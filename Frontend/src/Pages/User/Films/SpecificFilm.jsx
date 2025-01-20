@@ -3,6 +3,7 @@ import VideoPlayer from "../../../Component/Videoplayer"
 import { useState, useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { fireMessage } from '../../Admin/Pages/AuthPage/Signup'
+const api_url = process.env.REACT_APP_API_URL;
 
 function SpecificFilm() {
     const [clientName, setClientName] = useState({ Bride: "", Groom: "" })
@@ -80,7 +81,7 @@ function SpecificFilm() {
     const fetchClientVideoAndPhotos = useCallback(
         async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/videos/${videoId}`);
+                const res = await fetch(`${api_url}/api/videos/${videoId}`);
                 const data = await res.json();
                 if (!res.ok || !data.clientName || !data.selectedVideo || !data.remainingVideos || !data.photos) {
                     return fireMessage(data.message, 'error')
@@ -97,7 +98,7 @@ function SpecificFilm() {
     const fetchRecommendedVideos = useCallback(
         async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/videos/${videoId}/recommended`)
+                const res = await fetch(`${api_url}/api/videos/${videoId}/recommended`)
                 const data = await res.json();
                 if (!res.ok || !data.recommendedVideos) {
                     return fireMessage(data.message, 'error')

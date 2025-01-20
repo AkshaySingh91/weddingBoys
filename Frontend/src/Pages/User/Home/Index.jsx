@@ -8,7 +8,7 @@ import "react-router-dom"
 
 export default function Index() {
     return (<>
-        <section className='lg:px-4 py-3'>
+        <section className='lg:px-4 py-3 h-auto'>
             <Herobanner></Herobanner>
             <div className="py-24 flex items-center justify-center text-nowrap">
                 <div className="">

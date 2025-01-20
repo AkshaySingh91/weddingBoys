@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import Swal from 'sweetalert2';
 import BannerImage from "./BannerImage"
 import TeamImage from './TeamImage';
+const api_url = process.env.REACT_APP_API_URL;
 
 function Team() {
     const [teamImages, setTeamImages] = useState([]);
@@ -27,7 +28,7 @@ function Team() {
     const fetchTeamImage = useCallback(
         async () => {
             try {
-                const res = await fetch("http://localhost:5000/api/team");
+                const res = await fetch(`${api_url}/api/team`);
                 const data = await res.json();
                 if (!res.ok || !data.teamImages || !data.bannerImage) {
                     throw new Error(data.message);

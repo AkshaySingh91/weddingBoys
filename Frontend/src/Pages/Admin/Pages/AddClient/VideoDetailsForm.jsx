@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fireMessage } from '../AuthPage/Signup'
 
+const api_url = process.env.REACT_APP_API_URL;
 
 function VideoDetailsForm({ videoFiles, setVideoFiles, tagsData, setTagsData, videoDetails, setVideosDetails, setVideoForm, videoName }) {
     const [locationInput, setLocationInput] = useState(videoDetails.find((videoDetail) => videoDetail.video.name === videoName).location);
@@ -18,7 +19,7 @@ function VideoDetailsForm({ videoFiles, setVideoFiles, tagsData, setTagsData, vi
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/get-all-tags", {
+                const response = await fetch(`${api_url}/api/get-all-tags`, {
                     method: "GET",
                     credentials: "include"
                 });
@@ -33,7 +34,7 @@ function VideoDetailsForm({ videoFiles, setVideoFiles, tagsData, setTagsData, vi
         };
         fetchCategories();
     }, [setTagsData]);
-    
+
     const [collapsed, setCollapsed] = useState({
         tags: false,
     });

@@ -2,6 +2,8 @@ import React, { useCallback } from 'react'
 import { useState, useEffect } from 'react';
 import { fireMessage } from '../../Admin/Pages/AuthPage/Signup';
 import { Link } from 'react-router-dom';
+const api_url = process.env.REACT_APP_API_URL;
+
 export default function VideoThumbnail() {
     const [isLoading, setIsLoading] = useState(false);
     const [clients, setClients] = useState([])
@@ -11,7 +13,7 @@ export default function VideoThumbnail() {
     const fetchVideos = async (t) => {
         try {
             setIsLoading(true)
-            const res = await fetch(`http://localhost:5000/api/videos?tag=${t}`)
+            const res = await fetch(`${api_url}/api/videos?tag=${t}`)
             const data = await res.json();
             if (res.status >= 300) {
                 return fireMessage(data.message, 'error')
@@ -28,7 +30,7 @@ export default function VideoThumbnail() {
         async () => {
             try {
                 setIsLoading(true)
-                const res = await fetch(`http://localhost:5000/api/homepage/tags`)
+                const res = await fetch(`${api_url}/api/homepage/tags`)
                 const data = await res.json();
                 if (res.status >= 300) {
                     return fireMessage(data.message, 'error')

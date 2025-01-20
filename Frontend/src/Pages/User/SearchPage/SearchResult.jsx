@@ -4,6 +4,8 @@ import { fireMessage } from "../../Admin/Pages/AuthPage/Signup";
 import SearchResultPhoto from "./SearchResultPhoto";
 import SearchResultVideos from "./SearchResultVideos";
 
+const api_url = process.env.REACT_APP_API_URL;
+
 export default function SearchResult() {
     const [activeTab, setActiveTab] = useState("videos");
     const [videos, setVideos] = useState([]);
@@ -28,7 +30,7 @@ export default function SearchResult() {
         async (mediaType = "video", page = 1) => {
             setLoading(true);
             try {
-                const res = await fetch(`http://localhost:5000/api/search?query=${query}&media=${mediaType}&page=${page}&limit=${limit}`);
+                const res = await fetch(`${api_url}/api/search?query=${query}&media=${mediaType}&page=${page}&limit=${limit}`);
                 const data = await res.json()
                 if (!res.ok || !data.photos || !data.videos) {
                     return fireMessage(data.message, 'error')

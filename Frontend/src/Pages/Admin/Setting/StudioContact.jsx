@@ -4,6 +4,7 @@ import facebookLogo from '../../../Asset/facebookLogo.svg'
 import instagramLogo from '../../../Asset/instagramLogo.svg'
 import twitterLogo from '../../../Asset/twitterLogo.svg'
 import youtubeLogo from '../../../Asset/youtubeLogo.svg'
+const api_url = process.env.REACT_APP_API_URL;
 
 function StudioContact() {
     const [studioName, setStudioName] = useState("");
@@ -85,7 +86,7 @@ function StudioContact() {
         })
         if (result.isConfirmed) {
             try {
-                const res = await fetch("http://localhost:5000/admin/api/studio-setting/contact/save", {
+                const res = await fetch(`${api_url}/admin/api/studio-setting/contact/save`, {
                     credentials: "include",
                     method: "PUT",
                     headers: { "content-type": "application/json" },
@@ -140,7 +141,7 @@ function StudioContact() {
             }
         }
         try {
-            const res = await fetch("http://localhost:5000/admin/api/studio-setting/contact/get-logo-put-url", {
+            const res = await fetch(`${api_url}/admin/api/studio-setting/contact/get-logo-put-url`, {
                 credentials: "include",
                 method: "PUT",
                 headers: { "content-type": "application/json" },
@@ -156,7 +157,7 @@ function StudioContact() {
                 const { putUrl, key } = data;
                 let response = await uploadFileInBucket(studioLogoFile, putUrl);
                 if (response.isValid) {
-                    const res = await fetch("http://localhost:5000/admin/api/studio-setting/contact/save", {
+                    const res = await fetch(`${api_url}/admin/api/studio-setting/contact/save`, {
                         credentials: "include",
                         method: "PUT",
                         headers: { "content-type": "application/json" },

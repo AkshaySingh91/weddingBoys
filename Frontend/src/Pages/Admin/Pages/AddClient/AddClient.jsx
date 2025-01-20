@@ -3,6 +3,7 @@ import VideoDetailsForm from './VideoDetailsForm';
 import PhotoDetailsForm from './PhotoDetailsForm';
 import { fireMessage } from '../AuthPage/Signup';
 import Swal from 'sweetalert2'
+const api_url = process.env.REACT_APP_API_URL;
 
 const AddClient = () => {
     const [brideName, setBrideName] = useState('Bride');
@@ -173,7 +174,7 @@ const AddClient = () => {
                     i++;
                     return { ...p, photo: { key: urls.photosUrl[i].photoKey } }
                 })
-                const res = await fetch("http://localhost:5000/admin/api/add-client/save-details", {
+                const res = await fetch(`${api_url}/admin/api/add-client/save-details`, {
                     method: "POST",
                     body: JSON.stringify({
                         clientDetails: {
@@ -224,7 +225,7 @@ const AddClient = () => {
         }
         const verifyDetails = async () => {
             try {
-                const res = await fetch("http://localhost:5000/admin/api/add-client/validate-details", {
+                const res = await fetch(`${api_url}/admin/api/add-client/validate-details`, {
                     method: "POST",
                     body: JSON.stringify({
                         'bride': brideName,

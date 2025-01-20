@@ -6,6 +6,7 @@ import { fireMessage } from '../../Admin/Pages/AuthPage/Signup'
 import "../SearchPage/Masonry.css"
 import gmailLogo from '../../../Asset/gmailShareLogo.svg'
 import { PhotoSkeletonLoader } from './AllPhotos';
+const api_url = process.env.REACT_APP_API_URL;
 
 function SpecificPhoto() {
     const [isLoading, setIsLoading] = useState(false);
@@ -59,7 +60,7 @@ function SpecificPhoto() {
     const fetchPhotos = useCallback(
         async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/photos/${photoId}`)
+                const res = await fetch(`${api_url}/api/photos/${photoId}`)
                 const data = await res.json();
                 if (!res.ok || !(data.clientName && data.selectedPhoto && data.remainingPhotos)) {
                     return fireMessage(data.message, 'error')
@@ -76,7 +77,7 @@ function SpecificPhoto() {
         async () => {
             try {
                 setIsLoading(true);
-                const res = await fetch(`http://localhost:5000/api/photos/${photoId}/recommended?page=${page}&limit=${limit}`)
+                const res = await fetch(`${api_url}/api/photos/${photoId}/recommended?page=${page}&limit=${limit}`)
                 const data = await res.json();
                 if (!res.ok || !data.recommendedPhotos) {
                     return fireMessage(data.message, 'error')

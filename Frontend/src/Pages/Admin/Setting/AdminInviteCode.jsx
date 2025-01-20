@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Swal from "sweetalert2"
+const api_url = process.env.REACT_APP_API_URL;
 
 function AdminInviteCode() {
     const [inviteCode, setInviteCode] = useState(null)
@@ -7,7 +8,7 @@ function AdminInviteCode() {
     const [isCodeVisible, setIsCodeVisible] = useState(false);
     async function fetchInviteCode(req, res, next) {
         try {
-            const res = await fetch("http://localhost:5000/admin/api/studio-setting/invite-code", {
+            const res = await fetch(`${api_url}/admin/api/studio-setting/invite-code`, {
                 credentials: "include"
             })
             const data = await res.json();
@@ -36,7 +37,7 @@ function AdminInviteCode() {
     }, [])
     const regenerateCode = async () => {
         try {
-            const res = await fetch("http://localhost:5000/admin/api/studio-setting/invite-code/regenerate", {
+            const res = await fetch(`${api_url}/admin/api/studio-setting/invite-code/regenerate`, {
                 credentials: "include",
                 method: "GET"
             })

@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { fireMessage } from './Signup';
 import { useAuth } from '../../../../Context/AdminAuthContext';
 import { delay } from './Signup';
+const api_url = process.env.REACT_APP_API_URL;
 
 function Login() {
     const [email, setEmail] = useState("singhakshay8794@gmail.com");
@@ -49,7 +50,7 @@ function Login() {
         }
 
         try {
-            const res = await fetch("http://localhost:5000/admin/login", {
+            const res = await fetch(`${api_url}:5000/admin/login`, {
                 method: "POST",
                 body: JSON.stringify({ email, password, rememberMe }),
                 headers: {
@@ -129,7 +130,7 @@ function Login() {
             return fireMessage("INVALID TARGET TYPE", 'error')
         }
         try {
-            const res = await fetch("http://localhost:5000/admin/request-otp", {
+            const res = await fetch(`${api_url}/admin/request-otp`, {
                 method: "POST",
                 body: JSON.stringify({
                     target, type
@@ -153,7 +154,7 @@ function Login() {
         let otp = otpInputRef.map((ref) => ref.current.value).join("");
         let target = email;
         try {
-            const res = await fetch("http://localhost:5000/admin/verify-otp", {
+            const res = await fetch(`${api_url}/admin/verify-otp`, {
                 method: "POST",
                 body: JSON.stringify({
                     target, otp

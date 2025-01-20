@@ -3,6 +3,8 @@ import { fireMessage } from "../../Admin/Pages/AuthPage/Signup";
 import "leaflet/dist/leaflet.css";
 import Swal from "sweetalert2";
 
+const api_url = process.env.REACT_APP_API_URL;
+
 const AddTag = () => {
     const [allTags, setAllTags] = useState([]);
     const [orignalAllTags, setOrignalAllTags] = useState([]);
@@ -12,7 +14,7 @@ const AddTag = () => {
     const fetchCategories = useCallback(
         async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/get-all-tags", {
+                const response = await fetch(`${api_url}/api/get-all-tags`, {
                     method: "GET",
                     credentials: "include"
                 });
@@ -52,7 +54,7 @@ const AddTag = () => {
                     }
                 }
             }
-            const response = await fetch("http://localhost:5000/admin/api/tags", {
+            const response = await fetch(`${api_url}/admin/api/tags`, {
                 method: 'POST',
                 body: JSON.stringify({
                     tagType: newCategory,
@@ -104,7 +106,7 @@ const AddTag = () => {
                     })
                 }
             })
-            const response = await fetch(`http://localhost:5000/admin/api/tags`, {
+            const response = await fetch(`${api_url}/admin/api/tags`, {
                 method: "PUT",
                 credentials: "include",
                 body: JSON.stringify({
@@ -130,7 +132,7 @@ const AddTag = () => {
                     confirmButtonText: "Yes, delete it!"
                 })
                 if (result.isConfirmed) {
-                    const res = await fetch(`http://localhost:5000/admin/api/tags`, {
+                    const res = await fetch(`${api_url}/admin/api/tags`, {
                         method: "PUT",
                         credentials: "include",
                         body: JSON.stringify({

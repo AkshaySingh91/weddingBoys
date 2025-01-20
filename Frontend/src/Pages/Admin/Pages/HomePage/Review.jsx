@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { fireMessage } from '../AuthPage/Signup'
 import Swal from 'sweetalert2';
 import ReviewEdit from './ReviewEdit';
+const api_url = process.env.REACT_APP_API_URL;
 
 export default function Review() {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -56,7 +57,7 @@ export default function Review() {
         // Fetch initial reviews
         async function fetchReviews() {
             try {
-                const res = await fetch("http://localhost:5000/api/reviews");
+                const res = await fetch(`${api_url}/api/reviews`);
                 const data = await res.json();
                 if (res.status !== 200) throw new Error(data.message);
                 if (data.reviews && data.reviews.length) {

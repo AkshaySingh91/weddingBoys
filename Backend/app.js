@@ -7,7 +7,15 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
 // middlewares
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
+const corsOptions = {
+    origin:
+        process.env.NODE_ENV === 'production'
+            ? 'https://ankitstudios.in'
+            : 'http://localhost:3000',
+    credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser(process.env.COOKIE_SECRET_KEY))

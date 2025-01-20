@@ -1,6 +1,7 @@
 import React from 'react'
 import { fireMessage } from '../AuthPage/Signup';
 import { useEffect, useState } from 'react';
+const api_url = process.env.REACT_APP_API_URL;
 
 function EditVideoForm({ thumbailFiles, setThumbnailFiles, id, isEditing, setVideoForm, tagsData, setTagsData, clientDetails, setClientDetails }) {
     const [collapsed, setCollapsed] = useState({ tags: false, });
@@ -10,7 +11,7 @@ function EditVideoForm({ thumbailFiles, setThumbnailFiles, id, isEditing, setVid
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/get-all-tags", {
+                const response = await fetch(`${api_url}/api/get-all-tags`, {
                     method: "GET",
                     credentials: "include"
                 });

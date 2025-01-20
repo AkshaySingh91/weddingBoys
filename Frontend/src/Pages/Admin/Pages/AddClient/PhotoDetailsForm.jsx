@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fireMessage } from '../AuthPage/Signup'
+const api_url = process.env.REACT_APP_API_URL;
 
 function PhotoDetailsForm({ tagsData, setTagsData, photosDetails, setPhotoDetails, setPhotoForm, photoName }) {
     const [locationInput, setLocationInput] = useState(photosDetails.find((photosDetails) => photosDetails.photo.name === photoName).location);
@@ -9,7 +10,7 @@ function PhotoDetailsForm({ tagsData, setTagsData, photosDetails, setPhotoDetail
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/get-all-tags", {
+                const response = await fetch(`${api_url}/api/get-all-tags`, {
                     method: "GET",
                     credentials: "include"
                 });

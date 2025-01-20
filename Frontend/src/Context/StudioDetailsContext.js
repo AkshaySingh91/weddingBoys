@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { createContext } from "react";
 import Swal from "sweetalert2";
 
+const api_url = process.env.REACT_APP_API_URL;
 const studioDetailsContext = createContext();
 function StudioDetailsContext({ children }) {
     const [studioName, setStudioName] = useState(null);
@@ -13,10 +14,10 @@ function StudioDetailsContext({ children }) {
 
     const getStudioDetails = async () => {
         try {
-            const res = await fetch('http://localhost:5000/api/studio/details', {
+            const res = await fetch(`${api_url}/api/studio/details`, {
                 method: 'GET',
             })
-            const data = await res.json(); 
+            const data = await res.json();
             if (res.status === 200 && data.studioDetails && data.studioDetails.name && data.studioDetails.logo && data.studioDetails.email && data.studioDetails.address && data.studioDetails.socials && data.studioDetails.contact) {
                 const studioDetails = data.studioDetails
                 setStudioName(studioDetails.name)
@@ -47,8 +48,8 @@ function StudioDetailsContext({ children }) {
         }
     }
     useEffect(() => {
-        getStudioDetails() 
-    }, []) 
+        getStudioDetails()
+    }, [])
     return (
         <studioDetailsContext.Provider value={{ studioName, studioSocials, studioAddress, studioContact, studioEmail, studioLogo }}>
             {children}

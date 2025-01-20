@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Swal from 'sweetalert2';
+const api_url = process.env.REACT_APP_API_URL;
 
 export default function BtsTape() {
     const btsTapeRef = useRef();
@@ -51,7 +52,7 @@ export default function BtsTape() {
 
     const fetchBtsImage = async () => {
         try {
-            const res = await fetch("http://localhost:5000/api/homepage/bts-image");
+            const res = await fetch(`${api_url}/api/homepage/bts-image`);
             const data = await res.json()
             if (res.status >= 300) {
                 return Swal.fire({

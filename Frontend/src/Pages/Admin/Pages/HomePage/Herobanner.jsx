@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import Videoplayer from '../../../../Component/Videoplayer';
 import { fireMessage } from '../AuthPage/Signup'
 import { Link } from 'react-router-dom';
+const api_url = process.env.REACT_APP_API_URL;
 
 export default function Herobanner() {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -17,7 +18,7 @@ export default function Herobanner() {
     useEffect(() => {
         const fetchHeroVideos = async () => {
             try {
-                const res = await fetch("http://localhost:5000/api/hero-videos")
+                const res = await fetch(`${api_url}/api/hero-videos`)
                 const data = await res.json();
                 if (res.status >= 300) {
                     return fireMessage(data.message, 'error')

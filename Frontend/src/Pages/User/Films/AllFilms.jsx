@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Swal from 'sweetalert2';
 import FilteredFilms from './FilteredFilms';
-
+const api_url = process.env.REACT_APP_API_URL;
+ 
 function AllFilms() {
     const [isLoading, setIsLoading] = useState(false);
     const [allTags, setAllTags] = useState([]);
@@ -13,7 +14,7 @@ function AllFilms() {
 
     async function fetchAllTags() {
         try {
-            const res = await fetch("http://localhost:5000/api/get-all-tags");
+            const res = await fetch(`${api_url}/api/get-all-tags`);
             const data = await res.json()
             if (!res.ok || !data.allTags) {
                 throw new Error(data.message);
@@ -45,7 +46,7 @@ function AllFilms() {
                     query = query + `${filters[key].trim()},`
                 }
             }
-            const res = await fetch(`http://localhost:5000/api/videos?tag=${query}&page=${p}&limit=${l}`);
+            const res = await fetch(`${api_url}/api/videos?tag=${query}&page=${p}&limit=${l}`);
             const data = await res.json();
             if (!res.ok || !data.client) throw new Error(data.message);
             setHasMoreVideos(data.client.length === l);

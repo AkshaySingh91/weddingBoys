@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { createContext } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from 'react-router-dom'
+const api_url = process.env.REACT_APP_API_URL;
+
 // protecting our route eg if user go on /chat first checkUserAuth will fetch user auth & if not valid he will redirect to /login also this context helps to get name, email at any compo 
 const adminAuthContext = createContext(null);
 export default function AdminAuthProvider(props) {
@@ -15,7 +17,7 @@ export default function AdminAuthProvider(props) {
     useEffect(() => {
         const checkUserAuth = async () => {
             try {
-                const res = await fetch('http://localhost:5000/admin/auth-status', {
+                const res = await fetch(`${api_url}/admin/auth-status`, {
                     method: 'GET',
                     credentials: 'include'
                 })

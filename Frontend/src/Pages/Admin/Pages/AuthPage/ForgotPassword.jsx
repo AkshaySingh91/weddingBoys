@@ -5,6 +5,7 @@ import { fireMessage } from './Signup'
 import { delay } from './Signup'
 
 
+const api_url = process.env.REACT_APP_API_URL;
 
 function ForgotPassword() {
     const [phone, setPhone] = useState('')
@@ -101,7 +102,7 @@ function ForgotPassword() {
             return await fireMessage('INVALID EMAIL', 'error')
         }
         try {
-            const res = await fetch("http://localhost:5000/admin/check-details", {
+            const res = await fetch(`${api_url}/admin/check-details`, {
                 method: "POST",
                 body: JSON.stringify({ email, phone }),
                 headers: {
@@ -133,7 +134,7 @@ function ForgotPassword() {
             target = phone;
         }
         try {
-            const res = await fetch("http://localhost:5000/admin/request-otp", {
+            const res = await fetch(`${api_url}/admin/request-otp`, {
                 method: "POST",
                 body: JSON.stringify({
                     target, type
@@ -157,7 +158,7 @@ function ForgotPassword() {
         let otp = otpInputRef.map((ref) => ref.current.value).join("");
         let target = email;
         try {
-            const res = await fetch("http://localhost:5000/admin/verify-otp", {
+            const res = await fetch(`${api_url}/admin/verify-otp`, {
                 method: "POST",
                 body: JSON.stringify({
                     target, otp
@@ -207,7 +208,7 @@ function ForgotPassword() {
         let otp = otpInputRef.map((ref) => ref.current.value).join("");
         let target = phone
         try {
-            const res = await fetch("http://localhost:5000/admin/verify-otp", {
+            const res = await fetch(`${api_url}/admin/verify-otp`, {
                 method: "POST",
                 body: JSON.stringify({
                     target, otp

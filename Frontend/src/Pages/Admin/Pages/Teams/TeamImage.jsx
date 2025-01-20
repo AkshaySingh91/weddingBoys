@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Swal from 'sweetalert2';
+const api_url = process.env.REACT_APP_API_URL;
 
 function TeamImage({ teamImages, uploadFileInBucket, fetchTeamImage }) {
   const [isEditing, setIsEditing] = useState(false)
@@ -35,7 +36,7 @@ function TeamImage({ teamImages, uploadFileInBucket, fetchTeamImage }) {
   }
   const saveClientDetails = async (uploadedImage) => {
     try {
-      const res = await fetch("http://localhost:5000/admin/api/team", {
+      const res = await fetch(`${api_url}/admin/api/team`, {
         method: "POST",
         body: JSON.stringify({
           uploadedImage
@@ -55,7 +56,7 @@ function TeamImage({ teamImages, uploadFileInBucket, fetchTeamImage }) {
   }
   const addNewTeamImage = async () => {
     try {
-      const res = await fetch("http://localhost:5000/admin/api/team/get-put-url", {
+      const res = await fetch(`${api_url}/admin/api/team/get-put-url`, {
         method: "POST",
         credentials: "include",
         body: JSON.stringify({
@@ -196,7 +197,7 @@ function TeamImage({ teamImages, uploadFileInBucket, fetchTeamImage }) {
         confirmButtonColor: "green",
       })
       if (result.isConfirmed) {
-        const res = await fetch("http://localhost:5000/admin/api/team", {
+        const res = await fetch(`${api_url}/admin/api/team`, {
           method: "DELETE",
           body: JSON.stringify({ id }),
           credentials: 'include',
@@ -266,7 +267,7 @@ function TeamImage({ teamImages, uploadFileInBucket, fetchTeamImage }) {
       try {
         const details = editableImage.find((img) => img._id === id);
         if (details && details.about.name && details.about.name.trim() && details.about.designation && details.about.designation.trim()) {
-          const res = await fetch("http://localhost:5000/admin/api/team", {
+          const res = await fetch(`${api_url}/admin/api/team`, {
             method: "PUT",
             body: JSON.stringify({ details }),
             credentials: 'include',

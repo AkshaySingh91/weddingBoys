@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { fireMessage } from '../AuthPage/Signup'
 import { Link } from 'react-router-dom'
 import Loader from '../../../../Component/Loader'
+const api_url = process.env.REACT_APP_API_URL;
 
 function AllClients() {
     const [clientDetails, setClientDetails] = useState([])
@@ -10,7 +11,7 @@ function AllClients() {
     useEffect(() => {
         async function fetchAllClients() {
             try {
-                const res = await fetch("http://localhost:5000/admin/api/clients", {
+                const res = await fetch(`${api_url}/admin/api/clients`, {
                     method: "GET",
                     credentials: "include"
                 })

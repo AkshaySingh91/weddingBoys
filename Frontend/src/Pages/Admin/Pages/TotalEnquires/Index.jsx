@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import Swal from "sweetalert2"
+const api_url = process.env.REACT_APP_API_URL;
 
 function Index() {
     const [inquiries, setInquiries] = useState([]);
@@ -26,7 +27,7 @@ function Index() {
 
     const markViewed = async (id) => {
         try {
-            const data = await fetch(`http://localhost:5000/admin/api/enquires/mark-viewed/${id}`, { method: 'PATCH', credentials: "include" });
+            const data = await fetch(`${api_url}/admin/api/enquires/mark-viewed/${id}`, { method: 'PATCH', credentials: "include" });
             if (data.status >= 300) {
                 Swal.fire('Error', data.message, 'error');
             }
@@ -62,7 +63,7 @@ function Index() {
     };
     const deleteInquiry = async (id) => {
         try {
-            await fetch(`http://localhost:5000/admin/api/enquires/${id}`, { method: 'DELETE', credentials: "include" });
+            await fetch(`${api_url}/admin/api/enquires/${id}`, { method: 'DELETE', credentials: "include" });
             Swal.fire('Deleted!', 'Inquiry has been deleted.', 'success');
             fetchInquiries();
         } catch (error) {

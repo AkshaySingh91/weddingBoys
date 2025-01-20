@@ -5,6 +5,7 @@ Frontend/node_modules/
 # Ignore .env files
 Backend/.env
 Frontend/.env
+Frontend/.env.production
 
 # Ignore .vercel directory
 Frontend/.vercel/

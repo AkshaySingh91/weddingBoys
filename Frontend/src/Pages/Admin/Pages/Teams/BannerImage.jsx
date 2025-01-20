@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Swal from 'sweetalert2';
+const api_url = process.env.REACT_APP_API_URL;
 
 function BannerImage({ bannerImage, uploadFileInBucket, fetchTeamImage }) {
     const [isEditing, setIsEditing] = useState(false)
@@ -25,7 +26,7 @@ function BannerImage({ bannerImage, uploadFileInBucket, fetchTeamImage }) {
     }
     const saveClientDetails = async (uploadedImage) => {
         try {
-            const res = await fetch("http://localhost:5000/admin/api/team/banner-image", {
+            const res = await fetch(`${api_url}/admin/api/team/banner-image`, {
                 method: "POST",
                 body: JSON.stringify({
                     uploadedImage
@@ -46,7 +47,7 @@ function BannerImage({ bannerImage, uploadFileInBucket, fetchTeamImage }) {
     }
     const handleSave = async () => {
         try {
-            const res = await fetch("http://localhost:5000/admin/api/team/banner-image/get-put-url", {
+            const res = await fetch(`${api_url}/admin/api/team/banner-image/get-put-url`, {
                 method: "POST",
                 credentials: "include",
                 body: JSON.stringify({
@@ -154,7 +155,7 @@ function BannerImage({ bannerImage, uploadFileInBucket, fetchTeamImage }) {
         })
         if (result.isConfirmed) {
             try {
-                const res = await fetch("http://localhost:5000/admin/api/team/banner-image", {
+                const res = await fetch(`${api_url}/admin/api/team/banner-image`, {
                     method: "DELETE",
                     credentials: "include",
                     body: JSON.stringify({ id }),

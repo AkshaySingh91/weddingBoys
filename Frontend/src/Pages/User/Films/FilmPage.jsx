@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { fireMessage } from '../../Admin/Pages/AuthPage/Signup';
 import NoSearchResult from "../../../Asset/NoSearchResult.png"
+const api_url = process.env.REACT_APP_API_URL;
 
 function FilmPage() {
     const [allVideos, setAllVideos] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const fetchVideos = async (t) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/videos?tag=${t}&page=1&limit=10`)
+            const res = await fetch(`${api_url}/api/videos?tag=${t}&page=1&limit=10`)
             const data = await res.json();
             if (res.status >= 300) {
                 return fireMessage(data.message, 'error')
@@ -23,7 +24,7 @@ function FilmPage() {
         const fetchFilmPageTags = async () => {
             setIsLoading(true)
             try {
-                const res = await fetch(`http://localhost:5000/api/filmpage/tags`)
+                const res = await fetch(`${api_url}/api/filmpage/tags`)
                 const data = await res.json();
                 if (res.status >= 300 || !data.tags) {
                     return fireMessage(data.message, 'error')

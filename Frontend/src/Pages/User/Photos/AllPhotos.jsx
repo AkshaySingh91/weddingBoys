@@ -4,19 +4,20 @@ import Swal from "sweetalert2"
 import InfiniteScroll from 'react-infinite-scroll-component';
 import './allPhotoMasonry.css'
 
+const api_url = process.env.REACT_APP_API_URL;
 
 const AllPhotos = () => {
     const [photos, setPhotos] = useState([]);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
-    const maxVisibleTags = useState(3);
+    const maxVisibleTags = 3;
     const [loadedImages, setLoadedImages] = useState({});
     const limit = 10;
 
     const fetchPhotos = useCallback(
         async () => {
             try {
-                const response = await fetch(`http://localhost:5000/api/photos?page=${page}&limit=${limit}`)
+                const response = await fetch(`${api_url}/api/photos?page=${page}&limit=${limit}`)
                 const data = await response.json()
                 if (response.status >= 300 || !data.photos) {
                     Swal.fire({
@@ -67,10 +68,6 @@ const AllPhotos = () => {
         setLoadedImages((prev) => ({ ...prev, [id]: true }));
     };
 
-    const skeletonColors = ["cb997e", "76c893", "eddcd2", "fff1e6", "f0efeb", "f8ad9d", "ddbea9", "a5a58d", "b7b7a4", "ffe5d9", "caf0f8", "d4a373", "ffb5a7", "fcd5ce", "ced4da", "4361ee"]
-    const getRandomColor = () => {
-        return `#${skeletonColors[Math.floor(Math.random() * (skeletonColors.length - 0)) + 0]}`
-    }
     return (<>
         <InfiniteScroll
             dataLength={photos.length}
@@ -79,7 +76,7 @@ const AllPhotos = () => {
             loader={
                 <grid-container>
                     {Array.from({ length: 5 }).map((_, index) => {
-                        return <PhotoSkeletonLoader key={index} bgColor={getRandomColor()} />
+                        return <PhotoSkeletonLoader key={index} />
                     })}
                 </grid-container>
             }
@@ -88,7 +85,7 @@ const AllPhotos = () => {
                 <grid-container>
                     {photos.map((photo, i) => {
                         const visibleTags = photo.tags.slice(0, maxVisibleTags); // Tags to display
-                        const hiddenTagCount = photo.tags.length - maxVisibleTags; // Number of hidden tags 
+                        const hiddenTagCount = photo.tags.length - maxVisibleTags; // Number of hidden tags  
                         return (
                             <div
                                 key={i}
@@ -97,7 +94,7 @@ const AllPhotos = () => {
                                 <Link to={`/photos/${photo._id}`}>
                                     <div className="wrapper flex flex-col h-full w-full gap-2 py-2 px-2  backdrop-blur-sm border-[1px] border-slate-300 rounded-md bg-[#e9e9e4]">
                                         <div className="w-full h-auto flex-grow">
-                                            {!loadedImages[photo._id] && <PhotoSkeletonLoader bgColor={getRandomColor()} />}
+                                            {!loadedImages[photo._id] && <PhotoSkeletonLoader />}
                                             <img
                                                 src={photo.url}
                                                 alt="Client"
@@ -132,15 +129,11 @@ const AllPhotos = () => {
     </ >)
 };
 
-export const PhotoSkeletonLoader = ({ bgColor }) => (
-    <div className="relative animate-pulse rounded-3xl w-full"
+export const PhotoSkeletonLoader = () => (
+    <div className="relative animate-pulse rounded-3xl w-full bg-slate-300"
         style={{
             height: `${Math.floor(Math.random() * (450 - 300 + 1)) + 300}px`,
-            backgroundColor: bgColor,
-            backgroundImage: 'linear-gradient(135deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent)',
-            backgroundSize: '40px 40px'
         }}>
-        <div className={`w-full h-full rounded-lg  bg-[${bgColor}]`}></div>
         <div className="absolute bottom-6 left-6 text-white flex flex-col gap-0">
             <div className="flex items-center text-desktopBodySmall uppercase font-semibold tracking-wide">
                 <span className="inline-block animate-pulse w-28 h-4 rounded-lg bg-slate-400 mr-2 my-4"></span>

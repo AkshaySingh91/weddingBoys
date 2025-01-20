@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import Swal from "sweetalert2"
+const api_url = process.env.REACT_APP_API_URL;
 
 function Index() {
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +63,7 @@ function Index() {
   async function fetchTeamImage() {
     setIsLoading(true)
     try {
-      const res = await fetch("http://localhost:5000/api/team");
+      const res = await fetch(`${api_url}/api/team`);
       const data = await res.json();
       if (!res.ok || !data.teamImages || !data.bannerImage) {
         throw new Error(data.message);
@@ -104,7 +105,7 @@ function Index() {
                     </div>
                   )
                 }) :
-                <div className="mx-auto my-auto text-lg font-bold tracking-widest">No available video</div>)
+                <div className="mx-auto my-auto text-lg font-bold tracking-widest">No available Images</div>)
         }
         </div>
         <button

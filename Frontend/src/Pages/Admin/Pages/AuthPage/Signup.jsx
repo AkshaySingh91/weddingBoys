@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../../Context/AdminAuthContext';
+const api_url = process.env.REACT_APP_API_URL;
 
 export async function fireMessage(msg, type) {
     await Swal.fire({
@@ -139,7 +140,7 @@ export function Signup() {
             return await fireMessage('Password must have minimum eight characters, at least one uppercase letter, one lowercase letter and one number', 'error')
         }
         try {
-            const res = await fetch('http://localhost:5000/admin/verify-details', {
+            const res = await fetch(`${api_url}/admin/verify-details`, {
                 method: 'POST',
                 body: JSON.stringify({
                     name, email, phone, password, code, rememberMe, avatarMetaData
@@ -188,7 +189,7 @@ export function Signup() {
             target = phone;
         }
         try {
-            const res = await fetch("http://localhost:5000/admin/request-otp", {
+            const res = await fetch(`${api_url}/admin/request-otp`, {
                 method: "POST",
                 body: JSON.stringify({
                     target, type
@@ -212,7 +213,7 @@ export function Signup() {
         let otp = otpInputRef.map((ref) => ref.current.value).join("");
         let target = email;
         try {
-            const res = await fetch("http://localhost:5000/admin/verify-otp", {
+            const res = await fetch(`${api_url}/admin/verify-otp`, {
                 method: "POST",
                 body: JSON.stringify({
                     target, otp
@@ -262,7 +263,7 @@ export function Signup() {
         let otp = otpInputRef.map((ref) => ref.current.value).join("");
         let target = phone
         try {
-            const res = await fetch("http://localhost:5000/admin/verify-otp", {
+            const res = await fetch(`${api_url}/admin/verify-otp`, {
                 method: "POST",
                 body: JSON.stringify({
                     target, otp
@@ -314,7 +315,7 @@ export function Signup() {
         try {
             await uploadFileInBucket(avatarFile, avatarPutUrl);
             // if avatar uploded than send key too
-            const res = await fetch('http://localhost:5000/admin/signup', {
+            const res = await fetch(`${api_url}/admin/signup`, {
                 method: 'POST',
                 body: JSON.stringify({
                     name, email, phone, password, code, rememberMe, avatarKey

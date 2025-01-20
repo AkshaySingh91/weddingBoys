@@ -7,6 +7,7 @@ import EditPhotoForm from './EditPhotoForm';
 import VideoDetailsForm from '../AddClient/VideoDetailsForm';
 import PhotoDetailsForm from '../AddClient/PhotoDetailsForm';
 import Swal from 'sweetalert2'
+const api_url = process.env.REACT_APP_API_URL;
 
 function ClientDetails() {
     const { id } = useParams();
@@ -31,7 +32,7 @@ function ClientDetails() {
         try {
             async function fetchClientDetails() {
                 try {
-                    const res = await fetch(`http://localhost:5000/admin/api/client/${id}`, {
+                    const res = await fetch(`${api_url}/admin/api/client/${id}`, {
                         method: "GET",
                         credentials: "include"
                     })
@@ -238,7 +239,7 @@ function ClientDetails() {
                 })
                 const newVideoAndOldVideoWithNewThumb = [...newVideosMetaData, ...oldVideos]
                 const newPhotoAndOldPhoto = [...newPhotoMetaData, ...clientDetails.photos]
-                const res = await fetch(`http://localhost:5000/admin/api/client/${id}/save-details`, {
+                const res = await fetch(`${api_url}/admin/api/client/${id}/save-details`, {
                     method: "PUT",
                     body: JSON.stringify({
                         'bride': clientDetails.clientName.Bride,
@@ -311,7 +312,7 @@ function ClientDetails() {
                         location: v.photoLocation,
                     }
                 })
-                const res = await fetch(`http://localhost:5000/admin/api/client/${id}/validate-details`, {
+                const res = await fetch(`${api_url}/admin/api/client/${id}/validate-details`, {
                     method: "PUT",
                     body: JSON.stringify({
                         'bride': clientDetails.clientName.Bride,

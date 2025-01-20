@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { fireMessage } from '../AuthPage/Signup';
+const api_url = process.env.REACT_APP_API_URL;
 
 function Index() {
     const [newAddedTags, setNewAddedTags] = useState([]);
@@ -11,7 +12,7 @@ function Index() {
 
     const fetchVideos = async (t) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/videos?tag=${t}`)
+            const res = await fetch(`${api_url}/api/videos?tag=${t}`)
             const data = await res.json();
             if (res.status >= 300) {
                 return fireMessage(data.message, 'error')
@@ -25,7 +26,7 @@ function Index() {
     useEffect(() => {
         const fetchFilmPageTags = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/filmpage/tags`)
+                const res = await fetch(`${api_url}/api/filmpage/tags`)
                 const data = await res.json();
                 if (res.status >= 300 || !data.tags) {
                     return fireMessage(data.message, 'error')
@@ -51,7 +52,7 @@ function Index() {
         // fetch all avalable tags from tagschems
         const fetchCategories = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/get-all-tags", {
+                const response = await fetch(`${api_url}/api/get-all-tags`, {
                     method: "GET",
                     credentials: "include"
                 });
@@ -78,7 +79,7 @@ function Index() {
     }
     const handleSave = async () => {
         try {
-            const res = await fetch(`http://localhost:5000/admin/api/filmpage/tags`, {
+            const res = await fetch(`${api_url}/admin/api/filmpage/tags`, {
                 method: "POST",
                 body: JSON.stringify({ newAddedTags }),
                 headers: {
