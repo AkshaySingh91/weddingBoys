@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../../../../Context/AdminAuthContext'
+// import { useAuth } from '../../../../Context/AdminAuthContext'
 import { fireMessage } from './Signup'
 import { delay } from './Signup'
 
@@ -22,10 +22,10 @@ function ForgotPassword() {
     const otpInputComponentChildRef = useRef()
     const otpInputRef = [useRef(), useRef(), useRef(), useRef(), useRef(), useRef()];
     const navigate = useNavigate();
-    const { setAdminName, setAdminEmail, setAdminPhone } = useAuth();
-    const [tempName, setTempName] = useState(null)
-    const [tempEmail, setTempEmail] = useState(null)
-    const [tempPhone, setTempPhone] = useState(null)
+    // const { setAdminName, setAdminEmail, setAdminPhone } = useAuth();
+    // const [tempName, setTempName] = useState(null)
+    // const [tempEmail, setTempEmail] = useState(null)
+    // const [tempPhone, setTempPhone] = useState(null)
     const [otpRecivingType, setOtpRecivingType] = useState('email');
 
     useEffect(() => {
@@ -117,9 +117,9 @@ function ForgotPassword() {
                 setOtpRecivingType('email');
                 setIsDetailsVerified(true);
                 handleSendOtp("email")
-                setTempEmail(data.email)
-                setTempName(data.name)
-                setTempPhone(data.phone)
+                // setTempEmail(data.email)
+                // setTempName(data.name)
+                // setTempPhone(data.phone)
             }
         } catch (error) {
             fireMessage(error.message, 'error')
@@ -258,9 +258,9 @@ function ForgotPassword() {
             if (res.status >= 300) {
                 return await fireMessage(message, 'error');
             } else {
-                setAdminName(tempName)
-                setAdminEmail(tempEmail)
-                setAdminPhone(tempPhone)
+                // setAdminName(tempName)
+                // setAdminEmail(tempEmail)
+                // setAdminPhone(tempPhone)
                 await fireMessage(message, 'success');
                 navigate('/admin/login', { replace: true })
             }

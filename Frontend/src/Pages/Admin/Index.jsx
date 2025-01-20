@@ -13,6 +13,7 @@ import StudioSetting from "../Admin/Setting/Index"
 import Header from '../../Component/Header'
 import Footer from '../../Component/Footer'
 import NotFound from '../../Component/NotFound'
+import AdminAuthProvider from '../../Context/AdminAuthContext'
 
 function Index() {
     const location = useLocation()
@@ -29,7 +30,7 @@ function Index() {
             }
             {
                 !isAuthPage &&
-                <>
+                <AdminAuthProvider>
                     <div className=' pt-4 lg:pl-40 pr-2 sm:pl-4  box-border w-screen min-h-screen overflow-hidden'>
                         <main className='flex flex-col box-border bg-primary rounded-2xl item-center  ' >
                             <Header />
@@ -60,7 +61,7 @@ function Index() {
                         </main>
                         <Footer />
                     </div>
-                </>
+                </AdminAuthProvider>
             }
 
         </>

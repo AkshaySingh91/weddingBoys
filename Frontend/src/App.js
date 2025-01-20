@@ -8,7 +8,6 @@ import Contact from './Pages/User/Contact/Index.jsx'
 import Header from './Component/Header.jsx'
 import Sidebar from './Component/Sidebar.jsx'
 import Footer from './Component/Footer.jsx'
-import AdminAuthProvider from './Context/AdminAuthContext.js'
 import StudioDetailsContext from './Context/StudioDetailsContext.js';
 import AdminRoutes from './Pages/Admin/Index.jsx'
 import NotFound from './Component/NotFound.jsx';
@@ -60,13 +59,11 @@ function App() {
       }
       {
         isAdminRoute &&
-        <AdminAuthProvider>
-          <Routes >
-            <Route path='/admin/*'
-              element={<AdminRoutes />}>
-            </Route>
-          </Routes>
-        </AdminAuthProvider >
+        <Routes >
+          <Route path='/admin/*'
+            element={<AdminRoutes />}>
+          </Route>
+        </Routes>
       }
     </StudioDetailsContext>
   </>);

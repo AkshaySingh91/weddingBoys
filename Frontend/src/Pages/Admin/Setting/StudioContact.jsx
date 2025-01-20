@@ -4,8 +4,8 @@ import facebookLogo from '../../../Asset/facebookLogo.svg'
 import instagramLogo from '../../../Asset/instagramLogo.svg'
 import twitterLogo from '../../../Asset/twitterLogo.svg'
 import youtubeLogo from '../../../Asset/youtubeLogo.svg'
-const api_url = process.env.REACT_APP_API_URL;
 
+const api_url = process.env.REACT_APP_API_URL;
 function StudioContact() {
     const [studioName, setStudioName] = useState("");
     const [studioLogo, setStudioLogo] = useState("");
@@ -26,10 +26,10 @@ function StudioContact() {
 
     const getStudioDetails = async () => {
         try {
-            const res = await fetch('http://localhost:5000/api/studio/details', {
+            const res = await fetch(`${api_url}/api/studio/details`, {
                 method: 'GET',
             })
-            const data = await res.json(); 
+            const data = await res.json();
             if (res.status === 200 && data.studioDetails && data.studioDetails.name && data.studioDetails.logo && data.studioDetails.email && data.studioDetails.address && data.studioDetails.socials && data.studioDetails.contact) {
                 const studioDetails = data.studioDetails
                 setStudioName(studioDetails.name)

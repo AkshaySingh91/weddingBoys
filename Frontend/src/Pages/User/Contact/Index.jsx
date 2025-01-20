@@ -3,6 +3,9 @@ import { Link } from "react-router-dom"
 import { useStudioDetails } from '../../../Context/StudioDetailsContext'
 import Swal from 'sweetalert2';
 import success from "./success.svg"
+
+const api_url = process.env.REACT_APP_API_URL;
+
 function Index() {
   const { studioContact } = useStudioDetails();
 
@@ -24,7 +27,7 @@ function Index() {
     };
     if (bride.trim() && groom.trim() && contact.trim() && reach.trim() && eventDate.start.trim() && eventDate.end.trim() && (validateEmail(contact) || validatePhone(contact))) {
       try {
-        const res = await fetch('http://localhost:5000/api/enquiry', {
+        const res = await fetch(`${api_url}/api/enquiry`, {
           method: 'POST',
           body: JSON.stringify({
             bride, groom, contact, reach, eventDate

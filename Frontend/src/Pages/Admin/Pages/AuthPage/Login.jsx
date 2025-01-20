@@ -2,26 +2,25 @@ import React from 'react'
 import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { fireMessage } from './Signup';
-import { useAuth } from '../../../../Context/AdminAuthContext';
+// import { useAuth } from '../../../../Context/AdminAuthContext';
 import { delay } from './Signup';
 const api_url = process.env.REACT_APP_API_URL;
 
 function Login() {
-    const [email, setEmail] = useState("singhakshay8794@gmail.com");
-    const [password, setPassword] = useState("Akshaysingh@0");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState('7');
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-
     const [isDetailsVerified, setIsDetailsVerified] = useState(null)
     const [intervalId, setIntervalId] = useState(null)
     const [otpTimer, setOtpTimer] = useState(null)
     const otpInputComponentRef = useRef()
     const otpInputComponentChildRef = useRef()
     const otpInputRef = [useRef(), useRef(), useRef(), useRef(), useRef(), useRef()];
-    const { setAdminName, setAdminEmail, setAdminPhone } = useAuth();
-    const [tempName, setTempName] = useState(null)
-    const [tempEmail, setTempEmail] = useState(null)
-    const [tempPhone, setTempPhone] = useState(null) 
+    // const { setAdminName, setAdminEmail, setAdminPhone } = useAuth();
+    // const [tempName, setTempName] = useState(null)
+    // const [tempEmail, setTempEmail] = useState(null)
+    // const [tempPhone, setTempPhone] = useState(null) 
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -63,10 +62,10 @@ function Login() {
                 fireMessage(data.message, 'error')
             } else {
                 setIsDetailsVerified(true);
-                handleSendOtp("email")
-                setTempName(data.name)
-                setTempEmail(data.email)
-                setTempPhone(data.phone)
+                handleSendOtp("email", data.admin)
+                // setTempName(data.name)
+                // setTempEmail(data.email)
+                // setTempPhone(data.phone)
             }
         } catch (error) {
             fireMessage(error.message, 'error')
@@ -122,8 +121,9 @@ function Login() {
         }, 1000)
         setIntervalId(id);
     }
-    const handleSendOtp = async (type) => {
-        let target
+    const handleSendOtp = async (type, admin) => {
+        let target = "", name = "";
+        if (admin && admin.name) name = admin.name
         if (type === 'email') {
             target = email;
         } else {
@@ -133,7 +133,7 @@ function Login() {
             const res = await fetch(`${api_url}/admin/request-otp`, {
                 method: "POST",
                 body: JSON.stringify({
-                    target, type
+                    target, type, name
                 }),
                 headers: {
                     "content-type": "application/json"
@@ -181,9 +181,9 @@ function Login() {
                     otpInputComponentChildRef.current.classList.add(c);
                 });
                 fireMessage('YOU LOGGED IN', 'success')
-                setAdminName(tempName)
-                setAdminEmail(tempEmail)
-                setAdminPhone(tempPhone)
+                // setAdminName(tempName)
+                // setAdminEmail(tempEmail)
+                // setAdminPhone(tempPhone)
                 navigate('/admin/dashboard', { replace: true })
             }
         } catch (error) {
@@ -207,7 +207,7 @@ function Login() {
                             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                             placeholder="Enter your email"
                             required
-                            onInput={(e) => { setEmail(e.target.value);  }}
+                            onInput={(e) => { setEmail(e.target.value); }}
                         />
                     </div>
                     <div>
@@ -238,7 +238,7 @@ function Login() {
                     <div className="flex items-center">
                         <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-900">Remember me for</label>
                         <select
-                            onInput={(e) => { setRememberMe(e.target.value);  }}
+                            onInput={(e) => { setRememberMe(e.target.value); }}
                             value={rememberMe} name="rememberMe" id="rememberMe" className='border-none outline-none text-sm font-bold px-2'>
                             <option className='text-xs p-1 ' value="7"> 7 Days</option>
                             <option className='text-xs p-1 ' value="15">15 Days</option>

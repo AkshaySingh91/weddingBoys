@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../../../../Context/AdminAuthContext';
+// import { useAuth } from '../../../../Context/AdminAuthContext';
 const api_url = process.env.REACT_APP_API_URL;
 
 export async function fireMessage(msg, type) {
@@ -27,11 +27,11 @@ export const delay = (time) => {
     })
 }
 export function Signup() {
-    const [name, setName] = useState("akshsy singh");
-    const [email, setEmail] = useState("singhakshay8794@gmail.com");
-    const [phone, setPhone] = useState("+919967559191");
-    const [password, setPassword] = useState("Akshaysingh@0");
-    const [code, setCode] = useState("t4xJz_943b");
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [password, setPassword] = useState("");
+    const [code, setCode] = useState("");
     const [rememberMe, setRememberMe] = useState('7');
     const [avatarMetaData, setAvatarMetaData] = useState(null);
     const [avatarFile, setAvatarFile] = useState(null);
@@ -47,7 +47,7 @@ export function Signup() {
     const [intervalId, setIntervalId] = useState(null)
     const [otpRecivingType, setOtpRecivingType] = useState('email');
     const navigate = useNavigate();
-    const { setAdminName, setAdminEmail, setAdminPhone } = useAuth();
+    // const { setAdminName, setAdminEmail, setAdminPhone } = useAuth();
     const [avatarPutUrl, setAvatarPutUrl] = useState(null);
     const [avatarKey, setAvatarKey] = useState(null);
 
@@ -191,7 +191,7 @@ export function Signup() {
             const res = await fetch(`${api_url}/admin/request-otp`, {
                 method: "POST",
                 body: JSON.stringify({
-                    target, type
+                    target, type, name
                 }),
                 headers: {
                     "content-type": "application/json"
@@ -231,28 +231,31 @@ export function Signup() {
                     otpDigit.current.style.border = '1px solid green'
                 }
                 setIntervalId(null)
-                await delay(1500);
-                'blur-sm overflow-hidden'.split(' ').forEach(c => {
-                    otpInputComponentRef.current.classList.add(c);
-                });
-                'transition-transform duration-400 translate-x-full'.split(' ').forEach(c => {
-                    otpInputComponentChildRef.current.classList.add(c);
-                });
-                await delay(800);
-                'blur-sm overflow-hidden'.split(' ').forEach(c => {
-                    otpInputComponentRef.current.classList.remove(c);
-                });
-                'transition-transform duration-400 translate-x-full'.split(' ').forEach(c => {
-                    otpInputComponentChildRef.current.classList.remove(c);
-                });
+                // await delay(1500);
+                // 'blur-sm overflow-hidden'.split(' ').forEach(c => {
+                //     otpInputComponentRef.current.classList.add(c);
+                // });
+                // 'transition-transform duration-400 translate-x-full'.split(' ').forEach(c => {
+                //     otpInputComponentChildRef.current.classList.add(c);
+                // });
+                // await delay(800);
+                // 'blur-sm overflow-hidden'.split(' ').forEach(c => {
+                //     otpInputComponentRef.current.classList.remove(c);
+                // });
+                // 'transition-transform duration-400 translate-x-full'.split(' ').forEach(c => {
+                //     otpInputComponentChildRef.current.classList.remove(c);
+                // });
+                // for (const otpDigit of otpInputRef) {
+                //     otpDigit.current.value = ''
+                //     otpDigit.current.style.border = ''
+                // }
                 for (const otpDigit of otpInputRef) {
-                    otpDigit.current.value = ''
-                    otpDigit.current.style.border = ''
+                    otpDigit.current.style.border = '1px solid green'
                 }
-
-                setOtpRecivingType('sms')
-                await delay(3000);
-                handleSendOtp("sms");
+                // setOtpRecivingType('sms')
+                await delay(1000);
+                await saveDetails();
+                // handleSendOtp("sms");
             }
         } catch (error) {
             await fireMessage(error.message, 'error')
@@ -312,7 +315,7 @@ export function Signup() {
         }
 
         try {
-            await uploadFileInBucket(avatarFile, avatarPutUrl);
+            // await uploadFileInBucket(avatarFile, avatarPutUrl);
             // if avatar uploded than send key too
             const res = await fetch(`${api_url}/admin/signup`, {
                 method: 'POST',
@@ -328,9 +331,9 @@ export function Signup() {
             } else {
                 clearInterval(intervalId);
                 await fireMessage("Now you are Admin", 'success')
-                setAdminName(admin.name)
-                setAdminEmail(admin.email)
-                setAdminPhone(admin.phone)
+                // setAdminName(admin.name)
+                // setAdminEmail(admin.email)
+                // setAdminPhone(admin.phone)
                 navigate('/admin/dashboard')
             }
         } catch (error) {
@@ -517,7 +520,8 @@ export function Signup() {
                                                 handleVerifySmsOtp()
                                             }
                                         }}
-                                        className="my-2 px-8 py-2 text-white border-gray-800 border-1 bg-blue-500 rounded-md">{otpRecivingType === 'email' ? "Verify" : 'Next'}</button>
+                                        className="my-2 px-8 py-2 text-white border-gray-800 border-1 bg-blue-500 rounded-md">{otpRecivingType === 'email' ? "Verify" : 'Next'}
+                                    </button>
                                 </div>
                             </div>
                         </div>

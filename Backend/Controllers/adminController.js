@@ -28,7 +28,7 @@ async function verifyOtp(req, res, next) {
 }
 // this will generate new otp of type sms or email & save otp in schema
 async function requestOtp(req, res, next) {
-    const { target, type } = req.body;
+    const { target, type, name } = req.body;
     // target = abc@gmail.com or 121312313  type = sms or email
     let newOtp = {};
     if (!target || !type) {
@@ -42,11 +42,9 @@ async function requestOtp(req, res, next) {
             otp, expiresAt, target
         })
         if (type === 'email') {
-            console.log("email", { otp })
-            // sendEmailOtp(target, otp)
+            sendEmailOtp(target, otp, name)
         } else if (type === 'sms') {
-            console.log("sms", { otp })
-            // sendSmsOtp(target, otp)
+            sendSmsOtp(target, otp)
         } else {
             res.status(400).json({ message: 'INVALID OTP REQUEST' });
         }
@@ -99,7 +97,6 @@ async function adminLogin(req, res, next) {
     try {
         const { email, password, rememberMe } = req.body;
         const admin = await adminSchema.findOne({ email });
-        console.log(admin)
         if (!admin) {
             res.status(400).json({
                 "message": 'INVALID EMAIL OR PASSWORD'
@@ -179,7 +176,6 @@ async function checkIsAdminAvailable(req, res, next) {
 async function updatePassword(req, res, next) {
     try {
         const { phone, email, password } = req.body;
-        console.log({ phone, email, password })
         const validateEmail = () => {
             const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             return emailRegex.test(email);

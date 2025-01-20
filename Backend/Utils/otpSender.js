@@ -142,12 +142,11 @@ i.fas.fa-envelope-open {
 const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
 export async function sendSmsOtp(phone, otp) {
     try {
-        const message = await client.messages.create({
+        await client.messages.create({
             body: `Dear Admin greeting from Ankit Studios, your One Time Passcode for phone verification to access admin dashboard is: ${otp}.`,
             from: process.env.TWILIO_PHONE_NUMBER,
             to: phone
-        })
-        console.log("SMS sent:", message.sid);
+        }) 
         return true;
     } catch (error) {
         console.error("Error sending SMS:", error.message);
@@ -172,8 +171,7 @@ export const sendEmailOtp = async (email, otp, name = 'Aman singh') => {
             subject: "Ankit Studios Verification Code", 
             html: emailHtml(otp, name),
         };
-        const info = await transporter.sendMail(mailOptions);
-        console.log("Email sent:", info.response);
+        await transporter.sendMail(mailOptions); 
         return true;
     } catch (error) {
         console.error("Error sending email:", error);
