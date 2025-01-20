@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { fireMessage } from '../../Admin/Pages/AuthPage/Signup';
 import { Link } from 'react-router-dom';
+const api_url = process.env.REACT_APP_API_URL;
 
 export default function Map() {
     const [isMapSidebarOpen, setIsMapSidebarOpen] = useState(true);
@@ -12,7 +13,7 @@ export default function Map() {
     useEffect(() => {
         const fetchMapClients = async () => {
             try {
-                const res = await fetch(('http://localhost:5000/api/map-clients'))
+                const res = await fetch((`${api_url}/api/map-clients`))
                 const data = await res.json()
                 if (res.status >= 300) {
                     return fireMessage(data.message, 'error');
@@ -72,7 +73,7 @@ export default function Map() {
                                                 <img
                                                     alt="map-client-image"
                                                     className=' lg:w-36 lg:h-28 sm:h-24 sm:w-40 rounded-lg object-cover bg-center border-[1px] border-gray-200'
-                                                    src={c.url}/>
+                                                    src={c.url} />
                                             </Link>
                                             <div className="text-content my-2 flex flex-col items-start justify-center font-serif opacity-70">
                                                 <p style={{ margin: ' 5px 0', fontFamily: "sans-serif" }} className='px-2 my-1 uppercase text-wrap text-desktopBodySmall text-center'>
