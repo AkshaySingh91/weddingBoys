@@ -155,8 +155,7 @@ const AddClient = () => {
         const saveClientDetails = async (urls) => {
             try {
                 // add file key to each file 
-                let i = -1;
-                console.log(videoDetails, photosDetails)
+                let i = -1; 
                 const videosMetaData = videoDetails.map((v) => {
                     i++;
                     return {
@@ -204,8 +203,7 @@ const AddClient = () => {
         e.preventDefault();
         const uploadMedia = async (urls) => {
             try {
-                const { videosUrl, photosUrl } = urls;
-                console.log(urls)
+                const { videosUrl, photosUrl } = urls; 
                 let i = 0;
                 for (const videoObj of videosUrl) {
                     await uploadFileInBucket(videoFiles[i].video, videoObj.videoPutUrl)

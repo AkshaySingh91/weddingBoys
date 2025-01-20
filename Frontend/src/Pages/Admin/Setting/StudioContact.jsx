@@ -29,8 +29,7 @@ function StudioContact() {
             const res = await fetch('http://localhost:5000/api/studio/details', {
                 method: 'GET',
             })
-            const data = await res.json();
-            console.log(data)
+            const data = await res.json(); 
             if (res.status === 200 && data.studioDetails && data.studioDetails.name && data.studioDetails.logo && data.studioDetails.email && data.studioDetails.address && data.studioDetails.socials && data.studioDetails.contact) {
                 const studioDetails = data.studioDetails
                 setStudioName(studioDetails.name)

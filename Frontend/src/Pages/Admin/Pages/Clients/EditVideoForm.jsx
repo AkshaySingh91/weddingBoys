@@ -49,8 +49,7 @@ function EditVideoForm({ thumbailFiles, setThumbnailFiles, id, isEditing, setVid
                     }
                 })
                 if (isPresent) {
-                    prev.videos = prev.videos.map(v => {
-                        console.log(v._id === id, withoutTag)
+                    prev.videos = prev.videos.map(v => { 
                         if (v._id === id) {
                             return { ...v, tags: withoutTag };
                         } return v;

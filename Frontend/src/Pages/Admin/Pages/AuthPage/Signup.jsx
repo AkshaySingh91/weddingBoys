@@ -154,7 +154,6 @@ export function Signup() {
                 await fireMessage(data.message, 'error')
             } else {
                 // we will save putUrl to upload avatar & if both otp will verified we will upload file    
-                console.log({ data })
                 setAvatarPutUrl(data.putUrl)
                 setAvatarKey(data.avatarKey);
                 setOtpRecivingType('email');

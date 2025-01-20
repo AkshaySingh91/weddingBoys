@@ -9,7 +9,7 @@ function Index() {
     const fetchInquiries = useCallback(
         async () => {
             try {
-                const res = await fetch('http://localhost:5000/admin/api/get-clients-enquiry', {
+                const res = await fetch(`${api_url}/admin/api/get-clients-enquiry`, {
                     credentials: "include"
                 });
                 const data = await res.json();

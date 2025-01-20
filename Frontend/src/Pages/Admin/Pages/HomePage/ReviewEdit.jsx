@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { fireMessage } from '../AuthPage/Signup';
 import Swal from 'sweetalert2';
+const api_url = process.env.REACT_APP_API_URL;
 
 function ReviewEdit({ setIsEditing, setEditingReview, editingReview }) {
     const [file, setFile] = useState(null);
@@ -55,7 +56,7 @@ function ReviewEdit({ setIsEditing, setEditingReview, editingReview }) {
                 // photo has uploded now we have to send key of it 
                 try {
                     if (urls.key) {
-                        const res = await fetch('http://localhost:5000/admin/api/review/save-details', {
+                        const res = await fetch(`${api_url}/admin/api/review/save-details`, {
                             method: "PUT",
                             body: JSON.stringify({
                                 "editingReview": {
@@ -66,8 +67,7 @@ function ReviewEdit({ setIsEditing, setEditingReview, editingReview }) {
                             }),
                             credentials: 'include', headers: { 'Content-type': 'application/json' }
                         })
-                        const data = await res.json();
-                        console.log({ data })
+                        const data = await res.json(); 
                         if (res.status >= 300) {
                             return { isValid: false, msg: data.message || 'Unable to save details' }
                         } else {
@@ -88,7 +88,7 @@ function ReviewEdit({ setIsEditing, setEditingReview, editingReview }) {
                     if (((file && editingReview.photo.type && editingReview.photo.size && editingReview.photo.name) || (!file && editingReview.photo.key)) && editingReview.reviewText && editingReview.person && editingReview.person.name && editingReview.person.name.trim() && editingReview.person.gender && editingReview.person.gender.trim()) {
                         if (!file) {
                             // save only text details
-                            const res = await fetch('http://localhost:5000/admin/api/review/get-put-url', {
+                            const res = await fetch(`${api_url}/api/review/get-put-url`, {
                                 method: "PUT",
                                 body: JSON.stringify({ editingReview }),
                                 credentials: 'include', headers: { 'Content-type': 'application/json' }
@@ -97,12 +97,12 @@ function ReviewEdit({ setIsEditing, setEditingReview, editingReview }) {
                             if (res.status >= 300) {
                                 fireMessage(data.message, 'error');
                             } else {
-                                fireMessage(data.message, 'success'); 
+                                fireMessage(data.message, 'success');
                             }
                         }
                         else {
                             // get put url & upload file
-                            const res = await fetch('http://localhost:5000/admin/api/review/get-put-url', {
+                            const res = await fetch(`${api_url}/admin/api/review/get-put-url`, {
                                 method: "PUT",
                                 body: JSON.stringify({ editingReview }),
                                 credentials: 'include', headers: { 'Content-type': 'application/json' }

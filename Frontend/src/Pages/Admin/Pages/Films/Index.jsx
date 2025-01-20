@@ -41,8 +41,7 @@ function Index() {
                         allVideos.push({
                             tagName: tag, videos
                         })
-                    }
-                    console.log(allVideos)
+                    } 
                     setAllVideos(allVideos);
                 }
             } catch (error) {
@@ -60,8 +59,7 @@ function Index() {
                 if (response.status >= 300) {
                     return fireMessage(data.message, 'error')
                 }
-                setAllTags(data.allTags);
-                console.log(data.allTags)
+                setAllTags(data.allTags); 
             } catch (error) {
                 console.error("Error fetching categories:", error);
             }

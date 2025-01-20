@@ -129,8 +129,7 @@ function VideoDetailsForm({ videoFiles, setVideoFiles, tagsData, setTagsData, vi
                 } return videoDetail
             }))
     }
-    const handleBtsEntry = () => {
-        console.log({ videoDetails })
+    const handleBtsEntry = () => { 
         setVideosDetails((prev) =>
             prev.map((videoDetail) => {
                 if (videoDetail.video.name === videoName) {

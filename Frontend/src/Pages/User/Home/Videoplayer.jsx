@@ -56,8 +56,7 @@ const VideoPlayer = ({ src }) => {
     setIsMuted(!isMuted);
   };
 
-  const handleSpeedChange = (e) => {
-    console.log(Number.parseFloat(e.target.value))
+  const handleSpeedChange = (e) => { 
     if (Number.parseInt(e.target.value) !== NaN) {
       const video = videoRef.current;
       setSpeed(e.target.value);
@@ -88,8 +87,7 @@ const VideoPlayer = ({ src }) => {
     const video = videoRef.current;
     const { left, width } = progressRef.current.getBoundingClientRect();
     const clickPos = (isMobileView ? e.touches[0].clientX : e.clientX) - left;
-    const scrubTime = (clickPos / width) * video.duration;
-    console.log(clickPos, width)
+    const scrubTime = (clickPos / width) * video.duration; 
     video.currentTime = scrubTime;  //in sec 
     setCurrentTime(scrubTime);
   };
@@ -142,8 +140,7 @@ const VideoPlayer = ({ src }) => {
       container.msRequestFullscreen();
     }
   }
-  const exitFullScreen = () => {
-    console.log(document.exitFullscreen)
+  const exitFullScreen = () => { 
     if (document.fullscreenElement) {
       document.exitFullscreen();
     } else if (document.webkitFullscreenElement) { /* Safari */

@@ -5,6 +5,7 @@ import "leaflet/dist/leaflet.css";
 import { fireMessage } from '../AuthPage/Signup';
 import { Link } from 'react-router-dom';
 
+const api_url = process.env.REACT_APP_API_URL;
 
 export default function Map() {
     const [isMapSidebarOpen, setIsMapSidebarOpen] = useState(true);
@@ -13,7 +14,7 @@ export default function Map() {
     useEffect(() => {
         const fetchMapClients = async () => {
             try {
-                const res = await fetch(('http://localhost:5000/api/map-clients'))
+                const res = await fetch(`${api_url}/api/map-clients`)
                 const data = await res.json()
                 if (res.status >= 300) {
                     return fireMessage(data.message, 'error');
@@ -30,7 +31,7 @@ export default function Map() {
     }
     const deleteMapClient = async (clientId) => {
         try {
-            const res = await fetch('http://localhost:5000/admin/api/map-clients', {
+            const res = await fetch(`${api_url}/admin/api/map-clients`, {
                 method: "delete",
                 body: JSON.stringify({
                     clientId

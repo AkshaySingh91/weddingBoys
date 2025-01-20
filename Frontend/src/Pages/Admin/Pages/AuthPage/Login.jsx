@@ -50,7 +50,7 @@ function Login() {
         }
 
         try {
-            const res = await fetch(`${api_url}:5000/admin/login`, {
+            const res = await fetch(`${api_url}/admin/login`, {
                 method: "POST",
                 body: JSON.stringify({ email, password, rememberMe }),
                 headers: {
@@ -207,7 +207,7 @@ function Login() {
                             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                             placeholder="Enter your email"
                             required
-                            onInput={(e) => { setEmail(e.target.value); console.log(e.target.value) }}
+                            onInput={(e) => { setEmail(e.target.value);  }}
                         />
                     </div>
                     <div>
@@ -222,7 +222,7 @@ function Login() {
                                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                                 placeholder="Enter your password"
                                 required
-                                onInput={(e) => { setPassword(e.target.value); console.log(e.target.value) }}
+                                onInput={(e) => { setPassword(e.target.value); }}
                             />
                             <button className='absolute right-0 top-2 px-2' onClick={(e) => {
                                 e.preventDefault();
@@ -238,7 +238,7 @@ function Login() {
                     <div className="flex items-center">
                         <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-900">Remember me for</label>
                         <select
-                            onInput={(e) => { setRememberMe(e.target.value); console.log(e.target.value) }}
+                            onInput={(e) => { setRememberMe(e.target.value);  }}
                             value={rememberMe} name="rememberMe" id="rememberMe" className='border-none outline-none text-sm font-bold px-2'>
                             <option className='text-xs p-1 ' value="7"> 7 Days</option>
                             <option className='text-xs p-1 ' value="15">15 Days</option>

@@ -25,7 +25,7 @@ function ForgotPassword() {
     const { setAdminName, setAdminEmail, setAdminPhone } = useAuth();
     const [tempName, setTempName] = useState(null)
     const [tempEmail, setTempEmail] = useState(null)
-    const [tempPhone, setTempPhone] = useState(null) 
+    const [tempPhone, setTempPhone] = useState(null)
     const [otpRecivingType, setOtpRecivingType] = useState('email');
 
     useEffect(() => {
@@ -35,7 +35,7 @@ function ForgotPassword() {
             document.body.classList.remove("overflow-hidden");
         }
     }, [isDetailsVerified]);
-    
+
     const handleInput = (e, idx) => {
         const current = e.target;
         const value = current.value;
@@ -108,8 +108,7 @@ function ForgotPassword() {
                 headers: {
                     'content-type': 'application/json'
                 }
-            })
-            console.log('sdfsdfs')
+            }) 
             const data = await res.json();
             if (res.status >= 300) {
                 fireMessage(data.message, 'error')
@@ -246,7 +245,7 @@ function ForgotPassword() {
             return await fireMessage('Password must have minimum eight characters, at least one uppercase letter, one lowercase letter and one number', 'error')
         }
         try {
-            const res = await fetch('http://localhost:5000/admin/update-password', {
+            const res = await fetch(`${api_url}/admin/update-password`, {
                 method: 'POST',
                 body: JSON.stringify({
                     phone, email, password

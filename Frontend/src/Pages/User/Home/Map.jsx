@@ -18,8 +18,7 @@ export default function Map() {
                 if (res.status >= 300) {
                     return fireMessage(data.message, 'error');
                 }
-                setClients(data.clients);
-                console.log(data.clients)
+                setClients(data.clients); 
             } catch (error) {
                 fireMessage(error.message, 'error');
             }

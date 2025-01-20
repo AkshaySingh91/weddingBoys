@@ -123,8 +123,7 @@ export default function BtsTape() {
                 })
                 // now we got file with key that have to pass to save 
                 let i = 0;
-                for (const urlsObj of imgUrls) {
-                    console.log(btsImageFile[i], urlsObj.putUrl)
+                for (const urlsObj of imgUrls) { 
                     await uploadFileInBucket(btsImageFile[i], urlsObj.putUrl)
                     i++;
                 }
