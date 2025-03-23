@@ -49,7 +49,7 @@ function Login() {
         }
 
         try {
-            const res = await fetch(`${api_url}/admin/login`, {
+            const res = await fetch(`${api_url}/api/admin/login`, {
                 method: "POST",
                 body: JSON.stringify({ email, password, rememberMe }),
                 headers: {
@@ -130,7 +130,7 @@ function Login() {
             return fireMessage("INVALID TARGET TYPE", 'error')
         }
         try {
-            const res = await fetch(`${api_url}/admin/request-otp`, {
+            const res = await fetch(`${api_url}/api/admin/request-otp`, {
                 method: "POST",
                 body: JSON.stringify({
                     target, type, name
@@ -154,7 +154,7 @@ function Login() {
         let otp = otpInputRef.map((ref) => ref.current.value).join("");
         let target = email;
         try {
-            const res = await fetch(`${api_url}/admin/verify-otp`, {
+            const res = await fetch(`${api_url}/api/admin/verify-otp`, {
                 method: "POST",
                 body: JSON.stringify({
                     target, otp

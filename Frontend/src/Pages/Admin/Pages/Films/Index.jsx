@@ -77,7 +77,7 @@ function Index() {
     }
     const handleSave = async () => {
         try {
-            const res = await fetch(`${api_url}/admin/api/filmpage/tags`, {
+            const res = await fetch(`${api_url}/api/admin/filmpage/tags`, {
                 method: "POST",
                 body: JSON.stringify({ newAddedTags }),
                 headers: {

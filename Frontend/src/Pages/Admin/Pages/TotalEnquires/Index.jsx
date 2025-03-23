@@ -9,7 +9,7 @@ function Index() {
     const fetchInquiries = useCallback(
         async () => {
             try {
-                const res = await fetch(`${api_url}/admin/api/get-clients-enquiry`, {
+                const res = await fetch(`${api_url}/api/admin/get-clients-enquiry`, {
                     credentials: "include"
                 });
                 const data = await res.json();
@@ -27,7 +27,7 @@ function Index() {
 
     const markViewed = async (id) => {
         try {
-            const data = await fetch(`${api_url}/admin/api/enquires/mark-viewed/${id}`, { method: 'PATCH', credentials: "include" });
+            const data = await fetch(`${api_url}/api/admin/enquires/mark-viewed/${id}`, { method: 'PATCH', credentials: "include" });
             if (data.status >= 300) {
                 Swal.fire('Error', data.message, 'error');
             }
@@ -63,7 +63,7 @@ function Index() {
     };
     const deleteInquiry = async (id) => {
         try {
-            await fetch(`${api_url}/admin/api/enquires/${id}`, { method: 'DELETE', credentials: "include" });
+            await fetch(`${api_url}/api/admin/enquires/${id}`, { method: 'DELETE', credentials: "include" });
             Swal.fire('Deleted!', 'Inquiry has been deleted.', 'success');
             fetchInquiries();
         } catch (error) {

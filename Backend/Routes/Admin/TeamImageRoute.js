@@ -27,7 +27,7 @@ async function deleteTeamBannerImage(req, res, next) {
         res.status(500).json({ message: error.message })
     }
 }
-Route.delete("/admin/api/team/banner-image", deleteTeamBannerImage)
+Route.delete("/api/admin/team/banner-image", deleteTeamBannerImage)
 
 async function addTeamBannerImage(req, res, next) {
     try {
@@ -79,8 +79,8 @@ async function saveTeamBannerImage(req, res, next) {
         res.status(500).json({ message: error.message })
     }
 }
-Route.post("/admin/api/team/banner-image", saveTeamBannerImage)
-Route.post("/admin/api/team/banner-image/get-put-url", addTeamBannerImage)
+Route.post("/api/admin/team/banner-image", saveTeamBannerImage)
+Route.post("/api/admin/team/banner-image/get-put-url", addTeamBannerImage)
 /***********************************/
 
 
@@ -186,10 +186,10 @@ async function verifyNewTeamImageDetails(req, res, next) {
         res.status(500).json({ message: error.message })
     }
 }
-Route.put("/admin/api/team/", changeTeamImageDetails)
-Route.post("/admin/api/team/get-put-url", verifyNewTeamImageDetails)
-Route.post("/admin/api/team", addNewTeamImage)
-Route.delete("/admin/api/team", deleteTeamImage)
+Route.put("/api/admin/team/", changeTeamImageDetails)
+Route.post("/api/admin/team/get-put-url", verifyNewTeamImageDetails)
+Route.post("/api/admin/team", addNewTeamImage)
+Route.delete("/api/admin/team", deleteTeamImage)
 
 
 export default Route;

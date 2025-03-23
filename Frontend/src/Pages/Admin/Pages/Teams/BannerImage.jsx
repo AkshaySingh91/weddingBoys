@@ -26,7 +26,7 @@ function BannerImage({ bannerImage, uploadFileInBucket, fetchTeamImage }) {
     }
     const saveClientDetails = async (uploadedImage) => {
         try {
-            const res = await fetch(`${api_url}/admin/api/team/banner-image`, {
+            const res = await fetch(`${api_url}/api/admin/team/banner-image`, {
                 method: "POST",
                 body: JSON.stringify({
                     uploadedImage
@@ -47,7 +47,7 @@ function BannerImage({ bannerImage, uploadFileInBucket, fetchTeamImage }) {
     }
     const handleSave = async () => {
         try {
-            const res = await fetch(`${api_url}/admin/api/team/banner-image/get-put-url`, {
+            const res = await fetch(`${api_url}/api/admin/team/banner-image/get-put-url`, {
                 method: "POST",
                 credentials: "include",
                 body: JSON.stringify({
@@ -155,7 +155,7 @@ function BannerImage({ bannerImage, uploadFileInBucket, fetchTeamImage }) {
         })
         if (result.isConfirmed) {
             try {
-                const res = await fetch(`${api_url}/admin/api/team/banner-image`, {
+                const res = await fetch(`${api_url}/api/admin/team/banner-image`, {
                     method: "DELETE",
                     credentials: "include",
                     body: JSON.stringify({ id }),

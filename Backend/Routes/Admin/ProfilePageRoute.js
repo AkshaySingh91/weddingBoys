@@ -4,7 +4,7 @@ import AdminSchema from "../../Models/adminSchema.js"
 import { deleteObject, getObjectUrl, putObjectUrl } from "../../Controllers/awsController.js"
 import * as uuid from "uuid";
 import { COOKIE_NAME } from '../../constants.js';
-import tokenGenerator from '../../utils/tokenGenerator.js';
+import tokenGenerator from '../../Utils/tokenGenerator.js';
 import bcrypt, { hash } from "bcrypt";
 
 const Route = express.Router();
@@ -178,9 +178,9 @@ async function changeAdminPassword(req, res, next) {
         return res.status(400).json({ message: 'UNAUTHORIZED ADMIN' })
     }
 }
-Route.get("/admin/api/profile", getAdminProfileDetails)
-Route.put("/admin/api/profile/verify", verifyAdminProfileDetails)
-Route.put("/admin/api/profile/save", updateAdminProfileDetails)
-Route.post("/admin/api/profile/change-password", changeAdminPassword)
+Route.get("/api/admin/profile", getAdminProfileDetails)
+Route.put("/api/admin/profile/verify", verifyAdminProfileDetails)
+Route.put("/api/admin/profile/save", updateAdminProfileDetails)
+Route.post("/api/admin/profile/change-password", changeAdminPassword)
 
 export default Route

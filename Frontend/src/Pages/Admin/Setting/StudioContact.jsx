@@ -85,7 +85,7 @@ function StudioContact() {
         })
         if (result.isConfirmed) {
             try {
-                const res = await fetch(`${api_url}/admin/api/studio-setting/contact/save`, {
+                const res = await fetch(`${api_url}/api/admin/studio-setting/contact/save`, {
                     credentials: "include",
                     method: "PUT",
                     headers: { "content-type": "application/json" },
@@ -140,7 +140,7 @@ function StudioContact() {
             }
         }
         try {
-            const res = await fetch(`${api_url}/admin/api/studio-setting/contact/get-logo-put-url`, {
+            const res = await fetch(`${api_url}/api/admin/studio-setting/contact/get-logo-put-url`, {
                 credentials: "include",
                 method: "PUT",
                 headers: { "content-type": "application/json" },
@@ -156,7 +156,7 @@ function StudioContact() {
                 const { putUrl, key } = data;
                 let response = await uploadFileInBucket(studioLogoFile, putUrl);
                 if (response.isValid) {
-                    const res = await fetch(`${api_url}/admin/api/studio-setting/contact/save`, {
+                    const res = await fetch(`${api_url}/api/admin/studio-setting/contact/save`, {
                         credentials: "include",
                         method: "PUT",
                         headers: { "content-type": "application/json" },

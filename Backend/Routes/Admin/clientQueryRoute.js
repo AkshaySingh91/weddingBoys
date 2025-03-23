@@ -9,20 +9,20 @@ clientQueryRoute.use(authenticateAdmin)
 
 /***************************************************/
 // see all client that have added on website
-clientQueryRoute.get('/admin/api/clients/', getAllClients)
+clientQueryRoute.get('/api/admin/clients/', getAllClients)
 // see specific client detial like videos & photos posted
-clientQueryRoute.get('/admin/api/client/:id', getSingleClientDetails)
+clientQueryRoute.get('/api/admin/client/:id', getSingleClientDetails)
 
 /***************************************************/
 // while adding new client validate their details 
-clientQueryRoute.post("/admin/api/add-client/validate-details", checkClientDetails, sendPutUrlsForNewClient)
+clientQueryRoute.post("/api/admin/add-client/validate-details", checkClientDetails, sendPutUrlsForNewClient)
 // after validating new client details & sending puturls user media will upload on s3 & we have to save keys & other meta
-clientQueryRoute.post("/admin/api/add-client/save-details", AddNewClient)
+clientQueryRoute.post("/api/admin/add-client/save-details", AddNewClient)
 
 /***************************************************/
 // for existing client when details are updated like new media added validate it 
-clientQueryRoute.put('/admin/api/client/:id/validate-details', validateClientUpdatedDetails, sendPutUrlsForNewMedia)
-clientQueryRoute.put('/admin/api/client/:id/save-details', updateClientDetails)
+clientQueryRoute.put('/api/admin/client/:id/validate-details', validateClientUpdatedDetails, sendPutUrlsForNewMedia)
+clientQueryRoute.put('/api/admin/client/:id/save-details', updateClientDetails)
 
 
 

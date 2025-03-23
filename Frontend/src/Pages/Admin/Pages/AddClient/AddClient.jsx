@@ -9,34 +9,11 @@ const AddClient = () => {
     const [brideName, setBrideName] = useState('Bride');
     const [groomName, setGroomName] = useState('Groom');
     const [tagsData, setTagsData] = useState([]);
-    const [videoDetails, setVideosDetails] = useState([{
-        video: null,    //this is video metadata that will go on verification
-        tags: [],
-        location: {
-            country: 'India',
-            state: 'Maharastra',
-            city: 'Pune',
-        },
-        isHeroVideo: false,
-        heroPriority: null,
-        generalPriority: null,
-        btsInfo: [{ key: '', value: '' }],
-        shootDate: null,
-    }])
+    const [videoDetails, setVideosDetails] = useState([])
     // this is actual files that will upload on s3 
     const [videoFiles, setVideoFiles] = useState([])
     const [photoFiles, setPhotoFiles] = useState([])
-    const [photosDetails, setPhotosDetails] = useState([{
-        photo: null,
-        tags: [],
-        location: {
-            country: '',
-            state: '',
-            city: '',
-        },
-        generalPriority: null,
-        shootDate: null,
-    }]);
+    const [photosDetails, setPhotosDetails] = useState([]);
     const [previewVideos, setPreviewVideos] = useState([]);
     const [previewPhotos, setPreviewPhotos] = useState([]);
     const [videoForm, setVideoForm] = useState([]);
@@ -155,25 +132,30 @@ const AddClient = () => {
         const saveClientDetails = async (urls) => {
             try {
                 // add file key to each file 
-                let i = -1; 
-                const videosMetaData = videoDetails.map((v) => {
-                    i++;
-                    return {
-                        ...v,
-                        video: {
-                            key: urls.videosUrl[i].videoKey
-                        },
-                        thumbnail: {
-                            key: urls.videosUrl[i].thumbnailKey
+                let i = -1;
+                let videosMetaData = [], photoMetaData = [];
+                if (urls.videosUrl?.length) {
+                    videosMetaData = videoDetails.map((v) => {
+                        i++;
+                        return {
+                            ...v,
+                            video: {
+                                key: urls.videosUrl[i].videoKey
+                            },
+                            thumbnail: {
+                                key: urls.videosUrl[i].thumbnailKey
+                            }
                         }
-                    }
-                })
+                    })
+                }
                 i = -1
-                const photoMetaData = photosDetails.map((p) => {
-                    i++;
-                    return { ...p, photo: { key: urls.photosUrl[i].photoKey } }
-                })
-                const res = await fetch(`${api_url}/admin/api/add-client/save-details`, {
+                if (urls.photosUrl?.length) {
+                    photoMetaData = photosDetails.map((p) => {
+                        i++;
+                        return { ...p, photo: { key: urls.photosUrl[i].photoKey } }
+                    })
+                }
+                const res = await fetch(`${api_url}/api/admin/add-client/save-details`, {
                     method: "POST",
                     body: JSON.stringify({
                         clientDetails: {
@@ -203,7 +185,7 @@ const AddClient = () => {
         e.preventDefault();
         const uploadMedia = async (urls) => {
             try {
-                const { videosUrl, photosUrl } = urls; 
+                const { videosUrl, photosUrl } = urls;
                 let i = 0;
                 for (const videoObj of videosUrl) {
                     await uploadFileInBucket(videoFiles[i].video, videoObj.videoPutUrl)
@@ -223,7 +205,7 @@ const AddClient = () => {
         }
         const verifyDetails = async () => {
             try {
-                const res = await fetch(`${api_url}/admin/api/add-client/validate-details`, {
+                const res = await fetch(`${api_url}/api/admin/add-client/validate-details`, {
                     method: "POST",
                     body: JSON.stringify({
                         'bride': brideName,

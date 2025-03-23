@@ -87,9 +87,9 @@ async function deleteBtsImage(req, res, next) {
     }
 
 }
-Route.put("/admin/api/homepage/bts-image/get-url", generatePutUrlForBtsImg)
-Route.put("/admin/api/homepage/bts-image/save-details", saveBtsImage)
-Route.delete("/admin/api/homepage/bts-image", deleteBtsImage)
+Route.put("/api/admin/homepage/bts-image/get-url", generatePutUrlForBtsImg)
+Route.put("/api/admin/homepage/bts-image/save-details", saveBtsImage)
+Route.delete("/api/admin/homepage/bts-image", deleteBtsImage)
 /************************************************************************************************/
 
 // this will delete client from map by finding from client id
@@ -118,6 +118,6 @@ async function deleteClientFromMap(req, res, next) {
         res.status(500).json({ message: "Internal server error", error: error.message });
     }
 }
-Route.delete("/admin/api/map-clients", deleteClientFromMap);
+Route.delete("/api/admin/map-clients", deleteClientFromMap);
 
 export default Route

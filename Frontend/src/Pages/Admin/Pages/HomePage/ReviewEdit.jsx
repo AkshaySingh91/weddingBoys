@@ -56,7 +56,7 @@ function ReviewEdit({ setIsEditing, setEditingReview, editingReview }) {
                 // photo has uploded now we have to send key of it 
                 try {
                     if (urls.key) {
-                        const res = await fetch(`${api_url}/admin/api/review/save-details`, {
+                        const res = await fetch(`${api_url}/api/admin/review/save-details`, {
                             method: "PUT",
                             body: JSON.stringify({
                                 "editingReview": {
@@ -102,7 +102,7 @@ function ReviewEdit({ setIsEditing, setEditingReview, editingReview }) {
                         }
                         else {
                             // get put url & upload file
-                            const res = await fetch(`${api_url}/admin/api/review/get-put-url`, {
+                            const res = await fetch(`${api_url}/api/admin/review/get-put-url`, {
                                 method: "PUT",
                                 body: JSON.stringify({ editingReview }),
                                 credentials: 'include', headers: { 'Content-type': 'application/json' }

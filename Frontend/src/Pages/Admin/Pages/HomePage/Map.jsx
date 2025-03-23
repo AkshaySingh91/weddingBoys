@@ -31,7 +31,7 @@ export default function Map() {
     }
     const deleteMapClient = async (clientId) => {
         try {
-            const res = await fetch(`${api_url}/admin/api/map-clients`, {
+            const res = await fetch(`${api_url}/api/admin/map-clients`, {
                 method: "delete",
                 body: JSON.stringify({
                     clientId

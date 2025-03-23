@@ -15,10 +15,7 @@ export default async function DBconnection() {
     }
     catch (e) {
         console.dir(e.message);
-    }
-    finally {
-
-    }
+    } 
 }
 
 const db = mongoose.connection;
@@ -36,9 +33,5 @@ db.on('disconnected', () => {
 
 // Gracefully close the connection when the application exits
 process.on('SIGINT', () => {
-    mongoose.connection.close(() => {
-        console.log('Mongoose connection is disconnected'
-            + ' due to application termination');
-        process.exit(0);
-    });
+    mongoose.connection.close();
 });

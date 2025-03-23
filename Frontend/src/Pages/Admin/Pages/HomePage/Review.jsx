@@ -123,7 +123,7 @@ export default function Review() {
                 }
             }
             const saveReview = async (urls) => {
-                const res = await fetch(`${api_url}/admin/api/review/save-details`, {
+                const res = await fetch(`${api_url}/api/admin/review/save-details`, {
                     method: 'POST',
                     headers: { 'Content-type': 'application/json' },
                     credentials: 'include',
@@ -141,7 +141,7 @@ export default function Review() {
                         newReview.person && newReview.person.name && newReview.person.gender && newReview.person.name.trim() &&
                         newReview.person.gender.trim()) {
 
-                        const res = await fetch(`${api_url}/admin/api/review/get-put-url`, {
+                        const res = await fetch(`${api_url}/api/admin/review/get-put-url`, {
                             method: 'POST',
                             body: JSON.stringify({ newReview }),
                             headers: { 'Content-type': 'application/json' },
@@ -223,7 +223,7 @@ export default function Review() {
             return fireMessage('Review not found', 'error')
         }
         try {
-            const res = await fetch(`${api_url}/admin/api/reviews`, {
+            const res = await fetch(`${api_url}/api/admin/reviews`, {
                 method: 'DELETE',
                 body: JSON.stringify({ reviewDetials }),
                 headers: { 'Content-type': 'application/json' },

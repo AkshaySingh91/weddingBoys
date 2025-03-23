@@ -57,11 +57,11 @@ export default function VideoThumbnail() {
     }
     return (<>
         <Link to="/films">
-            <h1 className="inline-block lg:mb-8 sm:mb-4 sm:w-full sm:text-center lg:text-left px-4 py-0 lg:text-desktopHeadlineMedium transition-all delay-700 duration-75	 lg:hover:underline sm:py-4 sm:text-desktopBodyLarge tracking-wider">Films
+            <h1 className="inline-block lg:mb-6 sm:mb-4 sm:w-full sm:text-center lg:text-left px-4 py-0 lg:text-desktopHeadlineSmall transition-all delay-700 duration-75 lg:hover:underline sm:py-4 sm:text-desktopBodyLarge tracking-wider">Our Films
                 <hr className='lg:hidden mx-auto border-[1px] w-8 border-slate-300' />
             </h1>
         </Link>
-        <div className="flex gap-3 lg:justify-center sm:justify-start w-full sm:overflow-x-auto scrollbar-none sm:pl-2">
+        <div className="flex gap-3 lg:justify-center sm:justify-start w-full sm:overflow-x-auto scrollbar-none sm:pl-2 my-4">
             {
                 isLoading ?
                     [...Array(3)].map((_, i) => (
@@ -82,8 +82,8 @@ export default function VideoThumbnail() {
                 [...Array(3)].map((_, i) => <VideoSkeletonLoader key={i} />)
             ) : clients && clients.length ? (
                 clients.map((c) => (
-                    <Link to={`/films/${c.videos._id}`} key={c.videos._id}>
-                        <div className="lg:h-[31rem] lg:w-[28rem] relative my-9 sm:h-80 sm:w-[18rem] sm:flex-none">
+                    <Link className='' to={`/films/${c.videos._id}`} key={c.videos._id}>
+                        <div className="lg:h-[26rem] lg:w-[26rem] relative sm:h-80 sm:w-[18rem] sm:flex-none">
                             <div className="relative h-full overflow-hidden ">
                                 {/* Video Thumbnail */}
                                 <img
@@ -94,8 +94,8 @@ export default function VideoThumbnail() {
                                 {/* Gradient Overlay */}
                                 <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-slate-900 to-transparent rounded-b-3xl"></div>
                                 {/* Text Content */}
-                                <div className="absolute bottom-6 left-6 text-white flex flex-col gap-0 z-10">
-                                    <div className="flex items-center gap-2 text-desktopBodyLarge uppercase font-semibold tracking-wide">
+                                <div className="absolute sm:bottom-5 sm:left-5 md:bottom-6 md:left-6 text-white flex flex-col gap-0 z-10">
+                                    <div className="flex items-center gap-2 sm:text-desktopBodyMedium lg:text-desktopBodyLarge uppercase font-semibold tracking-wide">
                                         <span className='text-nowrap'>{c.videos.videoShootDate}</span>
                                         <svg
                                             className="lg:w-6 lg:h-6 sm:w-4 sm:h-4"
@@ -106,7 +106,7 @@ export default function VideoThumbnail() {
                                         </svg>
                                         <span>{c.videos.videoLocation.city}</span>
                                     </div>
-                                    <div className="flex gap-2 lg:text-desktopHeadlineSmall text-white uppercase tracking-wide">
+                                    <div className="flex gap-2 sm:text-mobileBodySmall lg:text-mobileHeadlineSmall text-white uppercase tracking-wide">
                                         <span>{c.clientName.Bride}</span>
                                         <span>&</span>
                                         <span>{c.clientName.Groom}</span>

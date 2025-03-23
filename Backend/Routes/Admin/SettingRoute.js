@@ -65,15 +65,15 @@ async function regenerateAdminInviteCode(req, res, next) {
     }
 }
 
-Route.get("/admin/api/studio-setting/invite-code", getAdminInviteCode)
-Route.get("/admin/api/studio-setting/invite-code/regenerate", regenerateAdminInviteCode)
+Route.get("/api/admin/studio-setting/invite-code", getAdminInviteCode)
+Route.get("/api/admin/studio-setting/invite-code/regenerate", regenerateAdminInviteCode)
 /*****************************************************/
 
 async function getStudioLogoPutUrl(req, res, next) {
     try {
         if (req.body.studioLogoMetaData && req.body.studioLogoMetaData.name && req.body.studioLogoMetaData.size && req.body.studioLogoMetaData.type && req.body.isLogoUpdated) {
             const { studioLogoMetaData } = req.body;
-            const imagetype = ["image/png", "image/jpg", "image/jpeg"];
+            const imagetype = ["image/png", "image/jpg", "image/jpeg", "image/svg+xml"];
             if (imagetype.includes(studioLogoMetaData.type)) {
                 //  now all details are verified send put url
                 const key = `admin/images/${uuid.v4()}.${studioLogoMetaData.type.split("/")[1]}`
@@ -158,7 +158,7 @@ async function saveStudioContactDetails(req, res, next) {
         return res.status(500).json({ message: error.message })
     }
 }
-Route.put("/admin/api/studio-setting/contact/save", saveStudioContactDetails)
-Route.put("/admin/api/studio-setting/contact/get-logo-put-url", getStudioLogoPutUrl)
+Route.put("/api/admin/studio-setting/contact/save", saveStudioContactDetails)
+Route.put("/api/admin/studio-setting/contact/get-logo-put-url", getStudioLogoPutUrl)
 
 export default Route;

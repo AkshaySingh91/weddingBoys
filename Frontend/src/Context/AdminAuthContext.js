@@ -17,7 +17,7 @@ export default function AdminAuthProvider(props) {
     useEffect(() => {
         const checkUserAuth = async () => {
             try {
-                const res = await fetch(`${api_url}/admin/auth-status`, {
+                const res = await fetch(`${api_url}/api/admin/auth-status`, {
                     method: 'GET',
                     credentials: 'include'
                 })

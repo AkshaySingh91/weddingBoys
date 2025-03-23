@@ -26,7 +26,7 @@ const Index = () => {
   useEffect(() => {
     async function fetchAdminDetails() {
       try {
-        const res = await fetch(`${api_url}/admin/api/profile`, {
+        const res = await fetch(`${api_url}/api/admin/profile`, {
           credentials: "include"
         })
         const data = await res.json();
@@ -66,7 +66,7 @@ const Index = () => {
     })
     if (result.isConfirmed) {
       try {
-        const res = await fetch(`${api_url}/admin/api/profile/verify`, {
+        const res = await fetch(`${api_url}/api/admin/profile/verify`, {
           credentials: "include",
           method: "PUT",
           headers: { "content-type": "application/json" },
@@ -135,7 +135,7 @@ const Index = () => {
       }
     }
     try {
-      const res = await fetch(`${api_url}/admin/api/profile/verify`, {
+      const res = await fetch(`${api_url}/api/admin/profile/verify`, {
         credentials: "include",
         method: "PUT",
         headers: { "content-type": "application/json" },
@@ -151,7 +151,7 @@ const Index = () => {
         const { putUrl, key } = data;
         let response = await uploadFileInBucket(avatarFile, putUrl);
         if (response.isValid) {
-          const res = await fetch(`${api_url}/admin/api/profile/save`, {
+          const res = await fetch(`${api_url}/api/admin/profile/save`, {
             credentials: "include",
             method: "PUT",
             headers: { "content-type": "application/json" },
@@ -207,7 +207,7 @@ const Index = () => {
   const changePassword = async () => {
     try {
       if (currentPassword && newPassword && confirmPassword && currentPassword.trim() && newPassword.trim() && confirmPassword.trim()) {
-        const res = await fetch(`${api_url}/admin/api/profile/change-password`, {
+        const res = await fetch(`${api_url}/api/admin/profile/change-password`, {
           credentials: 'include',
           method: "POST",
           body: JSON.stringify({

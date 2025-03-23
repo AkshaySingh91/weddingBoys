@@ -132,12 +132,13 @@ async function deleteReview(req, res, next) {
     }
 }
 
-Route.post("/admin/api/review/get-put-url", validateReviewAndSendPutUrl)
-Route.post("/admin/api/review/save-details", saveNewClientReview)
+Route.post("/api/admin/review/get-put-url", validateReviewAndSendPutUrl)
+Route.post("/api/admin/review/save-details", saveNewClientReview)
 
-Route.put("/admin/api/review/get-put-url", validateUpdatedReviewAndSendPutUrl)
-Route.put("/admin/api/review/save-details", saveUpdatedReview)
+Route.put("/api/admin/review/get-put-url", validateUpdatedReviewAndSendPutUrl)
+Route.put("/api/admin/review/save-details", saveUpdatedReview)
 
-Route.delete("/admin/api/reviews", deleteReview)
+Route.delete("/api/admin/reviews", deleteReview)
 
 export default Route;
+ 

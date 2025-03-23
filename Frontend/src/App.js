@@ -13,6 +13,7 @@ import AdminRoutes from './Pages/Admin/Index.jsx'
 import NotFound from './Component/NotFound.jsx';
 import Search from "./Pages/User/SearchPage/SearchResult.jsx"
 import AllFilms from './Pages/User/Films/AllFilms.jsx';
+import AboutPage from './Pages/User/AboutUs/AboutPage.jsx';
 
 function App() {
   const location = useLocation();
@@ -26,7 +27,7 @@ function App() {
         <div className='lg:pt-4 lg:pl-40 lg:pr-2 sm:px-2  box-border max-w-screen min-h-screen  scrollbar-thin'>
           <Header></Header>
           <Sidebar></Sidebar>
-          <main className='w-auto h-auto box-border bg-primary rounded-2xl item-center overflow-x-hidden'>
+          <main className='w-auto h-auto box-border bg-primary  item-center overflow-x-hidden'>
             <Routes>
               <Route exact path='/' element={
                 <Home></Home>}>
@@ -48,6 +49,9 @@ function App() {
               </Route>
               <Route exact path='/team' element={
                 <Team></Team>}>
+              </Route>
+              <Route exact path='/about-us' element={
+                <AboutPage></AboutPage>}>
               </Route>
               <Route path='/*'
                 element={<NotFound />}>

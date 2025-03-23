@@ -129,7 +129,7 @@ function VideoDetailsForm({ videoFiles, setVideoFiles, tagsData, setTagsData, vi
                 } return videoDetail
             }))
     }
-    const handleBtsEntry = () => { 
+    const handleBtsEntry = () => {
         setVideosDetails((prev) =>
             prev.map((videoDetail) => {
                 if (videoDetail.video.name === videoName) {
@@ -245,23 +245,25 @@ function VideoDetailsForm({ videoFiles, setVideoFiles, tagsData, setTagsData, vi
                                 <div className=" cursor-pointer text-center text-sm h-10 w-full border-2 border-black bg-slate-300 rounded-md" onClick={() => { toogleCollapse('tags') }}>
                                     select the as many keyword for related to video
                                 </div>
-                                <div className={`bg-blue-300 all-tags ${collapsed.tags ? "max-h-40" : "max-h-0 overflow-y-scroll scrollbar-thin"}`}>
+                                <div className={` all-tags ${collapsed.tags ? "max-h-52" : "max-h-0 "} overflow-y-scroll scrollbar-thin`}>
                                     {
                                         tagsData.map((tagType) => {
-                                            return <div key={tagType.videoName} className="flex flex-wrap gap-2 w-full p-2">
-                                                {
-                                                    tagType.tags.map((t) => {
-                                                        return <button key={t} type='button' className={`py-1 px-2 rounded-md bg-blue-100 ${videoDetails.find((vd) => vd.video.name === videoName).tags.find((tg) => tg === t ? true : false) ? "bg-blue-400" : ""}`}
-                                                            onClick={() => handleTags(t)}
-                                                        >{t}</button>
-                                                    })
-                                                }
+                                            return <div key={tagType.tagType} className="">
+                                                <h1 className='text-center font-bold tracking-widest'>{tagType.tagType}</h1>
+                                                <div className="flex flex-wrap gap-2 w-full p-2">
+                                                    {
+                                                        tagType.tags.map((t) => {
+                                                            return <button key={t} type='button' className={`tex-sm py-1 px-2 rounded-md bg-blue-100 ${videoDetails.find((vd) => vd.video.name === videoName).tags.find((tg) => tg === t ? true : false) ? "bg-blue-400" : ""}`}
+                                                                onClick={() => handleTags(t)}
+                                                            >{t}</button>
+                                                        })
+                                                    }
+                                                </div>
                                             </div>
                                         })
                                     }
 
                                 </div>
-
                             </div>
                             <div className="video-thumbnail my-4">
                                 <h1 className='text-center font-semibold text-desktopBodyMedium py-2'>Add thumbnail</h1>

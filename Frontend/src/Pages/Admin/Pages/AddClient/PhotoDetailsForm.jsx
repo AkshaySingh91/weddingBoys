@@ -25,7 +25,7 @@ function PhotoDetailsForm({ tagsData, setTagsData, photosDetails, setPhotoDetail
         };
         fetchCategories();
     }, [setTagsData]);
-    
+
     const [collapsed, setCollapsed] = useState({
         tags: false,
     });
@@ -118,25 +118,24 @@ function PhotoDetailsForm({ tagsData, setTagsData, photosDetails, setPhotoDetail
                                 <div className=" cursor-pointer text-center text-sm h-10 w-full border-2 border-black bg-slate-300 rounded-md" onClick={() => { toogleCollapse('tags') }}>
                                     select the as many keyword for related to photo
                                 </div>
-                                <div className={`bg-blue-300 all-tags ${collapsed.tags ? "max-h-40" : "max-h-0 overflow-y-scroll scrollbar-thin"}`}>
+                                <div className={` all-tags ${collapsed.tags ? "max-h-52" : "max-h-0 "} overflow-y-scroll scrollbar-thin`}>
                                     {
                                         tagsData.map((tagType) => {
-                                            // tagType.tagType = category, religion, region, etc
-                                            // tagType.tagType.tags = beach, aerial, etc
-                                            return <div key={tagType.tagType} className="flex flex-wrap gap-2 w-full p-2">
-                                                {
-                                                    tagType.tags.map((t) => {
-                                                        return <button key={t} type='button' className={`py-1 px-2 rounded-md bg-blue-100 ${photosDetails.find((ph) => ph.photo.name === photoName).tags.find((tg) => tg === t ? true : false) ? "bg-blue-400" : ""}`}
-                                                            onClick={() => handleTags(t)}
-                                                        >{t}</button>
-                                                    })
-                                                }
+                                            return <div key={tagType.tagType} className="">
+                                                <h1 className='text-center font-bold tracking-widest'>{tagType.tagType}</h1>
+                                                <div className="flex flex-wrap gap-2 w-full p-2">
+                                                    {
+                                                        tagType.tags.map((t) => {
+                                                            return <button key={t} type='button' className={`text-sm py-1 px-2 rounded-md bg-blue-100 ${photosDetails.find((ph) => ph.photo.name === photoName).tags.find((tg) => tg === t ? true : false) ? "bg-blue-400" : ""}`}
+                                                                onClick={() => handleTags(t)}
+                                                            >{t}</button>
+                                                        })
+                                                    }
+                                                </div>
                                             </div>
                                         })
                                     }
-
                                 </div>
-
                             </div>
                             <div className="location mb-4">
                                 <div className="flex flex-col gap-2 ">

@@ -76,7 +76,7 @@ export default function VideoThumbnail() {
     const handleSave = async () => {
         try {
             setIsLoading(true)
-            const res = await fetch(`${api_url}/admin/api/homepage/tags`, {
+            const res = await fetch(`${api_url}/api/admin/homepage/tags`, {
                 method: "POST",
                 credentials: "include",
                 body: JSON.stringify({ newAddedTags }),

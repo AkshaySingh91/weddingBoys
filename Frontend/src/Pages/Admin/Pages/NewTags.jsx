@@ -54,7 +54,7 @@ const AddTag = () => {
                     }
                 }
             }
-            const response = await fetch(`${api_url}/admin/api/tags`, {
+            const response = await fetch(`${api_url}/api/admin/tags`, {
                 method: 'POST',
                 body: JSON.stringify({
                     tagType: newCategory,
@@ -106,7 +106,7 @@ const AddTag = () => {
                     })
                 }
             })
-            const response = await fetch(`${api_url}/admin/api/tags`, {
+            const response = await fetch(`${api_url}/api/admin/tags`, {
                 method: "PUT",
                 credentials: "include",
                 body: JSON.stringify({
@@ -132,7 +132,7 @@ const AddTag = () => {
                     confirmButtonText: "Yes, delete it!"
                 })
                 if (result.isConfirmed) {
-                    const res = await fetch(`${api_url}/admin/api/tags`, {
+                    const res = await fetch(`${api_url}/api/admin/tags`, {
                         method: "PUT",
                         credentials: "include",
                         body: JSON.stringify({

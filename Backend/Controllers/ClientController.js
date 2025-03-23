@@ -10,43 +10,65 @@ async function getAllClients(req, res, next) {
         const clients = await ClientSchema.aggregate([
             {
                 $project: {
-                    clientId: '$_id',
-                    clientName: '$clientName',
-                    timestamp: { $ifNull: ['$createdAt', new Date()] }, // Ensure a timestamp field is present
+                    clientId: "$_id",
+                    clientName: "$clientName",
+                    timestamp: { $ifNull: ["$createdAt", new Date()] },
+                    photos: { $ifNull: ["$photos", []] },
+                    videos: { $ifNull: ["$videos", []] }
+                }
+            },
+            // Calculate highest priority for photos and videos if arrays exist
+            {
+                $addFields: {
                     highestPhoto: {
-                        $arrayElemAt: [
+                        $cond: [
+                            { $gt: [{ $size: "$photos" }, 0] },
                             {
-                                $sortArray: {
-                                    input: { $ifNull: ['$photos', []] }, // Handle missing photos array
-                                    sortBy: { generalPriority: -1 },
-                                },
+                                $arrayElemAt: [
+                                    { $sortArray: { input: "$photos", sortBy: { generalPriority: -1 } } },
+                                    0
+                                ]
                             },
-                            0,
-                        ],
+                            null
+                        ]
                     },
                     highestVideo: {
-                        $arrayElemAt: [
+                        $cond: [
+                            { $gt: [{ $size: "$videos" }, 0] },
                             {
-                                $sortArray: {
-                                    input: { $ifNull: ['$videos', []] }, // Handle missing videos array
-                                    sortBy: { generalPriority: -1 },
-                                },
+                                $arrayElemAt: [
+                                    { $sortArray: { input: "$videos", sortBy: { generalPriority: -1 } } },
+                                    0
+                                ]
                             },
-                            0,
-                        ],
-                    },
-                },
+                            null
+                        ]
+                    }
+                }
             },
+            // Now choose the media field based on availability and priority
             {
                 $addFields: {
                     media: {
                         $cond: [
-                            { $gt: [{ $size: { $ifNull: ['$photos', []] } }, 0] },
-                            '$highestPhoto',
-                            '$highestVideo',
-                        ],
-                    },
-                },
+                            { $and: [{ $gt: [{ $size: "$photos" }, 0] }, { $gt: [{ $size: "$videos" }, 0] }] },
+                            {
+                                $cond: [
+                                    { $gte: ["$highestPhoto.generalPriority", "$highestVideo.generalPriority"] },
+                                    "$highestPhoto",
+                                    "$highestVideo"
+                                ]
+                            },
+                            {
+                                $cond: [
+                                    { $gt: [{ $size: "$photos" }, 0] },
+                                    "$highestPhoto",
+                                    "$highestVideo"
+                                ]
+                            }
+                        ]
+                    }
+                }
             },
             {
                 $project: {
@@ -57,25 +79,33 @@ async function getAllClients(req, res, next) {
                 },
             },
         ]);
-        const clientDetails = [];
-        for (const c of clients) {
-            clientDetails.push({
-                ...c,
-                clientId: c.clientId.toString(),
-            })
-        }
-        // get all thumbnail url from s3 & avoid sending video which is costly
+
+        const clientDetails = clients.map(c => ({
+            ...c,
+            clientId: c.clientId.toString()
+        }));
+
+        // For each client, get the S3 URL of the media.
         const updatedClientDetails = [];
         for (const client of clientDetails) {
-            const thumbnailUrl = await getObjectUrl(client.media.thumbnailMetaData.key);
-            updatedClientDetails.push({ ...client, media: { ...client.media, thumbnailUrl } })
+            // If media exists and has either thumbnailMetaData or photoMetaData:
+            let thumbnailUrl = "";
+            if (client.media) {
+                if (client.media.thumbnailMetaData && client.media.thumbnailMetaData.key) {
+                    thumbnailUrl = await getObjectUrl(client.media.thumbnailMetaData.key);
+                } else if (client.media.photoMetaData && client.media.photoMetaData.key) {
+                    thumbnailUrl = await getObjectUrl(client.media.photoMetaData.key);
+                }
+            }
+            updatedClientDetails.push({ ...client, media: { ...client.media, thumbnailUrl } });
         }
-        res.status(200).json({ clientDetails: updatedClientDetails })
+        res.status(200).json({ clientDetails: updatedClientDetails });
     } catch (error) {
-        console.log(error)
-        res.status(500).json({ message: 'SERVER ERROR' })
+        console.log(error);
+        res.status(500).json({ message: "SERVER ERROR" });
     }
 }
+
 
 /*  /admin/client/:id    */
 // see specific client detial like videos & photos posted
@@ -173,63 +203,83 @@ function validateClientDetails(details, type) {
     }
     return { valid: true, message: 'Good' };
 };
-/*  /admin/api/add-client/validate-details  */
+/*  /api/admin/add-client/validate-details  */
 //  this fx check client all details 
 async function checkClientDetails(req, res, next) {
     try {
-        let videoDetails = req.body.videoDetails;
-        let photosDetails = req.body.photosDetails;
-        const coordinate = req.body.coordinate
-        const bride = req.body.bride
-        const groom = req.body.groom
-        const isInMap = req.body.isInMap
-        if (!videoDetails || !photosDetails || !coordinate || !bride || !groom || !isInMap) {
-            return res.status(400).json({ message: "FIELD NOT POPULATED" })
+        const videoDetails = req.body.videoDetails;  // may be undefined or null
+        const photosDetails = req.body.photosDetails;  // may be undefined or null
+        const coordinate = req.body.coordinate;
+        const bride = req.body.bride;
+        const groom = req.body.groom;
+        const isInMap = req.body.isInMap;
+        // Check that essential fields are populated
+        if ((!videoDetails && !photosDetails) || !coordinate || !bride || !groom || !isInMap) {
+            return res.status(400).json({ message: "FIELD NOT POPULATED: At least one of videoDetails or photosDetails and all other fields are required" });
         }
-        if (req.body.isInMap === 'true' && req.body.coordinate) {
-            if (Number.isInteger(req.body.coordinate.latitude) || Number.isInteger(req.body.coordinate.longitute)) {
+
+        // Check coordinate if isInMap is true
+        if (isInMap === 'true' && coordinate) {
+            if (Number.isInteger(coordinate.latitude) || Number.isInteger(coordinate.longitute)) {
                 return res.status(400).json({ message: "COORDINATE REQUIRED" });
             }
         }
+
         if (!bride.trim() || !groom.trim()) {
             return res.status(400).json({ message: "CLIENT NAME REQUIRED" });
         }
-        let obj = validateClientDetails(videoDetails, 'videos')
-        if (!obj.valid) {
-            return res.status(400).json({ message: obj.message });
+
+        // Validate video details only if provided
+        if (videoDetails) {
+            let obj = validateClientDetails(videoDetails, 'videos');
+            if (!obj.valid) {
+                return res.status(400).json({ message: obj.message });
+            }
         }
-        obj = validateClientDetails(photosDetails, 'photos')
-        if (!obj.valid) {
-            return res.status(400).json({ message: obj.message });
+
+        // Validate photos details only if provided
+        if (photosDetails) {
+            let obj = validateClientDetails(photosDetails, 'photos');
+            if (!obj.valid) {
+                return res.status(400).json({ message: obj.message });
+            }
         }
-        // from here every thing is validate & all good including file type & metadata 
-        res.locals.clientDetails = { videoDetails, photosDetails }
+
+        // All validations passed – store details in res.locals for use in the next middleware
+        res.locals.clientDetails = { videoDetails, photosDetails, coordinate, bride, groom, isInMap };
         next();
     } catch (error) {
-        res.status(500).json({ message: error.message })
+        res.status(500).json({ message: error.message });
     }
 }
+
 // this fx generate put url for every video & photo for adding new client
 async function sendPutUrlsForNewClient(req, res, next) {
-    const { videoDetails, photosDetails } = res.locals.clientDetails
-    // Generate URLs for videos and their thumbnails
+    const { videoDetails, photosDetails } = res.locals.clientDetails;
     const urls = { videosUrl: [], photosUrl: [] };
-    for (const videoObj of videoDetails) {
-        const videoKey = `user/videos/${uuid.v4()}.${videoObj.video.type.split('/')[1]}`;
-        const thumbnailKey = `user/photos/${uuid.v4()}.${videoObj.thumbnail.type.split('/')[1]}`;
-        const videoPutUrl = await putObjectUrl(videoKey, videoObj.video.type);
-        const thumbnailPutUrl = await putObjectUrl(thumbnailKey, videoObj.thumbnail.type);
-        urls.videosUrl.push({ videoPutUrl, thumbnailPutUrl, videoKey, thumbnailKey });
+
+    // Process videoDetails only if provided
+    if (videoDetails) {
+        for (const videoObj of videoDetails) {
+            const videoKey = `user/videos/${uuid.v4()}.${videoObj.video.type.split('/')[1]}`;
+            const thumbnailKey = `user/photos/${uuid.v4()}.${videoObj.thumbnail.type.split('/')[1]}`;
+            const videoPutUrl = await putObjectUrl(videoKey, videoObj.video.type);
+            const thumbnailPutUrl = await putObjectUrl(thumbnailKey, videoObj.thumbnail.type);
+            urls.videosUrl.push({ videoPutUrl, thumbnailPutUrl, videoKey, thumbnailKey });
+        }
     }
 
-    // Generate URLs for photos
-    for (const photoObj of photosDetails) {
-        const photoKey = `user/photos/${uuid.v4()}.${photoObj.photo.type.split('/')[1]}`;
-        const photoPutUrl = await putObjectUrl(photoKey, photoObj.photo.type);
-        urls.photosUrl.push({ photoPutUrl, photoKey });
+    // Process photosDetails only if provided
+    if (photosDetails) {
+        for (const photoObj of photosDetails) {
+            const photoKey = `user/photos/${uuid.v4()}.${photoObj.photo.type.split('/')[1]}`;
+            const photoPutUrl = await putObjectUrl(photoKey, photoObj.photo.type);
+            urls.photosUrl.push({ photoPutUrl, photoKey });
+        }
     }
-    res.status(200).json({ urls })
+    res.status(200).json({ urls });
 }
+
 // after validating new client details & sending puturls user media will upload on s3 & we have to save keys & other meta
 
 async function updateHeroVideos(client) {
@@ -295,13 +345,16 @@ async function addClientInMap(id, clientDetails) {
         };
     }
 }
+
+/*  /api/admin/add-client/save-details */
 async function AddNewClient(req, res, next) {
     const { clientDetails } = req.body;
     try {
         const uploadedVideos = [];
         const uploadedPhotos = [];
-        // todo= the upload part we will do earlier 
-        for (const video of clientDetails.videoDetails) {
+
+        // Process video details if they exist
+        for (const video of clientDetails.videoDetails || []) {
             uploadedVideos.push({
                 videoMetaData: { key: video.video.key },
                 tags: video.tags,
@@ -312,10 +365,12 @@ async function AddNewClient(req, res, next) {
                 bts: video.btsInfo,
                 thumbnailMetaData: { key: video.thumbnail.key },
                 videoShootDate: video.shootDate,
-                _id: new mongoose.Types.ObjectId()
-            })
+                _id: new mongoose.Types.ObjectId(),
+            });
         }
-        for (const photo of clientDetails.photosDetails) {
+
+        // Process photo details if they exist
+        for (const photo of clientDetails.photosDetails || []) {
             uploadedPhotos.push({
                 photoMetaData: { key: photo.photo.key },
                 tags: photo.tags,
@@ -323,9 +378,10 @@ async function AddNewClient(req, res, next) {
                 photoLocation: photo.location,
                 bts: photo.btsInfo,
                 photoShootDate: photo.shootDate,
-                _id: new mongoose.Types.ObjectId()
-            })
+                _id: new mongoose.Types.ObjectId(),
+            });
         }
+
         const newClient = await ClientSchema.create({
             clientName: {
                 Bride: clientDetails.bride,
@@ -333,32 +389,35 @@ async function AddNewClient(req, res, next) {
             },
             videos: uploadedVideos,
             photos: uploadedPhotos,
-        })
-        // save herovideo in its schema 
+        });
+
+        // Save hero videos if available
         if (newClient.videos.filter((video) => video.isHeroVideo).length > 0) {
             const { isValid, message } = await updateHeroVideos(newClient);
             if (!isValid) {
-                return res.status(500).json({ message })
+                return res.status(500).json({ message });
             }
         }
-        // add client id to map
-        if (clientDetails.isInMap === 'true' && clientDetails.coordinate) {
-            const { isValid, message } = await addClientInMap(newClient._id, clientDetails)
+
+        // Add client id to map if needed
+        if (clientDetails.isInMap === "true" && clientDetails.coordinate) {
+            const { isValid, message } = await addClientInMap(newClient._id, clientDetails);
             if (isValid) {
-                return res.status(200).json({ message })
+                return res.status(200).json({ message });
             } else {
-                return res.status(500).json({ message })
+                return res.status(500).json({ message });
             }
         }
-        return res.status(200).json({ message: "Client added" })
+        return res.status(200).json({ message: "Client added" });
     } catch (error) {
-        console.log('Error while saving file', error)
-        res.status(500).json({ message: error.message })
+        console.log("Error while saving file", error);
+        res.status(500).json({ message: error.message });
     }
 }
+
 /***************************************************/
 
-/*  /admin/api/add-client/validate-details  */
+/*  /api/admin/add-client/validate-details  */
 // for existing client when details are updated like new media added validate it 
 async function validateClientUpdatedDetails(req, res, next) {
     const { id } = req.params
@@ -477,7 +536,7 @@ async function sendPutUrlsForNewMedia(req, res, next) {
         res.status(500).json({ message: error.message })
     }
 }
-/*  /admin/api/add-client/validate-details  */
+/*  /api/admin/add-client/validate-details  */
 // update client details
 async function updateClientDetails(req, res, next) {
     try {
@@ -526,9 +585,11 @@ async function updateClientDetails(req, res, next) {
                 thumbnailsToDelete.push(v.photoMetaData.key)
             }
         })
-        if (videosToDelete.length === client.videos.length) {
-            return res.status(400).json({ message: 'Video cant be empty' })
-        }
+        // if there will single video & it will deleted & new one added this wont work
+        // if (videosToDelete.length === client.videos.length) {
+        //     return res.status(400).json({ message: 'Video cant be empty' })
+        // }
+
         // Synchronize Videos
         // we have just add _id to new video & catch all hero video _id
         for (const video of videoDetails) {

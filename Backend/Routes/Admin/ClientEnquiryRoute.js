@@ -14,7 +14,7 @@ async function getAllClientEnquiry(req, res, next) {
     }
 }
 
-clientEnquiryRoute.get("/admin/api/get-clients-enquiry", getAllClientEnquiry)
+clientEnquiryRoute.get("/api/admin/get-clients-enquiry", getAllClientEnquiry)
 async function markViewToClientEnquires(req, res, next) {
     try {
         const enquiryId = req.params;
@@ -30,7 +30,7 @@ async function markViewToClientEnquires(req, res, next) {
         res.status(500).json({ message: error.message })
     }
 }
-clientEnquiryRoute.patch("/admin/api/enquires/mark-viewed/:id", markViewToClientEnquires)
+clientEnquiryRoute.patch("/api/admin/enquires/mark-viewed/:id", markViewToClientEnquires)
 
 async function deleteClientEnquiry(req, res, next) {
     try {
@@ -45,6 +45,6 @@ async function deleteClientEnquiry(req, res, next) {
         res.status(500).json({ message: error.message })
     }
 }
-clientEnquiryRoute.delete("/admin/api/enquires/:id", deleteClientEnquiry)
+clientEnquiryRoute.delete("/api/admin/enquires/:id", deleteClientEnquiry)
 
 export default clientEnquiryRoute

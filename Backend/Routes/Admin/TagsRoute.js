@@ -5,11 +5,11 @@ import { addNewTagCategory, verifyTagInExistingCategory, addNewTagOnHomePage, ad
 
 Route.use(authenticateAdmin)
 
-Route.post("/admin/api/tags", addNewTagCategory)
-Route.put("/admin/api/tags", verifyTagInExistingCategory)
+Route.post("/api/admin/tags", addNewTagCategory)
+Route.put("/api/admin/tags", verifyTagInExistingCategory)
 /*************************************************/
 
-Route.post("/admin/api/homepage/tags", addNewTagOnHomePage)
-Route.post("/admin/api/filmpage/tags", addNewTagOnFilmPage)
+Route.post("/api/admin/homepage/tags", addNewTagOnHomePage)
+Route.post("/api/admin/filmpage/tags", addNewTagOnFilmPage)
 
 export default Route

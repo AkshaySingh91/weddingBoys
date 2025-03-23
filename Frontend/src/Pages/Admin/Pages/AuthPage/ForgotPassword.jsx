@@ -102,7 +102,7 @@ function ForgotPassword() {
             return await fireMessage('INVALID EMAIL', 'error')
         }
         try {
-            const res = await fetch(`${api_url}/admin/check-details`, {
+            const res = await fetch(`${api_url}/api/admin/check-details`, {
                 method: "POST",
                 body: JSON.stringify({ email, phone }),
                 headers: {
@@ -133,7 +133,7 @@ function ForgotPassword() {
             target = phone;
         }
         try {
-            const res = await fetch(`${api_url}/admin/request-otp`, {
+            const res = await fetch(`${api_url}/api/admin/request-otp`, {
                 method: "POST",
                 body: JSON.stringify({
                     target, type
@@ -157,7 +157,7 @@ function ForgotPassword() {
         let otp = otpInputRef.map((ref) => ref.current.value).join("");
         let target = email;
         try {
-            const res = await fetch(`${api_url}/admin/verify-otp`, {
+            const res = await fetch(`${api_url}/api/admin/verify-otp`, {
                 method: "POST",
                 body: JSON.stringify({
                     target, otp
@@ -207,7 +207,7 @@ function ForgotPassword() {
         let otp = otpInputRef.map((ref) => ref.current.value).join("");
         let target = phone
         try {
-            const res = await fetch(`${api_url}/admin/verify-otp`, {
+            const res = await fetch(`${api_url}/api/admin/verify-otp`, {
                 method: "POST",
                 body: JSON.stringify({
                     target, otp
@@ -245,7 +245,7 @@ function ForgotPassword() {
             return await fireMessage('Password must have minimum eight characters, at least one uppercase letter, one lowercase letter and one number', 'error')
         }
         try {
-            const res = await fetch(`${api_url}/admin/update-password`, {
+            const res = await fetch(`${api_url}/api/admin/update-password`, {
                 method: 'POST',
                 body: JSON.stringify({
                     phone, email, password

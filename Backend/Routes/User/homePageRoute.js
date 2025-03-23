@@ -8,12 +8,12 @@ import { getObjectUrl } from '../../Controllers/awsController.js';
 Route.get("/api/hero-videos", async (req, res) => {
     try {
         const { heroVideos } = await websiteSettingSchema.findOne().select('heroVideos').sort({ 'heroVideos.priority': -1 }).lean()
+        
         const clientDetails = []
         // get all herovideo
         for (const heroVideo of heroVideos) {
             clientDetails.push(await ClientSchema.findById(heroVideo.clientId.toString()))
         }
-
         for (let i = 0; i < heroVideos.length; i++) {
             // add clientname to each video & update date
             heroVideos[i].clientName = clientDetails[i].clientName;

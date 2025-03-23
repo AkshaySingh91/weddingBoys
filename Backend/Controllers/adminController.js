@@ -1,6 +1,6 @@
 import adminSchema from "../Models/adminSchema.js";
 import bcrypt from 'bcrypt'
-import tokenGenerator from '../utils/tokenGenerator.js'
+import tokenGenerator from '../Utils/tokenGenerator.js'
 import { config } from "dotenv";
 import { COOKIE_NAME } from "../constants.js";
 import { sendEmailOtp, sendSmsOtp, generateOtp } from "../Utils/otpSender.js";
@@ -98,19 +98,17 @@ async function adminLogin(req, res, next) {
         const { email, password, rememberMe } = req.body;
         const admin = await adminSchema.findOne({ email });
         if (!admin) {
-            res.status(400).json({
+            return res.status(400).json({
                 "message": 'INVALID EMAIL OR PASSWORD'
             })
-            return;
         }
         const adminHashedPassword = admin.password
         const isPasswordCorrect = await bcrypt.compare(password, adminHashedPassword)
 
         if (!isPasswordCorrect) {
-            res.status(400).json({
+            return res.status(400).json({
                 "message": 'INVALID EMAIL OR PASSWORD'
             })
-            return;
         }
         const sessionToken = tokenGenerator({ name: admin.name, role: 'admin', phone: admin.phone, email: admin.email }, `${rememberMe}d`)
         const expires = new Date(Date.now() + Number.parseInt(rememberMe) * 24 * 60 * 60 * 1000);

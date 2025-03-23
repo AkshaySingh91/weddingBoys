@@ -25,19 +25,23 @@ export default function Header() {
     };
     return (
         <>
-            <div className="sm:hidden lg:block relative header-wrapper flex lg:py-2 lg:mb-4 sm:px-4 sm:pt-4 bg-primary_on rounded-t-2xl item-center sm:gap-4 sm:py-2">
+            <div className="sm:hidden lg:block relative header-wrapper flex lg:py-2  sm:px-4 sm:pt-4 bg-primary_on rounded-t-2xl item-center sm:gap-4 sm:py-2">
                 <div className="flex md:pr-5  lg:gap-8  justify-between sm:h-12 sm:flex-auto sm:my-auto sm:gap-2 ">
                     <div className="flex sm:flex-auto lg:w-auto  items-center bg-[#e0c7a9] rounded-3xl gap-2 sm:basis-1/5 border-2 border-red-200 lg:h-9 my-auto px-2 sm:h-10 sm:w-24">
-                        <svg className='flex-none lg:w-6 lg:h-6 sm:w-8 sm:h-8  fill-gray-500' xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" ><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" /></svg>
+                        <svg className='flex-none lg:w-6 lg:h-6 sm:w-8 sm:h-8' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="gray" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="11" cy="11" r="7"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
                         <input
-                            className='flex-auto basis-3/4 text-sm font-primary tracking-wider outline-0 text-primary bg-transparent lg:placeholder:text-desktopBodySmall sm:placeholder:text-mobileBodyLarge placeholder:text-primary placeholder:opacity-60 rounded-2xl '
+                            className='flex-auto basis-3/4 text-sm font-primary tracking-wider  text-primary bg-transparent lg:placeholder:text-desktopBodySmall sm:placeholder:text-mobileBodyLarge placeholder:text-primary placeholder:opacity-60 rounded-2xl outline-none'
                             type="text" placeholder={searchPlaceholder}
                             onKeyDown={handleSearch}
+                            spellCheck="false"
                             onChange={(e) => setSearchQuery(e.target.value)} />
                     </div>
 
                     <Link className="enquire-btn group flex justify-center  items-center gap-1 bg-secondary rounded-3xl px-4 py-1 text-mobileBodyMedium text-primary lg:w-30 lg:h-9 my-auto sm:h-10" to={"/contact"}>
-                        <span className='whitespace-nowrap tracking-wide'>Enquire</span>
+                        <span className='whitespace-nowrap tracking-wide'>Get Quote</span>
                         <svg className='transition-all group-hover:translate-x-2 flex-none lg:w-6 lg:h-6 sm:w-5 sm:h-4 text-blue-300 fill-slate-700' xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" ><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z" /></svg>
                     </Link>
                 </div>

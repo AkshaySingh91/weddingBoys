@@ -84,7 +84,7 @@ export default function BtsTape() {
 
         const saveClientDetails = async (filesMetaWithKey) => {
             try {
-                const res = await fetch(`${api_url}/admin/api/homepage/bts-image/save-details`, {
+                const res = await fetch(`${api_url}/api/admin/homepage/bts-image/save-details`, {
                     method: "PUT",
                     body: JSON.stringify({
                         filesMetaWithKey
@@ -136,7 +136,7 @@ export default function BtsTape() {
         }
         const verifyDetails = async () => {
             try {
-                const res = await fetch(`${api_url}/admin/api/homepage/bts-image/get-url`, {
+                const res = await fetch(`${api_url}/api/admin/homepage/bts-image/get-url`, {
                     method: "PUT",
                     body: JSON.stringify({ btsMetaData }),
                     credentials: 'include',
@@ -212,7 +212,7 @@ export default function BtsTape() {
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     try {
-                        const res = await fetch(`${api_url}/admin/api/homepage/bts-image`, {
+                        const res = await fetch(`${api_url}/api/admin/homepage/bts-image`, {
                             method: "DELETE",
                             body: JSON.stringify({ key }),
                             credentials: 'include',
