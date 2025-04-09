@@ -8,7 +8,7 @@ import { getObjectUrl } from '../../Controllers/awsController.js';
 Route.get("/api/hero-videos", async (req, res) => {
     try {
         const { heroVideos } = await websiteSettingSchema.findOne().select('heroVideos').sort({ 'heroVideos.priority': -1 }).lean()
-        
+
         const clientDetails = []
         // get all herovideo
         for (const heroVideo of heroVideos) {
@@ -181,5 +181,59 @@ Route.get("/api/map-clients", async (req, res) => {
         res.status(500).json({ message: "Internal server error", error: error.message });
     }
 });
+
+// Route: GET /api/home/sample-photos - Returns 8 sample photos sorted by ascending generalPriority
+async function getHomePhotos(req, res, next) {
+    try {
+        // Read category from query string; default to "All Work" (which means no filtering)
+        const category = req.query.category || "All Work";
+        const matchStage = category === "All Work" ? [] : [category];
+        const pipeline = [
+            // Unwind photos array so each photo becomes a document
+            { $unwind: "$photos" },
+            // Filter by category if specified
+            {
+                $match: {
+                    $or: [
+                        { "photos.tags": { $in: matchStage } }, // Match tags if matchStage is not empty
+                        { $expr: { $eq: [matchStage.length, 0] } } // If matchStage is empty, return all
+                    ]
+                }
+            },
+            // Sort photos by generalPriority (ascending)
+            { $sort: { "photos.generalPriority": 1 } },
+            // Limit the number of returned photos
+            { $limit: 2 },
+            // Project the necessary fields
+            {
+                $project: {
+                    _id: "$photos._id",
+                    photoMetaData: "$photos.photoMetaData",
+                    tags: "$photos.tags",
+                    photoShootDate: "$photos.photoShootDate",
+                    photoLocation: "$photos.photoLocation",
+                    generalPriority: "$photos.generalPriority",
+                    category: "$photos.category",
+                    client: "$clientName"
+                }
+            }
+        ];
+
+        let photos = await ClientSchema.aggregate(pipeline); 
+        // Generate signed URLs for each photo
+        for (const photo of photos) {
+            if (photo.photoMetaData && photo.photoMetaData.key) {
+                photo.url = await getObjectUrl(photo.photoMetaData.key);
+            }
+        }
+        res.status(200).json({ photos });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error fetching photos" });
+    }
+}
+
+// Bind route to Express router
+Route.get("/api/home/sample-photos", getHomePhotos);
 
 export default Route;

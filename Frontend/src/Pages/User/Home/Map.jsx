@@ -77,14 +77,14 @@ export default function Map() {
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className='text-primary lg:text-desktopHeadlineSmall font-semibold sm:text-mobileBodyLarge text-nowrap'
+                    className='text-primary lg:text-desktopHeadlineSmall font-semibold sm:text-mobileHeadlineSmall text-center'
                 >
                     Love Stories Captured Across the Map
                 </motion.h1>
                 <motion.h2  
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className='text-primary text-desktopBodySmall font-light text-center'
+                    className='text-primary sm:text-mobileBodyMedium lg:text-desktopBodyLarge font-light text-center'
                 >
                     Tap on the icon to see which couples choose us to capture their special day
                 </motion.h2>

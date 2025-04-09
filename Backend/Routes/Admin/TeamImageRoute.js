@@ -32,7 +32,7 @@ Route.delete("/api/admin/team/banner-image", deleteTeamBannerImage)
 async function addTeamBannerImage(req, res, next) {
     try {
         if (req.body.imageMeta && req.body.imageMeta.length) {
-            const imageType = ["image/jpg", "image/png", "image/jpeg"];
+            const imageType = ["image/jpg", "image/png", "image/jpeg", "image/webp"];
             const imageMeta = req.body.imageMeta;
             for (const img of imageMeta) {
                 if (!imageType.includes(img.type)) {
@@ -159,7 +159,7 @@ async function addNewTeamImage(req, res, next) {
 async function verifyNewTeamImageDetails(req, res, next) {
     try {
         if (req.body.imageMeta && req.body.imageMeta.length) { 
-            const imageType = ["image/jpg", "image/png", "image/jpeg"];
+            const imageType = ["image/jpg", "image/png", "image/jpeg", "image/webp"];
             const imageMeta = req.body.imageMeta;
             for (const img of imageMeta) {
                 if (!(img.designation && img.designation.trim() && img.name && img.name.trim() && img.fileMeta && img.fileMeta.size && img.fileMeta.name)) {

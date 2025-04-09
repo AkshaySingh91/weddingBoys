@@ -1,6 +1,10 @@
 import React, { useCallback, useRef, useState } from 'react'
 import Swal from "sweetalert2"
 import { useEffect } from 'react';
+import { motion, useAnimation } from 'framer-motion';
+import { FiChevronLeft, FiChevronRight, FiStar, FiHeart } from 'react-icons/fi';
+import { Link as ScrollLink } from "react-scroll"
+
 const api_url = process.env.REACT_APP_API_URL;
 
 export default function Review() {
@@ -61,86 +65,153 @@ export default function Review() {
         }
         fetchReviews();
     }, []);
-    return (<>
-        <div className="reviews flex justify-center mt-40 w-full px-4">
-            <div className="flex-auto relative w-full lg:w-4/5 bg-[#ffe3ba] border-[1px] border-[#ffcb77] py-8 px-10 rounded-2xl shadow-lg sm:px-6">
-                {/* Section Title */}
-                <h1 className="text-center text-primary pb-16 font-semibold sm:text-xl lg:text-2xl sm:pb-10">
-                    Love Notes from Our Couples
-                </h1>
+    const controls = useAnimation();
 
-                {/* Reviews Wrapper */}
-                <div className="reviews-wrapper overflow-hidden relative "
-                    onTouchStart={handleTouchStart}
-                    onTouchMove={handleTouchMove}
-                    onTouchEnd={handleTouchEnd}>
-                    <div className="flex transition-transform duration-500" ref={slide}>
-                        {/* item 1 */}
-                        {
-                            reviews.length ?
-                                reviews.map((review) => (
-                                    <div key={review.photo.key} className="wrapper flex-shrink-0 w-full transition-transform duration-500">
-                                        <div className="flex-shrink-0 w-full flex lg:flex-row lg:gap-2 sm:flex-col sm:text-center sm:gap-4 sm:pb-8">
-                                            <div className="lg:w-1/2 flex flex-col gap-3 justify-center items-center leading-5 sm:w-auto">
-                                                <p className='text-primary text-desktopBodySmall font-semifont text-center'>
-                                                    {review.reviewText}
-                                                </p>
-                                                <span className='text-primary text-desktopBodyLarge font-medium capitalize text-center'>{review.person.name}</span>
-                                                <span className='text-primary text-desktopBodyLarge font-medium capitalize text-center'>{review.person.gender}</span>
-                                            </div>
-                                            <div className="lg:order-none flex-auto lg:w-1/2 lg:h-60 md:h-[22rem]  overflow-hidden sm:order-first sm:w-auto">
-                                                <img className='lg:w-full h-full md:w-11/12 rounded-xl mx-auto object-cover bg-center' src={review.url} alt="client name" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))
-                                : <div className="">No Reviews</div>
-                        }
-                    </div>
+    const generateRating = () => Math.floor(Math.random() * 3) + 3;
+
+    return (
+        <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="relative py-20  bg-gradient-to-b from-[#FFF5F5] to-[#FFEEE6] overflow-hidden"
+        >
+            {/* Floating Hearts */}
+            {[...Array(5)].map((_, i) => (
+                <motion.div
+                    key={i}
+                    className="absolute text-[#FF6969]/20"
+                    initial={{ y: 0, x: Math.random() * 100, rotate: Math.random() * 360 }}
+                    animate={{
+                        y: [0, 100],
+                        rotate: Math.random() * 360
+                    }}
+                    transition={{
+                        duration: 15 + Math.random() * 10,
+                        repeat: Infinity,
+                        ease: "linear"
+                    }}
+                    style={{
+                        left: `${Math.random() * 100}%`,
+                        fontSize: `${Math.random() * 32 + 24}px`
+                    }}
+                >
+                    <FiHeart />
+                </motion.div>
+            ))}
+
+            <div className="max-w-7xl mx-auto relative z-10">
+                <div className="text-center mb-16">
+                    <motion.div
+                        initial={{ scale: 0 }}
+                        whileInView={{ scale: 1 }}
+                        className="bg-[#FFE9E9] text-[#FF6969] font-semibold py-2 px-6 rounded-full inline-block mb-4"
+                    >
+                        CLIENT LOVE
+                    </motion.div>
+                    <h1 className="text-4xl font-bold text-[#5E2B17] mb-4 font-serif">
+                        What Our Couples Say
+                    </h1>
+                    <p className="text-[#7F5347] max-w-2xl mx-auto">
+                        Hear directly from the couples who trusted us to capture their special day across Mumbai and beyond.
+                    </p>
                 </div>
 
-                {/* Navigation Buttons */}
-                <button
-                    className="absolute left-4 lg:top-1/2 border-0 outline-none bg-[#FFE3C8] text-primary rounded-full p-2 shadow-lg sm:top-[90%]"
-                    onClick={handlePrev}
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="2"
-                        stroke="currentColor"
-                        className="w-6 h-6"
+                <div className="relative group">
+                    <div
+                        className="reviews-wrapper overflow-hidden relative"
+                        onTouchStart={handleTouchStart}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={handleTouchEnd}
                     >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M15 19l-7-7 7-7"
-                        />
-                    </svg>
-                </button>
-                <button
-                    className="absolute right-4 lg:top-1/2 border-0 outline-none bg-[#FFE3C8] text-primary rounded-full p-2 shadow-lg sm:top-[90%]"
-                    onClick={handleNext}
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="2"
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M9 5l7 7-7 7"
-                        />
-                    </svg>
-                </button>
-            </div>
-        </div>
+                        <motion.div
+                            className="flex"
+                            ref={slide}
+                            animate={controls}
+                        >
+                            {reviews.map((review) => (
+                                <div key={review.photo.key} className="min-w-full px-4">
+                                    <motion.div
+                                        className="bg-white rounded-3xl shadow-lg overflow-hidden flex flex-col lg:flex-row group relative hover:shadow-xl transition-shadow"
+                                        whileHover={{ y: -5 }}
+                                    >
+                                        {/* Rating Badge */}
+                                        <div className="absolute top-4 right-4 bg-white px-4 py-2 rounded-full shadow-md flex items-center gap-1">
+                                            {[...Array(generateRating())].map((_, i) => (
+                                                <FiStar key={i} className="w-5 h-5 text-[#FFD700]" />
+                                            ))}
+                                        </div>
 
-    </>
+                                        <div className="lg:w-1/2 relative overflow-hidden">
+                                            <img
+                                                className="w-full h-96 object-cover transform transition-transform duration-500 group-hover:scale-105"
+                                                src={review.url}
+                                                alt={review.person.name}
+                                            />
+                                            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 p-6">
+                                                <FiHeart className="text-white w-12 h-12 mb-4 opacity-75" />
+                                                <h3 className="text-2xl font-bold text-white">
+                                                    {review.person.name}
+                                                </h3>
+                                                <p className="text-[#FFE3C8]">{review.person.gender}</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="lg:w-1/2 p-8 flex flex-col justify-center">
+                                            <blockquote className="text-xl text-[#5E2B17] mb-6 relative before:content-['“'] before:absolute before:-left-6 before:-top-4 before:text-6xl before:text-[#FF6969]/30 before:font-serif">
+                                                {review.reviewText}
+                                            </blockquote>
+                                            <div className="flex items-center space-x-4">
+                                                <div className="flex-1 h-px bg-[#FF6969]/20" />
+                                                <span className="text-[#FF6969] uppercase tracking-widest text-sm">
+                                                    Wedding Story
+                                                </span>
+                                                <div className="flex-1 h-px bg-[#FF6969]/20" />
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                </div>
+                            ))}
+                        </motion.div>
+                    </div>
+
+                    {/* Navigation Buttons */}
+                    <motion.button
+                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all"
+                        onClick={handlePrev}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <FiChevronLeft className="w-6 h-6 text-[#5E2B17]" />
+                    </motion.button>
+                    <motion.button
+                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all"
+                        onClick={handleNext}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <FiChevronRight className="w-6 h-6 text-[#5E2B17]" />
+                    </motion.button>
+                </div>
+
+                {/* Animated Scroll Indicator */}
+                <motion.div
+                    className="mt-12 flex justify-center"
+                    animate={{ y: [0, 10, 0] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                >
+                    <ScrollLink
+                        to="top" // ID of the top section
+                        smooth={true}
+                        duration={500}
+                        offset={-80} // adjust if you have a fixed navbar
+                        className="flex flex-col items-center text-[#FF6969] cursor-pointer"
+                    >
+                        <FiChevronLeft className="w-8 h-8 transform rotate-90" />
+                        <span className="text-sm mt-2">Go to Top</span>
+                    </ScrollLink>
+                </motion.div>
+
+            </div>
+        </motion.div>
     )
 }

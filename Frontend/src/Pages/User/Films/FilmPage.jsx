@@ -1,159 +1,177 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fireMessage } from '../../Admin/Pages/AuthPage/Signup';
-import NoSearchResult from "../../../Asset/NoSearchResult.png"
+import NoSearchResult from "../../../Asset/NoSearchResult.png";
 const api_url = process.env.REACT_APP_API_URL;
 
 function FilmPage() {
     const [allVideos, setAllVideos] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const fetchVideos = async (t) => {
+
+    const fetchVideos = async (tag) => {
         try {
-            const res = await fetch(`${api_url}/api/videos?tag=${t}&page=1&limit=10`)
+            const res = await fetch(`${api_url}/api/videos?tag=${tag}&page=1&limit=10`);
             const data = await res.json();
             if (res.status >= 300) {
-                return fireMessage(data.message, 'error')
+                return fireMessage(data.message, 'error');
             }
-            return data.client
+            return data.client;
         } catch (error) {
-            console.log(error)
-            return fireMessage(error.message, 'error')
+            console.log(error);
+            return fireMessage(error.message, 'error');
         }
-    }
+    };
+
     useEffect(() => {
         const fetchFilmPageTags = async () => {
-            setIsLoading(true)
+            setIsLoading(true);
             try {
-                const res = await fetch(`${api_url}/api/filmpage/tags`)
+                const res = await fetch(`${api_url}/api/filmpage/tags`);
                 const data = await res.json();
                 if (res.status >= 300 || !data.tags) {
-                    return fireMessage(data.message, 'error')
+                    return fireMessage(data.message, 'error');
                 }
                 if (data.tags.length > 0) {
-                    // now we have multiple tags we have to fetch all videos 
-                    const allVideos = [];
+                    const videosData = [];
                     for (const tag of data.tags) {
                         const videos = await fetchVideos(tag);
-                        allVideos.push({
-                            tagName: tag, videos
-                        })
+                        videosData.push({ tagName: tag, videos });
                     }
-                    setAllVideos(allVideos);
+                    setAllVideos(videosData);
                 }
             } catch (error) {
-                return fireMessage(error.message, 'error')
+                fireMessage(error.message, 'error');
             } finally {
-                setIsLoading(false)
+                setIsLoading(false);
             }
-        }
+        };
         fetchFilmPageTags();
-    }, [])
+    }, []);
 
-    return (<>
+    return (
+        <>
+            {/* Page Header */}
+            <div className="py-6 text-center">
+                <h1 className="text-lg sm:text-xl lg:text-3xl font-extrabold text-gray-800 tracking-wide mb-4">
+                    Wedding Boys Films
+                </h1>
+                <hr className="w-16 sm:w-20 lg:w-24 mx-auto border-gray-400" />
+            </div>
 
-        <div className="header py-6 mx-auto sm:mb-4 text-desktopHeadlineSmall opacity-70">
-            <h1 className='whitespace-nowrap mb-2 text-center mx-auto'>Ankit studios Films</h1>
-            <hr className='bg-gray-500 w-20 mx-auto' />
-        </div>
-        <div className="films-category-wrapper box-border  space-y-10">
-            {isLoading ?
-                [...Array(3)].map((_, i) => (
-                    <div key={i} className="our-favourite px-2 lg:my-12">
-                        <div className="category-name text-desktopBodyLarge font-[500] tracking-wide flex flex-col items-center space-y-4">
-                            <div className=" w-full flex justify-between px-4">
-                                <h2 className="w-20 h-5 bg-slate-400 rounded-full" aria-hidden="true" ></h2>
-                                <button className='w-12 h-5 bg-slate-400 border-[1px] border-slate-600  rounded-3xl px-3 py-1 mx-2 '></button>
+            <div className="films-category-wrapper space-y-8 sm:space-y-10 lg:space-y-12">
+                {isLoading ? (
+                    [...Array(3)].map((_, i) => (
+                        <div key={i} className="px-4 lg:my-12">
+                            <div className="flex justify-between items-center mb-4">
+                                <div className="w-20 sm:w-28 h-5 bg-slate-300 rounded-full animate-pulse" aria-hidden="true"></div>
+                                <button className="w-12 sm:w-16 h-5 bg-slate-300 border border-slate-500 rounded-full animate-pulse"></button>
                             </div>
-                            <div className="top-films w-full overflow-x-auto scrollbar-none lg:px-4  bg-[#f9efe4] " role='list'>
-                                <div role='listitem' className="movies flex gap-4">
-                                    {[...Array(3)].map((_, i) => (
-                                        <VideoSkeletonLoader key={i} />
+                            <div className="overflow-x-auto scrollbar-none bg-[#f9efe4] p-2 sm:p-4 rounded-xl">
+                                <div className="flex gap-2 sm:gap-4">
+                                    {[...Array(3)].map((_, j) => (
+                                        <VideoSkeletonLoader key={j} />
                                     ))}
                                 </div>
                             </div>
-                        </div >
-                    </div>
-                )) :
-
-                (allVideos.length ? (
-                    allVideos.map((filmsRow) => {
-                        return <div key={filmsRow.tagName} className="our-favourite px-2 lg:my-12 space-y-4">
-                            <div className="category-name text-desktopBodyLarge font-[500] tracking-wide flex justify-between items-center">
-                                <h2 className="lg:px-4 tracking-wider lg:text-desktopHeadlineSmall sm:text-mobileHeadlineMedium">{filmsRow.tagName}</h2>
-                                <Link to={`/allfilms`} className='text-desktopBodySmall border-[1px] border-slate-600 bg-tertiary rounded-3xl px-3 py-1 mx-2 text-white'>view all</Link>
+                        </div>
+                    ))
+                ) : allVideos.length ? (
+                    allVideos.map((filmsRow) => (
+                        <div key={filmsRow.tagName} className="px-4 lg:my-12 space-y-4">
+                            <div className="flex justify-between items-center">
+                                <h2 className="text-base sm:text-lg lg:text-xl font-semibold tracking-wide text-gray-700">
+                                    {filmsRow.tagName}
+                                </h2>
+                                <Link
+                                    to={`/allfilms`}
+                                    className="text-xs sm:text-sm lg:text-base px-3 sm:px-4 lg:px-6 py-1 sm:py-2 bg-gradient-to-r from-rose-500 to-rose-400 text-white rounded-full shadow-md hover:shadow-lg transition-all"
+                                >
+                                    View All
+                                </Link>
                             </div>
-                            <div className="top-films w-full overflow-x-auto scrollbar-none lg:px-4 py-4 bg-[#f9efe4] " role='list'>
-                                <div role='listitem' className="movies flex gap-4">
-                                    {
-                                        filmsRow.videos && filmsRow.videos.length ?
-                                            filmsRow.videos.map((video) => (
-                                                <Link key={video.videos._id} to={`/films/${video.videos._id}`} className=' flex flex-col lg:gap-3 sm:gap-4'>
-                                                    <div className="relative thumbnail lg:w-56 lg:h-40 sm:w-60 sm:h-[10rem]">
-                                                        <img className='object-cover rounded-xl w-full h-full'
-                                                            src={video.thumbnailUrl} alt="" />
-                                                        <button className="play-btn absolute top-[45%] left-[45%] bg-gray-400 text-gray-800 rounded-full shadow-md hover:bg-gray-400 drop-shadow-lg ">
-                                                            <svg
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                fill="none"
-                                                                viewBox="0 0 24 24"
-                                                                strokeWidth="2"
-                                                                stroke="currentColor"
-                                                                className="lg:w-10 lg:h-10 sm:w-8 sm:h-8">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-4.197-2.42A1 1 0 009 9.5v5a1 1 0 001.555.832l4.197-2.42a1 1 0 000-1.664z" />
-                                                            </svg>
-                                                        </button>
+                            <div className="overflow-x-auto scrollbar-none bg-[#f9efe4] p-2 sm:p-4 rounded-xl">
+                                <div className="flex gap-2 sm:gap-4">
+                                    {filmsRow.videos && filmsRow.videos.length ? (
+                                        filmsRow.videos.map((video) => (
+                                            <Link
+                                                key={video.videos._id}
+                                                to={`/films/${video.videos._id}`}
+                                                className="flex flex-col flex-shrink-0 gap-1 sm:gap-2 lg:gap-3 w-50 sm:w-52 lg:w-72 hover:scale-105 transition-transform duration-300"
+                                            >
+                                                <div className="relative rounded-xl overflow-hidden shadow-md">
+                                                    <img
+                                                        className="object-cover w-full  h-32 sm:h-40 lg:h-48 rounded-xl"
+                                                        src={video.thumbnailUrl}
+                                                        alt="Video Thumbnail"
+                                                    />
+                                                    <button className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 opacity-0 hover:opacity-100 transition-opacity">
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            strokeWidth="2"
+                                                            stroke="currentColor"
+                                                            className="w-8 h-8 sm:w-10 sm:h-10 text-white"
+                                                        >
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-4.197-2.42A1 1 0 009 9.5v5a1 1 0 001.555.832l4.197-2.42a1 1 0 000-1.664z" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                <div className="text-gray-800 flex flex-col gap-1">
+                                                    <div className="flex items-center uppercase font-bold text-[0.65rem] sm:text-xs lg:text-sm">
+                                                        <span className="text-nowrap">{video.videos.videoShootDate}</span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" className="w-4 h-4 mx-1">
+                                                            <path d="M411-481 213-679l42-42 240 240-240 240-42-42 198-198Zm253 0L466-679l42-42 240 240-240 240-42-42 198-198Z" />
+                                                        </svg>
+                                                        <span className="text-nowrap">{video.videos.videoLocation.city}</span>
                                                     </div>
-                                                    <div className="text-primary flex flex-col lg:gap-2 sm:gap-1 px-2">
-                                                        <div className="flex items-center lg:text-desktopBodySmall uppercase  tracking-wide sm:text-mobileBodyMedium whitespace-nowrap font-bold">
-                                                            <span>{video.videos.videoShootDate}</span>
-                                                            <svg className='lg:w-8 lg:h-8 sm:w-4 sm:h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="black"><path d="M411-481 213-679l42-42 240 240-240 240-42-42 198-198Zm253 0L466-679l42-42 240 240-240 240-42-42 198-198Z" /></svg>
-                                                            <span>{video.videos.videoLocation.city}</span>
-                                                        </div>
-                                                        <div className="flex gap-2 lg:text-[1.3rem] font-semibold sm:text-mobileBodyLarge whitespace-nowrap">
-                                                            <span>{video.clientName.Bride}</span>
-                                                            <span>&</span>
-                                                            <span>{video.clientName.Groom}</span>
-                                                        </div>
+                                                    <div className="flex gap-1 sm:gap-2 font-semibold text-[0.75rem] sm:text-base lg:text-lg">
+                                                        <span className="text-nowrap">{video.clientName.Bride}</span>
+                                                        <span>&</span>
+                                                        <span className="text-nowrap">{video.clientName.Groom}</span>
                                                     </div>
-
-                                                </Link>
-                                            )) :
-                                            <div className="">No Video In this Category</div>
-                                    }
+                                                </div>
+                                            </Link>
+                                        ))
+                                    ) : (
+                                        <div className="text-gray-600 text-center w-full">
+                                            No Video In This Category
+                                        </div>
+                                    )}
                                 </div>
                             </div>
-                        </div >
-                    })
-                ) : <div className="w-full h-auto">
-                    <div className="flex items-start justify-center min-h-screen">
+                        </div>
+                    ))
+                ) : (
+                    <div className="w-full flex items-center justify-center min-h-screen">
                         <div className="text-center">
-                            <img src={NoSearchResult} alt="No Results" className="w-52 h-52 mx-auto mb-3 opacity-75 object-cover bg-center" />
-                            <h2 className="text-2xl font-semibold text-gray-700">No Videos Found</h2>
-                            <p className="text-gray-500 mt-2">We couldn't find anything matching your search.</p>
+                            <img
+                                src={NoSearchResult}
+                                alt="No Results"
+                                className="w-32 sm:w-40 lg:w-52 h-32 sm:h-40 lg:h-52 mx-auto mb-3 opacity-75 object-cover"
+                            />
+                            <h2 className="text-base sm:text-lg lg:text-2xl font-semibold text-gray-700">No Videos Found</h2>
+                            <p className="text-xs sm:text-sm lg:text-base text-gray-500 mt-2">
+                                We couldn't find anything matching your search.
+                            </p>
                         </div>
                     </div>
-                </div>)
-            }
-        </div >
-    </>)
+                )}
+            </div>
+        </>
+    );
 }
 
-
 const VideoSkeletonLoader = () => (
-    <div className="animate-pulse bg-slate-200 lg:h-70 max-w-full w-70 mx-2 relative my-9 sm:h-52 sm:w-60 sm:flex-none rounded-3xl">
+    <div className="animate-pulse bg-slate-200 h-40 sm:h-44 lg:h-52 w-40 sm:w-48 lg:w-56 mx-2 my-6 rounded-3xl">
         <div className="relative h-full overflow-hidden">
-            <div className="w-full h-full rounded-3xl bg-slate-300"></div>
-            <div className="absolute bottom-6 left-6 text-white flex flex-col gap-0">
-                <div className="flex items-center text-desktopBodySmall uppercase font-semibold tracking-wide">
-                    <div className="inline-block animate-pulse w-28 h-4 rounded-lg bg-slate-400 mr-2 my-4"></div>
-                    <div className="inline-block animate-pulse w-10 h-4 rounded-lg bg-slate-400"></div>
-                </div>
-                <div className="flex gap-2 text-desktopBodyMedium font-bold">
-                    <div className="inline-block animate-pulse w-10 h-4 rounded-lg bg-slate-400"></div>
-                    <div className="inline-block animate-pulse w-10 h-4 rounded-lg bg-slate-400"></div>
-                </div>
+            <div className="w-full h-40 sm:h-44 lg:h-52 rounded-3xl bg-slate-300"></div>
+            <div className="absolute bottom-6 left-6 flex flex-col gap-1">
+                <div className="w-24 sm:w-28 h-4 rounded-lg bg-slate-400"></div>
+                <div className="w-12 sm:w-16 h-4 rounded-lg bg-slate-400"></div>
             </div>
         </div>
     </div>
 );
-export default FilmPage
+
+export default FilmPage;

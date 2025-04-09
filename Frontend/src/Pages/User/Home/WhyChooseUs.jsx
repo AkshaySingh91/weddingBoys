@@ -1,179 +1,108 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { FiCamera, FiFilm, FiBriefcase, FiZap, FiGlobe, FiHeart } from 'react-icons/fi';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
+import { motion, useAnimation } from 'framer-motion';
+import { FiCamera, FiFilm, FiBriefcase, FiZap, FiGlobe, FiHeart, FiStar } from 'react-icons/fi';
 
+// Simplified animations
 const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
         opacity: 1,
         transition: {
-            duration: 0.5,
-            staggerChildren: 0.2,
-            when: 'beforeChildren',
+            duration: 0.3,
+            staggerChildren: 0.1,
         },
     },
 };
 
-const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: { type: 'spring', stiffness: 120 }
-    },
-};
-const quotes = [
-    "\"We don't just capture moments - we create timeless emotional artifacts.\"",
-    "\"Every snapshot tells a unique story of love, laughter, and cherished memories.\"",
-    "\"Your love deserves to be celebrated with every frame, every smile, every tear.\""
-];
-const TypewriterQuotes = ({ variants }) => {
+const TypewriterQuotes = React.memo(({ quotes }) => {
     const [displayText, setDisplayText] = useState('');
     const [quoteIndex, setQuoteIndex] = useState(0);
-    const [charIndex, setCharIndex] = useState(0);
+    const timeoutRef = useRef(null);
 
-    useEffect(() => {
-        const currentQuote = quotes[quoteIndex];
-        let timeout;
-
+    const typeText = useCallback((currentQuote, charIndex) => {
         if (charIndex < currentQuote.length) {
-            // Type one character at a time
-            timeout = setTimeout(() => {
+            timeoutRef.current = setTimeout(() => {
                 setDisplayText(currentQuote.substring(0, charIndex + 1));
-                setCharIndex(charIndex + 1);
-            }, 100); // Adjust typing speed here
+                typeText(currentQuote, charIndex + 1);
+            }, 50);
         } else {
-            // Pause at the end of the quote before moving to next one
-            timeout = setTimeout(() => {
-                // Reset for next quote
+            timeoutRef.current = setTimeout(() => {
                 setDisplayText('');
-                setCharIndex(0);
-                setQuoteIndex((prev) => (prev + 1) % quotes.length);
-            }, 3000); // Pause duration after finishing a quote
-        }
-        return () => clearTimeout(timeout);
-    }, [charIndex, quoteIndex]);
-
-    return (
-        <motion.blockquote
-            className="mt-16 text-center italic lg:text-desktopBodyLarge sm:text-mobileBodyMedium text-secondary font-primary max-w-2xl mx-auto"
-            variants={variants}
-        >
-            {displayText}
-            <span className="border-r-2 border-secondary ml-1 animate-pulse" />
-        </motion.blockquote>
-    );
-};
-function TiltCard({ icon, title, description, idx }) {
-    const cardRef = useRef(null);
-    const [dimensions, setDimensions] = useState({ w: 0, h: 0 });
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-
-    const handleMouseMove = (e) => {
-        const rect = cardRef.current.getBoundingClientRect();
-        mouseX.set(e.clientX - rect.left);
-        mouseY.set(e.clientY - rect.top);
-        setDimensions({ w: rect.width, h: rect.height });
-    };
-
-    const handleMouseLeave = () => {
-        mouseX.set(dimensions.w / 2);
-        mouseY.set(dimensions.h / 2);
-    };
-    useEffect(() => {
-        if (cardRef.current) {
-            const rect = cardRef.current.getBoundingClientRect();
-            setDimensions({ w: rect.width, h: rect.height });
-            // Initialize the cursor to the center, so the card stays flat
-            mouseX.set(rect.width / 2);
-            mouseY.set(rect.height / 2);
+                setQuoteIndex(prev => (prev + 1) % quotes.length);
+            }, 2000);
         }
     }, []);
 
-    // Tilt transformations
-    const rotateX = useTransform(mouseY, [0, dimensions.h], [8, -8]);
-    const rotateY = useTransform(mouseX, [0, dimensions.w], [-8, 8]);
-    const translateZ = useTransform(
-        mouseY,
-        [0, dimensions.h],
-        [0, 15]
-    );
+    useEffect(() => {
+        const currentQuote = quotes[quoteIndex];
+        typeText(currentQuote, 0);
 
-    // Gradient effect
-    const gradient = useTransform([mouseX, mouseY], ([x, y]) =>
-        `radial-gradient(300px at ${x}px ${y}px, 
-      rgba(250, 215, 160, 0.4) 0%, 
-      rgba(255, 247, 238, 0.2) 50%, 
-      rgba(229, 189, 167, 0) 100%)`
-    );
+        return () => clearTimeout(timeoutRef.current);
+    }, [quoteIndex, typeText, quotes]);
 
-    // Border highlight
-    const borderMask = useTransform([mouseX, mouseY], ([x, y]) =>
-        `radial-gradient(200px at ${x}px ${y}px, 
-      rgba(0,0,0,1) 20%, 
-      rgba(0,0,0,0.3) 60%, 
-      rgba(0,0,0,0) 100%)`
+    return (
+        <motion.blockquote
+            className="mt-12 text-center italic text-lg text-secondary max-w-2xl mx-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+        >
+            {displayText}
+            <span className="ml-1 border-r-2 border-secondary animate-pulse" />
+        </motion.blockquote>
     );
+});
+
+const TiltCard = React.memo(({ icon, title, description }) => {
+    const controls = useAnimation();
+    const cardRef = useRef(null);
+
+    const handleHover = useCallback(() => {
+        controls.start({
+            scale: 1.02,
+            transition: { duration: 0.2 }
+        });
+    }, [controls]);
+
+    const handleHoverEnd = useCallback(() => {
+        controls.start({
+            scale: 1,
+            transition: { duration: 0.2 }
+        });
+    }, [controls]);
 
     return (
         <motion.div
             ref={cardRef}
-            className="p-6 rounded-lg shadow-lg bg-primary relative overflow-hidden 
-                 cursor-pointer group"
-            style={{
-                rotateX,
-                rotateY,
-                translateZ,
-                perspective: 1000,
-                transformStyle: 'preserve-3d',
-            }}
-            variants={itemVariants}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: 'spring', stiffness: 300 }}
+            className="p-6 rounded-lg shadow-lg bg-white relative overflow-hidden cursor-pointer"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+            animate={controls}
+            onHoverStart={handleHover}
+            onHoverEnd={handleHoverEnd}
+            transition={{ duration: 0.3 }}
         >
-            {/* Gradient overlay */}
-            <motion.div
-                className="absolute inset-0 pointer-events-none"
-                style={{ background: gradient }}
-            />
-
-            {/* Border highlight */}
-            <motion.div
-                className="absolute inset-0 border-2 pointer-events-none opacity-0 
-                   group-hover:opacity-100 transition-opacity"
-                style={{
-                    borderColor: '#5E6572',
-                    mask: borderMask,
-                    WebkitMask: borderMask,
-                }}
-            />
-
-            {/* Content */}
-            <div className="relative z-10 space-y-4">
+            <div className="space-y-4">
                 <div className="flex items-center gap-4">
-                    <div className="text-tertiary text-2xl p-3 bg-primary_on rounded-lg">
+                    <div className="text-[#FF6969] text-2xl p-3 bg-[#FFF5F5] rounded-lg">
                         {icon}
                     </div>
-                    <h3 className="lg:text-xl sm:text-mobileHeadlineSmall font-semibold text-primary font-primary">
-                        {title}
-                    </h3>
+                    <h3 className="text-xl font-semibold text-gray-800">{title}</h3>
                 </div>
-                <p className="text-tertiary_on font-primary lg:text-desktopBodyMedium sm:text-mobileBodyMedium text-center">{description}</p>
+                <p className="text-gray-600 text-md">{description}</p>
             </div>
         </motion.div>
     );
-}
+});
 
 const WhyChooseUs = () => {
     const features = [
         {
             icon: <FiZap className="w-6 h-6" />,
             title: "Decade of Expertise",
-            description:
-                "With 8+ years mastering wedding photography, we handle every lighting condition, venue, and cultural tradition seamlessly."
+            description: (<>
+                With <b>8+ years</b> mastering wedding photography, we handle every lighting condition, venue, and cultural tradition seamlessly.
+            </>)
         },
         {
             icon: <FiFilm className="w-6 h-6" />,
@@ -208,44 +137,97 @@ const WhyChooseUs = () => {
     ];
 
 
+    const quotes = [
+        "\"We don't just capture moments - we create timeless emotional artifacts.\"",
+        "\"Every snapshot tells a unique story of love, laughter, and cherished memories.\"",
+        "\"Your love deserves to be celebrated with every frame, every smile, every tear.\""
+    ];
     return (
-        <motion.section
-            className="px-4 py-8 lg:py-24 bg-primary my-4"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={containerVariants}
-        >
-            <div className="max-w-6xl mx-auto">
-                <motion.div className="mb-12 text-center" variants={itemVariants}>
-                    <motion.h2
-                        className="lg:text-desktopHeadlineMedium sm:text-mobileHeadlineMedium font-bold mb-6 text-primary font-primary"
-                        variants={itemVariants}>
-                        WHY CHOOSE
-                        <br />
-                        <span className="text-secondary lg:text-desktopHeadlineMedium sm:text-mobileHeadlineMedium">THE WEDDING BOYS?</span>
-                    </motion.h2>
+        <section 
+        id='whyToChooseUs'
+        className="px-4 sm:py-10 lg:py-16 relative overflow-hidden bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] sm:my-10 lg:my-8  lg:rounded-3xl sm:rounded-lg border-[#fed6c3] border-[1px]">
+            {/* Floating Hearts Decoration */}
+            <div className="absolute inset-0 pointer-events-none">
+                {[...Array(8)].map((_, i) => (
                     <motion.div
-                        className="mx-auto h-1 bg-secondary"
-                        variants={itemVariants}
+                        key={i}
+                        className="absolute text-[#FF6969]/10"
+                        initial={{
+                            y: Math.random() * 100,
+                            x: Math.random() * 100,
+                            rotate: Math.random() * 360
+                        }}
+                        animate={{
+                            y: [0, 100],
+                            x: [0, Math.random() * 50 - 25],
+                            rotate: 360
+                        }}
+                        transition={{
+                            duration: 15 + Math.random() * 10,
+                            repeat: Infinity,
+                            ease: "linear"
+                        }}
+                        style={{
+                            left: `${Math.random() * 100}%`,
+                            fontSize: `${Math.random() * 32 + 24}px`
+                        }}
+                    >
+                        <FiHeart />
+                    </motion.div>
+                ))}
+            </div>
+
+            {/* Main Content */}
+            <div className="max-w-6xl mx-auto relative z-10">
+                <motion.div
+                    className="mb-12 text-center"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                >
+                    <div className="bg-[#FF6969]/10 text-[#FF6969] px-6 py-2 rounded-full inline-block mb-4">
+                        <FiStar className="inline mr-2 animate-pulse" />
+                        Why We Stand Out
+                    </div>
+                    <h2 className="text-3xl md:text-4xl font-bold text-[#5E2B17] mb-4 font-serif">
+                        Why Choose
+                        <br />
+                        <span className="text-[#FF6969]">The Wedding Boys?</span>
+                    </h2>
+                    <motion.div
+                        className="mx-auto w-24 h-1 bg-[#FF6969] rounded-full"
                         initial={{ scaleX: 0 }}
                         whileInView={{ scaleX: 1 }}
-                        transition={{ duration: 1, ease: 'circOut' }}
+                        transition={{ duration: 0.8 }}
                     />
                 </motion.div>
 
-                <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+                {/* Cards Grid */}
+                <motion.div
+                    className="grid md:grid-cols-2 gap-6 lg:gap-8"
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+                >
                     {features.map((feature, index) => (
-                        <TiltCard key={index} {...feature} idx={index} />
+                        <motion.div
+                            key={index}
+                            variants={containerVariants}
+                            whileHover={{ y: -5 }}
+                        >
+                            <TiltCard {...feature} />
+                        </motion.div>
                     ))}
+                </motion.div>
+
+                {/* Quote Section */}
+                <div className="relative mt-16">
+                    <FiHeart className="absolute -top-4 left-1/2 -translate-x-1/2 text-[#FF6969]/20 w-16 h-16" />
+                    <TypewriterQuotes quotes={quotes} />
                 </div>
-
-                <TypewriterQuotes
-                    variants={itemVariants}
-                />
             </div>
-
-        </motion.section>
+        </section>
     );
 };
 

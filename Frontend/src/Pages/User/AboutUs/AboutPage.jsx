@@ -1,258 +1,377 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { NavLink, Link } from 'react-router-dom';
-import aboutPageImg1 from "../../../Asset/ClientImage/aboutPageImg1.jpg"
-import aboutPageImg2 from "../../../Asset/ClientImage/aboutPageImg2.jpg"
-import aboutPageImg3 from "../../../Asset/ClientImage/aboutPageImg3.jpg"
-import aboutPageImg4 from "../../../Asset/ClientImage/aboutPageImg4.jpg"
-import aboutPageImg5 from "../../../Asset/ClientImage/aboutPageImg5.jpg"
-import aboutPageImg6 from "../../../Asset/ClientImage/aboutPageImg6.jpg"
-import aboutPageImg7 from "../../../Asset/ClientImage/aboutPageImg7.jpg"
-import amanSingh from "../../../Asset/ClientImage/amansingh.jpg"
-import yogeshDubey from "../../../Asset/ClientImage/yogeshdubey.jpg"
-
+import { FiCamera, FiHeart, FiVideo, FiStar, FiAward } from 'react-icons/fi';
+import { FaInfoCircle, FaCreditCard, FaGlobe } from "react-icons/fa"
+import aboutPageImg1 from "../../../Asset/ClientImage/aboutPageImg1.jpg";
+import aboutPageImg2 from "../../../Asset/ClientImage/aboutPageImg2.jpg";
+import aboutPageImg3 from "../../../Asset/ClientImage/aboutPageImg3.jpg";
+import aboutPageImg4 from "../../../Asset/ClientImage/aboutPageImg4.jpg";
+import aboutPageImg5 from "../../../Asset/ClientImage/aboutPageImg5.jpg";
+import aboutPageImg6 from "../../../Asset/ClientImage/aboutPageImg6.jpg";
+import aboutPageImg7 from "../../../Asset/ClientImage/aboutPageImg7.jpg";
+import amanSingh from "../../../Asset/ClientImage/amansingh.jpg";
+import yogeshDubey from "../../../Asset/ClientImage/yogeshdubey.jpg";
 import { useStudioDetails } from '../../../Context/StudioDetailsContext';
+
 const AboutPage = () => {
   const { studioContact } = useStudioDetails();
 
   const storyTimeline = [
     {
       year: '2015',
-      event:
-        'A broken tripod sparked an unlikely friendship in the heart of Mumbai’s buzzing studios.',
+      event: 'A broken tripod sparked an unlikely friendship in the heart of Mumbai’s buzzing studios.',
     },
     { year: '2018', event: 'First viral YouTube love story' },
     { year: '2020', event: 'WeddingBoys founded.' },
     {
       year: '2022',
-      event:
-        'WeddingBoys continues to capture genuine moments of love and joy, one frame at a time.',
+      event: 'WeddingBoys continues to capture genuine moments of love and joy, one frame at a time.',
     },
     { year: 'Present', event: '500+ love stories captured.' },
   ];
 
   return (
-    <div className="min-h-screen sm:bg-primary_on/40 lg:bg-primary_on/10 font-primary lg:mt-4 ">
-      {/* Hero & Founders Story Section */}
-      <section className="relative lg:py-16 sm:py-8 px-4 md:px-8">
-        {/* Background image and overlay */}
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: `url(${aboutPageImg1})`, backgroundSize: 'cover',
-            backgroundPosition: '50% center',
-          }}
-        ></div>
-        <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div>
+    <div className="min-h-screen bg-gradient-to-b  relative overflow-hidden">
+      {/* Floating Decorative Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Golden Particles */}
+        {[...Array(30)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-[#FFD700]/30 rounded-full"
+            animate={{
+              y: [0, 100],
+              x: [0, Math.random() * 50 - 25],
+              opacity: [1, 0]
+            }}
+            transition={{
+              duration: 4 + Math.random() * 4,
+              repeat: Infinity,
+              delay: Math.random() * 2
+            }}
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 20}%`
+            }}
+          />
+        ))}
+      </div>
 
-        <div className="relative max-w-4xl mx-auto text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: -30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="text-3xl md:text-4xl font-bold mb-8 text-white"
-          >
-            Every Love Story is Unique
-          </motion.h2>
+      {/* Hero Section */}
+      <section className="relative h-screen flex lg:items-center justify-center overflow-hidden px-4">
+        <div className="absolute inset-0 z-0">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: `url(${aboutPageImg1})`, backgroundSize: 'cover',
+              backgroundPosition: '50% center',
+            }}
+          ></div>
+          {/* <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div> */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#ffdccc7b] to-transparent" />
+        </div>
+
+        <motion.div
+          className="relative z-10 max-w-4xl text-center sm:py-10"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <div className="mb-12 relative inline-block">
+            <h1 className="sm:text-mobileHeadlineLarge lg:text-desktopHeadlineLarge text-5xl  font-bold text-[#54382E] mb-6">
+              Crafting Timeless<br />Love Stories
+            </h1>
+            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-48 h-1 bg-[#FF6969] rounded-full" />
+          </div>
+
           <motion.p
+            className="sm:text-mobileBodyLarge lg:text-desktopHeadlineSmall text-lg text-[#74583E] mb-12 max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="text-lg mb-12 text-white"
           >
-            In the heart of Mumbai, two visionaries—Yogesh, whose lens captures magic, and Aman, whose words craft timeless tales—began a journey that transformed moments into masterpieces. What started with a broken tripod and a secondhand camera evolved into WeddingBoys: a celebration of love through every ceremony, be it weddings, pre-weddings, haldi, mehendi, destination weddings, baby showers, or engagements.
+            In the heart of Mumbai, two visionaries—Yogesh, whose lens captures magic,
+            and Aman, whose words craft timeless tales—began a journey that transformed
+            moments into masterpieces.
           </motion.p>
-          <div className="grid md:grid-cols-2 gap-8">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1 }}
-              className="flex flex-col items-center"
-            >
+        </motion.div>
+      </section>
+
+      {/* Founders Section */}
+      <section className="relative py-20 px-4 md:px-8 bg-white/50 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+          <motion.div
+            className="relative group"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+          >
+            <div className="relative h-96 rounded-3xl overflow-hidden shadow-2xl">
               <img
                 src={yogeshDubey}
                 alt="Yogesh Dubey"
-                className="w-48 h-48 rounded-full object-cover shadow-2xl"
+                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
               />
-              <h3 className="mt-4 text-xl font-semibold text-white">Yogesh Dubey</h3>
-              <p className="text-white">The visionary behind the lens</p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.2 }}
-              className="flex flex-col items-center"
-            >
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+              <div className="absolute bottom-0 left-0 p-6 text-white">
+                <h3 className="text-3xl font-bold">Yogesh Dubey</h3>
+                <p className="text-lg opacity-90">Founder</p>
+              </div>
+            </div>
+
+            <div className="absolute -right-8 -top-8 z-10">
+              <FiCamera className="w-16 h-16 text-[#FF6969]/30" />
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="relative group"
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+          >
+            <div className="relative h-96 rounded-3xl overflow-hidden shadow-2xl">
               <img
                 src={amanSingh}
                 alt="Aman Singh"
-                className="w-48 h-48 rounded-full object-cover shadow-2xl"
+                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
               />
-              <h3 className="mt-4 text-xl font-semibold text-white">Aman Singh</h3>
-              <p className="text-white">The storyteller weaving magic</p>
-            </motion.div>
-          </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+              <div className="absolute bottom-0 left-0 p-6 text-white">
+                <h3 className="text-3xl font-bold">Aman Singh</h3>
+                <p className="text-lg opacity-90">Founder</p>
+              </div>
+            </div>
+
+            <div className="absolute -left-8 -top-8 z-10">
+              <FiVideo className="w-16 h-16 text-[#FF6969]/30" />
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Founders & Vision Section */}
-      <section className="relative lg:py-10 sm:py-5 sm:px-2 lg:px-3 mt-6 ">
+      {/* Clients Section */}
+      <section className="py-16 sm:py-10 px-4 relative bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] ">
+        <div className="max-w-6xl mx-auto">
+          {/* Gradient Waves */}
+          <div className="absolute top-0 left-0 w-full -translate-y-1/3">
+            <svg viewBox="0 0 1440 320" className="w-full">
+              <path
+                fill="#FF6969"
+                fillOpacity="0.05"
+                d="M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,112C672,117,768,171,864,192C960,213,1056,203,1152,186.7C1248,171,1344,149,1392,138.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+              ></path>
+            </svg>
+          </div>
+          <motion.h3
+            className="text-3xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6969] to-[#FF9640]"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+          >
+            Trusted by 500+ Couples
 
-        <div className="relative px-4 py-4 max-w-7xl mx-auto grid lg:grid-cols-2 lg:gap-12 sm:gap-8 sm:items-center justify-center rounded-lg bg-primary_on/50 text-primary">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1 }}
-            className="relative lg:h-64 lg:w-72 sm:h-56 sm:w-auto mx-auto"
-          >
-            <img
-              src="https://kinsta.com/wp-content/uploads/2021/11/about-us-page.png"
-              alt="Founders Yogesh & Aman"
-              className="object-cover rounded-2xl shadow-2xl w-full h-full "
-            />
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1 }}
-          >
-            <h2 className="lg:text-desktopHeadlineSmall sm:text-mobileBodyLarge font-semibold mb-6 text-center">
-              The Visionaries Behind the Lens
-            </h2>
-            <p className="lg:text-desktopBodyMedium sm:text-mobileBodyMedium   mb-8 text-center">
-              With hearts that beat in sync and a passion for storytelling, Yogesh and Aman have turned chance encounters into a legacy of love and memories...
-            </p>
-            <motion.div whileTap={{ scale: 0.95 }} className="w-fit mx-auto">
-              <NavLink to={"/team"} className="bg-primary_on   px-6 py-2 rounded-lg hover:bg-secondary transition-colors duration-300 shadow-lg">
-                Meet the Team
-              </NavLink>
-            </motion.div>
-          </motion.div>
-        </div>
-        {/* Clients Section - Overlapping Avatars */}
-        <div className="max-w-6xl mx-auto  mt-20">
-          <h3 className="text-2xl font-bold text-center mb-6 text-tertiary_on">
-            Our Beloved Clients
-          </h3>
-          <div className="flex justify-center">
-            <div className="flex lg:-space-x-8 sm:-space-x-9 rtl:space-x-reverse">
-              {[
-                aboutPageImg2,
-                aboutPageImg3,
-                aboutPageImg4,
-                aboutPageImg5,
-                aboutPageImg6,
-                aboutPageImg7,
-              ].map((src, index) => (
-                <motion.img
-                  key={index}
-                  src={src}
-                  alt={`Client ${index + 1}`}
-                  className="  sm:w-20 sm:h-20  md:w-24 md:h-24 lg:w-28 lg:h-28  border-2 border-white rounded-full shadow-md cursor-pointer object-cover"
-                  whileHover={{ y: -5, zIndex: 10 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                />
+          </motion.h3>
+
+          <div className="relative flex justify-center">
+            <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-64 h-64 bg-[#FF6969]/10 blur-3xl rounded-full" />
+            <motion.div
+              className="flex lg:-space-x-6 sm:-space-x-8"
+              initial={{ scale: 0.9 }}
+              whileInView={{ scale: 1 }}
+            >
+              {[aboutPageImg2, aboutPageImg3, aboutPageImg4, aboutPageImg5, aboutPageImg6, aboutPageImg7].map((src, i) => (
+                <motion.div
+                  key={i}
+                  whileHover={{ y: -10 }}
+                  className="relative"
+                >
+                  <img
+                    src={src}
+                    alt={`Client ${i + 1}`}
+                    className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 border-3 border-white rounded-full shadow-lg object-cover"
+                  />
+                  <div className="absolute inset-0 border border-[#FF6969]/20 rounded-full pointer-events-none" />
+                </motion.div>
               ))}
-              <motion.a
-                href="#"
-                className="flex items-center justify-center  sm:w-20 sm:h-20  md:w-24 md:h-24 lg:w-28 lg:h-28 text-xl font-medium text-white bg-gray-700 border-2 border-white rounded-full hover:bg-gray-600"
-                whileHover={{ y: -5, zIndex: 10 }}
-                transition={{ type: "spring", stiffness: 300 }}
+              <motion.div
+                className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 text-xl font-bold text-white bg-[#FF6969] border-3 border-white rounded-full shadow-lg"
+                whileHover={{ y: -10 }}
               >
                 500+
-              </motion.a>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
-        </div>
-      </section >
+          {/* Stats Banner */}
+          <div className="max-w-5xl mx-auto mt-20 grid md:grid-cols-3 gap-8 text-center">
+            <motion.div
+              whileHover={{ y: -8 }}
+              className="bg-white/90 backdrop-blur-sm p-6 rounded-2xl border border-[#FFE5D5] hover:border-[#FFD0B5] transition-all relative overflow-hidden"
+            >
+              <div className="absolute -top-8 -right-8 w-24 h-24 bg-[#FF6969]/10 rounded-full blur-xl" />
+              <div className="mb-4 flex justify-center">
+                <div className="p-3 bg-[#FFF0E6] rounded-xl">
+                  {React.cloneElement(<FiHeart />, { className: "w-8 h-8 text-[#FF6969]" })}
+                </div>
+              </div>
+              <h3 className="text-xl font-semibold text-[#54382E] mb-2">
+                500+
+              </h3>
+              <p className="text-[#74583E] sm:text-sm text-center leading-relaxed">
+                Happy Couples
+              </p>
+            </motion.div>
+            <motion.div
+              whileHover={{ y: -8 }}
+              className="bg-white/90 backdrop-blur-sm p-6 rounded-2xl border border-[#FFE5D5] hover:border-[#FFD0B5] transition-all relative overflow-hidden"
+            >
+              <div className="absolute -top-8 -right-8 w-24 h-24 bg-[#FF6969]/10 rounded-full blur-xl" />
+              <div className="mb-4 flex justify-center">
+                <div className="p-3 bg-[#FFF0E6] rounded-xl">
+                  {React.cloneElement(<FiCamera />, { className: "w-8 h-8 text-[#FF6969]" })}
+                </div>
+              </div>
+              <h3 className="text-xl font-semibold text-[#54382E] mb-2">
+                500+
+              </h3>
+              <p className="text-[#74583E] leading-relaxed">
+                Moments Captured
+              </p>
+            </motion.div>
+            <motion.div
+              whileHover={{ y: -8 }}
+              className="bg-white/90 backdrop-blur-sm p-6 rounded-2xl border border-[#FFE5D5] hover:border-[#FFD0B5] transition-all relative overflow-hidden"
+            >
+              <div className="absolute -top-8 -right-8 w-24 h-24 bg-[#FF6969]/10 rounded-full blur-xl" />
+              <div className="mb-4 flex justify-center">
+                <div className="p-3 bg-[#FFF0E6] rounded-xl">
+                  {React.cloneElement(<FiAward />, { className: "w-8 h-8 text-[#FF6969]" })}
+                </div>
+              </div>
+              <h3 className="text-xl font-semibold text-[#54382E] mb-2">
+                10+
+              </h3>
+              <p className="text-[#74583E] leading-relaxed">
+                Awards Won
+              </p>
+            </motion.div>
+          </div>
+          {/* Floating Golden Confetti */}
+          <div className="absolute inset-0 pointer-events-none">
+            {[...Array(15)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-3 h-3 bg-[#FFD700]/30 rounded-full"
+                initial={{ y: -100, x: Math.random() * 100 }}
+                animate={{
+                  y: [0, 1000],
+                  x: [Math.random() * 50, Math.random() * 100 + 50]
+                }}
+                transition={{
+                  duration: 8 + Math.random() * 5,
+                  repeat: Infinity,
+                  delay: Math.random() * 3
+                }}
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  rotate: Math.random() * 360
+                }}
+              />
+            ))}
+          </div>
+          {/* Animated Mandala Background */}
+          {/* <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
+            className="absolute -top-1/2 -left-1/2 w-[200%] opacity-[0.03]"
+          >
+            <svg viewBox="0 0 500 500" className="text-[#FF6969]">
+              <path fill="currentColor" d="M250 0c-34.6 0-67.9 6.9-99 19.6-30.2 12.3-57.5 29.9-81 51.4-23.5 21.5-42.9 46.8-57.1 75-14.2 28.2-22.9 58.8-25.4 90.6C5.9 269 12.5 301 25 331c12.5 30 30.9 57.5 54.4 81 23.5 23.5 51 41.9 81 54.4 30 12.5 62 19.1 94.6 19.1s64.6-6.6 94.6-19.1c30-12.5 57.5-30.9 81-54.4 23.5-23.5 41.9-51 54.4-81 12.5-30 19.1-62 19.1-94.6s-6.6-64.6-19.1-94.6c-12.5-30-30.9-57.5-54.4-81-23.5-23.5-51-41.9-81-54.4C317.9 6.9 284.6 0 250 0z" />
+            </svg>
+          </motion.div> */}
 
+          {/* Dynamic Border Elements */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#FF6969]/30 via-[#FFD700]/30 to-[#FF6969]/30" />
+          <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[#FF6969]/30 via-[#FFD700]/30 to-[#FF6969]/30" />
+
+          {/* Floating Floral Cluster */}
+          <motion.div
+            animate={{ y: [-10, 10, -10] }}
+            transition={{ duration: 6, repeat: Infinity }}
+            className="absolute top-8 right-8 w-24 opacity-15"
+          >
+            <svg viewBox="0 0 64 64" fill="none">
+              <path d="M32 12a4 4 0 0 1 4 4v8a4 4 0 1 1-8 0v-8a4 4 0 0 1 4-4z" fill="#FF6969" />
+              <path d="M48 28a4 4 0 0 1 4 4v8a4 4 0 1 1-8 0v-8a4 4 0 0 1 4-4z" fill="#FFD700" />
+              <circle cx="16" cy="40" r="4" fill="#FF6969" />
+            </svg>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Timeline Section */}
-      <section className="py-16   ">
+      <section className="py-20 bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] relative">
+        <div className="max-w-4xl mx-auto px-4 sm:px-2">
+          <motion.h2
+            className="text-4xl font-bold text-center mb-16 text-[#54382E]"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+          >
+            Our Journey Through Time
+          </motion.h2>
 
-        <div className="mx-auto sm:px-4 w-full lg:px-12">
           <div className="relative">
-            {/* Vertical Timeline Line */}
-            <div className="bg-[#E5BDA7] sm:visible md:hidden absolute left-1/2 top-0 w-0.5 h-[95%] -translate-x-1/2 z-0" ></div>
+            <div className="absolute left-1/2 w-0.5 h-full bg-gradient-to-b from-[#FF6969] to-[#FFD700] transform -translate-x-1/2" />
 
             {storyTimeline.map((item, index) => (
               <motion.div
                 key={item.year}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className={`flex flex-col md:flex-row items-center mb-4 gap-2 ${index % 2 !== 0 ? 'md:flex-row-reverse' : ''}`}
+                className="flex items-center mb-16 sm:mb-8 even:flex-row-reverse"
+                initial={{ opacity: 0, x: index % 2 ? 50 : -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
               >
-                <div className="w-24 h-24 md:w-32 md:h-32 bg-[#a27b57]  text-white border-2 border-[#967251e4] rounded-full flex items-center justify-center shadow-md z-30 ">
-                  <span className="text-xl md:text-2xl font-bold ">{item.year}</span>
+                <div className="w-1/2 px-8 sm:px-2">
+                  <div className="bg-white p-6 rounded-2xl shadow-lg border border-[#FF6969]/10 relative">
+                    <div className="absolute -top-8 -right-8 w-24 h-24 bg-[#FF6969]/10 rounded-full blur-xl" />
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-[#FF6969] rounded-full flex items-center justify-center text-white">
+                      <FiStar className="w-4 h-4" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-[#54382E] mb-2">{item.year}</h3>
+                    <p className="text-[#74583E]">{item.event}</p>
+                  </div>
                 </div>
-                <div className="flex-1 bg-[#f9deb2] p-6 rounded-xl shadow-sm z-30">
-                  <p className="text-lg text-gray-700">{item.event}</p>
+                <div className="w-1/2 flex justify-center">
+                  <div className="w-auto h-auto rounded-full bg-[#FF6969] flex items-center justify-center text-white text-xl font-bold shadow-lg py-2 px-3">
+                    {item.year}
+                  </div>
                 </div>
               </motion.div>
             ))}
-
-            {/* Continuing Journey */}
-            <motion.div
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              className="text-center mt-12"
-            >
-              <div className="inline-flex items-center px-8 py-3 rounded-full bg-[#FAD7A0] text-[#74583E] font-primary">
-                <span className="mr-3 text-xl">✨</span>
-                Continuing Our Passion Journey
-                <span className="ml-3 text-xl">✨</span>
-              </div>
-            </motion.div>
           </div>
         </div>
-      </section >
+      </section>
 
       {/* CTA Section */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="relative py-16 px-4"
-      >
-        <div
-          className="max-w-4xl mx-auto rounded-xl p-8 md:p-12 text-center bg-tertiary/70 shadow-lg"
-        >
-          <motion.h2
-            className="text-2xl md:text-3xl font-bold mb-6"
-            style={{
-              color: '#FAD7A0', // secondary
-              fontFamily: 'Oxygen'
-            }}
-          >
-            Ready to Create Your Dream Wedding Film?
-          </motion.h2>
-
-          <p
-            className="text-lg mb-8 max-w-2xl mx-auto text-white " >
-            Let's transform your cherished moments into an unforgettable masterpiece
-          </p>
-
+      <section className="relative py-32 sm:py-10 bg-gradient-to-br from-[#FF6969]/5 to-[#FFD700]/5">
+        <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div
-            initial={{ scale: 0 }}
+            className="bg-white rounded-3xl sm:p-6 p-12 shadow-2xl relative overflow-hidden"
+            initial={{ scale: 0.95 }}
             whileInView={{ scale: 1 }}
-            transition={{ type: 'spring', stiffness: 100 }}
           >
-            <Link
-              to={`https://wa.me/${studioContact?.[0] || ""}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-3 rounded-lg text-lg font-medium transition-all hover:shadow-lg bg-secondary_on/50 text-white shadow-lg"
-              title="Chat with us on WhatsApp"
+            <div className="absolute -top-32 -left-32 w-64 h-64 bg-[#FFD700]/10 rounded-full blur-3xl" />
+            <div className="absolute -bottom-32 -right-32 w-64 h-64 bg-[#FF6969]/10 rounded-full blur-3xl" />
+
+            <h2 className="sm:text-mobileHeadlineMedium lg:text-desktopHeadlineMedium text-4xl font-bold text-[#54382E] mb-6">
+              Ready to Begin Your<br />Everlasting Story?
+            </h2>
+
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              className="bg-gradient-to-br from-[#FF6969] to-[#FF9640] px-12 py-4 rounded-full text-white font-bold flex items-center gap-3 mx-auto hover:shadow-xl transition-all text-nowrap sm:px-3 sm:py-2"
             >
+              <FiHeart className="flex-shrink-0 w-5 h-5" />
               Start Your Journey
-            </Link>
+            </motion.button>
           </motion.div>
         </div>
-      </motion.section>
-    </div >
+      </section>
+    </div>
   );
 };
 

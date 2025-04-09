@@ -344,7 +344,7 @@ export function Signup() {
     return (<>
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="bg-white shadow-lg rounded-lg p-6 max-w-md w-full">
-                <h1 className="font-bold lg:text-desktopHeadlineSmall sm:text-mobileHeadlineSmall text-center ">Welcome to Ankit Studio</h1>
+                <h1 className="font-bold lg:text-desktopHeadlineSmall sm:text-mobileHeadlineSmall text-center ">Welcome to Wedding Boys</h1>
                 <h2 className="text-2xl  mb-6 lg:text-desktopHeadlineSmall sm:text-mobileHeadlineSmall text-center">Signup</h2>
                 <form method='POST' className="space-y-4" onSubmit={handleForm} encType="multipart/form-data">
                     <div className="flex flex-col items-center">

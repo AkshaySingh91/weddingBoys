@@ -124,7 +124,7 @@ function Index() {
     return (
         <>
             <div className="header py-6 mx-auto text-desktopHeadlineSmall opacity-70">
-                <h1 className='whitespace-nowrap mb-2'>Ankit studios Films</h1>
+                <h1 className='whitespace-nowrap mb-2'>Wedding Boys Films</h1>
                 <hr className='bg-gray-400 w-20 mx-auto' />
             </div>
 

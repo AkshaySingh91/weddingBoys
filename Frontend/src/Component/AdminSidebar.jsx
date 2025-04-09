@@ -69,6 +69,8 @@ export default function AdminSidebar() {
                                 to="/admin/website-setting/clients">All client</Link></li>
                             <li><Link className='flex items-center gap-2 px-5 py-3 hover:opacity-50 transition-all duration-200 '
                                 to="/admin/website-setting/add-tags">New tags</Link></li>
+                            <li><Link className='flex items-center gap-2 px-5 py-3 hover:opacity-50 transition-all duration-200 '
+                                to="/admin/website-setting/bts-schema-manager">BtsSchemaManager</Link></li>
                         </ul>
                     </div>
                 </div>

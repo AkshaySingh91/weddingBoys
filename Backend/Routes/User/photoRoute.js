@@ -38,6 +38,7 @@ async function getAllPhotos(req, res, next) {
         res.status(500).json({ message: "Error fetching photos" });
     }
 }
+
 Route.get("/api/photos", getAllPhotos)
 async function getSpecificPhoto(req, res, next) {
     try {

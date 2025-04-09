@@ -7,6 +7,7 @@ import ClientDetails from './Clients/ClientDetails'
 import HomePage from '../Pages/HomePage/Index'
 import Films from './Films/Index'
 import Team from './Teams/Team'
+import BtsSchemaManager from "./BtsSchemaManager"
 
 function Index() {
   return (
@@ -22,6 +23,9 @@ function Index() {
       </Route>
       <Route path='/add-tags'
         element={<NewTags />}>
+      </Route>
+      <Route path='/bts-schema-manager'
+        element={<BtsSchemaManager />}>
       </Route>
       <Route path='/add-client'
         element={<AddClient />}>

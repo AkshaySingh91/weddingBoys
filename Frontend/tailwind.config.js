@@ -29,6 +29,13 @@ module.exports = {
       },
       fontFamily: {
         primary: 'Oxygen',
+        playfair: ['Playfair Display', 'serif'],
+        lato: ['Lato', 'sans-serif'],
+        cinzel: ['Cinzel', 'serif'],
+        greatvibes: ['Great Vibes', 'cursive'],  
+        vibes: ['Great Vibes', 'cursive'],
+        dmserif: ['DM Serif Display', 'serif'],
+        lora: ['Lora', 'serif'],
       },
       colors: {
         primary: '#2F2F2F',

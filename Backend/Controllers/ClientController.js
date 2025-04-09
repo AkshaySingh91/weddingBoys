@@ -236,7 +236,8 @@ async function checkClientDetails(req, res, next) {
                 return res.status(400).json({ message: obj.message });
             }
         }
-
+        console.log(videoDetails)
+        console.log(videoDetails[0].btsInfo)
         // Validate photos details only if provided
         if (photosDetails) {
             let obj = validateClientDetails(photosDetails, 'photos');

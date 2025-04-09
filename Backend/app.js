@@ -8,12 +8,12 @@ const app = express();
 const PORT = process.env.PORT;
 // middlewares
 const corsOptions = {
-    origin:
-        process.env.NODE_ENV === 'production'
-            ? 'https://ankitstudios.in'
-            : 'http://localhost:3000',
+    origin: process.env.NODE_ENV === 'production'
+        ? ['https://ankitstudios.in', 'https://www.ankitstudios.in']
+        : 'http://localhost:3000',
     credentials: true,
 };
+
 
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }))
@@ -45,6 +45,7 @@ import HomePageRoute from "./Routes/User/homePageRoute.js"
 // it will give all videos  
 import videosRoute from './Routes/User/videoRoute.js'
 import photosRoute from './Routes/User/photoRoute.js'
+import btsRoleRoutes from './Routes/Admin/btsRoleRoutes.js';
 
 
 // all this route wont required authentication
@@ -65,6 +66,7 @@ app.use(updateHomePage)
 app.use(clientQueryRoute)
 app.use(ProfilePageRoute)
 app.use(adminTeamImageRoute)
+app.use('/api/bts-schema', btsRoleRoutes);
 
 
 const server = () => {

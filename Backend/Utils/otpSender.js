@@ -104,7 +104,7 @@ i.fas.fa-envelope-open {
         <div class="w-96">
             <div class="welcome-section flex flex-col items-center">
                 <div class="app-name font-bold text-xl p-2">
-                    Ankit Studios
+                    Wedding Boys
                 </div>
                 <div class="welcome-text text-xs tracking-wider mb-3">
                     Thanks for signing up !
@@ -128,7 +128,7 @@ i.fas.fa-envelope-open {
             </div>
         </div>
         <div class="footer-text flex flex-col w-96 mt-6">
-            <p class="text-center text-xs text-slate-400">Thank you,<br>The Ankit studios Team</p>
+            <p class="text-center text-xs text-slate-400">Thank you,<br>The Wedding BoysTeam</p>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -143,7 +143,7 @@ const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TO
 export async function sendSmsOtp(phone, otp) {
     try {
         await client.messages.create({
-            body: `Dear Admin greeting from Ankit Studios, your One Time Passcode for phone verification to access admin dashboard is: ${otp}.`,
+            body: `Dear Admin greeting from Wedding Boys, your One Time Passcode for phone verification to access admin dashboard is: ${otp}.`,
             from: process.env.TWILIO_PHONE_NUMBER,
             to: phone
         }) 
@@ -168,7 +168,7 @@ export const sendEmailOtp = async (email, otp, name = 'Aman singh') => {
         const mailOptions = {
             from: process.env.EMAIL_FROM,
             to: email,
-            subject: "Ankit Studios Verification Code", 
+            subject: "Wedding BoysVerification Code", 
             html: emailHtml(otp, name),
         };
         await transporter.sendMail(mailOptions); 

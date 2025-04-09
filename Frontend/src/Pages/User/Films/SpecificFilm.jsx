@@ -3,8 +3,9 @@ import VideoPlayer from "../../../Component/Videoplayer"
 import { useState, useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { fireMessage } from '../../Admin/Pages/AuthPage/Signup'
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiMapPin, FiCalendar, FiPlayCircle, FiChevronLeft, FiChevronRight, FiUsers } from 'react-icons/fi';
 const api_url = process.env.REACT_APP_API_URL;
-
 function SpecificFilm() {
     const [clientName, setClientName] = useState({ Bride: "", Groom: "" })
     const [mainVideo, setMainVideo] = useState(null)
@@ -123,213 +124,263 @@ function SpecificFilm() {
     }, [videoId, fetchClientVideoAndPhotos]);
 
     return (
-        <>
-            {
-                mainVideo ?
-                    <>
-                        <div className='w-full lg:h-[32rem] sm:h-80 sm:py-4 flex justify-center'>
-                            <VideoPlayer src={mainVideo.url} />
-                        </div>
-                        <div className="text-container flex lg:flex-row sm:flex-col gap-4 justify-between lg:text-mobileHeadlineLarge lg:px-4 lg:py-10 lg:pt-0 sm:py-5">
-                            <div className="left-part flex flex-col lg:gap-4 sm:gap-2 w-fit">
-                                <div className="flex-col lg:gap-2 sm:gap-1 w-fit">
-                                    <div className="bride-and-groom flex items-center gap-2  sm:px-4 lg:px-0 ">
-                                        <span className='uppercase whitespace-nowrap sm:text-xl lg:text-2xl'>{clientName.Bride}</span>
-                                        <span className='sm:text-xl lg:text-2xl'>&</span>
-                                        <span className='uppercase sm:text-xl lg:text-2xl'>{clientName.Groom}</span>
-                                    </div>
-                                    <div className="data-and-location flex items-center gap-2  sm:px-4 lg:px-0">
-                                        <span className='uppercase whitespace-nowrap sm:text-lg lg:text-xl'>{mainVideo.videoShootDate}</span>
-                                        <svg className='w-10 h-10 fill-black' xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" ><path d="M411-481 213-679l42-42 240 240-240 240-42-42 198-198Zm253 0L466-679l42-42 240 240-240 240-42-42 198-198Z" /></svg>
-                                        <span className='uppercase sm:text-lg lg:text-xl'>{mainVideo.videoLocation ? mainVideo.videoLocation.city : ""}</span>
-                                    </div>
-                                </div>
-                                <div className="tags flex flex-wrap gap-3 lg:text-desktopBodySmall sm:text-mobileBodySmall sm:px-4 lg:px-0">
-                                    {
-                                        (mainVideo.tags && mainVideo.tags.length) ?
-                                            mainVideo.tags.map((t, i) => (
-                                                <div key={i} className="bg-[#ffeee4] tag-btn border-[1px] rounded-full text-center border-gray-500 px-3 py-1  tracking-wider">
-                                                    {t}
-                                                </div>
-                                            ))
-                                            : null
-                                    }
-                                </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Video Player Section */}
+            {mainVideo && (
+                <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="mb-12 shadow-2xl rounded-2xl overflow-hidden border-2 border-[#FFDCCC]"
+                >
+                    <div className="relative aspect-video sm:h-50 sm:w-full">
+                        <VideoPlayer src={mainVideo.url} />
+                    </div>
+                </motion.div>
+            )}
+
+            {/* Client Details Section */}
+            {mainVideo && (
+                <motion.div 
+                    className="mb-16"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                >
+                    {/* Decorative Header */}
+                    <div className="relative mb-8">
+                        <h1 className="text-4xl font-bold text-center font-cursive text-[#FF6969] mb-2">
+                            {clientName.Bride} & {clientName.Groom}
+                        </h1>
+                        <div className="flex justify-center items-center gap-4 text-lg text-gray-700 mb-6">
+                            <div className="flex items-center gap-2">
+                                <FiCalendar className="text-[#FF6969]" />
+                                <span>{mainVideo.videoShootDate}</span>
                             </div>
-                            <div className="bts-details lg:text-desktopBodyLarge tracking-wider text-gray-600 lg:px-4 sm:px-4 sm:text-mobileBodyMedium">
-                                {
-                                    (mainVideo.bts && mainVideo.bts.length) ?
-                                        mainVideo.bts.map((keyPair, i) => (
-                                            <div key={i} className="pair inline-flex">
-                                                <div className="key px-1">{keyPair.key}</div>
-                                                <span>:</span>
-                                                <div className="value px-1">{keyPair.value}</div>
-                                            </div>
-                                        ))
-                                        : null
-                                }
+                            <div className="w-1 h-1 bg-[#FF6969] rounded-full"></div>
+                            <div className="flex items-center gap-2">
+                                <FiMapPin className="text-[#FF6969]" />
+                                <span>{mainVideo.videoLocation?.city}</span>
                             </div>
                         </div>
-                    </>
-                    : null
-            }
-            <div className="same-client-content">
-                {
-                    clientPhotos.length ?
-                        <div className="photo relative sm:mx-2  rounded-2xl lg:w-full lg:h-svh  overflow-hidden scrollbar-none">
-                            <div className="flex h-full w-auto transition-transform" ref={photoSlide}
-                                onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}> {
-                                    clientPhotos.map((photo, i) => {
-                                        return (
-                                            <Link key={i} className='flex-shrink-0 h-full w-full '>
-                                                <div className="flex-shrink-0 h-full w-full " >
-                                                    <img src={photo.photoMetaData.url}
-                                                        alt="client-photo"
-                                                        className='bg-no-repeat object-cover w-full h-full lg:rounded-2xl sm:rounded-md' />
-                                                </div>
-                                            </Link>
-                                        )
-                                    })
-                                }
-                            </div>
-                            <button
-                                className="prev-photo-btn sm:p-1 left-video absolute left-4 top-1/2 transform -translate-y-1/2 bg-white text-gray-700 rounded-full lg:p-2 shadow-md hover:bg-gray-200 focus:border-none focus:outline-none" onClick={handlePrev}>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="lg:w-6 lg:h-6 sm:w-4 sm:h-4">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-                                </svg>
-                            </button>
-                            <button
-                                className="next-photo-btn sm:p-1 right-video absolute right-4 top-1/2 transform -translate-y-1/2 bg-white text-gray-700 rounded-full lg:p-2 shadow-md hover:bg-gray-200 focus:border-none focus:outline-none" onClick={handleNext}>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="lg:w-6 lg:h-6 sm:w-4 sm:h-4">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-                        </div> : null
-                }
-                {
-                    clientOtherVideos.length ?
-                        <div className="videos relative">
-                            <div className="w-full mx-2 my-10 overflow-x-auto scrollbar-none" role='list'>
-                                <div ref={videoSlide} role='listitem' className="movies flex gap-4">
-                                    {clientOtherVideos.map((video, i) => (
-                                        <Link to={`/films/${video._id}`} key={i} className='other-video flex flex-col lg:gap-2 sm:gap-3'>
-                                            <div className="relative lg:w-72 lg:h-48 sm:w-72 sm:h-[10rem]">
-                                                <img className='object-cover rounded-xl w-full h-full' src={video.thumbnailMetaData.url} alt="client-video-thumbnail" />
-                                                <button className="play-btn absolute top-[45%] left-[45%] bg-gray-400 text-gray-800 rounded-full shadow-md hover:bg-gray-400 drop-shadow-lg ">
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        fill="none"
-                                                        viewBox="0 0 24 24"
-                                                        strokeWidth="2"
-                                                        stroke="currentColor"
-                                                        className="lg:w-10 lg:h-10 sm:w-8 sm:h-8">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-4.197-2.42A1 1 0 009 9.5v5a1 1 0 001.555.832l4.197-2.42a1 1 0 000-1.664z" />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                            <div className="text-primary flex flex-col gap-0 px-2">
-                                                <div className="flex items-center lg:text-desktopBodyMedium uppercase  tracking-wide sm:text-mobileBodyMedium whitespace-nowrap font-bold uppercase">
-                                                    <span>{video.videoShootDate ? video.videoShootDate : ""}</span>
-                                                    <svg className='lg:w-8 lg:h-8 sm:w-4 sm:h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="black"><path d="M411-481 213-679l42-42 240 240-240 240-42-42 198-198Zm253 0L466-679l42-42 240 240-240 240-42-42 198-198Z" /></svg>
-                                                    <span>{video.videoLocation ? video.videoLocation.city : ""}</span>
-                                                </div>
-                                                <div className="flex gap-2 lg:text-mobileHeadlineMedium font-bold sm:text-mobileBodyLarge whitespace-wrap">
-                                                    <span>{video.clientName ? video.clientName.Bride : ""}</span>
-                                                    <span>&</span>
-                                                    <span>{video.clientName ? video.clientName.Groom : ""}</span>
-                                                </div>
-                                            </div>
+                        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-[#FF6969]/30 rounded-full"></div>
+                    </div>
 
-                                        </Link>
-                                    ))}
-                                </div>
-                            </div>
-                            <button
-                                className="prev-photo-btn sm:p-1 left-video absolute left-4 top-2/3  transform -translate-y-1/2 bg-white text-gray-700 rounded-full lg:p-2 shadow-md hover:bg-gray-200 focus:border-none focus:outline-none"
-                                onClick={() => moveVideoLeft(videoSlide)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="lg:w-6 lg:h-6 sm:w-4 sm:h-4">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-                                </svg>
-                            </button>
-                            <button
-                                className="next-photo-btn sm:p-1 right-video absolute right-4 top-2/3 transform -translate-y-1/2 bg-white text-gray-700 rounded-full lg:p-2 shadow-md hover:bg-gray-200 focus:border-none focus:outline-none"
-                                onClick={() => moveVideoRight(videoSlide)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="lg:w-6 lg:h-6 sm:w-4 sm:h-4">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-                        </div> : null
-                }
-            </div>
+                    {/* Tags Section */}
+                    <div className="flex flex-wrap justify-center gap-3 mb-10">
+                        {mainVideo.tags?.map((tag, i) => (
+                            <motion.div 
+                                key={i}
+                                whileHover={{ scale: 1.05 }}
+                                className="px-4 py-2 bg-[#FF6969]/10 text-[#FF6969] rounded-full font-medium shadow-sm"
+                            >
+                                {tag}
+                            </motion.div>
+                        ))}
+                    </div>
 
-            {
-                recommendedVideos.length ?
-                    <div className="related-content relative lg:py-8 min-w-full">
-                        <h2 className='lg:text-desktopHeadlineMedium text-center py-4 pb-8 tracking-wider font-bold sm:text-mobileHeadlineMedium sm:pt-10'> Related videos
-                            <hr className='border-1 border-gray-400 sm:w-1/2 lg:w-1/4 mx-auto' />
+                    {/* Production Team Section */}
+                    <div className="bg-[#FFF0E6] p-6 rounded-2xl shadow-inner">
+                        <h2 className="text-2xl font-bold mb-6 text-center flex items-center justify-center gap-2">
+                            <FiUsers className="text-[#FF6969]" />
+                            <span>Production Team</span>
                         </h2>
-                        <div className="w-full  overflow-x-auto   py-2 bg-[#e9e5e5] mb-4" role='list'>
-                            <div ref={recommendedVideoSlide} role='listitem'
-                                className="movies flex gap-4 lg:px-4 overflow-x-auto scrollbar-none scroll-smooth">
-                                {recommendedVideos.map((video, i) => (
-                                    <Link key={i} to={`/films/${video._id}`} className=' flex flex-col lg:gap-2 sm:gap-3'>
-                                        <div className="relative thumbnail lg:w-72 lg:h-48 sm:w-72 sm:h-[10rem]">
-                                            <img className='object-cover rounded-xl w-full h-full'
-                                                src={video.thumbnailMetaData.url} alt="video-thumbnail" />
-                                            <button className="play-btn absolute top-[45%] left-[45%] bg-gray-400 text-gray-800 rounded-full shadow-md hover:bg-gray-400 drop-shadow-lg ">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    strokeWidth="2"
-                                                    stroke="currentColor"
-                                                    className="lg:w-10 lg:h-10 sm:w-8 sm:h-8">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-4.197-2.42A1 1 0 009 9.5v5a1 1 0 001.555.832l4.197-2.42a1 1 0 000-1.664z" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                        <div className="text-primary flex flex-col gap-0 px-2">
-                                            <div className="flex items-center lg:text-desktopBodyMedium uppercase  tracking-wide sm:text-mobileBodyMedium whitespace-nowrap font-bold">
-                                                <span>{video.videoShootDate ? video.videoShootDate : ""}</span>
-                                                <svg className='lg:w-8 lg:h-8 sm:w-4 sm:h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="black"><path d="M411-481 213-679l42-42 240 240-240 240-42-42 198-198Zm253 0L466-679l42-42 240 240-240 240-42-42 198-198Z" /></svg>
-                                                <span>{video.videoLocation ? video.videoLocation.city : ""}</span>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {mainVideo.bts?.map((member, i) => (
+                                <div key={i} className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                                    <h3 className="font-bold text-[#FF6969]">{member.key}</h3>
+                                    <p className="text-gray-700">{member.value}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </motion.div>
+            )}
+
+            {/* Photo Gallery */}
+            {clientPhotos.length > 0 && (
+                <motion.section 
+                    className="mb-16 relative"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                >
+                    {/* Decorative Elements */}
+                    <div className="absolute -top-6 -left-6 w-16 h-16 opacity-20">
+                        <motion.svg
+                            animate={{ rotate: [0, 15, 0] }}
+                            transition={{ duration: 8, repeat: Infinity }}
+                            viewBox="0 0 24 24"
+                        >
+                            <path fill="#FFD700" d="M12 2C8 2 4 6 4 12s4 10 8 10 8-4 8-10S16 2 12 2zm0 18c-3 0-6-3-6-6s3-6 6-6 6 3 6 6-3 6-6 6z" />
+                            <path fill="#FF6969" d="M12 6c-2 0-4 2-4 4s2 4 4 4 4-2 4-4-2-4-4-4z" />
+                        </motion.svg>
+                    </div>
+
+                    <h2 className="text-2xl font-bold mb-6 text-center relative">
+                        <span className="relative z-10 px-4 bg-white">Gallery Moments</span>
+                        <div className="absolute top-1/2 left-0 right-0 h-px bg-[#FF6969]/30 z-0"></div>
+                    </h2>
+                    
+                    <div className="relative h-[500px] rounded-2xl overflow-hidden border-2 border-[#FFDCCC]">
+                        <div 
+                            ref={photoSlide}
+                            className="absolute inset-0 flex transition-transform duration-500 ease-out"
+                        >
+                            {clientPhotos.map((photo, i) => (
+                                <div key={i} className="relative flex-shrink-0 w-full h-full">
+                                    <img
+                                        src={photo.photoMetaData.url}
+                                        alt=""
+                                        className="w-full h-full object-cover"
+                                        loading="lazy"
+                                    />
+                                    {/* Photo Counter */}
+                                    <div className="absolute bottom-4 left-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+                                        {i+1}/{clientPhotos.length}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Navigation Buttons with Decorative Background */}
+                        <button 
+                            onClick={handlePrev}
+                            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 text-[#FF6969] p-3 rounded-full shadow-lg hover:bg-white transition-all"
+                        >
+                            <FiChevronLeft className="w-6 h-6" />
+                        </button>
+                        <button 
+                            onClick={handleNext}
+                            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 text-[#FF6969] p-3 rounded-full shadow-lg hover:bg-white transition-all"
+                        >
+                            <FiChevronRight className="w-6 h-6" />
+                        </button>
+                    </div>
+                </motion.section>
+            )}
+
+            {/* Related Videos */}
+            {recommendedVideos.length > 0 && (
+                <motion.section 
+                    className="mb-16"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                >
+                    <h2 className="text-2xl font-bold mb-6 text-center relative">
+                        <span className="relative z-10 px-4 bg-white">More Love Stories</span>
+                        <div className="absolute top-1/2 left-0 right-0 h-px bg-[#FF6969]/30 z-0"></div>
+                    </h2>
+
+                    <div className="relative">
+                        {/* Decorative Swirl */}
+                        <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                            className="absolute -right-16 -top-16 w-32 h-32 opacity-10"
+                        >
+                            <svg viewBox="0 0 100 100">
+                                <path
+                                    fill="none"
+                                    stroke="#FFD700"
+                                    strokeWidth="2"
+                                    d="M50,5a45,45 0 1,0 0,90a45,45 0 1,0 0,-90"
+                                    pathLength="1"
+                                    strokeDasharray="0.1 0.9"
+                                    strokeLinecap="round"
+                                />
+                            </svg>
+                        </motion.div>
+
+                        <div className="relative overflow-x-auto pb-4 scrollbar-hide">
+                            <div ref={recommendedVideoSlide} className="flex gap-6">
+                                {recommendedVideos.map((video) => (
+                                    <motion.div 
+                                        key={video._id}
+                                        whileHover={{ y: -5 }}
+                                        className="flex-shrink-0 w-80 bg-white rounded-xl shadow-lg overflow-hidden border border-[#FFDCCC]"
+                                    >
+                                        <Link to={`/films/${video._id}`} className="block">
+                                            <div className="relative aspect-video">
+                                                <img
+                                                    src={video.thumbnailMetaData.url}
+                                                    alt=""
+                                                    className="w-full h-full object-cover"
+                                                    loading="lazy"
+                                                />
+                                                <div className="absolute inset-0 flex items-center justify-center">
+                                                    <FiPlayCircle className="w-16 h-16 text-white/90 hover:text-[#FF6969] transition-colors drop-shadow-lg" />
+                                                </div>
                                             </div>
-                                            <div className="flex gap-2 lg:text-mobileHeadlineMedium font-bold sm:text-mobileBodyLarge whitespace-wrap">
-                                                <span>{video.clientName ? video.clientName.Bride : ""}</span>
-                                                <span>&</span>
-                                                <span>{video.clientName ? video.clientName.Groom : ""}</span>
+                                            <div className="p-4">
+                                                <h3 className="font-bold text-lg mb-2">
+                                                    {video.clientName?.Bride} & {video.clientName?.Groom}
+                                                </h3>
+                                                <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
+                                                    <FiCalendar />
+                                                    <span>{video.videoShootDate}</span>
+                                                    <FiMapPin className="ml-2" />
+                                                    <span>{video.videoLocation?.city}</span>
+                                                </div>
+                                                <div className="flex flex-wrap gap-2">
+                                                    {video.tags?.slice(0, 3).map((tag, i) => (
+                                                        <span key={i} className="px-2 py-1 bg-[#FF6969]/10 text-[#FF6969] rounded-full text-xs">
+                                                            {tag}
+                                                        </span>
+                                                    ))}
+                                                    {video.tags?.length > 3 && (
+                                                        <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs">
+                                                            +{video.tags.length - 3} more
+                                                        </span>
+                                                    )}
+                                                </div>
                                             </div>
-                                            <div className="tags w-full flex flex-wrap gap-2 my-3 text-nowrap max-w-full">
-                                                {(video.tags && video.tags.length) ?
-                                                    video.tags.map((t, i) => (
-                                                        <div key={i} className="tag text-nowrap px-2 py-1 rounded-full bg-gray-100 border-[1px] border-slate-500">{t}</div>
-                                                    ))
-                                                    : ""}
-                                            </div>
-                                        </div>
-                                    </Link>
+                                        </Link>
+                                    </motion.div>
                                 ))}
                             </div>
                         </div>
+
                         <button
-                            className="prev-photo-btn sm:p-1 left-video absolute left-4 top-2/3  transform -translate-y-1/2 bg-white text-gray-700 rounded-full lg:p-2 shadow-md hover:bg-gray-200 focus:border-none focus:outline-none"
-                            onClick={() => moveVideoLeft(recommendedVideoSlide)}>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="lg:w-6 lg:h-6 sm:w-4 sm:h-4">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-                            </svg>
+                            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white text-[#FF6969] p-3 rounded-full shadow-lg hover:bg-gray-50"
+                            onClick={() => moveVideoLeft(recommendedVideoSlide)}
+                        >
+                            <FiChevronLeft className="w-6 h-6" />
                         </button>
                         <button
-                            className="next-photo-btn sm:p-1 right-video absolute right-4 top-2/3 transform -translate-y-1/2 bg-white text-gray-700 rounded-full lg:p-2 shadow-md hover:bg-gray-200 focus:border-none focus:outline-none"
-                            onClick={() => moveVideoRight(recommendedVideoSlide)}>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="lg:w-6 lg:h-6 sm:w-4 sm:h-4">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                            </svg>
+                            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white text-[#FF6969] p-3 rounded-full shadow-lg hover:bg-gray-50"
+                            onClick={() => moveVideoRight(recommendedVideoSlide)}
+                        >
+                            <FiChevronRight className="w-6 h-6" />
                         </button>
                     </div>
-                    : null
-            }
-        </>
-    )
+                </motion.section>
+            )}
+
+            {/* Floating Particles */}
+            <div className="fixed inset-0 pointer-events-none z-0">
+                {[...Array(12)].map((_, i) => (
+                    <motion.div
+                        key={i}
+                        className="absolute w-2 h-2 rounded-full bg-[#FF6969]/20"
+                        initial={{ 
+                            y: Math.random() * 100,
+                            x: Math.random() * 100,
+                            scale: 0
+                        }}
+                        animate={{
+                            y: ["0%", "-100%"],
+                            x: ["0%", `${Math.random() * 20 - 10}%`],
+                            scale: [0, 1, 0]
+                        }}
+                        transition={{
+                            duration: 4 + Math.random() * 4,
+                            repeat: Infinity,
+                            delay: Math.random() * 2,
+                            ease: "linear"
+                        }}
+                    />
+                ))}
+            </div>
+        </div>
+    );
 }
 
 export default SpecificFilm

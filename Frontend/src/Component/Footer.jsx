@@ -11,7 +11,7 @@ import { useInView } from "react-intersection-observer";
 
 
 export default function Footer() {
-  const { studioName, studioLogo, studioAddress, studioContact, studioEmail, studioSocials } = useStudioDetails();
+  const { studioName, studioAddress, studioContact, studioEmail, studioSocials } = useStudioDetails();
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   // Animation variants
@@ -44,8 +44,7 @@ export default function Footer() {
   const contacts = [
     {
       label: "Phone",
-      value: studioContact?.[0],
-      getHref: (value) => `tel:${value}`,
+      value: [{ no: studioContact?.[0], getHref: (value) => `tel:${value}` }, { no: studioContact?.[1], getHref: (value) => `https://wa.me/${value || ''}`, }],
       tooltip: "Call Now",
     },
     {
@@ -95,7 +94,41 @@ export default function Footer() {
             className="flex flex-col items-center text-center gap-4"
           >
             <div className="lg:grid lg:grid-cols-3 sm:flex sm:flex-col gap-4 p-4 bg-[rgba(63,63,63,0.32)] rounded-3xl shadow-md backdrop-blur-md min-h-[50px] items-center">
-              {contacts.map((contact, index) => (
+              <motion.div
+                variants={childVariants}
+                className="flex flex-col items-center gap-3 break-all relative group"
+                whileHover={{ scale: 1.02 }}
+              >
+                <h3 className="font-bold text-mobileBodyMedium">{contacts[0].label}</h3>
+                {contacts[0].value[0] ?
+                  <div className='flex flex-col lg:gap-4 sm:gap-2'>
+                    <a
+                      href={contacts[0].value[0].getHref(contacts[0].value[0].no)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="break-words"
+                    >
+                      <p>{contacts[0].value[0].no}</p>
+                    </a>
+                    <a
+                      href={contacts[0].value[1].getHref(contacts[0].value[1].no)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="break-words"
+                    >
+                      <p>{contacts[0].value[1].no}</p>
+                    </a>
+                  </div>
+
+                  : (
+                    <div className="flex flex-col gap-2 justify-center items-center">
+                      <span className="block animate-pulse bg-slate-400 rounded-xl sm:w-60 lg:w-60 h-5" />
+                      <span className="block animate-pulse bg-slate-400 rounded-xl sm:w-48 lg:w-48 h-5" />
+                      <span className="block animate-pulse bg-slate-400 rounded-xl sm:w-52 lg:w-52 h-5" />
+                    </div>
+                  )}
+              </motion.div>
+              {contacts.slice(1).map((contact, index) => (
                 <motion.div
                   key={index}
                   variants={childVariants}

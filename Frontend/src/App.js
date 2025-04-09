@@ -14,6 +14,8 @@ import NotFound from './Component/NotFound.jsx';
 import Search from "./Pages/User/SearchPage/SearchResult.jsx"
 import AllFilms from './Pages/User/Films/AllFilms.jsx';
 import AboutPage from './Pages/User/AboutUs/AboutPage.jsx';
+import Navbar from './Component/Navbar.jsx';
+import Background from "./Component/Background.jsx"
 
 function App() {
   const location = useLocation();
@@ -24,41 +26,27 @@ function App() {
     <StudioDetailsContext>
       {
         !isAdminRoute &&
-        <div className='lg:pt-4 lg:pl-40 lg:pr-2 sm:px-2  box-border max-w-screen min-h-screen  scrollbar-thin'>
-          <Header></Header>
-          <Sidebar></Sidebar>
-          <main className='w-auto h-auto box-border bg-primary  item-center overflow-x-hidden'>
-            <Routes>
-              <Route exact path='/' element={
-                <Home></Home>}>
-              </Route>
-              <Route path='/films/*' element={
-                <FilmsRoute></FilmsRoute>}>
-              </Route>
-              <Route path='/allfilms' element={
-                <AllFilms></AllFilms>}>
-              </Route>
-              <Route path='/photos/*' element={
-                <Photos></Photos>}>
-              </Route>
-              <Route path='/search-result' element={
-                <Search></Search>}>
-              </Route>
-              <Route exact path='/contact' element={
-                <Contact></Contact>}>
-              </Route>
-              <Route exact path='/team' element={
-                <Team></Team>}>
-              </Route>
-              <Route exact path='/about-us' element={
-                <AboutPage></AboutPage>}>
-              </Route>
-              <Route path='/*'
-                element={<NotFound />}>
-              </Route>
-            </Routes>
-          </main>
-          <Footer></Footer>
+        <div className="relative min-h-screen">
+          {/* Cinematic Background (placed behind the content) */}
+          <Background />
+          {/* Content wrapper with higher z-index */}
+          <div className="relative z-10">
+            <Navbar />
+            <main className="pt-[6rem] lg:pr-2 sm:px-2 box-border overflow-hidden">
+              <Routes>
+                <Route exact path='/' element={<Home />} />
+                <Route path='/films/*' element={<FilmsRoute />} />
+                <Route path='/allfilms' element={<AllFilms />} />
+                <Route path='/photos/*' element={<Photos />} />
+                <Route path='/search-result' element={<Search />} />
+                <Route exact path='/contact' element={<Contact />} />
+                <Route exact path='/team' element={<Team />} />
+                <Route exact path='/about-us' element={<AboutPage />} />
+                <Route path='/*' element={<NotFound />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
         </div>
       }
       {
@@ -74,3 +62,4 @@ function App() {
 }
 
 export default App;
+

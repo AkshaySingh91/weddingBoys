@@ -90,7 +90,7 @@ export default function Herobanner() {
         <>
             {
                 isVideoPlaying && videoUrl ?
-                    <div className="homepage-video-underlay fixed top-0 left-0 flex lg:flex-row sm:flex-col items-center w-screen h-screen underlay bg-[rgba(0,0,0,0.87)] shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-[2px] lg:px-4 lg:py-4 overflow-hidden z-[99999] sm:justify-center">
+                    <div className="homepage-video-underlay fixed top-[6rem] left-0 flex lg:flex-row sm:flex-col items-center w-screen h-[calc(100vh-6rem)] underlay bg-[rgba(0,0,0,0.87)] shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-[2px] lg:px-4 lg:py-4 overflow-hidden z-[999990] sm:justify-center">
                         <button onClick={() => setIsVideoPlaying(false)} className='close-video-player lg:order-last lg:self-start video-end-btn bg-gray-600 rounded-full lg:p-1 sm:p-1 sm:self-end w-fit h-fit m-4'>
                             <svg className='lg:w-6 lg:h-6 sm:h-4 sm:w-4 fill-gray-100 ' xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" /></svg>
                         </button>
@@ -125,12 +125,12 @@ export default function Herobanner() {
 
                                     <Link to={`/films/${video.videoId}`}>
                                         <div className="absolute lg:bottom-8 leading-4 lg:left-8 text-white flex flex-col gap-0 sm:left-4 sm:bottom-4">
-                                            <div className="flex gap-2 lg:text-3xl tracking-widest font-bold sm:text-mobileHeadlineSmall">
+                                            <div className="flex gap-2 lg:text-3xl tracking-widest font-bold sm:text-mobileBodyLarge">
                                                 <span>{video.clientName.Bride}</span>
                                                 <span>&</span>
                                                 <span>{video.clientName.Groom}</span>
                                             </div>
-                                            <div className="flex items-center leading-4 lg:text-lg uppercase font-light tracking-wide sm:text-mobileHeadlineSmall">
+                                            <div className="flex items-center leading-4 lg:text-lg uppercase font-light tracking-wide sm:text-mobileBodyMedium">
                                                 <span>{video.videoShootDate}</span>
                                                 <svg className='w-10 h-10' xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="white"><path d="M411-481 213-679l42-42 240 240-240 240-42-42 198-198Zm253 0L466-679l42-42 240 240-240 240-42-42 198-198Z" /></svg>
                                                 <span>{video.videoLocation.city}</span>
