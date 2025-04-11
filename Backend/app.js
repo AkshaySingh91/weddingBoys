@@ -9,7 +9,7 @@ const PORT = process.env.PORT;
 // middlewares
 const corsOptions = {
     origin: process.env.NODE_ENV === 'production'
-        ? ['https://ankitstudios.in', 'https://www.ankitstudios.in']
+        ? ['https://theweddingboys.in', 'https://www.theweddingboys.in']
         : 'http://localhost:3000',
     credentials: true,
 };

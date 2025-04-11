@@ -234,7 +234,7 @@ export default function Footer() {
           transition={{ delay: 0.5 }}
           className="text-center px-8 text-sm lg:text-desktopBodySmall sm:pb-24 md:pb-10"
         >
-          © 2024 - {studioName || "Wedding Boys"} | All Rights Reserved.
+          © <span id="footer-year">2025</span> - {studioName || "The Wedding Boys"} | All Rights Reserved.
         </motion.div>
       </motion.div>
     </footer>
