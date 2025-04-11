@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FiCamera, FiHeart, FiVideo, FiStar, FiAward } from 'react-icons/fi';
-import { FaInfoCircle, FaCreditCard, FaGlobe } from "react-icons/fa"
 import aboutPageImg1 from "../../../Asset/ClientImage/aboutPageImg1.jpg";
 import aboutPageImg2 from "../../../Asset/ClientImage/aboutPageImg2.jpg";
 import aboutPageImg3 from "../../../Asset/ClientImage/aboutPageImg3.jpg";
@@ -364,14 +363,21 @@ const AboutPage = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               className="bg-gradient-to-br from-[#FF6969] to-[#FF9640] px-12 py-4 rounded-full text-white font-bold flex items-center gap-3 mx-auto hover:shadow-xl transition-all text-nowrap sm:px-3 sm:py-2"
+              onClick={() => window.open(
+                `https://wa.me/${studioContact?.[0] || ''}?text=${encodeURIComponent(
+                    "Hello! I'm interested in booking your studio for my event. " +
+                    "Could you please share available dates and package details?"
+                )}`,
+                '_blank'
+            )}
             >
-              <FiHeart className="flex-shrink-0 w-5 h-5" />
-              Start Your Journey
-            </motion.button>
-          </motion.div>
-        </div>
-      </section>
+            <FiHeart className="flex-shrink-0 w-5 h-5" />
+            Start Your Journey
+          </motion.button>
+        </motion.div>
     </div>
+      </section >
+    </div >
   );
 };
 

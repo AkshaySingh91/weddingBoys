@@ -7,7 +7,6 @@ export default function BtsTape() {
     const btsTapeRef = useRef();
     const containerRef = useRef();
     const [btsImageUrl, setBtsImageUrl] = useState([]);
-    const [duplicatedImages, setDuplicatedImages] = useState([]);
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start end", "end start"]
@@ -31,8 +30,7 @@ export default function BtsTape() {
 
                 // Duplicate images for seamless loop
                 const images = data.btsUrls.length > 0 ? data.btsUrls : [];
-                setBtsImageUrl(images);
-                setDuplicatedImages([...images, ...images]);
+                setBtsImageUrl([...images, ...images]);
 
             } catch (error) {
                 Swal.fire({
@@ -64,7 +62,7 @@ export default function BtsTape() {
                     className="flex gap-3 px-4"
                     ref={btsTapeRef}
                 >
-                    {duplicatedImages.map((btsUrl, index) => (
+                    {btsImageUrl.map((btsUrl, index) => (
                         <div
                             key={`${btsUrl.key}-${index}`}
                             className="relative flex-none w-72 h-56 group overflow-hidden shadow-lg rounded-xl"

@@ -58,12 +58,14 @@ const TeamCard = ({ member }) => {
         >
           <a
             target='_blank'
+            rel="noreferrer"
             href={`https://www.instagram.com/${member.social.instagram}`}
             className="p-2 bg-white/10 rounded-full backdrop-blur-sm hover:bg-white/20">
             <FiInstagram className="w-5 h-5" />
           </a>
           <a href={`https://www.linkedin.com/${member.social.linkedin}`}
             target='_blank'
+            rel="noreferrer"
             className="p-2 bg-white/10 rounded-full backdrop-blur-sm hover:bg-white/20">
             <FiLinkedin className="w-5 h-5" />
           </a>

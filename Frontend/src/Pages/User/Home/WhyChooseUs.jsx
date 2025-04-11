@@ -31,7 +31,7 @@ const TypewriterQuotes = React.memo(({ quotes }) => {
                 setQuoteIndex(prev => (prev + 1) % quotes.length);
             }, 2000);
         }
-    }, []);
+    }, [quotes]);
 
     useEffect(() => {
         const currentQuote = quotes[quoteIndex];

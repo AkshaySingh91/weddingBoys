@@ -3,20 +3,18 @@ import VideoPlayer from "../../../Component/Videoplayer"
 import { useState, useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { fireMessage } from '../../Admin/Pages/AuthPage/Signup'
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { FiMapPin, FiCalendar, FiPlayCircle, FiChevronLeft, FiChevronRight, FiUsers } from 'react-icons/fi';
 const api_url = process.env.REACT_APP_API_URL;
 function SpecificFilm() {
     const [clientName, setClientName] = useState({ Bride: "", Groom: "" })
     const [mainVideo, setMainVideo] = useState(null)
     const [clientPhotos, setClientPhotos] = useState([]);
-    const [clientOtherVideos, setClientOtherVideos] = useState([]);
     const [recommendedVideos, setRecommendedVideos] = useState([]);
     const [currentPhotoSlide, setCurrentPhotoSlide] = useState(0);
     const photoSlide = useRef();
-    const touchStartX = useRef(0);
-    const touchEndX = useRef(0);
-    const videoSlide = useRef();
+    // const touchStartX = useRef(0);
+    // const touchEndX = useRef(0); 
     const recommendedVideoSlide = useRef();
     const { videoId } = useParams();
 
@@ -40,22 +38,22 @@ function SpecificFilm() {
             photoSlide.current.style.transform = `translateX(${-currentPhotoSlide * 100}%)`;
         }
     }, [currentPhotoSlide]);
-    const handleTouchStart = (e) => {
-        touchStartX.current = e.touches[0].clientX;
-    }
-    const handleTouchMove = (e) => {
-        touchEndX.current = e.touches[0].clientX;
-    }
-    const handleTouchEnd = () => {
-        const changeInPosition = touchEndX.current - touchStartX.current;
-        if (changeInPosition > 50) {
-            // Swipe Right
-            handlePrev();
-        } else if (changeInPosition < -50) {
-            // Swipe Left
-            handleNext();
-        }
-    }
+    // const handleTouchStart = (e) => {
+    //     touchStartX.current = e.touches[0].clientX;
+    // }
+    // const handleTouchMove = (e) => {
+    //     touchEndX.current = e.touches[0].clientX;
+    // }
+    // const handleTouchEnd = () => {
+    //     const changeInPosition = touchEndX.current - touchStartX.current;
+    //     if (changeInPosition > 50) {
+    //         // Swipe Right
+    //         handlePrev();
+    //     } else if (changeInPosition < -50) {
+    //         // Swipe Left
+    //         handleNext();
+    //     }
+    // }
     const moveVideoLeft = (slide) => {
         const container = slide.current;
         if (container) {
@@ -89,7 +87,6 @@ function SpecificFilm() {
                 }
                 setClientName(data.clientName)
                 setMainVideo(data.selectedVideo)
-                setClientOtherVideos(data.remainingVideos)
                 setClientPhotos(data.photos)
             } catch (error) {
                 fireMessage(error, 'error')
@@ -127,7 +124,7 @@ function SpecificFilm() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Video Player Section */}
             {mainVideo && (
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     className="mb-12 shadow-2xl rounded-2xl overflow-hidden border-2 border-[#FFDCCC]"
@@ -140,7 +137,7 @@ function SpecificFilm() {
 
             {/* Client Details Section */}
             {mainVideo && (
-                <motion.div 
+                <motion.div
                     className="mb-16"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -167,7 +164,7 @@ function SpecificFilm() {
                     {/* Tags Section */}
                     <div className="flex flex-wrap justify-center gap-3 mb-10">
                         {mainVideo.tags?.map((tag, i) => (
-                            <motion.div 
+                            <motion.div
                                 key={i}
                                 whileHover={{ scale: 1.05 }}
                                 className="px-4 py-2 bg-[#FF6969]/10 text-[#FF6969] rounded-full font-medium shadow-sm"
@@ -197,7 +194,7 @@ function SpecificFilm() {
 
             {/* Photo Gallery */}
             {clientPhotos.length > 0 && (
-                <motion.section 
+                <motion.section
                     className="mb-16 relative"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -218,9 +215,9 @@ function SpecificFilm() {
                         <span className="relative z-10 px-4 bg-white">Gallery Moments</span>
                         <div className="absolute top-1/2 left-0 right-0 h-px bg-[#FF6969]/30 z-0"></div>
                     </h2>
-                    
+
                     <div className="relative h-[500px] rounded-2xl overflow-hidden border-2 border-[#FFDCCC]">
-                        <div 
+                        <div
                             ref={photoSlide}
                             className="absolute inset-0 flex transition-transform duration-500 ease-out"
                         >
@@ -234,20 +231,20 @@ function SpecificFilm() {
                                     />
                                     {/* Photo Counter */}
                                     <div className="absolute bottom-4 left-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
-                                        {i+1}/{clientPhotos.length}
+                                        {i + 1}/{clientPhotos.length}
                                     </div>
                                 </div>
                             ))}
                         </div>
 
                         {/* Navigation Buttons with Decorative Background */}
-                        <button 
+                        <button
                             onClick={handlePrev}
                             className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 text-[#FF6969] p-3 rounded-full shadow-lg hover:bg-white transition-all"
                         >
                             <FiChevronLeft className="w-6 h-6" />
                         </button>
-                        <button 
+                        <button
                             onClick={handleNext}
                             className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 text-[#FF6969] p-3 rounded-full shadow-lg hover:bg-white transition-all"
                         >
@@ -259,7 +256,7 @@ function SpecificFilm() {
 
             {/* Related Videos */}
             {recommendedVideos.length > 0 && (
-                <motion.section 
+                <motion.section
                     className="mb-16"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -292,7 +289,7 @@ function SpecificFilm() {
                         <div className="relative overflow-x-auto pb-4 scrollbar-hide">
                             <div ref={recommendedVideoSlide} className="flex gap-6">
                                 {recommendedVideos.map((video) => (
-                                    <motion.div 
+                                    <motion.div
                                         key={video._id}
                                         whileHover={{ y: -5 }}
                                         className="flex-shrink-0 w-80 bg-white rounded-xl shadow-lg overflow-hidden border border-[#FFDCCC]"
@@ -360,7 +357,7 @@ function SpecificFilm() {
                     <motion.div
                         key={i}
                         className="absolute w-2 h-2 rounded-full bg-[#FF6969]/20"
-                        initial={{ 
+                        initial={{
                             y: Math.random() * 100,
                             x: Math.random() * 100,
                             scale: 0
