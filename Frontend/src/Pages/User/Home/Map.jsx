@@ -81,7 +81,7 @@ export default function Map() {
                 >
                     Love Stories Captured Across the Map
                 </motion.h1>
-                <motion.h2  
+                <motion.h2
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     className='text-primary sm:text-mobileBodyMedium lg:text-desktopBodyLarge font-light text-center'
@@ -162,7 +162,7 @@ export default function Map() {
                                                 {c.clientName.Bride} & {c.clientName.Groom}
                                             </p>
                                             <p className="text-xs text-gray-600">
-                                                {c.photo.photoLocation.city}
+                                                {c.photo?.photoLocation?.city || c.video?.videoLocation?.city || ""}
                                             </p>
                                         </div>
                                     </motion.div>
@@ -258,7 +258,7 @@ export default function Map() {
                     )}
                 </AnimatePresence>
             </div>
-            
+
         </div>
     );
-}
+}  

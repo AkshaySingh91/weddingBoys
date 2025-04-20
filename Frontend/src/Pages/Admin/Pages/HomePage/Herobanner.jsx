@@ -122,17 +122,17 @@ export default function Herobanner() {
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-4.197-2.42A1 1 0 009 9.5v5a1 1 0 001.555.832l4.197-2.42a1 1 0 000-1.664z" />
                                         </svg>
                                     </button>
-                                    <Link to={`/films/${video.videoId}`}>
+                                    <Link to={`/films/${video?.videoId}`}>
                                         <div className="absolute lg:bottom-8 lg:left-8 text-white flex flex-col gap-0 sm:left-4 sm:bottom-4">
                                             <div className="flex items-center lg:text-desktopHeadlineSmall uppercase font-light tracking-wide sm:text-mobileHeadlineSmall">
-                                                <span>{video.videoShootDate}</span>
+                                                <span>{video?.videoShootDate || ""}</span>
                                                 <svg className='w-10 h-10' xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="white"><path d="M411-481 213-679l42-42 240 240-240 240-42-42 198-198Zm253 0L466-679l42-42 240 240-240 240-42-42 198-198Z" /></svg>
-                                                <span>{video.videoLocation.city}</span>
+                                                <span>{video?.videoLocation?.city || ""}</span>
                                             </div>
                                             <div className="flex gap-2 text-mobileHeadlineMedium font-bold sm:text-mobileHeadlineSmall">
-                                                <span>{video.clientName.Bride}</span>
+                                                <span>{video?.clientName?.Bride || ""}</span>
                                                 <span>&</span>
-                                                <span>{video.clientName.Groom}</span>
+                                                <span>{video?.clientName?.Groom || ""}</span>
                                             </div>
                                         </div>
                                     </Link>

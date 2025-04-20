@@ -159,7 +159,7 @@ export default function VideoThumbnail() {
                     <div className=" cursor-pointer text-center text-sm h-10 w-full border-2 border-black bg-slate-300 rounded-md" onClick={() => { toogleCollapse('tags') }}>
                         select the keyword for related to video
                     </div>
-                    <div className={`bg-blue-300 all-tags ${collapsed.tags ? "max-h-40" : "max-h-0 overflow-y-scroll scrollbar-thin"}`}>
+                    <div className={`bg-blue-300 all-tags ${collapsed.tags ? "max-h-fit" : "max-h-0 overflow-y-scroll scrollbar-thin"}`}>
                         {
                             tagsData.map((tagType) => {
                                 return <div key={tagType.tagType} className="flex flex-wrap gap-2 w-full p-2">

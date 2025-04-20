@@ -99,7 +99,8 @@ export default function Map() {
                                                     <p style={{ margin: ' 5px 0', fontFamily: "sans-serif" }} className='px-2 my-1 uppercase text-wrap text-desktopBodySmall'>
                                                         {c.clientName.Bride} & {c.clientName.Groom}
                                                     </p>
-                                                    <p style={{ margin: '5px 0' }} className='px-2 my-1 uppercase text-mobileBodyMedium text-center w-full'>{c.photo.photoLocation.city}</p>
+                                                    <p style={{ margin: '5px 0' }} className='px-2 my-1 uppercase text-mobileBodyMedium text-center w-full'>{c.photo?.photoLocation?.city || c.video?.videoLocation?.city || ""}
+                                                    </p>
                                                 </div>
                                             </div>
                                         </Popup>
