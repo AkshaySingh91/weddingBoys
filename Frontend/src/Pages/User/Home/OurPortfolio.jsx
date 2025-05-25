@@ -236,7 +236,7 @@ export default function OurPortfolio() {
                                         src={item.url}
                                         alt={`${item.client?.Bride} & ${item.client?.Groom}`}
                                         className="w-full sm:h-64 lg:h-80 object-cover transform transition-transform duration-500 group-hover:scale-105"
-                                        loading="lazy"
+                                        loading="eager"
                                     />
                                     <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                                     <div className="absolute bottom-0 left-0 right-0 p-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">

@@ -115,7 +115,13 @@ async function adminLogin(req, res, next) {
 
         res.cookie(COOKIE_NAME.session_token, sessionToken, {
             httpOnly: true,
-            domain: 'localhost',
+            // only include domain in production:
+            // .theweddingboys.in Works for both theweddingboys.in and www.theweddingboys.in
+            ...(process.env.NODE_ENV === 'production' && { domain: ".theweddingboys.in" }),
+            // secure cookies over HTTPS only in production:
+            secure: process.env.NODE_ENV === 'production',
+            // tighten CSRF protection if you need cross‑site POSTs (e.g. OAuth callbacks)
+            sameSite: process.env.NODE_ENV === 'production' ? 'lax' : 'lax',
             path: '/',
             signed: true,
             expires
