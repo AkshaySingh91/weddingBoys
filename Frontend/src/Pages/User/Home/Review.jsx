@@ -5,7 +5,7 @@ import { motion, useAnimation } from 'framer-motion';
 import { FiChevronLeft, FiChevronRight, FiStar, FiHeart } from 'react-icons/fi';
 import { Link as ScrollLink } from "react-scroll"
 
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 export default function Review() {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -108,7 +108,7 @@ export default function Review() {
                     >
                         CLIENT LOVE
                     </motion.div>
-                    <h1 className="text-4xl font-bold text-[#5E2B17] mb-4 font-serif">
+                    <h1 className="text-4xl font-bold text-[#5E2B17] mb-4 ">
                         What Our Couples Say
                     </h1>
                     <p className="text-[#7F5347] max-w-2xl mx-auto">
@@ -157,7 +157,7 @@ export default function Review() {
                                         </div>
 
                                         <div className="lg:w-1/2 p-8 flex flex-col justify-center">
-                                            <blockquote className="text-xl text-[#5E2B17] mb-6 relative before:content-['“'] before:absolute before:-left-6 before:-top-4 before:text-6xl before:text-[#FF6969]/30 before:font-serif">
+                                            <blockquote className="text-xl text-[#5E2B17] mb-6 relative before:content-['“'] before:absolute before:-left-6 before:-top-4 before:text-6xl before:text-[#FF6969]/30 before:">
                                                 {review.reviewText}
                                             </blockquote>
                                             <div className="flex items-center space-x-4">

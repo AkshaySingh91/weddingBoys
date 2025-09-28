@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import { fireMessage } from '../../Admin/Pages/AuthPage/Signup'
 import { motion } from 'framer-motion';
 import { FiMapPin, FiCalendar, FiPlayCircle, FiChevronLeft, FiChevronRight, FiUsers } from 'react-icons/fi';
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 function SpecificFilm() {
     const [clientName, setClientName] = useState({ Bride: "", Groom: "" })
     const [mainVideo, setMainVideo] = useState(null)

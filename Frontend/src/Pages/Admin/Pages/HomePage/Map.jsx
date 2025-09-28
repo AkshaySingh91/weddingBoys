@@ -5,7 +5,7 @@ import "leaflet/dist/leaflet.css";
 import { fireMessage } from '../AuthPage/Signup';
 import { Link } from 'react-router-dom';
 
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 export default function Map() {
     const [isMapSidebarOpen, setIsMapSidebarOpen] = useState(true);
@@ -95,7 +95,7 @@ export default function Map() {
                                                         className='w-40 h-24 rounded-lg object-cover bg-center border-[1px] border-gray-200'
                                                         src={c.url} alt={`map-client-photo`} />
                                                 </Link>
-                                                <div className="text-content my-2 flex flex-col items-start justify-center font-serif opacity-70">
+                                                <div className="text-content my-2 flex flex-col items-start justify-center  opacity-70">
                                                     <p style={{ margin: ' 5px 0', fontFamily: "sans-serif" }} className='px-2 my-1 uppercase text-wrap text-desktopBodySmall'>
                                                         {c.clientName.Bride} & {c.clientName.Groom}
                                                     </p>

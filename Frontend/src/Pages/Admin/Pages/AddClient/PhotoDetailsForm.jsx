@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { fireMessage } from '../AuthPage/Signup';
 import { indianLocations } from '../../../../Utils/Data';
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 
 function PhotoDetailsForm({ tagsData, setTagsData, photosDetails, setPhotoDetails, setPhotoForm, photoName }) {

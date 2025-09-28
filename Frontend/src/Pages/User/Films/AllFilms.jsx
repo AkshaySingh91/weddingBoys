@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Swal from 'sweetalert2';
 import FilteredFilms from './FilteredFilms';
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
  
 function AllFilms() {
     const [isLoading, setIsLoading] = useState(false);

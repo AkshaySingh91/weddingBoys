@@ -3,7 +3,7 @@ import { fireMessage } from "../../Admin/Pages/AuthPage/Signup";
 import "leaflet/dist/leaflet.css";
 import Swal from "sweetalert2";
 
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 const AddTag = () => {
     const [allTags, setAllTags] = useState([]);

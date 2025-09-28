@@ -5,7 +5,7 @@ import ClientReview from '../../Models/ReviewSchema.js';
 import ClientSchema from '../../Models/ClientSchema.js';
 import { getObjectUrl } from '../../Controllers/awsController.js';
 
-Route.get("/api/hero-videos", async (req, res) => {
+Route.get("/api/hero-videos", async (req, res) => { 
     try {
         const { heroVideos } = await websiteSettingSchema.findOne().select('heroVideos').sort({ 'heroVideos.priority': -1 }).lean()
 

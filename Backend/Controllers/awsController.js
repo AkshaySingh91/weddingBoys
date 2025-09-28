@@ -18,7 +18,7 @@ async function getObjectUrl(key, expiresIn = 3600) {
         })
         const url = await getSignedUrl(s3Client, command, { expiresIn });
         return url
-    } catch (error) { 
+    } catch (error) {
         throw new Error('Error on Getting media url');
     }
 }
@@ -34,7 +34,7 @@ async function putObjectUrl(key, type, expiresIn = 60 * 5) {
             Expires: expiresIn
         })
         return url;
-    } catch (error) { 
+    } catch (error) {
         throw new Error('Error generating presigned URLs');
     }
 }
@@ -44,12 +44,14 @@ async function deleteObject(key) {
             Bucket: process.env.S3_BUCKET_NAME,
             Key: key,
         });
-        await s3Client.send(command); 
-    } catch (error) { 
+        await s3Client.send(command);
+    } catch (error) {
         throw new Error('File deletion failed');
     }
 }
+// this will create a always public url
+function generatePublicUrl(key) {
+    return `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
+}
 
-
-
-export { getObjectUrl, putObjectUrl, deleteObject }
+export { getObjectUrl, putObjectUrl, deleteObject, generatePublicUrl }

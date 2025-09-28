@@ -3,7 +3,7 @@ import facebookLogo from '../Asset/facebookLogo.svg'
 import instagramLogo from '../Asset/instagramLogo.svg'
 import twitterLogo from '../Asset/twitterLogo.svg'
 import youtubeLogo from '../Asset/youtubeLogo.svg'
-import { useStudioDetails } from '../Context/StudioDetailsContext'
+import { useStudioDetails } from '../Context/StudioDetailsContext.jsx'
 import { Link } from "react-router-dom"
 import footerVideo from "../Asset/ClientImage/footerVideo.mp4"
 import { motion } from "framer-motion";

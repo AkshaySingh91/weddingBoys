@@ -1,7 +1,7 @@
 import React from 'react'
 import { fireMessage } from '../AuthPage/Signup';
 import { useEffect, useState } from 'react';
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 function EditPhotoForm({ id, isEditing, setPhotoForm, tagsData, setTagsData, clientDetails, setClientDetails }) {
     const [collapsed, setCollapsed] = useState({ tags: false, });

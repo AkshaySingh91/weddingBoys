@@ -189,7 +189,7 @@ const WhyChooseUs = () => {
                         <FiStar className="inline mr-2 animate-pulse" />
                         Why We Stand Out
                     </div>
-                    <h2 className="text-3xl md:text-4xl font-bold text-[#5E2B17] mb-4 font-serif">
+                    <h2 className="text-3xl md:text-4xl font-bold text-[#5E2B17] mb-4 ">
                         Why Choose
                         <br />
                         <span className="text-[#FF6969]">The Wedding Boys?</span>

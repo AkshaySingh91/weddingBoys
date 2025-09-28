@@ -7,7 +7,7 @@ import EditPhotoForm from './EditPhotoForm';
 import VideoDetailsForm from '../AddClient/VideoDetailsForm';
 import PhotoDetailsForm from '../AddClient/PhotoDetailsForm';
 import Swal from 'sweetalert2'
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 function ClientDetails() {
     const { id } = useParams();

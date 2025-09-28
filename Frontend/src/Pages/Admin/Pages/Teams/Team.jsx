@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import Swal from 'sweetalert2';
 import BannerImage from "./BannerImage"
 import TeamImage from './TeamImage';
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 function Team() {
     const [teamImages, setTeamImages] = useState([]);

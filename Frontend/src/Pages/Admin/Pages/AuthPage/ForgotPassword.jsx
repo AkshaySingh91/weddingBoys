@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { fireMessage } from './Signup'
 import { delay } from './Signup'
 
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 function ForgotPassword() {
     const [phone, setPhone] = useState('')

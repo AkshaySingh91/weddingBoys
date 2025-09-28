@@ -10,7 +10,7 @@ const PORT = process.env.PORT;
 const corsOptions = {
     origin: process.env.NODE_ENV === 'production'
         ? ['https://theweddingboys.in', 'https://www.theweddingboys.in']
-        : 'http://localhost:3000',
+        : 'http://localhost:5173',
     credentials: true,
 };
 
@@ -46,7 +46,7 @@ import HomePageRoute from "./Routes/User/homePageRoute.js"
 import videosRoute from './Routes/User/videoRoute.js'
 import photosRoute from './Routes/User/photoRoute.js'
 import btsRoleRoutes from './Routes/Admin/btsRoleRoutes.js';
-
+import blogsRoute from './Routes/Admin/blogsRoute.js'
 
 // all this route wont required authentication
 app.use(HomePageRoute)
@@ -67,7 +67,7 @@ app.use(clientQueryRoute)
 app.use(ProfilePageRoute)
 app.use(adminTeamImageRoute)
 app.use('/api/bts-schema', btsRoleRoutes);
-
+app.use(blogsRoute)
 
 const server = () => {
     DBconnection()

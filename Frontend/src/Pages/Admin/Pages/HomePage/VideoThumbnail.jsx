@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { fireMessage } from '../AuthPage/Signup';
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 export default function VideoThumbnail() {
     const [isLoading, setIsLoading] = useState(false);

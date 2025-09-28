@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 function TeamPage() {
   const [isLoading, setIsLoading] = useState(false);

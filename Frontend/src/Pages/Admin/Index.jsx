@@ -14,57 +14,58 @@ import Header from '../../Component/Header'
 import Footer from '../../Component/Footer'
 import NotFound from '../../Component/NotFound'
 import AdminAuthProvider from '../../Context/AdminAuthContext'
+import Blogs from "./Blogs/BlogEditor/Index"
+import BlogList from './Blogs/BlogsList/Index'
 
 function Index() {
     const location = useLocation()
     const isAuthPage = location.pathname === '/admin/login' || location.pathname === '/admin/signup' || location.pathname === '/admin/forgot-password';
     return (
-        <>
+        <div className="flex items-center justify-center min-h-screen p-4">
             {
                 isAuthPage &&
-                <Routes>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
-                    <Route path="/forgot-password" element={<ForgotPassword />} />
-                </Routes>
+                <div className="flex items-center justify-center min-h-screen p-4">
+                    <div className="w-full max-w-md">
+                        <Routes>
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/signup" element={<Signup />} />
+                            <Route path="/forgot-password" element={<ForgotPassword />} />
+                        </Routes>
+                    </div>
+                </div>
             }
             {
                 !isAuthPage &&
                 <AdminAuthProvider>
-                    <div className=' pt-4 lg:pl-40 pr-2 sm:pl-4  box-border w-screen min-h-screen overflow-hidden'>
-                        <main className='flex flex-col box-border bg-primary rounded-2xl item-center  ' >
+                    <div className="flex flex-col lg:flex-row min-h-screen">
+                        <AdminSidebar />
+
+                        {/* Main Content Area */}
+                        <div className="flex-1 flex flex-col transition-all duration-300">
                             <Header />
-                            <AdminSidebar />
-                            <Routes>
-                                <Route path='/dashboard'
-                                    element={<Dashboard />}>
-                                </Route>
-                                <Route path='/studio-setting'
-                                    element={<StudioSetting />}>
-                                </Route>
-                                <Route path='/user'
-                                    element={<AllAdmin />}>
-                                </Route>
-                                <Route path='/website-setting/*'
-                                    element={<WebsiteSetting />}>
-                                </Route>
-                                <Route path='/profile'
-                                    element={<Profile />}>
-                                </Route>
-                                <Route path='/total-Enquires'
-                                    element={<TotalEnquires />}>
-                                </Route>
-                                <Route path='/*'
-                                    element={<NotFound />}>
-                                </Route>
-                            </Routes>
-                        </main>
-                        <Footer />
+
+                            <main className="flex-grow p-4 sm:p-6">
+                                <div className="max-w-7xl mx-auto w-full">
+                                    <Routes>
+                                        <Route path='/dashboard' element={<Dashboard />} />
+                                        <Route path='/blogs' element={<BlogList />} />
+                                        <Route path='/studio-setting' element={<StudioSetting />} />
+                                        <Route path='/user' element={<AllAdmin />} />
+                                        <Route path='/website-setting/*' element={<WebsiteSetting />} />
+                                        <Route path='/profile' element={<Profile />} />
+                                        <Route path='/total-Enquires' element={<TotalEnquires />} />
+                                        <Route path='/*' element={<NotFound />} />
+                                    </Routes>
+                                </div>
+                            </main>
+
+                            <Footer />
+                        </div>
                     </div>
                 </AdminAuthProvider>
             }
 
-        </>
+        </div>
     )
 }
 

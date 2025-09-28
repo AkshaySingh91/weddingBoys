@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { fireMessage } from '../AuthPage/Signup';
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 function Index() {
     const [newAddedTags, setNewAddedTags] = useState([]);

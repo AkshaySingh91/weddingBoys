@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fireMessage } from '../../Admin/Pages/AuthPage/Signup';
 import NoSearchResult from "../../../Asset/NoSearchResult.png";
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 function FilmPage() {
     const [allVideos, setAllVideos] = useState([]);

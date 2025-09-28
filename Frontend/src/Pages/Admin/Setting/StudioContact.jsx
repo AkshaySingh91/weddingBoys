@@ -5,7 +5,7 @@ import instagramLogo from '../../../Asset/instagramLogo.svg'
 import twitterLogo from '../../../Asset/twitterLogo.svg'
 import youtubeLogo from '../../../Asset/youtubeLogo.svg'
 
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 function StudioContact() {
     const [studioName, setStudioName] = useState("");
     const [studioLogo, setStudioLogo] = useState("");

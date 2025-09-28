@@ -15,7 +15,7 @@ import {
     FiList,
 } from 'react-icons/fi';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { useStudioDetails } from '../Context/StudioDetailsContext';
+import { useStudioDetails } from '../Context/StudioDetailsContext.jsx';
 
 const primaryLinks = [
     { name: 'Home', path: '/', icon: <FiHome /> },
@@ -63,7 +63,7 @@ export default function ProfessionalNavbar() {
                             <div className="absolute inset-0 border-2 border-rose-200 rounded-full animate-ping-slow opacity-20" />
                         </motion.div>
                         <div className="flex flex-col gap-1">
-                            <span className="text-2xl font-bold bg-gradient-to-r from-rose-600 to-rose-400 bg-clip-text text-transparent font-serif">
+                            <span className="text-2xl font-bold bg-gradient-to-r from-rose-600 to-rose-400 bg-clip-text text-transparent ">
                                 The Wedding Boys
                             </span>
                             <span className="text-xs text-rose-500/80 font-medium tracking-widest">
@@ -140,13 +140,13 @@ export default function ProfessionalNavbar() {
                             alt="Studio Logo"
                         />
                         <div className="flex flex-col gap-1">
-                            <span className="sm:text-2xl md:text-3xl text-4xl font-bold bg-gradient-to-r from-orange-500 to-red-500  bg-clip-text text-transparent font-vibes">
+                            <span className="sm:text-2xl md:text-3xl text-4xl font-bold bg-gradient-to-r from-orange-500 to-red-500  bg-clip-text text-transparent ">
                                 The Wedding Boys
                             </span>
-                            <span className="hidden md:block sm:text-xs md:text-sm lg:text-md text-xs text-rose-500/80 font-medium lg:tracking-widest font-cinzel uppercase">
+                            <span className="hidden md:block sm:text-xs md:text-sm lg:text-md text-xs text-rose-500/80 font-medium lg:tracking-widest  uppercase">
                                 Where Every Frame Tells a Love Story
                             </span>
-                            <span className="md:hidden sm:text-xs md:text-sm lg:text-md text-xs text-rose-500/80 font-medium lg:tracking-widest font-cinzel uppercase">
+                            <span className="md:hidden sm:text-xs md:text-sm lg:text-md text-xs text-rose-500/80 font-medium lg:tracking-widest  uppercase">
                                 Architects of Cinematic Romance
                             </span>
                         </div>

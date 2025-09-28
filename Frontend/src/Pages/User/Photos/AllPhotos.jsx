@@ -4,7 +4,7 @@ import Swal from "sweetalert2"
 import InfiniteScroll from 'react-infinite-scroll-component';
 import './allPhotoMasonry.css'
 
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 const AllPhotos = () => {
     const [photos, setPhotos] = useState([]);

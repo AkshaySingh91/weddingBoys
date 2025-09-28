@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom'
 // import { useAuth } from '../../../../Context/AdminAuthContext';
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 export async function fireMessage(msg, type) {
     await Swal.fire({

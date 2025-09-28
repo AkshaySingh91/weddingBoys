@@ -72,7 +72,7 @@ const services = [
     image: homeImage5,
   },
 ];
- 
+
 
 const OurServices = () => {
   const { studioContact } = useStudioDetails();
@@ -93,10 +93,10 @@ const OurServices = () => {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6 }}
+          // initial={{ opacity: 0, y: 20 }}
+          // whileInView={{ opacity: 1, y: 0 }}
+          // viewport={{ once: true, amount: 0.3 }}
+          // transition={{ duration: 0.6 }}
           className="text-center lg:mb-16 sm:mb-8"
         >
           <h2 className="sm:text-mobileHeadlineMedium lg:text-desktopHeadlineMedium text-secondary_on font-semibold mb-4">
@@ -114,10 +114,10 @@ const OurServices = () => {
           {services.map((svc, idx) => (
             <div
               key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.5 }}
+              // initial={{ opacity: 0, y: 20 }}
+              // whileInView={{ opacity: 1, y: 0 }}
+              // viewport={{ once: true, amount: 0.1 }}
+              // transition={{ duration: 0.5 }}
               className={`rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl border-2 border-slate-300 relative group ${idx % 2 ? 'bg-[#e4b88f67]' : 'bg-[#9a724e51]'
                 }`}
             >
@@ -149,7 +149,11 @@ const OurServices = () => {
           ))}
         </div>
 
-        <div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.4 }} className="text-center mt-16">
+        <div
+          // initial={{ opacity: 0 }}
+          // whileInView={{ opacity: 1 }}
+          // transition={{ delay: 0.4 }}
+          className="text-center mt-16">
           <p className="text-mobileBodyMedium text-tertiary_on mb-6">
             Don't see exactly what you're looking for? We customize every package!
           </p>

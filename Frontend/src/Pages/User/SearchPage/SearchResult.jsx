@@ -4,7 +4,7 @@ import { fireMessage } from "../../Admin/Pages/AuthPage/Signup";
 import SearchResultPhoto from "./SearchResultPhoto";
 import SearchResultVideos from "./SearchResultVideos";
 
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 export default function SearchResult() {
     const [activeTab, setActiveTab] = useState("videos");

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Swal from 'sweetalert2';
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 function BannerImage({ bannerImage, uploadFileInBucket, fetchTeamImage }) {
     const [isEditing, setIsEditing] = useState(false)

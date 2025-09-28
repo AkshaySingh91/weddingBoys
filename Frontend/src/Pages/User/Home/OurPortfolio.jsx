@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const categories = ["All Work", "Wedding", "Pre-Wedding", "Garden", "Haldi"];
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 const PortfolioSkeleton = () => (
     <div className="space-y-8">

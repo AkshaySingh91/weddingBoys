@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2"
 import { useNavigate } from 'react-router-dom'
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 const Index = () => {
   const [isEditing, setIsEditing] = useState(false);

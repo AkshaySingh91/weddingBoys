@@ -1,20 +1,18 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./public/index.html', "'./src/**/*.{js,jsx,ts,tsx}'"],
+  content: [
+    './index.html',
+    './src/**/*.{js,jsx,ts,tsx}',
+  ],
   theme: {
     screens: {
       'sm': '50px',
       // => @media (min-width: 640px) { ... }
-
       'md': '720px',
       // => @media (min-width: 768px) { ... }
-
       'lg': '970px',
       // => @media (min-width: 1024px) { ... }
-
       'xl': '1280px',
       // => @media (min-width: 1280px) { ... }
-
       '2xl': '1536px',
       // => @media (min-width: 1536px) { ... }
     },
@@ -32,7 +30,7 @@ module.exports = {
         playfair: ['Playfair Display', 'serif'],
         lato: ['Lato', 'sans-serif'],
         cinzel: ['Cinzel', 'serif'],
-        greatvibes: ['Great Vibes', 'cursive'],  
+        greatvibes: ['Great Vibes', 'cursive'],
         vibes: ['Great Vibes', 'cursive'],
         dmserif: ['DM Serif Display', 'serif'],
         lora: ['Lora', 'serif'],
@@ -90,6 +88,6 @@ module.exports = {
     },
   },
   plugins: [
-    require("tailwind-scrollbar"),
+    require('tailwind-scrollbar'),
   ],
-}
+};

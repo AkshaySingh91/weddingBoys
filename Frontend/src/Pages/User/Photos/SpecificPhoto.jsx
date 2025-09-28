@@ -6,7 +6,7 @@ import { fireMessage } from '../../Admin/Pages/AuthPage/Signup'
 import "../SearchPage/Masonry.css"
 import gmailLogo from '../../../Asset/gmailShareLogo.svg'
 import { PhotoSkeletonLoader } from './AllPhotos';
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 function SpecificPhoto() {
     const [isLoading, setIsLoading] = useState(false);

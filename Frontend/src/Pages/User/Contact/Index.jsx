@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import success from "./success.svg"
 
 import { motion } from 'framer-motion';
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 const WhatsAppButton = ({ studioContact }) => {
   const fireworkVariants = {

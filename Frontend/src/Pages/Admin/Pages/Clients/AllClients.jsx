@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { fireMessage } from '../AuthPage/Signup'
 import { Link } from 'react-router-dom'
 import Loader from '../../../../Component/Loader'
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 function AllClients() {
     const [clientDetails, setClientDetails] = useState([])

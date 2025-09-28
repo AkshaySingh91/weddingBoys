@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import Videoplayer from '../../../../Component/Videoplayer';
 import { fireMessage } from '../AuthPage/Signup'
 import { Link } from 'react-router-dom';
-const api_url = process.env.REACT_APP_API_URL;
+const api_url = import.meta.env.VITE_API_URL;
 
 export default function Herobanner() {
     const [currentSlide, setCurrentSlide] = useState(0);
