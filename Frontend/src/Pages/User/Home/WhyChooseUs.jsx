@@ -101,7 +101,7 @@ const WhyChooseUs = () => {
             icon: <FiZap className="w-6 h-6" />,
             title: "Decade of Expertise",
             description: (<>
-                With <b>8+ years</b> mastering wedding photography, we handle every lighting condition, venue, and cultural tradition seamlessly.
+                With <b>5+ years</b> mastering wedding photography, we handle every lighting condition, venue, and cultural tradition seamlessly.
             </>)
         },
         {
@@ -145,7 +145,7 @@ const WhyChooseUs = () => {
     return (
         <section 
         id='whyToChooseUs'
-        className="px-4 sm:py-10 lg:py-16 relative overflow-hidden bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] sm:my-10 lg:my-8  lg:rounded-3xl sm:rounded-lg border-[#fed6c3] border-[1px]">
+        className="px-4 sm:py-10 lg:py-16 relative overflow-hidden bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] sm:my-10 lg:my-8  lg:rounded-3xl sm:rounded-lg border-[#fed6c3] border-[1px] shadow-lg">
             {/* Floating Hearts Decoration */}
             <div className="absolute inset-0 pointer-events-none">
                 {[...Array(8)].map((_, i) => (
@@ -213,8 +213,7 @@ const WhyChooseUs = () => {
                     {features.map((feature, index) => (
                         <motion.div
                             key={index}
-                            variants={containerVariants}
-                            whileHover={{ y: -5 }}
+                            variants={containerVariants} 
                         >
                             <TiltCard {...feature} />
                         </motion.div>

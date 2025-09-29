@@ -31,8 +31,7 @@ export default function OurPortfolio() {
             try {
                 setIsLoading(true);
                 const res = await fetch(`${api_url}/api/home/sample-photos?category=${activeCategory}`);
-                const data = await res.json();
-                console.log(data)
+                const data = await res.json(); 
                 if (res.status >= 300) {
                     Swal.fire({
                         toast: true,
@@ -66,7 +65,7 @@ export default function OurPortfolio() {
     return (
         <section
         id="ourPortfolio"
-        className="lg:py-10 sm:py-5 px-4 sm:px-6 lg:px-8  bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] relative overflow-hidden lg:rounded-3xl sm:rounded-lg">
+        className="lg:py-10 sm:py-5 px-4 sm:px-6 lg:px-8  bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] relative overflow-hidden lg:rounded-3xl sm:rounded-lg shadow-lg">
 
             {/* henna top border */}
             <div className="absolute top-0 left-0 w-full">

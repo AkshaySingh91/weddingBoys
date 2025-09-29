@@ -7,7 +7,7 @@ import catering from "../../../Asset/Dharaa/Food/catering.jpg"
 export default function DharaaLandingPage() {
     return (
         <div className="min-h-screen">
-            <section className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-10 lg:gap-16 pt-10 pb-16 px-4 sm:px-6 lg:px-20">
+            <section className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-10 lg:gap-16 pt-10 pb-16 px-4  lg:px-20">
                 {/* Left Content */}
                 <div className="w-full lg:w-1/2 text-center lg:text-left">
                     <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
@@ -28,7 +28,7 @@ export default function DharaaLandingPage() {
                         <button
                             className="border border-orange-600 text-orange-600 px-6 sm:px-8 py-3 rounded-xl hover:bg-orange-50 transition-all font-semibold sm:font-bold text-base sm:text-lg"
                             onClick={() =>
-                                window.open(`https://wa.me/9054794444`, "_blank")
+                                window.open(`https://wa.me/9284690935`, "_blank")
                             }
                         >
                             Contact Us
@@ -42,10 +42,10 @@ export default function DharaaLandingPage() {
                         <img
                             src={dharaaLogo}
                             alt="Dharaa Event Management Logo"
-                            className="w-16 h-16 sm:w-20 sm:h-20 lg:w-28 lg:h-28 object-contain"
+                            className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 object-contain"
                         />
                         <div className="ml-3 tracking-wider">
-                            <h2 className="text-xl sm:text-2xl lg:text-2xl font-extrabold text-gray-900">
+                            <h2 className="text-xl sm:text-2xl lg:text-2xl font-extrabold text-gray-900 leading-none">
                                 Dharaa
                             </h2>
                             <h2 className="text-xl sm:text-2xl lg:text-2xl font-extrabold text-gray-900">

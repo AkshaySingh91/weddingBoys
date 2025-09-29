@@ -1,7 +1,7 @@
 // server/routes/blogRoutes.js
 import express from 'express'
 import authenticateAdmin from '../../Middleware/authenticateAdmin.js'
-import BlogPost from '../../models/blogPost.js';
+import BlogPost from '../../Models/blogPost.js';
 import {
     createPost, updatePost, getAdminPosts, getPostBySlug, deletePost, getBlogUploadUrl,
 } from "../../Controllers/blogController.js"

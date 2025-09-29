@@ -7,7 +7,7 @@ import { useMediaQuery } from "react-responsive";
 import img from "../../../Asset/Home/homepage_short_story.jpg"
 
 export default function OurStory() {
-  const isMobile = useMediaQuery({ maxWidth: 640 }); // Tailwind's 'sm' breakpoint
+  const isMobile = useMediaQuery({ maxWidth: 640 });  
 
   return (
     <div className="bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] relative overflow-hidden w-full lg:rounded-3xl sm:rounded-lg">
@@ -125,7 +125,7 @@ export default function OurStory() {
               transition={{ duration: 1, delay: 0.5 }}
               className="bg-white rounded-b-lg shadow-lg px-2 py-4 mt-0 flex justify-evenly items-center relative z-20"
             >
-              {[500, 100, 8].map((number, index) => (
+              {[500, 200, 5].map((number, index) => (
                 <motion.div
                   key={index}
                   whileHover={{ scale: 1.05 }}

@@ -1,5 +1,5 @@
 import React from 'react'
-import Wedding from "../../../Asset/Dharaa/Wedding.jpg"
+import Wedding from "../../../Asset/Dharaa/wedding.jpg"
 import OfficeEvent from "../../../Asset/Dharaa/office-event.jpg"
 import BirthdayParty from "../../../Asset/Dharaa/birthday.jpg"
 import Party from "../../../Asset/Dharaa/party.jpg"
@@ -80,7 +80,7 @@ function EventTypes() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
                 <button
                     className="bg-orange-600 text-white px-6 sm:px-8 py-3 rounded-xl shadow-lg hover:bg-orange-700 transition-all font-bold text-sm sm:text-base cursor-pointer z-10"
-                    onClick={() => window.open(`https://wa.me/9054794444`, '_blank')}
+                    onClick={() => window.open(`https://wa.me/9284690935`, '_blank')}
                 >
                     Book Your Event
                 </button>

@@ -1,5 +1,5 @@
 // controllers/blogController.js
-import BlogPost from '../models/blogPost.js';
+import BlogPost from '../Models/blogPost.js';
 import { putObjectUrl, generatePublicUrl } from './awsController.js'
 
 const calculateReadingTime = (content) => {

@@ -121,7 +121,7 @@ const stats = [
     { id: 1, number: 500, title: 'Weddings Captured', icon: <FiCamera className="lg:text-3xl sm:text-2xl" />, description: 'Magical moments preserved' },
     { id: 2, number: 10, title: 'Awards Won', icon: <FiAward className="lg:text-3xl sm:text-2xl" />, description: 'Industry recognition' },
     { id: 3, number: 1500, title: 'Happy Clients', icon: <FiHeart className="lg:text-3xl sm:text-2xl" />, description: 'Satisfied families' },
-    { id: 4, number: 8, title: 'Years Experience', icon: <FiClock className="lg:text-3xl sm:text-2xl" />, description: 'In the industry' },
+    { id: 4, number: 5, title: 'Years Experience', icon: <FiClock className="lg:text-3xl sm:text-2xl" />, description: 'In the industry' },
 ];
 
 // Function to create the WhatsApp message text
@@ -140,8 +140,7 @@ const createWhatsAppMessage = (pkg) => {
 const PackageCard = ({ pkg, isExpanded, onToggle, studioContact }) => {
     return (
         <motion.div
-            className="relative rounded-3xl p-8 mb-8 bg-gradient-to-br from-[#fdf1e9d9] to-[#f9e7db] hover:from-[#FFE9D9] hover:to-[#fbf3ef] shadow-lg overflow-hidden group"
-            whileHover={{ y: -5 }}
+            className="relative rounded-3xl p-8 mb-8 bg-gradient-to-br from-[#fdf1e9d9] to-[#f9e7db] hover:from-[#FFE9D9] hover:to-[#fbf3ef] shadow-lg overflow-hidden group" 
             transition={{ type: 'spring', stiffness: 300 }}
         >
             {/* Floating Sparkles */}
@@ -366,9 +365,7 @@ const PackagesSection = () => {
             </div>
 
             <div className="max-w-7xl mx-auto relative">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                <div 
                     className="text-center mb-16"
                 >
                     <div className="bg-[#FF6969]/10 text-[#FF6969] px-6 py-2 rounded-full inline-block mb-4">
@@ -381,7 +378,7 @@ const PackagesSection = () => {
                     <p className="lg:text-desktopHeadlineSmall sm:text-mobileBodyLarge text-gray-600 max-w-2xl mx-auto">
                         Tailored packages that capture every magical moment of your wedding journey
                     </p>
-                </motion.div>
+                </div>
 
                 <div className="grid lg:grid-cols-2 lg:gap-8 sm:gap-4">
                     {packages.map((pkg) => (
