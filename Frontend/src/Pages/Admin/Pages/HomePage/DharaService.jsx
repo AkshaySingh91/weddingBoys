@@ -64,7 +64,7 @@ export default function DharaaStory() {
                     <img
                         src={dharaaLogo}
                         alt="Dharaa Event Management Logo"
-                        className="w-24 h-24 md:h-28 md:w-28 object-contain flex-shrink-0"
+                        className="w-14 h-14 md:h-28 md:w-28 object-contain flex-shrink-0"
                     />
                     <div className="tracking-widest">
                         <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 leading-tight">

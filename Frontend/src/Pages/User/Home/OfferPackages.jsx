@@ -118,8 +118,8 @@ const features = [
     }
 ];
 const stats = [
-    { id: 1, number: 500, title: 'Weddings Captured', icon: <FiCamera className="lg:text-3xl sm:text-2xl" />, description: 'Magical moments preserved' },
-    { id: 2, number: 10, title: 'Awards Won', icon: <FiAward className="lg:text-3xl sm:text-2xl" />, description: 'Industry recognition' },
+    { id: 1, number: 1000, title: 'Weddings Captured', icon: <FiCamera className="lg:text-3xl sm:text-2xl" />, description: 'Magical moments preserved' },
+    { id: 2, number: 25, title: 'Awards Won', icon: <FiAward className="lg:text-3xl sm:text-2xl" />, description: 'Industry recognition' },
     { id: 3, number: 1500, title: 'Happy Clients', icon: <FiHeart className="lg:text-3xl sm:text-2xl" />, description: 'Satisfied families' },
     { id: 4, number: 5, title: 'Years Experience', icon: <FiClock className="lg:text-3xl sm:text-2xl" />, description: 'In the industry' },
 ];

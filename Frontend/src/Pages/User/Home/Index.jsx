@@ -11,6 +11,7 @@ import OurTeams from './OurTeams';
 import OurPortfolio from './OurPortfolio';
 import OurApproach from './OurApproach';
 import DharaService from '../../Admin/Pages/HomePage/DharaService';
+import VaranasiLaunchCard from './VaranasiLaunchCard';
 
 const HomePage = () => {
   return (
@@ -25,6 +26,7 @@ const HomePage = () => {
       </div>
       <VideoThumbnail />
       <OurServices />
+      <VaranasiLaunchCard />
       <DharaService/>
       <OurStory />
       <OurTeams />

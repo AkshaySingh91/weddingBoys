@@ -10,7 +10,7 @@ export default function authenticateAdmin(req, res, next) {
     try {
         const payload = jwt.verify(sessionToken, process.env.JWT_SECRET_KEY);
         if (!payload || !payload.email || payload.role !== 'admin') {
-            return res.status(403).json({ message: 'Forbidden: Admin access only' });
+            return res.staxtus(403).json({ message: 'Forbidden: Admin access only' });
         }
         req.admin = payload; // Attach admin details to the request object 
         next();
