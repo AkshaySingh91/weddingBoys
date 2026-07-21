@@ -2,32 +2,32 @@ import React, { useCallback, useState, useRef, useEffect } from 'react';
 import { FiPlay, FiChevronLeft, FiChevronRight, FiX, FiFilm } from 'react-icons/fi';
 import Videoplayer from '../../../Component/Videoplayer';
 import { fireMessage } from '../../Admin/Pages/AuthPage/Signup';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 
 const api_url = import.meta.env.VITE_API_URL;
 
 const VideoSkeleton = () => (
     <div className="absolute inset-0 overflow-hidden bg-[#FAF1E6] animate-pulse">
-    {/* Animated shimmer overlay */}
-    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#FFDCCC]/50 to-transparent animate-shimmer" />
-    
-    {/* Content placeholder */}
-    <div className="absolute inset-0 flex flex-col justify-end p-6 z-10">
-      <div className="h-7 w-48 mb-3 bg-[#FF6969]/20 rounded-full" />
-      <div className="h-5 w-64 bg-[#FF4D4D]/20 rounded-full" />
-    </div>
+        {/* Animated shimmer overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#FFDCCC]/50 to-transparent animate-shimmer" />
 
-    {/* Play button skeleton */}
-    <div className="absolute bottom-6 right-6 z-10">
-      <div className="w-12 h-12 bg-[#FFD700]/30 rounded-full" />
-    </div>
+        {/* Content placeholder */}
+        <div className="absolute inset-0 flex flex-col justify-end p-6 z-10">
+            <div className="h-7 w-48 mb-3 bg-[#FF6969]/20 rounded-full" />
+            <div className="h-5 w-64 bg-[#FF4D4D]/20 rounded-full" />
+        </div>
 
-    {/* Decorative elements */}
-    <div className="absolute inset-0 opacity-10">
-      <div className="w-full h-full pattern-dots pattern-[#FF6969] pattern-opacity-20 pattern-size-8" />
+        {/* Play button skeleton */}
+        <div className="absolute bottom-6 right-6 z-10">
+            <div className="w-12 h-12 bg-[#FFD700]/30 rounded-full" />
+        </div>
+
+        {/* Decorative elements */}
+        <div className="absolute inset-0 opacity-10">
+            <div className="w-full h-full pattern-dots pattern-[#FF6969] pattern-opacity-20 pattern-size-8" />
+        </div>
     </div>
-  </div>
-  )
+)
 
 export default function Herobanner() {
     const [currentSlide, setCurrentSlide] = useState(0);

@@ -7,7 +7,7 @@ import { useMediaQuery } from "react-responsive";
 import img from "../../../Asset/Home/homepage_short_story.jpg"
 
 export default function OurStory() {
-  const isMobile = useMediaQuery({ maxWidth: 640 });  
+  const isMobile = useMediaQuery({ maxWidth: 640 });
 
   return (
     <div className="bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] relative overflow-hidden w-full lg:rounded-3xl sm:rounded-lg">

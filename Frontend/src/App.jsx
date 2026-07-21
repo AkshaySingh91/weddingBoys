@@ -17,8 +17,8 @@ import Navbar from './Component/Navbar.jsx';
 import Footer from './Component/Footer.jsx';
 import Background from './Component/Background.jsx';
 import StudioDetailsContext from './Context/StudioDetailsContext.jsx';
-
 import DharaaEventManagement from "./Pages/User/Dharaa/Index.jsx"
+import Vanarasi from "./Pages/User/Varanasi/index.jsx"
 
 export default function App() {
   const location = useLocation();
@@ -34,6 +34,7 @@ export default function App() {
             <main className="pt-[6rem] lg:pr-2 sm:px-2 box-border overflow-hidden">
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/varanasi" element={<Vanarasi />} />
                 <Route path="/films/*" element={<FilmsRoute />} />
                 <Route path="/allfilms" element={<AllFilms />} />
                 <Route path="/photos/*" element={<Photos />} />

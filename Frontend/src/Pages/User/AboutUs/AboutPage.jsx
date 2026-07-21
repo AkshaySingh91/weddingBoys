@@ -26,7 +26,7 @@ const AboutPage = () => {
       year: '2022',
       event: 'WeddingBoys continues to capture genuine moments of love and joy, one frame at a time.',
     },
-    { year: 'Present', event: '500+ love stories captured.' },
+    { year: 'Present', event: '1000+ love stories captured.' },
   ];
 
   return (
@@ -163,7 +163,7 @@ const AboutPage = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
           >
-            Trusted by 500+ Couples
+            Trusted by 1000+ Couples
 
           </motion.h3>
 
@@ -192,7 +192,7 @@ const AboutPage = () => {
                 className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 text-xl font-bold text-white bg-[#FF6969] border-3 border-white rounded-full shadow-lg"
                 whileHover={{ y: -10 }}
               >
-                500+
+                1000+
               </motion.div>
             </motion.div>
           </div>
@@ -209,7 +209,7 @@ const AboutPage = () => {
                 </div>
               </div>
               <h3 className="text-xl font-semibold text-[#54382E] mb-2">
-                500+
+                1000+
               </h3>
               <p className="text-[#74583E] sm:text-sm text-center leading-relaxed">
                 Happy Couples
@@ -226,7 +226,7 @@ const AboutPage = () => {
                 </div>
               </div>
               <h3 className="text-xl font-semibold text-[#54382E] mb-2">
-                500+
+                1000+
               </h3>
               <p className="text-[#74583E] leading-relaxed">
                 Moments Captured
