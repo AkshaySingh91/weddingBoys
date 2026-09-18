@@ -25,8 +25,14 @@ for (const id of (wanted.length ? wanted : Object.keys(PAGES))) {
     await page.setViewport(vp.w, vp.h);
     await page.goto(`${BASE}${PAGES[id]}`, { waitMs: 4000 });
     await page.eval(async () => {
+      /*
+        Capped at 14 steps. /photos is an infinite-scroll masonry: an uncapped
+        pass keeps loading rows for as long as it is scrolled, the document never
+        stops growing, and the screenshot never completes. The cap is itself a
+        record of that behaviour.
+      */
       const step = window.innerHeight;
-      for (let y = 0; y < document.body.scrollHeight; y += step) {
+      for (let i = 0, y = 0; i < 14 && y < document.body.scrollHeight; i += 1, y += step) {
         window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 90));
       }
       window.scrollTo(0, 0); await new Promise((r) => setTimeout(r, 400));
