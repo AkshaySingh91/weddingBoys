@@ -1,0 +1,5788 @@
+{
+ "allfilms": {
+  "viewports": {
+   "desktop": {
+    "scanned": 262,
+    "overflowX": 0,
+    "lcpMs": 324,
+    "cls": 0.0169,
+    "fcpMs": 128,
+    "tbtMs": 13,
+    "lcpElement": "img.w-full.h-full.object-cover",
+    "clsSources": [
+     {
+      "value": 0.0169,
+      "at": 190,
+      "sources": [
+       "div.w-full.my-4"
+      ]
+     }
+    ],
+    "h1Count": 1,
+    "headingJumps": 1,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 3,
+    "overImage": 6,
+    "tinyTarget": 13,
+    "oversizedImage": 4,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Browse All Wedding Films | The Wedding Boys"
+   },
+   "laptop": {
+    "scanned": 262,
+    "overflowX": 0,
+    "lcpMs": 284,
+    "cls": 0,
+    "fcpMs": 128,
+    "tbtMs": 0,
+    "lcpElement": "img.w-full.h-full.object-cover",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 1,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 3,
+    "overImage": 6,
+    "tinyTarget": 13,
+    "oversizedImage": 4,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Browse All Wedding Films | The Wedding Boys"
+   },
+   "mobile": {
+    "scanned": 241,
+    "overflowX": 0,
+    "lcpMs": 388,
+    "cls": 0,
+    "fcpMs": 112,
+    "tbtMs": 0,
+    "lcpElement": "img.w-full.h-full.object-cover",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 1,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 3,
+    "overImage": 5,
+    "tinyTarget": 13,
+    "oversizedImage": 4,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Browse All Wedding Films | The Wedding Boys"
+   },
+   "tablet": {
+    "scanned": 262,
+    "overflowX": 0,
+    "lcpMs": 240,
+    "cls": 0,
+    "fcpMs": 108,
+    "tbtMs": 0,
+    "lcpElement": "img.w-full.h-full.object-cover",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 1,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 3,
+    "overImage": 6,
+    "tinyTarget": 13,
+    "oversizedImage": 4,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Browse All Wedding Films | The Wedding Boys"
+   }
+  },
+  "defects": {
+   "lowContrast": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.md:hidden.h-16.flex>a.flex.items-center.gap-3>div.flex.flex-col.gap-1>span.md:hidden.sm:text-xs.md:text-sm",
+     "text": "Architects of Cinematic Romance",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "tablet"
+    }
+   ],
+   "overImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "text": "The Bi-Weekly Dispatch",
+     "fg": "#FF5353",
+     "bg": "#FFFFFF",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "text": "Cinematic Love Stories, Delivered to Your Inbox",
+     "fg": "#5E2B17",
+     "bg": "#FFFFFF",
+     "ratio": 11.45,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+     "text": "Join 12,000 discerning couples receiving curated real weddin",
+     "fg": "#74583E",
+     "bg": "#FFFFFF",
+     "ratio": 6.55,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>p.text-[10px].text-[#78716C].pl-2",
+     "text": "No spam. Just meaningful stories.",
+     "fg": "#78716C",
+     "bg": "#FFFFFF",
+     "ratio": 4.8,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "text": "The Bi-Weekly Dispatch",
+     "fg": "#FF5353",
+     "bg": "#FFFFFF",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "text": "Cinematic Love Stories, Delivered to Your Inbox",
+     "fg": "#5E2B17",
+     "bg": "#FFFFFF",
+     "ratio": 11.45,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "laptop"
+    }
+   ],
+   "tinyTarget": [
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Our Team",
+     "size": "55x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "About Us",
+     "size": "52x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Dharaa Events",
+     "size": "82x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Our Team",
+     "size": "55x15",
+     "viewport": "laptop"
+    }
+   ],
+   "oversizedImage": [
+    {
+     "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+     "src": "://media.theweddingboys.in/client/67e057a30f15ebfba3ee506e/Yo77XLEg-jsd/orig.jpg",
+     "natural": "2700x1796",
+     "displayed": "613x256",
+     "wastedFactor": 4.4,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+     "src": "://media.theweddingboys.in/client/67e055820f15ebfba3ee504b/1D7ntEi1Cp3v/orig.jpg",
+     "natural": "1800x2700",
+     "displayed": "613x256",
+     "wastedFactor": 2.9,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+     "src": "://media.theweddingboys.in/client/67e0529e0f15ebfba3ee5032/vmi6lN3vm2vv/orig.jpg",
+     "natural": "3984x2656",
+     "displayed": "613x256",
+     "wastedFactor": 6.5,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+     "src": "://media.theweddingboys.in/client/68069c18162b3828a2e67fcc/SvAXbt5na2t3/orig.png",
+     "natural": "1920x927",
+     "displayed": "613x256",
+     "wastedFactor": 3.1,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+     "src": "://media.theweddingboys.in/client/67e057a30f15ebfba3ee506e/Yo77XLEg-jsd/orig.jpg",
+     "natural": "2700x1796",
+     "displayed": "688x256",
+     "wastedFactor": 3.9,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+     "src": "://media.theweddingboys.in/client/67e055820f15ebfba3ee504b/1D7ntEi1Cp3v/orig.jpg",
+     "natural": "1800x2700",
+     "displayed": "688x256",
+     "wastedFactor": 2.6,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+     "src": "://media.theweddingboys.in/client/67e0529e0f15ebfba3ee5032/vmi6lN3vm2vv/orig.jpg",
+     "natural": "3984x2656",
+     "displayed": "688x256",
+     "wastedFactor": 5.8,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+     "src": "://media.theweddingboys.in/client/68069c18162b3828a2e67fcc/SvAXbt5na2t3/orig.png",
+     "natural": "1920x927",
+     "displayed": "688x256",
+     "wastedFactor": 2.8,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+     "src": "://media.theweddingboys.in/client/67e057a30f15ebfba3ee506e/Yo77XLEg-jsd/orig.jpg",
+     "natural": "2700x1796",
+     "displayed": "390x259",
+     "wastedFactor": 6.9,
+     "viewport": "mobile"
+    },
+    {
+     "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+     "src": "://media.theweddingboys.in/client/67e055820f15ebfba3ee504b/1D7ntEi1Cp3v/orig.jpg",
+     "natural": "1800x2700",
+     "displayed": "390x585",
+     "wastedFactor": 4.6,
+     "viewport": "mobile"
+    }
+   ],
+   "brokenImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.md:hidden.h-16.flex>a.flex.items-center.gap-3>img.w-16.h-16.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "tablet"
+    }
+   ]
+  }
+ },
+ "contact": {
+  "viewports": {
+   "desktop": {
+    "scanned": 183,
+    "overflowX": 0,
+    "lcpMs": 188,
+    "cls": 0,
+    "fcpMs": 172,
+    "tbtMs": 123,
+    "lcpElement": "img.absolute.w-full.h-full",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 1,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 4,
+    "overImage": 6,
+    "tinyTarget": 16,
+    "oversizedImage": 1,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Contact & Booking Enquiries | The Wedding Boys"
+   },
+   "laptop": {
+    "scanned": 183,
+    "overflowX": 0,
+    "lcpMs": 236,
+    "cls": 0,
+    "fcpMs": 224,
+    "tbtMs": 129,
+    "lcpElement": "img.absolute.w-full.h-full",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 1,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 4,
+    "overImage": 6,
+    "tinyTarget": 16,
+    "oversizedImage": 1,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Contact & Booking Enquiries | The Wedding Boys"
+   },
+   "mobile": {
+    "scanned": 163,
+    "overflowX": 0,
+    "lcpMs": 368,
+    "cls": 0,
+    "fcpMs": 368,
+    "tbtMs": 0,
+    "lcpElement": "p.text-center.text-gray-400.mb-12",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 1,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 4,
+    "overImage": 5,
+    "tinyTarget": 16,
+    "oversizedImage": 1,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Contact & Booking Enquiries | The Wedding Boys"
+   },
+   "tablet": {
+    "scanned": 188,
+    "overflowX": 0,
+    "lcpMs": 160,
+    "cls": 0,
+    "fcpMs": 148,
+    "tbtMs": 102,
+    "lcpElement": "img.absolute.w-full.h-full",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 1,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 4,
+    "overImage": 6,
+    "tinyTarget": 16,
+    "oversizedImage": 1,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Contact & Booking Enquiries | The Wedding Boys"
+   }
+  },
+  "defects": {
+   "lowContrast": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>section.max-w-7xl.mx-auto.py-10>p.text-center.text-gray-400.mb-12",
+     "text": "We would love to hear from you. Please fill out this form to",
+     "fg": "#9CA3AF",
+     "bg": "#FFFFFF",
+     "ratio": 2.54,
+     "need": 4.5,
+     "fontSize": "16px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>section.max-w-7xl.mx-auto.py-10>p.text-center.text-gray-400.mb-12",
+     "text": "We would love to hear from you. Please fill out this form to",
+     "fg": "#9CA3AF",
+     "bg": "#FFFFFF",
+     "ratio": 2.54,
+     "need": 4.5,
+     "fontSize": "16px",
+     "weight": "400",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.md:hidden.h-16.flex>a.flex.items-center.gap-3>div.flex.flex-col.gap-1>span.md:hidden.sm:text-xs.md:text-sm",
+     "text": "Architects of Cinematic Romance",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>section.max-w-7xl.mx-auto.py-10>p.text-center.text-gray-400.mb-12",
+     "text": "We would love to hear from you. Please fill out this form to",
+     "fg": "#9CA3AF",
+     "bg": "#FFFFFF",
+     "ratio": 2.54,
+     "need": 4.5,
+     "fontSize": "16px",
+     "weight": "400",
+     "viewport": "mobile"
+    }
+   ],
+   "overImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "text": "The Bi-Weekly Dispatch",
+     "fg": "#FF5353",
+     "bg": "#FFFFFF",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "text": "Cinematic Love Stories, Delivered to Your Inbox",
+     "fg": "#5E2B17",
+     "bg": "#FFFFFF",
+     "ratio": 11.45,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+     "text": "Join 12,000 discerning couples receiving curated real weddin",
+     "fg": "#74583E",
+     "bg": "#FFFFFF",
+     "ratio": 6.55,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>p.text-[10px].text-[#78716C].pl-2",
+     "text": "No spam. Just meaningful stories.",
+     "fg": "#78716C",
+     "bg": "#FFFFFF",
+     "ratio": 4.8,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "text": "The Bi-Weekly Dispatch",
+     "fg": "#FF5353",
+     "bg": "#FFFFFF",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "text": "Cinematic Love Stories, Delivered to Your Inbox",
+     "fg": "#5E2B17",
+     "bg": "#FFFFFF",
+     "ratio": 11.45,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "laptop"
+    }
+   ],
+   "tinyTarget": [
+    {
+     "sel": "div.sticky.top-10>div.relative.w-full.h-[22rem]>div.absolute.bottom-3.w-full>button.w-3.h-3.rounded-full",
+     "label": "",
+     "size": "12x12",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.sticky.top-10>div.relative.w-full.h-[22rem]>div.absolute.bottom-3.w-full>button.w-3.h-3.rounded-full",
+     "label": "",
+     "size": "12x12",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.sticky.top-10>div.relative.w-full.h-[22rem]>div.absolute.bottom-3.w-full>button.w-3.h-3.rounded-full",
+     "label": "",
+     "size": "12x12",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.sticky.top-10>div.relative.w-full.h-[22rem]>div.absolute.bottom-3.w-full>button.w-3.h-3.rounded-full",
+     "label": "",
+     "size": "12x12",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.sticky.top-10>div.relative.w-full.h-[22rem]>div.absolute.bottom-3.w-full>button.w-3.h-3.rounded-full",
+     "label": "",
+     "size": "12x12",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.sticky.top-10>div.relative.w-full.h-[22rem]>div.absolute.bottom-3.w-full>button.w-3.h-3.rounded-full",
+     "label": "",
+     "size": "12x12",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "laptop"
+    }
+   ],
+   "oversizedImage": [
+    {
+     "sel": "div.bg-[#FFEFE4].relative.overflow-hidden>div.sticky.top-10>div.relative.w-full.h-[22rem]>img.absolute.w-full.h-full",
+     "src": "http://localhost:3000/_next/static/media/img1.0k-ozhhqtwbtp.jpg",
+     "natural": "5333x3555",
+     "displayed": "592x560",
+     "wastedFactor": 9,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.bg-[#FFEFE4].relative.overflow-hidden>div.sticky.top-10>div.relative.w-full.h-[22rem]>img.absolute.w-full.h-full",
+     "src": "http://localhost:3000/_next/static/media/img1.0k-ozhhqtwbtp.jpg",
+     "natural": "5760x3840",
+     "displayed": "592x560",
+     "wastedFactor": 9.7,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.bg-[#FFEFE4].relative.overflow-hidden>div.sticky.top-10>div.relative.w-full.h-[22rem]>img.absolute.w-full.h-full",
+     "src": "http://localhost:3000/_next/static/media/img1.0k-ozhhqtwbtp.jpg",
+     "natural": "3656x2437",
+     "displayed": "390x352",
+     "wastedFactor": 9.4,
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.bg-[#FFEFE4].relative.overflow-hidden>div.sticky.top-10>div.relative.w-full.h-[22rem]>img.absolute.w-full.h-full",
+     "src": "http://localhost:3000/_next/static/media/img1.0k-ozhhqtwbtp.jpg",
+     "natural": "5565x3710",
+     "displayed": "736x480",
+     "wastedFactor": 7.6,
+     "viewport": "tablet"
+    }
+   ],
+   "brokenImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.md:hidden.h-16.flex>a.flex.items-center.gap-3>img.w-16.h-16.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "tablet"
+    }
+   ]
+  }
+ },
+ "dharaa": {
+  "viewports": {
+   "desktop": {
+    "scanned": 272,
+    "overflowX": 0,
+    "lcpMs": 192,
+    "cls": 0,
+    "fcpMs": 176,
+    "tbtMs": 0,
+    "lcpElement": "img.w-full.max-w-sm.sm:max-w-md",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 15,
+    "overImage": 28,
+    "tinyTarget": 13,
+    "oversizedImage": 9,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Dharaa Event Management — Wedding Catering & Events | The Wedding Boys"
+   },
+   "laptop": {
+    "scanned": 272,
+    "overflowX": 0,
+    "lcpMs": 328,
+    "cls": 0,
+    "fcpMs": 288,
+    "tbtMs": 0,
+    "lcpElement": "img.w-full.max-w-sm.sm:max-w-md",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 15,
+    "overImage": 28,
+    "tinyTarget": 13,
+    "oversizedImage": 8,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Dharaa Event Management — Wedding Catering & Events | The Wedding Boys"
+   },
+   "mobile": {
+    "scanned": 248,
+    "overflowX": 0,
+    "lcpMs": 1872,
+    "cls": 0,
+    "fcpMs": 1856,
+    "tbtMs": 0,
+    "lcpElement": "img.w-full.max-w-sm.sm:max-w-md",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 15,
+    "overImage": 27,
+    "tinyTarget": 13,
+    "oversizedImage": 1,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Dharaa Event Management — Wedding Catering & Events | The Wedding Boys"
+   },
+   "tablet": {
+    "scanned": 272,
+    "overflowX": 0,
+    "lcpMs": 328,
+    "cls": 0,
+    "fcpMs": 260,
+    "tbtMs": 0,
+    "lcpElement": "img.w-full.max-w-sm.sm:max-w-md",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 15,
+    "overImage": 28,
+    "tinyTarget": 13,
+    "oversizedImage": 6,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Dharaa Event Management — Wedding Catering & Events | The Wedding Boys"
+   }
+  },
+  "defects": {
+   "lowContrast": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6",
+     "text": "Explore Packages",
+     "fg": "#FFFFFF",
+     "bg": "#EA580C",
+     "ratio": 3.56,
+     "need": 4.5,
+     "fontSize": "18px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>a.border.border-orange-600.text-orange-600",
+     "text": "Contact Us",
+     "fg": "#EA580C",
+     "bg": "#FFFFFF",
+     "ratio": 3.56,
+     "need": 4.5,
+     "fontSize": "18px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.min-h-screen>section.lg:py-10.sm:py-5.px-4>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6",
+     "text": "Book Your Event",
+     "fg": "#FFFFFF",
+     "bg": "#EA580C",
+     "ratio": 3.56,
+     "need": 4.5,
+     "fontSize": "16px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex-shrink-0.w-56.sm:w-64>div.p-4>p.text-sm.text-gray-500.mt-1>span.font-semibold.text-orange-600",
+     "text": "Gold",
+     "fg": "#EA580C",
+     "bg": "#FFFFFF",
+     "ratio": 3.56,
+     "need": 4.5,
+     "fontSize": "14px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex-shrink-0.w-56.sm:w-64>div.p-4>p.text-sm.text-gray-500.mt-1>span.font-semibold.text-orange-600",
+     "text": "Gold/Platinum",
+     "fg": "#EA580C",
+     "bg": "#FFFFFF",
+     "ratio": 3.56,
+     "need": 4.5,
+     "fontSize": "14px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6",
+     "text": "Explore Packages",
+     "fg": "#FFFFFF",
+     "bg": "#EA580C",
+     "ratio": 3.56,
+     "need": 4.5,
+     "fontSize": "18px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>a.border.border-orange-600.text-orange-600",
+     "text": "Contact Us",
+     "fg": "#EA580C",
+     "bg": "#FFFFFF",
+     "ratio": 3.56,
+     "need": 4.5,
+     "fontSize": "18px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.min-h-screen>section.lg:py-10.sm:py-5.px-4>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6",
+     "text": "Book Your Event",
+     "fg": "#FFFFFF",
+     "bg": "#EA580C",
+     "ratio": 3.56,
+     "need": 4.5,
+     "fontSize": "16px",
+     "weight": "700",
+     "viewport": "laptop"
+    }
+   ],
+   "overImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>h2.text-2xl.sm:text-3xl.lg:text-4xl",
+     "text": "How It Works",
+     "fg": "#111827",
+     "bg": "#FFFFFF",
+     "ratio": 17.74,
+     "need": 3,
+     "fontSize": "36px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>p.text-gray-600.text-center.mt-2",
+     "text": "Booking catering with Dharaa Event Management is simple, tra",
+     "fg": "#4B5563",
+     "bg": "#FFFFFF",
+     "ratio": 7.56,
+     "need": 4.5,
+     "fontSize": "16px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-lg.sm:text-xl.font-semibold",
+     "text": "Contact Us",
+     "fg": "#111827",
+     "bg": "#FFFFFF",
+     "ratio": 17.74,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>p.text-sm.sm:text-base.text-gray-500",
+     "text": "Reach out via call or WhatsApp to discuss your requirements.",
+     "fg": "#6B7280",
+     "bg": "#FFFFFF",
+     "ratio": 4.83,
+     "need": 4.5,
+     "fontSize": "16px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>h2.text-2xl.sm:text-3xl.lg:text-4xl",
+     "text": "How It Works",
+     "fg": "#111827",
+     "bg": "#FFFFFF",
+     "ratio": 17.74,
+     "need": 3,
+     "fontSize": "36px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>p.text-gray-600.text-center.mt-2",
+     "text": "Booking catering with Dharaa Event Management is simple, tra",
+     "fg": "#4B5563",
+     "bg": "#FFFFFF",
+     "ratio": 7.56,
+     "need": 4.5,
+     "fontSize": "16px",
+     "weight": "400",
+     "viewport": "laptop"
+    }
+   ],
+   "tinyTarget": [
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Our Team",
+     "size": "55x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "About Us",
+     "size": "52x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Dharaa Events",
+     "size": "82x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Our Team",
+     "size": "55x15",
+     "viewport": "laptop"
+    }
+   ],
+   "oversizedImage": [
+    {
+     "sel": "div.min-h-screen>section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.flex>img.w-full.max-w-sm.sm:max-w-md",
+     "src": "http://localhost:3000/_next/static/media/catering.1bz87uwq7w98k.jpg",
+     "natural": "5260x3507",
+     "displayed": "512x347",
+     "wastedFactor": 10.3,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+     "src": "http://localhost:3000/_next/static/media/basundi.1gyzztkm7_rch.jpg",
+     "natural": "612x330",
+     "displayed": "254x160",
+     "wastedFactor": 2.4,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+     "src": "http://localhost:3000/_next/static/media/briyani.3vqeou9u4b21f.jpg",
+     "natural": "2304x4096",
+     "displayed": "254x160",
+     "wastedFactor": 9.1,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+     "src": "http://localhost:3000/_next/static/media/drinks.2i0jtn2xy8zp1.jpg",
+     "natural": "2666x4000",
+     "displayed": "254x160",
+     "wastedFactor": 10.5,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+     "src": "http://localhost:3000/_next/static/media/gulabjamun.361073zso5zg9.jpg",
+     "natural": "3000x4000",
+     "displayed": "254x160",
+     "wastedFactor": 11.8,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+     "src": "http://localhost:3000/_next/static/media/icecream.1my_fdqhwem8x.jpg",
+     "natural": "612x433",
+     "displayed": "254x160",
+     "wastedFactor": 2.4,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.min-h-screen>section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.flex>img.w-full.max-w-sm.sm:max-w-md",
+     "src": "http://localhost:3000/_next/static/media/catering.1bz87uwq7w98k.jpg",
+     "natural": "5260x3507",
+     "displayed": "512x347",
+     "wastedFactor": 10.3,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+     "src": "http://localhost:3000/_next/static/media/basundi.1gyzztkm7_rch.jpg",
+     "natural": "612x330",
+     "displayed": "254x160",
+     "wastedFactor": 2.4,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+     "src": "http://localhost:3000/_next/static/media/briyani.3vqeou9u4b21f.jpg",
+     "natural": "2304x4096",
+     "displayed": "254x160",
+     "wastedFactor": 9.1,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+     "src": "http://localhost:3000/_next/static/media/drinks.2i0jtn2xy8zp1.jpg",
+     "natural": "2666x4000",
+     "displayed": "254x160",
+     "wastedFactor": 10.5,
+     "viewport": "laptop"
+    }
+   ],
+   "brokenImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.md:hidden.h-16.flex>a.flex.items-center.gap-3>img.w-16.h-16.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "tablet"
+    }
+   ]
+  }
+ },
+ "film-detail": {
+  "viewports": {
+   "desktop": {
+    "scanned": 297,
+    "overflowX": 0,
+    "lcpMs": 192,
+    "cls": 0.4255,
+    "fcpMs": 108,
+    "tbtMs": 0,
+    "lcpElement": "video.w-full.h-full.object-cover",
+    "clsSources": [
+     {
+      "value": 0.4255,
+      "at": 145,
+      "sources": [
+       "footer.relative.w-full"
+      ]
+     }
+    ],
+    "h1Count": 1,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 24,
+    "overImage": 6,
+    "tinyTarget": 16,
+    "oversizedImage": 0,
+    "brokenImage": 4,
+    "noAlt": 0,
+    "title": "Capturing Your Love Story: Cinematic Wedding Videography in India | The Wedding Boys"
+   },
+   "laptop": {
+    "scanned": 297,
+    "overflowX": 0,
+    "lcpMs": 276,
+    "cls": 0.6809,
+    "fcpMs": 140,
+    "tbtMs": 0,
+    "lcpElement": "video.w-full.h-full.object-cover",
+    "clsSources": [
+     {
+      "value": 0.6809,
+      "at": 209,
+      "sources": [
+       "footer.relative.w-full"
+      ]
+     }
+    ],
+    "h1Count": 1,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 24,
+    "overImage": 6,
+    "tinyTarget": 16,
+    "oversizedImage": 0,
+    "brokenImage": 4,
+    "noAlt": 0,
+    "title": "Capturing Your Love Story: Cinematic Wedding Videography in India | The Wedding Boys"
+   },
+   "mobile": {
+    "scanned": 278,
+    "overflowX": 0,
+    "lcpMs": 1592,
+    "cls": 0.0016,
+    "fcpMs": 340,
+    "tbtMs": 0,
+    "lcpElement": "video.w-full.h-full.object-cover",
+    "clsSources": [
+     {
+      "value": 0.0016,
+      "at": 1454,
+      "sources": [
+       "div.flex.items-center"
+      ]
+     }
+    ],
+    "h1Count": 1,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 24,
+    "overImage": 5,
+    "tinyTarget": 16,
+    "oversizedImage": 0,
+    "brokenImage": 4,
+    "noAlt": 0,
+    "title": "Capturing Your Love Story: Cinematic Wedding Videography in India | The Wedding Boys"
+   },
+   "tablet": {
+    "scanned": 298,
+    "overflowX": 0,
+    "lcpMs": 220,
+    "cls": 0.8492,
+    "fcpMs": 100,
+    "tbtMs": 0,
+    "lcpElement": "video.w-full.h-full.object-cover",
+    "clsSources": [
+     {
+      "value": 0.0038,
+      "at": 152,
+      "sources": [
+       "div.space-y-2.5",
+       "div.space-y-8",
+       "div.mt-12.pt-6"
+      ]
+     },
+     {
+      "value": 0.8438,
+      "at": 168,
+      "sources": [
+       "footer.relative.w-full"
+      ]
+     },
+     {
+      "value": 0.0016,
+      "at": 181,
+      "sources": [
+       "div.flex.items-center"
+      ]
+     }
+    ],
+    "h1Count": 1,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 24,
+    "overImage": 6,
+    "tinyTarget": 16,
+    "oversizedImage": 0,
+    "brokenImage": 4,
+    "noAlt": 0,
+    "title": "Capturing Your Love Story: Cinematic Wedding Videography in India | The Wedding Boys"
+   }
+  },
+  "defects": {
+   "lowContrast": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.mb-16>div.relative.mb-8>h1.text-4xl.font-bold.text-center",
+     "text": "Khusboo & Vedant",
+     "fg": "#FF6969",
+     "bg": "#FFFFFF",
+     "ratio": 2.81,
+     "need": 3,
+     "fontSize": "36px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.mb-16>div.flex.flex-wrap.justify-center>div.px-4.py-2.bg-[#FF6969]/10",
+     "text": "Reception",
+     "fg": "#FF6969",
+     "bg": "#FFFFFF",
+     "ratio": 2.81,
+     "need": 4.5,
+     "fontSize": "16px",
+     "weight": "500",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.mb-16>div.flex.flex-wrap.justify-center>div.px-4.py-2.bg-[#FF6969]/10",
+     "text": "North India",
+     "fg": "#FF6969",
+     "bg": "#FFFFFF",
+     "ratio": 2.81,
+     "need": 4.5,
+     "fontSize": "16px",
+     "weight": "500",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.mb-16>div.flex.flex-wrap.justify-center>div.px-4.py-2.bg-[#FF6969]/10",
+     "text": "Urban",
+     "fg": "#FF6969",
+     "bg": "#FFFFFF",
+     "ratio": 2.81,
+     "need": 4.5,
+     "fontSize": "16px",
+     "weight": "500",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.mb-16>div.flex.flex-wrap.justify-center>div.px-4.py-2.bg-[#FF6969]/10",
+     "text": "Sindoor Daan",
+     "fg": "#FF6969",
+     "bg": "#FFFFFF",
+     "ratio": 2.81,
+     "need": 4.5,
+     "fontSize": "16px",
+     "weight": "500",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.mb-16>div.relative.mb-8>h1.text-4xl.font-bold.text-center",
+     "text": "Khusboo & Vedant",
+     "fg": "#FF6969",
+     "bg": "#FFFFFF",
+     "ratio": 2.81,
+     "need": 3,
+     "fontSize": "36px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.mb-16>div.flex.flex-wrap.justify-center>div.px-4.py-2.bg-[#FF6969]/10",
+     "text": "Reception",
+     "fg": "#FF6969",
+     "bg": "#FFFFFF",
+     "ratio": 2.81,
+     "need": 4.5,
+     "fontSize": "16px",
+     "weight": "500",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.mb-16>div.flex.flex-wrap.justify-center>div.px-4.py-2.bg-[#FF6969]/10",
+     "text": "North India",
+     "fg": "#FF6969",
+     "bg": "#FFFFFF",
+     "ratio": 2.81,
+     "need": 4.5,
+     "fontSize": "16px",
+     "weight": "500",
+     "viewport": "laptop"
+    }
+   ],
+   "overImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "text": "The Bi-Weekly Dispatch",
+     "fg": "#FF5353",
+     "bg": "#FFFFFF",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "text": "Cinematic Love Stories, Delivered to Your Inbox",
+     "fg": "#5E2B17",
+     "bg": "#FFFFFF",
+     "ratio": 11.45,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+     "text": "Join 12,000 discerning couples receiving curated real weddin",
+     "fg": "#74583E",
+     "bg": "#FFFFFF",
+     "ratio": 6.55,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>p.text-[10px].text-[#78716C].pl-2",
+     "text": "No spam. Just meaningful stories.",
+     "fg": "#78716C",
+     "bg": "#FFFFFF",
+     "ratio": 4.8,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "text": "The Bi-Weekly Dispatch",
+     "fg": "#FF5353",
+     "bg": "#FFFFFF",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "text": "Cinematic Love Stories, Delivered to Your Inbox",
+     "fg": "#5E2B17",
+     "bg": "#FFFFFF",
+     "ratio": 11.45,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "laptop"
+    }
+   ],
+   "tinyTarget": [
+    {
+     "sel": "div.bottom-control-panel.absolute.bottom-0>div.right-control.relative.flex>div.relative.speaker.h-fit>button.relative.speaker-btn.flex",
+     "label": "",
+     "size": "20x20",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.bottom-control-panel.absolute.bottom-0>div.right-control.relative.flex>div.setting.h-fit.w-fit>button.setting-btn.flex.justify-center",
+     "label": "",
+     "size": "20x20",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.bottom-control-panel.absolute.bottom-0>div.right-control.relative.flex>div.fullscreen.h-fit.w-fit>button.fullscreen-btn.flex.justify-center",
+     "label": "",
+     "size": "20x20",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.bottom-control-panel.absolute.bottom-0>div.right-control.relative.flex>div.relative.speaker.h-fit>button.relative.speaker-btn.flex",
+     "label": "",
+     "size": "20x20",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.bottom-control-panel.absolute.bottom-0>div.right-control.relative.flex>div.setting.h-fit.w-fit>button.setting-btn.flex.justify-center",
+     "label": "",
+     "size": "20x20",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.bottom-control-panel.absolute.bottom-0>div.right-control.relative.flex>div.fullscreen.h-fit.w-fit>button.fullscreen-btn.flex.justify-center",
+     "label": "",
+     "size": "20x20",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "laptop"
+    }
+   ],
+   "brokenImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex-shrink-0.w-80.bg-white>a.block>div.relative.aspect-video>img.w-full.h-full.object-cover",
+     "src": "",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex-shrink-0.w-80.bg-white>a.block>div.relative.aspect-video>img.w-full.h-full.object-cover",
+     "src": "",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex-shrink-0.w-80.bg-white>a.block>div.relative.aspect-video>img.w-full.h-full.object-cover",
+     "src": "",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.flex-shrink-0.w-80.bg-white>a.block>div.relative.aspect-video>img.w-full.h-full.object-cover",
+     "src": "",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.flex-shrink-0.w-80.bg-white>a.block>div.relative.aspect-video>img.w-full.h-full.object-cover",
+     "src": "",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.flex-shrink-0.w-80.bg-white>a.block>div.relative.aspect-video>img.w-full.h-full.object-cover",
+     "src": "",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.md:hidden.h-16.flex>a.flex.items-center.gap-3>img.w-16.h-16.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.flex-shrink-0.w-80.bg-white>a.block>div.relative.aspect-video>img.w-full.h-full.object-cover",
+     "src": "",
+     "viewport": "mobile"
+    }
+   ]
+  }
+ },
+ "films": {
+  "viewports": {
+   "desktop": {
+    "scanned": 254,
+    "overflowX": 0,
+    "lcpMs": 668,
+    "cls": 0,
+    "fcpMs": 228,
+    "tbtMs": 10,
+    "lcpElement": "img.object-cover.w-full.h-32",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 3,
+    "overImage": 9,
+    "tinyTarget": 13,
+    "oversizedImage": 8,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Wedding Films & Cinematography Portfolio | The Wedding Boys"
+   },
+   "laptop": {
+    "scanned": 254,
+    "overflowX": 0,
+    "lcpMs": 512,
+    "cls": 0,
+    "fcpMs": 192,
+    "tbtMs": 0,
+    "lcpElement": "img.object-cover.w-full.h-32",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 3,
+    "overImage": 9,
+    "tinyTarget": 13,
+    "oversizedImage": 8,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Wedding Films & Cinematography Portfolio | The Wedding Boys"
+   },
+   "mobile": {
+    "scanned": 233,
+    "overflowX": 0,
+    "lcpMs": 2396,
+    "cls": 0.0105,
+    "fcpMs": 428,
+    "tbtMs": 0,
+    "lcpElement": "img.object-cover.w-full.h-32",
+    "clsSources": [
+     {
+      "value": 0.0105,
+      "at": 943,
+      "sources": [
+       "a.flex.flex-col",
+       "div.relative.rounded-xl"
+      ]
+     }
+    ],
+    "h1Count": 1,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 3,
+    "overImage": 8,
+    "tinyTarget": 13,
+    "oversizedImage": 8,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Wedding Films & Cinematography Portfolio | The Wedding Boys"
+   },
+   "tablet": {
+    "scanned": 254,
+    "overflowX": 0,
+    "lcpMs": 544,
+    "cls": 0,
+    "fcpMs": 136,
+    "tbtMs": 0,
+    "lcpElement": "img.object-cover.w-full.h-32",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 3,
+    "overImage": 9,
+    "tinyTarget": 13,
+    "oversizedImage": 8,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Wedding Films & Cinematography Portfolio | The Wedding Boys"
+   }
+  },
+  "defects": {
+   "lowContrast": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.md:hidden.h-16.flex>a.flex.items-center.gap-3>div.flex.flex-col.gap-1>span.md:hidden.sm:text-xs.md:text-sm",
+     "text": "Architects of Cinematic Romance",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "tablet"
+    }
+   ],
+   "overImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.films-category-wrapper.space-y-8.sm:space-y-10>div.px-4.lg:my-12.space-y-4>div.flex.justify-between.items-center>a.text-xs.sm:text-sm.lg:text-base",
+     "text": "View All",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "16px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.films-category-wrapper.space-y-8.sm:space-y-10>div.px-4.lg:my-12.space-y-4>div.flex.justify-between.items-center>a.text-xs.sm:text-sm.lg:text-base",
+     "text": "View All",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "16px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.films-category-wrapper.space-y-8.sm:space-y-10>div.px-4.lg:my-12.space-y-4>div.flex.justify-between.items-center>a.text-xs.sm:text-sm.lg:text-base",
+     "text": "View All",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "16px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "text": "The Bi-Weekly Dispatch",
+     "fg": "#FF5353",
+     "bg": "#FFFFFF",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.films-category-wrapper.space-y-8.sm:space-y-10>div.px-4.lg:my-12.space-y-4>div.flex.justify-between.items-center>a.text-xs.sm:text-sm.lg:text-base",
+     "text": "View All",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "16px",
+     "weight": "400",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.films-category-wrapper.space-y-8.sm:space-y-10>div.px-4.lg:my-12.space-y-4>div.flex.justify-between.items-center>a.text-xs.sm:text-sm.lg:text-base",
+     "text": "View All",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "16px",
+     "weight": "400",
+     "viewport": "laptop"
+    }
+   ],
+   "tinyTarget": [
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Our Team",
+     "size": "55x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "About Us",
+     "size": "52x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Dharaa Events",
+     "size": "82x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Our Team",
+     "size": "55x15",
+     "viewport": "laptop"
+    }
+   ],
+   "oversizedImage": [
+    {
+     "sel": "div.flex.gap-2.sm:gap-4>a.flex.flex-col.flex-shrink-0>div.relative.rounded-xl.overflow-hidden>img.object-cover.w-full.h-32",
+     "src": "://media.theweddingboys.in/client/67e05bb60f15ebfba3ee509b/sGZNN2jIaQma/orig.jpg",
+     "natural": "640x640",
+     "displayed": "288x192",
+     "wastedFactor": 2.2,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex.gap-2.sm:gap-4>a.flex.flex-col.flex-shrink-0>div.relative.rounded-xl.overflow-hidden>img.object-cover.w-full.h-32",
+     "src": "://media.theweddingboys.in/client/67e055820f15ebfba3ee504b/1D7ntEi1Cp3v/orig.jpg",
+     "natural": "1800x2700",
+     "displayed": "288x192",
+     "wastedFactor": 6.3,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex.gap-2.sm:gap-4>a.flex.flex-col.flex-shrink-0>div.relative.rounded-xl.overflow-hidden>img.object-cover.w-full.h-32",
+     "src": "://media.theweddingboys.in/client/68069c18162b3828a2e67fcc/BMK4Wc-u1Ish/orig.png",
+     "natural": "741x454",
+     "displayed": "288x192",
+     "wastedFactor": 2.6,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex.gap-2.sm:gap-4>a.flex.flex-col.flex-shrink-0>div.relative.rounded-xl.overflow-hidden>img.object-cover.w-full.h-32",
+     "src": "://media.theweddingboys.in/client/68069c18162b3828a2e67fcc/SvAXbt5na2t3/orig.png",
+     "natural": "1920x927",
+     "displayed": "288x192",
+     "wastedFactor": 6.7,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex.gap-2.sm:gap-4>a.flex.flex-col.flex-shrink-0>div.relative.rounded-xl.overflow-hidden>img.object-cover.w-full.h-32",
+     "src": "://media.theweddingboys.in/client/67e057a30f15ebfba3ee506e/Yo77XLEg-jsd/orig.jpg",
+     "natural": "2700x1796",
+     "displayed": "288x192",
+     "wastedFactor": 9.4,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex.gap-2.sm:gap-4>a.flex.flex-col.flex-shrink-0>div.relative.rounded-xl.overflow-hidden>img.object-cover.w-full.h-32",
+     "src": "://media.theweddingboys.in/client/67e0529e0f15ebfba3ee5032/vmi6lN3vm2vv/orig.jpg",
+     "natural": "3984x2656",
+     "displayed": "288x192",
+     "wastedFactor": 13.8,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex.gap-2.sm:gap-4>a.flex.flex-col.flex-shrink-0>div.relative.rounded-xl.overflow-hidden>img.object-cover.w-full.h-32",
+     "src": "://media.theweddingboys.in/client/67e05bb60f15ebfba3ee509b/sGZNN2jIaQma/orig.jpg",
+     "natural": "640x640",
+     "displayed": "288x192",
+     "wastedFactor": 2.2,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.flex.gap-2.sm:gap-4>a.flex.flex-col.flex-shrink-0>div.relative.rounded-xl.overflow-hidden>img.object-cover.w-full.h-32",
+     "src": "://media.theweddingboys.in/client/67e055820f15ebfba3ee504b/1D7ntEi1Cp3v/orig.jpg",
+     "natural": "1800x2700",
+     "displayed": "288x192",
+     "wastedFactor": 6.3,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.flex.gap-2.sm:gap-4>a.flex.flex-col.flex-shrink-0>div.relative.rounded-xl.overflow-hidden>img.object-cover.w-full.h-32",
+     "src": "://media.theweddingboys.in/client/68069c18162b3828a2e67fcc/BMK4Wc-u1Ish/orig.png",
+     "natural": "741x454",
+     "displayed": "288x192",
+     "wastedFactor": 2.6,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.flex.gap-2.sm:gap-4>a.flex.flex-col.flex-shrink-0>div.relative.rounded-xl.overflow-hidden>img.object-cover.w-full.h-32",
+     "src": "://media.theweddingboys.in/client/68069c18162b3828a2e67fcc/SvAXbt5na2t3/orig.png",
+     "natural": "1920x927",
+     "displayed": "288x192",
+     "wastedFactor": 6.7,
+     "viewport": "laptop"
+    }
+   ],
+   "brokenImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.md:hidden.h-16.flex>a.flex.items-center.gap-3>img.w-16.h-16.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "tablet"
+    }
+   ]
+  }
+ },
+ "home": {
+  "viewports": {
+   "desktop": {
+    "scanned": 958,
+    "overflowX": 0,
+    "lcpMs": 424,
+    "cls": 0.0594,
+    "fcpMs": 424,
+    "tbtMs": 57,
+    "lcpElement": "img.absolute.inset-0.w-full",
+    "clsSources": [
+     {
+      "value": 0.0588,
+      "at": 665,
+      "sources": [
+       "div.w-full.flex",
+       "section.py-16.px-4"
+      ]
+     },
+     {
+      "value": 0.0006,
+      "at": 824,
+      "sources": [
+       "div.w-full.flex"
+      ]
+     }
+    ],
+    "h1Count": 4,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 37,
+    "overImage": 107,
+    "tinyTarget": 20,
+    "oversizedImage": 15,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Capturing Your Love Story: Cinematic Wedding Videography in India | The Wedding Boys"
+   },
+   "laptop": {
+    "scanned": 955,
+    "overflowX": 0,
+    "lcpMs": 240,
+    "cls": 0.0391,
+    "fcpMs": 240,
+    "tbtMs": 47,
+    "lcpElement": "img.absolute.inset-0.w-full",
+    "clsSources": [
+     {
+      "value": 0.0388,
+      "at": 479,
+      "sources": [
+       "div.w-full.flex",
+       "section.py-16.px-4"
+      ]
+     },
+     {
+      "value": 0.0004,
+      "at": 580,
+      "sources": [
+       "div.w-full.flex"
+      ]
+     }
+    ],
+    "h1Count": 4,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 37,
+    "overImage": 107,
+    "tinyTarget": 20,
+    "oversizedImage": 16,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Capturing Your Love Story: Cinematic Wedding Videography in India | The Wedding Boys"
+   },
+   "mobile": {
+    "scanned": 929,
+    "overflowX": 0,
+    "lcpMs": 412,
+    "cls": 0.056,
+    "fcpMs": 412,
+    "tbtMs": 19,
+    "lcpElement": "img.absolute.inset-0.w-full",
+    "clsSources": [
+     {
+      "value": 0.0174,
+      "at": 1147,
+      "sources": [
+       "section.py-16.px-4",
+       "div.w-full.flex"
+      ]
+     },
+     {
+      "value": 0.024,
+      "at": 1264,
+      "sources": [
+       "section.py-16.px-4"
+      ]
+     },
+     {
+      "value": 0.0146,
+      "at": 1366,
+      "sources": [
+       "div.relative.h-full",
+       "div.absolute.sm:bottom-5"
+      ]
+     }
+    ],
+    "h1Count": 4,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 37,
+    "overImage": 106,
+    "tinyTarget": 25,
+    "oversizedImage": 20,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Capturing Your Love Story: Cinematic Wedding Videography in India | The Wedding Boys"
+   },
+   "tablet": {
+    "scanned": 961,
+    "overflowX": 0,
+    "lcpMs": 212,
+    "cls": 0.1046,
+    "fcpMs": 212,
+    "tbtMs": 24,
+    "lcpElement": "img.absolute.inset-0.w-full",
+    "clsSources": [
+     {
+      "value": 0.1035,
+      "at": 410,
+      "sources": [
+       "div.w-full.flex",
+       "section.py-16.px-4"
+      ]
+     },
+     {
+      "value": 0.0011,
+      "at": 471,
+      "sources": [
+       "div.w-full.flex"
+      ]
+     }
+    ],
+    "h1Count": 4,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 37,
+    "overImage": 107,
+    "tinyTarget": 20,
+    "oversizedImage": 10,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Capturing Your Love Story: Cinematic Wedding Videography in India | The Wedding Boys"
+   }
+  },
+  "defects": {
+   "lowContrast": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative.h-full.overflow-hidden>div.absolute.sm:bottom-5.sm:left-5>div.flex.items-center.gap-2>span.text-nowrap",
+     "text": "20 December",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "22px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative.h-full.overflow-hidden>div.absolute.sm:bottom-5.sm:left-5>div.flex.items-center.gap-2>span",
+     "text": "Daman",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "22px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative.h-full.overflow-hidden>div.absolute.sm:bottom-5.sm:left-5>div.flex.gap-2.sm:text-mobileBodySmall>span",
+     "text": "Anshu",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative.h-full.overflow-hidden>div.absolute.sm:bottom-5.sm:left-5>div.flex.gap-2.sm:text-mobileBodySmall>span",
+     "text": "&",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative.h-full.overflow-hidden>div.absolute.sm:bottom-5.sm:left-5>div.flex.gap-2.sm:text-mobileBodySmall>span",
+     "text": "Abhishek",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.relative.h-full.overflow-hidden>div.absolute.sm:bottom-5.sm:left-5>div.flex.items-center.gap-2>span.text-nowrap",
+     "text": "20 December",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "22px",
+     "weight": "600",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.relative.h-full.overflow-hidden>div.absolute.sm:bottom-5.sm:left-5>div.flex.items-center.gap-2>span",
+     "text": "Daman",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "22px",
+     "weight": "600",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.relative.h-full.overflow-hidden>div.absolute.sm:bottom-5.sm:left-5>div.flex.gap-2.sm:text-mobileBodySmall>span",
+     "text": "Anshu",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "400",
+     "viewport": "laptop"
+    }
+   ],
+   "overImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex-shrink-0.relative.w-full>div.absolute.inset-0.bg-gradient-to-t>a.absolute.bottom-6.left-6>h2.text-2xl.font-bold",
+     "text": "Shreyas & Bhavika",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.absolute.inset-0.bg-gradient-to-t>a.absolute.bottom-6.left-6>div.flex.items-center.gap-2>span",
+     "text": "13 May",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "14px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.absolute.inset-0.bg-gradient-to-t>a.absolute.bottom-6.left-6>div.flex.items-center.gap-2>span",
+     "text": "•",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "14px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.absolute.inset-0.bg-gradient-to-t>a.absolute.bottom-6.left-6>div.flex.items-center.gap-2>span",
+     "text": "Jammu",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "14px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.flex-shrink-0.relative.w-full>div.absolute.inset-0.bg-gradient-to-t>a.absolute.bottom-6.left-6>h2.text-2xl.font-bold",
+     "text": "Shreyas & Bhavika",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.absolute.inset-0.bg-gradient-to-t>a.absolute.bottom-6.left-6>div.flex.items-center.gap-2>span",
+     "text": "13 May",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "14px",
+     "weight": "400",
+     "viewport": "laptop"
+    }
+   ],
+   "tinyTarget": [
+    {
+     "sel": "section#top>a",
+     "label": "Our Films",
+     "size": "1872x20",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.md:grid-cols-2>div.rounded-2xl.overflow-hidden.shadow-xl>div.p-6.text-center>a.text-secondary_on.text-mobileBodySmall.font-medium",
+     "label": "Explore Gallery",
+     "size": "353x21",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.md:grid-cols-2>div.rounded-2xl.overflow-hidden.shadow-xl>div.p-6.text-center>a.text-secondary_on.text-mobileBodySmall.font-medium",
+     "label": "Explore Gallery",
+     "size": "353x21",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.md:grid-cols-2>div.rounded-2xl.overflow-hidden.shadow-xl>div.p-6.text-center>a.text-secondary_on.text-mobileBodySmall.font-medium",
+     "label": "Explore Gallery",
+     "size": "353x21",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.md:grid-cols-2>div.rounded-2xl.overflow-hidden.shadow-xl>div.p-6.text-center>a.text-secondary_on.text-mobileBodySmall.font-medium",
+     "label": "Explore Gallery",
+     "size": "353x21",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.md:grid-cols-2>div.rounded-2xl.overflow-hidden.shadow-xl>div.p-6.text-center>a.text-secondary_on.text-mobileBodySmall.font-medium",
+     "label": "Explore Gallery",
+     "size": "353x21",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "section#top>a",
+     "label": "Our Films",
+     "size": "1392x20",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.md:grid-cols-2>div.rounded-2xl.overflow-hidden.shadow-xl>div.p-6.text-center>a.text-secondary_on.text-mobileBodySmall.font-medium",
+     "label": "Explore Gallery",
+     "size": "353x21",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.md:grid-cols-2>div.rounded-2xl.overflow-hidden.shadow-xl>div.p-6.text-center>a.text-secondary_on.text-mobileBodySmall.font-medium",
+     "label": "Explore Gallery",
+     "size": "353x21",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.md:grid-cols-2>div.rounded-2xl.overflow-hidden.shadow-xl>div.p-6.text-center>a.text-secondary_on.text-mobileBodySmall.font-medium",
+     "label": "Explore Gallery",
+     "size": "353x21",
+     "viewport": "laptop"
+    }
+   ],
+   "oversizedImage": [
+    {
+     "sel": "a>div.lg:h-[26rem].lg:w-[26rem].relative>div.relative.h-full.overflow-hidden>img.w-full.h-full.rounded-3xl",
+     "src": "://media.theweddingboys.in/client/67e055820f15ebfba3ee504b/1D7ntEi1Cp3v/orig.jpg",
+     "natural": "1800x2700",
+     "displayed": "416x416",
+     "wastedFactor": 4.3,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.rounded-2xl.overflow-hidden.shadow-xl>div.relative.h-60.sm:h-60>div.relative.w-full.h-full>img.absolute.inset-0.w-full",
+     "src": "http://localhost:3000/_next/static/media/homeImage1.34-cjqwp_ip48.jpg",
+     "natural": "6048x4032",
+     "displayed": "401x256",
+     "wastedFactor": 15.1,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.rounded-2xl.overflow-hidden.shadow-xl>div.relative.h-60.sm:h-60>div.relative.w-full.h-full>img.absolute.inset-0.w-full",
+     "src": "http://localhost:3000/_next/static/media/homeImage4.42764m2390ycd.jpg",
+     "natural": "2160x2700",
+     "displayed": "401x256",
+     "wastedFactor": 5.4,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.rounded-2xl.overflow-hidden.shadow-xl>div.relative.h-60.sm:h-60>div.relative.w-full.h-full>img.absolute.inset-0.w-full",
+     "src": "http://localhost:3000/_next/static/media/homeImage3.3minzrc-2zqey.jpg",
+     "natural": "5504x8256",
+     "displayed": "401x256",
+     "wastedFactor": 13.7,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.rounded-2xl.overflow-hidden.shadow-xl>div.relative.h-60.sm:h-60>div.relative.w-full.h-full>img.absolute.inset-0.w-full",
+     "src": "http://localhost:3000/_next/static/media/homeImage6.047azaljcs6_2.jpg",
+     "natural": "3914x5883",
+     "displayed": "401x256",
+     "wastedFactor": 9.8,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.rounded-2xl.overflow-hidden.shadow-xl>div.relative.h-60.sm:h-60>div.relative.w-full.h-full>img.absolute.inset-0.w-full",
+     "src": "http://localhost:3000/_next/static/media/homeImage5.05qda5369q39y.jpg",
+     "natural": "1080x1080",
+     "displayed": "401x256",
+     "wastedFactor": 2.7,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hero-banner.relative.h-[33rem]>div.flex.h-full.transition-transform>div.flex-shrink-0.relative.w-full>img.absolute.inset-0.w-full",
+     "src": "://media.theweddingboys.in/client/67e0529e0f15ebfba3ee5032/vmi6lN3vm2vv/orig.jpg",
+     "natural": "3984x2656",
+     "displayed": "1392x528",
+     "wastedFactor": 2.9,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "a>div.lg:h-[26rem].lg:w-[26rem].relative>div.relative.h-full.overflow-hidden>img.w-full.h-full.rounded-3xl",
+     "src": "://media.theweddingboys.in/client/67e055820f15ebfba3ee504b/1D7ntEi1Cp3v/orig.jpg",
+     "natural": "1800x2700",
+     "displayed": "416x416",
+     "wastedFactor": 4.3,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.rounded-2xl.overflow-hidden.shadow-xl>div.relative.h-60.sm:h-60>div.relative.w-full.h-full>img.absolute.inset-0.w-full",
+     "src": "http://localhost:3000/_next/static/media/homeImage1.34-cjqwp_ip48.jpg",
+     "natural": "6048x4032",
+     "displayed": "401x256",
+     "wastedFactor": 15.1,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.rounded-2xl.overflow-hidden.shadow-xl>div.relative.h-60.sm:h-60>div.relative.w-full.h-full>img.absolute.inset-0.w-full",
+     "src": "http://localhost:3000/_next/static/media/homeImage4.42764m2390ycd.jpg",
+     "natural": "2160x2700",
+     "displayed": "401x256",
+     "wastedFactor": 5.4,
+     "viewport": "laptop"
+    }
+   ],
+   "brokenImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.md:hidden.h-16.flex>a.flex.items-center.gap-3>img.w-16.h-16.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "tablet"
+    }
+   ]
+  }
+ },
+ "not-found": {
+  "viewports": {
+   "desktop": {
+    "scanned": 143,
+    "overflowX": 0,
+    "lcpMs": 692,
+    "cls": 0,
+    "fcpMs": 692,
+    "tbtMs": 0,
+    "lcpElement": "h1.mb-4.text-7xl.tracking-tight",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 1,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 4,
+    "overImage": 6,
+    "tinyTarget": 13,
+    "oversizedImage": 0,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Page not found | The Wedding Boys"
+   },
+   "laptop": {
+    "scanned": 143,
+    "overflowX": 0,
+    "lcpMs": 460,
+    "cls": 0,
+    "fcpMs": 460,
+    "tbtMs": 0,
+    "lcpElement": "h1.mb-4.text-7xl.tracking-tight",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 1,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 4,
+    "overImage": 6,
+    "tinyTarget": 13,
+    "oversizedImage": 0,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Page not found | The Wedding Boys"
+   },
+   "mobile": {
+    "scanned": 122,
+    "overflowX": 0,
+    "lcpMs": 380,
+    "cls": 0,
+    "fcpMs": 380,
+    "tbtMs": 0,
+    "lcpElement": "p.mb-4.text-lg.font-light",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 1,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 4,
+    "overImage": 5,
+    "tinyTarget": 13,
+    "oversizedImage": 0,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Page not found | The Wedding Boys"
+   },
+   "tablet": {
+    "scanned": 143,
+    "overflowX": 0,
+    "lcpMs": 280,
+    "cls": 0,
+    "fcpMs": 280,
+    "tbtMs": 0,
+    "lcpElement": "p.mb-4.text-3xl.tracking-tight",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 1,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 4,
+    "overImage": 6,
+    "tinyTarget": 13,
+    "oversizedImage": 0,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Page not found | The Wedding Boys"
+   }
+  },
+  "defects": {
+   "lowContrast": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "section.w-full.bg-primary.dark:bg-gray-900>div.py-8.px-4.mx-auto>div.mx-auto.text-center>h1.mb-4.text-7xl.tracking-tight",
+     "text": "404",
+     "fg": "#000000",
+     "bg": "#111827",
+     "ratio": 1.18,
+     "need": 3,
+     "fontSize": "128px",
+     "weight": "800",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "section.w-full.bg-primary.dark:bg-gray-900>div.py-8.px-4.mx-auto>div.mx-auto.text-center>h1.mb-4.text-7xl.tracking-tight",
+     "text": "404",
+     "fg": "#000000",
+     "bg": "#111827",
+     "ratio": 1.18,
+     "need": 3,
+     "fontSize": "128px",
+     "weight": "800",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.md:hidden.h-16.flex>a.flex.items-center.gap-3>div.flex.flex-col.gap-1>span.md:hidden.sm:text-xs.md:text-sm",
+     "text": "Architects of Cinematic Romance",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "section.w-full.bg-primary.dark:bg-gray-900>div.py-8.px-4.mx-auto>div.mx-auto.text-center>h1.mb-4.text-7xl.tracking-tight",
+     "text": "404",
+     "fg": "#000000",
+     "bg": "#111827",
+     "ratio": 1.18,
+     "need": 3,
+     "fontSize": "72px",
+     "weight": "800",
+     "viewport": "mobile"
+    }
+   ],
+   "overImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "text": "The Bi-Weekly Dispatch",
+     "fg": "#FF5353",
+     "bg": "#FFFFFF",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "text": "Cinematic Love Stories, Delivered to Your Inbox",
+     "fg": "#5E2B17",
+     "bg": "#FFFFFF",
+     "ratio": 11.45,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+     "text": "Join 12,000 discerning couples receiving curated real weddin",
+     "fg": "#74583E",
+     "bg": "#FFFFFF",
+     "ratio": 6.55,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>p.text-[10px].text-[#78716C].pl-2",
+     "text": "No spam. Just meaningful stories.",
+     "fg": "#78716C",
+     "bg": "#FFFFFF",
+     "ratio": 4.8,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "text": "The Bi-Weekly Dispatch",
+     "fg": "#FF5353",
+     "bg": "#FFFFFF",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "text": "Cinematic Love Stories, Delivered to Your Inbox",
+     "fg": "#5E2B17",
+     "bg": "#FFFFFF",
+     "ratio": 11.45,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "laptop"
+    }
+   ],
+   "tinyTarget": [
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Our Team",
+     "size": "55x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "About Us",
+     "size": "52x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Dharaa Events",
+     "size": "82x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Our Team",
+     "size": "55x15",
+     "viewport": "laptop"
+    }
+   ],
+   "brokenImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.md:hidden.h-16.flex>a.flex.items-center.gap-3>img.w-16.h-16.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "tablet"
+    }
+   ]
+  }
+ },
+ "photo-detail": {
+  "viewports": {
+   "mobile": {
+    "scanned": 339,
+    "overflowX": 0,
+    "lcpMs": 376,
+    "cls": 0,
+    "fcpMs": 344,
+    "tbtMs": 0,
+    "lcpElement": "img.w-full.h-full.object-cover",
+    "clsSources": [],
+    "h1Count": 0,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 3,
+    "overImage": 5,
+    "tinyTarget": 13,
+    "oversizedImage": 8,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Capturing Your Love Story: Cinematic Wedding Videography in India | The Wedding Boys"
+   },
+   "tablet": {
+    "scanned": 360,
+    "overflowX": 0,
+    "lcpMs": 196,
+    "cls": 0.1945,
+    "fcpMs": 196,
+    "tbtMs": 82,
+    "lcpElement": "img.w-full.h-full.object-cover",
+    "clsSources": [
+     {
+      "value": 0.0036,
+      "at": 224,
+      "sources": [
+       "div.absolute.bottom-6",
+       "div.absolute.bottom-6",
+       "div.absolute.bottom-6"
+      ]
+     },
+     {
+      "value": 0.1909,
+      "at": 257,
+      "sources": [
+       "div.infinite-scroll-component__outerdiv",
+       "svg",
+       "hr.mt-9.w-full"
+      ]
+     }
+    ],
+    "h1Count": 0,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 3,
+    "overImage": 6,
+    "tinyTarget": 13,
+    "oversizedImage": 20,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Capturing Your Love Story: Cinematic Wedding Videography in India | The Wedding Boys"
+   }
+  },
+  "defects": {
+   "lowContrast": [
+    {
+     "sel": "div.md:hidden.h-16.flex>a.flex.items-center.gap-3>div.flex.flex-col.gap-1>span.md:hidden.sm:text-xs.md:text-sm",
+     "text": "Architects of Cinematic Romance",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "tablet"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "tablet"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "tablet"
+    }
+   ],
+   "overImage": [
+    {
+     "sel": "div.md:hidden.h-16.flex>a.flex.items-center.gap-3>div.flex.flex-col.gap-1>span.sm:text-2xl.md:text-3xl.text-4xl",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "36px",
+     "weight": "700",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "text": "The Bi-Weekly Dispatch",
+     "fg": "#FF5353",
+     "bg": "#FFFFFF",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "700",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "text": "Cinematic Love Stories, Delivered to Your Inbox",
+     "fg": "#5E2B17",
+     "bg": "#FFFFFF",
+     "ratio": 11.45,
+     "need": 3,
+     "fontSize": "20px",
+     "weight": "700",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+     "text": "Join 12,000 discerning couples receiving curated real weddin",
+     "fg": "#74583E",
+     "bg": "#FFFFFF",
+     "ratio": 6.55,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "400",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>p.text-[10px].text-[#78716C].pl-2",
+     "text": "No spam. Just meaningful stories.",
+     "fg": "#78716C",
+     "bg": "#FFFFFF",
+     "ratio": 4.8,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "400",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "tablet"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "tablet"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "text": "The Bi-Weekly Dispatch",
+     "fg": "#FF5353",
+     "bg": "#FFFFFF",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "700",
+     "viewport": "tablet"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "text": "Cinematic Love Stories, Delivered to Your Inbox",
+     "fg": "#5E2B17",
+     "bg": "#FFFFFF",
+     "ratio": 11.45,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "tablet"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+     "text": "Join 12,000 discerning couples receiving curated real weddin",
+     "fg": "#74583E",
+     "bg": "#FFFFFF",
+     "ratio": 6.55,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "400",
+     "viewport": "tablet"
+    }
+   ],
+   "tinyTarget": [
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Our Team",
+     "size": "55x15",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "About Us",
+     "size": "52x15",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Dharaa Events",
+     "size": "82x15",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "tablet"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "tablet"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "tablet"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Our Team",
+     "size": "55x15",
+     "viewport": "tablet"
+    }
+   ],
+   "oversizedImage": [
+    {
+     "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.relative.w-full.h-auto>div.selected-image.relative.flex>img.w-full.h-full.object-cover",
+     "src": "://media.theweddingboys.in/client/6804a822f012e5e291abebe3/QPEtgK2hgPn0/orig.jpg",
+     "natural": "6048x4032",
+     "displayed": "390x260",
+     "wastedFactor": 15.5,
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.w-full.flex.gap-2>a>div.lg:h-96.lg:w-[22rem].relative>img.w-full.h-full.rounded-3xl",
+     "src": "://media.theweddingboys.in/client/6804a822f012e5e291abebe3/cRI_BNe-cfKS/orig.jpg",
+     "natural": "6048x4032",
+     "displayed": "141x94",
+     "wastedFactor": 43,
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.w-full.flex.gap-2>a>div.lg:h-96.lg:w-[22rem].relative>img.w-full.h-full.rounded-3xl",
+     "src": "://media.theweddingboys.in/client/6804a822f012e5e291abebe3/FJalDPVt6kG3/orig.jpg",
+     "natural": "6048x4032",
+     "displayed": "141x94",
+     "wastedFactor": 43,
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.w-full.flex.gap-2>a>div.lg:h-96.lg:w-[22rem].relative>img.w-full.h-full.rounded-3xl",
+     "src": "://media.theweddingboys.in/client/6804a822f012e5e291abebe3/MCGZNxxSL-fc/orig.jpg",
+     "natural": "4000x6000",
+     "displayed": "93x139",
+     "wastedFactor": 43,
+     "viewport": "mobile"
+    },
+    {
+     "sel": "a>div.wrapper.flex.flex-col>div.w-full.h-auto.flex-grow>img.object-cover.w-full.h-full",
+     "src": "://media.theweddingboys.in/client/6804a822f012e5e291abebe3/cRI_BNe-cfKS/orig.jpg",
+     "natural": "6048x4032",
+     "displayed": "372x248",
+     "wastedFactor": 16.3,
+     "viewport": "mobile"
+    },
+    {
+     "sel": "a>div.wrapper.flex.flex-col>div.w-full.h-auto.flex-grow>img.object-cover.w-full.h-full",
+     "src": "://media.theweddingboys.in/client/6804a822f012e5e291abebe3/FJalDPVt6kG3/orig.jpg",
+     "natural": "6048x4032",
+     "displayed": "372x248",
+     "wastedFactor": 16.3,
+     "viewport": "mobile"
+    },
+    {
+     "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.relative.w-full.h-auto>div.selected-image.relative.flex>img.w-full.h-full.object-cover",
+     "src": "://media.theweddingboys.in/client/6804a822f012e5e291abebe3/QPEtgK2hgPn0/orig.jpg",
+     "natural": "6048x4032",
+     "displayed": "752x352",
+     "wastedFactor": 8,
+     "viewport": "tablet"
+    },
+    {
+     "sel": "div.w-full.flex.gap-2>a>div.lg:h-96.lg:w-[22rem].relative>img.w-full.h-full.rounded-3xl",
+     "src": "://media.theweddingboys.in/client/6804a822f012e5e291abebe3/cRI_BNe-cfKS/orig.jpg",
+     "natural": "6048x4032",
+     "displayed": "320x320",
+     "wastedFactor": 18.9,
+     "viewport": "tablet"
+    },
+    {
+     "sel": "div.w-full.flex.gap-2>a>div.lg:h-96.lg:w-[22rem].relative>img.w-full.h-full.rounded-3xl",
+     "src": "://media.theweddingboys.in/client/6804a822f012e5e291abebe3/FJalDPVt6kG3/orig.jpg",
+     "natural": "6048x4032",
+     "displayed": "320x320",
+     "wastedFactor": 18.9,
+     "viewport": "tablet"
+    },
+    {
+     "sel": "div.w-full.flex.gap-2>a>div.lg:h-96.lg:w-[22rem].relative>img.w-full.h-full.rounded-3xl",
+     "src": "://media.theweddingboys.in/client/6804a822f012e5e291abebe3/MCGZNxxSL-fc/orig.jpg",
+     "natural": "4000x6000",
+     "displayed": "320x320",
+     "wastedFactor": 12.5,
+     "viewport": "tablet"
+    }
+   ],
+   "brokenImage": [
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.md:hidden.h-16.flex>a.flex.items-center.gap-3>img.w-16.h-16.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "tablet"
+    }
+   ]
+  }
+ },
+ "photos": {
+  "viewports": {
+   "laptop": {
+    "scanned": 465,
+    "overflowX": 0,
+    "lcpMs": 720,
+    "cls": 1.3814,
+    "fcpMs": 412,
+    "tbtMs": 180,
+    "lcpElement": "img.object-cover.w-full.h-full",
+    "clsSources": [
+     {
+      "value": 0.0099,
+      "at": 462,
+      "sources": [
+       "div.relative.animate-pulse",
+       "div.absolute.bottom-6",
+       "div.absolute.bottom-6"
+      ]
+     },
+     {
+      "value": 0.8482,
+      "at": 511,
+      "sources": [
+       "?"
+      ]
+     },
+     {
+      "value": 0.5232,
+      "at": 528,
+      "sources": [
+       "img.object-cover.w-full",
+       "img.object-cover.w-full",
+       "img.object-cover.w-full"
+      ]
+     }
+    ],
+    "h1Count": 0,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 3,
+    "overImage": 6,
+    "tinyTarget": 13,
+    "oversizedImage": 25,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Wedding Photography Gallery | The Wedding Boys"
+   },
+   "mobile": {
+    "scanned": 592,
+    "overflowX": 0,
+    "lcpMs": 1424,
+    "cls": 0.7294,
+    "fcpMs": 348,
+    "tbtMs": 135,
+    "lcpElement": "img.object-cover.w-full.h-full",
+    "clsSources": [
+     {
+      "value": 0.1276,
+      "at": 1007,
+      "sources": [
+       "div.relative",
+       "div.tags.flex"
+      ]
+     },
+     {
+      "value": 0.326,
+      "at": 1284,
+      "sources": [
+       "img.object-cover.w-full",
+       "div.relative",
+       "div.tags.flex"
+      ]
+     },
+     {
+      "value": 0.2303,
+      "at": 1558,
+      "sources": [
+       "img.object-cover.w-full",
+       "div.relative",
+       "div.tags.flex"
+      ]
+     },
+     {
+      "value": 0.0454,
+      "at": 1713,
+      "sources": [
+       "img.object-cover.w-full"
+      ]
+     }
+    ],
+    "h1Count": 0,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 3,
+    "overImage": 5,
+    "tinyTarget": 13,
+    "oversizedImage": 7,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Wedding Photography Gallery | The Wedding Boys"
+   },
+   "tablet": {
+    "scanned": 681,
+    "overflowX": 0,
+    "lcpMs": 428,
+    "cls": 1.7011,
+    "fcpMs": 196,
+    "tbtMs": 115,
+    "lcpElement": "img.object-cover.w-full.h-full",
+    "clsSources": [
+     {
+      "value": 0.0631,
+      "at": 231,
+      "sources": [
+       "div.relative.animate-pulse",
+       "div.relative.animate-pulse",
+       "footer.relative.w-full"
+      ]
+     },
+     {
+      "value": 0.8147,
+      "at": 266,
+      "sources": [
+       "?"
+      ]
+     },
+     {
+      "value": 0.802,
+      "at": 277,
+      "sources": [
+       "img.object-cover.w-full",
+       "div.wrapper.flex",
+       "img.object-cover.w-full"
+      ]
+     },
+     {
+      "value": 0.0213,
+      "at": 497,
+      "sources": [
+       "img.object-cover.w-full",
+       "div.tags.flex",
+       "div.tags.flex"
+      ]
+     }
+    ],
+    "h1Count": 0,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 3,
+    "overImage": 6,
+    "tinyTarget": 13,
+    "oversizedImage": 21,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Wedding Photography Gallery | The Wedding Boys"
+   }
+  },
+  "defects": {
+   "lowContrast": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.md:hidden.h-16.flex>a.flex.items-center.gap-3>div.flex.flex-col.gap-1>span.md:hidden.sm:text-xs.md:text-sm",
+     "text": "Architects of Cinematic Romance",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "tablet"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "tablet"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "tablet"
+    }
+   ],
+   "overImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "text": "The Bi-Weekly Dispatch",
+     "fg": "#FF5353",
+     "bg": "#FFFFFF",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "text": "Cinematic Love Stories, Delivered to Your Inbox",
+     "fg": "#5E2B17",
+     "bg": "#FFFFFF",
+     "ratio": 11.45,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+     "text": "Join 12,000 discerning couples receiving curated real weddin",
+     "fg": "#74583E",
+     "bg": "#FFFFFF",
+     "ratio": 6.55,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "400",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>p.text-[10px].text-[#78716C].pl-2",
+     "text": "No spam. Just meaningful stories.",
+     "fg": "#78716C",
+     "bg": "#FFFFFF",
+     "ratio": 4.8,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "400",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.md:hidden.h-16.flex>a.flex.items-center.gap-3>div.flex.flex-col.gap-1>span.sm:text-2xl.md:text-3xl.text-4xl",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "36px",
+     "weight": "700",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "text": "The Bi-Weekly Dispatch",
+     "fg": "#FF5353",
+     "bg": "#FFFFFF",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "700",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "text": "Cinematic Love Stories, Delivered to Your Inbox",
+     "fg": "#5E2B17",
+     "bg": "#FFFFFF",
+     "ratio": 11.45,
+     "need": 3,
+     "fontSize": "20px",
+     "weight": "700",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+     "text": "Join 12,000 discerning couples receiving curated real weddin",
+     "fg": "#74583E",
+     "bg": "#FFFFFF",
+     "ratio": 6.55,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "400",
+     "viewport": "mobile"
+    }
+   ],
+   "tinyTarget": [
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Our Team",
+     "size": "55x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "About Us",
+     "size": "52x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Dharaa Events",
+     "size": "82x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Our Team",
+     "size": "55x15",
+     "viewport": "mobile"
+    }
+   ],
+   "oversizedImage": [
+    {
+     "sel": "a>div.wrapper.flex.flex-col>div.w-full.h-auto.flex-grow>img.object-cover.w-full.h-full",
+     "src": "://media.theweddingboys.in/client/6804a822f012e5e291abebe3/QPEtgK2hgPn0/orig.jpg",
+     "natural": "6048x4032",
+     "displayed": "331x658",
+     "wastedFactor": 18.3,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "a>div.wrapper.flex.flex-col>div.w-full.h-auto.flex-grow>img.object-cover.w-full.h-full",
+     "src": "://media.theweddingboys.in/client/6804a822f012e5e291abebe3/cRI_BNe-cfKS/orig.jpg",
+     "natural": "6048x4032",
+     "displayed": "331x296",
+     "wastedFactor": 18.3,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "a>div.wrapper.flex.flex-col>div.w-full.h-auto.flex-grow>img.object-cover.w-full.h-full",
+     "src": "://media.theweddingboys.in/client/6804a822f012e5e291abebe3/FJalDPVt6kG3/orig.jpg",
+     "natural": "6048x4032",
+     "displayed": "331x296",
+     "wastedFactor": 18.3,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "a>div.wrapper.flex.flex-col>div.w-full.h-auto.flex-grow>img.object-cover.w-full.h-full",
+     "src": "://media.theweddingboys.in/client/6804a822f012e5e291abebe3/MCGZNxxSL-fc/orig.jpg",
+     "natural": "4000x6000",
+     "displayed": "331x496",
+     "wastedFactor": 12.1,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "a>div.wrapper.flex.flex-col>div.w-full.h-auto.flex-grow>img.object-cover.w-full.h-full",
+     "src": "://media.theweddingboys.in/client/67e05bb60f15ebfba3ee509b/ajXzfcyp24Rj/orig.jpg",
+     "natural": "1080x720",
+     "displayed": "331x258",
+     "wastedFactor": 3.3,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "a>div.wrapper.flex.flex-col>div.w-full.h-auto.flex-grow>img.object-cover.w-full.h-full",
+     "src": "://media.theweddingboys.in/client/67e05bb60f15ebfba3ee509b/gvCxipp2PR8F/orig.jpg",
+     "natural": "1080x719",
+     "displayed": "331x658",
+     "wastedFactor": 3.3,
+     "viewport": "laptop"
+    },
+    {
+     "sel": "a>div.wrapper.flex.flex-col>div.w-full.h-auto.flex-grow>img.object-cover.w-full.h-full",
+     "src": "://media.theweddingboys.in/client/6804a822f012e5e291abebe3/QPEtgK2hgPn0/orig.jpg",
+     "natural": "6048x4032",
+     "displayed": "372x248",
+     "wastedFactor": 16.3,
+     "viewport": "mobile"
+    },
+    {
+     "sel": "a>div.wrapper.flex.flex-col>div.w-full.h-auto.flex-grow>img.object-cover.w-full.h-full",
+     "src": "://media.theweddingboys.in/client/6804a822f012e5e291abebe3/cRI_BNe-cfKS/orig.jpg",
+     "natural": "6048x4032",
+     "displayed": "372x248",
+     "wastedFactor": 16.3,
+     "viewport": "mobile"
+    },
+    {
+     "sel": "a>div.wrapper.flex.flex-col>div.w-full.h-auto.flex-grow>img.object-cover.w-full.h-full",
+     "src": "://media.theweddingboys.in/client/6804a822f012e5e291abebe3/FJalDPVt6kG3/orig.jpg",
+     "natural": "6048x4032",
+     "displayed": "372x248",
+     "wastedFactor": 16.3,
+     "viewport": "mobile"
+    },
+    {
+     "sel": "a>div.wrapper.flex.flex-col>div.w-full.h-auto.flex-grow>img.object-cover.w-full.h-full",
+     "src": "://media.theweddingboys.in/client/6804a822f012e5e291abebe3/MCGZNxxSL-fc/orig.jpg",
+     "natural": "4000x6000",
+     "displayed": "372x558",
+     "wastedFactor": 10.8,
+     "viewport": "mobile"
+    }
+   ],
+   "brokenImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.md:hidden.h-16.flex>a.flex.items-center.gap-3>img.w-16.h-16.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "tablet"
+    }
+   ]
+  }
+ },
+ "search": {
+  "viewports": {
+   "desktop": {
+    "scanned": 228,
+    "overflowX": 0,
+    "lcpMs": 176,
+    "cls": 0,
+    "fcpMs": 176,
+    "tbtMs": 0,
+    "lcpElement": "div.flex.flex-col.gap-1",
+    "clsSources": [],
+    "h1Count": 0,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 3,
+    "overImage": 6,
+    "tinyTarget": 13,
+    "oversizedImage": 0,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Search Results | The Wedding Boys"
+   },
+   "laptop": {
+    "scanned": 228,
+    "overflowX": 0,
+    "lcpMs": 124,
+    "cls": 0,
+    "fcpMs": 124,
+    "tbtMs": 0,
+    "lcpElement": "div.flex.flex-col.gap-1",
+    "clsSources": [],
+    "h1Count": 0,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 3,
+    "overImage": 6,
+    "tinyTarget": 13,
+    "oversizedImage": 0,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Search Results | The Wedding Boys"
+   },
+   "mobile": {
+    "scanned": 209,
+    "overflowX": 0,
+    "lcpMs": 2804,
+    "cls": 0,
+    "fcpMs": 2804,
+    "tbtMs": 0,
+    "lcpElement": "div.flex.flex-col.gap-1",
+    "clsSources": [],
+    "h1Count": 0,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 3,
+    "overImage": 5,
+    "tinyTarget": 13,
+    "oversizedImage": 0,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Search Results | The Wedding Boys"
+   },
+   "tablet": {
+    "scanned": 230,
+    "overflowX": 0,
+    "lcpMs": 180,
+    "cls": 0,
+    "fcpMs": 180,
+    "tbtMs": 0,
+    "lcpElement": "div.flex.flex-col.gap-1",
+    "clsSources": [],
+    "h1Count": 0,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 3,
+    "overImage": 6,
+    "tinyTarget": 13,
+    "oversizedImage": 0,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Search Results | The Wedding Boys"
+   }
+  },
+  "defects": {
+   "lowContrast": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.md:hidden.h-16.flex>a.flex.items-center.gap-3>div.flex.flex-col.gap-1>span.md:hidden.sm:text-xs.md:text-sm",
+     "text": "Architects of Cinematic Romance",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "tablet"
+    }
+   ],
+   "overImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "text": "The Bi-Weekly Dispatch",
+     "fg": "#FF5353",
+     "bg": "#FFFFFF",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "text": "Cinematic Love Stories, Delivered to Your Inbox",
+     "fg": "#5E2B17",
+     "bg": "#FFFFFF",
+     "ratio": 11.45,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+     "text": "Join 12,000 discerning couples receiving curated real weddin",
+     "fg": "#74583E",
+     "bg": "#FFFFFF",
+     "ratio": 6.55,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>p.text-[10px].text-[#78716C].pl-2",
+     "text": "No spam. Just meaningful stories.",
+     "fg": "#78716C",
+     "bg": "#FFFFFF",
+     "ratio": 4.8,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "text": "The Bi-Weekly Dispatch",
+     "fg": "#FF5353",
+     "bg": "#FFFFFF",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "text": "Cinematic Love Stories, Delivered to Your Inbox",
+     "fg": "#5E2B17",
+     "bg": "#FFFFFF",
+     "ratio": 11.45,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "laptop"
+    }
+   ],
+   "tinyTarget": [
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Our Team",
+     "size": "55x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "About Us",
+     "size": "52x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Dharaa Events",
+     "size": "82x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Our Team",
+     "size": "55x15",
+     "viewport": "laptop"
+    }
+   ],
+   "brokenImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.md:hidden.h-16.flex>a.flex.items-center.gap-3>img.w-16.h-16.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "tablet"
+    }
+   ]
+  }
+ },
+ "varanasi": {
+  "viewports": {
+   "desktop": {
+    "scanned": 490,
+    "overflowX": 0,
+    "lcpMs": 596,
+    "cls": 0.1953,
+    "fcpMs": 332,
+    "tbtMs": 88,
+    "lcpElement": "h1.font-['Cormorant_Garamond'].text-[clamp(65px,15vw,160px)].leading-[0.85]",
+    "clsSources": [
+     {
+      "value": 0.0496,
+      "at": 4582,
+      "sources": [
+       "canvas.absolute.inset-0"
+      ]
+     },
+     {
+      "value": 0.0495,
+      "at": 4860,
+      "sources": [
+       "canvas.absolute.inset-0"
+      ]
+     },
+     {
+      "value": 0.0496,
+      "at": 5525,
+      "sources": [
+       "canvas.absolute.inset-0"
+      ]
+     },
+     {
+      "value": 0.0467,
+      "at": 7639,
+      "sources": [
+       "canvas.absolute.inset-0"
+      ]
+     }
+    ],
+    "h1Count": 1,
+    "headingJumps": 1,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 4,
+    "overImage": 49,
+    "tinyTarget": 13,
+    "oversizedImage": 2,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Wedding Cinematography in Varanasi | The Wedding Boys"
+   },
+   "laptop": {
+    "scanned": 490,
+    "overflowX": 0,
+    "lcpMs": 360,
+    "cls": 0.0659,
+    "fcpMs": 360,
+    "tbtMs": 88,
+    "lcpElement": "h2.font-['Cormorant_Garamond'].text-[clamp(36px,7vw,84px)].text-white",
+    "clsSources": [
+     {
+      "value": 0.0659,
+      "at": 4662,
+      "sources": [
+       "canvas.absolute.inset-0"
+      ]
+     }
+    ],
+    "h1Count": 1,
+    "headingJumps": 1,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 4,
+    "overImage": 49,
+    "tinyTarget": 13,
+    "oversizedImage": 0,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Wedding Cinematography in Varanasi | The Wedding Boys"
+   },
+   "mobile": {
+    "scanned": 469,
+    "overflowX": 0,
+    "lcpMs": 356,
+    "cls": 0.1137,
+    "fcpMs": 356,
+    "tbtMs": 0,
+    "lcpElement": "h2.font-['Cormorant_Garamond'].text-[clamp(36px,7vw,84px)].text-white",
+    "clsSources": [
+     {
+      "value": 0.1137,
+      "at": 4791,
+      "sources": [
+       "canvas.absolute.inset-0"
+      ]
+     }
+    ],
+    "h1Count": 1,
+    "headingJumps": 1,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 4,
+    "overImage": 48,
+    "tinyTarget": 13,
+    "oversizedImage": 2,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Wedding Cinematography in Varanasi | The Wedding Boys"
+   },
+   "tablet": {
+    "scanned": 490,
+    "overflowX": 0,
+    "lcpMs": 776,
+    "cls": 0.0918,
+    "fcpMs": 776,
+    "tbtMs": 113,
+    "lcpElement": "h2.font-['Cormorant_Garamond'].text-[clamp(36px,7vw,84px)].text-white",
+    "clsSources": [
+     {
+      "value": 0.0918,
+      "at": 5156,
+      "sources": [
+       "canvas.absolute.inset-0"
+      ]
+     }
+    ],
+    "h1Count": 1,
+    "headingJumps": 1,
+    "landmarks": {
+     "header": 0,
+     "nav": 1,
+     "main": 1,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 4,
+    "overImage": 49,
+    "tinyTarget": 13,
+    "oversizedImage": 3,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Wedding Cinematography in Varanasi | The Wedding Boys"
+   }
+  },
+  "defects": {
+   "lowContrast": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "form.w-full.max-w-xl.text-left>div.flex.justify-center.pt-8>button.relative.group.overflow-hidden>span.relative.text-[12px].tracking-[0.25em]",
+     "text": "Claim 20% Off & Send Story",
+     "fg": "#FFFFFF",
+     "bg": "#EB4B55",
+     "ratio": 3.7,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "form.w-full.max-w-xl.text-left>div.flex.justify-center.pt-8>button.relative.group.overflow-hidden>span.relative.text-[12px].tracking-[0.25em]",
+     "text": "Claim 20% Off & Send Story",
+     "fg": "#FFFFFF",
+     "bg": "#EB4B55",
+     "ratio": 3.7,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+     "text": "Subscribe",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+     "text": "Inquire for Your Date",
+     "fg": "#FFFFFF",
+     "bg": "#FF5353",
+     "ratio": 3.17,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.md:hidden.h-16.flex>a.flex.items-center.gap-3>div.flex.flex-col.gap-1>span.md:hidden.sm:text-xs.md:text-sm",
+     "text": "Architects of Cinematic Romance",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "form.w-full.max-w-xl.text-left>div.flex.justify-center.pt-8>button.relative.group.overflow-hidden>span.relative.text-[12px].tracking-[0.25em]",
+     "text": "Claim 20% Off & Send Story",
+     "fg": "#FFFFFF",
+     "bg": "#EB4B55",
+     "ratio": 3.7,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "mobile"
+    }
+   ],
+   "overImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "section.relative.w-full.h-screen>div.absolute.inset-0.z-20>h1.font-['Cormorant_Garamond'].text-[clamp(65px,15vw,160px)].leading-[0.85]>span.italic.text-transparent.bg-clip-text",
+     "text": "Awaits",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#0A0705",
+     "ratio": 1.05,
+     "need": 3,
+     "fontSize": "160px",
+     "weight": "300",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "section.relative.w-full.h-screen>div.absolute.inset-0.z-30>h2.font-['Cormorant_Garamond'].text-[clamp(36px,7vw,84px)].text-white>span.italic.text-transparent.bg-clip-text",
+     "text": "along the historic ghats.",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#0A0705",
+     "ratio": 1.05,
+     "need": 3,
+     "fontSize": "84px",
+     "weight": "300",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "section.relative.w-full.h-screen>div.absolute.inset-0.z-20>h2.font-['Cormorant_Garamond'].text-[clamp(32px,5vw,64px)].text-white>span.italic.text-transparent.bg-clip-text",
+     "text": "perfect moment.",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#0A0705",
+     "ratio": 1.05,
+     "need": 3,
+     "fontSize": "64px",
+     "weight": "300",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "section.relative.w-full.h-screen>div.absolute.inset-x-0.bottom-[15vh]>h3.font-['Cormorant_Garamond'].text-[clamp(28px,4vw,56px)].text-white>span.italic.text-transparent.bg-clip-text",
+     "text": "you'll keep forever.",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#0A0705",
+     "ratio": 1.05,
+     "need": 3,
+     "fontSize": "56px",
+     "weight": "300",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "section.relative.w-full.h-screen>div.absolute.inset-0.z-20>h1.font-['Cormorant_Garamond'].text-[clamp(65px,15vw,160px)].leading-[0.85]>span.italic.text-transparent.bg-clip-text",
+     "text": "Awaits",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#0A0705",
+     "ratio": 1.05,
+     "need": 3,
+     "fontSize": "160px",
+     "weight": "300",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "section.relative.w-full.h-screen>div.absolute.inset-0.z-30>h2.font-['Cormorant_Garamond'].text-[clamp(36px,7vw,84px)].text-white>span.italic.text-transparent.bg-clip-text",
+     "text": "along the historic ghats.",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#0A0705",
+     "ratio": 1.05,
+     "need": 3,
+     "fontSize": "84px",
+     "weight": "300",
+     "viewport": "laptop"
+    }
+   ],
+   "tinyTarget": [
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Our Team",
+     "size": "55x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "About Us",
+     "size": "52x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Dharaa Events",
+     "size": "82x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Our Team",
+     "size": "55x15",
+     "viewport": "laptop"
+    }
+   ],
+   "oversizedImage": [
+    {
+     "sel": "div.relative.w-full.max-w-7xl>div.relative.w-full.md:w-1/2>div.absolute.inset-[-10%].w-[120%]>img.parallax-img.object-cover.opacity-70",
+     "src": "http://localhost:3000/_next/static/media/culture-aarti.2-tjetanizsko.png",
+     "natural": "1672x941",
+     "displayed": "718x1236",
+     "wastedFactor": 2.3,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative.w-full.max-w-7xl>div.relative.w-full.md:w-1/2>div.absolute.inset-[-10%].w-[120%]>img.parallax-img.object-cover.opacity-70",
+     "src": "http://localhost:3000/_next/static/media/culture-rituals.44jv5kzv_v7s2.png",
+     "natural": "1672x941",
+     "displayed": "718x1236",
+     "wastedFactor": 2.3,
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.relative.w-full.max-w-7xl>div.relative.w-full.md:w-1/2>div.absolute.inset-[-10%].w-[120%]>img.parallax-img.object-cover.opacity-70",
+     "src": "http://localhost:3000/_next/static/media/culture-aarti.2-tjetanizsko.png",
+     "natural": "1018x573",
+     "displayed": "408x475",
+     "wastedFactor": 2.5,
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.relative.w-full.max-w-7xl>div.relative.w-full.md:w-1/2>div.absolute.inset-[-10%].w-[120%]>img.parallax-img.object-cover.opacity-70",
+     "src": "http://localhost:3000/_next/static/media/culture-rituals.44jv5kzv_v7s2.png",
+     "natural": "1018x573",
+     "displayed": "408x475",
+     "wastedFactor": 2.5,
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.relative.w-full.max-w-7xl>div.relative.w-full.md:w-1/2>div.absolute.inset-[-10%].w-[120%]>img.parallax-img.object-cover.opacity-70",
+     "src": "http://localhost:3000/_next/static/media/culture-aarti.2-tjetanizsko.png",
+     "natural": "1550x872",
+     "displayed": "382x1169",
+     "wastedFactor": 4.1,
+     "viewport": "tablet"
+    },
+    {
+     "sel": "div.relative.w-full.max-w-7xl>div.relative.w-full.md:w-1/2>div.absolute.inset-[-10%].w-[120%]>img.parallax-img.object-cover.opacity-70",
+     "src": "http://localhost:3000/_next/static/media/culture-rituals.44jv5kzv_v7s2.png",
+     "natural": "1550x872",
+     "displayed": "382x1169",
+     "wastedFactor": 4.1,
+     "viewport": "tablet"
+    },
+    {
+     "sel": "div.relative.w-full.max-w-7xl>div.relative.w-full.md:w-1/2>div.absolute.inset-[-10%].w-[120%]>img.parallax-img.object-cover.opacity-70",
+     "src": "http://localhost:3000/_next/static/media/culture-ghats.3r7h1l0dqqzlv.png",
+     "natural": "1040x1300",
+     "displayed": "382x1169",
+     "wastedFactor": 2.7,
+     "viewport": "tablet"
+    }
+   ],
+   "brokenImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.md:hidden.h-16.flex>a.flex.items-center.gap-3>img.w-16.h-16.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "tablet"
+    }
+   ]
+  }
+ },
+ "weddings-city": {
+  "viewports": {
+   "desktop": {
+    "scanned": 240,
+    "overflowX": 0,
+    "lcpMs": 376,
+    "cls": 0,
+    "fcpMs": 376,
+    "tbtMs": 0,
+    "lcpElement": "h1.mt-5.font-serif.text-4xl",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 1,
+     "nav": 2,
+     "main": 2,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 8,
+    "overImage": 10,
+    "tinyTarget": 14,
+    "oversizedImage": 0,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Destination Wedding Cinematography in Udaipur | The Wedding Boys"
+   },
+   "laptop": {
+    "scanned": 240,
+    "overflowX": 0,
+    "lcpMs": 764,
+    "cls": 0,
+    "fcpMs": 764,
+    "tbtMs": 0,
+    "lcpElement": "h1.mt-5.font-serif.text-4xl",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 1,
+     "nav": 2,
+     "main": 2,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 8,
+    "overImage": 10,
+    "tinyTarget": 14,
+    "oversizedImage": 0,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Destination Wedding Cinematography in Udaipur | The Wedding Boys"
+   },
+   "mobile": {
+    "scanned": 219,
+    "overflowX": 0,
+    "lcpMs": 6576,
+    "cls": 0,
+    "fcpMs": 6576,
+    "tbtMs": 0,
+    "lcpElement": "h1.mt-5.font-serif.text-4xl",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 1,
+     "nav": 2,
+     "main": 2,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 8,
+    "overImage": 9,
+    "tinyTarget": 14,
+    "oversizedImage": 0,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Destination Wedding Cinematography in Udaipur | The Wedding Boys"
+   },
+   "tablet": {
+    "scanned": 240,
+    "overflowX": 0,
+    "lcpMs": 300,
+    "cls": 0,
+    "fcpMs": 300,
+    "tbtMs": 0,
+    "lcpElement": "h1.mt-5.font-serif.text-4xl",
+    "clsSources": [],
+    "h1Count": 1,
+    "headingJumps": 0,
+    "landmarks": {
+     "header": 1,
+     "nav": 2,
+     "main": 2,
+     "footer": 1,
+     "aside": 0
+    },
+    "lowContrast": 8,
+    "overImage": 10,
+    "tinyTarget": 14,
+    "oversizedImage": 0,
+    "brokenImage": 1,
+    "noAlt": 0,
+    "title": "Destination Wedding Cinematography in Udaipur | The Wedding Boys"
+   }
+  },
+  "defects": {
+   "lowContrast": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.mt-6.grid.grid-cols-1>div.rounded-2xl.border.border-studio-border>div.flex.items-center.justify-between>span.rounded-full.bg-studio-canvas.px-2.5",
+     "text": "Island Heritage Palace",
+     "fg": "#78716C",
+     "bg": "#F7F4EF",
+     "ratio": 4.37,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.mt-6.grid.grid-cols-1>div.rounded-2xl.border.border-studio-border>div.flex.items-center.justify-between>span.rounded-full.bg-studio-canvas.px-2.5",
+     "text": "Modern Luxury Palace",
+     "fg": "#78716C",
+     "bg": "#F7F4EF",
+     "ratio": 4.37,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.mt-6.grid.grid-cols-1>div.rounded-2xl.border.border-studio-border>div.flex.items-center.justify-between>span.rounded-full.bg-studio-canvas.px-2.5",
+     "text": "Royal Sanctuary",
+     "fg": "#78716C",
+     "bg": "#F7F4EF",
+     "ratio": 4.37,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.mt-6.grid.grid-cols-1>div.rounded-2xl.border.border-studio-border>div.flex.items-center.justify-between>span.rounded-full.bg-studio-canvas.px-2.5",
+     "text": "Heritage Island Wonder",
+     "fg": "#78716C",
+     "bg": "#F7F4EF",
+     "ratio": 4.37,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.mt-6.grid.grid-cols-1>div.rounded-2xl.border.border-studio-border>div.flex.items-center.justify-between>span.rounded-full.bg-studio-canvas.px-2.5",
+     "text": "Private Island Retreat",
+     "fg": "#78716C",
+     "bg": "#F7F4EF",
+     "ratio": 4.37,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+     "fg": "rgba(244,63,94,0.8)",
+     "bg": "#FFFFFF",
+     "ratio": 3.67,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "500",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.mt-6.grid.grid-cols-1>div.rounded-2xl.border.border-studio-border>div.flex.items-center.justify-between>span.rounded-full.bg-studio-canvas.px-2.5",
+     "text": "Island Heritage Palace",
+     "fg": "#78716C",
+     "bg": "#F7F4EF",
+     "ratio": 4.37,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "600",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.mt-6.grid.grid-cols-1>div.rounded-2xl.border.border-studio-border>div.flex.items-center.justify-between>span.rounded-full.bg-studio-canvas.px-2.5",
+     "text": "Modern Luxury Palace",
+     "fg": "#78716C",
+     "bg": "#F7F4EF",
+     "ratio": 4.37,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "600",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.mt-6.grid.grid-cols-1>div.rounded-2xl.border.border-studio-border>div.flex.items-center.justify-between>span.rounded-full.bg-studio-canvas.px-2.5",
+     "text": "Royal Sanctuary",
+     "fg": "#78716C",
+     "bg": "#F7F4EF",
+     "ratio": 4.37,
+     "need": 4.5,
+     "fontSize": "10px",
+     "weight": "600",
+     "viewport": "laptop"
+    }
+   ],
+   "overImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.mx-auto.max-w-5xl.px-4>section.rounded-3xl.border.border-[#C29555]/30>div.relative.mx-auto.max-w-2xl>span.text-[11px].font-bold.uppercase",
+     "text": "Bespoke Wedding Cinematography",
+     "fg": "#C29555",
+     "bg": "#F7F4EF",
+     "ratio": 2.48,
+     "need": 4.5,
+     "fontSize": "11px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.mx-auto.max-w-5xl.px-4>section.rounded-3xl.border.border-[#C29555]/30>div.relative.mx-auto.max-w-2xl>h2.mt-2.font-serif.text-3xl",
+     "text": "Planning a Destination Wedding in Udaipur ?",
+     "fg": "#FDFBF7",
+     "bg": "#F7F4EF",
+     "ratio": 1.06,
+     "need": 3,
+     "fontSize": "36px",
+     "weight": "700",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.mx-auto.max-w-5xl.px-4>section.rounded-3xl.border.border-[#C29555]/30>div.relative.mx-auto.max-w-2xl>p.mt-3.text-xs.leading-relaxed",
+     "text": "We take on a limited number of destination weddings each sea",
+     "fg": "#D6D3D1",
+     "bg": "#F7F4EF",
+     "ratio": 1.36,
+     "need": 4.5,
+     "fontSize": "14px",
+     "weight": "400",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "section.rounded-3xl.border.border-[#C29555]/30>div.relative.mx-auto.max-w-2xl>div.mt-6.flex.flex-wrap>a.rounded-xl.border.border-white/20",
+     "text": "Explore Journal",
+     "fg": "#FFFFFF",
+     "bg": "#F7F4EF",
+     "ratio": 1.1,
+     "need": 4.5,
+     "fontSize": "12px",
+     "weight": "600",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "text": "The Wedding Boys",
+     "fg": "rgba(0,0,0,0)",
+     "bg": "#FFFFFF",
+     "ratio": 21,
+     "need": 3,
+     "fontSize": "24px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "text": "Get Quote",
+     "fg": "#FFFFFF",
+     "bg": "#FFFFFF",
+     "ratio": 1,
+     "need": 4.5,
+     "fontSize": "20px",
+     "weight": "400",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.mx-auto.max-w-5xl.px-4>section.rounded-3xl.border.border-[#C29555]/30>div.relative.mx-auto.max-w-2xl>span.text-[11px].font-bold.uppercase",
+     "text": "Bespoke Wedding Cinematography",
+     "fg": "#C29555",
+     "bg": "#F7F4EF",
+     "ratio": 2.48,
+     "need": 4.5,
+     "fontSize": "11px",
+     "weight": "700",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.mx-auto.max-w-5xl.px-4>section.rounded-3xl.border.border-[#C29555]/30>div.relative.mx-auto.max-w-2xl>h2.mt-2.font-serif.text-3xl",
+     "text": "Planning a Destination Wedding in Udaipur ?",
+     "fg": "#FDFBF7",
+     "bg": "#F7F4EF",
+     "ratio": 1.06,
+     "need": 3,
+     "fontSize": "36px",
+     "weight": "700",
+     "viewport": "laptop"
+    }
+   ],
+   "tinyTarget": [
+    {
+     "sel": "header.relative.border-b.border-studio-border>div.relative.mx-auto.max-w-5xl>nav.mb-6.text-xs.text-stone-400>a.hover:text-white.transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Our Team",
+     "size": "55x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "About Us",
+     "size": "52x15",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "header.relative.border-b.border-studio-border>div.relative.mx-auto.max-w-5xl>nav.mb-6.text-xs.text-stone-400>a.hover:text-white.transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Home",
+     "size": "34x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Films",
+     "size": "30x15",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+     "label": "Gallery",
+     "size": "40x15",
+     "viewport": "laptop"
+    }
+   ],
+   "brokenImage": [
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "desktop"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "laptop"
+    },
+    {
+     "sel": "div.max-w-7xl.mx-auto.px-4>div.md:hidden.h-16.flex>a.flex.items-center.gap-3>img.w-16.h-16.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "mobile"
+    },
+    {
+     "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg",
+     "viewport": "tablet"
+    }
+   ]
+  }
+ }
+}

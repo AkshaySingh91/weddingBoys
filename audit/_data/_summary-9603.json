@@ -1,0 +1,137 @@
+[
+ {
+  "id": "contact",
+  "path": "/contact",
+  "viewports": {
+   "mobile": {
+    "overflowX": 0,
+    "lcpMs": 368,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 2810,
+    "shotTruncated": false
+   },
+   "tablet": {
+    "overflowX": 0,
+    "lcpMs": 160,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 2430,
+    "shotTruncated": false
+   },
+   "laptop": {
+    "overflowX": 0,
+    "lcpMs": 236,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 1632,
+    "shotTruncated": false
+   },
+   "desktop": {
+    "overflowX": 0,
+    "lcpMs": 188,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 1632,
+    "shotTruncated": false
+   }
+  },
+  "tabStops": 45,
+  "noVisibleFocus": 2,
+  "movingUnderReduce": 31
+ },
+ {
+  "id": "varanasi",
+  "path": "/varanasi",
+  "viewports": {
+   "mobile": {
+    "overflowX": 0,
+    "lcpMs": 356,
+    "cls": 0.1137,
+    "errors": 2,
+    "failedReq": 1,
+    "pageHeight": 23621,
+    "shotTruncated": true
+   },
+   "tablet": {
+    "overflowX": 0,
+    "lcpMs": 776,
+    "cls": 0.0918,
+    "errors": 2,
+    "failedReq": 1,
+    "pageHeight": 23832,
+    "shotTruncated": true
+   },
+   "laptop": {
+    "overflowX": 0,
+    "lcpMs": 360,
+    "cls": 0.0659,
+    "errors": 2,
+    "failedReq": 1,
+    "pageHeight": 24522,
+    "shotTruncated": true
+   },
+   "desktop": {
+    "overflowX": 0,
+    "lcpMs": 596,
+    "cls": 0.1953,
+    "errors": 2,
+    "failedReq": 1,
+    "pageHeight": 28261,
+    "shotTruncated": true
+   }
+  },
+  "tabStops": 45,
+  "noVisibleFocus": 0,
+  "movingUnderReduce": 61
+ },
+ {
+  "id": "dharaa",
+  "path": "/dharaa-event-management",
+  "viewports": {
+   "mobile": {
+    "overflowX": 0,
+    "lcpMs": 1872,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 4897,
+    "shotTruncated": true
+   },
+   "tablet": {
+    "overflowX": 0,
+    "lcpMs": 328,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 4146,
+    "shotTruncated": true
+   },
+   "laptop": {
+    "overflowX": 0,
+    "lcpMs": 328,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 2963,
+    "shotTruncated": false
+   },
+   "desktop": {
+    "overflowX": 0,
+    "lcpMs": 192,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 2939,
+    "shotTruncated": false
+   }
+  },
+  "tabStops": 32,
+  "noVisibleFocus": 0,
+  "movingUnderReduce": 38
+ }
+]

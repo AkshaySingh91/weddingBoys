@@ -1,0 +1,3197 @@
+{
+ "url": "/allfilms",
+ "title": "Browse All Wedding Films | The Wedding Boys",
+ "viewport": {
+  "w": 1440,
+  "h": 900
+ },
+ "scrollWidth": 1440,
+ "overflowX": 0,
+ "scanned": 262,
+ "tokens": {
+  "fontFamily": {
+   "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif": {
+    "n": 187,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, -apple-system, \"system-ui\", sans-serif": {
+    "n": 65,
+    "where": [
+     "body.antialiased>div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]",
+     "div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12",
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl",
+     "footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12"
+    ]
+   },
+   "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace": {
+    "n": 7,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold"
+    ]
+   },
+   "\"Playfair Display\", \"Playfair Display Fallback\", \"DM Serif Display\", \"DM Serif Display Fallback\", Georgia, serif": {
+    "n": 3,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.font-serif.text-base.font-bold",
+     "div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.mt-12.pt-6.border-t>p.font-serif.italic.text-[#FAD7A0]/80"
+    ]
+   }
+  },
+  "fontSize": {
+   "16px": {
+    "n": 168,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "24px": {
+    "n": 4,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "div.relative.min-h-screen>div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>h1.text-2xl.mx-auto.text-nowrap",
+     "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>h1.text-2xl.mx-auto.text-nowrap>hr.mx-auto.w-1/2.border-[1px]",
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl"
+    ]
+   },
+   "12px": {
+    "n": 38,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+     "form.space-y-1.5>div.flex.items-center.bg-white>div.relative.flex-1.flex>input.w-full.pl-2.pr-2",
+     "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center"
+    ]
+   },
+   "14px": {
+    "n": 22,
+    "where": [
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm"
+    ]
+   },
+   "20px": {
+    "n": 18,
+    "where": [
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-xl",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3",
+     "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500>svg>line"
+    ]
+   },
+   "18px": {
+    "n": 1,
+    "where": [
+     "div>a.text-desktopBodyMedium.text-nowrap.px-3>svg>polyline"
+    ]
+   },
+   "10px": {
+    "n": 10,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>p.text-[10px].text-[#78716C].pl-2",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold"
+    ]
+   },
+   "8px": {
+    "n": 1,
+    "where": [
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]"
+    ]
+   }
+  },
+  "fontWeight": {
+   "400": {
+    "n": 222,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "500": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium"
+    ]
+   },
+   "600": {
+    "n": 30,
+    "where": [
+     "div.relative.min-h-screen>div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>h1.text-2xl.mx-auto.text-nowrap",
+     "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>h1.text-2xl.mx-auto.text-nowrap>hr.mx-auto.w-1/2.border-[1px]",
+     "a>div.shadow-md>div.text-container.py-4.px-2>div.header.flex.gap-4",
+     "div.shadow-md>div.text-container.py-4.px-2>div.header.flex.gap-4>p.date.uppercase"
+    ]
+   },
+   "700": {
+    "n": 9,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl"
+    ]
+   }
+  },
+  "lineHeight": {
+   "24px": {
+    "n": 161,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "32px": {
+    "n": 4,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "div.relative.min-h-screen>div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>h1.text-2xl.mx-auto.text-nowrap",
+     "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>h1.text-2xl.mx-auto.text-nowrap>hr.mx-auto.w-1/2.border-[1px]",
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl"
+    ]
+   },
+   "16px": {
+    "n": 35,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "form.space-y-1.5>div.flex.items-center.bg-white>div.relative.flex-1.flex>input.w-full.pl-2.pr-2",
+     "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center",
+     "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span"
+    ]
+   },
+   "20px": {
+    "n": 22,
+    "where": [
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm"
+    ]
+   },
+   "28px": {
+    "n": 17,
+    "where": [
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-xl",
+     "div>a.text-desktopBodyMedium.text-nowrap.px-3>svg>polyline",
+     "div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500>svg>line",
+     "div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500>svg>line"
+    ]
+   },
+   "30px": {
+    "n": 2,
+    "where": [
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3",
+     "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span"
+    ]
+   },
+   "normal": {
+    "n": 7,
+    "where": [
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border"
+    ]
+   },
+   "15px": {
+    "n": 10,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>p.text-[10px].text-[#78716C].pl-2",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold"
+    ]
+   },
+   "19.5px": {
+    "n": 3,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>p.text-xs.text-stone-300.leading-relaxed",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>p.text-xs.text-stone-300.leading-relaxed"
+    ]
+   },
+   "12px": {
+    "n": 1,
+    "where": [
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]"
+    ]
+   }
+  },
+  "letterSpacing": {
+   "normal": {
+    "n": 250,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "1.2px": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium"
+    ]
+   },
+   "2px": {
+    "n": 3,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]"
+    ]
+   },
+   "-0.6px": {
+    "n": 1,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl"
+    ]
+   },
+   "0.3px": {
+    "n": 2,
+    "where": [
+     "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center",
+     "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span"
+    ]
+   },
+   "2.56px": {
+    "n": 1,
+    "where": [
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.font-serif.text-base.font-bold"
+    ]
+   },
+   "2.2px": {
+    "n": 4,
+    "where": [
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold"
+    ]
+   }
+  },
+  "textTransform": {
+   "none": {
+    "n": 231,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "uppercase": {
+    "n": 31,
+    "where": [
+     "div.shadow-md>div.text-container.py-4.px-2>div.header.flex.gap-4>p.date.uppercase",
+     "div.shadow-md>div.text-container.py-4.px-2>div.header.flex.gap-4>p.location.uppercase",
+     "a>div.shadow-md>div.text-container.py-4.px-2>div.name.uppercase.text-xl",
+     "div.shadow-md>div.text-container.py-4.px-2>div.name.uppercase.text-xl>p.font-semibold"
+    ]
+   }
+  },
+  "color": {
+   "#000000": {
+    "n": 149,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "rgba(254,205,211,0.4)": {
+    "n": 15,
+    "where": [
+     "div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none>div.absolute.text-rose-200/40",
+     "div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none>div.absolute.text-rose-200/40",
+     "div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none>div.absolute.text-rose-200/40",
+     "div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none>div.absolute.text-rose-200/40"
+    ]
+   },
+   "rgba(0,0,0,0)": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r"
+    ]
+   },
+   "rgba(244,63,94,0.8)": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium"
+    ]
+   },
+   "#374151": {
+    "n": 14,
+    "where": [
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.flex.items-center.gap-6>a.px-3.py-2.flex>svg>polyline",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex"
+    ]
+   },
+   "#FFFFFF": {
+    "n": 8,
+    "where": [
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3",
+     "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "div>a.text-desktopBodyMedium.text-nowrap.px-3>svg>polyline",
+     "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center"
+    ]
+   },
+   "#4B5563": {
+    "n": 4,
+    "where": [
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500",
+     "div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500>svg>line",
+     "div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500>svg>line",
+     "div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500>svg>line"
+    ]
+   },
+   "#2F2F2F": {
+    "n": 10,
+    "where": [
+     "body.antialiased>div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]",
+     "div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12",
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl",
+     "footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12"
+    ]
+   },
+   "#FF5353": {
+    "n": 2,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span"
+    ]
+   },
+   "#5E2B17": {
+    "n": 1,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl"
+    ]
+   },
+   "#74583E": {
+    "n": 1,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md"
+    ]
+   },
+   "#78716C": {
+    "n": 1,
+    "where": [
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>p.text-[10px].text-[#78716C].pl-2"
+    ]
+   },
+   "#FAF8F5": {
+    "n": 11,
+    "where": [
+     "div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12",
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6",
+     "footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2",
+     "div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2"
+    ]
+   },
+   "#FAD7A0": {
+    "n": 5,
+    "where": [
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>h4.text-[10px].font-mono.font-bold"
+    ]
+   },
+   "#D6D3D1": {
+    "n": 36,
+    "where": [
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>p.text-xs.text-stone-300.leading-relaxed",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full"
+    ]
+   },
+   "#A8A29E": {
+    "n": 2,
+    "where": [
+     "footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.mt-12.pt-6.border-t",
+     "div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.mt-12.pt-6.border-t>p"
+    ]
+   },
+   "rgba(250,215,160,0.8)": {
+    "n": 1,
+    "where": [
+     "div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.mt-12.pt-6.border-t>p.font-serif.italic.text-[#FAD7A0]/80"
+    ]
+   }
+  },
+  "backgroundColor": {
+   "rgba(0,0,0,0)": {
+    "n": 207,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "rgba(255,255,255,0.95)": {
+    "n": 1,
+    "where": [
+     "body.antialiased>div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0"
+    ]
+   },
+   "#FFFFFF": {
+    "n": 8,
+    "where": [
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border"
+    ]
+   },
+   "#F3F4F6": {
+    "n": 39,
+    "where": [
+     "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+     "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+     "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+     "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2"
+    ]
+   },
+   "#FF5353": {
+    "n": 2,
+    "where": [
+     "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5"
+    ]
+   },
+   "#2A160F": {
+    "n": 1,
+    "where": [
+     "div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12"
+    ]
+   },
+   "#4E2818": {
+    "n": 4,
+    "where": [
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full"
+    ]
+   }
+  },
+  "borderTopWidth": {
+   "0px": {
+    "n": 209,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "4px": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full"
+    ]
+   },
+   "2px": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>div.absolute.inset-0.border-2"
+    ]
+   },
+   "1px": {
+    "n": 51,
+    "where": [
+     "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>h1.text-2xl.mx-auto.text-nowrap>hr.mx-auto.w-1/2.border-[1px]",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border"
+    ]
+   }
+  },
+  "borderTopStyle": {
+   "solid": {
+    "n": 262,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   }
+  },
+  "borderTopColor": {
+   "#E5E7EB": {
+    "n": 215,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "#F3F4F6": {
+    "n": 1,
+    "where": [
+     "body.antialiased>div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0"
+    ]
+   },
+   "#FFF1F2": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full"
+    ]
+   },
+   "#FECDD3": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>div.absolute.inset-0.border-2"
+    ]
+   },
+   "#CBD5E1": {
+    "n": 1,
+    "where": [
+     "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>h1.text-2xl.mx-auto.text-nowrap>hr.mx-auto.w-1/2.border-[1px]"
+    ]
+   },
+   "#64748B": {
+    "n": 39,
+    "where": [
+     "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+     "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+     "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+     "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2"
+    ]
+   },
+   "#E5DCD3": {
+    "n": 2,
+    "where": [
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white"
+    ]
+   },
+   "#5E2B17": {
+    "n": 1,
+    "where": [
+     "div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12"
+    ]
+   },
+   "rgba(94,43,23,0.6)": {
+    "n": 1,
+    "where": [
+     "footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.mt-12.pt-6.border-t"
+    ]
+   }
+  },
+  "borderTopLeftRadius": {
+   "0px": {
+    "n": 198,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "9999px": {
+    "n": 50,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>div.absolute.inset-0.border-2",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500"
+    ]
+   },
+   "4px": {
+    "n": 7,
+    "where": [
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border"
+    ]
+   },
+   "12px": {
+    "n": 6,
+    "where": [
+     "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+     "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+     "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+     "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover"
+    ]
+   },
+   "16px": {
+    "n": 1,
+    "where": [
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl"
+    ]
+   }
+  },
+  "boxShadow": {
+   "none": {
+    "n": 242,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px": {
+    "n": 5,
+    "where": [
+     "body.antialiased>div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0",
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white",
+     "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center"
+    ]
+   },
+   "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px": {
+    "n": 2,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3"
+    ]
+   },
+   "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px": {
+    "n": 7,
+    "where": [
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border"
+    ]
+   },
+   "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px": {
+    "n": 6,
+    "where": [
+     "div.infinite-scroll-component>div.video-panel.flex-shrink-0.grid>a>div.shadow-md",
+     "div.infinite-scroll-component>div.video-panel.flex-shrink-0.grid>a>div.shadow-md",
+     "div.infinite-scroll-component>div.video-panel.flex-shrink-0.grid>a>div.shadow-md",
+     "div.infinite-scroll-component>div.video-panel.flex-shrink-0.grid>a>div.shadow-md"
+    ]
+   }
+  },
+  "zIndex": {
+   "10": {
+    "n": 1,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.relative.z-10"
+    ]
+   },
+   "50": {
+    "n": 1,
+    "where": [
+     "body.antialiased>div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0"
+    ]
+   },
+   "1000": {
+    "n": 1,
+    "where": [
+     "div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none>div.fixed.top-1/2.left-1/2"
+    ]
+   },
+   "auto": {
+    "n": 258,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none",
+     "div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none>div.absolute.text-rose-200/40"
+    ]
+   },
+   "-50": {
+    "n": 1,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50"
+    ]
+   }
+  },
+  "transitionDuration": {
+   "0s": {
+    "n": 236,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "0.15s": {
+    "n": 25,
+    "where": [
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex"
+    ]
+   },
+   "0.2s": {
+    "n": 1,
+    "where": [
+     "div.relative.min-h-screen>div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.my-4.lg:px-4"
+    ]
+   }
+  },
+  "transitionTimingFunction": {
+   "ease": {
+    "n": 236,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "cubic-bezier(0.4, 0, 0.2, 1)": {
+    "n": 26,
+    "where": [
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex"
+    ]
+   }
+  },
+  "maxWidth": {
+   "none": {
+    "n": 250,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "1280px": {
+    "n": 1,
+    "where": [
+     "div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4"
+    ]
+   },
+   "100%": {
+    "n": 7,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+     "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+     "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover"
+    ]
+   },
+   "1152px": {
+    "n": 1,
+    "where": [
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl"
+    ]
+   },
+   "448px": {
+    "n": 1,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md"
+    ]
+   },
+   "1400px": {
+    "n": 1,
+    "where": [
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6"
+    ]
+   },
+   "384px": {
+    "n": 1,
+    "where": [
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>p.text-xs.text-stone-300.leading-relaxed"
+    ]
+   }
+  },
+  "gap": {
+   "normal": {
+    "n": 232,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "16px": {
+    "n": 11,
+    "where": [
+     "nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>a.flex.items-center.gap-4",
+     "nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-4",
+     "div.relative.min-h-screen>div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap",
+     "div.w-full.my-4.lg:px-4>div.infinite-scroll-component__outerdiv>div.infinite-scroll-component>div.video-panel.flex-shrink-0.grid"
+    ]
+   },
+   "4px": {
+    "n": 1,
+    "where": [
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1"
+    ]
+   },
+   "24px": {
+    "n": 2,
+    "where": [
+     "nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6",
+     "footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12"
+    ]
+   },
+   "8px": {
+    "n": 11,
+    "where": [
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex"
+    ]
+   },
+   "6px": {
+    "n": 3,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5"
+    ]
+   },
+   "48px": {
+    "n": 1,
+    "where": [
+     "footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2"
+    ]
+   },
+   "10px": {
+    "n": 1,
+    "where": [
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap"
+    ]
+   }
+  },
+  "spacing": {
+   "32px": {
+    "n": 7,
+    "where": [
+     "paddingLeft@div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4",
+     "paddingRight@div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4",
+     "marginBottom@div.relative.min-h-screen>div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap",
+     "paddingTop@div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl"
+    ]
+   },
+   "4px": {
+    "n": 86,
+    "where": [
+     "paddingTop@div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "paddingBottom@div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "paddingLeft@div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "paddingRight@div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full"
+    ]
+   },
+   "8px": {
+    "n": 181,
+    "where": [
+     "paddingTop@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "paddingBottom@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "paddingTop@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "paddingBottom@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex"
+    ]
+   },
+   "12px": {
+    "n": 12,
+    "where": [
+     "paddingLeft@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "paddingRight@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "paddingLeft@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "paddingRight@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex"
+    ]
+   },
+   "96px": {
+    "n": 1,
+    "where": [
+     "paddingTop@body.antialiased>div.relative.min-h-screen>div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2"
+    ]
+   },
+   "24px": {
+    "n": 6,
+    "where": [
+     "marginBottom@div.relative.min-h-screen>div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>h1.text-2xl.mx-auto.text-nowrap",
+     "marginTop@div.w-full.my-4.lg:px-4>div.infinite-scroll-component__outerdiv>div.infinite-scroll-component>div.video-panel.flex-shrink-0.grid",
+     "paddingTop@body.antialiased>div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]",
+     "paddingLeft@div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center"
+    ]
+   },
+   "16px": {
+    "n": 16,
+    "where": [
+     "marginTop@div.relative.min-h-screen>div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.my-4.lg:px-4",
+     "marginBottom@div.relative.min-h-screen>div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.my-4.lg:px-4",
+     "paddingLeft@div.relative.min-h-screen>div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.my-4.lg:px-4",
+     "paddingRight@div.relative.min-h-screen>div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.my-4.lg:px-4"
+    ]
+   },
+   "64px": {
+    "n": 1,
+    "where": [
+     "marginTop@body.antialiased>div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]"
+    ]
+   },
+   "48px": {
+    "n": 3,
+    "where": [
+     "marginBottom@div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12",
+     "paddingTop@div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12",
+     "marginTop@footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.mt-12.pt-6.border-t"
+    ]
+   },
+   "40px": {
+    "n": 6,
+    "where": [
+     "paddingLeft@div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12",
+     "paddingRight@div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12",
+     "paddingLeft@div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl",
+     "paddingRight@div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl"
+    ]
+   },
+   "6px": {
+    "n": 5,
+    "where": [
+     "marginTop@div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "marginTop@div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+     "paddingTop@form.space-y-1.5>div.flex.items-center.bg-white>div.relative.flex-1.flex>input.w-full.pl-2.pr-2",
+     "paddingBottom@form.space-y-1.5>div.flex.items-center.bg-white>div.relative.flex-1.flex>input.w-full.pl-2.pr-2"
+    ]
+   },
+   "14px": {
+    "n": 1,
+    "where": [
+     "paddingLeft@div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>div.relative.flex-1.flex"
+    ]
+   },
+   "2px": {
+    "n": 1,
+    "where": [
+     "marginTop@div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]"
+    ]
+   },
+   "10px": {
+    "n": 7,
+    "where": [
+     "marginTop@div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300",
+     "marginTop@div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300",
+     "marginTop@div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300",
+     "marginTop@div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>p.text-xs.text-stone-300.leading-relaxed"
+    ]
+   },
+   "20px": {
+    "n": 2,
+    "where": [
+     "paddingLeft@div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5",
+     "paddingRight@div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5"
+    ]
+   }
+  }
+ },
+ "components": {
+  "button": [
+   {
+    "sel": "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500",
+    "w": 36,
+    "h": 36,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#4B5563",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "8px 8px 8px 8px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center",
+    "text": "Subscribe",
+    "w": 129,
+    "h": 32,
+    "font": "12px/16px 600",
+    "family": "Inter",
+    "tracking": "0.3px",
+    "transform": "none",
+    "color": "#FFFFFF",
+    "bg": "#FF5353",
+    "pad": "8px 24px 8px 24px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+    "w": 31,
+    "h": 31,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "#4E2818",
+    "pad": "8px 8px 8px 8px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+    "w": 31,
+    "h": 31,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "#4E2818",
+    "pad": "8px 8px 8px 8px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+    "w": 31,
+    "h": 31,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "#4E2818",
+    "pad": "8px 8px 8px 8px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+    "w": 31,
+    "h": 31,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "#4E2818",
+    "pad": "8px 8px 8px 8px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5",
+    "text": "Inquire for Your Date",
+    "w": 177,
+    "h": 36,
+    "font": "12px/16px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#FFFFFF",
+    "bg": "#FF5353",
+    "pad": "10px 20px 10px 20px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   }
+  ],
+  "card": [
+   {
+    "sel": "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl",
+    "text": "The Bi-Weekly DispatchCinematic Love Sto",
+    "w": 1152,
+    "h": 173,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#2F2F2F",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "32px 40px 32px 40px",
+    "radius": "16px",
+    "border": "1px solid #E5DCD3",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "1152px",
+    "z": "auto"
+   }
+  ],
+  "chip": [
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Reception",
+    "w": 94,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "North India",
+    "w": 102,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Urban",
+    "w": 65,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Sindoor Daan",
+    "w": 120,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Garden",
+    "w": 73,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Grand",
+    "w": 64,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Varmala",
+    "w": 79,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Haldi",
+    "w": 56,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Classic",
+    "w": 72,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Day Wedding",
+    "w": 119,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Aerial",
+    "w": 61,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Haldi",
+    "w": 56,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Traditional",
+    "w": 97,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "West India",
+    "w": 97,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Hindu",
+    "w": 62,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Classic",
+    "w": 72,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Outdoor",
+    "w": 80,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Parsi",
+    "w": 56,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Modern",
+    "w": 77,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "North India",
+    "w": 102,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Hindu",
+    "w": 62,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Grand",
+    "w": 64,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Wedding",
+    "w": 85,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Cassic",
+    "w": 69,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Tilak",
+    "w": 54,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Mehendi",
+    "w": 84,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Haldi",
+    "w": 56,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "North India",
+    "w": 102,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Outdoor",
+    "w": 80,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Hindu",
+    "w": 62,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Beach",
+    "w": 66,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Sindoor Daan",
+    "w": 120,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Wedding",
+    "w": 85,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "North India",
+    "w": 102,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Night Wedding",
+    "w": 130,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Hindu",
+    "w": 62,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Beach",
+    "w": 66,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Grand",
+    "w": 64,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.shadow-md>div.text-container.py-4.px-2>div.tags.w-full.flex>div.tag.text-nowrap.px-2",
+    "text": "Saat Phere",
+    "w": 100,
+    "h": 34,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#F3F4F6",
+    "pad": "4px 8px 4px 8px",
+    "radius": "9999px",
+    "border": "1px solid #64748B",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   }
+  ],
+  "input": [
+   {
+    "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+    "text": "Select CategoryPre-WeddingWeddingEngagem",
+    "w": 160,
+    "h": 40,
+    "font": "16px/normal 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#FFFFFF",
+    "pad": "8px 8px 8px 8px",
+    "radius": "4px",
+    "border": "1px solid #E5E7EB",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+    "text": "Select RegionNorth IndiaSouth IndiaEast ",
+    "w": 203,
+    "h": 40,
+    "font": "16px/normal 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#FFFFFF",
+    "pad": "8px 8px 8px 8px",
+    "radius": "4px",
+    "border": "1px solid #E5E7EB",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+    "text": "Select Event TypeDay WeddingNight Weddin",
+    "w": 174,
+    "h": 40,
+    "font": "16px/normal 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#FFFFFF",
+    "pad": "8px 8px 8px 8px",
+    "radius": "4px",
+    "border": "1px solid #E5E7EB",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+    "text": "Select CasteHinduMuslimSikhChristianJain",
+    "w": 134,
+    "h": 40,
+    "font": "16px/normal 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#FFFFFF",
+    "pad": "8px 8px 8px 8px",
+    "radius": "4px",
+    "border": "1px solid #E5E7EB",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+    "text": "Select Pre-Wedding ThemesBeachGardenAeri",
+    "w": 254,
+    "h": 40,
+    "font": "16px/normal 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#FFFFFF",
+    "pad": "8px 8px 8px 8px",
+    "radius": "4px",
+    "border": "1px solid #E5E7EB",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+    "text": "Select Wedding ThemesClassicRoyalFloralM",
+    "w": 223,
+    "h": 40,
+    "font": "16px/normal 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#FFFFFF",
+    "pad": "8px 8px 8px 8px",
+    "radius": "4px",
+    "border": "1px solid #E5E7EB",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.w-full.flex.flex-wrap>div>select.w-full.p-2.border",
+    "text": "Select Ceremony DetailsVarmalaSaat Phere",
+    "w": 224,
+    "h": 40,
+    "font": "16px/normal 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#FFFFFF",
+    "pad": "8px 8px 8px 8px",
+    "radius": "4px",
+    "border": "1px solid #E5E7EB",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "form.space-y-1.5>div.flex.items-center.bg-white>div.relative.flex-1.flex>input.w-full.pl-2.pr-2",
+    "w": 263,
+    "h": 28,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#2F2F2F",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "6px 8px 6px 8px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   }
+  ],
+  "heading": [
+   {
+    "sel": "div.relative.min-h-screen>div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>h1.text-2xl.mx-auto.text-nowrap",
+    "text": "Search Films",
+    "w": 149,
+    "h": 42,
+    "font": "24px/32px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+    "text": "Cinematic Love Stories, Delivered to You",
+    "w": 614,
+    "h": 32,
+    "font": "24px/32px 700",
+    "family": "Playfair Display",
+    "tracking": "-0.6px",
+    "transform": "none",
+    "color": "#5E2B17",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+    "text": "Explore",
+    "w": 226,
+    "h": 15,
+    "font": "10px/15px 700",
+    "family": "ui-monospace",
+    "tracking": "2.2px",
+    "transform": "uppercase",
+    "color": "#FAD7A0",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+    "text": "Editorial Journal",
+    "w": 226,
+    "h": 15,
+    "font": "10px/15px 700",
+    "family": "ui-monospace",
+    "tracking": "2.2px",
+    "transform": "uppercase",
+    "color": "#FAD7A0",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+    "text": "Royal Destinations",
+    "w": 226,
+    "h": 15,
+    "font": "10px/15px 700",
+    "family": "ui-monospace",
+    "tracking": "2.2px",
+    "transform": "uppercase",
+    "color": "#FAD7A0",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+    "text": "Studio Inquiries",
+    "w": 226,
+    "h": 15,
+    "font": "10px/15px 700",
+    "family": "ui-monospace",
+    "tracking": "2.2px",
+    "transform": "uppercase",
+    "color": "#FAD7A0",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   }
+  ],
+  "section": [
+   {
+    "sel": "div.video-panel.flex-shrink-0.grid>a>div.shadow-md>div.text-container.py-4.px-2",
+    "text": "19 SeptemberHowrahKhusboo & VedantRecept",
+    "w": 688,
+    "h": 134,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "16px 8px 16px 8px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.video-panel.flex-shrink-0.grid>a>div.shadow-md>div.text-container.py-4.px-2",
+    "text": "20 DecemberDamanAnshu & AbhishekGardenGr",
+    "w": 688,
+    "h": 134,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "16px 8px 16px 8px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.video-panel.flex-shrink-0.grid>a>div.shadow-md>div.text-container.py-4.px-2",
+    "text": "14 OctoberAhemdabadNipa & BrijeshDay Wed",
+    "w": 688,
+    "h": 134,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "16px 8px 16px 8px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.video-panel.flex-shrink-0.grid>a>div.shadow-md>div.text-container.py-4.px-2",
+    "text": "13 MayJammuShreyas & BhavikaOutdoorParsi",
+    "w": 688,
+    "h": 134,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "16px 8px 16px 8px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.video-panel.flex-shrink-0.grid>a>div.shadow-md>div.text-container.py-4.px-2",
+    "text": "15 MarchVaranasiSakshi & ShubhankarTilak",
+    "w": 688,
+    "h": 176,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "16px 8px 16px 8px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.video-panel.flex-shrink-0.grid>a>div.shadow-md>div.text-container.py-4.px-2",
+    "text": "17 OctoberSolapurSakshi & ShubhankarWedd",
+    "w": 688,
+    "h": 134,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "16px 8px 16px 8px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   }
+  ],
+  "link": [
+   {
+    "sel": "nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>a.flex.items-center.gap-4",
+    "text": "The Wedding BoysMUMBAI'S PREMIER WEDDING",
+    "w": 398,
+    "h": 80,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+    "text": "Home",
+    "w": 87,
+    "h": 36,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#374151",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "8px 12px 8px 12px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+    "text": "₹Pricing",
+    "w": 89,
+    "h": 44,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#374151",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "8px 12px 8px 12px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+    "text": "Process",
+    "w": 101,
+    "h": 36,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#374151",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "8px 12px 8px 12px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+    "text": "Services",
+    "w": 105,
+    "h": 36,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#374151",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "8px 12px 8px 12px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3",
+    "text": "Get Quote",
+    "w": 146,
+    "h": 46,
+    "font": "20px/30px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#FFFFFF",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "8px 12px 8px 12px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.infinite-scroll-component__outerdiv>div.infinite-scroll-component>div.video-panel.flex-shrink-0.grid>a",
+    "text": "19 SeptemberHowrahKhusboo & VedantRecept",
+    "w": 688,
+    "h": 390,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.infinite-scroll-component__outerdiv>div.infinite-scroll-component>div.video-panel.flex-shrink-0.grid>a",
+    "text": "20 DecemberDamanAnshu & AbhishekGardenGr",
+    "w": 688,
+    "h": 390,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.infinite-scroll-component__outerdiv>div.infinite-scroll-component>div.video-panel.flex-shrink-0.grid>a",
+    "text": "14 OctoberAhemdabadNipa & BrijeshDay Wed",
+    "w": 688,
+    "h": 390,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.infinite-scroll-component__outerdiv>div.infinite-scroll-component>div.video-panel.flex-shrink-0.grid>a",
+    "text": "13 MayJammuShreyas & BhavikaOutdoorParsi",
+    "w": 688,
+    "h": 390,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.infinite-scroll-component__outerdiv>div.infinite-scroll-component>div.video-panel.flex-shrink-0.grid>a",
+    "text": "15 MarchVaranasiSakshi & ShubhankarTilak",
+    "w": 688,
+    "h": 432,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.infinite-scroll-component__outerdiv>div.infinite-scroll-component>div.video-panel.flex-shrink-0.grid>a",
+    "text": "17 OctoberSolapurSakshi & ShubhankarWedd",
+    "w": 688,
+    "h": 432,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Home",
+    "w": 34,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Films",
+    "w": 30,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Gallery",
+    "w": 40,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Our Team",
+    "w": 55,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "About Us",
+    "w": 52,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Dharaa Events",
+    "w": 82,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "All Published Stories",
+    "w": 116,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Real Wedding Features",
+    "w": 130,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Destination Planning Guides",
+    "w": 159,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Udaipur Palace Celebrations",
+    "w": 161,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Jaipur Heritage Haveli",
+    "w": 126,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Goa Coastal Nuptials",
+    "w": 119,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Varanasi Sacred Ghats",
+    "w": 128,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   }
+  ],
+  "image": [
+   {
+    "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+    "w": 80,
+    "h": 80,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "4px 4px 4px 4px",
+    "radius": "9999px",
+    "border": "4px solid #FFF1F2",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+    "w": 688,
+    "h": 256,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "12px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+    "w": 688,
+    "h": 256,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "12px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+    "w": 688,
+    "h": 256,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "12px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+    "w": 688,
+    "h": 256,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "12px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+    "w": 688,
+    "h": 256,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "12px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+    "w": 688,
+    "h": 256,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "12px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   }
+  ]
+ },
+ "defects": {
+  "lowContrast": [
+   {
+    "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+    "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+    "fg": "rgba(244,63,94,0.8)",
+    "bg": "#FFFFFF",
+    "ratio": 3.67,
+    "need": 4.5,
+    "fontSize": "12px",
+    "weight": "500"
+   },
+   {
+    "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+    "text": "Subscribe",
+    "fg": "#FFFFFF",
+    "bg": "#FF5353",
+    "ratio": 3.17,
+    "need": 4.5,
+    "fontSize": "12px",
+    "weight": "600"
+   },
+   {
+    "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+    "text": "Inquire for Your Date",
+    "fg": "#FFFFFF",
+    "bg": "#FF5353",
+    "ratio": 3.17,
+    "need": 4.5,
+    "fontSize": "12px",
+    "weight": "600"
+   }
+  ],
+  "lowContrastCount": 3,
+  "overImage": [
+   {
+    "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+    "text": "The Wedding Boys",
+    "fg": "rgba(0,0,0,0)",
+    "bg": "#FFFFFF",
+    "ratio": 21,
+    "need": 3,
+    "fontSize": "24px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+    "text": "Get Quote",
+    "fg": "#FFFFFF",
+    "bg": "#FFFFFF",
+    "ratio": 1,
+    "need": 4.5,
+    "fontSize": "20px",
+    "weight": "400"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+    "text": "The Bi-Weekly Dispatch",
+    "fg": "#FF5353",
+    "bg": "#FFFFFF",
+    "ratio": 3.17,
+    "need": 4.5,
+    "fontSize": "10px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+    "text": "Cinematic Love Stories, Delivered to Your Inbox",
+    "fg": "#5E2B17",
+    "bg": "#FFFFFF",
+    "ratio": 11.45,
+    "need": 3,
+    "fontSize": "24px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+    "text": "Join 12,000 discerning couples receiving curated real weddin",
+    "fg": "#74583E",
+    "bg": "#FFFFFF",
+    "ratio": 6.55,
+    "need": 4.5,
+    "fontSize": "12px",
+    "weight": "400"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>p.text-[10px].text-[#78716C].pl-2",
+    "text": "No spam. Just meaningful stories.",
+    "fg": "#78716C",
+    "bg": "#FFFFFF",
+    "ratio": 4.8,
+    "need": 4.5,
+    "fontSize": "10px",
+    "weight": "400"
+   }
+  ],
+  "overImageCount": 6,
+  "tinyTarget": [
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Home",
+    "size": "34x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Films",
+    "size": "30x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Gallery",
+    "size": "40x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Our Team",
+    "size": "55x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "About Us",
+    "size": "52x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Dharaa Events",
+    "size": "82x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "All Published Stories",
+    "size": "116x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Real Wedding Features",
+    "size": "130x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Destination Planning Guides",
+    "size": "159x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Udaipur Palace Celebrations",
+    "size": "161x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Jaipur Heritage Haveli",
+    "size": "126x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Goa Coastal Nuptials",
+    "size": "119x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Varanasi Sacred Ghats",
+    "size": "128x15"
+   }
+  ],
+  "tinyTargetCount": 13,
+  "brokenImage": [
+   {
+    "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+    "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg"
+   }
+  ],
+  "oversizedImage": [
+   {
+    "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+    "src": "://media.theweddingboys.in/client/67e057a30f15ebfba3ee506e/Yo77XLEg-jsd/orig.jpg",
+    "natural": "2700x1796",
+    "displayed": "688x256",
+    "wastedFactor": 3.9
+   },
+   {
+    "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+    "src": "://media.theweddingboys.in/client/67e055820f15ebfba3ee504b/1D7ntEi1Cp3v/orig.jpg",
+    "natural": "1800x2700",
+    "displayed": "688x256",
+    "wastedFactor": 2.6
+   },
+   {
+    "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+    "src": "://media.theweddingboys.in/client/67e0529e0f15ebfba3ee5032/vmi6lN3vm2vv/orig.jpg",
+    "natural": "3984x2656",
+    "displayed": "688x256",
+    "wastedFactor": 5.8
+   },
+   {
+    "sel": "a>div.shadow-md>div.thumbnail.lg:h-64.sm:h-52>img.w-full.h-full.object-cover",
+    "src": "://media.theweddingboys.in/client/68069c18162b3828a2e67fcc/SvAXbt5na2t3/orig.png",
+    "natural": "1920x927",
+    "displayed": "688x256",
+    "wastedFactor": 2.8
+   }
+  ],
+  "oversizedImageCount": 4,
+  "noAltImage": [],
+  "noAltImageCount": 0
+ },
+ "headings": [
+  {
+   "level": 1,
+   "text": "Search Films"
+  },
+  {
+   "level": 3,
+   "text": "Cinematic Love Stories, Delivered to Your Inbox"
+  },
+  {
+   "level": 4,
+   "text": "Explore"
+  },
+  {
+   "level": 4,
+   "text": "Editorial Journal"
+  },
+  {
+   "level": 4,
+   "text": "Royal Destinations"
+  },
+  {
+   "level": 4,
+   "text": "Studio Inquiries"
+  }
+ ],
+ "headingJumps": [
+  "h1->h3 at \"Cinematic Love Stories, Delivered to Your Inbox\""
+ ],
+ "h1Count": 1,
+ "landmarks": {
+  "header": 0,
+  "nav": 1,
+  "main": 1,
+  "footer": 1,
+  "aside": 0
+ },
+ "images": {
+  "total": 8,
+  "lazy": 0
+ },
+ "overflowers": [],
+ "vitals": {
+  "lcpMs": 284,
+  "lcpElement": "img.w-full.h-full.object-cover",
+  "lcpUrl": "heweddingboys.in/client/67e057a30f15ebfba3ee506e/Yo77XLEg-jsd/orig.jpg",
+  "cls": 0,
+  "clsSources": [],
+  "longTasks": [],
+  "totalBlockingMs": 0,
+  "fcpMs": 128,
+  "domContentLoadedMs": 84,
+  "loadMs": 164
+ },
+ "bodyText": "The Wedding Boys\nMUMBAI'S PREMIER WEDDING FILMMAKERS\nHome\n₹\nPricing\nProcess\nServices\nGet Quote\nSearch Films\nSelect Category\nPre-Wedding\nWedding\nEngagement\nHaldi\nMehendi\nTilak\nReception\nBTS\nTraditional\nCandid\nCinematic\nCouple Shoot\nSelect Region\nNorth India\nSouth India\nEast India\nWest India\nCentral India\nDestination Weddings\nHome\nMountains\nSelect Event Type\nDay Wedding\nNight Wedding\nIndoor\nOutdoor\nTemple Wedding\nPalace Wedding\nResort Wedding\nSelect Caste\nHindu\nMuslim\nSikh\nChristian\nJain\nBuddhist\nParsi\nSelect Pre-Wedding Themes\nBeach\nGarden\nAerial\nUrban\nFairytale\nRustic\nCultural\nModern\nSelect Wedding Themes\nClassic\nRoyal\nFloral\nMinimalist\nGrand\nSelect Ceremony Details\nVarmala\nSaat Phere\nBidaai\nSindoor Daan\nMangalsutra\n\n19 SEPTEMBER\n\nHOWRAH\n\nKHUSBOO & VEDANT\n\nReception\nNorth India\nUrban\nSindoor Daan\n\n20 DECEMBER\n\nDAMAN\n\nANSHU & ABHISHEK\n\nGarden\nGrand\nVarmala\nHaldi\nClassic\n\n14 OCTOBER\n\nAHEMDABAD\n\nNIPA & BRIJESH\n\nDay Wedding\nAerial\nHaldi\nTraditional\nWest India\nHindu\nClassic\n\n13 MAY\n\nJAMMU\n\nSHREYAS & BHAVIKA\n\nOutdoor\nParsi\nModern\nNorth India\nHindu\nGrand\nWedding\nCassic\n\n15 MARCH\n\nVARANASI\n\nSAKSHI & SHUBHANKAR\n\nTilak\nMehendi\nHaldi\nNorth India\nOutdoor\nHindu\nBeach\nSindoor Daan\n\n17 OCTOBER\n\nSOLAPUR\n\nSAKSHI & SHUBHANKAR\n\nWedding\nNorth India\nNight Wedding\nHindu\nBeach\nGrand\nSaat Phere\nTHE BI-WEEKLY DISPATCH\nCinematic Love Stories, Delivered to Your Inbox\n\nJoin 12,000 discerning couples receiving curated real wedding films and palace destination guides.\n\nSubscribe\n\nNo spam. Just meaningful stories.\n\nTHE WEDDING BOYS\nCINEMATOGRAPHY STUDIO\n\nIndia’s premier wedding cinematography studio, crafting emotionally charged, motion-picture heirlooms across royal palaces, coastal sanctuaries, and worldwide destinations.\n\nEXPLORE\nHome\nFilms\nGallery\nOur Team\nAbout Us\nDharaa Events\nEDITORIAL JOURNAL\nAll Published Stories\nReal Wedding Features\nDestination Planning Guides\nROYAL DESTINATIONS\nUdaipur Palace Celebrations\nJaipur Heritage Haveli\nGoa Coastal Nuptials\nVaranasi Sacred Ghats\nSTUDIO INQUIRIES\n\nWe accept a strictly limited number of cinematic commissions each wedding season to guarantee uncompromising artistry.\n\nInquire for Your Date\n\n© 2026 The Wedding Boys Studio. All rights reserved.\n\nDedicated to the poetry, cinema, and enduring emotion of love.",
+ "consoleErrors": [
+  {
+   "level": "error",
+   "text": "Failed to load resource: net::ERR_INVALID_URL",
+   "url": "data:image/png;base64,iVBORw0KGgo..."
+  }
+ ],
+ "network": {
+  "total": 51,
+  "failed": [],
+  "totalBytes": 6087420,
+  "heaviest": [
+   {
+    "url": "://media.theweddingboys.in/client/68069c18162b3828a2e67fcc/SvAXbt5na2t3/orig.png",
+    "kb": 3496,
+    "mime": "image/png"
+   },
+   {
+    "url": "://media.theweddingboys.in/client/68069c18162b3828a2e67fcc/BMK4Wc-u1Ish/orig.png",
+    "kb": 987,
+    "mime": "image/png"
+   },
+   {
+    "url": "://media.theweddingboys.in/client/67e057a30f15ebfba3ee506e/Yo77XLEg-jsd/orig.jpg",
+    "kb": 459,
+    "mime": "image/jpeg"
+   },
+   {
+    "url": "://media.theweddingboys.in/client/67e055820f15ebfba3ee504b/1D7ntEi1Cp3v/orig.jpg",
+    "kb": 414,
+    "mime": "image/jpeg"
+   },
+   {
+    "url": "://media.theweddingboys.in/client/67e0529e0f15ebfba3ee5032/vmi6lN3vm2vv/orig.jpg",
+    "kb": 186,
+    "mime": "image/jpeg"
+   }
+  ]
+ }
+}

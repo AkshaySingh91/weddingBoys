@@ -1,0 +1,137 @@
+[
+ {
+  "id": "search",
+  "path": "/search-result",
+  "viewports": {
+   "mobile": {
+    "overflowX": 0,
+    "lcpMs": 2804,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 2334,
+    "shotTruncated": false
+   },
+   "tablet": {
+    "overflowX": 0,
+    "lcpMs": 180,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 4160,
+    "shotTruncated": true
+   },
+   "laptop": {
+    "overflowX": 0,
+    "lcpMs": 124,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 3812,
+    "shotTruncated": false
+   },
+   "desktop": {
+    "overflowX": 0,
+    "lcpMs": 176,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 3812,
+    "shotTruncated": false
+   }
+  },
+  "tabStops": 45,
+  "noVisibleFocus": 0,
+  "movingUnderReduce": 65
+ },
+ {
+  "id": "weddings-city",
+  "path": "/weddings/udaipur",
+  "viewports": {
+   "mobile": {
+    "overflowX": 0,
+    "lcpMs": 6576,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 5080,
+    "shotTruncated": true
+   },
+   "tablet": {
+    "overflowX": 0,
+    "lcpMs": 300,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 3606,
+    "shotTruncated": false
+   },
+   "laptop": {
+    "overflowX": 0,
+    "lcpMs": 764,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 3198,
+    "shotTruncated": false
+   },
+   "desktop": {
+    "overflowX": 0,
+    "lcpMs": 376,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 3198,
+    "shotTruncated": false
+   }
+  },
+  "tabStops": 32,
+  "noVisibleFocus": 0,
+  "movingUnderReduce": 35
+ },
+ {
+  "id": "not-found",
+  "path": "/audit-probe-nonexistent-route",
+  "viewports": {
+   "mobile": {
+    "overflowX": 0,
+    "lcpMs": 380,
+    "cls": 0,
+    "errors": 2,
+    "failedReq": 1,
+    "pageHeight": 2334,
+    "shotTruncated": false
+   },
+   "tablet": {
+    "overflowX": 0,
+    "lcpMs": 280,
+    "cls": 0,
+    "errors": 2,
+    "failedReq": 1,
+    "pageHeight": 2130,
+    "shotTruncated": false
+   },
+   "laptop": {
+    "overflowX": 0,
+    "lcpMs": 460,
+    "cls": 0,
+    "errors": 2,
+    "failedReq": 1,
+    "pageHeight": 1708,
+    "shotTruncated": false
+   },
+   "desktop": {
+    "overflowX": 0,
+    "lcpMs": 692,
+    "cls": 0,
+    "errors": 2,
+    "failedReq": 1,
+    "pageHeight": 1888,
+    "shotTruncated": false
+   }
+  },
+  "tabStops": 45,
+  "noVisibleFocus": 0,
+  "movingUnderReduce": 25
+ }
+]

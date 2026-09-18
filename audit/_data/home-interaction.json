@@ -1,0 +1,491 @@
+{
+ "focusTrail": [
+  {
+   "tag": "a",
+   "label": "The Wedding BoysMUMBAI'S PREMIER WEDDING FIL",
+   "href": "/",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Home",
+   "href": "/",
+   "outline": "auto 2px rgb(122, 59, 132)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "₹Pricing",
+   "href": "#pricing",
+   "outline": "auto 2px rgb(30, 79, 137)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Process",
+   "href": "#process",
+   "outline": "auto 2px rgb(30, 79, 137)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Services",
+   "href": "#services",
+   "outline": "auto 2px rgb(30, 79, 137)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Get Quote",
+   "href": "/contact",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0)",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Play film",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Shreyas & Bhavika13 May•Jammu",
+   "href": "/films/6803dc08c0a4da33e9655463",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Play film",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Nipa & Brijesh14 October•Ahemdabad",
+   "href": "/films/6803dd3ec0a4da33e9655482",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Play film",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Khusboo & Vedant19 September•Howrah",
+   "href": "/films/6806935a162b3828a2e67e85",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Play film",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Anshu & Abhishek20 December•Daman",
+   "href": "/films/6803deadc0a4da33e96554be",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Previous film",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Next film",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Our Films",
+   "href": "/films",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Classic",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "North India",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Garden",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "20 DecemberDamanAnshu&Abhishek",
+   "href": "/films/6803deadc0a4da33e96554be",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "14 OctoberAhemdabadNipa&Brijesh",
+   "href": "/films/6803dd3ec0a4da33e9655482",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Explore Gallery",
+   "href": "/photos",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Explore Gallery",
+   "href": "/photos",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Explore Gallery",
+   "href": "/photos",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Explore Gallery",
+   "href": "/photos",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Explore Gallery",
+   "href": "/photos",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Explore Gallery",
+   "href": "/photos",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Create Your Perfect Package",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0)",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Explore Varanasi Packages",
+   "outline": "auto 2px rgb(233, 241, 251)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0)",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Learn More About Us",
+   "href": "/dharaa-event-management",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0)",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Who We Are",
+   "href": "/about-us",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0)",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "All Work",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Wedding",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Pre-Wedding",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Garden",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Haldi",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Explore Complete Gallery",
+   "href": "/photos",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "View Complete Package",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "View Complete Package",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "View Complete Package",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "View Complete Package",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Schedule Free Consultation",
+   "outline": "auto 2px rgb(138, 182, 232)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0)",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Free Consultation",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  }
+ ],
+ "reducedMotion": {
+  "count": 119,
+  "sample": [
+   {
+    "tag": "a",
+    "cls": "px-3 py-2 flex items-center gap-2 text-gray-700 ",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "px-3 py-2 flex items-center gap-2 text-gray-700 ",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "px-3 py-2 flex items-center gap-2 text-gray-700 ",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "px-3 py-2 flex items-center gap-2 text-gray-700 ",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "text-desktopBodyMedium text-nowrap px-3 py-2 bg-",
+    "transition": "box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "div",
+    "cls": "flex h-full transition-transform duration-500 ea",
+    "transition": "transform 0.5s cubic-bezier(0, 0, 0.2, 1)"
+   },
+   {
+    "tag": "button",
+    "cls": "p-3 bg-white/10 rounded-full backdrop-blur-sm ho",
+    "transition": "color 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0"
+   },
+   {
+    "tag": "a",
+    "cls": "absolute bottom-6 left-6 text-white hover:text-g",
+    "transition": "color 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0"
+   },
+   {
+    "tag": "button",
+    "cls": "p-3 bg-white/10 rounded-full backdrop-blur-sm ho",
+    "transition": "color 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0"
+   },
+   {
+    "tag": "a",
+    "cls": "absolute bottom-6 left-6 text-white hover:text-g",
+    "transition": "color 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0"
+   },
+   {
+    "tag": "button",
+    "cls": "p-3 bg-white/10 rounded-full backdrop-blur-sm ho",
+    "transition": "color 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0"
+   },
+   {
+    "tag": "a",
+    "cls": "absolute bottom-6 left-6 text-white hover:text-g",
+    "transition": "color 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0"
+   },
+   {
+    "tag": "button",
+    "cls": "p-3 bg-white/10 rounded-full backdrop-blur-sm ho",
+    "transition": "color 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0"
+   },
+   {
+    "tag": "a",
+    "cls": "absolute bottom-6 left-6 text-white hover:text-g",
+    "transition": "color 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0"
+   },
+   {
+    "tag": "button",
+    "cls": "pointer-events-auto p-2 bg-white/10 rounded-full",
+    "transition": "color 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0"
+   },
+   {
+    "tag": "button",
+    "cls": "pointer-events-auto p-2 bg-white/10 rounded-full",
+    "transition": "color 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0"
+   },
+   {
+    "tag": "h1",
+    "cls": "inline-block lg:mb-6 sm:mb-4 sm:w-full sm:text-c",
+    "transition": "0.075s cubic-bezier(0.4, 0, 0.2, 1) 0.7s"
+   },
+   {
+    "tag": "div",
+    "cls": "w-full flex gap-2 overflow-x-auto scrollbar-none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "div",
+    "cls": "absolute inset-0 bg-gray-200 animate-pulse z-10",
+    "animation": "pulse 2s"
+   },
+   {
+    "tag": "img",
+    "cls": "absolute inset-0 w-full h-full object-cover tran",
+    "transition": "opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1)"
+   }
+  ]
+ }
+}

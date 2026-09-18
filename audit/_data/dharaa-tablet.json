@@ -1,0 +1,3728 @@
+{
+ "url": "/dharaa-event-management",
+ "title": "Dharaa Event Management — Wedding Catering & Events | The Wedding Boys",
+ "viewport": {
+  "w": 768,
+  "h": 1024
+ },
+ "scrollWidth": 768,
+ "overflowX": 0,
+ "scanned": 272,
+ "tokens": {
+  "fontFamily": {
+   "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif": {
+    "n": 197,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, -apple-system, \"system-ui\", sans-serif": {
+    "n": 65,
+    "where": [
+     "body.antialiased>div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]",
+     "div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12",
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl",
+     "footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12"
+    ]
+   },
+   "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace": {
+    "n": 7,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold"
+    ]
+   },
+   "\"Playfair Display\", \"Playfair Display Fallback\", \"DM Serif Display\", \"DM Serif Display Fallback\", Georgia, serif": {
+    "n": 3,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.font-serif.text-base.font-bold",
+     "div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.mt-12.pt-6.border-t>p.font-serif.italic.text-[#FAD7A0]/80"
+    ]
+   }
+  },
+  "fontSize": {
+   "16px": {
+    "n": 166,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "24px": {
+    "n": 4,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "div.w-full.lg:w-1/2.flex>div.flex.items-center.justify-center>div.ml-3.tracking-wider>h2.text-xl.sm:text-2xl.lg:text-2xl",
+     "div.w-full.lg:w-1/2.flex>div.flex.items-center.justify-center>div.ml-3.tracking-wider>h2.text-xl.sm:text-2xl.lg:text-2xl",
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl"
+    ]
+   },
+   "12px": {
+    "n": 38,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+     "form.space-y-1.5>div.flex.items-center.bg-white>div.relative.flex-1.flex>input.w-full.pl-2.pr-2",
+     "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center"
+    ]
+   },
+   "14px": {
+    "n": 22,
+    "where": [
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm"
+    ]
+   },
+   "20px": {
+    "n": 14,
+    "where": [
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-xl",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3",
+     "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500>svg>line"
+    ]
+   },
+   "18px": {
+    "n": 12,
+    "where": [
+     "div>a.text-desktopBodyMedium.text-nowrap.px-3>svg>polyline",
+     "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6",
+     "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>a.border.border-orange-600.text-orange-600",
+     "div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>div.p-4>h3.text-lg.font-semibold.text-gray-900"
+    ]
+   },
+   "36px": {
+    "n": 2,
+    "where": [
+     "div.min-h-screen>section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>h1.text-3xl.sm:text-4xl.lg:text-6xl",
+     "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>h1.text-3xl.sm:text-4xl.lg:text-6xl>span.text-orange-600"
+    ]
+   },
+   "30px": {
+    "n": 3,
+    "where": [
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>h2.text-2xl.sm:text-3xl.lg:text-4xl",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4>h2.text-2xl.sm:text-3xl.lg:text-4xl",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4>h2.text-2xl.sm:text-3xl.font-bold"
+    ]
+   },
+   "10px": {
+    "n": 10,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>p.text-[10px].text-[#78716C].pl-2",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold"
+    ]
+   },
+   "8px": {
+    "n": 1,
+    "where": [
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]"
+    ]
+   }
+  },
+  "fontWeight": {
+   "400": {
+    "n": 219,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "500": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium"
+    ]
+   },
+   "600": {
+    "n": 32,
+    "where": [
+     "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-lg.sm:text-xl.font-semibold",
+     "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-lg.sm:text-xl.font-semibold",
+     "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-lg.sm:text-xl.font-semibold",
+     "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-lg.sm:text-xl.font-semibold"
+    ]
+   },
+   "700": {
+    "n": 18,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "div.min-h-screen>section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>h1.text-3xl.sm:text-4xl.lg:text-6xl",
+     "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>h1.text-3xl.sm:text-4xl.lg:text-6xl>span.text-orange-600",
+     "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6"
+    ]
+   },
+   "800": {
+    "n": 2,
+    "where": [
+     "div.w-full.lg:w-1/2.flex>div.flex.items-center.justify-center>div.ml-3.tracking-wider>h2.text-xl.sm:text-2xl.lg:text-2xl",
+     "div.w-full.lg:w-1/2.flex>div.flex.items-center.justify-center>div.ml-3.tracking-wider>h2.text-xl.sm:text-2xl.lg:text-2xl"
+    ]
+   }
+  },
+  "lineHeight": {
+   "24px": {
+    "n": 166,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "32px": {
+    "n": 4,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "div.w-full.lg:w-1/2.flex>div.flex.items-center.justify-center>div.ml-3.tracking-wider>h2.text-xl.sm:text-2xl.lg:text-2xl",
+     "div.w-full.lg:w-1/2.flex>div.flex.items-center.justify-center>div.ml-3.tracking-wider>h2.text-xl.sm:text-2xl.lg:text-2xl",
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl"
+    ]
+   },
+   "16px": {
+    "n": 35,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "form.space-y-1.5>div.flex.items-center.bg-white>div.relative.flex-1.flex>input.w-full.pl-2.pr-2",
+     "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center",
+     "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span"
+    ]
+   },
+   "20px": {
+    "n": 22,
+    "where": [
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm"
+    ]
+   },
+   "28px": {
+    "n": 24,
+    "where": [
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-xl",
+     "div>a.text-desktopBodyMedium.text-nowrap.px-3>svg>polyline",
+     "div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500>svg>line",
+     "div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500>svg>line"
+    ]
+   },
+   "30px": {
+    "n": 2,
+    "where": [
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3",
+     "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span"
+    ]
+   },
+   "40px": {
+    "n": 2,
+    "where": [
+     "div.min-h-screen>section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>h1.text-3xl.sm:text-4xl.lg:text-6xl",
+     "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>h1.text-3xl.sm:text-4xl.lg:text-6xl>span.text-orange-600"
+    ]
+   },
+   "36px": {
+    "n": 3,
+    "where": [
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>h2.text-2xl.sm:text-3xl.lg:text-4xl",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4>h2.text-2xl.sm:text-3xl.lg:text-4xl",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4>h2.text-2xl.sm:text-3xl.font-bold"
+    ]
+   },
+   "15px": {
+    "n": 10,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>p.text-[10px].text-[#78716C].pl-2",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold"
+    ]
+   },
+   "19.5px": {
+    "n": 3,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>p.text-xs.text-stone-300.leading-relaxed",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>p.text-xs.text-stone-300.leading-relaxed"
+    ]
+   },
+   "12px": {
+    "n": 1,
+    "where": [
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]"
+    ]
+   }
+  },
+  "letterSpacing": {
+   "normal": {
+    "n": 257,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "1.2px": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium"
+    ]
+   },
+   "0.8px": {
+    "n": 3,
+    "where": [
+     "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.flex>div.flex.items-center.justify-center>div.ml-3.tracking-wider",
+     "div.w-full.lg:w-1/2.flex>div.flex.items-center.justify-center>div.ml-3.tracking-wider>h2.text-xl.sm:text-2xl.lg:text-2xl",
+     "div.w-full.lg:w-1/2.flex>div.flex.items-center.justify-center>div.ml-3.tracking-wider>h2.text-xl.sm:text-2xl.lg:text-2xl"
+    ]
+   },
+   "2px": {
+    "n": 3,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]"
+    ]
+   },
+   "-0.6px": {
+    "n": 1,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl"
+    ]
+   },
+   "0.3px": {
+    "n": 2,
+    "where": [
+     "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center",
+     "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span"
+    ]
+   },
+   "2.56px": {
+    "n": 1,
+    "where": [
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.font-serif.text-base.font-bold"
+    ]
+   },
+   "2.2px": {
+    "n": 4,
+    "where": [
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold"
+    ]
+   }
+  },
+  "textTransform": {
+   "none": {
+    "n": 265,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "uppercase": {
+    "n": 7,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold"
+    ]
+   }
+  },
+  "color": {
+   "#000000": {
+    "n": 85,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "rgba(254,205,211,0.4)": {
+    "n": 15,
+    "where": [
+     "div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none>div.absolute.text-rose-200/40",
+     "div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none>div.absolute.text-rose-200/40",
+     "div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none>div.absolute.text-rose-200/40",
+     "div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none>div.absolute.text-rose-200/40"
+    ]
+   },
+   "rgba(0,0,0,0)": {
+    "n": 16,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.flex>div.flex.items-center.justify-center>img.w-14.h-14.sm:w-16",
+     "div.min-h-screen>section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.flex>img.w-full.max-w-sm.sm:max-w-md",
+     "section.lg:py-10.sm:py-5.px-4>div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden>img.w-full.h-52.sm:h-56"
+    ]
+   },
+   "rgba(244,63,94,0.8)": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium"
+    ]
+   },
+   "#374151": {
+    "n": 16,
+    "where": [
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.flex.items-center.gap-6>a.px-3.py-2.flex>svg>polyline",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex"
+    ]
+   },
+   "#FFFFFF": {
+    "n": 14,
+    "where": [
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3",
+     "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "div>a.text-desktopBodyMedium.text-nowrap.px-3>svg>polyline",
+     "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6"
+    ]
+   },
+   "#4B5563": {
+    "n": 8,
+    "where": [
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500",
+     "div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500>svg>line",
+     "div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500>svg>line",
+     "div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500>svg>line"
+    ]
+   },
+   "#111827": {
+    "n": 19,
+    "where": [
+     "div.min-h-screen>section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>h1.text-3xl.sm:text-4xl.lg:text-6xl",
+     "div.w-full.lg:w-1/2.flex>div.flex.items-center.justify-center>div.ml-3.tracking-wider>h2.text-xl.sm:text-2xl.lg:text-2xl",
+     "div.w-full.lg:w-1/2.flex>div.flex.items-center.justify-center>div.ml-3.tracking-wider>h2.text-xl.sm:text-2xl.lg:text-2xl",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>h2.text-2xl.sm:text-3xl.lg:text-4xl"
+    ]
+   },
+   "#EA580C": {
+    "n": 15,
+    "where": [
+     "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>h1.text-3xl.sm:text-4xl.lg:text-6xl>span.text-orange-600",
+     "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>a.border.border-orange-600.text-orange-600",
+     "div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>svg>circle",
+     "div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>svg>rect"
+    ]
+   },
+   "#6B7280": {
+    "n": 13,
+    "where": [
+     "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>p.text-sm.sm:text-base.text-gray-500",
+     "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>p.text-sm.sm:text-base.text-gray-500",
+     "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>p.text-sm.sm:text-base.text-gray-500",
+     "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>p.text-sm.sm:text-base.text-gray-500"
+    ]
+   },
+   "#2F2F2F": {
+    "n": 10,
+    "where": [
+     "body.antialiased>div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]",
+     "div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12",
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl",
+     "footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12"
+    ]
+   },
+   "#FF5353": {
+    "n": 2,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span"
+    ]
+   },
+   "#5E2B17": {
+    "n": 1,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl"
+    ]
+   },
+   "#74583E": {
+    "n": 1,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md"
+    ]
+   },
+   "#78716C": {
+    "n": 1,
+    "where": [
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>p.text-[10px].text-[#78716C].pl-2"
+    ]
+   },
+   "#FAF8F5": {
+    "n": 11,
+    "where": [
+     "div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12",
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6",
+     "footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2",
+     "div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2"
+    ]
+   },
+   "#FAD7A0": {
+    "n": 5,
+    "where": [
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>h4.text-[10px].font-mono.font-bold"
+    ]
+   },
+   "#D6D3D1": {
+    "n": 36,
+    "where": [
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>p.text-xs.text-stone-300.leading-relaxed",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full"
+    ]
+   },
+   "#A8A29E": {
+    "n": 2,
+    "where": [
+     "footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.mt-12.pt-6.border-t",
+     "div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.mt-12.pt-6.border-t>p"
+    ]
+   },
+   "rgba(250,215,160,0.8)": {
+    "n": 1,
+    "where": [
+     "div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.mt-12.pt-6.border-t>p.font-serif.italic.text-[#FAD7A0]/80"
+    ]
+   }
+  },
+  "backgroundColor": {
+   "rgba(0,0,0,0)": {
+    "n": 240,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "rgba(255,255,255,0.95)": {
+    "n": 1,
+    "where": [
+     "body.antialiased>div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0"
+    ]
+   },
+   "#EA580C": {
+    "n": 2,
+    "where": [
+     "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6",
+     "div.min-h-screen>section.lg:py-10.sm:py-5.px-4>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6"
+    ]
+   },
+   "rgba(255,255,255,0.9)": {
+    "n": 6,
+    "where": [
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6",
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6",
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6",
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6"
+    ]
+   },
+   "rgba(255,105,105,0.2)": {
+    "n": 6,
+    "where": [
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.absolute.inset-0.pointer-events-none>div.absolute.w-2.h-2",
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.absolute.inset-0.pointer-events-none>div.absolute.w-2.h-2",
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.absolute.inset-0.pointer-events-none>div.absolute.w-2.h-2",
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.absolute.inset-0.pointer-events-none>div.absolute.w-2.h-2"
+    ]
+   },
+   "#FFFFFF": {
+    "n": 10,
+    "where": [
+     "section.lg:py-10.sm:py-5.px-4>div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64",
+     "section.lg:py-10.sm:py-5.px-4>div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64",
+     "section.lg:py-10.sm:py-5.px-4>div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64",
+     "section.lg:py-10.sm:py-5.px-4>div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64"
+    ]
+   },
+   "#FF5353": {
+    "n": 2,
+    "where": [
+     "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5"
+    ]
+   },
+   "#2A160F": {
+    "n": 1,
+    "where": [
+     "div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12"
+    ]
+   },
+   "#4E2818": {
+    "n": 4,
+    "where": [
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full"
+    ]
+   }
+  },
+  "borderTopWidth": {
+   "0px": {
+    "n": 251,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "4px": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full"
+    ]
+   },
+   "2px": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>div.absolute.inset-0.border-2"
+    ]
+   },
+   "1px": {
+    "n": 18,
+    "where": [
+     "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>a.border.border-orange-600.text-orange-600",
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6",
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6",
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6"
+    ]
+   },
+   "8px": {
+    "n": 1,
+    "where": [
+     "div.min-h-screen>section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.flex>img.w-full.max-w-sm.sm:max-w-md"
+    ]
+   }
+  },
+  "borderTopStyle": {
+   "solid": {
+    "n": 272,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   }
+  },
+  "borderTopColor": {
+   "#E5E7EB": {
+    "n": 250,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "#F3F4F6": {
+    "n": 14,
+    "where": [
+     "body.antialiased>div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0",
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6",
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6",
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6"
+    ]
+   },
+   "#FFF1F2": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full"
+    ]
+   },
+   "#FECDD3": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>div.absolute.inset-0.border-2"
+    ]
+   },
+   "#EA580C": {
+    "n": 1,
+    "where": [
+     "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>a.border.border-orange-600.text-orange-600"
+    ]
+   },
+   "#FFFFFF": {
+    "n": 1,
+    "where": [
+     "div.min-h-screen>section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.flex>img.w-full.max-w-sm.sm:max-w-md"
+    ]
+   },
+   "#E5DCD3": {
+    "n": 2,
+    "where": [
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white"
+    ]
+   },
+   "#5E2B17": {
+    "n": 1,
+    "where": [
+     "div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12"
+    ]
+   },
+   "rgba(94,43,23,0.6)": {
+    "n": 1,
+    "where": [
+     "footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.mt-12.pt-6.border-t"
+    ]
+   }
+  },
+  "borderTopLeftRadius": {
+   "0px": {
+    "n": 219,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "9999px": {
+    "n": 19,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>div.absolute.inset-0.border-2",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500"
+    ]
+   },
+   "12px": {
+    "n": 3,
+    "where": [
+     "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6",
+     "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>a.border.border-orange-600.text-orange-600",
+     "div.min-h-screen>section.lg:py-10.sm:py-5.px-4>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6"
+    ]
+   },
+   "24px": {
+    "n": 1,
+    "where": [
+     "div.min-h-screen>section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.flex>img.w-full.max-w-sm.sm:max-w-md"
+    ]
+   },
+   "16px": {
+    "n": 28,
+    "where": [
+     "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]",
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6",
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6",
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6"
+    ]
+   },
+   "8px": {
+    "n": 2,
+    "where": [
+     "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4",
+     "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4"
+    ]
+   }
+  },
+  "boxShadow": {
+   "none": {
+    "n": 243,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px": {
+    "n": 5,
+    "where": [
+     "body.antialiased>div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0",
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white",
+     "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center"
+    ]
+   },
+   "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px": {
+    "n": 4,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3",
+     "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6",
+     "div.min-h-screen>section.lg:py-10.sm:py-5.px-4>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6"
+    ]
+   },
+   "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.25) 0px 25px 50px -12px": {
+    "n": 1,
+    "where": [
+     "div.min-h-screen>section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.flex>img.w-full.max-w-sm.sm:max-w-md"
+    ]
+   },
+   "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px": {
+    "n": 19,
+    "where": [
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6",
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6",
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6",
+     "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6"
+    ]
+   }
+  },
+  "zIndex": {
+   "10": {
+    "n": 4,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.relative.z-10",
+     "div.min-h-screen>section.lg:py-10.sm:py-5.px-4>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6",
+     "div.min-h-screen>section.lg:py-10.sm:py-5.px-4>div.relative>button.absolute.left-2.top-1/2",
+     "div.min-h-screen>section.lg:py-10.sm:py-5.px-4>div.relative>button.absolute.right-2.top-1/2"
+    ]
+   },
+   "50": {
+    "n": 1,
+    "where": [
+     "body.antialiased>div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0"
+    ]
+   },
+   "1000": {
+    "n": 1,
+    "where": [
+     "div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none>div.fixed.top-1/2.left-1/2"
+    ]
+   },
+   "auto": {
+    "n": 265,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none",
+     "div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none>div.absolute.text-rose-200/40"
+    ]
+   },
+   "-50": {
+    "n": 1,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50"
+    ]
+   }
+  },
+  "transitionDuration": {
+   "0s": {
+    "n": 234,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "0.15s": {
+    "n": 34,
+    "where": [
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex"
+    ]
+   },
+   "0.5s": {
+    "n": 4,
+    "where": [
+     "section.lg:py-10.sm:py-5.px-4>div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden>img.w-full.h-52.sm:h-56",
+     "section.lg:py-10.sm:py-5.px-4>div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden>img.w-full.h-52.sm:h-56",
+     "section.lg:py-10.sm:py-5.px-4>div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden>img.w-full.h-52.sm:h-56",
+     "section.lg:py-10.sm:py-5.px-4>div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden>img.w-full.h-52.sm:h-56"
+    ]
+   }
+  },
+  "transitionTimingFunction": {
+   "ease": {
+    "n": 234,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "cubic-bezier(0.4, 0, 0.2, 1)": {
+    "n": 38,
+    "where": [
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex"
+    ]
+   }
+  },
+  "maxWidth": {
+   "none": {
+    "n": 246,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "1280px": {
+    "n": 2,
+    "where": [
+     "div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4",
+     "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.max-w-7xl.mx-auto.flex"
+    ]
+   },
+   "100%": {
+    "n": 15,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.flex>div.flex.items-center.justify-center>img.w-14.h-14.sm:w-16",
+     "section.lg:py-10.sm:py-5.px-4>div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden>img.w-full.h-52.sm:h-56",
+     "section.lg:py-10.sm:py-5.px-4>div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden>img.w-full.h-52.sm:h-56"
+    ]
+   },
+   "512px": {
+    "n": 2,
+    "where": [
+     "div.min-h-screen>section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>p.mt-4.text-gray-600.max-w-lg",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4>p.text-gray-600.text-center.mt-2"
+    ]
+   },
+   "448px": {
+    "n": 2,
+    "where": [
+     "div.min-h-screen>section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.flex>img.w-full.max-w-sm.sm:max-w-md",
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md"
+    ]
+   },
+   "576px": {
+    "n": 2,
+    "where": [
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>p.text-gray-600.text-center.mt-2",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4>p.text-gray-600.text-center.mt-2"
+    ]
+   },
+   "1152px": {
+    "n": 1,
+    "where": [
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl"
+    ]
+   },
+   "1400px": {
+    "n": 1,
+    "where": [
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6"
+    ]
+   },
+   "384px": {
+    "n": 1,
+    "where": [
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>p.text-xs.text-stone-300.leading-relaxed"
+    ]
+   }
+  },
+  "gap": {
+   "normal": {
+    "n": 251,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "16px": {
+    "n": 5,
+    "where": [
+     "nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>a.flex.items-center.gap-4",
+     "nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-4",
+     "div.min-h-screen>section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4>div.flex.flex-col.sm:flex-row"
+    ]
+   },
+   "4px": {
+    "n": 1,
+    "where": [
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1"
+    ]
+   },
+   "24px": {
+    "n": 3,
+    "where": [
+     "nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4>div.grid.grid-cols-1.sm:grid-cols-2",
+     "footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12"
+    ]
+   },
+   "8px": {
+    "n": 5,
+    "where": [
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex"
+    ]
+   },
+   "40px": {
+    "n": 1,
+    "where": [
+     "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.max-w-7xl.mx-auto.flex"
+    ]
+   },
+   "32px": {
+    "n": 2,
+    "where": [
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4",
+     "footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2"
+    ]
+   },
+   "6px": {
+    "n": 3,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5"
+    ]
+   },
+   "10px": {
+    "n": 1,
+    "where": [
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap"
+    ]
+   }
+  },
+  "spacing": {
+   "24px": {
+    "n": 28,
+    "where": [
+     "paddingLeft@div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4",
+     "paddingRight@div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4",
+     "paddingLeft@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]",
+     "paddingRight@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]"
+    ]
+   },
+   "4px": {
+    "n": 17,
+    "where": [
+     "paddingTop@div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "paddingBottom@div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "paddingLeft@div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "paddingRight@div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full"
+    ]
+   },
+   "8px": {
+    "n": 64,
+    "where": [
+     "paddingTop@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "paddingBottom@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "paddingTop@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "paddingBottom@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex"
+    ]
+   },
+   "12px": {
+    "n": 18,
+    "where": [
+     "paddingLeft@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "paddingRight@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "paddingLeft@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "paddingRight@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex"
+    ]
+   },
+   "96px": {
+    "n": 1,
+    "where": [
+     "paddingTop@body.antialiased>div.relative.min-h-screen>div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2"
+    ]
+   },
+   "40px": {
+    "n": 8,
+    "where": [
+     "paddingTop@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.max-w-7xl.mx-auto.flex",
+     "marginBottom@main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4>p.text-gray-600.text-center.mt-2",
+     "paddingLeft@div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12",
+     "paddingRight@div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12"
+    ]
+   },
+   "64px": {
+    "n": 4,
+    "where": [
+     "paddingBottom@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.max-w-7xl.mx-auto.flex",
+     "paddingTop@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]",
+     "paddingBottom@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]",
+     "marginTop@body.antialiased>div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]"
+    ]
+   },
+   "16px": {
+    "n": 56,
+    "where": [
+     "paddingLeft@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.max-w-7xl.mx-auto.flex",
+     "paddingRight@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.max-w-7xl.mx-auto.flex",
+     "marginTop@div.min-h-screen>section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>p.mt-4.text-gray-600.max-w-lg",
+     "paddingTop@section.lg:py-10.sm:py-5.px-4>div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden>div.absolute.inset-0.bg-gradient-to-t"
+    ]
+   },
+   "32px": {
+    "n": 12,
+    "where": [
+     "marginTop@div.min-h-screen>section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row",
+     "paddingLeft@section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6",
+     "paddingRight@section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6",
+     "paddingLeft@section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>a.border.border-orange-600.text-orange-600"
+    ]
+   },
+   "56px": {
+    "n": 2,
+    "where": [
+     "marginBottom@main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>p.text-gray-600.text-center.mt-2",
+     "marginBottom@main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4>p.text-gray-600.text-center.mt-2"
+    ]
+   },
+   "20px": {
+    "n": 6,
+    "where": [
+     "paddingTop@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4",
+     "paddingBottom@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4",
+     "paddingTop@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4",
+     "paddingBottom@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4"
+    ]
+   },
+   "48px": {
+    "n": 4,
+    "where": [
+     "marginTop@main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4>div.flex.flex-col.sm:flex-row",
+     "marginBottom@div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12",
+     "paddingTop@div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12",
+     "marginTop@footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.mt-12.pt-6.border-t"
+    ]
+   },
+   "6px": {
+    "n": 5,
+    "where": [
+     "marginTop@div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "marginTop@div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+     "paddingTop@form.space-y-1.5>div.flex.items-center.bg-white>div.relative.flex-1.flex>input.w-full.pl-2.pr-2",
+     "paddingBottom@form.space-y-1.5>div.flex.items-center.bg-white>div.relative.flex-1.flex>input.w-full.pl-2.pr-2"
+    ]
+   },
+   "14px": {
+    "n": 1,
+    "where": [
+     "paddingLeft@div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>div.relative.flex-1.flex"
+    ]
+   },
+   "2px": {
+    "n": 1,
+    "where": [
+     "marginTop@div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]"
+    ]
+   },
+   "10px": {
+    "n": 7,
+    "where": [
+     "marginTop@div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300",
+     "marginTop@div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300",
+     "marginTop@div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300",
+     "marginTop@div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>p.text-xs.text-stone-300.leading-relaxed"
+    ]
+   }
+  }
+ },
+ "components": {
+  "button": [
+   {
+    "sel": "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500",
+    "w": 36,
+    "h": 36,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#4B5563",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "8px 8px 8px 8px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6",
+    "text": "Explore Packages",
+    "w": 220,
+    "h": 54,
+    "font": "18px/28px 700",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#FFFFFF",
+    "bg": "#EA580C",
+    "pad": "12px 32px 12px 32px",
+    "radius": "12px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.min-h-screen>section.lg:py-10.sm:py-5.px-4>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6",
+    "text": "Book Your Event",
+    "w": 192,
+    "h": 48,
+    "font": "16px/24px 700",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#FFFFFF",
+    "bg": "#EA580C",
+    "pad": "12px 32px 12px 32px",
+    "radius": "12px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "10"
+   },
+   {
+    "sel": "div.min-h-screen>section.lg:py-10.sm:py-5.px-4>div.relative>button.absolute.left-2.top-1/2",
+    "w": 40,
+    "h": 40,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(255,255,255,0.9)",
+    "pad": "8px 8px 8px 8px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "10"
+   },
+   {
+    "sel": "div.min-h-screen>section.lg:py-10.sm:py-5.px-4>div.relative>button.absolute.right-2.top-1/2",
+    "w": 40,
+    "h": 40,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(255,255,255,0.9)",
+    "pad": "8px 8px 8px 8px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "10"
+   },
+   {
+    "sel": "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center",
+    "text": "Subscribe",
+    "w": 129,
+    "h": 32,
+    "font": "12px/16px 600",
+    "family": "Inter",
+    "tracking": "0.3px",
+    "transform": "none",
+    "color": "#FFFFFF",
+    "bg": "#FF5353",
+    "pad": "8px 24px 8px 24px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+    "w": 31,
+    "h": 31,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "#4E2818",
+    "pad": "8px 8px 8px 8px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+    "w": 31,
+    "h": 31,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "#4E2818",
+    "pad": "8px 8px 8px 8px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+    "w": 31,
+    "h": 31,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "#4E2818",
+    "pad": "8px 8px 8px 8px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+    "w": 31,
+    "h": 31,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "#4E2818",
+    "pad": "8px 8px 8px 8px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5",
+    "text": "Inquire for Your Date",
+    "w": 177,
+    "h": 36,
+    "font": "12px/16px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#FFFFFF",
+    "bg": "#FF5353",
+    "pad": "10px 20px 10px 20px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   }
+  ],
+  "card": [
+   {
+    "sel": "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6",
+    "text": "Contact UsReach out via call or WhatsApp",
+    "w": 704,
+    "h": 174,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(255,255,255,0.9)",
+    "pad": "24px 24px 24px 24px",
+    "radius": "16px",
+    "border": "1px solid #F3F4F6",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6",
+    "text": "ConsultationWe guide you through caterin",
+    "w": 704,
+    "h": 174,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(255,255,255,0.9)",
+    "pad": "24px 24px 24px 24px",
+    "radius": "16px",
+    "border": "1px solid #F3F4F6",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6",
+    "text": "Choose PackagePick from Silver, Gold, or",
+    "w": 704,
+    "h": 174,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(255,255,255,0.9)",
+    "pad": "24px 24px 24px 24px",
+    "radius": "16px",
+    "border": "1px solid #F3F4F6",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6",
+    "text": "Catering DeliveredWe serve fresh, delici",
+    "w": 704,
+    "h": 174,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(255,255,255,0.9)",
+    "pad": "24px 24px 24px 24px",
+    "radius": "16px",
+    "border": "1px solid #F3F4F6",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.min-h-screen>section.lg:py-10.sm:py-5.px-4>div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden",
+    "text": "Wedding",
+    "w": 340,
+    "h": 224,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.min-h-screen>section.lg:py-10.sm:py-5.px-4>div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden",
+    "text": "Office Event",
+    "w": 340,
+    "h": 224,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.min-h-screen>section.lg:py-10.sm:py-5.px-4>div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden",
+    "text": "Birthday Party",
+    "w": 340,
+    "h": 224,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.min-h-screen>section.lg:py-10.sm:py-5.px-4>div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden",
+    "text": "Festival / Party",
+    "w": 340,
+    "h": 224,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.lg:py-10.sm:py-5.px-4>div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64",
+    "text": "BasundiIncluded in: Gold",
+    "w": 256,
+    "h": 246,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#FFFFFF",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px",
+    "border": "1px solid #F3F4F6",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.lg:py-10.sm:py-5.px-4>div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64",
+    "text": "Veg Dum BiryaniIncluded in: Gold/Platinu",
+    "w": 256,
+    "h": 246,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#FFFFFF",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px",
+    "border": "1px solid #F3F4F6",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.lg:py-10.sm:py-5.px-4>div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64",
+    "text": "Refreshing DrinksIncluded in: All Packag",
+    "w": 256,
+    "h": 246,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#FFFFFF",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px",
+    "border": "1px solid #F3F4F6",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.lg:py-10.sm:py-5.px-4>div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64",
+    "text": "Gulab JamunIncluded in: Silver",
+    "w": 256,
+    "h": 246,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#FFFFFF",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px",
+    "border": "1px solid #F3F4F6",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.lg:py-10.sm:py-5.px-4>div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64",
+    "text": "Ice Cream VarietiesIncluded in: Gold/Pla",
+    "w": 256,
+    "h": 246,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#FFFFFF",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px",
+    "border": "1px solid #F3F4F6",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.lg:py-10.sm:py-5.px-4>div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64",
+    "text": "Hara Bhara KababIncluded in: Platinum",
+    "w": 256,
+    "h": 246,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#FFFFFF",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px",
+    "border": "1px solid #F3F4F6",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.lg:py-10.sm:py-5.px-4>div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64",
+    "text": "Pani PuriIncluded in: Gold/Platinum",
+    "w": 256,
+    "h": 246,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#FFFFFF",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px",
+    "border": "1px solid #F3F4F6",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.lg:py-10.sm:py-5.px-4>div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64",
+    "text": "Paneer Tikka MasalaIncluded in: Gold/Pla",
+    "w": 256,
+    "h": 246,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#FFFFFF",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px",
+    "border": "1px solid #F3F4F6",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.lg:py-10.sm:py-5.px-4>div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64",
+    "text": "Cheese PizzaIncluded in: Platinum",
+    "w": 256,
+    "h": 246,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#FFFFFF",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px",
+    "border": "1px solid #F3F4F6",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl",
+    "text": "The Bi-Weekly DispatchCinematic Love Sto",
+    "w": 688,
+    "h": 260,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#2F2F2F",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "32px 40px 32px 40px",
+    "radius": "16px",
+    "border": "1px solid #E5DCD3",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "1152px",
+    "z": "auto"
+   }
+  ],
+  "chip": [],
+  "input": [
+   {
+    "sel": "form.space-y-1.5>div.flex.items-center.bg-white>div.relative.flex-1.flex>input.w-full.pl-2.pr-2",
+    "w": 438,
+    "h": 28,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#2F2F2F",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "6px 8px 6px 8px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   }
+  ],
+  "heading": [
+   {
+    "sel": "div.min-h-screen>section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>h1.text-3xl.sm:text-4xl.lg:text-6xl",
+    "text": "Premium Catering For Every Occasion",
+    "w": 720,
+    "h": 40,
+    "font": "36px/40px 700",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#111827",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.w-full.lg:w-1/2.flex>div.flex.items-center.justify-center>div.ml-3.tracking-wider>h2.text-xl.sm:text-2xl.lg:text-2xl",
+    "text": "Dharaa",
+    "w": 243,
+    "h": 32,
+    "font": "24px/32px 800",
+    "family": "Inter",
+    "tracking": "0.8px",
+    "transform": "none",
+    "color": "#111827",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.w-full.lg:w-1/2.flex>div.flex.items-center.justify-center>div.ml-3.tracking-wider>h2.text-xl.sm:text-2xl.lg:text-2xl",
+    "text": "Event Management",
+    "w": 243,
+    "h": 32,
+    "font": "24px/32px 800",
+    "family": "Inter",
+    "tracking": "0.8px",
+    "transform": "none",
+    "color": "#111827",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>h2.text-2xl.sm:text-3xl.lg:text-4xl",
+    "text": "How It Works",
+    "w": 704,
+    "h": 36,
+    "font": "30px/36px 700",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#111827",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-lg.sm:text-xl.font-semibold",
+    "text": "Contact Us",
+    "w": 654,
+    "h": 28,
+    "font": "20px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#111827",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-lg.sm:text-xl.font-semibold",
+    "text": "Consultation",
+    "w": 654,
+    "h": 28,
+    "font": "20px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#111827",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-lg.sm:text-xl.font-semibold",
+    "text": "Choose Package",
+    "w": 654,
+    "h": 28,
+    "font": "20px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#111827",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-lg.sm:text-xl.font-semibold",
+    "text": "Catering Delivered",
+    "w": 654,
+    "h": 28,
+    "font": "20px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#111827",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4>h2.text-2xl.sm:text-3xl.lg:text-4xl",
+    "text": "Events We Cater",
+    "w": 704,
+    "h": 36,
+    "font": "30px/36px 700",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#111827",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4>h2.text-2xl.sm:text-3xl.font-bold",
+    "text": "Our Top Dishes",
+    "w": 704,
+    "h": 36,
+    "font": "30px/36px 700",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#111827",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>div.p-4>h3.text-lg.font-semibold.text-gray-900",
+    "text": "Basundi",
+    "w": 222,
+    "h": 28,
+    "font": "18px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#111827",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>div.p-4>h3.text-lg.font-semibold.text-gray-900",
+    "text": "Veg Dum Biryani",
+    "w": 222,
+    "h": 28,
+    "font": "18px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#111827",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>div.p-4>h3.text-lg.font-semibold.text-gray-900",
+    "text": "Refreshing Drinks",
+    "w": 222,
+    "h": 28,
+    "font": "18px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#111827",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>div.p-4>h3.text-lg.font-semibold.text-gray-900",
+    "text": "Gulab Jamun",
+    "w": 222,
+    "h": 28,
+    "font": "18px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#111827",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>div.p-4>h3.text-lg.font-semibold.text-gray-900",
+    "text": "Ice Cream Varieties",
+    "w": 222,
+    "h": 28,
+    "font": "18px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#111827",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>div.p-4>h3.text-lg.font-semibold.text-gray-900",
+    "text": "Hara Bhara Kabab",
+    "w": 222,
+    "h": 28,
+    "font": "18px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#111827",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>div.p-4>h3.text-lg.font-semibold.text-gray-900",
+    "text": "Pani Puri",
+    "w": 222,
+    "h": 28,
+    "font": "18px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#111827",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>div.p-4>h3.text-lg.font-semibold.text-gray-900",
+    "text": "Paneer Tikka Masala",
+    "w": 222,
+    "h": 28,
+    "font": "18px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#111827",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>div.p-4>h3.text-lg.font-semibold.text-gray-900",
+    "text": "Cheese Pizza",
+    "w": 222,
+    "h": 28,
+    "font": "18px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#111827",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+    "text": "Cinematic Love Stories, Delivered to You",
+    "w": 606,
+    "h": 32,
+    "font": "24px/32px 700",
+    "family": "Playfair Display",
+    "tracking": "-0.6px",
+    "transform": "none",
+    "color": "#5E2B17",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+    "text": "Explore",
+    "w": 328,
+    "h": 15,
+    "font": "10px/15px 700",
+    "family": "ui-monospace",
+    "tracking": "2.2px",
+    "transform": "uppercase",
+    "color": "#FAD7A0",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+    "text": "Editorial Journal",
+    "w": 328,
+    "h": 15,
+    "font": "10px/15px 700",
+    "family": "ui-monospace",
+    "tracking": "2.2px",
+    "transform": "uppercase",
+    "color": "#FAD7A0",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+    "text": "Royal Destinations",
+    "w": 328,
+    "h": 15,
+    "font": "10px/15px 700",
+    "family": "ui-monospace",
+    "tracking": "2.2px",
+    "transform": "uppercase",
+    "color": "#FAD7A0",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+    "text": "Studio Inquiries",
+    "w": 328,
+    "h": 15,
+    "font": "10px/15px 700",
+    "family": "ui-monospace",
+    "tracking": "2.2px",
+    "transform": "uppercase",
+    "color": "#FAD7A0",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   }
+  ],
+  "section": [
+   {
+    "sel": "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.max-w-7xl.mx-auto.flex",
+    "text": "Premium Catering For Every OccasionDhara",
+    "w": 752,
+    "h": 726,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "40px 16px 64px 16px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "1280px",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]",
+    "text": "How It WorksBooking catering with Dharaa",
+    "w": 752,
+    "h": 1068,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "64px 24px 64px 24px",
+    "radius": "16px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4",
+    "text": "Events We CaterFrom weddings to office p",
+    "w": 752,
+    "h": 756,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "20px 24px 20px 24px",
+    "radius": "8px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4",
+    "text": "Our Top DishesExplore our most loved dis",
+    "w": 752,
+    "h": 490,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "20px 24px 20px 24px",
+    "radius": "8px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   }
+  ],
+  "link": [
+   {
+    "sel": "nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>a.flex.items-center.gap-4",
+    "text": "The Wedding BoysMUMBAI'S PREMIER WEDDING",
+    "w": 398,
+    "h": 80,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+    "text": "Home",
+    "w": 87,
+    "h": 36,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#374151",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "8px 12px 8px 12px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+    "text": "₹Pricing",
+    "w": 89,
+    "h": 44,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#374151",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "8px 12px 8px 12px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+    "text": "Process",
+    "w": 101,
+    "h": 36,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#374151",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "8px 12px 8px 12px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+    "text": "Services",
+    "w": 105,
+    "h": 36,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#374151",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "8px 12px 8px 12px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3",
+    "text": "Get Quote",
+    "w": 146,
+    "h": 46,
+    "font": "20px/30px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#FFFFFF",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "8px 12px 8px 12px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>a.border.border-orange-600.text-orange-600",
+    "text": "Contact Us",
+    "w": 163,
+    "h": 54,
+    "font": "18px/28px 700",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#EA580C",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "12px 32px 12px 32px",
+    "radius": "12px",
+    "border": "1px solid #EA580C",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Home",
+    "w": 34,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Films",
+    "w": 30,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Gallery",
+    "w": 40,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Our Team",
+    "w": 55,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "About Us",
+    "w": 52,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Dharaa Events",
+    "w": 82,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "All Published Stories",
+    "w": 116,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Real Wedding Features",
+    "w": 130,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Destination Planning Guides",
+    "w": 159,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Udaipur Palace Celebrations",
+    "w": 161,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Jaipur Heritage Haveli",
+    "w": 126,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Goa Coastal Nuptials",
+    "w": 119,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Varanasi Sacred Ghats",
+    "w": 128,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   }
+  ],
+  "image": [
+   {
+    "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+    "w": 80,
+    "h": 80,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "4px 4px 4px 4px",
+    "radius": "9999px",
+    "border": "4px solid #FFF1F2",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.flex>div.flex.items-center.justify-center>img.w-14.h-14.sm:w-16",
+    "w": 64,
+    "h": 64,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "div.min-h-screen>section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.flex>img.w-full.max-w-sm.sm:max-w-md",
+    "w": 448,
+    "h": 304,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "24px",
+    "border": "8px solid #FFFFFF",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "448px",
+    "z": "auto"
+   },
+   {
+    "sel": "section.lg:py-10.sm:py-5.px-4>div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden>img.w-full.h-52.sm:h-56",
+    "w": 340,
+    "h": 224,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "section.lg:py-10.sm:py-5.px-4>div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden>img.w-full.h-52.sm:h-56",
+    "w": 340,
+    "h": 224,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "section.lg:py-10.sm:py-5.px-4>div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden>img.w-full.h-52.sm:h-56",
+    "w": 340,
+    "h": 224,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "section.lg:py-10.sm:py-5.px-4>div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden>img.w-full.h-52.sm:h-56",
+    "w": 340,
+    "h": 224,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+    "w": 254,
+    "h": 160,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px/16px/0px/0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+    "w": 254,
+    "h": 160,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px/16px/0px/0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+    "w": 254,
+    "h": 160,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px/16px/0px/0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+    "w": 254,
+    "h": 160,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px/16px/0px/0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+    "w": 254,
+    "h": 160,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px/16px/0px/0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+    "w": 254,
+    "h": 160,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px/16px/0px/0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+    "w": 254,
+    "h": 160,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px/16px/0px/0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+    "w": 254,
+    "h": 160,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px/16px/0px/0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+    "w": 254,
+    "h": 160,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "16px/16px/0px/0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   }
+  ]
+ },
+ "defects": {
+  "lowContrast": [
+   {
+    "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+    "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+    "fg": "rgba(244,63,94,0.8)",
+    "bg": "#FFFFFF",
+    "ratio": 3.67,
+    "need": 4.5,
+    "fontSize": "12px",
+    "weight": "500"
+   },
+   {
+    "sel": "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6",
+    "text": "Explore Packages",
+    "fg": "#FFFFFF",
+    "bg": "#EA580C",
+    "ratio": 3.56,
+    "need": 4.5,
+    "fontSize": "18px",
+    "weight": "700"
+   },
+   {
+    "sel": "section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.text-center>div.flex.flex-col.sm:flex-row>a.border.border-orange-600.text-orange-600",
+    "text": "Contact Us",
+    "fg": "#EA580C",
+    "bg": "#FFFFFF",
+    "ratio": 3.56,
+    "need": 4.5,
+    "fontSize": "18px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.min-h-screen>section.lg:py-10.sm:py-5.px-4>div.flex.flex-col.sm:flex-row>button.bg-orange-600.text-white.px-6",
+    "text": "Book Your Event",
+    "fg": "#FFFFFF",
+    "bg": "#EA580C",
+    "ratio": 3.56,
+    "need": 4.5,
+    "fontSize": "16px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.flex-shrink-0.w-56.sm:w-64>div.p-4>p.text-sm.text-gray-500.mt-1>span.font-semibold.text-orange-600",
+    "text": "Gold",
+    "fg": "#EA580C",
+    "bg": "#FFFFFF",
+    "ratio": 3.56,
+    "need": 4.5,
+    "fontSize": "14px",
+    "weight": "600"
+   },
+   {
+    "sel": "div.flex-shrink-0.w-56.sm:w-64>div.p-4>p.text-sm.text-gray-500.mt-1>span.font-semibold.text-orange-600",
+    "text": "Gold/Platinum",
+    "fg": "#EA580C",
+    "bg": "#FFFFFF",
+    "ratio": 3.56,
+    "need": 4.5,
+    "fontSize": "14px",
+    "weight": "600"
+   },
+   {
+    "sel": "div.flex-shrink-0.w-56.sm:w-64>div.p-4>p.text-sm.text-gray-500.mt-1>span.font-semibold.text-orange-600",
+    "text": "All Packages",
+    "fg": "#EA580C",
+    "bg": "#FFFFFF",
+    "ratio": 3.56,
+    "need": 4.5,
+    "fontSize": "14px",
+    "weight": "600"
+   },
+   {
+    "sel": "div.flex-shrink-0.w-56.sm:w-64>div.p-4>p.text-sm.text-gray-500.mt-1>span.font-semibold.text-orange-600",
+    "text": "Silver",
+    "fg": "#EA580C",
+    "bg": "#FFFFFF",
+    "ratio": 3.56,
+    "need": 4.5,
+    "fontSize": "14px",
+    "weight": "600"
+   },
+   {
+    "sel": "div.flex-shrink-0.w-56.sm:w-64>div.p-4>p.text-sm.text-gray-500.mt-1>span.font-semibold.text-orange-600",
+    "text": "Gold/Platinum",
+    "fg": "#EA580C",
+    "bg": "#FFFFFF",
+    "ratio": 3.56,
+    "need": 4.5,
+    "fontSize": "14px",
+    "weight": "600"
+   },
+   {
+    "sel": "div.flex-shrink-0.w-56.sm:w-64>div.p-4>p.text-sm.text-gray-500.mt-1>span.font-semibold.text-orange-600",
+    "text": "Platinum",
+    "fg": "#EA580C",
+    "bg": "#FFFFFF",
+    "ratio": 3.56,
+    "need": 4.5,
+    "fontSize": "14px",
+    "weight": "600"
+   },
+   {
+    "sel": "div.flex-shrink-0.w-56.sm:w-64>div.p-4>p.text-sm.text-gray-500.mt-1>span.font-semibold.text-orange-600",
+    "text": "Gold/Platinum",
+    "fg": "#EA580C",
+    "bg": "#FFFFFF",
+    "ratio": 3.56,
+    "need": 4.5,
+    "fontSize": "14px",
+    "weight": "600"
+   },
+   {
+    "sel": "div.flex-shrink-0.w-56.sm:w-64>div.p-4>p.text-sm.text-gray-500.mt-1>span.font-semibold.text-orange-600",
+    "text": "Gold/Platinum",
+    "fg": "#EA580C",
+    "bg": "#FFFFFF",
+    "ratio": 3.56,
+    "need": 4.5,
+    "fontSize": "14px",
+    "weight": "600"
+   },
+   {
+    "sel": "div.flex-shrink-0.w-56.sm:w-64>div.p-4>p.text-sm.text-gray-500.mt-1>span.font-semibold.text-orange-600",
+    "text": "Platinum",
+    "fg": "#EA580C",
+    "bg": "#FFFFFF",
+    "ratio": 3.56,
+    "need": 4.5,
+    "fontSize": "14px",
+    "weight": "600"
+   },
+   {
+    "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+    "text": "Subscribe",
+    "fg": "#FFFFFF",
+    "bg": "#FF5353",
+    "ratio": 3.17,
+    "need": 4.5,
+    "fontSize": "12px",
+    "weight": "600"
+   },
+   {
+    "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+    "text": "Inquire for Your Date",
+    "fg": "#FFFFFF",
+    "bg": "#FF5353",
+    "ratio": 3.17,
+    "need": 4.5,
+    "fontSize": "12px",
+    "weight": "600"
+   }
+  ],
+  "lowContrastCount": 15,
+  "overImage": [
+   {
+    "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+    "text": "The Wedding Boys",
+    "fg": "rgba(0,0,0,0)",
+    "bg": "#FFFFFF",
+    "ratio": 21,
+    "need": 3,
+    "fontSize": "24px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+    "text": "Get Quote",
+    "fg": "#FFFFFF",
+    "bg": "#FFFFFF",
+    "ratio": 1,
+    "need": 4.5,
+    "fontSize": "20px",
+    "weight": "400"
+   },
+   {
+    "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>h2.text-2xl.sm:text-3xl.lg:text-4xl",
+    "text": "How It Works",
+    "fg": "#111827",
+    "bg": "#FFFFFF",
+    "ratio": 17.74,
+    "need": 3,
+    "fontSize": "30px",
+    "weight": "700"
+   },
+   {
+    "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.relative.bg-gradient-to-b.from-[#FFDCCC]>p.text-gray-600.text-center.mt-2",
+    "text": "Booking catering with Dharaa Event Management is simple, tra",
+    "fg": "#4B5563",
+    "bg": "#FFFFFF",
+    "ratio": 7.56,
+    "need": 4.5,
+    "fontSize": "16px",
+    "weight": "400"
+   },
+   {
+    "sel": "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-lg.sm:text-xl.font-semibold",
+    "text": "Contact Us",
+    "fg": "#111827",
+    "bg": "#FFFFFF",
+    "ratio": 17.74,
+    "need": 4.5,
+    "fontSize": "20px",
+    "weight": "600"
+   },
+   {
+    "sel": "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>p.text-sm.sm:text-base.text-gray-500",
+    "text": "Reach out via call or WhatsApp to discuss your requirements.",
+    "fg": "#6B7280",
+    "bg": "#FFFFFF",
+    "ratio": 4.83,
+    "need": 4.5,
+    "fontSize": "16px",
+    "weight": "400"
+   },
+   {
+    "sel": "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-lg.sm:text-xl.font-semibold",
+    "text": "Consultation",
+    "fg": "#111827",
+    "bg": "#FFFFFF",
+    "ratio": 17.74,
+    "need": 4.5,
+    "fontSize": "20px",
+    "weight": "600"
+   },
+   {
+    "sel": "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>p.text-sm.sm:text-base.text-gray-500",
+    "text": "We guide you through catering packages based on your gatheri",
+    "fg": "#6B7280",
+    "bg": "#FFFFFF",
+    "ratio": 4.83,
+    "need": 4.5,
+    "fontSize": "16px",
+    "weight": "400"
+   },
+   {
+    "sel": "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-lg.sm:text-xl.font-semibold",
+    "text": "Choose Package",
+    "fg": "#111827",
+    "bg": "#FFFFFF",
+    "ratio": 17.74,
+    "need": 4.5,
+    "fontSize": "20px",
+    "weight": "600"
+   },
+   {
+    "sel": "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>p.text-sm.sm:text-base.text-gray-500",
+    "text": "Pick from Silver, Gold, or Platinum packages tailored to you",
+    "fg": "#6B7280",
+    "bg": "#FFFFFF",
+    "ratio": 4.83,
+    "need": 4.5,
+    "fontSize": "16px",
+    "weight": "400"
+   },
+   {
+    "sel": "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-lg.sm:text-xl.font-semibold",
+    "text": "Catering Delivered",
+    "fg": "#111827",
+    "bg": "#FFFFFF",
+    "ratio": 17.74,
+    "need": 4.5,
+    "fontSize": "20px",
+    "weight": "600"
+   },
+   {
+    "sel": "section.relative.bg-gradient-to-b.from-[#FFDCCC]>div.grid.grid-cols-1.lg:grid-cols-4>div.bg-white/90.backdrop-blur-sm.p-6>p.text-sm.sm:text-base.text-gray-500",
+    "text": "We serve fresh, delicious food at your event venue with perf",
+    "fg": "#6B7280",
+    "bg": "#FFFFFF",
+    "ratio": 4.83,
+    "need": 4.5,
+    "fontSize": "16px",
+    "weight": "400"
+   },
+   {
+    "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4>h2.text-2xl.sm:text-3xl.lg:text-4xl",
+    "text": "Events We Cater",
+    "fg": "#111827",
+    "bg": "#FFFFFF",
+    "ratio": 17.74,
+    "need": 3,
+    "fontSize": "30px",
+    "weight": "700"
+   },
+   {
+    "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4>p.text-gray-600.text-center.mt-2",
+    "text": "From weddings to office parties, we serve with passion and p",
+    "fg": "#4B5563",
+    "bg": "#FFFFFF",
+    "ratio": 7.56,
+    "need": 4.5,
+    "fontSize": "16px",
+    "weight": "400"
+   },
+   {
+    "sel": "div.min-h-screen>section.lg:py-10.sm:py-5.px-4>p.text-gray-600.text-center.mt-2>span.font-semibold.text-orange-600",
+    "text": "free consultation",
+    "fg": "#EA580C",
+    "bg": "#FFFFFF",
+    "ratio": 3.56,
+    "need": 4.5,
+    "fontSize": "16px",
+    "weight": "600"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden>div.absolute.inset-0.bg-gradient-to-t>span.text-white.font-semibold.text-lg",
+    "text": "Wedding",
+    "fg": "#FFFFFF",
+    "bg": "#FFFFFF",
+    "ratio": 1,
+    "need": 4.5,
+    "fontSize": "20px",
+    "weight": "600"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden>div.absolute.inset-0.bg-gradient-to-t>span.text-white.font-semibold.text-lg",
+    "text": "Office Event",
+    "fg": "#FFFFFF",
+    "bg": "#FFFFFF",
+    "ratio": 1,
+    "need": 4.5,
+    "fontSize": "20px",
+    "weight": "600"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden>div.absolute.inset-0.bg-gradient-to-t>span.text-white.font-semibold.text-lg",
+    "text": "Birthday Party",
+    "fg": "#FFFFFF",
+    "bg": "#FFFFFF",
+    "ratio": 1,
+    "need": 4.5,
+    "fontSize": "20px",
+    "weight": "600"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.relative.rounded-2xl.overflow-hidden>div.absolute.inset-0.bg-gradient-to-t>span.text-white.font-semibold.text-lg",
+    "text": "Festival / Party",
+    "fg": "#FFFFFF",
+    "bg": "#FFFFFF",
+    "ratio": 1,
+    "need": 4.5,
+    "fontSize": "20px",
+    "weight": "600"
+   },
+   {
+    "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4>h2.text-2xl.sm:text-3xl.font-bold",
+    "text": "Our Top Dishes",
+    "fg": "#111827",
+    "bg": "#FFFFFF",
+    "ratio": 17.74,
+    "need": 3,
+    "fontSize": "30px",
+    "weight": "700"
+   },
+   {
+    "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4>p.text-gray-600.text-center.mt-2",
+    "text": "Explore our most loved dishes from different packages.",
+    "fg": "#4B5563",
+    "bg": "#FFFFFF",
+    "ratio": 7.56,
+    "need": 4.5,
+    "fontSize": "16px",
+    "weight": "400"
+   },
+   {
+    "sel": "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen>section.lg:py-10.sm:py-5.px-4>p.text-center.mt-8.text-gray-700",
+    "text": "🍴 These are just a of our specialties — we have  to make yo",
+    "fg": "#374151",
+    "bg": "#FFFFFF",
+    "ratio": 10.31,
+    "need": 4.5,
+    "fontSize": "16px",
+    "weight": "400"
+   },
+   {
+    "sel": "div.min-h-screen>section.lg:py-10.sm:py-5.px-4>p.text-center.mt-8.text-gray-700>span.font-semibold",
+    "text": "few",
+    "fg": "#374151",
+    "bg": "#FFFFFF",
+    "ratio": 10.31,
+    "need": 4.5,
+    "fontSize": "16px",
+    "weight": "600"
+   },
+   {
+    "sel": "div.min-h-screen>section.lg:py-10.sm:py-5.px-4>p.text-center.mt-8.text-gray-700>span.text-orange-600.font-bold",
+    "text": "many more",
+    "fg": "#EA580C",
+    "bg": "#FFFFFF",
+    "ratio": 3.56,
+    "need": 4.5,
+    "fontSize": "16px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+    "text": "The Bi-Weekly Dispatch",
+    "fg": "#FF5353",
+    "bg": "#FFFFFF",
+    "ratio": 3.17,
+    "need": 4.5,
+    "fontSize": "10px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+    "text": "Cinematic Love Stories, Delivered to Your Inbox",
+    "fg": "#5E2B17",
+    "bg": "#FFFFFF",
+    "ratio": 11.45,
+    "need": 3,
+    "fontSize": "24px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+    "text": "Join 12,000 discerning couples receiving curated real weddin",
+    "fg": "#74583E",
+    "bg": "#FFFFFF",
+    "ratio": 6.55,
+    "need": 4.5,
+    "fontSize": "12px",
+    "weight": "400"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>p.text-[10px].text-[#78716C].pl-2",
+    "text": "No spam. Just meaningful stories.",
+    "fg": "#78716C",
+    "bg": "#FFFFFF",
+    "ratio": 4.8,
+    "need": 4.5,
+    "fontSize": "10px",
+    "weight": "400"
+   }
+  ],
+  "overImageCount": 28,
+  "tinyTarget": [
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Home",
+    "size": "34x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Films",
+    "size": "30x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Gallery",
+    "size": "40x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Our Team",
+    "size": "55x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "About Us",
+    "size": "52x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Dharaa Events",
+    "size": "82x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "All Published Stories",
+    "size": "116x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Real Wedding Features",
+    "size": "130x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Destination Planning Guides",
+    "size": "159x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Udaipur Palace Celebrations",
+    "size": "161x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Jaipur Heritage Haveli",
+    "size": "126x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Goa Coastal Nuptials",
+    "size": "119x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Varanasi Sacred Ghats",
+    "size": "128x15"
+   }
+  ],
+  "tinyTargetCount": 13,
+  "brokenImage": [
+   {
+    "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+    "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg"
+   }
+  ],
+  "oversizedImage": [
+   {
+    "sel": "div.min-h-screen>section.max-w-7xl.mx-auto.flex>div.w-full.lg:w-1/2.flex>img.w-full.max-w-sm.sm:max-w-md",
+    "src": "http://localhost:3000/_next/static/media/catering.1bz87uwq7w98k.jpg",
+    "natural": "5260x3507",
+    "displayed": "448x304",
+    "wastedFactor": 11.7
+   },
+   {
+    "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+    "src": "http://localhost:3000/_next/static/media/basundi.1gyzztkm7_rch.jpg",
+    "natural": "612x330",
+    "displayed": "254x160",
+    "wastedFactor": 2.4
+   },
+   {
+    "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+    "src": "http://localhost:3000/_next/static/media/briyani.3vqeou9u4b21f.jpg",
+    "natural": "2304x4096",
+    "displayed": "254x160",
+    "wastedFactor": 9.1
+   },
+   {
+    "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+    "src": "http://localhost:3000/_next/static/media/drinks.2i0jtn2xy8zp1.jpg",
+    "natural": "2666x4000",
+    "displayed": "254x160",
+    "wastedFactor": 10.5
+   },
+   {
+    "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+    "src": "http://localhost:3000/_next/static/media/gulabjamun.361073zso5zg9.jpg",
+    "natural": "3000x4000",
+    "displayed": "254x160",
+    "wastedFactor": 11.8
+   },
+   {
+    "sel": "div.relative>div.flex.space-x-5.overflow-x-hidden>div.flex-shrink-0.w-56.sm:w-64>img.w-full.h-40.object-cover",
+    "src": "http://localhost:3000/_next/static/media/icecream.1my_fdqhwem8x.jpg",
+    "natural": "612x433",
+    "displayed": "254x160",
+    "wastedFactor": 2.4
+   }
+  ],
+  "oversizedImageCount": 6,
+  "noAltImage": [],
+  "noAltImageCount": 0
+ },
+ "headings": [
+  {
+   "level": 1,
+   "text": "Premium Catering For Every Occasion"
+  },
+  {
+   "level": 2,
+   "text": "Dharaa"
+  },
+  {
+   "level": 2,
+   "text": "Event Management"
+  },
+  {
+   "level": 2,
+   "text": "How It Works"
+  },
+  {
+   "level": 3,
+   "text": "Contact Us"
+  },
+  {
+   "level": 3,
+   "text": "Consultation"
+  },
+  {
+   "level": 3,
+   "text": "Choose Package"
+  },
+  {
+   "level": 3,
+   "text": "Catering Delivered"
+  },
+  {
+   "level": 2,
+   "text": "Events We Cater"
+  },
+  {
+   "level": 2,
+   "text": "Our Top Dishes"
+  },
+  {
+   "level": 3,
+   "text": "Basundi"
+  },
+  {
+   "level": 3,
+   "text": "Veg Dum Biryani"
+  },
+  {
+   "level": 3,
+   "text": "Refreshing Drinks"
+  },
+  {
+   "level": 3,
+   "text": "Gulab Jamun"
+  },
+  {
+   "level": 3,
+   "text": "Ice Cream Varieties"
+  },
+  {
+   "level": 3,
+   "text": "Hara Bhara Kabab"
+  },
+  {
+   "level": 3,
+   "text": "Pani Puri"
+  },
+  {
+   "level": 3,
+   "text": "Paneer Tikka Masala"
+  },
+  {
+   "level": 3,
+   "text": "Cheese Pizza"
+  },
+  {
+   "level": 3,
+   "text": "Cinematic Love Stories, Delivered to Your Inbox"
+  },
+  {
+   "level": 4,
+   "text": "Explore"
+  },
+  {
+   "level": 4,
+   "text": "Editorial Journal"
+  },
+  {
+   "level": 4,
+   "text": "Royal Destinations"
+  },
+  {
+   "level": 4,
+   "text": "Studio Inquiries"
+  }
+ ],
+ "headingJumps": [],
+ "h1Count": 1,
+ "landmarks": {
+  "header": 0,
+  "nav": 1,
+  "main": 1,
+  "footer": 1,
+  "aside": 0
+ },
+ "images": {
+  "total": 17,
+  "lazy": 15
+ },
+ "overflowers": [
+  {
+   "sel": "nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6",
+   "right": 908.8,
+   "w": 454.9
+  },
+  {
+   "sel": "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+   "right": 779.4,
+   "w": 101.3
+  },
+  {
+   "sel": "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+   "right": 908.8,
+   "w": 105.5
+  },
+  {
+   "sel": "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>svg",
+   "right": 831.4,
+   "w": 16
+  },
+  {
+   "sel": "div.flex.items-center.gap-6>a.px-3.py-2.flex>svg>line",
+   "right": 829.4,
+   "w": 8.7
+  },
+  {
+   "sel": "div.flex.items-center.gap-6>a.px-3.py-2.flex>svg>line",
+   "right": 829.4,
+   "w": 8.7
+  },
+  {
+   "sel": "div.flex.items-center.gap-6>a.px-3.py-2.flex>svg>line",
+   "right": 829.4,
+   "w": 8.7
+  },
+  {
+   "sel": "div.flex.items-center.gap-6>a.px-3.py-2.flex>svg>line",
+   "right": 817.4,
+   "w": 0
+  },
+  {
+   "sel": "div.flex.items-center.gap-6>a.px-3.py-2.flex>svg>line",
+   "right": 817.4,
+   "w": 0
+  },
+  {
+   "sel": "div.flex.items-center.gap-6>a.px-3.py-2.flex>svg>line",
+   "right": 817.4,
+   "w": 0
+  },
+  {
+   "sel": "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+   "right": 896.8,
+   "w": 57.5
+  },
+  {
+   "sel": "nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-4",
+   "right": 1138.7,
+   "w": 197.9
+  },
+  {
+   "sel": "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div",
+   "right": 1086.7,
+   "w": 145.9
+  },
+  {
+   "sel": "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3",
+   "right": 1086.7,
+   "w": 145.9
+  },
+  {
+   "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+   "right": 1048.7,
+   "w": 95.9
+  },
+  {
+   "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>svg",
+   "right": 1074.7,
+   "w": 18
+  },
+  {
+   "sel": "div>a.text-desktopBodyMedium.text-nowrap.px-3>svg>path",
+   "right": 1073.2,
+   "w": 15
+  },
+  {
+   "sel": "div>a.text-desktopBodyMedium.text-nowrap.px-3>svg>polyline",
+   "right": 1073.2,
+   "w": 15
+  },
+  {
+   "sel": "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500",
+   "right": 1138.7,
+   "w": 36
+  },
+  {
+   "sel": "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500>svg",
+   "right": 1130.7,
+   "w": 20
+  }
+ ],
+ "vitals": {
+  "lcpMs": 328,
+  "lcpElement": "img.w-full.max-w-sm.sm:max-w-md",
+  "lcpUrl": "http://localhost:3000/_next/static/media/catering.1bz87uwq7w98k.jpg",
+  "cls": 0,
+  "clsSources": [],
+  "longTasks": [],
+  "totalBlockingMs": 0,
+  "fcpMs": 260,
+  "domContentLoadedMs": 497,
+  "loadMs": 515
+ },
+ "bodyText": "The Wedding Boys\nMUMBAI'S PREMIER WEDDING FILMMAKERS\nHome\n₹\nPricing\nProcess\nServices\nGet Quote\nPremium Catering For Every Occasion\n\nDharaa Event Management brings you fresh, customized catering packages under our trusted parent company WeddingBoys.in. Let us make your event memorable.\n\nExplore Packages\nContact Us\nDharaa\nEvent Management\nHow It Works\n\nBooking catering with Dharaa Event Management is simple, transparent, and stress-free.\n\nContact Us\n\nReach out via call or WhatsApp to discuss your requirements.\n\nConsultation\n\nWe guide you through catering packages based on your gathering size.\n\nChoose Package\n\nPick from Silver, Gold, or Platinum packages tailored to your event.\n\nCatering Delivered\n\nWe serve fresh, delicious food at your event venue with perfection.\n\nEvents We Cater\n\nFrom weddings to office parties, we serve with passion and perfection.\nFor more events, contact us for free consultation.\n\nWedding\nOffice Event\nBirthday Party\nFestival / Party\nBook Your Event\nOur Top Dishes\n\nExplore our most loved dishes from different packages.\n\nBasundi\n\nIncluded in: Gold\n\nVeg Dum Biryani\n\nIncluded in: Gold/Platinum\n\nRefreshing Drinks\n\nIncluded in: All Packages\n\nGulab Jamun\n\nIncluded in: Silver\n\nIce Cream Varieties\n\nIncluded in: Gold/Platinum\n\nHara Bhara Kabab\n\nIncluded in: Platinum\n\nPani Puri\n\nIncluded in: Gold/Platinum\n\nPaneer Tikka Masala\n\nIncluded in: Gold/Platinum\n\nCheese Pizza\n\nIncluded in: Platinum\n\n🍴 These are just a few of our specialties — we have many more to make your event unforgettable!\n\nTHE BI-WEEKLY DISPATCH\nCinematic Love Stories, Delivered to Your Inbox\n\nJoin 12,000 discerning couples receiving curated real wedding films and palace destination guides.\n\nSubscribe\n\nNo spam. Just meaningful stories.\n\nTHE WEDDING BOYS\nCINEMATOGRAPHY STUDIO\n\nIndia’s premier wedding cinematography studio, crafting emotionally charged, motion-picture heirlooms across royal palaces, coastal sanctuaries, and worldwide destinations.\n\nEXPLORE\nHome\nFilms\nGallery\nOur Team\nAbout Us\nDharaa Events\nEDITORIAL JOURNAL\nAll Published Stories\nReal Wedding Features\nDestination Planning Guides\nROYAL DESTINATIONS\nUdaipur Palace Celebrations\nJaipur Heritage Haveli\nGoa Coastal Nuptials\nVaranasi Sacred Ghats\nSTUDIO INQUIRIES\n\nWe accept a strictly limited number of cinematic commissions each wedding season to guarantee uncompromising artistry.\n\nInquire for Your Date\n\n© 2026 The Wedding Boys Studio. All rights reserved.\n\nDedicated to the poetry, cinema, and enduring emotion of love.",
+ "consoleErrors": [
+  {
+   "level": "error",
+   "text": "Failed to load resource: net::ERR_INVALID_URL",
+   "url": "data:image/png;base64,iVBORw0KGgo..."
+  }
+ ],
+ "network": {
+  "total": 54,
+  "failed": [],
+  "totalBytes": 375858,
+  "heaviest": []
+ }
+}

@@ -1,0 +1,503 @@
+{
+ "focusTrail": [
+  {
+   "tag": "a",
+   "label": "The Wedding BoysMUMBAI'S PREMIER WEDDING FIL",
+   "href": "/",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Home",
+   "href": "/",
+   "outline": "auto 2px rgb(30, 79, 137)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "₹Pricing",
+   "href": "#pricing",
+   "outline": "auto 2px rgb(30, 79, 137)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Process",
+   "href": "#process",
+   "outline": "auto 2px rgb(30, 79, 137)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Services",
+   "href": "#services",
+   "outline": "auto 2px rgb(30, 79, 137)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Get Quote",
+   "href": "/contact",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0)",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "View All",
+   "href": "/allfilms",
+   "outline": "auto 2px rgb(138, 182, 232)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0)",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "20 DecemberDamanAnshu&Abhishek",
+   "href": "/films/6803deadc0a4da33e96554be",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "14 OctoberAhemdabadNipa&Brijesh",
+   "href": "/films/6803dd3ec0a4da33e9655482",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "View All",
+   "href": "/allfilms",
+   "outline": "auto 1px rgb(77, 144, 219)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0)",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "15 MarchVaranasiSakshi&Shubhankar",
+   "href": "/films/68069c18162b3828a2e67fca",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "17 OctoberSolapurSakshi&Shubhankar",
+   "href": "/films/68069c18162b3828a2e67fcb",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "View All",
+   "href": "/allfilms",
+   "outline": "auto 2px rgb(138, 182, 232)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0)",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "19 SeptemberHowrahKhusboo&Vedant",
+   "href": "/films/6806935a162b3828a2e67e85",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "13 MayJammuShreyas&Bhavika",
+   "href": "/films/6803dc08c0a4da33e9655463",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "15 MarchVaranasiSakshi&Shubhankar",
+   "href": "/films/68069c18162b3828a2e67fca",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "17 OctoberSolapurSakshi&Shubhankar",
+   "href": "/films/68069c18162b3828a2e67fcb",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "input",
+   "label": "",
+   "outline": "solid 2px rgba(0, 0, 0, 0)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Subscribe",
+   "outline": "auto 2px rgb(138, 182, 232)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0)",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Instagram",
+   "href": "https://www.instagram.com/the_wedding_boys_/",
+   "outline": "auto 2px rgb(116, 158, 207)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "YouTube",
+   "href": "https://www.youtube.com/@The_wedding_boys_",
+   "outline": "auto 1px rgb(17, 104, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Facebook",
+   "href": "https://www.facebook.com/people/The-Wedding-Boys/61573085374487/?rdid=16YSufJmNDtnMAHx&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F15LNSFSeZS%2F",
+   "outline": "auto 1px rgb(17, 104, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Twitter",
+   "href": "https://x.com/",
+   "outline": "auto 1px rgb(17, 104, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Home",
+   "href": "/",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Films",
+   "href": "/films",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Gallery",
+   "href": "/photos",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Our Team",
+   "href": "/team",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "About Us",
+   "href": "/about-us",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Dharaa Events",
+   "href": "/dharaa-event-management",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "All Published Stories",
+   "href": "/blogs",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Real Wedding Features",
+   "href": "/blogs?category=Real+Weddings",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Destination Planning Guides",
+   "href": "/blogs?category=Planning+Guides",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Udaipur Palace Celebrations",
+   "href": "/weddings/udaipur",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Jaipur Heritage Haveli",
+   "href": "/weddings/jaipur",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Goa Coastal Nuptials",
+   "href": "/weddings/goa",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Varanasi Sacred Ghats",
+   "href": "/varanasi",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  }
+ ],
+ "reducedMotion": {
+  "count": 44,
+  "sample": [
+   {
+    "tag": "a",
+    "cls": "px-3 py-2 flex items-center gap-2 text-gray-700 ",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "px-3 py-2 flex items-center gap-2 text-gray-700 ",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "px-3 py-2 flex items-center gap-2 text-gray-700 ",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "px-3 py-2 flex items-center gap-2 text-gray-700 ",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "text-desktopBodyMedium text-nowrap px-3 py-2 bg-",
+    "transition": "box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "text-xs sm:text-sm lg:text-base px-3 sm:px-4 lg:",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "flex flex-col flex-shrink-0 gap-1 sm:gap-2 lg:ga",
+    "transition": "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "button",
+    "cls": "absolute inset-0 flex items-center justify-cente",
+    "transition": "opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "flex flex-col flex-shrink-0 gap-1 sm:gap-2 lg:ga",
+    "transition": "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "button",
+    "cls": "absolute inset-0 flex items-center justify-cente",
+    "transition": "opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "text-xs sm:text-sm lg:text-base px-3 sm:px-4 lg:",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "flex flex-col flex-shrink-0 gap-1 sm:gap-2 lg:ga",
+    "transition": "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "button",
+    "cls": "absolute inset-0 flex items-center justify-cente",
+    "transition": "opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "flex flex-col flex-shrink-0 gap-1 sm:gap-2 lg:ga",
+    "transition": "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "button",
+    "cls": "absolute inset-0 flex items-center justify-cente",
+    "transition": "opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "text-xs sm:text-sm lg:text-base px-3 sm:px-4 lg:",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "flex flex-col flex-shrink-0 gap-1 sm:gap-2 lg:ga",
+    "transition": "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "button",
+    "cls": "absolute inset-0 flex items-center justify-cente",
+    "transition": "opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "flex flex-col flex-shrink-0 gap-1 sm:gap-2 lg:ga",
+    "transition": "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "button",
+    "cls": "absolute inset-0 flex items-center justify-cente",
+    "transition": "opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   }
+  ]
+ }
+}

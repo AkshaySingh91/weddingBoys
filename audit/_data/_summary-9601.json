@@ -1,0 +1,182 @@
+[
+ {
+  "id": "home",
+  "path": "/",
+  "viewports": {
+   "mobile": {
+    "overflowX": 0,
+    "lcpMs": 412,
+    "cls": 0.056,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 20199,
+    "shotTruncated": true
+   },
+   "tablet": {
+    "overflowX": 0,
+    "lcpMs": 212,
+    "cls": 0.1046,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 16044,
+    "shotTruncated": true
+   },
+   "laptop": {
+    "overflowX": 0,
+    "lcpMs": 240,
+    "cls": 0.0391,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 12413,
+    "shotTruncated": true
+   },
+   "desktop": {
+    "overflowX": 0,
+    "lcpMs": 424,
+    "cls": 0.0594,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 12386,
+    "shotTruncated": true
+   }
+  },
+  "tabStops": 45,
+  "noVisibleFocus": 0,
+  "movingUnderReduce": 119
+ },
+ {
+  "id": "films",
+  "path": "/films",
+  "viewports": {
+   "mobile": {
+    "overflowX": 0,
+    "lcpMs": 2396,
+    "cls": 0.0105,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 2325,
+    "shotTruncated": false
+   },
+   "tablet": {
+    "overflowX": 0,
+    "lcpMs": 544,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 2167,
+    "shotTruncated": false
+   },
+   "laptop": {
+    "overflowX": 0,
+    "lcpMs": 512,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 2085,
+    "shotTruncated": false
+   },
+   "desktop": {
+    "overflowX": 0,
+    "lcpMs": 668,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 2085,
+    "shotTruncated": false
+   }
+  },
+  "tabStops": 45,
+  "noVisibleFocus": 0,
+  "movingUnderReduce": 44
+ },
+ {
+  "id": "allfilms",
+  "path": "/allfilms",
+  "viewports": {
+   "mobile": {
+    "overflowX": 0,
+    "lcpMs": 388,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 5046,
+    "shotTruncated": true
+   },
+   "tablet": {
+    "overflowX": 0,
+    "lcpMs": 240,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 2596,
+    "shotTruncated": false
+   },
+   "laptop": {
+    "overflowX": 0,
+    "lcpMs": 284,
+    "cls": 0,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 2286,
+    "shotTruncated": false
+   },
+   "desktop": {
+    "overflowX": 0,
+    "lcpMs": 324,
+    "cls": 0.0169,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 1866,
+    "shotTruncated": false
+   }
+  },
+  "tabStops": 45,
+  "noVisibleFocus": 0,
+  "movingUnderReduce": 26
+ },
+ {
+  "id": "film-detail",
+  "path": "/films/6806935a162b3828a2e67e85",
+  "viewports": {
+   "mobile": {
+    "overflowX": 0,
+    "lcpMs": 1592,
+    "cls": 0.0016,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 3278,
+    "shotTruncated": false
+   },
+   "tablet": {
+    "overflowX": 0,
+    "lcpMs": 220,
+    "cls": 0.8492,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 2749,
+    "shotTruncated": false
+   },
+   "laptop": {
+    "overflowX": 0,
+    "lcpMs": 276,
+    "cls": 0.6809,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 2643,
+    "shotTruncated": false
+   },
+   "desktop": {
+    "overflowX": 0,
+    "lcpMs": 192,
+    "cls": 0.4255,
+    "errors": 1,
+    "failedReq": 0,
+    "pageHeight": 2643,
+    "shotTruncated": false
+   }
+  },
+  "tabStops": 40,
+  "noVisibleFocus": 2,
+  "movingUnderReduce": 39
+ }
+]

@@ -1,0 +1,504 @@
+{
+ "focusTrail": [
+  {
+   "tag": "a",
+   "label": "The Wedding BoysMUMBAI'S PREMIER WEDDING FIL",
+   "href": "/",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Home",
+   "href": "/",
+   "outline": "auto 2px rgb(30, 79, 137)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "₹Pricing",
+   "href": "#pricing",
+   "outline": "auto 1px rgb(17, 86, 166)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Process",
+   "href": "#process",
+   "outline": "auto 2px rgb(30, 79, 137)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Services",
+   "href": "#services",
+   "outline": "auto 2px rgb(30, 79, 137)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Get Quote",
+   "href": "/contact",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0)",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Videos",
+   "outline": "solid 2px rgba(0, 0, 0, 0)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Photos",
+   "outline": "solid 2px rgba(0, 0, 0, 0)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "input",
+   "label": "",
+   "outline": "solid 2px rgba(0, 0, 0, 0)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Subscribe",
+   "outline": "auto 2px rgb(138, 182, 232)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0)",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Instagram",
+   "href": "https://www.instagram.com/the_wedding_boys_/",
+   "outline": "auto 2px rgb(116, 158, 207)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "YouTube",
+   "href": "https://www.youtube.com/@The_wedding_boys_",
+   "outline": "auto 1px rgb(65, 130, 206)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Facebook",
+   "href": "https://www.facebook.com/people/The-Wedding-Boys/61573085374487/?rdid=16YSufJmNDtnMAHx&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F15LNSFSeZS%2F",
+   "outline": "auto 1px rgb(65, 130, 206)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Twitter",
+   "href": "https://x.com/",
+   "outline": "auto 2px rgb(176, 191, 208)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Home",
+   "href": "/",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Films",
+   "href": "/films",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Gallery",
+   "href": "/photos",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Our Team",
+   "href": "/team",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "About Us",
+   "href": "/about-us",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Dharaa Events",
+   "href": "/dharaa-event-management",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "All Published Stories",
+   "href": "/blogs",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Real Wedding Features",
+   "href": "/blogs?category=Real+Weddings",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Destination Planning Guides",
+   "href": "/blogs?category=Planning+Guides",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Udaipur Palace Celebrations",
+   "href": "/weddings/udaipur",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Jaipur Heritage Haveli",
+   "href": "/weddings/jaipur",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Goa Coastal Nuptials",
+   "href": "/weddings/goa",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Varanasi Sacred Ghats",
+   "href": "/varanasi",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Inquire for Your Date",
+   "href": "/contact",
+   "outline": "auto 2px rgb(139, 182, 232)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0)",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "The Wedding BoysMUMBAI'S PREMIER WEDDING FIL",
+   "href": "/",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Home",
+   "href": "/",
+   "outline": "auto 1px rgb(9, 90, 184)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "₹Pricing",
+   "href": "#pricing",
+   "outline": "auto 1px rgb(17, 86, 167)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Process",
+   "href": "#process",
+   "outline": "auto 2px rgb(30, 79, 137)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Services",
+   "href": "#services",
+   "outline": "auto 1px rgb(9, 90, 184)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Get Quote",
+   "href": "/contact",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0)",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Videos",
+   "outline": "solid 2px rgba(0, 0, 0, 0)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Photos",
+   "outline": "solid 2px rgba(0, 0, 0, 0)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "input",
+   "label": "",
+   "outline": "solid 2px rgba(0, 0, 0, 0)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "button",
+   "label": "Subscribe",
+   "outline": "auto 2px rgb(138, 182, 232)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0)",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Instagram",
+   "href": "https://www.instagram.com/the_wedding_boys_/",
+   "outline": "auto 1px rgb(65, 130, 206)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "YouTube",
+   "href": "https://www.youtube.com/@The_wedding_boys_",
+   "outline": "auto 2px rgb(177, 191, 208)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Facebook",
+   "href": "https://www.facebook.com/people/The-Wedding-Boys/61573085374487/?rdid=16YSufJmNDtnMAHx&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F15LNSFSeZS%2F",
+   "outline": "auto 2px rgb(116, 158, 207)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Twitter",
+   "href": "https://x.com/",
+   "outline": "auto 2px rgb(116, 158, 207)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  },
+  {
+   "tag": "a",
+   "label": "Home",
+   "href": "/",
+   "outline": "auto 1px rgb(0, 95, 204)",
+   "boxShadow": "none",
+   "visibleFocus": true,
+   "offscreen": false
+  }
+ ],
+ "reducedMotion": {
+  "count": 65,
+  "sample": [
+   {
+    "tag": "a",
+    "cls": "px-3 py-2 flex items-center gap-2 text-gray-700 ",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "px-3 py-2 flex items-center gap-2 text-gray-700 ",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "px-3 py-2 flex items-center gap-2 text-gray-700 ",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "px-3 py-2 flex items-center gap-2 text-gray-700 ",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "a",
+    "cls": "text-desktopBodyMedium text-nowrap px-3 py-2 bg-",
+    "transition": "box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1)"
+   },
+   {
+    "tag": "div",
+    "cls": "animate-pulse bg-slate-200 lg:h-80 max-w-full w-",
+    "animation": "pulse 2s"
+   },
+   {
+    "tag": "span",
+    "cls": "inline-block animate-pulse w-28 h-4 rounded-lg b",
+    "animation": "pulse 2s"
+   },
+   {
+    "tag": "span",
+    "cls": "inline-block animate-pulse w-10 h-4 rounded-lg b",
+    "animation": "pulse 2s"
+   },
+   {
+    "tag": "span",
+    "cls": "inline-block animate-pulse w-10 h-4 rounded-lg b",
+    "animation": "pulse 2s"
+   },
+   {
+    "tag": "span",
+    "cls": "inline-block animate-pulse w-10 h-4 rounded-lg b",
+    "animation": "pulse 2s"
+   },
+   {
+    "tag": "div",
+    "cls": "animate-pulse bg-slate-200 lg:h-80 max-w-full w-",
+    "animation": "pulse 2s"
+   },
+   {
+    "tag": "span",
+    "cls": "inline-block animate-pulse w-28 h-4 rounded-lg b",
+    "animation": "pulse 2s"
+   },
+   {
+    "tag": "span",
+    "cls": "inline-block animate-pulse w-10 h-4 rounded-lg b",
+    "animation": "pulse 2s"
+   },
+   {
+    "tag": "span",
+    "cls": "inline-block animate-pulse w-10 h-4 rounded-lg b",
+    "animation": "pulse 2s"
+   },
+   {
+    "tag": "span",
+    "cls": "inline-block animate-pulse w-10 h-4 rounded-lg b",
+    "animation": "pulse 2s"
+   },
+   {
+    "tag": "div",
+    "cls": "animate-pulse bg-slate-200 lg:h-80 max-w-full w-",
+    "animation": "pulse 2s"
+   },
+   {
+    "tag": "span",
+    "cls": "inline-block animate-pulse w-28 h-4 rounded-lg b",
+    "animation": "pulse 2s"
+   },
+   {
+    "tag": "span",
+    "cls": "inline-block animate-pulse w-10 h-4 rounded-lg b",
+    "animation": "pulse 2s"
+   },
+   {
+    "tag": "span",
+    "cls": "inline-block animate-pulse w-10 h-4 rounded-lg b",
+    "animation": "pulse 2s"
+   },
+   {
+    "tag": "span",
+    "cls": "inline-block animate-pulse w-10 h-4 rounded-lg b",
+    "animation": "pulse 2s"
+   }
+  ]
+ }
+}
