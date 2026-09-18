@@ -1,0 +1,57 @@
+// Default block layouts for known pages. When an admin opens a page in the CMS,
+// any of these blocks whose `key` isn't already present is appended — so the
+// management system always reflects the real sections the site renders, without
+// ever clobbering blocks the admin has since added/edited/reordered.
+
+const section = (key, component, extra = {}) => ({
+    key,
+    type: 'section',
+    settings: { component },
+    visible: true,
+    ...extra,
+});
+
+export const DEFAULT_LAYOUTS = {
+    home: [
+        section('home-hero', 'heroVideos'),
+        section('home-films', 'ourFilms'),
+        section('home-service', 'service'),
+        section('home-varanasi', 'announcementVaranasi'),
+        section('home-dharaa', 'announcementDharaa'),
+        section('home-story', 'ourStory'),
+        { key: 'home-team', type: 'team', title: 'Meet the Team', visible: true, items: [] },
+        section('home-portfolio', 'portfolio'),
+        section('home-why', 'whyChooseUs'),
+        section('home-packages', 'packages'),
+        section('home-approach', 'ourApproach'),
+        { key: 'home-bts', type: 'mediaGallery', title: 'Behind the Scenes', visible: true, media: [] },
+        { key: 'home-reviews', type: 'reviews', title: 'Love Notes from Our Couples', visible: true, items: [] },
+        {
+            key: 'home-stats',
+            type: 'stats',
+            title: 'Our Track Record',
+            visible: true,
+            items: [
+                { title: '1000+', subtitle: 'Weddings Captured' },
+                { title: '25+', subtitle: 'Awards Won' },
+                { title: '1500+', subtitle: 'Happy Clients' },
+                { title: '5+', subtitle: 'Years Experience' },
+            ],
+        },
+    ],
+};
+
+// Non-destructively append any default blocks missing from the page (matched by
+// `key`). Returns true if the page was modified.
+export function ensureDefaultBlocks(page, pageKey) {
+    const defaults = DEFAULT_LAYOUTS[pageKey];
+    if (!defaults) return false;
+
+    const existingKeys = new Set((page.blocks || []).map((b) => b.key).filter(Boolean));
+    const missing = defaults.filter((b) => !existingKeys.has(b.key));
+    if (missing.length === 0) return false;
+
+    const startOrder = (page.blocks || []).length;
+    missing.forEach((b, i) => page.blocks.push({ ...b, order: startOrder + i }));
+    return true;
+}

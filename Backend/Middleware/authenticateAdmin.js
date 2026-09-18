@@ -1,20 +1,11 @@
-import jwt from 'jsonwebtoken';
-import { COOKIE_NAME } from "../constants.js";
+import { verifyToken } from './auth.js';
 
-// it is backend middleware use to protect backend route by checking session cookiee 
+/**
+ * Historical name used by every existing admin route. It now delegates to the
+ * shared `verifyToken`, which understands both the new access-token cookie and
+ * the legacy session cookie — so existing routes gain the new auth system
+ * without any per-route changes.
+ */
 export default function authenticateAdmin(req, res, next) {
-    const sessionToken = req.signedCookies[COOKIE_NAME.session_token];
-    if (!sessionToken) {
-        return res.status(401).json({ message: 'Unauthorized: No token provided' });
-    }
-    try {
-        const payload = jwt.verify(sessionToken, process.env.JWT_SECRET_KEY);
-        if (!payload || !payload.email || payload.role !== 'admin') {
-            return res.staxtus(403).json({ message: 'Forbidden: Admin access only' });
-        }
-        req.admin = payload; // Attach admin details to the request object 
-        next();
-    } catch (err) {
-        return res.status(401).json({ message: 'Unauthorized: Invalid token' });
-    }
-};
+    return verifyToken(req, res, next);
+}

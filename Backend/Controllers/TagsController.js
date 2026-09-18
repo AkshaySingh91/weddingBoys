@@ -144,7 +144,15 @@ async function updateTagInExistingCategory(req, res, next) {
                         shouldPhotoUpdate = true;
                     }
                 });
-                if (!(shouldVideoUpdate && shouldPhotoUpdate)) {
+                // `&&` here meant a client with videos but no photos (or the
+                // reverse) failed the check and blocked the whole delete, even
+                // though its media were fine. Only one populated side needs to
+                // survive.
+                const hasVideos = (client.videos || []).length > 0;
+                const hasPhotos = (client.photos || []).length > 0;
+                const videosOk = !hasVideos || shouldVideoUpdate;
+                const photosOk = !hasPhotos || shouldPhotoUpdate;
+                if (!(videosOk && photosOk)) {
                     return res.status(200).json({ message: "Sorry, we can't delete tag because media should have atleast one tag keyword." })
                 }
             }
@@ -169,7 +177,9 @@ async function updateTagInExistingCategory(req, res, next) {
                         shouldPhotoUpdate = true;
                     }
                 });
-                if (shouldVideoUpdate && shouldPhotoUpdate) {
+                // Same bug on the write side: a client with only photos was
+                // never saved, so its tags were never actually pruned.
+                if (shouldVideoUpdate || shouldPhotoUpdate) {
                     await client.save();
                 }
             }
@@ -181,6 +191,18 @@ async function updateTagInExistingCategory(req, res, next) {
             await websiteSettingsSchema.updateMany(
                 { homepageVideosTags: { $in: allDeletedTag } },
                 { $pull: { homepageVideosTags: { $in: allDeletedTag } } }
+            );
+            // photoPagePhotoTags was omitted here, so deleted tags lingered in
+            // the gallery curation list forever.
+            await websiteSettingsSchema.updateMany(
+                { photoPagePhotoTags: { $in: allDeletedTag } },
+                { $pull: { photoPagePhotoTags: { $in: allDeletedTag } } }
+            );
+            // Portfolio items carry their own copy of the tag strings.
+            const PortfolioItem = (await import('../Models/PortfolioItem.js')).default;
+            await PortfolioItem.updateMany(
+                { tags: { $in: allDeletedTag } },
+                { $pull: { tags: { $in: allDeletedTag } } }
             );
 
             // now we have to remove tag from Tag schema
@@ -225,6 +247,29 @@ async function addNewTagOnHomePage(req, res, next) {
     }
 }
 // it will add new tag on film page
+/**
+ * POST /api/admin/photopage/tags — gallery tag-row curation.
+ *
+ * `photoPagePhotoTags` has existed on the schema all along with no read, no
+ * write and no UI, so the gallery could never be curated the way films can.
+ */
+async function addNewTagOnPhotoPage(req, res, next) {
+    try {
+        if (!req.body.newAddedTags) {
+            return res.status(400).json({ message: "Invalid field" })
+        }
+        const { newAddedTags } = req.body
+        const settings = await websiteSettingsSchema.findOne();
+        if (!settings) return res.status(404).json({ message: "Settings not found" })
+        settings.photoPagePhotoTags = newAddedTags;
+        await settings.save();
+        return res.status(200).json({ tags: settings.photoPagePhotoTags })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ message: error.message })
+    }
+}
+
 async function addNewTagOnFilmPage(req, res, next) {
     {
         try {
@@ -249,4 +294,4 @@ async function addNewTagOnFilmPage(req, res, next) {
     }
 }
 
-export { getAllTags, addNewTagCategory, verifyTagInExistingCategory, updateTagInExistingCategory, addNewTagOnHomePage, addNewTagOnFilmPage }
+export { getAllTags, addNewTagCategory, verifyTagInExistingCategory, updateTagInExistingCategory, addNewTagOnHomePage, addNewTagOnFilmPage, addNewTagOnPhotoPage }

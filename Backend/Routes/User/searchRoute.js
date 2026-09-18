@@ -3,6 +3,13 @@ const router = express.Router();
 import ClientSchema from "../../Models/ClientSchema.js";
 import { getObjectUrl } from "../../Controllers/awsController.js";
 
+import { mediaUrlForKey } from '../../Utils/mediaUrl.js';
+import * as portfolio from '../../Services/portfolioService.js';
+// Prefer the immutable R2 CDN URL for any asset already migrated; fall back to a
+// signed S3 URL while the migration is in flight. Lookups are batched, so a page
+// of assets costs one query, not one per asset.
+const mediaUrl = (key) => mediaUrlForKey(key, getObjectUrl);
+
 // Search Endpoint
 router.get("/api/search", async (req, res) => {
     try {
@@ -11,7 +18,37 @@ router.get("/api/search", async (req, res) => {
         if (!query.trim()) {
             return res.status(400).json({ message: "Search query is required." });
         }
-        const searchRegex = new RegExp(query, "i");
+        // `query` is raw user input. Interpolating it straight into a RegExp let a
+        // visitor send a catastrophic-backtracking pattern and pin the event loop,
+        // and a stray "(" produced a 500. Escape every metacharacter.
+        // PortfolioItem path: a text index over tags, couple names and place.
+        // The legacy branch below matches TAGS ONLY, so a couple's name or a
+        // city returns nothing there.
+        if (portfolio.portfolioReadsEnabled()) {
+            const want = (!media || media === 'video') ? 'Video' : 'Photo';
+            const [vids, pics] = await Promise.all([
+                (!media || media === 'video')
+                    ? portfolio.search({ query, kind: 'Video', page: parseInt(page), limit: parseInt(limit) })
+                    : Promise.resolve([]),
+                (!media || media === 'photo')
+                    ? portfolio.search({ query, kind: 'Photo', page: parseInt(page), limit: parseInt(limit) })
+                    : Promise.resolve([]),
+            ]);
+            void want;
+            return res.status(200).json({
+                videos: vids.map((v) => {
+                    const r = portfolio.toLegacyVideoRow(v);
+                    return { ...r.videos, clientName: r.clientName, thumbnailMetaData: { ...r.videos.thumbnailMetaData, url: r.thumbnailUrl } };
+                }),
+                photos: pics.map((p2) => {
+                    const r = portfolio.toLegacyPhotoRow(p2);
+                    return { ...r, photoMetaData: { ...r.photoMetaData, url: r.url } };
+                }),
+            });
+        }
+
+        const escaped = String(query).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const searchRegex = new RegExp(escaped, "i");
         let videos = [];
         let photos = [];
         const skipCount = (page - 1) * limit;
@@ -72,10 +109,10 @@ router.get("/api/search", async (req, res) => {
         }
         // get url for video thumbnail & photos 
         for (const video of videos) {
-            video.thumbnailMetaData.url = await getObjectUrl(video.thumbnailMetaData.key);
+            video.thumbnailMetaData.url = await mediaUrl(video.thumbnailMetaData.key);
         }
         for (const photo of photos) {
-            photo.photoMetaData.url = await getObjectUrl(photo.photoMetaData.key);
+            photo.photoMetaData.url = await mediaUrl(photo.photoMetaData.key);
         }
         res.json({ videos, photos });
     } catch (error) {

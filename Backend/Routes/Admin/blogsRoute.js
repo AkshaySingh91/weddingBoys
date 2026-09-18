@@ -1,41 +1,34 @@
-// server/routes/blogRoutes.js
+// server/routes/blogsRoute.js  (admin)
 import express from 'express'
 import authenticateAdmin from '../../Middleware/authenticateAdmin.js'
-import BlogPost from '../../Models/blogPost.js';
 import {
-    createPost, updatePost, getAdminPosts, getPostBySlug, deletePost, getBlogUploadUrl,
+    createPost, updatePost, getAdminPosts, getAdminPostById, deletePost, getBlogUploadUrl, togglePublish, getPreviewToken,
 } from "../../Controllers/blogController.js"
+import {
+    createRevision, getRevisions, getRevisionById, restoreRevision,
+} from "../../Controllers/revisionController.js"
+import { getBlogAnalytics } from "../../Controllers/blogAnalyticsController.js"
 
 const router = express.Router();
 
-// Create new blog
+// Specific routes before parameterized :id
+router.get('/api/admin/blogs/analytics', authenticateAdmin, getBlogAnalytics);
+
+// Legacy blog-scoped presign (kept for back-compat).
 router.post('/api/admin/blogs/presigned-urls', authenticateAdmin, getBlogUploadUrl);
+
 router.post('/api/admin/blogs', authenticateAdmin, createPost);
-
 router.get('/api/admin/blogs', authenticateAdmin, getAdminPosts);
-
-
-// Update blog
+router.get('/api/admin/blogs/:id', authenticateAdmin, getAdminPostById);
+router.get('/api/admin/blogs/:id/preview-token', authenticateAdmin, getPreviewToken);
 router.put('/api/admin/blogs/:id', authenticateAdmin, updatePost);
-
-// Toggle publish status
-router.put('/api/admin/blogs/:id/publish', authenticateAdmin, async (req, res) => {
-    try {
-        const blog = await BlogPost.findById(req.params.id);
-        if (!blog) return res.status(404).json({ error: 'Blog not found' });
-
-        blog.isPublished = req.body.isPublished;
-        blog.publishedAt = req.body.isPublished ? new Date() : null;
-        await blog.save();
-
-        res.json(blog);
-    } catch (err) {
-        res.status(400).json({ error: err.message });
-    }
-});
-
-// Delete blog
+router.put('/api/admin/blogs/:id/publish', authenticateAdmin, togglePublish);
 router.delete('/api/admin/blogs/:id', authenticateAdmin, deletePost);
 
+// ---- Revision endpoints (Phase 1) ----
+router.post('/api/admin/blogs/:id/revisions', authenticateAdmin, createRevision);
+router.get('/api/admin/blogs/:id/revisions', authenticateAdmin, getRevisions);
+router.get('/api/admin/blogs/:id/revisions/:revId', authenticateAdmin, getRevisionById);
+router.post('/api/admin/blogs/:id/revisions/:revId/restore', authenticateAdmin, restoreRevision);
 
 export default router;

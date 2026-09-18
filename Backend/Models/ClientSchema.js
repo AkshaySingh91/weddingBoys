@@ -51,6 +51,10 @@ const Client = new mongoose.Schema({
             photoLocation: { type: Object, required: true }, 
         }
     ]
-}, { timestamp: true })
+// `timestamp` (singular) is not an option Mongoose recognises — it was silently
+// ignored, so createdAt/updatedAt were never written. getAllClients'
+// `$ifNull: ["$createdAt", new Date()]` therefore always fell through, and every
+// client card's "Modified" date rendered as today.
+}, { timestamps: true })
 
 export default mongoose.model('Client', Client);

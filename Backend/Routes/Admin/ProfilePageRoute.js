@@ -2,6 +2,12 @@ import express from 'express'
 import authenticateAdmin from '../../Middleware/authenticateAdmin.js';
 import AdminSchema from "../../Models/adminSchema.js"
 import { deleteObject, getObjectUrl, putObjectUrl } from "../../Controllers/awsController.js"
+import { mediaUrlForKey, resolveNode } from '../../Utils/mediaUrl.js';
+// Prefer the immutable R2 CDN URL for any asset already migrated; fall back to a
+// signed S3 URL while the migration is in flight. Lookups are batched, so a page
+// of assets costs one query, not one per asset.
+const mediaUrl = (key) => mediaUrlForKey(key, getObjectUrl);
+
 import * as uuid from "uuid";
 import { COOKIE_NAME } from '../../constants.js';
 import tokenGenerator from '../../Utils/tokenGenerator.js';
@@ -20,7 +26,7 @@ async function getAdminProfileDetails(req, res, next) {
                 return res.status(400).json({ message: 'ADMIN AVATAR NOT FOUND IN DB' })
             }
             // get url for avatar 
-            const avatar = await getObjectUrl(admin.avatar.key);
+            const avatar = await resolveNode(admin.avatar, getObjectUrl);
             res.status(200).json({
                 adminDetail: {
                     name: admin.name, email: admin.email, phone: admin.phone, avatar, _id: admin._id.toString()

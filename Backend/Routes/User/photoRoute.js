@@ -2,11 +2,30 @@ import express from "express"
 import ClientSchema from '../../Models/ClientSchema.js'
 import { getObjectUrl } from '../../Controllers/awsController.js'
 
+import { mediaUrlForKey } from '../../Utils/mediaUrl.js';
+import * as portfolio from '../../Services/portfolioService.js';
+// Prefer the immutable R2 CDN URL for any asset already migrated; fall back to a
+// signed S3 URL while the migration is in flight. Lookups are batched, so a page
+// of assets costs one query, not one per asset.
+const mediaUrl = (key) => mediaUrlForKey(key, getObjectUrl);
+
 const Route = express.Router();
 
 async function getAllPhotos(req, res, next) {
     try {
-        const { page = 1, limit = 10 } = req.query;
+        const { page = 1, limit = 10, tag = '' } = req.query;
+
+        // PortfolioItem path. Also adds the tag filter the gallery never had —
+        // /api/photos accepted no `tag` param at all, which is why
+        // WebsiteSetting.photoPagePhotoTags could never do anything.
+        if (portfolio.portfolioReadsEnabled()) {
+            const items = await portfolio.findFeed({
+                kind: 'Photo', tags: portfolio.parseTags(tag),
+                page: parseInt(page), limit: parseInt(limit),
+            });
+            return res.status(200).json({ photos: items.map(portfolio.toLegacyPhotoRow) });
+        }
+
         const skip = (page - 1) * limit;
         const pipeline = [
             { $unwind: "$photos" },
@@ -29,7 +48,7 @@ async function getAllPhotos(req, res, next) {
         // Generate signed URLs for images
         for (const photo of photos) {
             if (photo.photoMetaData && photo.photoMetaData.key) {
-                photo.url = await getObjectUrl(photo.photoMetaData.key);
+                photo.url = await mediaUrl(photo.photoMetaData.key);
             }
         }
         res.status(200).json({ photos });
@@ -43,6 +62,21 @@ Route.get("/api/photos", getAllPhotos)
 async function getSpecificPhoto(req, res, next) {
     try {
         const { id = null } = req.params
+
+        // Resolves by new _id or legacy subdoc id, preserving published URLs.
+        if (id && portfolio.portfolioReadsEnabled()) {
+            const item = await portfolio.findById(id);
+            if (!item || item.kind !== 'Photo') return res.status(404).json({ message: 'Photo not found' });
+            const siblings = await portfolio.findSiblings({
+                clientId: item.client?._id || item.client, kind: 'Photo', excludeId: item._id,
+            });
+            return res.status(200).json({
+                clientName: item.client?.clientName,
+                selectedPhoto: portfolio.toLegacyPhotoRow(item),
+                remainingPhotos: siblings.map(portfolio.toLegacyPhotoRow),
+            });
+        }
+
         if (id) {
             // get client name & that photo
             const clientData = await ClientSchema.findOne({ "photos._id": id }, {
@@ -64,7 +98,7 @@ async function getSpecificPhoto(req, res, next) {
             selectedPhoto.photoShootDate = date;
             selectedPhoto._id = selectedPhoto._id.toString();
             // get url for selected photo
-            selectedPhoto.url = await getObjectUrl(selectedPhoto.photoMetaData.key);
+            selectedPhoto.url = await mediaUrl(selectedPhoto.photoMetaData.key);
 
             // Fetch remaining photos of the same client
             const remainingPhotos = await ClientSchema.findOne(
@@ -77,7 +111,7 @@ async function getSpecificPhoto(req, res, next) {
             otherPhotos = otherPhotos.map(photo => ({ ...photo, _id: photo._id.toString() })); //very imp
             // get url for other photo
             for (const otherPhoto of otherPhotos) {
-                const url = await getObjectUrl(otherPhoto.photoMetaData.key)
+                const url = await mediaUrl(otherPhoto.photoMetaData.key)
                 otherPhoto.url = url
             }
             res.status(200).json({
@@ -101,6 +135,13 @@ async function getRecommendedPhotos(req, res, next) {
     try {
         const { id } = req.params;
         const { page = 1, limit = 10 } = req.query; // Infinite scrolling support
+        if (portfolio.portfolioReadsEnabled()) {
+            const item = await portfolio.findById(id);
+            if (!item) return res.status(404).json({ message: 'Photo not found' });
+            const recs = await portfolio.findRecommended({ item, page: parseInt(page), limit: parseInt(limit) });
+            return res.status(200).json({ recommendedPhotos: recs.map(portfolio.toLegacyPhotoRow) });
+        }
+
         // Fetch the selected photo to get its tags
         const clientData = await ClientSchema.findOne({ "photos._id": id }, { "photos.$": 1 });
         if (!clientData) return res.status(404).json({ message: "Photo not found" });
@@ -154,7 +195,7 @@ async function getRecommendedPhotos(req, res, next) {
         }); //very imp
         // get url for other photo
         for (const photo of recommendedPhotos) {
-            const url = await getObjectUrl(photo.photoMetaData.key)
+            const url = await mediaUrl(photo.photoMetaData.key)
             photo.url = url
         }
         res.status(200).json({ recommendedPhotos });

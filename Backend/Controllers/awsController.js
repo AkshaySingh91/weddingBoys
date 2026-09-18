@@ -49,9 +49,29 @@ async function deleteObject(key) {
         throw new Error('File deletion failed');
     }
 }
+/**
+ * Fetch an object's bytes from the legacy S3 bucket.
+ *
+ * Used by the S3 → R2 migration; there is no reason for request-path code to
+ * pull whole objects through Node.
+ */
+async function getObjectBuffer(key) {
+    const out = await s3Client.send(new GetObjectCommand({
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: key,
+    }));
+    const chunks = [];
+    for await (const chunk of out.Body) chunks.push(chunk);
+    return {
+        buffer: Buffer.concat(chunks),
+        contentType: out.ContentType,
+        contentLength: out.ContentLength,
+    };
+}
+
 // this will create a always public url
 function generatePublicUrl(key) {
     return `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
 }
 
-export { getObjectUrl, putObjectUrl, deleteObject, generatePublicUrl }
+export { getObjectUrl, putObjectUrl, deleteObject, generatePublicUrl, getObjectBuffer }

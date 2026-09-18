@@ -27,9 +27,12 @@ const websiteSettingsSchema = new mongoose.Schema({
         { type: String }
     ],
     BtsPhotos: [{
+        // Mixed, so both the legacy `{ key }` and the newer `{ mediaId }` shapes
+        // persist. `mediaId` was being dropped when this was a typed subdoc.
         photoMetaData: {
             type: Object
-        }
+        },
+        mediaId: { type: String },
     }],
     companyDetails: {
         companyName: { type: String },

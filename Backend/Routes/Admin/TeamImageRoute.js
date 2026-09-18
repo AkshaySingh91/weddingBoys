@@ -9,7 +9,7 @@ Route.use(authenticateAdmin)
 
 
 async function deleteTeamBannerImage(req, res, next) {
-    try { 
+    try {
         if (req.body.id && req.body.id.trim()) {
             const image = await TeamSchema.findById(req.body.id);
             if (!image) {
@@ -56,16 +56,21 @@ async function addTeamBannerImage(req, res, next) {
         res.status(500).json({ message: error.message })
     }
 }
+// Same dual shape as addNewTeamImage: `{ mediaId }` from the R2 uploader, or
+// `{ key }` from the legacy presign handshake.
 async function saveTeamBannerImage(req, res, next) {
     try {
         if (req.body.uploadedImage && req.body.uploadedImage.length) {
             for (const img of req.body.uploadedImage) {
-                if (img.key && img.key.trim()) {
+                const mediaId = img.mediaId?.trim?.();
+                const key = img.key?.trim?.();
+                if (mediaId || key) {
                     await TeamSchema.create({
                         isHero: true,
                         about: null,
                         imageMetaData: {
-                            key: img.key
+                            ...(key ? { key } : {}),
+                            ...(mediaId ? { mediaId } : {}),
                         }
                     })
                 }
@@ -133,16 +138,29 @@ async function changeTeamImageDetails(req, res, next) {
     }
 
 }
+/**
+ * Persist new team members.
+ *
+ * Accepts either shape:
+ *   { mediaId, name, designation }  — the R2 uploader (bytes already in R2)
+ *   { key, name, designation }      — the legacy presign→PUT handshake
+ *
+ * Both are stored on `imageMetaData`; the public read path resolves whichever is
+ * present (Utils/mediaUrl.js resolveNode).
+ */
 async function addNewTeamImage(req, res, next) {
     try {
         if (req.body.uploadedImage && req.body.uploadedImage.length) {
             for (const img of req.body.uploadedImage) {
-                if (img.key && img.key.trim()) {
+                const mediaId = img.mediaId?.trim?.();
+                const key = img.key?.trim?.();
+                if (mediaId || key) {
                     await TeamSchema.create({
-                        isHero: false,
+                        isHero: Boolean(img.isHero),
                         about: { name: img.name, designation: img.designation },
                         imageMetaData: {
-                            key: img.key
+                            ...(key ? { key } : {}),
+                            ...(mediaId ? { mediaId } : {}),
                         }
                     })
                 }
@@ -158,7 +176,7 @@ async function addNewTeamImage(req, res, next) {
 }
 async function verifyNewTeamImageDetails(req, res, next) {
     try {
-        if (req.body.imageMeta && req.body.imageMeta.length) { 
+        if (req.body.imageMeta && req.body.imageMeta.length) {
             const imageType = ["image/jpg", "image/png", "image/jpeg", "image/webp"];
             const imageMeta = req.body.imageMeta;
             for (const img of imageMeta) {

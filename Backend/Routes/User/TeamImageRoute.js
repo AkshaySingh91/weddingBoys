@@ -2,6 +2,12 @@ import express from "express"
 const Route = express.Router();
 import { getObjectUrl } from "../../Controllers/awsController.js"
 
+import { mediaUrlForKey, resolveNode } from '../../Utils/mediaUrl.js';
+// Prefer the immutable R2 CDN URL for any asset already migrated; fall back to a
+// signed S3 URL while the migration is in flight. Lookups are batched, so a page
+// of assets costs one query, not one per asset.
+const mediaUrl = (key) => mediaUrlForKey(key, getObjectUrl);
+
 import TeamSchema from "../../Models/TeamSchema.js"
 
 async function getTeamImage(req, res, next) {
@@ -10,8 +16,9 @@ async function getTeamImage(req, res, next) {
         let teamImages = [];
         let bannerImage = [];
         for (const i of images) {
-            if (i.imageMetaData.key && i.imageMetaData.key.trim()) {
-                const url = await getObjectUrl(i.imageMetaData.key);
+            // A new upload has only a mediaId; a migrated/legacy one has a key.
+            if (i.imageMetaData?.mediaId || i.imageMetaData?.key?.trim()) {
+                const url = await resolveNode(i.imageMetaData, getObjectUrl);
                 if (i.isHero) {
                     bannerImage.push({
                         ...i,

@@ -1,0 +1,8 @@
+{
+  "//": "Worker-only nodemon config. The worker holds long ffmpeg jobs (a 200 MB master can take minutes), so it must NOT restart on every unrelated file save the way the API does. Watches only what the worker actually loads, and waits 2s to coalesce a burst of saves.",
+  "watch": ["worker.js", "Services", "Models", "Config", "Utils"],
+  "ext": "js,json",
+  "ignore": ["Routes/**", "Controllers/**", "Middleware/**", "scripts/**", "node_modules/**", "Public/**"],
+  "delay": "2000",
+  "signal": "SIGTERM"
+}

@@ -10,7 +10,7 @@ const PORT = process.env.PORT;
 const corsOptions = {
     origin: process.env.NODE_ENV === 'production'
         ? ['https://theweddingboys.in', 'https://www.theweddingboys.in']
-        : 'http://localhost:5173',
+        : ['http://localhost:5173', 'http://localhost:3000', 'http://admin.localhost:3000'],
     credentials: true,
 };
 
@@ -21,8 +21,6 @@ app.use(express.json())
 app.use(cookieParser(process.env.COOKIE_SECRET_KEY))
 
 // Routes
-// it include signup, login etc
-import authRoute from './Routes/Admin/authRoute.js'
 // it include add & updating client details
 import clientQueryRoute from './Routes/Admin/clientQueryRoute.js'
 // it will change content from home page
@@ -47,16 +45,42 @@ import videosRoute from './Routes/User/videoRoute.js'
 import photosRoute from './Routes/User/photoRoute.js'
 import btsRoleRoutes from './Routes/Admin/btsRoleRoutes.js';
 import blogsRoute from './Routes/Admin/blogsRoute.js'
+import embedRoute from './Routes/Admin/embedRoute.js'
+import mediaRoute from './Routes/Admin/mediaRoute.js'
+import publicBlogRoute from './Routes/User/blogRoute.js'
+import publicCommentRoute from './Routes/User/commentRoute.js'
+import publicBlogAnalyticsRoute from './Routes/User/blogAnalyticsRoute.js'
+import adminCommentRoute from './Routes/Admin/commentAdminRoute.js'
+import adminBlogAnalyticsRoute from './Routes/Admin/blogAnalyticsAdminRoute.js'
+import authV2Route from './Routes/Admin/authV2Route.js'
+import userRoute from './Routes/Admin/userRoute.js'
+import publicContentRoute from './Routes/User/contentRoute.js'
+import adminContentRoute from './Routes/Admin/contentRoute.js'
+import pricingConfigRoute from './Routes/User/pricingConfigRoute.js'
+import adminOpsRoute from './Routes/Admin/adminOpsRoute.js'
+import { startBlogPublishScheduler } from './Services/blogPublishScheduler.js';
+// browser→R2 direct upload control plane (create/sign/parts/complete/abort)
+import uploadRoute from './Routes/Admin/uploadRoute.js'
+// portfolio: assign media to clients, cross-client curation
+import portfolioRoute from './Routes/Admin/portfolioRoute.js'
 
 // all this route wont required authentication
 app.use(HomePageRoute)
 app.use(photosRoute)
 app.use(videosRoute)
-app.use(authRoute)
 app.use(studioDetailsRoute)
 app.use(submitEnquiryRoute)
 app.use(searchRoute)
 app.use(getTeamImage)
+app.use(publicBlogRoute)
+app.use(publicCommentRoute)
+app.use(publicBlogAnalyticsRoute)
+app.use(publicContentRoute)
+app.use(pricingConfigRoute)
+// enterprise auth (login/refresh/logout/forgot/reset) — guards applied per-route
+app.use(authV2Route)
+// user management — guards applied per-route (SuperAdmin for mutations)
+app.use(userRoute)
 // all this route required authentication
 app.use(clientEnquiryRoute)
 app.use(studioSettingRoute)
@@ -67,10 +91,23 @@ app.use(clientQueryRoute)
 app.use(ProfilePageRoute)
 app.use(adminTeamImageRoute)
 app.use('/api/bts-schema', btsRoleRoutes);
+app.use(adminBlogAnalyticsRoute)
 app.use(blogsRoute)
+app.use(adminCommentRoute)
+app.use(embedRoute)
+app.use(mediaRoute)
+// Mounted before adminOpsRoute, which applies verifyToken to everything that
+// reaches it — anything after that router inherits its guard.
+app.use(uploadRoute)
+app.use(portfolioRoute)
+// content CMS — guards applied per-route
+app.use(adminContentRoute)
+// pricing CRUD, globals, analytics — verifyToken applied inside the router
+app.use(adminOpsRoute)
 
 const server = () => {
     DBconnection()
+    startBlogPublishScheduler()
     app.listen(PORT, () => {
         console.log('Listning...')
     })

@@ -1,8 +1,16 @@
 import * as uuid from 'uuid';
 import mongoose from 'mongoose';
+import { syncClientPortfolio } from '../Services/portfolioSync.js';
 import { deleteObject, getObjectUrl, putObjectUrl } from './awsController.js';
+import { mediaUrlForKey } from '../Utils/mediaUrl.js';
+// Prefer the immutable R2 CDN URL for any asset already migrated; fall back to a
+// signed S3 URL while the migration is in flight. Lookups are batched, so a page
+// of assets costs one query, not one per asset.
+const mediaUrl = (key) => mediaUrlForKey(key, getObjectUrl);
+
 import ClientSchema from '../Models/ClientSchema.js';
 import WebsiteSettingSchema from '../Models/WebsiteSettingSchema.js';
+import { rollupByClient, storageByClient } from '../Services/clientStats.js';
 
 /*  /admin/client  */
 async function getAllClients(req, res, next) {
@@ -85,20 +93,29 @@ async function getAllClients(req, res, next) {
             clientId: c.clientId.toString()
         }));
 
-        // For each client, get the S3 URL of the media.
-        const updatedClientDetails = [];
-        for (const client of clientDetails) {
-            // If media exists and has either thumbnailMetaData or photoMetaData:
-            let thumbnailUrl = "";
-            if (client.media) {
-                if (client.media.thumbnailMetaData && client.media.thumbnailMetaData.key) {
-                    thumbnailUrl = await getObjectUrl(client.media.thumbnailMetaData.key);
-                } else if (client.media.photoMetaData && client.media.photoMetaData.key) {
-                    thumbnailUrl = await getObjectUrl(client.media.photoMetaData.key);
-                }
-            }
-            updatedClientDetails.push({ ...client, media: { ...client.media, thumbnailUrl } });
-        }
+        // Two aggregations for the whole list, not per client: counts from
+        // PortfolioItem, bytes from Media. This list previously showed a
+        // thumbnail, two names and one date, and nothing about how much work a
+        // client actually has.
+        const [rollup, storage] = await Promise.all([rollupByClient(), storageByClient()]);
+
+        // Resolved together rather than in a serial await-per-client loop.
+        // mediaUrlForKey batches within a microtask, so this is one lookup.
+        const updatedClientDetails = await Promise.all(clientDetails.map(async (client) => {
+            const key = client.media?.thumbnailMetaData?.key || client.media?.photoMetaData?.key;
+            const thumbnailUrl = key ? await mediaUrl(key) : "";
+            return {
+                ...client,
+                media: { ...client.media, thumbnailUrl },
+                stats: {
+                    videos: 0, photos: 0, hero: 0, drafts: 0, untagged: 0,
+                    tags: [], cities: [], firstShoot: null, lastShoot: null,
+                    ...(rollup.get(client.clientId) || {}),
+                    storageBytes: storage.get(client.clientId)?.bytes || 0,
+                    assetCount: storage.get(client.clientId)?.assets || 0,
+                },
+            };
+        }));
         res.status(200).json({ clientDetails: updatedClientDetails });
     } catch (error) {
         console.log(error);
@@ -128,12 +145,12 @@ async function getSingleClientDetails(req, res, next) {
         const videos = []
         const photos = []
         for (const v of clientDetails.videos) {
-            const videoUrl = await getObjectUrl(v.videoMetaData.key)
-            const thumbnailUrl = await getObjectUrl(v.thumbnailMetaData.key)
+            const videoUrl = await mediaUrl(v.videoMetaData.key)
+            const thumbnailUrl = await mediaUrl(v.thumbnailMetaData.key)
             videos.push({ ...v, videoUrl, thumbnailUrl })
         }
         for (const p of clientDetails.photos) {
-            const photoUrl = await getObjectUrl(p.photoMetaData.key)
+            const photoUrl = await mediaUrl(p.photoMetaData.key)
             photos.push({ ...p, photoUrl })
         }
         res.status(200).json({ clientDetails: { ...clientDetails, videos, photos } })
@@ -265,7 +282,16 @@ async function sendPutUrlsForNewClient(req, res, next) {
             const thumbnailKey = `user/photos/${uuid.v4()}.${videoObj.thumbnail.type.split('/')[1]}`;
             const videoPutUrl = await putObjectUrl(videoKey, videoObj.video.type);
             const thumbnailPutUrl = await putObjectUrl(thumbnailKey, videoObj.thumbnail.type);
-            urls.videosUrl.push({ videoPutUrl, thumbnailPutUrl, videoKey, thumbnailKey });
+            // videoName is what the client matches its File objects against. Without
+            // it every `videoFiles.find(f => f.video.name === videoObj.videoName)`
+            // returned undefined, the upload was skipped, and the keys were saved
+            // anyway — producing records pointing at objects that never existed.
+            // The edit path has always returned it; this one never did.
+            urls.videosUrl.push({
+                videoPutUrl, thumbnailPutUrl, videoKey, thumbnailKey,
+                videoName: videoObj.video.name,
+                thumbnailName: videoObj.thumbnail?.name,
+            });
         }
     }
 
@@ -274,7 +300,7 @@ async function sendPutUrlsForNewClient(req, res, next) {
         for (const photoObj of photosDetails) {
             const photoKey = `user/photos/${uuid.v4()}.${photoObj.photo.type.split('/')[1]}`;
             const photoPutUrl = await putObjectUrl(photoKey, photoObj.photo.type);
-            urls.photosUrl.push({ photoPutUrl, photoKey });
+            urls.photosUrl.push({ photoPutUrl, photoKey, photoName: photoObj.photo.name });
         }
     }
     res.status(200).json({ urls });
@@ -390,6 +416,11 @@ async function AddNewClient(req, res, next) {
             videos: uploadedVideos,
             photos: uploadedPhotos,
         });
+
+        // Dual-write: keep the PortfolioItem feed in step with the embedded arrays
+        // while both models are live. Never fatal — a sync failure must not fail
+        // an otherwise successful client save.
+        await syncClientPortfolio(newClient._id).catch((e) => console.error('portfolio sync failed:', e.message));
 
         // Save hero videos if available
         if (newClient.videos.filter((video) => video.isHeroVideo).length > 0) {
@@ -599,14 +630,17 @@ async function updateClientDetails(req, res, next) {
                 if (!existingVideo) {
                     thumbnailsToDelete.push(video.thumbnailMetaData.key);
                 } else {
-                    if (video.isHeroVideo && video.heroPriority)
-                        heroVideoIds.push({ videoKey: video.videoMetaData.key, priority: video.heroPriority, clientId: client._id });
+                    // `&& video.heroPriority` excluded priority 0, which is a valid
+                    // priority — such a video stayed flagged as hero but never
+                    // reached the carousel.
+                    if (video.isHeroVideo)
+                        heroVideoIds.push({ videoKey: video.videoMetaData.key, priority: video.heroPriority || 0, clientId: client._id });
                     updatedVideos.push(video);
                 }
             } else {
                 // New video: Add to updatedVideos 
-                if (video.isHeroVideo && video.heroPriority)
-                    heroVideoIds.push({ videoKey: video.videoMetaData.key, priority: video.heroPriority, clientId: client._id });
+                if (video.isHeroVideo)
+                    heroVideoIds.push({ videoKey: video.videoMetaData.key, priority: video.heroPriority || 0, clientId: client._id });
                 updatedVideos.push({
                     ...video,
                     _id: new mongoose.Types.ObjectId()    // Assign new ObjectId for new videos
@@ -665,15 +699,22 @@ async function updateClientDetails(req, res, next) {
                 heroVideos: heroVideoIds
             })
         } else {
-            await WebsiteSettingSchema.updateOne(
-                { 'heroVideos.clientId': id, },
-                {
-                    $set: {
-                        heroVideos: heroVideoIds,
-                    },
-                },
-                { upsert: true }
-            );
+            // Replace ONLY this client's hero entries.
+            //
+            // This was `$set: { heroVideos: heroVideoIds }` filtered on
+            // `{'heroVideos.clientId': id}` with `upsert: true`, which had two
+            // failure modes: it replaced the WHOLE array (destroying every other
+            // client's hero slides on any edit), and when the filter matched
+            // nothing the upsert created a SECOND WebsiteSettings document —
+            // silently forking all site config, since every reader uses findOne().
+            await WebsiteSettingSchema.updateOne({}, {
+                $pull: { heroVideos: { clientId: new mongoose.Types.ObjectId(id) } },
+            });
+            if (heroVideoIds.length) {
+                await WebsiteSettingSchema.updateOne({}, {
+                    $push: { heroVideos: { $each: heroVideoIds } },
+                });
+            }
         }
         // delete files from s3
         for (const key of videosToDelete) {
@@ -682,6 +723,13 @@ async function updateClientDetails(req, res, next) {
         for (const key of thumbnailsToDelete) {
             await deleteObject(key)
         }
+
+        await syncClientPortfolio(id).catch((e) => console.error('portfolio sync failed:', e.message));
+
+        // This response was missing entirely — the only res.* in the whole
+        // handler was the 500 below, so a SUCCESSFUL save never replied and the
+        // admin's request hung until it timed out.
+        return res.status(200).json({ message: 'Client details updated' })
     } catch (error) {
         console.log('Error while saving file', error)
         res.status(500).json({ message: error.message })

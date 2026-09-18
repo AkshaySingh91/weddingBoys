@@ -1,6 +1,13 @@
 import express from "express"
 import ClientSchema from '../../Models/ClientSchema.js'
 import { getObjectUrl } from '../../Controllers/awsController.js'
+import { mediaUrlForKey } from '../../Utils/mediaUrl.js';
+import * as portfolio from '../../Services/portfolioService.js';
+// Prefer the immutable R2 CDN URL for any asset already migrated; fall back to a
+// signed S3 URL while the migration is in flight. Lookups are batched, so a page
+// of assets costs one query, not one per asset.
+const mediaUrl = (key) => mediaUrlForKey(key, getObjectUrl);
+
 import { getAllTags } from "../../Controllers/TagsController.js"
 const Route = express.Router();
 
@@ -11,6 +18,13 @@ Route.get("/api/videos", async (req, res) => {
         limit = parseInt(limit);
         page = parseInt(page);
         tag = tag.split(",").filter(t => t.trim() !== "");
+
+        // PortfolioItem path: a plain indexed find instead of $unwind over every
+        // client document. Same response shape, so the frontend is unaffected.
+        if (portfolio.portfolioReadsEnabled()) {
+            const items = await portfolio.findFeed({ kind: 'Video', tags: tag, page, limit });
+            return res.status(200).json({ client: items.map(portfolio.toLegacyVideoRow) });
+        }
 
         const skipCount = (page - 1) * limit;
         const pipeline = [
@@ -55,7 +69,7 @@ Route.get("/api/videos", async (req, res) => {
             for (const c of client) {
                 if (c.videos.thumbnailMetaData && c.videos.thumbnailMetaData.key) {
                     const thumbnailKey = c.videos.thumbnailMetaData.key;
-                    const url = await getObjectUrl(thumbnailKey);
+                    const url = await mediaUrl(thumbnailKey);
                     c.thumbnailUrl = url;
                 }
             }
@@ -70,6 +84,29 @@ Route.get("/api/videos", async (req, res) => {
 // it will give specific video details 
 async function getSpecificVideo(req, res, next) {
     const { id = null } = req.params
+
+    // PortfolioItem path. Resolves by either the new _id or the old subdoc id,
+    // so every /films/:videoId URL already published in the sitemap keeps working.
+    if (id && portfolio.portfolioReadsEnabled()) {
+        const item = await portfolio.findById(id);
+        if (!item || item.kind !== 'Video') return res.status(404).json({ message: 'Video not found' });
+
+        const [siblings, photos] = await Promise.all([
+            portfolio.findSiblings({ clientId: item.client?._id || item.client, kind: 'Video', excludeId: item._id }),
+            portfolio.findSiblings({ clientId: item.client?._id || item.client, kind: 'Photo' }),
+        ]);
+        const row = portfolio.toLegacyVideoRow(item);
+        return res.status(200).json({
+            clientName: item.client?.clientName,
+            selectedVideo: { ...row.videos, url: row.url, loopUrl: row.loopUrl, thumbnailUrl: row.thumbnailUrl },
+            remainingVideos: siblings.map((s2) => {
+                const r = portfolio.toLegacyVideoRow(s2);
+                return { ...r.videos, thumbnailMetaData: { ...r.videos.thumbnailMetaData, url: r.thumbnailUrl } };
+            }),
+            photos: photos.map(portfolio.toLegacyPhotoRow),
+        });
+    }
+
     if (id) {
         // get client name & that photo
         const clientData = await ClientSchema.findOne({ "videos._id": id }, {
@@ -91,7 +128,7 @@ async function getSpecificVideo(req, res, next) {
         selectedVideo.videoShootDate = date;
         selectedVideo._id = selectedVideo._id.toString();
         // get url for selected video
-        selectedVideo.url = await getObjectUrl(selectedVideo.videoMetaData.key);
+        selectedVideo.url = await mediaUrl(selectedVideo.videoMetaData.key);
 
         // Fetch remaining videos of the same client
         const remainingPhotoAndVideo = await ClientSchema.findOne({ _id: clientData._id }).lean();
@@ -102,7 +139,7 @@ async function getSpecificVideo(req, res, next) {
         // get url for other video
         for (const otherVideo of otherVideos) {
             if (otherVideo.videoMetaData && otherVideo.videoMetaData.key)
-                otherVideo.thumbnailMetaData.url = await getObjectUrl(otherVideo.thumbnailMetaData.key)
+                otherVideo.thumbnailMetaData.url = await mediaUrl(otherVideo.thumbnailMetaData.key)
             let date = `${months[new Date(otherVideo.videoShootDate).getMonth()]} ${new Date(otherVideo.videoShootDate).getFullYear()}`
             selectedVideo.videoShootDate = date;
         }
@@ -110,7 +147,7 @@ async function getSpecificVideo(req, res, next) {
         const allPhotos = remainingPhotoAndVideo.photos.map((p) => ({ ...p, _id: p._id.toString() }))
         for (const p of allPhotos) {
             if (p.photoMetaData && p.photoMetaData.key)
-                p.photoMetaData.url = await getObjectUrl(p.photoMetaData.key)
+                p.photoMetaData.url = await mediaUrl(p.photoMetaData.key)
         } 
         res.status(200).json({
             clientName: clientData.clientName,
@@ -131,6 +168,18 @@ async function getRecommendedVideos(req, res, next) {
     try {
         const { id } = req.params;
         const { page = 1, limit = 10 } = req.query; // Infinite scrolling support
+
+        if (portfolio.portfolioReadsEnabled()) {
+            const item = await portfolio.findById(id);
+            if (!item) return res.status(404).json({ message: 'videos not found' });
+            const recs = await portfolio.findRecommended({ item, page: parseInt(page), limit: parseInt(limit) });
+            return res.status(200).json({
+                recommendedVideos: recs.map((r) => {
+                    const row = portfolio.toLegacyVideoRow(r);
+                    return { ...row.videos, clientName: row.clientName, url: row.thumbnailUrl, thumbnailUrl: row.thumbnailUrl };
+                }),
+            });
+        }
 
         // Fetch the selected photo to get its tags
         const clientData = await ClientSchema.findOne({ "videos._id": id }, { "videos.$": 1 });
@@ -154,9 +203,13 @@ async function getRecommendedVideos(req, res, next) {
             {
                 $skip: (page - 1) * limit
             },
-            // {
-            //     $limit: parseInt(limit)
-            // },
+            // This was commented out, so /recommended returned EVERY video sharing
+            // a tag and then signed a URL for each one in a serial loop below. With
+            // a common tag across a large library that is thousands of signature
+            // round-trips on a public endpoint, per request.
+            {
+                $limit: parseInt(limit)
+            },
             {
                 $project: {
                     _id: "$videos._id", //very imp
@@ -186,7 +239,7 @@ async function getRecommendedVideos(req, res, next) {
         }); //very imp
         // get url for other recommendedVideos
         for (const video of recommendedVideos) { 
-            video.thumbnailMetaData.url = await getObjectUrl(video.thumbnailMetaData.key)
+            video.thumbnailMetaData.url = await mediaUrl(video.thumbnailMetaData.key)
         } 
         res.status(200).json({ recommendedVideos });
     } catch (error) {

@@ -2,6 +2,7 @@ import express from 'express'
 import authenticateAdmin from '../../Middleware/authenticateAdmin.js'
 
 import { getAllClients, getSingleClientDetails, checkClientDetails, sendPutUrlsForNewClient, AddNewClient, validateClientUpdatedDetails, sendPutUrlsForNewMedia, updateClientDetails } from "../../Controllers/ClientController.js"
+import { createClient, updateClientProfile, getClientStats, deleteClient } from "../../Controllers/clientProfileController.js"
 
 const clientQueryRoute = express.Router();
 // check if admin is requesting or not 
@@ -10,6 +11,16 @@ clientQueryRoute.use(authenticateAdmin)
 /***************************************************/
 // see all client that have added on website
 clientQueryRoute.get('/api/admin/clients/', getAllClients)
+
+/***************************************************/
+// Client identity, independent of its media. The wizard creates the entity
+// first so uploads can be scoped to a real client id from the first byte.
+clientQueryRoute.post('/api/admin/clients', createClient)
+// `/stats` before `/:id` so Express does not match it as an id.
+clientQueryRoute.get('/api/admin/clients/:id/stats', getClientStats)
+clientQueryRoute.patch('/api/admin/clients/:id', updateClientProfile)
+clientQueryRoute.delete('/api/admin/clients/:id', deleteClient)
+
 // see specific client detial like videos & photos posted
 clientQueryRoute.get('/api/admin/client/:id', getSingleClientDetails)
 
