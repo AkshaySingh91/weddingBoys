@@ -23,8 +23,14 @@ const PROFILES = [
   { name: 'laptop', w: 1440, h: 900, throttle: null },
 ];
 
-const browser = await launch({ port: 9800 });
+const browser = await launch({ port: 9801 });
 const page = await openPage(browser);
+/*
+  Cold load, every time. A warm cache made the first pass report 0KB of images
+  and CLS 0 on /photos — the gallery does not shift when its images are already
+  decoded, which tells us nothing about a first visit.
+*/
+await page.setCacheDisabled(true);
 const results = {};
 
 for (const [id, path] of Object.entries(PAGES)) {
@@ -32,6 +38,7 @@ for (const [id, path] of Object.entries(PAGES)) {
   for (const p of PROFILES) {
     await page.setViewport(p.w, p.h);
     if (p.throttle) await page.throttle(p.throttle); else await page.unthrottle();
+    await page.clearBrowserCache();
     await page.goto(`${BASE}${path}`, { waitMs: 7000 });
     const r = await page.eval(() => {
       const V = window.__wbVitals || {};

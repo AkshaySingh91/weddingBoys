@@ -146,6 +146,13 @@ export async function openPage(browser) {
         offline: false, latency: 0, downloadThroughput: -1, uploadThroughput: -1,
       });
     },
+    /** Cold-load measurement: no HTTP cache, no memory cache. */
+    async setCacheDisabled(disabled = true) {
+      await send('Network.setCacheDisabled', { cacheDisabled: disabled });
+    },
+    async clearBrowserCache() {
+      await send('Network.clearBrowserCache');
+    },
     async goto(url, { waitMs = 3500 } = {}) {
       events.length = 0;
       await send('Page.navigate', { url });
