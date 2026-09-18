@@ -180,6 +180,28 @@ export async function openPage(browser) {
       await send('Emulation.setDeviceMetricsOverride', {
         width, height: shotHeight, deviceScaleFactor: 1, mobile: width < 700,
       });
+      /*
+        Wait for images to actually decode after the resize.
+
+        Resizing to the document height brings the whole page into the viewport
+        at once, which re-triggers every lazy image. Capturing immediately
+        photographs the loading state and reports it as the design — the first
+        run of this harness produced screenshots showing grey blocks where the
+        home page's offering cards are, and those images in fact load fine.
+      */
+      await this.eval(async () => {
+        const imgs = [...document.querySelectorAll('img')];
+        await Promise.all(imgs.map((i) => {
+          if (i.complete && i.naturalWidth > 0) return i.decode().catch(() => {});
+          return new Promise((res) => {
+            const done = () => res();
+            i.addEventListener('load', done, { once: true });
+            i.addEventListener('error', done, { once: true });
+            setTimeout(done, 6000);
+          });
+        }));
+        await new Promise((r) => setTimeout(r, 600));
+      });
       await new Promise((r) => setTimeout(r, 450));
       let data;
       try {
