@@ -1,0 +1,1092 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Smooth scrolling belongs to anchor navigation, not to every element.
+
+  As `*` it applied to every scroll container on the site — including the
+  editor canvas, where ProseMirror scrolls the caret into view on almost every
+  keystroke near an edge. Animating that makes typing feel like it is dragging
+  behind the cursor, which is what "the scroll is not good" was describing.
+  Next.js also warns about the `*` form specifically, because it makes route
+  transitions animate their scroll reset.
+*/
+html {
+  scroll-behavior: smooth;
+}
+
+/* Anything a person edits or drags scrolls instantly. */
+.ProseMirror,
+.editor-toolbar,
+[data-editor-surface],
+[data-floating-toolbar] {
+  scroll-behavior: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* Shared masonry grid utility (Photos/Search galleries). Ported from
+   Frontend's allPhotoMasonry.css/Masonry.css, which both used a bare
+   `grid-container` element selector — fixed to `.grid-container` here. */
+.grid-container {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(3, minmax(200px, 1fr));
+  grid-auto-rows: auto;
+}
+
+@media (min-width: 1300px) {
+  .grid-container {
+    grid-template-columns: repeat(4, 1fr);
+    padding: 16px 0;
+  }
+}
+@media (max-width: 1100px) {
+  .grid-container {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 16px 0;
+  }
+}
+@media (max-width: 700px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 16px 0;
+  }
+}
+@media (max-width: 500px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+    padding: 8px 0;
+  }
+}
+
+:root {
+  --x: 50%;
+  --y: 50%;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+      BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+      "Noto Sans", sans-serif;
+  }
+
+  body {
+    font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+      BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+      "Noto Sans", sans-serif;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+  transform-origin: left;
+}
+
+@layer components {
+  .range {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    /* creating a custom design */
+    width: 100%;
+    cursor: pointer;
+    outline: none;
+    /*  slider progress trick  */
+    overflow: hidden;
+    border-radius: 16px;
+  }
+  /* Track: webkit browsers */
+  .range::-webkit-slider-runnable-track {
+    height: 15px;
+    background: #ccc;
+    border-radius: 16px;
+  }
+  /* Track: Mozilla Firefox */
+  .range::-moz-range-track {
+    height: 15px;
+    background: #ccc;
+    border-radius: 16px;
+  }
+  /* Thumb: webkit */
+  .range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 15px;
+    width: 15px;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 2px solid #f50;
+    box-shadow: -407px 0 0 400px #f50;
+  }
+  /* Thumb: Firefox */
+  .range::-moz-range-thumb {
+    height: 15px;
+    width: 15px;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 1px solid #f50;
+    box-shadow: -407px 0 0 400px #f50;
+  }
+  .range {
+    display: flex;
+    align-items: center;
+    max-width: 500px;
+    height: 4rem;
+    width: 80%;
+    background: #fff;
+    padding: 0px 10px;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Blog custom-node styling — shared by the Tiptap editor surface and  */
+/* the public article body (rendered from stored HTML). The Tailwind   */
+/* typography plugin handles headings/lists/quotes; these rules cover  */
+/* the bespoke InlineMedia / PhotoGallery / Callout / VideoEmbed nodes. */
+/* ------------------------------------------------------------------ */
+
+/* Inline media alignment */
+.inline-media { margin: 0; }
+/* `height: auto` only holds for an unframed image — a framed one takes its
+   shape from the frame and must fill it. See the frame rules further down. */
+.inline-media img { border-radius: 0.75rem; height: auto; }
+.inline-media-full img { width: 100%; }
+.inline-media-center { margin-left: auto; margin-right: auto; max-width: 42rem; }
+.inline-media-left { float: left; margin: 0.25rem 1.5rem 1rem 0; max-width: 20rem; }
+.inline-media-right { float: right; margin: 0.25rem 0 1rem 1.5rem; max-width: 20rem; }
+.inline-media figcaption { text-align: center; font-size: 0.875rem; color: #6b7280; margin-top: 0.4rem; }
+
+/* Photo gallery grid */
+.photo-gallery { display: grid; gap: 0.5rem; clear: both; }
+.photo-gallery-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.photo-gallery-cols-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 640px) {
+  .photo-gallery-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.photo-gallery-item { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 0.5rem; margin: 0; }
+
+/* Wedding video embed */
+.wedding-video { clear: both; }
+.wedding-video-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 0.75rem; overflow: hidden; background: #000; }
+.wedding-video-media { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.wedding-video-caption { text-align: center; font-size: 0.875rem; color: #6b7280; margin-top: 0.4rem; }
+
+/* Callouts */
+.callout { border-radius: 0.75rem; padding: 1rem 1.25rem; border-left-width: 4px; }
+.callout .callout-head { margin-bottom: 0.5rem; font-size: 0.75rem; }
+.callout .callout-body > :last-child { margin-bottom: 0; }
+.callout-note { background: #f8fafc; border-color: #94a3b8; }
+.callout-vendor { background: #fffbeb; border-color: #f59e0b; }
+.callout-testimonial { background: #fdf2f8; border-color: #ec4899; font-style: italic; }
+
+/* ---------------------------------------------------------------------------
+   Layout grid.
+
+   One set of rules serves all three paths — the editor, the public React
+   renderer, and the sanitised HTML cache — because the whole template travels
+   as two inherited custom properties set on the grid:
+
+       --wb-cols : 1fr 2fr      the column ratio
+       --wb-gap  : 1.5rem       the gutter
+
+   Rows read them rather than being told, which is what makes the public render
+   possible at all: renderAst hands a block component no parent context, so a
+   row cannot ask its grid how wide its columns are. Both properties are on the
+   sanitiser's allowlist, verified, so the HTML cache keeps them too.
+
+   `fr` is the reason ratios survive: it divides whatever space exists, so a 1:2
+   authored in a ~900px editor is still 1:2 at 1440px and at 375px.
+--------------------------------------------------------------------------- */
+/*
+  ONE grid, not one grid per row.
+
+  Rows used to each be their own CSS grid. That gave the row a real box for its
+  controls to hang on, at the cost of row spanning — and a tall image beside two
+  stacked ones is exactly a row span. Rows are now `display: contents`, so every
+  cell is an item of a single grid and can span in both directions.
+
+  Placement is explicit rather than automatic, because once cells span rows the
+  automatic order is ambiguous. The four custom properties come from
+  `computePlacement` in gridOps, which the editor and this page both call — one
+  function, so the two cannot disagree about where a cell sits.
+*/
+.layout-grid {
+  display: grid;
+  grid-template-columns: 1fr;              /* mobile-first: stacked */
+  gap: var(--wb-gap, 1.5rem);
+  align-items: var(--wb-align, stretch);
+}
+.layout-row { display: contents; }
+.layout-cell { min-width: 0; }
+.layout-cell > :last-child { margin-bottom: 0; }
+
+/* Columns only where there is room for them. A 2:1 text/image split is
+   unreadable at 375px, so cells stack in document order instead — which is why
+   placement is applied here rather than inline: a stacked grid must ignore it,
+   and an inline style would need !important to beat. */
+@media (min-width: 720px) {
+  .layout-grid {
+    grid-template-columns: var(--wb-cols, 1fr);
+    grid-template-rows: var(--wb-rows, auto);
+  }
+  .layout-cell {
+    grid-column: var(--wb-col, auto) / span var(--wb-colspan, 1);
+    grid-row: var(--wb-row, auto) / span var(--wb-rowspan, 1);
+  }
+}
+
+/* Tables opt out: stacking a 4-column row loses which heading a value belongs
+   to, so they keep their columns and scroll sideways instead. */
+.layout-grid[data-mobile="scroll"] {
+  overflow-x: auto;
+  grid-template-columns: var(--wb-cols, 1fr);
+  grid-template-rows: var(--wb-rows, auto);
+  min-width: 34rem;
+}
+.layout-grid[data-mobile="scroll"] .layout-cell {
+  grid-column: var(--wb-col, auto) / span var(--wb-colspan, 1);
+  grid-row: var(--wb-row, auto) / span var(--wb-rowspan, 1);
+}
+
+/* Borders that publish — distinct from the editor's dashed authoring guides.
+   Rules sit between cells rather than around each one, so adjacent borders
+   never double into a 2px line. */
+.layout-grid[data-borders="lines"],
+.layout-grid[data-borders="boxed"] { --wb-gap: 0rem; }
+.layout-grid[data-borders="lines"] .layout-cell,
+.layout-grid[data-borders="boxed"] .layout-cell { padding: 0.75rem 1rem; }
+.layout-grid[data-borders="lines"] .layout-row + .layout-row,
+.layout-grid[data-borders="boxed"] .layout-row + .layout-row { border-top: 1px solid #E5DCD3; }
+.layout-grid[data-borders="lines"] .layout-cell + .layout-cell,
+.layout-grid[data-borders="boxed"] .layout-cell + .layout-cell { border-top: 1px solid #E5DCD3; }
+@media (min-width: 720px) {
+  .layout-grid[data-borders="lines"] .layout-cell + .layout-cell,
+  .layout-grid[data-borders="boxed"] .layout-cell + .layout-cell {
+    border-top: 0;
+    border-left: 1px solid #E5DCD3;
+  }
+}
+.layout-grid[data-borders="boxed"] {
+  border: 1px solid #E5DCD3;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   Row height.
+
+   Without this an image's own pixels decided how tall a row was, and this photo
+   library is almost entirely portrait (1440x1800, 2400x3000) — so a two-image
+   row pushed everything after it off the screen. A height on the row is what
+   lets an author say "this section is this tall".
+
+   It applies only where columns exist. Below the breakpoint cells are stacked,
+   and three of them crushed into 352px would be unreadable, so a stacked row is
+   always auto no matter what is stored.
+--------------------------------------------------------------------------- */
+/* Row heights live on the GRID now, as `grid-template-rows` — a
+   `display: contents` row has no box of its own to be tall. The row keeps its
+   `data-height` attribute because the rules below still need to know which rows
+   are fixed, and a row is still a DOM ancestor of its cells even without a box. */
+.layout-row[data-height]:not([data-height="auto"]) .layout-cell {
+  align-self: stretch;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Media in a fixed-height row COVER-FITS rather than overflowing.
+   
+   Previously a natural-frame image simply overflowed and the cell clipped it.
+   Two things were wrong with that: the crop was whatever happened to fall inside
+   rather than anything the author chose, and the clip happened at the cell —
+   which has no radius — so the picture came out with square corners while every
+   other image on the page was rounded. Fitting the image to the row instead
+   keeps the radius on the image and makes the drag-to-position control mean
+   something. */
+/* Height is distributed with FLEX, not `height: 100%`.
+   
+   Percentage heights only resolve against a parent with a definite height, and
+   the editor inserts two node-view wrappers between the cell and the figure.
+   Measured: the cell was a definite 300px, every wrapper below it was `auto`,
+   the chain broke, and the image stayed at its natural 245px inside a 300px row
+   while a 524px one overflowed a 200px row. Flex carries the height through any
+   number of wrappers, and splits the row correctly when a cell holds two images
+   rather than giving each of them the full height.
+
+   Gated to where a row ACTUALLY has a fixed height. Ungated, these rules also
+   applied to a stacked phone layout, where the grid's rows are auto — measured
+   at 375px, `height: 100%` of an auto cell resolved to zero and three images
+   disappeared completely. The editor gets its own copy because it never stacks.
+*/
+@media (min-width: 720px) {
+  .layout-row[data-height]:not([data-height="auto"]) .layout-cell,
+  .layout-row[data-height]:not([data-height="auto"]) .layout-cell [data-node-view-content],
+  .layout-row[data-height]:not([data-height="auto"]) .layout-cell [data-node-view-content-react],
+  .layout-row[data-height]:not([data-height="auto"]) .layout-cell .react-renderer,
+  .layout-row[data-height]:not([data-height="auto"]) .inline-media {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .layout-row[data-height]:not([data-height="auto"]) .layout-cell [data-node-view-content],
+  .layout-row[data-height]:not([data-height="auto"]) .layout-cell [data-node-view-content-react],
+  .layout-row[data-height]:not([data-height="auto"]) .layout-cell .react-renderer,
+  .layout-row[data-height]:not([data-height="auto"]) .inline-media,
+  .layout-row[data-height]:not([data-height="auto"]) .inline-media figure,
+  .layout-row[data-height]:not([data-height="auto"]) .inline-media .inline-media-frame {
+    flex: 1 1 0;
+    min-height: 0;
+  }
+  .layout-row[data-height]:not([data-height="auto"]) .inline-media {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .layout-row[data-height]:not([data-height="auto"]) .inline-media img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: auto;
+  }
+}
+
+/* The editor composes the wide layout at every width, so the same rules apply
+   there unconditionally. */
+.blog-layout-grid .layout-row[data-height]:not([data-height="auto"]) .layout-cell,
+.blog-layout-grid .layout-row[data-height]:not([data-height="auto"]) .layout-cell [data-node-view-content],
+.blog-layout-grid .layout-row[data-height]:not([data-height="auto"]) .layout-cell [data-node-view-content-react],
+.blog-layout-grid .layout-row[data-height]:not([data-height="auto"]) .layout-cell .react-renderer,
+.blog-layout-grid .layout-row[data-height]:not([data-height="auto"]) .inline-media {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.blog-layout-grid .layout-row[data-height]:not([data-height="auto"]) .layout-cell [data-node-view-content],
+.blog-layout-grid .layout-row[data-height]:not([data-height="auto"]) .layout-cell [data-node-view-content-react],
+.blog-layout-grid .layout-row[data-height]:not([data-height="auto"]) .layout-cell .react-renderer,
+.blog-layout-grid .layout-row[data-height]:not([data-height="auto"]) .inline-media,
+.blog-layout-grid .layout-row[data-height]:not([data-height="auto"]) .inline-media figure,
+.blog-layout-grid .layout-row[data-height]:not([data-height="auto"]) .inline-media .inline-media-frame {
+  flex: 1 1 0;
+  min-height: 0;
+}
+.blog-layout-grid .layout-row[data-height]:not([data-height="auto"]) .inline-media {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.blog-layout-grid .layout-row[data-height]:not([data-height="auto"]) .inline-media img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  aspect-ratio: auto;
+}
+
+/* ---------------------------------------------------------------------------
+   Media frames.
+
+   A frame crops an image to a shape instead of letting its own aspect decide,
+   which is the only way two images side by side come out the same size when one
+   is portrait and the other landscape.
+
+   Three DOM shapes have to agree here: the editor renders
+   `.inline-media > figure > img`, the React page renders
+   `.inline-media > .inline-media-frame > img`, and the sanitised HTML cache
+   renders `.inline-media > img`. Selecting on the figure's data-frame and
+   covering both the frame box and the bare image keeps all three identical.
+--------------------------------------------------------------------------- */
+.inline-media[data-frame="1-1"]  .inline-media-frame, .inline-media[data-frame="1-1"]  > img { aspect-ratio: 1 / 1; }
+.inline-media[data-frame="4-3"]  .inline-media-frame, .inline-media[data-frame="4-3"]  > img { aspect-ratio: 4 / 3; }
+.inline-media[data-frame="3-2"]  .inline-media-frame, .inline-media[data-frame="3-2"]  > img { aspect-ratio: 3 / 2; }
+.inline-media[data-frame="16-9"] .inline-media-frame, .inline-media[data-frame="16-9"] > img { aspect-ratio: 16 / 9; }
+.inline-media[data-frame="3-4"]  .inline-media-frame, .inline-media[data-frame="3-4"]  > img { aspect-ratio: 3 / 4; }
+.inline-media[data-frame="2-3"]  .inline-media-frame, .inline-media[data-frame="2-3"]  > img { aspect-ratio: 2 / 3; }
+
+/* Anything framed fills its box and is cropped, rather than keeping the
+   `height: auto` that the base rule gives an unframed image. */
+.inline-media[data-frame]:not([data-frame="natural"]) img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* Badge: a short label ON the image, as against a caption under it. The
+   comparison layouts in the brief are unreadable without one — two pictures of
+   a lit couple mean nothing until something says which is the good one. */
+/*
+  The comparison badge — "Good lighting" / "Harsh lighting" over a photograph.
+
+  Bottom-left, not top-left: the top of a wedding photograph is where the faces
+  usually are, and the badge was landing on them. The pill stays white and the
+  ICON carries the colour; a fully green or fully red pill competed with the
+  photograph it was labelling and read as an alert rather than a caption.
+*/
+.inline-media-badge {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
+  font-family: var(--font-sans, system-ui), sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: #1E1D1B;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+.inline-media-badge svg { flex: none; }
+.inline-media[data-badge-tone="positive"] .inline-media-badge svg { color: #1F8A4C; }
+.inline-media[data-badge-tone="negative"] .inline-media-badge svg { color: #E5342A; }
+
+/* Focal point, for content saved before positions became percentages. Anything
+   newer carries an exact `object-position` inline, which wins over these. */
+.inline-media[data-focus="top"] img    { object-position: top; }
+.inline-media[data-focus="bottom"] img { object-position: bottom; }
+.inline-media[data-focus="left"] img   { object-position: left; }
+.inline-media[data-focus="right"] img  { object-position: right; }
+
+/* Corner radius, on the image AND on the box that clips it — a radius on only
+   one of them shows as a square corner wherever the other does the clipping. */
+.inline-media[data-radius="none"] img, .inline-media[data-radius="none"] .inline-media-frame { border-radius: 0; }
+.inline-media[data-radius="sm"] img,   .inline-media[data-radius="sm"] .inline-media-frame   { border-radius: 0.375rem; }
+.inline-media[data-radius="md"] img,   .inline-media[data-radius="md"] .inline-media-frame   { border-radius: 0.75rem; }
+.inline-media[data-radius="lg"] img,   .inline-media[data-radius="lg"] .inline-media-frame   { border-radius: 1.25rem; }
+
+/* A `fill` image takes its cell's height whatever made the cell that tall.
+   
+   The fixed-row rules above cover a row with an explicit height, but a cell can
+   also be tall because it SPANS rows: measured on the reference layout, the cell
+   correctly spanned two rows while the image inside it kept a 4:3 fallback and
+   left the bottom half empty. Flexing the chain works for both, and does not
+   need the cell to have a definite height the way `height: 100%` would.
+
+   Scoped with `:has()` so ordinary text cells keep normal block flow — flexing
+   every cell would change how margins collapse in prose. */
+@media (min-width: 720px) {
+  .layout-cell:has(.inline-media[data-frame="fill"]),
+  .layout-cell:has(.inline-media[data-frame="fill"]) [data-node-view-content],
+  .layout-cell:has(.inline-media[data-frame="fill"]) [data-node-view-content-react],
+  .layout-cell:has(.inline-media[data-frame="fill"]) .react-renderer,
+  .layout-cell .inline-media[data-frame="fill"],
+  .layout-cell .inline-media[data-frame="fill"] figure {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .layout-cell:has(.inline-media[data-frame="fill"]) [data-node-view-content],
+  .layout-cell:has(.inline-media[data-frame="fill"]) [data-node-view-content-react],
+  .layout-cell:has(.inline-media[data-frame="fill"]) .react-renderer,
+  .layout-cell .inline-media[data-frame="fill"],
+  .layout-cell .inline-media[data-frame="fill"] figure,
+  .layout-cell .inline-media[data-frame="fill"] .inline-media-frame {
+    flex: 1 1 0;
+    min-height: 0;
+  }
+  .layout-cell .inline-media[data-frame="fill"] img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: auto;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Media inside a grid cell.
+--------------------------------------------------------------------------- */
+
+/* A floated half-width image inside a cell is nonsense — the cell is already a
+   column. One rule neutralises it for the editor, the page and the HTML cache,
+   which is why alignment moved out of the Tailwind strings in
+   InlineFigureBlock and into these classes. */
+.layout-cell .inline-media-left,
+.layout-cell .inline-media-right,
+.layout-cell .inline-media-center {
+  float: none;
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* `fill` is the partner to a fixed row height.
+   
+   It cannot be a plain `height: 100%`: a cell only has a definite height when
+   its row does, and measured at 375px — where rows are stacked and auto — that
+   resolved to zero and the image disappeared completely (328x0). So `fill`
+   falls back to a shape, and only becomes a true fill where there is a real
+   height to fill. */
+.inline-media[data-frame="fill"] .inline-media-frame,
+.inline-media[data-frame="fill"] > img { aspect-ratio: 4 / 3; }
+
+.layout-cell .inline-media[data-frame="fill"] { margin-top: 0; margin-bottom: 0; }
+
+@media (min-width: 720px) {
+  .layout-row[data-height]:not([data-height="auto"]) .inline-media[data-frame="fill"],
+  .layout-row[data-height]:not([data-height="auto"]) .inline-media[data-frame="fill"] figure,
+  .layout-row[data-height]:not([data-height="auto"]) .inline-media[data-frame="fill"] .inline-media-frame {
+    height: 100%;
+    aspect-ratio: auto;
+  }
+}
+/* The editor never stacks, so a fixed-height row fills there at every width. */
+.blog-layout-grid .layout-row[data-height]:not([data-height="auto"]) .inline-media[data-frame="fill"],
+.blog-layout-grid .layout-row[data-height]:not([data-height="auto"]) .inline-media[data-frame="fill"] figure,
+.blog-layout-grid .layout-row[data-height]:not([data-height="auto"]) .inline-media[data-frame="fill"] .inline-media-frame {
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+/* In a fixed-height row the media's own vertical margin is what makes content
+   overflow the cell it was measured to fit. */
+.layout-row[data-height]:not([data-height="auto"]) .layout-cell > .inline-media:first-child,
+.layout-row[data-height]:not([data-height="auto"]) .layout-cell .react-renderer:first-child .inline-media { margin-top: 0; }
+
+/* A gallery inside a cell is ALWAYS one column.
+   
+   The first attempt kept two columns on wide viewports, but the viewport is the
+   wrong thing to measure: a 212px cell on a 1440px screen still got two columns
+   and rendered its images at 100x75. A cell is already a column — nesting a
+   second grid inside it just divides what the author already divided. An author
+   who wants two images side by side adds a column to the row, which is what the
+   grid is for. */
+.layout-cell .photo-gallery,
+.layout-cell .photo-gallery-cols-2,
+.layout-cell .photo-gallery-cols-3,
+.layout-cell [class*="grid-cols-"] { grid-template-columns: minmax(0, 1fr); }
+
+/* A card in a stretched cell must fill it. Without this the CELL grows to the
+   row height and the container inside it stays its own size, so the cards are
+   still ragged and the stretch appears to do nothing.
+   `height: 100%` against an auto-height parent resolves to auto, so this is
+   inert in an unstretched row rather than circular. */
+.layout-cell > .blog-container,
+.layout-cell .react-renderer > .blog-container { height: 100%; }
+
+/* Bordered cells must reach the bottom of their row or the rules between them
+   stop short and the table reads as broken. `align: start` is right for an
+   editorial column and wrong for every table. */
+.layout-grid[data-borders="lines"] .layout-cell,
+.layout-grid[data-borders="boxed"] .layout-cell { align-self: stretch; }
+
+/* ---------------------------------------------------------------------------
+   Layout grid — editor chrome.
+
+   Authoring aids only: every rule here is scoped under `.blog-layout-grid`,
+   which exists in the admin editor's node view and nowhere on the public site.
+   Cell borders are ALWAYS drawn, never only on hover — an invisible cell is
+   what made the previous grid impossible to use.
+--------------------------------------------------------------------------- */
+.blog-layout-grid { margin: 1.25rem 0; }
+
+.layout-grid-frame {
+  position: relative;
+  padding: 1.5rem 1.6rem 0 0;   /* the gutter column holds the row handles */
+}
+
+/*
+  The editor never stacks: the author is composing the wide layout, and cells
+  they cannot see side by side are cells they cannot arrange.
+
+  The body IS the grid, with one extra column at the front for the row handles.
+  A `display: contents` row has no box to hang a handle on, so each handle is
+  placed as a grid item in that gutter on its own row — deterministic, with
+  nothing measured.
+*/
+.blog-layout-grid .layout-row { display: contents; }
+.blog-layout-grid .layout-cell {
+  grid-column: var(--wb-col, auto) / span var(--wb-colspan, 1);
+  grid-row: var(--wb-row, auto) / span var(--wb-rowspan, 1);
+}
+
+/* Tiptap's React node views insert TWO wrapper elements between a node and its
+   children — a `.react-renderer` box and a content holder. Left alone, those
+   wrappers become the grid items instead of the cells: measured in the browser,
+   both cells stacked inside column 1 (the holder was 227x180) while column 2 sat
+   empty. Dissolving every wrapper with `display: contents` restores the direct
+   parent/child relationship that these rules — and the public renderer, which
+   has no wrappers at all — both assume. */
+.layout-grid-body > [data-node-view-content-react],
+.layout-grid-body > [data-node-view-content-react] > .react-renderer,
+.layout-row-cells,
+.layout-row-cells > [data-node-view-content-react],
+.layout-row-cells > [data-node-view-content-react] > .react-renderer {
+  display: contents;
+}
+.layout-grid-body {
+  display: grid;
+  grid-template-columns: var(--wb-gutter, 1.25rem) var(--wb-cols, 1fr);
+  grid-template-rows: var(--wb-rows, auto);
+  gap: var(--wb-gap, 1.5rem);
+  align-items: var(--wb-align, stretch);
+}
+.layout-grid-stage { position: relative; }
+
+.blog-layout-grid .layout-cell {
+  position: relative;
+  min-height: 4.5rem;
+  padding: 0.75rem;
+  border: 1px dashed #DED4C9;
+  border-radius: 0.5rem;
+  transition: border-color 0.15s, background-color 0.15s, box-shadow 0.15s;
+}
+.blog-layout-grid .layout-cell:hover {
+  border-style: solid;
+  background: rgba(250, 241, 230, 0.4);
+}
+.node-layoutCell.is-focused > .layout-cell {
+  border-style: solid;
+  border-color: #A3603A;
+  background: rgba(250, 241, 230, 0.5);
+  box-shadow: 0 0 0 3px rgba(163, 96, 58, 0.12);
+}
+.blog-layout-grid .layout-cell > :first-child { margin-top: 0; }
+.blog-layout-grid .layout-cell > :last-child { margin-bottom: 0; }
+
+/* Cell expansion handles, one per edge.
+   
+   Placed just INSIDE the cell rather than straddling its border: a cell in a
+   fixed-height row clips its overflow, and a handle hanging outside would be cut
+   in half by the very rows these are most needed in. */
+.layout-cell-grips {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 6;
+}
+.node-layoutCell.is-focused .layout-cell-grips,
+.blog-layout-grid .layout-cell:hover .layout-cell-grips { opacity: 1; }
+
+.cell-grip {
+  position: absolute;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.05rem;
+  width: 1.05rem;
+  border-radius: 0.25rem;
+  background: rgba(255, 255, 255, 0.95);
+  color: #8B7E70;
+  font-size: 0.48rem;
+  line-height: 1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
+  transition: background 0.15s, color 0.15s;
+}
+.cell-grip:hover:not(:disabled) { background: #FAF1E6; color: #A3603A; }
+.cell-grip:disabled { opacity: 0; pointer-events: none; }
+.cell-grip--up    { top: 0.15rem;    left: 50%; transform: translateX(-50%); }
+.cell-grip--down  { bottom: 0.15rem; left: 50%; transform: translateX(-50%); }
+.cell-grip--left  { left: 0.15rem;   top: 50%;  transform: translateY(-50%); }
+.cell-grip--right { right: 0.15rem;  top: 50%;  transform: translateY(-50%); }
+.cell-grip--shrink { right: 0.15rem; bottom: 0.15rem; }
+
+.layout-cell-hint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;          /* never swallow the click that places the caret */
+  font-size: 0.7rem;
+  color: #B9AC9E;
+  letter-spacing: 0.02em;
+}
+
+.layout-cell-span {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  z-index: 5;
+  display: flex;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.node-layoutCell.is-focused .layout-cell-span { opacity: 1; }
+.layout-cell-span button {
+  display: flex;
+  height: 1.15rem;
+  width: 1.15rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: #78716C;
+  transition: background 0.15s, color 0.15s;
+}
+.layout-cell-span button:hover:not(:disabled) { background: #FAF1E6; color: #A3603A; }
+.layout-cell-span button:disabled { opacity: 0.25; cursor: not-allowed; }
+
+/* Chrome appears when the grid is hovered or holds the caret. `is-active` and
+   `is-focused` are node decorations from the LayoutGrid plugin, so tracking the
+   selection costs no React re-render. ProseMirror applies a node decoration to
+   the node view's outermost element, which for a React node view is Tiptap's
+   `.react-renderer` wrapper — NOT the element our component returns. Hence
+   `.node-layoutGrid.is-active`, not `.blog-layout-grid.is-active`. */
+.layout-grid-rail,
+.layout-row-rail,
+.layout-grid-add,
+.layout-grid-toolbar,
+.layout-grid-divider {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.blog-layout-grid:hover .layout-grid-rail,
+.blog-layout-grid:hover .layout-row-rail,
+.blog-layout-grid:hover .layout-grid-add,
+.blog-layout-grid:hover .layout-grid-toolbar,
+.blog-layout-grid:hover .layout-grid-divider,
+.node-layoutGrid.is-active .layout-grid-rail,
+.node-layoutGrid.is-active .layout-row-rail,
+.node-layoutGrid.is-active .layout-grid-add,
+.node-layoutGrid.is-active .layout-grid-toolbar,
+.node-layoutGrid.is-active .layout-grid-divider { opacity: 1; }
+.layout-grid-add:disabled { opacity: 0 !important; pointer-events: none; }
+
+/* Column rail: laid out by the same template as the rows, so each chip sits
+   exactly over its own track with nothing measuring pixels. */
+/* The leading empty track keeps each chip over its column, now that the body's
+   first column is the handle gutter. */
+.layout-grid-rail::before { content: ''; }
+.layout-grid-rail {
+  display: grid;
+  grid-template-columns: var(--wb-gutter, 1.25rem) var(--wb-cols, 1fr);
+  column-gap: var(--wb-gap, 1.5rem);
+  height: 1.15rem;
+  margin-bottom: 0.35rem;
+}
+.layout-col-chip { position: relative; height: 100%; min-width: 0; }
+
+/* The handle IS a grid item now: gutter column, its own row. */
+.layout-row-rail {
+  position: relative;
+  grid-column: 1;
+  grid-row: var(--wb-row, auto);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 0.3rem;
+}
+
+/* Track probes. Invisible, but they are what a divider drag measures against —
+   exact whatever the gap, and unbothered by spans making DOM order diverge
+   from column order. */
+.layout-grid-tracks::before { content: ''; }
+.layout-grid-tracks {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: var(--wb-gutter, 1.25rem) var(--wb-cols, 1fr);
+  column-gap: var(--wb-gap, 1.5rem);
+  pointer-events: none;
+}
+.layout-grid-track { position: relative; }
+.layout-grid-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: calc(var(--wb-gap, 1.5rem) / -2);
+  width: 13px;
+  transform: translateX(50%);
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  pointer-events: auto;
+  cursor: col-resize;
+}
+.layout-grid-divider-line {
+  width: 2px;
+  border-radius: 2px;
+  background: transparent;
+  transition: background 0.15s;
+}
+.layout-grid-divider:hover .layout-grid-divider-line,
+.layout-grid-divider.is-dragging .layout-grid-divider-line { background: #A3603A; }
+.layout-grid-ratio {
+  position: absolute;
+  top: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  border-radius: 0.375rem;
+  background: #1E1D1B;
+  color: #fff;
+  padding: 0.12rem 0.4rem;
+  font-size: 0.65rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.layout-grid-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #DED4C9;
+  border-radius: 0.375rem;
+  background: #fff;
+  color: #A2968A;
+  transition: opacity 0.15s, background 0.15s, color 0.15s, border-color 0.15s;
+}
+.layout-grid-add:hover { background: #FAF1E6; color: #A3603A; border-color: #A3603A; }
+.layout-grid-add--col {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -1.4rem;
+  width: 1.15rem;
+}
+.layout-grid-add--row {
+  width: 100%;
+  height: 1.15rem;
+  margin-top: 0.4rem;
+}
+
+.layout-grid-toolbar {
+  position: absolute;
+  top: -0.6rem;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid #E5DCD3;
+  border-radius: 0.5rem;
+  background: #fff;
+  padding: 0.15rem 0.4rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Container head: marker · icon · label.
+   
+   Sits above the box's own content and is markup rather than editable text, so
+   an author cannot half-delete it and leave a card with a stray number in it. */
+.blog-container-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-family: var(--font-sans, system-ui), sans-serif;
+  line-height: 1;
+}
+.blog-container-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.6rem;
+  height: 1.6rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  background: #FAF1E6;
+  color: #A3603A;
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.blog-container-icon { color: #A3603A; flex: none; }
+.blog-container-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #78716C;
+}
+.blog-container-head + * { margin-top: 0; }
+
+.blog-container { margin: 0; }
+.blog-container > :last-child { margin-bottom: 0; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ARTICLE FLOW — the one place that decides vertical spacing
+   ══════════════════════════════════════════════════════════════════════════
+
+   Every block used to carry its own margin and they never agreed: paragraphs
+   mb-5 (20px), containers my-6 (24), blockquotes and callouts my-8 (32),
+   galleries my-10 (40), pull quotes my-12 (48), headings mt-8/10/12/24. Six
+   gaps, no scale. Worse, a block disagreed with ITSELF across render paths —
+   a gallery was 40px from React and 24px from the HTML cache, because the
+   margin was written twice, in two languages, by two people.
+
+   So the margins were deleted from all eleven block components and from the
+   component CSS, and the rhythm lives here instead, expressed as the gap
+   BETWEEN two things rather than as a property of either. A block dropped
+   anywhere spaces correctly without knowing its neighbours, and both render
+   paths land inside `.blog-content`, so they cannot drift again.
+
+   Four steps, and a reason each exists:
+
+     tight    0.75rem  a heading and the paragraph it introduces — they are
+                       one unit, and a full gap makes the heading float
+     flow     1.5rem   the default: paragraph to paragraph
+     block    2.5rem   around something with edges — figure, grid, callout,
+                       container, quote. A box needs air a line of text doesn't
+     section  4rem     before an H2. This is the beat between sections, and it
+                       is what makes a long article scan as a sequence.
+
+   Placed at the end of the file, unlayered, so it outranks the typography
+   plugin's `prose` margins on the HTML-cache path, which it ties with on
+   specificity (`:where()` contributes nothing) and beats on source order.
+*/
+.blog-content {
+  --wb-flow-tight: 0.75rem;
+  --wb-flow: 1.5rem;
+  --wb-flow-block: 2.5rem;
+  --wb-flow-section: 4rem;
+}
+
+/*
+  A container, a grid cell or a callout is a smaller world: 2.5rem between two
+  paragraphs of a Pro Tip panel reads as a mistake. The tokens are inherited,
+  so a nested flow root only has to restate the values — every rule below
+  keeps working unchanged.
+
+  The override lands on the CHILDREN, not on the box. Put it on the box and the
+  box's own margin-top resolves `var(--wb-flow-block)` against the value it just
+  set for itself: a container sat 20px below the paragraph above it instead of
+  40px, quietly using the inner rhythm for its outer gap. A flow root belongs to
+  its parent's rhythm on the outside and runs its own on the inside.
+*/
+.blog-content :is(.blog-container, .layout-cell, .callout, .faq-answer, blockquote, li) > * {
+  --wb-flow-tight: 0.5rem;
+  --wb-flow: 1rem;
+  --wb-flow-block: 1.25rem;
+  --wb-flow-section: 1.5rem;
+}
+
+/*
+  The flow roots. Spacing is applied to direct children only, so each of these
+  boxes runs its own rhythm and a block never reaches across a boundary.
+*/
+.blog-content > * + *,
+.blog-content .blog-container > * + *,
+.blog-content .layout-cell > * + *,
+.blog-content .callout > * + *,
+.blog-content .faq-answer > * + *,
+.blog-content blockquote > * + * {
+  margin-top: var(--wb-flow);
+}
+
+/* Anything with edges gets the wider gap — on both sides of it. */
+.blog-content > * + :is(figure, .inline-media, .photo-gallery, .wedding-video, .callout, .blog-container, .layout-grid, .blog-layout-grid, .pull-quote, .faq-block, .embed-block, .wedding-embed, blockquote, table, pre, hr),
+.blog-content > :is(figure, .inline-media, .photo-gallery, .wedding-video, .callout, .blog-container, .layout-grid, .blog-layout-grid, .pull-quote, .faq-block, .embed-block, .wedding-embed, blockquote, table, pre, hr) + * {
+  margin-top: var(--wb-flow-block);
+}
+
+/* The beat between sections. */
+.blog-content > * + :is(h2, .section-heading) {
+  margin-top: var(--wb-flow-section);
+}
+
+.blog-content > * + :is(h3, h4) {
+  margin-top: var(--wb-flow-block);
+}
+
+/*
+  A heading and what follows it are one unit. This comes after the block rule
+  on purpose: a figure directly under a heading should hug it too, and the
+  later rule wins the tie.
+*/
+.blog-content :is(h2, h3, h4, .section-heading) + * {
+  margin-top: var(--wb-flow-tight);
+}
+
+/* Nothing pushes off the top or bottom of its own box. */
+.blog-content > :first-child,
+.blog-content .blog-container > :first-child,
+.blog-content .layout-cell > :first-child,
+.blog-content .callout > :first-child,
+.blog-content blockquote > :first-child {
+  margin-top: 0;
+}
+
+.blog-content > :last-child,
+.blog-content .blog-container > :last-child,
+.blog-content .layout-cell > :last-child,
+.blog-content .callout > :last-child,
+.blog-content blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+/* List items are closer than paragraphs — they are one thought, enumerated. */
+.blog-content :is(ul, ol) > li + li {
+  margin-top: 0.5rem;
+}
+
+/* ── The numbered section marker: `01 ———` above each H2 ────────────────── */
+.section-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.section-heading-marker {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The rule runs out from the number and stops — it measures the section, not the page. */
+.section-heading-rule {
+  display: block;
+  height: 1px;
+  width: 3.5rem;
+  flex: none;
+}
+
+.section-heading-text {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 640px) {
+  .section-heading-text { font-size: 2rem; }
+}
+
+/*
+  An empty paragraph renders at zero height but still claimed a full 24px of
+  flow, so a document that ended with the blank paragraphs ProseMirror leaves
+  behind finished with invisible dead space under the last line.
+*/
+.blog-content > p:empty { margin-top: 0; }
+
+/*
+  A "Fill cell" image takes its height from the cell, which works while the cell
+  is a fixed-height row. Dropped into an auto row there is nothing to fill, and
+  an absolutely-positioned image in a zero-height box disappears silently. The
+  floor only ever applies when nothing else has given the box a height.
+*/
+.inline-media[data-frame="fill"] .inline-media-frame { min-height: 8rem; }
+
+/*
+  The cover's script legend keeps the author's line breaks. It is set as a short
+  stack of two or three words a line in the reference, and collapsing it to one
+  long line loses that entirely.
+*/
+.cover-legend { white-space: pre-line; }

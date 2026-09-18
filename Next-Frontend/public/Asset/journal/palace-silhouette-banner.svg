@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 220" fill="none" stroke="#FAD7A0" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.28">
+  <!-- Symmetrical Heritage Palace Arch Columns for Banner Watermark -->
+  <path d="M20 210 H240 M30 195 H230" />
+  <path d="M40 195 V70 M70 195 V70 M190 195 V70 M220 195 V70" stroke-width="1.2" />
+  <!-- Cusped Mughal/Rajput Arch -->
+  <path d="M70 100 C70 60, 95 50, 110 60 C120 45, 140 45, 150 60 C165 50, 190 60, 190 100" stroke-width="1.4" />
+  <path d="M75 95 C75 65, 95 55, 110 65 C120 52, 140 52, 150 65 C165 55, 185 65, 185 95" />
+  <path d="M30 65 H230 M40 55 H220" />
+  <!-- Dome Top -->
+  <path d="M80 55 C80 25, 110 10, 130 0 C150 10, 180 25, 180 55" stroke-width="1.4" />
+  <path d="M130 0 V-10" />
+</svg>

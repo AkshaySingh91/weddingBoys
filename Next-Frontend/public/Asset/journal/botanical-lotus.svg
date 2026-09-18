@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none" stroke="#D8B29C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.65">
+  <!-- Royal Indian Lotus Blossom Line Art -->
+  <!-- Base Calyx / Stem -->
+  <path d="M80 145 C80 155, 78 160, 75 165" stroke-width="1" />
+  <path d="M55 140 C65 145, 95 145, 105 140" />
+  
+  <!-- Outer Lower Petals -->
+  <path d="M35 120 C45 135, 65 142, 80 142 C95 142, 115 135, 125 120 C110 128, 95 130, 80 130 C65 130, 50 128, 35 120 Z" fill="#FCEEE6" fill-opacity="0.3" />
+  
+  <!-- Mid Petals Left -->
+  <path d="M20 95 C35 105, 55 118, 75 125 C60 110, 40 85, 20 95 Z" fill="#FCEEE6" fill-opacity="0.25" />
+  <!-- Mid Petals Right -->
+  <path d="M140 95 C125 105, 105 118, 85 125 C100 110, 120 85, 140 95 Z" fill="#FCEEE6" fill-opacity="0.25" />
+  
+  <!-- Inner Left Petal -->
+  <path d="M42 70 C55 85, 68 105, 80 122 C70 95, 55 65, 42 70 Z" fill="#FCEEE6" fill-opacity="0.35" />
+  <!-- Inner Right Petal -->
+  <path d="M118 70 C105 85, 92 105, 80 122 C90 95, 105 65, 118 70 Z" fill="#FCEEE6" fill-opacity="0.35" />
+  
+  <!-- Center Main Petal (Crown) -->
+  <path d="M80 30 C70 55, 68 90, 80 125 C92 90, 90 55, 80 30 Z" fill="#FCEEE6" fill-opacity="0.45" stroke-width="1.4" />
+  <path d="M80 30 V125" stroke-width="0.8" stroke-dasharray="2,3" />
+</svg>

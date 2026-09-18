@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 120" fill="none">
+  <!-- Romantic Handwritten Script Text -->
+  <style>
+    .script-text {
+      font-family: 'Great Vibes', 'Playfair Display', cursive, serif;
+      font-style: italic;
+      font-size: 32px;
+      fill: #C49079;
+      letter-spacing: 0.04em;
+    }
+    .underline-swash {
+      stroke: #D8B29C;
+      stroke-width: 1.2;
+      stroke-linecap: round;
+    }
+  </style>
+  <text x="110" y="38" text-anchor="middle" class="script-text">Stories</text>
+  <text x="110" y="74" text-anchor="middle" class="script-text">That Feel</text>
+  <text x="110" y="108" text-anchor="middle" class="script-text">Like You</text>
+  <path d="M70 116 C95 118, 125 118, 150 116" class="underline-swash" />
+</svg>

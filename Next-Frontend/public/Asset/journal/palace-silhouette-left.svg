@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" fill="none" stroke="#D8B29C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55">
+  <!-- Royal Rajasthani Jharokha & Palace Chhatri Outline -->
+  <!-- Base Balcony -->
+  <path d="M40 300 H360 M60 285 H340 M80 270 H320" stroke-width="1.4" />
+  <path d="M70 285 L60 300 M110 285 L105 300 M150 285 L148 300 M190 285 L190 300 M230 285 L232 300 M270 285 L275 300 M310 285 L320 300" />
+  
+  <!-- Jali lattice pattern base -->
+  <rect x="90" y="240" width="200" height="30" rx="3" stroke-dasharray="3,3" />
+  
+  <!-- Main Arch Columns -->
+  <path d="M100 240 V150 M140 240 V150 M240 240 V150 M280 240 V150" stroke-width="1.5" />
+  <!-- Center Main Pillars -->
+  <path d="M120 240 V160 M260 240 V160" />
+  
+  <!-- Cusped Multi-foil Arch (Center) -->
+  <path d="M140 170 C140 140, 160 130, 175 140 C185 125, 195 125, 205 140 C220 130, 240 140, 240 170" stroke-width="1.6" />
+  <path d="M145 165 C145 145, 160 138, 175 145 C185 133, 195 133, 205 145 C220 138, 235 145, 235 165" />
+  
+  <!-- Side Arches -->
+  <path d="M100 180 C100 155, 115 145, 125 155 C132 145, 140 155, 140 180" />
+  <path d="M240 180 C240 155, 248 145, 255 155 C265 145, 280 155, 280 180" />
+  
+  <!-- Chhatri Dome Architrave -->
+  <path d="M80 140 H300 M90 130 H290" stroke-width="1.6" />
+  
+  <!-- Fluted Onion Dome -->
+  <path d="M110 130 C110 80, 140 50, 190 20 C240 50, 270 80, 270 130" stroke-width="1.8" />
+  <!-- Dome Flutes / Ribs -->
+  <path d="M140 130 C140 90, 160 60, 190 20" />
+  <path d="M165 130 C165 95, 175 65, 190 20" />
+  <path d="M215 130 C215 95, 205 65, 190 20" />
+  <path d="M240 130 C240 90, 220 60, 190 20" />
+  
+  <!-- Kalash & Finial Spire -->
+  <path d="M190 20 V5 M186 16 H194 M184 10 H196 M188 5 L190 0 L192 5" stroke-width="1.6" />
+  
+  <!-- Left Side Small Dome / Minaret -->
+  <path d="M40 240 V160 M60 240 V160" />
+  <path d="M35 160 H65 M40 150 H60" />
+  <path d="M40 150 C40 120, 50 100, 50 85 C50 100, 60 120, 60 150" />
+  <path d="M50 85 V75 M48 80 H52" />
+  
+  <!-- Right Side Small Dome / Minaret -->
+  <path d="M320 240 V160 M340 240 V160" />
+  <path d="M315 160 H345 M320 150 H340" />
+  <path d="M320 150 C320 120, 330 100, 330 85 C330 100, 340 120, 340 150" />
+  <path d="M330 85 V75 M328 80 H332" />
+</svg>

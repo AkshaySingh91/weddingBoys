@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" fill="none" stroke="#D8B29C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6">
+  <!-- Delicate Botanical Branch & Blossom -->
+  <path d="M160 220 C140 180, 110 130, 80 50 C70 30, 60 15, 40 10" stroke-width="1.4" />
+  
+  <!-- Side Twigs & Leaves -->
+  <!-- Leaf 1 -->
+  <path d="M125 155 C100 150, 80 160, 70 175 C85 180, 110 175, 125 155 Z" fill="#FCEEE6" fill-opacity="0.4" />
+  <!-- Leaf 2 -->
+  <path d="M140 180 C160 185, 175 175, 185 160 C170 155, 150 165, 140 180 Z" fill="#FCEEE6" fill-opacity="0.4" />
+  
+  <!-- Leaf 3 -->
+  <path d="M98 105 C75 95, 60 105, 50 120 C65 125, 85 120, 98 105 Z" fill="#FCEEE6" fill-opacity="0.4" />
+  <!-- Leaf 4 -->
+  <path d="M108 120 C130 120, 145 110, 155 95 C140 92, 120 102, 108 120 Z" fill="#FCEEE6" fill-opacity="0.4" />
+  
+  <!-- Small Flower 1 -->
+  <path d="M80 50 C60 45, 50 35, 45 25 C55 25, 68 35, 80 50 Z" />
+  <path d="M80 50 C85 30, 95 20, 110 20 C108 32, 98 42, 80 50 Z" />
+  <circle cx="80" cy="48" r="2.5" fill="#D8B29C" />
+  
+  <!-- Petal details -->
+  <path d="M40 10 C35 5, 25 8, 20 15 C28 20, 35 16, 40 10 Z" />
+</svg>
