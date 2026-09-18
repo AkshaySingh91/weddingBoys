@@ -1,17 +1,17 @@
-# Ignore node_modules in both Frontend and Backend
+# Ignore node_modules in both Next-Frontend and Backend
 Backend/node_modules/
-Frontend/node_modules/
+Next-Frontend/node_modules/
 
 # Ignore .env files
 Backend/.env
-Frontend/.env
-Frontend/.env.production
+Next-Next-Frontend/.env
+Next-Frontend/.env.production
 
 # Ignore .vercel directory
-Frontend/.vercel/
+Next-Frontend/.vercel/
 
 # Ignore build directory if unnecessary
-Frontend/build/
+Next-Frontend/build/
 
 # Ignore log files (optional)
 *.log
