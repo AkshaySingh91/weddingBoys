@@ -169,4 +169,11 @@ palette.
 - **One page type in scope was missing from the brief**: `/weddings/[city]`,
   seven live indexed pages linked from the footer.
 
+- **Three pages could not be captured full-page** at every viewport
+  (`/photos` at ≥1440, `/photos/[id]`, `/about-us` at 1920): the gallery's
+  infinite scroll keeps the document growing while it is being measured, so the
+  capture never completes. Those viewports are supplied as **viewport-height**
+  screenshots instead, and the failure is recorded as corroborating evidence for
+  R-38 rather than worked around silently.
+
 Reproduce with `node audit/_tools/capture.mjs`, `analyze.mjs`, `perf.mjs`.
