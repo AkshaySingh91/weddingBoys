@@ -1,0 +1,3073 @@
+{
+ "url": "/about-us",
+ "title": "About The Wedding Boys | Our Story & Approach",
+ "viewport": {
+  "w": 1920,
+  "h": 1080
+ },
+ "scrollWidth": 1920,
+ "overflowX": 0,
+ "scanned": 328,
+ "tokens": {
+  "fontFamily": {
+   "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif": {
+    "n": 253,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, -apple-system, \"system-ui\", sans-serif": {
+    "n": 65,
+    "where": [
+     "body.antialiased>div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]",
+     "div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12",
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl",
+     "footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12"
+    ]
+   },
+   "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace": {
+    "n": 7,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold"
+    ]
+   },
+   "\"Playfair Display\", \"Playfair Display Fallback\", \"DM Serif Display\", \"DM Serif Display Fallback\", Georgia, serif": {
+    "n": 3,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.font-serif.text-base.font-bold",
+     "div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.mt-12.pt-6.border-t>p.font-serif.italic.text-[#FAD7A0]/80"
+    ]
+   }
+  },
+  "fontSize": {
+   "16px": {
+    "n": 242,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "24px": {
+    "n": 2,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl"
+    ]
+   },
+   "12px": {
+    "n": 38,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+     "form.space-y-1.5>div.flex.items-center.bg-white>div.relative.flex-1.flex>input.w-full.pl-2.pr-2",
+     "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center"
+    ]
+   },
+   "14px": {
+    "n": 5,
+    "where": [
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm"
+    ]
+   },
+   "20px": {
+    "n": 20,
+    "where": [
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-xl",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3",
+     "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500>svg>line"
+    ]
+   },
+   "18px": {
+    "n": 3,
+    "where": [
+     "div>a.text-desktopBodyMedium.text-nowrap.px-3>svg>polyline",
+     "div.relative.group>div.relative.h-96.rounded-3xl>div.absolute.bottom-0.left-0>p.text-lg.opacity-90",
+     "div.relative.group>div.relative.h-96.rounded-3xl>div.absolute.bottom-0.left-0>p.text-lg.opacity-90"
+    ]
+   },
+   "48px": {
+    "n": 1,
+    "where": [
+     "section.relative.h-screen.flex>div.relative.z-10.max-w-4xl>div.mb-12.relative.inline-block>h1.sm:text-mobileHeadlineLarge.lg:text-desktopHeadlineLarge.text-5xl"
+    ]
+   },
+   "32px": {
+    "n": 1,
+    "where": [
+     "div.min-h-screen.bg-gradient-to-b.relative>section.relative.h-screen.flex>div.relative.z-10.max-w-4xl>p.sm:text-mobileBodyLarge.lg:text-desktopHeadlineSmall.text-lg"
+    ]
+   },
+   "30px": {
+    "n": 3,
+    "where": [
+     "div.relative.group>div.relative.h-96.rounded-3xl>div.absolute.bottom-0.left-0>h3.text-3xl.font-bold",
+     "div.relative.group>div.relative.h-96.rounded-3xl>div.absolute.bottom-0.left-0>h3.text-3xl.font-bold",
+     "div.min-h-screen.bg-gradient-to-b.relative>section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>h3.text-3xl.font-bold.text-center"
+    ]
+   },
+   "36px": {
+    "n": 1,
+    "where": [
+     "div.min-h-screen.bg-gradient-to-b.relative>section.py-20.bg-gradient-to-b.from-[#FFDCCC]>div.max-w-4xl.mx-auto.px-4>h2.text-4xl.font-bold.text-center"
+    ]
+   },
+   "40px": {
+    "n": 1,
+    "where": [
+     "section.relative.py-32.sm:py-10>div.max-w-4xl.mx-auto.px-4>div.bg-white.rounded-3xl.sm:p-6>h2.sm:text-mobileHeadlineMedium.lg:text-desktopHeadlineMedium.text-4xl"
+    ]
+   },
+   "10px": {
+    "n": 10,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>p.text-[10px].text-[#78716C].pl-2",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold"
+    ]
+   },
+   "8px": {
+    "n": 1,
+    "where": [
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]"
+    ]
+   }
+  },
+  "fontWeight": {
+   "400": {
+    "n": 293,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "500": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium"
+    ]
+   },
+   "600": {
+    "n": 12,
+    "where": [
+     "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-xl.font-semibold.text-[#54382E]",
+     "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-xl.font-semibold.text-[#54382E]",
+     "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-xl.font-semibold.text-[#54382E]",
+     "div.flex.items-center.mb-16>div.w-1/2.px-8.sm:px-2>div.bg-white.p-6.rounded-2xl>h3.text-xl.font-semibold.text-[#54382E]"
+    ]
+   },
+   "700": {
+    "n": 22,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "section.relative.h-screen.flex>div.relative.z-10.max-w-4xl>div.mb-12.relative.inline-block>h1.sm:text-mobileHeadlineLarge.lg:text-desktopHeadlineLarge.text-5xl",
+     "div.relative.group>div.relative.h-96.rounded-3xl>div.absolute.bottom-0.left-0>h3.text-3xl.font-bold",
+     "div.relative.group>div.relative.h-96.rounded-3xl>div.absolute.bottom-0.left-0>h3.text-3xl.font-bold"
+    ]
+   }
+  },
+  "lineHeight": {
+   "24px": {
+    "n": 240,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "32px": {
+    "n": 2,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl"
+    ]
+   },
+   "16px": {
+    "n": 35,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+     "form.space-y-1.5>div.flex.items-center.bg-white>div.relative.flex-1.flex>input.w-full.pl-2.pr-2",
+     "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center",
+     "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span"
+    ]
+   },
+   "20px": {
+    "n": 5,
+    "where": [
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm"
+    ]
+   },
+   "28px": {
+    "n": 21,
+    "where": [
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-xl",
+     "div>a.text-desktopBodyMedium.text-nowrap.px-3>svg>polyline",
+     "div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500>svg>line",
+     "div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500>svg>line"
+    ]
+   },
+   "30px": {
+    "n": 2,
+    "where": [
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3",
+     "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span"
+    ]
+   },
+   "48px": {
+    "n": 1,
+    "where": [
+     "section.relative.h-screen.flex>div.relative.z-10.max-w-4xl>div.mb-12.relative.inline-block>h1.sm:text-mobileHeadlineLarge.lg:text-desktopHeadlineLarge.text-5xl"
+    ]
+   },
+   "52px": {
+    "n": 1,
+    "where": [
+     "div.min-h-screen.bg-gradient-to-b.relative>section.relative.h-screen.flex>div.relative.z-10.max-w-4xl>p.sm:text-mobileBodyLarge.lg:text-desktopHeadlineSmall.text-lg"
+    ]
+   },
+   "36px": {
+    "n": 3,
+    "where": [
+     "div.relative.group>div.relative.h-96.rounded-3xl>div.absolute.bottom-0.left-0>h3.text-3xl.font-bold",
+     "div.relative.group>div.relative.h-96.rounded-3xl>div.absolute.bottom-0.left-0>h3.text-3xl.font-bold",
+     "div.min-h-screen.bg-gradient-to-b.relative>section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>h3.text-3xl.font-bold.text-center"
+    ]
+   },
+   "26px": {
+    "n": 2,
+    "where": [
+     "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>p.text-[#74583E].leading-relaxed",
+     "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>p.text-[#74583E].leading-relaxed"
+    ]
+   },
+   "40px": {
+    "n": 2,
+    "where": [
+     "div.min-h-screen.bg-gradient-to-b.relative>section.py-20.bg-gradient-to-b.from-[#FFDCCC]>div.max-w-4xl.mx-auto.px-4>h2.text-4xl.font-bold.text-center",
+     "section.relative.py-32.sm:py-10>div.max-w-4xl.mx-auto.px-4>div.bg-white.rounded-3xl.sm:p-6>h2.sm:text-mobileHeadlineMedium.lg:text-desktopHeadlineMedium.text-4xl"
+    ]
+   },
+   "15px": {
+    "n": 10,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>p.text-[10px].text-[#78716C].pl-2",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold"
+    ]
+   },
+   "19.5px": {
+    "n": 3,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>p.text-xs.text-stone-300.leading-relaxed",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>p.text-xs.text-stone-300.leading-relaxed"
+    ]
+   },
+   "12px": {
+    "n": 1,
+    "where": [
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]"
+    ]
+   }
+  },
+  "letterSpacing": {
+   "normal": {
+    "n": 316,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "1.2px": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium"
+    ]
+   },
+   "2px": {
+    "n": 3,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]"
+    ]
+   },
+   "-0.6px": {
+    "n": 1,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl"
+    ]
+   },
+   "0.3px": {
+    "n": 2,
+    "where": [
+     "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center",
+     "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span"
+    ]
+   },
+   "2.56px": {
+    "n": 1,
+    "where": [
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.font-serif.text-base.font-bold"
+    ]
+   },
+   "2.2px": {
+    "n": 4,
+    "where": [
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold"
+    ]
+   }
+  },
+  "textTransform": {
+   "none": {
+    "n": 321,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "uppercase": {
+    "n": 7,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold"
+    ]
+   }
+  },
+  "color": {
+   "#000000": {
+    "n": 157,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "rgba(254,205,211,0.4)": {
+    "n": 15,
+    "where": [
+     "div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none>div.absolute.text-rose-200/40",
+     "div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none>div.absolute.text-rose-200/40",
+     "div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none>div.absolute.text-rose-200/40",
+     "div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none>div.absolute.text-rose-200/40"
+    ]
+   },
+   "rgba(0,0,0,0)": {
+    "n": 10,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+     "div.max-w-7xl.mx-auto.grid>div.relative.group>div.relative.h-96.rounded-3xl>img.object-cover.transform.group-hover:scale-105",
+     "div.max-w-7xl.mx-auto.grid>div.relative.group>div.relative.h-96.rounded-3xl>img.object-cover.transform.group-hover:scale-105",
+     "div.min-h-screen.bg-gradient-to-b.relative>section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>h3.text-3xl.font-bold.text-center"
+    ]
+   },
+   "rgba(244,63,94,0.8)": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium"
+    ]
+   },
+   "#374151": {
+    "n": 14,
+    "where": [
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.flex.items-center.gap-6>a.px-3.py-2.flex>svg>polyline",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex>span.text-sm",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex"
+    ]
+   },
+   "#FFFFFF": {
+    "n": 31,
+    "where": [
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3",
+     "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+     "div>a.text-desktopBodyMedium.text-nowrap.px-3>svg>polyline",
+     "div.max-w-7xl.mx-auto.grid>div.relative.group>div.relative.h-96.rounded-3xl>div.absolute.bottom-0.left-0"
+    ]
+   },
+   "#4B5563": {
+    "n": 4,
+    "where": [
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500",
+     "div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500>svg>line",
+     "div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500>svg>line",
+     "div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500>svg>line"
+    ]
+   },
+   "#54382E": {
+    "n": 11,
+    "where": [
+     "section.relative.h-screen.flex>div.relative.z-10.max-w-4xl>div.mb-12.relative.inline-block>h1.sm:text-mobileHeadlineLarge.lg:text-desktopHeadlineLarge.text-5xl",
+     "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-xl.font-semibold.text-[#54382E]",
+     "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-xl.font-semibold.text-[#54382E]",
+     "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-xl.font-semibold.text-[#54382E]"
+    ]
+   },
+   "#74583E": {
+    "n": 10,
+    "where": [
+     "div.min-h-screen.bg-gradient-to-b.relative>section.relative.h-screen.flex>div.relative.z-10.max-w-4xl>p.sm:text-mobileBodyLarge.lg:text-desktopHeadlineSmall.text-lg",
+     "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>p.text-[#74583E].sm:text-sm.text-center",
+     "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>p.text-[#74583E].leading-relaxed",
+     "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>p.text-[#74583E].leading-relaxed"
+    ]
+   },
+   "rgba(255,105,105,0.3)": {
+    "n": 3,
+    "where": [
+     "div.relative.group>div.absolute.-right-8.-top-8>svg>circle",
+     "div.relative.group>div.absolute.-left-8.-top-8>svg>polygon",
+     "div.relative.group>div.absolute.-left-8.-top-8>svg>rect"
+    ]
+   },
+   "#FF6969": {
+    "n": 3,
+    "where": [
+     "div.mb-4.flex.justify-center>div.p-3.bg-[#FFF0E6].rounded-xl>svg>circle",
+     "div.mb-4.flex.justify-center>div.p-3.bg-[#FFF0E6].rounded-xl>svg>circle",
+     "div.mb-4.flex.justify-center>div.p-3.bg-[#FFF0E6].rounded-xl>svg>polyline"
+    ]
+   },
+   "#2F2F2F": {
+    "n": 10,
+    "where": [
+     "body.antialiased>div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]",
+     "div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12",
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl",
+     "footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12"
+    ]
+   },
+   "#FF5353": {
+    "n": 2,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span"
+    ]
+   },
+   "#5E2B17": {
+    "n": 1,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl"
+    ]
+   },
+   "#78716C": {
+    "n": 1,
+    "where": [
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>p.text-[10px].text-[#78716C].pl-2"
+    ]
+   },
+   "#FAF8F5": {
+    "n": 11,
+    "where": [
+     "div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12",
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6",
+     "footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2",
+     "div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2"
+    ]
+   },
+   "#FAD7A0": {
+    "n": 5,
+    "where": [
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>h4.text-[10px].font-mono.font-bold"
+    ]
+   },
+   "#D6D3D1": {
+    "n": 36,
+    "where": [
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>p.text-xs.text-stone-300.leading-relaxed",
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full"
+    ]
+   },
+   "#A8A29E": {
+    "n": 2,
+    "where": [
+     "footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.mt-12.pt-6.border-t",
+     "div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.mt-12.pt-6.border-t>p"
+    ]
+   },
+   "rgba(250,215,160,0.8)": {
+    "n": 1,
+    "where": [
+     "div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.mt-12.pt-6.border-t>p.font-serif.italic.text-[#FAD7A0]/80"
+    ]
+   }
+  },
+  "backgroundColor": {
+   "rgba(0,0,0,0)": {
+    "n": 238,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "rgba(255,255,255,0.95)": {
+    "n": 1,
+    "where": [
+     "body.antialiased>div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0"
+    ]
+   },
+   "rgba(255,215,0,0.3)": {
+    "n": 45,
+    "where": [
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>div.absolute.inset-0.pointer-events-none>div.absolute.w-2.h-2",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>div.absolute.inset-0.pointer-events-none>div.absolute.w-2.h-2",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>div.absolute.inset-0.pointer-events-none>div.absolute.w-2.h-2",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>div.absolute.inset-0.pointer-events-none>div.absolute.w-2.h-2"
+    ]
+   },
+   "#FF6969": {
+    "n": 12,
+    "where": [
+     "section.relative.h-screen.flex>div.relative.z-10.max-w-4xl>div.mb-12.relative.inline-block>div.absolute.-bottom-4.left-1/2",
+     "div.max-w-6xl.mx-auto>div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.flex.items-center.justify-center",
+     "div.flex.items-center.mb-16>div.w-1/2.px-8.sm:px-2>div.bg-white.p-6.rounded-2xl>div.absolute.-top-4.left-1/2",
+     "div.relative>div.flex.items-center.mb-16>div.w-1/2.flex.justify-center>div.w-auto.h-auto.rounded-full"
+    ]
+   },
+   "rgba(255,255,255,0.5)": {
+    "n": 1,
+    "where": [
+     "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.relative.py-20.px-4"
+    ]
+   },
+   "rgba(255,105,105,0.1)": {
+    "n": 10,
+    "where": [
+     "section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>div.relative.flex.justify-center>div.absolute.-top-8.left-1/2",
+     "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>div.absolute.-top-8.-right-8",
+     "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>div.absolute.-top-8.-right-8",
+     "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>div.absolute.-top-8.-right-8"
+    ]
+   },
+   "rgba(255,255,255,0.9)": {
+    "n": 3,
+    "where": [
+     "section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6",
+     "section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6",
+     "section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6"
+    ]
+   },
+   "#FFF0E6": {
+    "n": 3,
+    "where": [
+     "div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>div.mb-4.flex.justify-center>div.p-3.bg-[#FFF0E6].rounded-xl",
+     "div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>div.mb-4.flex.justify-center>div.p-3.bg-[#FFF0E6].rounded-xl",
+     "div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>div.mb-4.flex.justify-center>div.p-3.bg-[#FFF0E6].rounded-xl"
+    ]
+   },
+   "#FFFFFF": {
+    "n": 7,
+    "where": [
+     "div.relative>div.flex.items-center.mb-16>div.w-1/2.px-8.sm:px-2>div.bg-white.p-6.rounded-2xl",
+     "div.relative>div.flex.items-center.mb-16>div.w-1/2.px-8.sm:px-2>div.bg-white.p-6.rounded-2xl",
+     "div.relative>div.flex.items-center.mb-16>div.w-1/2.px-8.sm:px-2>div.bg-white.p-6.rounded-2xl",
+     "div.relative>div.flex.items-center.mb-16>div.w-1/2.px-8.sm:px-2>div.bg-white.p-6.rounded-2xl"
+    ]
+   },
+   "rgba(255,215,0,0.1)": {
+    "n": 1,
+    "where": [
+     "section.relative.py-32.sm:py-10>div.max-w-4xl.mx-auto.px-4>div.bg-white.rounded-3xl.sm:p-6>div.absolute.-top-32.-left-32"
+    ]
+   },
+   "#FF5353": {
+    "n": 2,
+    "where": [
+     "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5"
+    ]
+   },
+   "#2A160F": {
+    "n": 1,
+    "where": [
+     "div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12"
+    ]
+   },
+   "#4E2818": {
+    "n": 4,
+    "where": [
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full"
+    ]
+   }
+  },
+  "borderTopWidth": {
+   "0px": {
+    "n": 308,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "4px": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full"
+    ]
+   },
+   "2px": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>div.absolute.inset-0.border-2"
+    ]
+   },
+   "1px": {
+    "n": 18,
+    "where": [
+     "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>div.absolute.inset-0.border",
+     "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>div.absolute.inset-0.border",
+     "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>div.absolute.inset-0.border",
+     "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>div.absolute.inset-0.border"
+    ]
+   }
+  },
+  "borderTopStyle": {
+   "solid": {
+    "n": 328,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   }
+  },
+  "borderTopColor": {
+   "#E5E7EB": {
+    "n": 300,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "#F3F4F6": {
+    "n": 1,
+    "where": [
+     "body.antialiased>div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0"
+    ]
+   },
+   "#FFF1F2": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full"
+    ]
+   },
+   "#FECDD3": {
+    "n": 1,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>div.absolute.inset-0.border-2"
+    ]
+   },
+   "#FFFFFF": {
+    "n": 7,
+    "where": [
+     "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>img.w-20.h-20.md:w-24",
+     "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>img.w-20.h-20.md:w-24",
+     "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>img.w-20.h-20.md:w-24",
+     "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>img.w-20.h-20.md:w-24"
+    ]
+   },
+   "rgba(255,105,105,0.2)": {
+    "n": 6,
+    "where": [
+     "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>div.absolute.inset-0.border",
+     "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>div.absolute.inset-0.border",
+     "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>div.absolute.inset-0.border",
+     "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>div.absolute.inset-0.border"
+    ]
+   },
+   "#FFE5D5": {
+    "n": 3,
+    "where": [
+     "section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6",
+     "section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6",
+     "section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6"
+    ]
+   },
+   "rgba(255,105,105,0.1)": {
+    "n": 5,
+    "where": [
+     "div.relative>div.flex.items-center.mb-16>div.w-1/2.px-8.sm:px-2>div.bg-white.p-6.rounded-2xl",
+     "div.relative>div.flex.items-center.mb-16>div.w-1/2.px-8.sm:px-2>div.bg-white.p-6.rounded-2xl",
+     "div.relative>div.flex.items-center.mb-16>div.w-1/2.px-8.sm:px-2>div.bg-white.p-6.rounded-2xl",
+     "div.relative>div.flex.items-center.mb-16>div.w-1/2.px-8.sm:px-2>div.bg-white.p-6.rounded-2xl"
+    ]
+   },
+   "#E5DCD3": {
+    "n": 2,
+    "where": [
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white"
+    ]
+   },
+   "#5E2B17": {
+    "n": 1,
+    "where": [
+     "div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12"
+    ]
+   },
+   "rgba(94,43,23,0.6)": {
+    "n": 1,
+    "where": [
+     "footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.mt-12.pt-6.border-t"
+    ]
+   }
+  },
+  "borderTopLeftRadius": {
+   "0px": {
+    "n": 221,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "9999px": {
+    "n": 92,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>div.absolute.inset-0.border-2",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500"
+    ]
+   },
+   "24px": {
+    "n": 3,
+    "where": [
+     "section.relative.py-20.px-4>div.max-w-7xl.mx-auto.grid>div.relative.group>div.relative.h-96.rounded-3xl",
+     "section.relative.py-20.px-4>div.max-w-7xl.mx-auto.grid>div.relative.group>div.relative.h-96.rounded-3xl",
+     "div.min-h-screen.bg-gradient-to-b.relative>section.relative.py-32.sm:py-10>div.max-w-4xl.mx-auto.px-4>div.bg-white.rounded-3xl.sm:p-6"
+    ]
+   },
+   "16px": {
+    "n": 9,
+    "where": [
+     "section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6",
+     "section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6",
+     "section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6",
+     "div.relative>div.flex.items-center.mb-16>div.w-1/2.px-8.sm:px-2>div.bg-white.p-6.rounded-2xl"
+    ]
+   },
+   "12px": {
+    "n": 3,
+    "where": [
+     "div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>div.mb-4.flex.justify-center>div.p-3.bg-[#FFF0E6].rounded-xl",
+     "div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>div.mb-4.flex.justify-center>div.p-3.bg-[#FFF0E6].rounded-xl",
+     "div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>div.mb-4.flex.justify-center>div.p-3.bg-[#FFF0E6].rounded-xl"
+    ]
+   }
+  },
+  "boxShadow": {
+   "none": {
+    "n": 301,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px": {
+    "n": 5,
+    "where": [
+     "body.antialiased>div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0",
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl",
+     "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white",
+     "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center"
+    ]
+   },
+   "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px": {
+    "n": 19,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3",
+     "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>img.w-20.h-20.md:w-24",
+     "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>img.w-20.h-20.md:w-24"
+    ]
+   },
+   "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.25) 0px 25px 50px -12px": {
+    "n": 3,
+    "where": [
+     "section.relative.py-20.px-4>div.max-w-7xl.mx-auto.grid>div.relative.group>div.relative.h-96.rounded-3xl",
+     "section.relative.py-20.px-4>div.max-w-7xl.mx-auto.grid>div.relative.group>div.relative.h-96.rounded-3xl",
+     "div.min-h-screen.bg-gradient-to-b.relative>section.relative.py-32.sm:py-10>div.max-w-4xl.mx-auto.px-4>div.bg-white.rounded-3xl.sm:p-6"
+    ]
+   }
+  },
+  "zIndex": {
+   "0": {
+    "n": 1,
+    "where": [
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.relative.h-screen.flex>div.absolute.inset-0.z-0"
+    ]
+   },
+   "10": {
+    "n": 4,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.relative.z-10",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.relative.h-screen.flex>div.relative.z-10.max-w-4xl",
+     "section.relative.py-20.px-4>div.max-w-7xl.mx-auto.grid>div.relative.group>div.absolute.-right-8.-top-8",
+     "section.relative.py-20.px-4>div.max-w-7xl.mx-auto.grid>div.relative.group>div.absolute.-left-8.-top-8"
+    ]
+   },
+   "50": {
+    "n": 1,
+    "where": [
+     "body.antialiased>div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0"
+    ]
+   },
+   "1000": {
+    "n": 1,
+    "where": [
+     "div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none>div.fixed.top-1/2.left-1/2"
+    ]
+   },
+   "auto": {
+    "n": 320,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none",
+     "div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none>div.absolute.text-rose-200/40"
+    ]
+   },
+   "-50": {
+    "n": 1,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50"
+    ]
+   }
+  },
+  "transitionDuration": {
+   "0s": {
+    "n": 297,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "0.15s": {
+    "n": 29,
+    "where": [
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex"
+    ]
+   },
+   "0.5s": {
+    "n": 2,
+    "where": [
+     "div.max-w-7xl.mx-auto.grid>div.relative.group>div.relative.h-96.rounded-3xl>img.object-cover.transform.group-hover:scale-105",
+     "div.max-w-7xl.mx-auto.grid>div.relative.group>div.relative.h-96.rounded-3xl>img.object-cover.transform.group-hover:scale-105"
+    ]
+   }
+  },
+  "transitionTimingFunction": {
+   "ease": {
+    "n": 297,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "cubic-bezier(0.4, 0, 0.2, 1)": {
+    "n": 31,
+    "where": [
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex"
+    ]
+   }
+  },
+  "maxWidth": {
+   "none": {
+    "n": 307,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "1280px": {
+    "n": 2,
+    "where": [
+     "div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.relative.py-20.px-4>div.max-w-7xl.mx-auto.grid"
+    ]
+   },
+   "100%": {
+    "n": 9,
+    "where": [
+     "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "div.max-w-7xl.mx-auto.grid>div.relative.group>div.relative.h-96.rounded-3xl>img.object-cover.transform.group-hover:scale-105",
+     "div.max-w-7xl.mx-auto.grid>div.relative.group>div.relative.h-96.rounded-3xl>img.object-cover.transform.group-hover:scale-105",
+     "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>img.w-20.h-20.md:w-24"
+    ]
+   },
+   "896px": {
+    "n": 3,
+    "where": [
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.relative.h-screen.flex>div.relative.z-10.max-w-4xl",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.py-20.bg-gradient-to-b.from-[#FFDCCC]>div.max-w-4xl.mx-auto.px-4",
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.relative.py-32.sm:py-10>div.max-w-4xl.mx-auto.px-4"
+    ]
+   },
+   "672px": {
+    "n": 1,
+    "where": [
+     "div.min-h-screen.bg-gradient-to-b.relative>section.relative.h-screen.flex>div.relative.z-10.max-w-4xl>p.sm:text-mobileBodyLarge.lg:text-desktopHeadlineSmall.text-lg"
+    ]
+   },
+   "1152px": {
+    "n": 2,
+    "where": [
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto",
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl"
+    ]
+   },
+   "1024px": {
+    "n": 1,
+    "where": [
+     "div.min-h-screen.bg-gradient-to-b.relative>section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20"
+    ]
+   },
+   "448px": {
+    "n": 1,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md"
+    ]
+   },
+   "1400px": {
+    "n": 1,
+    "where": [
+     "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6"
+    ]
+   },
+   "384px": {
+    "n": 1,
+    "where": [
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>p.text-xs.text-stone-300.leading-relaxed"
+    ]
+   }
+  },
+  "gap": {
+   "normal": {
+    "n": 309,
+    "where": [
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen",
+     "html.inter_5d8977a8-module__8niREW__variable.oxygen_17f6c08b-module__uolFrG__variable.playfair_display_37dcb4e2-module__7gjuIq__variable>body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.bg-[url('data:image/png;base64,iVBORw0KGgo...')]",
+     "body.antialiased>div.relative.min-h-screen>div.fixed.inset-0.-z-50>div.absolute.inset-0.pointer-events-none"
+    ]
+   },
+   "16px": {
+    "n": 3,
+    "where": [
+     "nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>a.flex.items-center.gap-4",
+     "nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-4",
+     "footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.mt-12.pt-6.border-t"
+    ]
+   },
+   "4px": {
+    "n": 1,
+    "where": [
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1"
+    ]
+   },
+   "24px": {
+    "n": 2,
+    "where": [
+     "nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6",
+     "footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12"
+    ]
+   },
+   "8px": {
+    "n": 5,
+    "where": [
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex"
+    ]
+   },
+   "48px": {
+    "n": 2,
+    "where": [
+     "main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.relative.py-20.px-4>div.max-w-7xl.mx-auto.grid",
+     "footer.relative.w-full.text-[#2F2F2F]>div.bg-[#2A160F].text-[#FAF8F5].pt-12>div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2"
+    ]
+   },
+   "32px": {
+    "n": 1,
+    "where": [
+     "div.min-h-screen.bg-gradient-to-b.relative>section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20"
+    ]
+   },
+   "12px": {
+    "n": 1,
+    "where": [
+     "section.relative.py-32.sm:py-10>div.max-w-4xl.mx-auto.px-4>div.bg-white.rounded-3xl.sm:p-6>button.bg-gradient-to-br.from-[#FF6969].to-[#FF9640]"
+    ]
+   },
+   "6px": {
+    "n": 3,
+    "where": [
+     "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5",
+     "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center",
+     "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5"
+    ]
+   },
+   "10px": {
+    "n": 1,
+    "where": [
+     "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap"
+    ]
+   }
+  },
+  "spacing": {
+   "32px": {
+    "n": 13,
+    "where": [
+     "paddingLeft@div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4",
+     "paddingRight@div.relative.min-h-screen>div.relative.z-10>nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4",
+     "paddingLeft@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.relative.py-20.px-4",
+     "paddingRight@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.relative.py-20.px-4"
+    ]
+   },
+   "4px": {
+    "n": 8,
+    "where": [
+     "paddingTop@div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "paddingBottom@div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "paddingLeft@div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+     "paddingRight@div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full"
+    ]
+   },
+   "8px": {
+    "n": 81,
+    "where": [
+     "paddingTop@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "paddingBottom@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "paddingTop@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "paddingBottom@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex"
+    ]
+   },
+   "12px": {
+    "n": 36,
+    "where": [
+     "paddingLeft@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "paddingRight@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "paddingLeft@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+     "paddingRight@div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex"
+    ]
+   },
+   "96px": {
+    "n": 1,
+    "where": [
+     "paddingTop@body.antialiased>div.relative.min-h-screen>div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2"
+    ]
+   },
+   "16px": {
+    "n": 9,
+    "where": [
+     "paddingLeft@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.relative.h-screen.flex",
+     "paddingRight@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.relative.h-screen.flex",
+     "paddingLeft@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.py-16.sm:py-10.px-4",
+     "paddingRight@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.py-16.sm:py-10.px-4"
+    ]
+   },
+   "40px": {
+    "n": 12,
+    "where": [
+     "paddingTop@main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.relative.h-screen.flex>div.relative.z-10.max-w-4xl",
+     "paddingBottom@main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.relative.h-screen.flex>div.relative.z-10.max-w-4xl",
+     "paddingTop@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.py-16.sm:py-10.px-4",
+     "paddingBottom@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.py-16.sm:py-10.px-4"
+    ]
+   },
+   "48px": {
+    "n": 6,
+    "where": [
+     "marginBottom@div.min-h-screen.bg-gradient-to-b.relative>section.relative.h-screen.flex>div.relative.z-10.max-w-4xl>div.mb-12.relative.inline-block",
+     "marginBottom@div.min-h-screen.bg-gradient-to-b.relative>section.relative.h-screen.flex>div.relative.z-10.max-w-4xl>p.sm:text-mobileBodyLarge.lg:text-desktopHeadlineSmall.text-lg",
+     "marginBottom@div.min-h-screen.bg-gradient-to-b.relative>section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>h3.text-3xl.font-bold.text-center",
+     "marginBottom@div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12"
+    ]
+   },
+   "24px": {
+    "n": 50,
+    "where": [
+     "marginBottom@section.relative.h-screen.flex>div.relative.z-10.max-w-4xl>div.mb-12.relative.inline-block>h1.sm:text-mobileHeadlineLarge.lg:text-desktopHeadlineLarge.text-5xl",
+     "paddingTop@div.max-w-7xl.mx-auto.grid>div.relative.group>div.relative.h-96.rounded-3xl>div.absolute.bottom-0.left-0",
+     "paddingBottom@div.max-w-7xl.mx-auto.grid>div.relative.group>div.relative.h-96.rounded-3xl>div.absolute.bottom-0.left-0",
+     "paddingLeft@div.max-w-7xl.mx-auto.grid>div.relative.group>div.relative.h-96.rounded-3xl>div.absolute.bottom-0.left-0"
+    ]
+   },
+   "80px": {
+    "n": 5,
+    "where": [
+     "paddingTop@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.relative.py-20.px-4",
+     "paddingBottom@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.relative.py-20.px-4",
+     "marginTop@div.min-h-screen.bg-gradient-to-b.relative>section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20",
+     "paddingTop@div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.py-20.bg-gradient-to-b.from-[#FFDCCC]"
+    ]
+   },
+   "64px": {
+    "n": 2,
+    "where": [
+     "marginBottom@div.min-h-screen.bg-gradient-to-b.relative>section.py-20.bg-gradient-to-b.from-[#FFDCCC]>div.max-w-4xl.mx-auto.px-4>h2.text-4xl.font-bold.text-center",
+     "marginTop@body.antialiased>div.relative.min-h-screen>div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]"
+    ]
+   },
+   "6px": {
+    "n": 5,
+    "where": [
+     "marginTop@div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+     "marginTop@div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+     "paddingTop@form.space-y-1.5>div.flex.items-center.bg-white>div.relative.flex-1.flex>input.w-full.pl-2.pr-2",
+     "paddingBottom@form.space-y-1.5>div.flex.items-center.bg-white>div.relative.flex-1.flex>input.w-full.pl-2.pr-2"
+    ]
+   },
+   "14px": {
+    "n": 1,
+    "where": [
+     "paddingLeft@div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>div.relative.flex-1.flex"
+    ]
+   },
+   "2px": {
+    "n": 1,
+    "where": [
+     "marginTop@div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div>span.text-[8px].font-mono.tracking-[0.25em]"
+    ]
+   },
+   "10px": {
+    "n": 7,
+    "where": [
+     "marginTop@div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300",
+     "marginTop@div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300",
+     "marginTop@div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300",
+     "marginTop@div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>p.text-xs.text-stone-300.leading-relaxed"
+    ]
+   },
+   "20px": {
+    "n": 2,
+    "where": [
+     "paddingLeft@div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5",
+     "paddingRight@div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5"
+    ]
+   }
+  }
+ },
+ "components": {
+  "button": [
+   {
+    "sel": "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-4>button.p-2.text-gray-600.hover:text-rose-500",
+    "w": 36,
+    "h": 36,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#4B5563",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "8px 8px 8px 8px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.relative.py-32.sm:py-10>div.max-w-4xl.mx-auto.px-4>div.bg-white.rounded-3xl.sm:p-6>button.bg-gradient-to-br.from-[#FF6969].to-[#FF9640]",
+    "text": "Start Your Journey",
+    "w": 193,
+    "h": 38,
+    "font": "16px/24px 700",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#FFFFFF",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "8px 12px 8px 12px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.lg:col-span-5>form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center",
+    "text": "Subscribe",
+    "w": 129,
+    "h": 32,
+    "font": "12px/16px 600",
+    "family": "Inter",
+    "tracking": "0.3px",
+    "transform": "none",
+    "color": "#FFFFFF",
+    "bg": "#FF5353",
+    "pad": "8px 24px 8px 24px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+    "w": 31,
+    "h": 31,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "#4E2818",
+    "pad": "8px 8px 8px 8px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+    "w": 31,
+    "h": 31,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "#4E2818",
+    "pad": "8px 8px 8px 8px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+    "w": 31,
+    "h": 31,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "#4E2818",
+    "pad": "8px 8px 8px 8px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-3.lg:col-span-2>div.pt-2.flex.flex-wrap>a.p-2.bg-[#4E2818].rounded-full",
+    "w": 31,
+    "h": 31,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "#4E2818",
+    "pad": "8px 8px 8px 8px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5",
+    "text": "Inquire for Your Date",
+    "w": 177,
+    "h": 36,
+    "font": "12px/16px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#FFFFFF",
+    "bg": "#FF5353",
+    "pad": "10px 20px 10px 20px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   }
+  ],
+  "card": [
+   {
+    "sel": "section.relative.py-20.px-4>div.max-w-7xl.mx-auto.grid>div.relative.group>div.relative.h-96.rounded-3xl",
+    "text": "Yogesh DubeyFounder",
+    "w": 616,
+    "h": 384,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "24px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.relative.py-20.px-4>div.max-w-7xl.mx-auto.grid>div.relative.group>div.relative.h-96.rounded-3xl",
+    "text": "Aman SinghFounder",
+    "w": 616,
+    "h": 384,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "24px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6",
+    "text": "1000+Happy Couples",
+    "w": 320,
+    "h": 184,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(255,255,255,0.9)",
+    "pad": "24px 24px 24px 24px",
+    "radius": "16px",
+    "border": "1px solid #FFE5D5",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6",
+    "text": "1000+Moments Captured",
+    "w": 320,
+    "h": 184,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(255,255,255,0.9)",
+    "pad": "24px 24px 24px 24px",
+    "radius": "16px",
+    "border": "1px solid #FFE5D5",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6",
+    "text": "10+Awards Won",
+    "w": 320,
+    "h": 184,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(255,255,255,0.9)",
+    "pad": "24px 24px 24px 24px",
+    "radius": "16px",
+    "border": "1px solid #FFE5D5",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative>div.flex.items-center.mb-16>div.w-1/2.px-8.sm:px-2>div.bg-white.p-6.rounded-2xl",
+    "text": "2015A broken tripod sparked an unlikely ",
+    "w": 424,
+    "h": 134,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#FFFFFF",
+    "pad": "24px 24px 24px 24px",
+    "radius": "16px",
+    "border": "1px solid rgba(255,105,105,0.1)",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative>div.flex.items-center.mb-16>div.w-1/2.px-8.sm:px-2>div.bg-white.p-6.rounded-2xl",
+    "text": "2022WeddingBoys continues to capture gen",
+    "w": 424,
+    "h": 134,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#FFFFFF",
+    "pad": "24px 24px 24px 24px",
+    "radius": "16px",
+    "border": "1px solid rgba(255,105,105,0.1)",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.min-h-screen.bg-gradient-to-b.relative>section.relative.py-32.sm:py-10>div.max-w-4xl.mx-auto.px-4>div.bg-white.rounded-3xl.sm:p-6",
+    "text": "Ready to Begin YourEverlasting Story?Sta",
+    "w": 821,
+    "h": 182,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "#FFFFFF",
+    "pad": "24px 24px 24px 24px",
+    "radius": "24px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.z-10>footer.relative.w-full.text-[#2F2F2F]>div.px-6.sm:px-10.mb-12>div.relative.overflow-hidden.rounded-2xl",
+    "text": "The Bi-Weekly DispatchCinematic Love Sto",
+    "w": 1152,
+    "h": 173,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#2F2F2F",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "32px 40px 32px 40px",
+    "radius": "16px",
+    "border": "1px solid #E5DCD3",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "1152px",
+    "z": "auto"
+   }
+  ],
+  "chip": [],
+  "input": [
+   {
+    "sel": "form.space-y-1.5>div.flex.items-center.bg-white>div.relative.flex-1.flex>input.w-full.pl-2.pr-2",
+    "w": 263,
+    "h": 28,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#2F2F2F",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "6px 8px 6px 8px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   }
+  ],
+  "heading": [
+   {
+    "sel": "section.relative.h-screen.flex>div.relative.z-10.max-w-4xl>div.mb-12.relative.inline-block>h1.sm:text-mobileHeadlineLarge.lg:text-desktopHeadlineLarge.text-5xl",
+    "text": "Crafting TimelessLove Stories",
+    "w": 415,
+    "h": 96,
+    "font": "48px/48px 700",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#54382E",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.group>div.relative.h-96.rounded-3xl>div.absolute.bottom-0.left-0>h3.text-3xl.font-bold",
+    "text": "Yogesh Dubey",
+    "w": 211,
+    "h": 36,
+    "font": "30px/36px 700",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#FFFFFF",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.group>div.relative.h-96.rounded-3xl>div.absolute.bottom-0.left-0>h3.text-3xl.font-bold",
+    "text": "Aman Singh",
+    "w": 177,
+    "h": 36,
+    "font": "30px/36px 700",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#FFFFFF",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.min-h-screen.bg-gradient-to-b.relative>section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>h3.text-3xl.font-bold.text-center",
+    "text": "Trusted by 1000+ Couples",
+    "w": 1152,
+    "h": 36,
+    "font": "30px/36px 700",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-xl.font-semibold.text-[#54382E]",
+    "text": "1000+",
+    "w": 270,
+    "h": 28,
+    "font": "20px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#54382E",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-xl.font-semibold.text-[#54382E]",
+    "text": "1000+",
+    "w": 270,
+    "h": 28,
+    "font": "20px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#54382E",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-xl.font-semibold.text-[#54382E]",
+    "text": "10+",
+    "w": 270,
+    "h": 28,
+    "font": "20px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#54382E",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.min-h-screen.bg-gradient-to-b.relative>section.py-20.bg-gradient-to-b.from-[#FFDCCC]>div.max-w-4xl.mx-auto.px-4>h2.text-4xl.font-bold.text-center",
+    "text": "Our Journey Through Time",
+    "w": 880,
+    "h": 40,
+    "font": "36px/40px 700",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#54382E",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.flex.items-center.mb-16>div.w-1/2.px-8.sm:px-2>div.bg-white.p-6.rounded-2xl>h3.text-xl.font-semibold.text-[#54382E]",
+    "text": "2015",
+    "w": 374,
+    "h": 28,
+    "font": "20px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#54382E",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.flex.items-center.mb-16>div.w-1/2.px-8.sm:px-2>div.bg-white.p-6.rounded-2xl>h3.text-xl.font-semibold.text-[#54382E]",
+    "text": "2018",
+    "w": 374,
+    "h": 28,
+    "font": "20px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#54382E",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.flex.items-center.mb-16>div.w-1/2.px-8.sm:px-2>div.bg-white.p-6.rounded-2xl>h3.text-xl.font-semibold.text-[#54382E]",
+    "text": "2020",
+    "w": 374,
+    "h": 28,
+    "font": "20px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#54382E",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.flex.items-center.mb-16>div.w-1/2.px-8.sm:px-2>div.bg-white.p-6.rounded-2xl>h3.text-xl.font-semibold.text-[#54382E]",
+    "text": "2022",
+    "w": 374,
+    "h": 28,
+    "font": "20px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#54382E",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.flex.items-center.mb-16>div.w-1/2.px-8.sm:px-2>div.bg-white.p-6.rounded-2xl>h3.text-xl.font-semibold.text-[#54382E]",
+    "text": "Present",
+    "w": 374,
+    "h": 28,
+    "font": "20px/28px 600",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#54382E",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "section.relative.py-32.sm:py-10>div.max-w-4xl.mx-auto.px-4>div.bg-white.rounded-3xl.sm:p-6>h2.sm:text-mobileHeadlineMedium.lg:text-desktopHeadlineMedium.text-4xl",
+    "text": "Ready to Begin YourEverlasting Story?",
+    "w": 775,
+    "h": 76,
+    "font": "40px/40px 700",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#54382E",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+    "text": "Cinematic Love Stories, Delivered to You",
+    "w": 614,
+    "h": 32,
+    "font": "24px/32px 700",
+    "family": "Playfair Display",
+    "tracking": "-0.6px",
+    "transform": "none",
+    "color": "#5E2B17",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+    "text": "Explore",
+    "w": 226,
+    "h": 15,
+    "font": "10px/15px 700",
+    "family": "ui-monospace",
+    "tracking": "2.2px",
+    "transform": "uppercase",
+    "color": "#FAD7A0",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+    "text": "Editorial Journal",
+    "w": 226,
+    "h": 15,
+    "font": "10px/15px 700",
+    "family": "ui-monospace",
+    "tracking": "2.2px",
+    "transform": "uppercase",
+    "color": "#FAD7A0",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-8>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+    "text": "Royal Destinations",
+    "w": 226,
+    "h": 15,
+    "font": "10px/15px 700",
+    "family": "ui-monospace",
+    "tracking": "2.2px",
+    "transform": "uppercase",
+    "color": "#FAD7A0",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.mx-auto.max-w-[1400px].px-6>div.grid.grid-cols-1.sm:grid-cols-2>div.space-y-2.5>h4.text-[10px].font-mono.font-bold",
+    "text": "Studio Inquiries",
+    "w": 226,
+    "h": 15,
+    "font": "10px/15px 700",
+    "family": "ui-monospace",
+    "tracking": "2.2px",
+    "transform": "uppercase",
+    "color": "#FAD7A0",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   }
+  ],
+  "section": [
+   {
+    "sel": "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.relative.h-screen.flex",
+    "text": "Crafting TimelessLove StoriesIn the hear",
+    "w": 1904,
+    "h": 1080,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 16px 0px 16px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.relative.py-20.px-4",
+    "text": "Yogesh DubeyFounderAman SinghFounder",
+    "w": 1904,
+    "h": 544,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(255,255,255,0.5)",
+    "pad": "80px 32px 80px 32px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.py-16.sm:py-10.px-4",
+    "text": "Trusted by 1000+ Couples1000+1000+Happy ",
+    "w": 1904,
+    "h": 540,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "40px 16px 40px 16px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.py-20.bg-gradient-to-b.from-[#FFDCCC]",
+    "text": "Our Journey Through Time2015A broken tri",
+    "w": 1904,
+    "h": 1022,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "80px 0px 80px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.z-10>main.pt-[6rem].lg:pr-2.sm:px-2>div.min-h-screen.bg-gradient-to-b.relative>section.relative.py-32.sm:py-10",
+    "text": "Ready to Begin YourEverlasting Story?Sta",
+    "w": 1904,
+    "h": 272,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "40px 0px 40px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   }
+  ],
+  "link": [
+   {
+    "sel": "nav.fixed.w-full.top-0>div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>a.flex.items-center.gap-4",
+    "text": "The Wedding BoysMUMBAI'S PREMIER WEDDING",
+    "w": 398,
+    "h": 80,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "none",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+    "text": "Home",
+    "w": 87,
+    "h": 36,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#374151",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "8px 12px 8px 12px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+    "text": "₹Pricing",
+    "w": 89,
+    "h": 44,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#374151",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "8px 12px 8px 12px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+    "text": "Process",
+    "w": 101,
+    "h": 36,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#374151",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "8px 12px 8px 12px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.max-w-7xl.mx-auto.px-4>div.hidden.md:flex.h-24>div.flex.items-center.gap-6>a.px-3.py-2.flex",
+    "text": "Services",
+    "w": 105,
+    "h": 36,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#374151",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "8px 12px 8px 12px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.hidden.md:flex.h-24>div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3",
+    "text": "Get Quote",
+    "w": 146,
+    "h": 46,
+    "font": "20px/30px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#FFFFFF",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "8px 12px 8px 12px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Home",
+    "w": 34,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Films",
+    "w": 30,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Gallery",
+    "w": 40,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Our Team",
+    "w": 55,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "About Us",
+    "w": 52,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Dharaa Events",
+    "w": 82,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "All Published Stories",
+    "w": 116,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Real Wedding Features",
+    "w": 130,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Destination Planning Guides",
+    "w": 159,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Udaipur Palace Celebrations",
+    "w": 161,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Jaipur Heritage Haveli",
+    "w": 126,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Goa Coastal Nuptials",
+    "w": 119,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "text": "Varanasi Sacred Ghats",
+    "w": 128,
+    "h": 15,
+    "font": "12px/16px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#D6D3D1",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "none",
+    "z": "auto"
+   }
+  ],
+  "image": [
+   {
+    "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+    "w": 80,
+    "h": 80,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "#000000",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "4px 4px 4px 4px",
+    "radius": "9999px",
+    "border": "4px solid #FFF1F2",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "div.max-w-7xl.mx-auto.grid>div.relative.group>div.relative.h-96.rounded-3xl>img.object-cover.transform.group-hover:scale-105",
+    "w": 616,
+    "h": 384,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "div.max-w-7xl.mx-auto.grid>div.relative.group>div.relative.h-96.rounded-3xl>img.object-cover.transform.group-hover:scale-105",
+    "w": 616,
+    "h": 384,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "0px",
+    "border": "none",
+    "shadow": "none",
+    "transition": "0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>img.w-20.h-20.md:w-24",
+    "w": 101,
+    "h": 101,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>img.w-20.h-20.md:w-24",
+    "w": 101,
+    "h": 101,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>img.w-20.h-20.md:w-24",
+    "w": 101,
+    "h": 101,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>img.w-20.h-20.md:w-24",
+    "w": 101,
+    "h": 101,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>img.w-20.h-20.md:w-24",
+    "w": 101,
+    "h": 101,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   },
+   {
+    "sel": "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>img.w-20.h-20.md:w-24",
+    "w": 101,
+    "h": 101,
+    "font": "16px/24px 400",
+    "family": "Inter",
+    "tracking": "normal",
+    "transform": "none",
+    "color": "rgba(0,0,0,0)",
+    "bg": "rgba(0,0,0,0)",
+    "pad": "0px 0px 0px 0px",
+    "radius": "9999px",
+    "border": "none",
+    "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0",
+    "transition": "none",
+    "maxW": "100%",
+    "z": "auto"
+   }
+  ]
+ },
+ "defects": {
+  "lowContrast": [
+   {
+    "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-xs.text-rose-500/80.font-medium",
+    "text": "MUMBAI'S PREMIER WEDDING FILMMAKERS",
+    "fg": "rgba(244,63,94,0.8)",
+    "bg": "#FFFFFF",
+    "ratio": 3.67,
+    "need": 4.5,
+    "fontSize": "12px",
+    "weight": "500"
+   },
+   {
+    "sel": "div.relative.group>div.relative.h-96.rounded-3xl>div.absolute.bottom-0.left-0>h3.text-3xl.font-bold",
+    "text": "Yogesh Dubey",
+    "fg": "#FFFFFF",
+    "bg": "#FFFFFF",
+    "ratio": 1,
+    "need": 3,
+    "fontSize": "30px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.relative.group>div.relative.h-96.rounded-3xl>div.absolute.bottom-0.left-0>p.text-lg.opacity-90",
+    "text": "Founder",
+    "fg": "#FFFFFF",
+    "bg": "#FFFFFF",
+    "ratio": 1,
+    "need": 4.5,
+    "fontSize": "18px",
+    "weight": "400"
+   },
+   {
+    "sel": "div.relative.group>div.relative.h-96.rounded-3xl>div.absolute.bottom-0.left-0>h3.text-3xl.font-bold",
+    "text": "Aman Singh",
+    "fg": "#FFFFFF",
+    "bg": "#FFFFFF",
+    "ratio": 1,
+    "need": 3,
+    "fontSize": "30px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.relative.group>div.relative.h-96.rounded-3xl>div.absolute.bottom-0.left-0>p.text-lg.opacity-90",
+    "text": "Founder",
+    "fg": "#FFFFFF",
+    "bg": "#FFFFFF",
+    "ratio": 1,
+    "need": 4.5,
+    "fontSize": "18px",
+    "weight": "400"
+   },
+   {
+    "sel": "div.max-w-6xl.mx-auto>div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.flex.items-center.justify-center",
+    "text": "1000+",
+    "fg": "#FFFFFF",
+    "bg": "#FF6969",
+    "ratio": 2.81,
+    "need": 3,
+    "fontSize": "20px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.relative>div.flex.items-center.mb-16>div.w-1/2.flex.justify-center>div.w-auto.h-auto.rounded-full",
+    "text": "2015",
+    "fg": "#FFFFFF",
+    "bg": "#FF6969",
+    "ratio": 2.81,
+    "need": 3,
+    "fontSize": "20px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.relative>div.flex.items-center.mb-16>div.w-1/2.flex.justify-center>div.w-auto.h-auto.rounded-full",
+    "text": "2018",
+    "fg": "#FFFFFF",
+    "bg": "#FF6969",
+    "ratio": 2.81,
+    "need": 3,
+    "fontSize": "20px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.relative>div.flex.items-center.mb-16>div.w-1/2.flex.justify-center>div.w-auto.h-auto.rounded-full",
+    "text": "2020",
+    "fg": "#FFFFFF",
+    "bg": "#FF6969",
+    "ratio": 2.81,
+    "need": 3,
+    "fontSize": "20px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.relative>div.flex.items-center.mb-16>div.w-1/2.flex.justify-center>div.w-auto.h-auto.rounded-full",
+    "text": "2022",
+    "fg": "#FFFFFF",
+    "bg": "#FF6969",
+    "ratio": 2.81,
+    "need": 3,
+    "fontSize": "20px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.relative>div.flex.items-center.mb-16>div.w-1/2.flex.justify-center>div.w-auto.h-auto.rounded-full",
+    "text": "Present",
+    "fg": "#FFFFFF",
+    "bg": "#FF6969",
+    "ratio": 2.81,
+    "need": 3,
+    "fontSize": "20px",
+    "weight": "700"
+   },
+   {
+    "sel": "form.space-y-1.5>div.flex.items-center.bg-white>button.inline-flex.items-center.justify-center>span",
+    "text": "Subscribe",
+    "fg": "#FFFFFF",
+    "bg": "#FF5353",
+    "ratio": 3.17,
+    "need": 4.5,
+    "fontSize": "12px",
+    "weight": "600"
+   },
+   {
+    "sel": "div.space-y-2.5>div.pt-2>a.inline-flex.items-center.gap-1.5>span",
+    "text": "Inquire for Your Date",
+    "fg": "#FFFFFF",
+    "bg": "#FF5353",
+    "ratio": 3.17,
+    "need": 4.5,
+    "fontSize": "12px",
+    "weight": "600"
+   }
+  ],
+  "lowContrastCount": 13,
+  "overImage": [
+   {
+    "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.flex.flex-col.gap-1>span.text-2xl.font-bold.bg-gradient-to-r",
+    "text": "The Wedding Boys",
+    "fg": "rgba(0,0,0,0)",
+    "bg": "#FFFFFF",
+    "ratio": 21,
+    "need": 3,
+    "fontSize": "24px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.flex.items-center.gap-4>div>a.text-desktopBodyMedium.text-nowrap.px-3>span",
+    "text": "Get Quote",
+    "fg": "#FFFFFF",
+    "bg": "#FFFFFF",
+    "ratio": 1,
+    "need": 4.5,
+    "fontSize": "20px",
+    "weight": "400"
+   },
+   {
+    "sel": "div.min-h-screen.bg-gradient-to-b.relative>section.py-16.sm:py-10.px-4>div.max-w-6xl.mx-auto>h3.text-3xl.font-bold.text-center",
+    "text": "Trusted by 1000+ Couples",
+    "fg": "rgba(0,0,0,0)",
+    "bg": "#FFFFFF",
+    "ratio": 21,
+    "need": 3,
+    "fontSize": "30px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-xl.font-semibold.text-[#54382E]",
+    "text": "1000+",
+    "fg": "#54382E",
+    "bg": "#FFFFFF",
+    "ratio": 10.59,
+    "need": 4.5,
+    "fontSize": "20px",
+    "weight": "600"
+   },
+   {
+    "sel": "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>p.text-[#74583E].sm:text-sm.text-center",
+    "text": "Happy Couples",
+    "fg": "#74583E",
+    "bg": "#FFFFFF",
+    "ratio": 6.55,
+    "need": 4.5,
+    "fontSize": "14px",
+    "weight": "400"
+   },
+   {
+    "sel": "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-xl.font-semibold.text-[#54382E]",
+    "text": "1000+",
+    "fg": "#54382E",
+    "bg": "#FFFFFF",
+    "ratio": 10.59,
+    "need": 4.5,
+    "fontSize": "20px",
+    "weight": "600"
+   },
+   {
+    "sel": "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>p.text-[#74583E].leading-relaxed",
+    "text": "Moments Captured",
+    "fg": "#74583E",
+    "bg": "#FFFFFF",
+    "ratio": 6.55,
+    "need": 4.5,
+    "fontSize": "16px",
+    "weight": "400"
+   },
+   {
+    "sel": "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>h3.text-xl.font-semibold.text-[#54382E]",
+    "text": "10+",
+    "fg": "#54382E",
+    "bg": "#FFFFFF",
+    "ratio": 10.59,
+    "need": 4.5,
+    "fontSize": "20px",
+    "weight": "600"
+   },
+   {
+    "sel": "div.max-w-6xl.mx-auto>div.max-w-5xl.mx-auto.mt-20>div.bg-white/90.backdrop-blur-sm.p-6>p.text-[#74583E].leading-relaxed",
+    "text": "Awards Won",
+    "fg": "#74583E",
+    "bg": "#FFFFFF",
+    "ratio": 6.55,
+    "need": 4.5,
+    "fontSize": "16px",
+    "weight": "400"
+   },
+   {
+    "sel": "div.min-h-screen.bg-gradient-to-b.relative>section.py-20.bg-gradient-to-b.from-[#FFDCCC]>div.max-w-4xl.mx-auto.px-4>h2.text-4xl.font-bold.text-center",
+    "text": "Our Journey Through Time",
+    "fg": "#54382E",
+    "bg": "#FFFFFF",
+    "ratio": 10.59,
+    "need": 3,
+    "fontSize": "36px",
+    "weight": "700"
+   },
+   {
+    "sel": "section.relative.py-32.sm:py-10>div.max-w-4xl.mx-auto.px-4>div.bg-white.rounded-3xl.sm:p-6>button.bg-gradient-to-br.from-[#FF6969].to-[#FF9640]",
+    "text": "Start Your Journey",
+    "fg": "#FFFFFF",
+    "bg": "#FFFFFF",
+    "ratio": 1,
+    "need": 4.5,
+    "fontSize": "16px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>div.inline-flex.items-center.gap-1.5>span",
+    "text": "The Bi-Weekly Dispatch",
+    "fg": "#FF5353",
+    "bg": "#FFFFFF",
+    "ratio": 3.17,
+    "need": 4.5,
+    "fontSize": "10px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>h3.font-serif.text-xl.sm:text-2xl",
+    "text": "Cinematic Love Stories, Delivered to Your Inbox",
+    "fg": "#5E2B17",
+    "bg": "#FFFFFF",
+    "ratio": 11.45,
+    "need": 3,
+    "fontSize": "24px",
+    "weight": "700"
+   },
+   {
+    "sel": "div.relative.overflow-hidden.rounded-2xl>div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-7.space-y-1.5>p.text-xs.text-[#74583E].max-w-md",
+    "text": "Join 12,000 discerning couples receiving curated real weddin",
+    "fg": "#74583E",
+    "bg": "#FFFFFF",
+    "ratio": 6.55,
+    "need": 4.5,
+    "fontSize": "12px",
+    "weight": "400"
+   },
+   {
+    "sel": "div.grid.grid-cols-1.lg:grid-cols-12>div.lg:col-span-5>form.space-y-1.5>p.text-[10px].text-[#78716C].pl-2",
+    "text": "No spam. Just meaningful stories.",
+    "fg": "#78716C",
+    "bg": "#FFFFFF",
+    "ratio": 4.8,
+    "need": 4.5,
+    "fontSize": "10px",
+    "weight": "400"
+   }
+  ],
+  "overImageCount": 15,
+  "tinyTarget": [
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Home",
+    "size": "34x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Films",
+    "size": "30x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Gallery",
+    "size": "40x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Our Team",
+    "size": "55x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "About Us",
+    "size": "52x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Dharaa Events",
+    "size": "82x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "All Published Stories",
+    "size": "116x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Real Wedding Features",
+    "size": "130x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Destination Planning Guides",
+    "size": "159x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Udaipur Palace Celebrations",
+    "size": "161x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Jaipur Heritage Haveli",
+    "size": "126x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Goa Coastal Nuptials",
+    "size": "119x15"
+   },
+   {
+    "sel": "div.space-y-2.5>ul.space-y-2.text-xs.text-stone-300>li>a.hover:text-[#FF5353].transition-colors",
+    "label": "Varanasi Sacred Ghats",
+    "size": "128x15"
+   }
+  ],
+  "tinyTargetCount": 13,
+  "brokenImage": [
+   {
+    "sel": "div.hidden.md:flex.h-24>a.flex.items-center.gap-4>div.relative>img.w-20.h-20.rounded-full",
+    "src": "https://media.theweddingboys.in/brand/nenPxUa0SYau/orig.svg"
+   }
+  ],
+  "oversizedImage": [
+   {
+    "sel": "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>img.w-20.h-20.md:w-24",
+    "src": "http://localhost:3000/_next/static/media/aboutPageImg2.3v3h1d1zfpq_x.jpg",
+    "natural": "6000x3992",
+    "displayed": "101x101",
+    "wastedFactor": 59.5
+   },
+   {
+    "sel": "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>img.w-20.h-20.md:w-24",
+    "src": "http://localhost:3000/_next/static/media/aboutPageImg3.2hmv6pivb9qd4.jpg",
+    "natural": "1774x2231",
+    "displayed": "101x101",
+    "wastedFactor": 17.6
+   },
+   {
+    "sel": "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>img.w-20.h-20.md:w-24",
+    "src": "http://localhost:3000/_next/static/media/aboutPageImg4.38dv7nqld7iqe.jpg",
+    "natural": "2881x3129",
+    "displayed": "101x101",
+    "wastedFactor": 28.6
+   },
+   {
+    "sel": "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>img.w-20.h-20.md:w-24",
+    "src": "http://localhost:3000/_next/static/media/aboutPageImg5.26ns_aukse4no.jpg",
+    "natural": "979x963",
+    "displayed": "101x101",
+    "wastedFactor": 9.7
+   },
+   {
+    "sel": "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>img.w-20.h-20.md:w-24",
+    "src": "http://localhost:3000/_next/static/media/aboutPageImg6.31tmcfdgg53hg.jpg",
+    "natural": "3512x5140",
+    "displayed": "101x101",
+    "wastedFactor": 34.8
+   },
+   {
+    "sel": "div.relative.flex.justify-center>div.flex.lg:-space-x-6.sm:-space-x-8>div.relative>img.w-20.h-20.md:w-24",
+    "src": "http://localhost:3000/_next/static/media/aboutPageImg7.32v01isyf3vl_.jpg",
+    "natural": "3140x3814",
+    "displayed": "101x101",
+    "wastedFactor": 31.2
+   }
+  ],
+  "oversizedImageCount": 6,
+  "noAltImage": [],
+  "noAltImageCount": 0
+ },
+ "headings": [
+  {
+   "level": 1,
+   "text": "Crafting TimelessLove Stories"
+  },
+  {
+   "level": 3,
+   "text": "Yogesh Dubey"
+  },
+  {
+   "level": 3,
+   "text": "Aman Singh"
+  },
+  {
+   "level": 3,
+   "text": "Trusted by 1000+ Couples"
+  },
+  {
+   "level": 3,
+   "text": "1000+"
+  },
+  {
+   "level": 3,
+   "text": "1000+"
+  },
+  {
+   "level": 3,
+   "text": "10+"
+  },
+  {
+   "level": 2,
+   "text": "Our Journey Through Time"
+  },
+  {
+   "level": 3,
+   "text": "2015"
+  },
+  {
+   "level": 3,
+   "text": "2018"
+  },
+  {
+   "level": 3,
+   "text": "2020"
+  },
+  {
+   "level": 3,
+   "text": "2022"
+  },
+  {
+   "level": 3,
+   "text": "Present"
+  },
+  {
+   "level": 2,
+   "text": "Ready to Begin YourEverlasting Story?"
+  },
+  {
+   "level": 3,
+   "text": "Cinematic Love Stories, Delivered to Your Inbox"
+  },
+  {
+   "level": 4,
+   "text": "Explore"
+  },
+  {
+   "level": 4,
+   "text": "Editorial Journal"
+  },
+  {
+   "level": 4,
+   "text": "Royal Destinations"
+  },
+  {
+   "level": 4,
+   "text": "Studio Inquiries"
+  }
+ ],
+ "headingJumps": [
+  "h1->h3 at \"Yogesh Dubey\""
+ ],
+ "h1Count": 1,
+ "landmarks": {
+  "header": 0,
+  "nav": 1,
+  "main": 1,
+  "footer": 1,
+  "aside": 0
+ },
+ "images": {
+  "total": 10,
+  "lazy": 8
+ },
+ "overflowers": [],
+ "vitals": {
+  "lcpMs": 468,
+  "lcpElement": "div.absolute.inset-0.bg-cover",
+  "lcpUrl": "tp://localhost:3000/_next/static/media/aboutPageImg1.2qw5uh9_pvtj8.jpg",
+  "cls": 0,
+  "clsSources": [],
+  "longTasks": [],
+  "totalBlockingMs": 0,
+  "fcpMs": 468,
+  "domContentLoadedMs": 217,
+  "loadMs": 284
+ },
+ "bodyText": "The Wedding Boys\nMUMBAI'S PREMIER WEDDING FILMMAKERS\nHome\n₹\nPricing\nProcess\nServices\nGet Quote\nCrafting Timeless\nLove Stories\n\nIn the heart of Mumbai, two visionaries—Yogesh, whose lens captures magic, and Aman, whose words craft timeless tales—began a journey that transformed moments into masterpieces.\n\nYogesh Dubey\n\nFounder\n\nAman Singh\n\nFounder\n\nTrusted by 1000+ Couples\n1000+\n1000+\n\nHappy Couples\n\n1000+\n\nMoments Captured\n\n10+\n\nAwards Won\n\nOur Journey Through Time\n2015\n\nA broken tripod sparked an unlikely friendship in the heart of Mumbai’s buzzing studios.\n\n2015\n2018\n\nFirst viral YouTube love story\n\n2018\n2020\n\nWeddingBoys founded.\n\n2020\n2022\n\nWeddingBoys continues to capture genuine moments of love and joy, one frame at a time.\n\n2022\nPresent\n\n1000+ love stories captured.\n\nPresent\nReady to Begin Your\nEverlasting Story?\nStart Your Journey\nTHE BI-WEEKLY DISPATCH\nCinematic Love Stories, Delivered to Your Inbox\n\nJoin 12,000 discerning couples receiving curated real wedding films and palace destination guides.\n\nSubscribe\n\nNo spam. Just meaningful stories.\n\nTHE WEDDING BOYS\nCINEMATOGRAPHY STUDIO\n\nIndia’s premier wedding cinematography studio, crafting emotionally charged, motion-picture heirlooms across royal palaces, coastal sanctuaries, and worldwide destinations.\n\nEXPLORE\nHome\nFilms\nGallery\nOur Team\nAbout Us\nDharaa Events\nEDITORIAL JOURNAL\nAll Published Stories\nReal Wedding Features\nDestination Planning Guides\nROYAL DESTINATIONS\nUdaipur Palace Celebrations\nJaipur Heritage Haveli\nGoa Coastal Nuptials\nVaranasi Sacred Ghats\nSTUDIO INQUIRIES\n\nWe accept a strictly limited number of cinematic commissions each wedding season to guarantee uncompromising artistry.\n\nInquire for Your Date\n\n© 2026 The Wedding Boys Studio. All rights reserved.\n\nDedicated to the poetry, cinema, and enduring emotion of love.",
+ "consoleErrors": [
+  {
+   "level": "error",
+   "text": "Failed to load resource: net::ERR_INVALID_URL",
+   "url": "data:image/png;base64,iVBORw0KGgo..."
+  }
+ ],
+ "network": {
+  "total": 52,
+  "failed": [],
+  "totalBytes": 347034,
+  "heaviest": []
+ }
+}
