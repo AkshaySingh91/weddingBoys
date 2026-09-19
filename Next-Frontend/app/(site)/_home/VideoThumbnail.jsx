@@ -62,7 +62,7 @@ export default function VideoThumbnail() {
         fetchVideos(t)
     }
     return (
-        <Section width="wide" rhythm="tight" className="overflow-hidden">
+        <Section width="wide" rhythm="tight" className="overflow-x-clip">
             {/*
               Heading is an <h2>, not an <h1>. The home page carried FOUR <h1>
               elements and this was one of them (audit R-42); "Our Films" is a
@@ -71,7 +71,7 @@ export default function VideoThumbnail() {
             <div className="flex items-end justify-between gap-4 px-5 md:px-8 lg:px-12">
                 <div>
                     <h2 className="t-display-2">Our films</h2>
-                    <div className="rule-ornament mt-3 w-40" aria-hidden="true" />
+                    <div className="rule-ornament mt-2.5 w-36" aria-hidden="true" />
                 </div>
                 <Link
                     href="/films"
@@ -89,7 +89,7 @@ export default function VideoThumbnail() {
             <div
                 role="group"
                 aria-label="Filter films by category"
-                className="mt-6 flex gap-2 overflow-x-auto scrollbar-none px-5 md:px-8 lg:px-12"
+                className="mt-4 flex gap-2 overflow-x-auto scrollbar-none px-5 md:px-8 lg:px-12"
             >
                 {isLoading && !homepageTags.length
                     ? [...Array(3)].map((_, i) => (
@@ -122,22 +122,22 @@ export default function VideoThumbnail() {
                    twenty both read as deliberate. Scroll-snap and a peeking next
                    card make it obvious there is more to the right.
 
-                   A rail removes empty *cells*, but it does not fill a row on its
-                   own: two 300px cards in a 1440px viewport still left ~800px of
-                   void, which is the defect in a different shape. So when a
-                   category holds three films or fewer the row centres, and only
-                   then — centring a rail that overflows would clip the first card
-                   out of reach. ── */}
+                   Left-aligned, always. A previous pass centred short rows to
+                   avoid the void on the right; centring pulled the cards away
+                   from the heading and read worse than the space it was hiding.
+                   The row starts where the heading starts. ── */}
             <div
-                className={`mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto scrollbar-none
-                            px-5 pb-2 md:px-8 lg:gap-6 lg:px-12
-                            ${(clients?.length ?? 0) <= 3 ? 'lg:justify-center' : ''}`}
+                /* scroll-pl mirrors px. Without it snap-mandatory parks the
+                   first card flush against the scrollport and swallows the
+                   rail's own left padding — measured scrollLeft:20 at 390px,
+                   which put the cards 20px left of the heading they belong to. */
+                className="mt-5 flex snap-x snap-mandatory gap-3 overflow-x-auto scrollbar-none
+                           px-5 scroll-pl-5 pb-2 md:px-8 md:scroll-pl-8 lg:gap-4 lg:px-12 lg:scroll-pl-12"
             >
                 {isLoading ? (
                     [...Array(4)].map((_, i) => (
-                        <div key={i} className="w-[68vw] shrink-0 sm:w-[46vw] lg:w-[300px]">
-                            <Skeleton className="aspect-[4/5] w-full arch" />
-                            <Skeleton className="mt-3 h-4 w-3/4" rounded="control" />
+                        <div key={i} className="w-[78vw] shrink-0 sm:w-[44vw] lg:w-[420px]">
+                            <Skeleton className="aspect-square w-full" rounded="media" />
                         </div>
                     ))
                 ) : clients && clients.length ? (
@@ -145,15 +145,17 @@ export default function VideoThumbnail() {
                         <Link
                             href={`/films/${c.videos._id}`}
                             key={c.videos._id}
-                            className="group/film w-[68vw] shrink-0 snap-start sm:w-[46vw] lg:w-[300px]"
+                            className="group/film w-[78vw] shrink-0 snap-start sm:w-[44vw] lg:w-[420px]"
                         >
-                            {/* Portrait 4:5 under the arch. This is where the dome
-                                belongs — on a wide hero it read as a doorway; on a
-                                portrait card it is ornament. */}
-                            <div className="relative overflow-hidden arch border border-gold/35 bg-ground-sunk
-                                            transition-transform duration-ui ease-standard
-                                            group-hover/film:-translate-y-1">
-                                <div className="aspect-[4/5] w-full">
+                            {/* Square, as the previous UI had it. The arch was
+                                tried here and rejected: on a film still it crops
+                                the top of the frame, and the photograph is the
+                                point. The arch stays in the system for portrait
+                                media that is composed for it. */}
+                            <div className="relative overflow-hidden rounded-media border border-gold/30
+                                            bg-ground-sunk shadow-panel transition-transform duration-ui
+                                            ease-standard group-hover/film:-translate-y-1">
+                                <div className="aspect-square w-full">
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img
                                         src={c.thumbnailUrl}
@@ -201,7 +203,7 @@ export default function VideoThumbnail() {
 
             {/* The desktop "All films" link is hidden on phones; this is its
                 mobile equivalent, at full width where a thumb can reach it. */}
-            <div className="mt-6 px-5 sm:hidden md:px-8">
+            <div className="mt-5 px-5 sm:hidden md:px-8">
                 <Link
                     href="/films"
                     className="flex min-h-[44px] items-center justify-center gap-1.5 rounded-pill border

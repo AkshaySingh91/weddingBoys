@@ -89,6 +89,9 @@ module.exports = {
         none: '0',
         control: '2px',
         panel: '4px',
+        /* Photographs want more than a panel's 4px — the previous UI used a
+           generous rounding on its film cards and was right to. */
+        media: '20px',
         pill: '999px',
       },
       zIndex: {
