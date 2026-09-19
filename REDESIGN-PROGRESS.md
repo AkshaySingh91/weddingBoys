@@ -661,3 +661,38 @@ is small: give `START` a real end date and hide the block once it passes.
 class, not the instance: any `from-/via-/to-N%` or any opacity modifier `/N`
 off the 5-step scale now fails the build. Verified the rules fire on a planted
 case and that the repo is otherwise clean.
+
+### Dharaa Event Management — structure, type, spacing, motion (`DharaService.jsx`)
+
+Client constraint for this component: **no colour, background or decorative
+changes.** Held exactly — `#FFEFE4` ground, the 15 `#FF6969` particles, the
+henna wave and all 7 amber accents are byte-for-byte what they were. Verified
+after the rewrite: `cardBg rgb(255,239,228)`, `particleCount 15`,
+`hennaWavePresent true`, `amberAccents 7`.
+
+| | Was | Now |
+|---|---|---|
+| Heading order | h2, h2, **h1**, h2 | h2 → h3 → h4 |
+| `<h1>` count | 1 (mid-page; one of the home page's four, R-42) | **0** |
+| Brand name | "EventManagement" | "Event Management" |
+| Accessible name | `DharaaEvent Management` — `block` breaks the line, text content does not | `Dharaa Event Management` |
+| Lockup tracking | `tracking-widest` (0.1em) | `tracking-wide` (0.75px) |
+| Desktop list | `lg:text-center` under an `lg:text-left` heading — two axes | one axis |
+| CTA height | 36px | **44px** |
+| Landmark | bare `<div>` | `<section aria-labelledby>` |
+| Axis | `max-w-7xl` floating | `<Section>`, card at **x=64** / x=20 |
+| Images | no `sizes` | `sizes` on both |
+| Logo `alt` | "Dharaa Event Management Logo" beside the same words as text | `alt=""`, `aria-hidden` — it is decorative next to the heading |
+
+**Reduced motion.** Two `repeat: Infinity` animations — 15 particles and 5
+pulsing tick icons — plus three entrance animations ran regardless of
+`prefers-reduced-motion`. Now guarded with `useReducedMotion()`. Measured under
+emulated `reduce`: **0 particles, ticks static, content column opacity 1**. That
+last one matters — disabling `whileInView` naively leaves content stuck at
+`opacity: 0`, invisible to exactly the users the guard was meant to help.
+Restored to `no-preference`: 15 particles, ticks pulsing again. Nothing removed
+for anyone who has not asked for it.
+
+**Content issue to raise (not changed):** the white panel under the image is
+commented "Statistics Overlay" and contains the words *"Our Clients"* and no
+statistic. It is an empty stat block with a label and no number.
