@@ -17,7 +17,7 @@ re-read both before touching code.
 |---|---|---|---|
 | **0** | Design direction + tokens + `DESIGN-SYSTEM.md` | **✅ Approved 2026-09-19** | defines R-15 R-16 R-17 R-18 R-46 R-47 R-63 R-66 R-67 |
 | **1** | Primitives & global shell | **✅ Built & verified 2026-09-19 — awaiting gate** | R-05 R-07 R-08 R-14 R-19 R-22 R-30 R-31 R-32 R-34 R-39 R-40 R-45 R-58 R-65 + lands Stage 0 tokens |
-| **2** | Home | Not started | R-06¹ R-23 R-26¹ R-42 R-48 R-49 |
+| **2** | Home | **⏸ Proposed, awaiting approval** | R-06¹ R-23 R-26¹ R-42 R-48 R-49 |
 | **3** | Films (listing, rows, detail) | Not started | R-12² R-24² R-26 R-27² R-28 |
 | **4** | Gallery / Photos | Not started | R-13 R-20 R-38 R-43 R-58 R-59 |
 | **5** | Our Team | Not started | R-06 R-10 R-24² R-25 R-68 R-69 |
@@ -331,3 +331,93 @@ labelled as the audit CORS correction — a `git add -A` from the repo root swep
 it in. That commit also contains two files I never touched
 (`Component/AdminSidebar.jsx`, `Hooks/useClients.jsx`) which were already
 modified in the working tree before this phase began.
+
+
+---
+
+### Stage 2 — proposed 2026-09-19, awaiting approval
+
+**Measured first.** The home page renders **15 sections**, **12,354px** at laptop
+and **19,823px** on a phone — 23.5 viewport-heights. Four `<h1>`. 103
+text-over-image instances. CLS 0.107.
+
+| # | Section | laptop | mobile | Heading |
+|---:|---|---:|---:|---|
+| 1 | hero carousel | 528 | 528 | Shreyas & Bhavika |
+| 2 | category pills | 33 | 39 | — |
+| 3 | film row | 416 | 423 | — |
+| 4 | `#services` | 1465 | **3172** | Our Magical Offerings |
+| 5 | Varanasi card | 648 | 664 | Mumbai's Premier Storytellers… |
+| 6 | Dharaa | 620 | 956 | Dharaa |
+| 7 | studio pitch | 526 | 996 | Professional Wedding Storytellers |
+| 8 | `#ourPortfolio` | 1164 | **4258** | Moments We've Captured |
+| 9 | `#whyToChooseUs` | 970 | 1562 | Why Choose The Wedding Boys? |
+| 10 | `#pricing` | 1310 | 1818 | Perfect Plans for Your Perfect Day |
+| 11 | custom package | 589 | 886 | Need a Custom Package? |
+| 12 | since-2020 | 754 | 765 | Crafting Timeless Memories Since 2020 |
+| 13 | assistance CTA | 294 | 350 | Need Personal Assistance? |
+| 14 | `#process` | 1580 | 1688 | How We Craft Your Dream Wedding Story |
+| 15 | track record | 224 | 308 | Our Track Record |
+
+**The page says the same things three times.** That, not styling, is why it is 24
+screens long:
+
+- **Three "why us" blocks** — §4 *Our Magical Offerings*, §7 *Professional
+  Wedding Storytellers*, §9 *Why Choose The Wedding Boys?*
+- **Two pricing blocks** — §10 *Perfect Plans*, §11 *Need a Custom Package?*
+- **Two portfolio surfaces** — §3 film row, §8 *Moments We've Captured*
+- **Three contact CTAs** — §11, §13, and the footer's
+
+### Proposed structure — 15 sections to 8
+
+| # | Section | From | Purpose |
+|---:|---|---|---|
+| 1 | **Hero** | §1 | One full-bleed still, the page's **only `<h1>`**, arch-framed |
+| 2 | **Selected films** | §2 + §3 | Portfolio row that fills its width |
+| 3 | **What we film** | §4 | Services, tightened — 3172px on mobile is a page of its own |
+| 4 | **Why this studio** | §7 + §9 + §15 | One credibility block: proposition, reasons, the numbers |
+| 5 | **Destinations** | §5 | Varanasi + the city pages, which currently have no route in from home |
+| 6 | **Investment** | §10 + §11 | Packages and the custom route, one block |
+| 7 | **How we work** | §14 | Process — good content, kept |
+| 8 | **Dharaa** | §6 | Demoted to a slim band; it is a sub-brand, not a peer |
+
+§12 (*Since 2020*) folds into §4 as a line, not a section. §13's CTA is the
+footer's job — it already carries one.
+
+**Target: under 9,000px on mobile** (from 19,823) and ~6,500px at laptop.
+
+### Defects this closes
+
+- **R-42** — 4 `<h1>` → 1. The current set is *Our Films*, *Crafting Your Perfect
+  Event*, *Professional Wedding Storytellers*, *How We Craft…*; none describes
+  the business.
+- **R-49** — 19,823px mobile.
+- **R-26** — film rows leaving **55.6%** of the viewport empty at 1425px
+  (fixed 288×256 cards). Arch-framed cards that fill the row.
+- **R-06** — 103 text-over-image instances get scrim tokens. `<Media>` refuses an
+  overlay without one.
+- **R-48** — image pop-in; `<Media>` blur-up using the stored `blurDataURL` /
+  `dominantColor`.
+- **Horizontal overflow** — traced to the hero carousel track
+  (`flex-shrink-0 w-full h-full` reaching x=780 at a 390px viewport, i.e. two
+  slides wide, unclipped). Currently contained by `overflow-x-clip` on `main`;
+  this fixes the cause.
+- **`HeroCarousel` missing-key React error** — the one console error on the page.
+- **CLS 0.107** → target ≤ 0.05.
+
+### Content issues raised, not silently changed
+
+- **"Ahemdabad"** (R-23) is in the **film records**, not the markup — a data fix
+  the studio should make in admin. I will not mutate records.
+- **"1000+ Weddings Captured" beside "1500+ Happy Clients"** implies 1.5 clients
+  per wedding; and `/about-us` separately claims 1000+ for *both* couples and
+  moments captured (F-02). The Track Record numbers move into §4 — confirm them
+  before they are re-published.
+- **`OfferPackages.jsx:119`** still promises "all locations in Mumbai at no extra
+  cost. Additional charges apply for destination weddings" — unchanged, still a
+  commercial decision.
+
+### Deliberately not in this stage
+
+Films listing and detail (Stage 3), gallery (Stage 4), the `/weddings/[city]`
+pages themselves (Stage 8). Home will link to them; it will not restyle them.
