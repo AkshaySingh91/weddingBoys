@@ -739,3 +739,41 @@ Heading contrast measured 13.63:1 (`text-primary` resolves to `#1C1917` from
 3. These sit alongside the already-open "1000+ Weddings" vs "1500+ Happy
    Clients" and the footer's "12,000 discerning couples". **Four different
    scale claims now.** Worth settling as one set of numbers.
+
+### Moments We've Captured — the tallest section, and two silent bugs (`OurPortfolio.jsx`)
+
+Same constraint: **no colour, background or decorative changes.** Held — the
+gradient, both henna borders, the florals, garland, golden swirl, particles and
+every red and gold are what they were.
+
+**Two things were simply broken and had been shipping.**
+
+1. **The hover scrim measured 0×0.** It carried
+   `bg-gradient-to-t from-black/70 …` but no `inset-0`, so it had no box and
+   never painted. The white caption — couple's names and city — has been sitting
+   on bare photographs on hover. Its colours are untouched; it now has a box.
+   Measured before **0×0**, after **284×320**, exactly covering the tile.
+2. **`max-w-7xl` with no `mx-auto`, plus `-mx-4`.** The content block was
+   left-aligned inside a 1393px section *and* dragged 16px further out, putting
+   the heading at x=32 against the page's x=64.
+
+| | Was | Now |
+|---|---|---|
+| Grid | 1 col → **4** at 1024, nothing between | 1 → 2 → 3 → 4 |
+| Height at 768 | one column of eight photographs | **1,392px**, 3 columns |
+| Height at 390 | 4,117px | **3,007px** |
+| Skeleton | `aspect-square` tiles vs real `h-64 lg:h-80` | shares `GRID_CLASS` + `TILE_HEIGHT` with the real grid |
+| `setPortfolio(data.photos)` | `undefined` on a failed response → next `.map` threw | `Array.isArray(data?.photos) ? … : []` |
+| Category switching | no abort; a slow earlier request could land last | `AbortController` |
+| Empty category | blank grid, no message | designed empty state with a way back |
+| Filter buttons | 36px, no `aria-pressed`, **no padding at all below 640px** | 44px, `aria-pressed`, `role="group"` |
+| Images | 8 × `loading="eager"` below the fold | all lazy + `decoding="async"` |
+| Keys | `key={index}` across an `AnimatePresence` swap | `item._id ?? item.url` |
+| Landmark | `<section>` with no accessible name | `aria-labelledby` |
+
+Five `repeat: Infinity` animations guarded with `useReducedMotion()`; decorative
+SVGs given `aria-hidden`.
+
+The skeleton point is worth keeping: it drew square tiles against real 256/320px
+ones, so the grid resized the instant data arrived. A skeleton that does not
+match its content causes the exact layout shift skeletons exist to prevent.
