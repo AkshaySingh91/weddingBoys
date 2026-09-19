@@ -13,10 +13,18 @@
  * collapses at exactly one breakpoint (1024px). Above it, a full nav; below it,
  * a menu. Nothing in between.
  *
- * Scroll behaviour is one transition, at 72px: 96px tall and transparent
- * becomes 64px tall and near-opaque with a blur. It does not hide on scroll-down
- * — reclaiming 64px is an app pattern that costs more in orientation than it
- * returns on a site people browse rather than operate.
+ * The bar is ALWAYS on a solid ground. A first pass made it transparent until
+ * 72px of scroll, which looked clean on a pale page and was unreadable on the
+ * home page — the hero video sits directly beneath it, so dark ink on a
+ * transparent bar over dark footage left the navigation invisible. A masthead
+ * that disappears over certain content is not a style, it is a bug.
+ *
+ * Height is 72px, condensing to 58px past 72px of scroll. The first attempt at
+ * 96px was simply too tall: it ate the top of every hero for no gain.
+ *
+ * It does not hide on scroll-down — reclaiming 58px is an app pattern that costs
+ * more in orientation than it returns on a site people browse rather than
+ * operate.
  */
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
@@ -41,8 +49,18 @@ function Wordmark({ condensed }) {
             aria-label="The Wedding Boys — home"
         >
             <span
-                className={`font-display font-semibold tracking-[0.16em] text-ink transition-all
-                            duration-ui ease-standard ${condensed ? 'text-[16px]' : 'text-[19px]'}`}
+                /*
+                  Sized down hard on a phone. At 16px with 0.15em tracking the
+                  wordmark needs ~184px, which against a 110px CTA and a 44px
+                  menu button in 350px of usable width wrapped it onto two lines
+                  and burst the 72px bar.
+                */
+                className={`whitespace-nowrap font-display font-semibold text-accent-ink transition-all
+                            duration-ui ease-standard
+                            tracking-[0.1em] sm:tracking-[0.15em]
+                            ${condensed
+                                ? 'text-[12px] sm:text-[15px] lg:text-[16px]'
+                                : 'text-[13px] sm:text-[16px] lg:text-[18px]'}`}
             >
                 THE WEDDING BOYS
             </span>
@@ -103,12 +121,12 @@ export default function SiteHeader() {
 
     return (
         <header
-            className={`fixed inset-x-0 top-0 z-header transition-all duration-ui ease-standard
+            className={`fixed inset-x-0 top-0 z-header border-b transition-all duration-ui ease-standard
                         ${condensed
-                            ? 'h-[var(--header-height-condensed)] bg-ground/92 backdrop-blur-md border-b border-gold/40'
-                            : 'h-header bg-transparent border-b border-transparent'}`}
+                            ? 'h-[var(--header-height-condensed)] bg-ground border-gold/45 shadow-panel'
+                            : 'h-header bg-accent-tint border-gold/30'}`}
         >
-            <div className="mx-auto flex h-full max-w-wide items-center justify-between gap-6 px-5 md:px-8 lg:px-12">
+            <div className="mx-auto flex h-full max-w-wide items-center justify-between gap-3 px-4 sm:gap-6 sm:px-6 md:px-8 lg:px-12">
                 <Wordmark condensed={condensed} />
 
                 <nav aria-label="Primary" className="hidden lg:flex items-center gap-1">
@@ -126,9 +144,9 @@ export default function SiteHeader() {
                                     aria-current={active ? 'page' : undefined}
                                     aria-expanded={item.panel ? openPanel === item.label : undefined}
                                     onFocus={item.panel ? () => hold(item.label) : undefined}
-                                    className={`relative flex min-h-[44px] items-center px-3.5 text-[14px]
+                                    className={`relative flex min-h-[44px] items-center px-3 text-[14px]
                                                 transition-colors duration-micro ease-standard
-                                                ${active ? 'text-ink' : 'text-ink-secondary hover:text-ink'}`}
+                                                ${active ? 'text-accent-ink' : 'text-ink-secondary hover:text-accent-ink'}`}
                                 >
                                     {item.label}
                                     {/* Active mark is a gold thread, not a colour swap —
@@ -169,8 +187,11 @@ export default function SiteHeader() {
                     })}
                 </nav>
 
-                <div className="flex items-center gap-3">
-                    <Button href={PRIMARY_CTA.href} variant="primary" size="md" className="hidden sm:inline-flex">
+                <div className="flex items-center gap-2 sm:gap-3">
+                    {/* Visible at every width — on a phone this is the whole
+                        purpose of the bar, and hiding it behind the menu buried
+                        the studio's only conversion action. */}
+                    <Button href={PRIMARY_CTA.href} variant="primary" size="sm" className="shrink-0">
                         {PRIMARY_CTA.label}
                     </Button>
 

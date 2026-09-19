@@ -133,31 +133,33 @@ module.exports = {
           out-of-scope blog still consumes it.
         */
         ground: {
-          DEFAULT: 'var(--ground)',
-          raised: 'var(--ground-raised)',
-          sunk: 'var(--ground-sunk)',
-          deep: 'var(--ground-deep)',
+          DEFAULT: 'rgb(var(--ground-rgb) / <alpha-value>)',
+          raised: 'rgb(var(--ground-raised-rgb) / <alpha-value>)',
+          sunk: 'rgb(var(--ground-sunk-rgb) / <alpha-value>)',
+          deep: 'rgb(var(--ground-deep-rgb) / <alpha-value>)',
         },
         ink: {
-          DEFAULT: 'var(--ink-primary)',
-          secondary: 'var(--ink-secondary)',
-          muted: 'var(--ink-muted)',
+          DEFAULT: 'rgb(var(--ink-primary-rgb) / <alpha-value>)',
+          secondary: 'rgb(var(--ink-secondary-rgb) / <alpha-value>)',
+          muted: 'rgb(var(--ink-muted-rgb) / <alpha-value>)',
           onAccent: 'var(--ink-on-accent)',
           onDeep: 'var(--ink-on-deep)',
         },
         accent: {
-          DEFAULT: 'var(--accent)',
+          DEFAULT: 'rgb(var(--accent-rgb) / <alpha-value>)',
           hover: 'var(--accent-hover)',
           press: 'var(--accent-press)',
-          wash: 'var(--accent-wash)',
+          ink: 'rgb(var(--accent-ink-rgb) / <alpha-value>)',
+          wash: 'rgb(var(--accent-wash-rgb) / <alpha-value>)',
+          tint: 'rgb(var(--accent-tint-rgb) / <alpha-value>)',
         },
         marigold: {
-          DEFAULT: 'var(--marigold)',
+          DEFAULT: 'rgb(var(--marigold-rgb) / <alpha-value>)',
           ink: 'var(--marigold-ink)',
         },
         gold: {
-          DEFAULT: 'var(--gold)',
-          strong: 'var(--gold-strong)',
+          DEFAULT: 'rgb(var(--gold-rgb) / <alpha-value>)',
+          strong: 'rgb(var(--gold-strong-rgb) / <alpha-value>)',
           soft: 'var(--gold-soft)',
         },
         edge: {

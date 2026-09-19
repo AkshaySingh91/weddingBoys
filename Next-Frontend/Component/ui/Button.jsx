@@ -31,14 +31,17 @@ const VARIANTS = {
     onMedia:
         'bg-ink/55 text-ink backdrop-blur-sm border border-ink/15 '
         + 'hover:bg-ink/70 hover:border-ink/30 active:bg-ink/80',
-    /* Text-only. --accent reads at 5.99:1 on the ground, so on a light page one
-       accent value serves both fill and text — the dark ground needed two. */
+    /* Text-only. Uses --accent-ink (5.99:1), never --accent: the fill red is
+       4.36:1 as text on ivory, just under AA. */
     quiet:
-        'bg-transparent text-accent hover:text-ink active:text-accent-press '
+        'bg-transparent text-accent-ink hover:text-ink active:text-accent-press '
         + 'disabled:text-ink-muted px-0',
 };
 
 const SIZES = {
+    /* Compact — for the masthead, where 52px of button in a 72px bar is too
+       much. Still 44px tall, the target minimum. */
+    sm: 'min-h-[44px] px-4 text-[13px]',
     /* 44px and 52px. WCAG 2.2 target minimum is 24px; the brief's floor is 44.
        The audit found 13–25 targets under 24px on every page (R-45). */
     md: 'min-h-[44px] px-5 text-[14px]',

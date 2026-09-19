@@ -34,13 +34,20 @@
   --ink-on-accent: #FFFFFF;   /*  6.45:1 on --accent */
   --ink-on-deep:   #FBF6EE;   /* 14.9:1 on --ground-deep */
 
-  /* ── Accent: sindoor. On a light ground one value does both jobs —
-        white text sits on it at 6.45:1 and it reads as text at 5.99:1. The
-        dark ground needed two separate reds to reach AA; this does not. ── */
-  --accent:        #A83824;
-  --accent-hover:  #96301F;
-  --accent-press:  #8E2D1D;
-  --accent-wash:   #FBEDE9;   /* tinted surfaces, chips, callouts */
+  /* ── Accent: the studio's red, brought back.
+        The brand red was #FF5353, which carries white text at only 3.17:1 and
+        cannot reach AA at button size. #D9342A is the brightest, most saturated
+        red that does pass — 4.69:1 — so it reads as the same red rather than as
+        a muted substitute.
+
+        Two roles, because on ivory the fill red measures 4.36:1 as text, just
+        under the threshold. Fills use --accent; text uses --accent-ink. ── */
+  --accent:        #D9342A;   /* fills, buttons — white on it 4.69:1 */
+  --accent-hover:  #C9302A;   /* 5.33:1 */
+  --accent-press:  #B82A24;
+  --accent-ink:    #A83824;   /* accent AS TEXT on the ground — 5.99:1 */
+  --accent-wash:   #FDEEEA;   /* tinted surfaces, chips, callouts */
+  --accent-tint:   #FBE3DC;   /* stronger wash, header/section grounds */
 
   /* ── Marigold. The garland colour. ORNAMENT ONLY — 2.47:1 on the ground,
         so it never carries text. `--marigold-ink` is its legible sibling. ── */
@@ -87,8 +94,32 @@
   --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-page:     cubic-bezier(0.4, 0, 0.2, 1);
 
-  --header-height:            96px;
-  --header-height-condensed:  64px;
+  /* ── Channel forms of every colour above.
+        Tailwind's `/40` alpha modifier can only work on a colour it can split
+        into channels: `bg-accent/60` against a hex custom property compiles to
+        nothing and the element renders transparent. Thirteen such classes were
+        silently dead in the shell — including the header's own background,
+        which is why it stayed see-through over the hero video.
+
+        The hex vars above stay for raw CSS (scrims, ornament); Tailwind maps to
+        these. Both must be edited together. ── */
+  --ground-rgb:        251 246 238;
+  --ground-raised-rgb: 255 255 255;
+  --ground-sunk-rgb:   244 235 221;
+  --ground-deep-rgb:    42  27  18;
+  --ink-primary-rgb:    42  27  18;
+  --ink-secondary-rgb:  94  70  54;
+  --ink-muted-rgb:     122  99  85;
+  --accent-rgb:        217  52  42;
+  --accent-ink-rgb:    168  56  36;
+  --accent-wash-rgb:   253 238 234;
+  --accent-tint-rgb:   251 227 220;
+  --gold-rgb:          201 162  39;
+  --gold-strong-rgb:   168 134  46;
+  --marigold-rgb:      224 139  44;
+
+  --header-height:            72px;
+  --header-height-condensed:  58px;
 }
 
 @media (min-width: 1024px) {

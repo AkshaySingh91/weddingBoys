@@ -38,7 +38,9 @@ export const PRIMARY_NAV = [
 ];
 
 /** The one call to action. */
-export const PRIMARY_CTA = { label: 'Enquire', href: '/contact' };
+// "Get quote" over "Enquire": it states what the visitor receives. "Enquire" is
+// the generic default and says nothing about the outcome.
+export const PRIMARY_CTA = { label: 'Get Quote', href: '/contact' };
 
 /**
  * Footer columns. Mirrors the primary nav and adds what belongs only here —

@@ -8,7 +8,7 @@
 export default function Chip({ tone = 'default', as: Tag = 'span', className = '', children, ...rest }) {
     const TONES = {
         default: 'bg-ground-raised text-ink-secondary border-edge-subtle',
-        accent: 'bg-accent-wash text-accent border-accent/25',
+        accent: 'bg-accent-wash text-accent-ink border-accent/25',
         /* Overflow counts ("+5 more") are the SAME chip, quieter — not a
            different component in a different palette. */
         quiet: 'bg-transparent text-ink-muted border-edge-subtle',
