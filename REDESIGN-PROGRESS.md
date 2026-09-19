@@ -696,3 +696,46 @@ for anyone who has not asked for it.
 **Content issue to raise (not changed):** the white panel under the image is
 commented "Statistics Overlay" and contains the words *"Our Clients"* and no
 statistic. It is an empty stat block with a label and no number.
+
+### Our Story — structure, motion, targets (`OurShortStory.jsx`)
+
+Same constraint: **no colour, background or decorative changes.** Held and
+verified from computed styles after the rewrite — gradient still
+`linear-gradient(rgb(255,220,204), rgb(255,240,230))`, 15 particles, 4 sparkles,
+the henna wave, garland, floating camera, saree drape, gold rings, gold
+underline and every red exactly as they were.
+
+| | Was | Now |
+|---|---|---|
+| `<h1>` | "Professional Wedding Storytellers", mid-page | **h2**; "Our Core Values" h2 → h3 |
+| `<h1>` count | 1 | **0** |
+| Landmark | bare `<div>` | `<section aria-labelledby>` |
+| Axis | `max-w-7xl` floating | `<Section>`, card at **x=64** / x=20 |
+| Image entrance | wrapper **and** `<img>` each carried `initial={{opacity:0, x:-50}}` — 100px of travel, double fade | one animation, on the wrapper |
+| CTA | 36px tall | **44px** |
+| ❤️ in the eyebrow | announced as "red heart" | `aria-hidden` |
+| Tick alignment | `items-center` centred the tick against wrapped values | `items-start` |
+| Eyebrow element | `<div>` | `<p>` |
+| List keys | `key={index}` | keyed by value |
+
+**Nine `repeat: Infinity` animations** — particles, sparkles, garland sway,
+camera float, saree drape, two rings, heart rotation, five pulsing ticks, plus
+the CTA star — and six entrance animations, none guarded. All now behind
+`useReducedMotion()` via a small `loop()` helper.
+
+Measured under emulated `reduce`: 0 particles, 0 sparkles, ticks static, camera
+static — and content column, stats panel and image wrapper **all at opacity 1**.
+Restored to `no-preference`: 15 particles, 4 sparkles, everything moving again.
+
+Heading contrast measured 13.63:1 (`text-primary` resolves to `#1C1917` from
+`textColor`, not the cream `backgroundColor.primary` — worth having checked).
+
+**Content issues to raise (not changed)**
+
+1. **"500+ Weddings" here contradicts "1000+ Weddings Captured" elsewhere on
+   the site.** Two different numbers for the same claim on the same domain.
+2. **"Founded in 2020" beside "5+ Years"** — that reads as 6 years in 2026, and
+   the stat will keep drifting because it is hardcoded.
+3. These sit alongside the already-open "1000+ Weddings" vs "1500+ Happy
+   Clients" and the footer's "12,000 discerning couples". **Four different
+   scale claims now.** Worth settling as one set of numbers.
