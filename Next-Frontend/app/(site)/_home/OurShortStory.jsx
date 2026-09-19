@@ -174,7 +174,7 @@ export default function OurStory() {
           </svg>
         </div>
 
-        <div className="max-w-7xl mx-auto px-5 py-10 sm:px-8 md:py-14 relative">
+        <div className="max-w-7xl mx-auto px-5 py-10 sm:px-7 md:py-12 relative">
           <div className="flex flex-col lg:flex-row lg:items-start gap-10">
             {/* Left Column: Image with Stats Overlay */}
             <div className="w-full lg:w-2/5 relative">
@@ -302,7 +302,7 @@ export default function OurStory() {
                 {/* Was an <h1> in the middle of the page. */}
                 <h2
                   id="our-story-heading"
-                  className="text-2xl sm:text-3xl font-bold mb-4 text-primary relative z-10"
+                  className="t-display-2 mb-4 text-primary relative z-10"
                 >
                   Professional Wedding Storytellers
                   <motion.div

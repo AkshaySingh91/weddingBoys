@@ -882,3 +882,53 @@ packages section rendered into an error boundary. Caught only by reading the
 browser console after the change. The lesson: a green build is not evidence a
 client component renders. Check the console on the page after any structural
 edit.
+
+### Review pass 3 — ribbon, axis, one typeface, narrower gutters, mobile rails
+
+Gate answers: **Bodoni everywhere · gutter 64→40 and band 32→28 · swipe rails**.
+
+**1. The diagonal ribbon is back.** Positioned absolutely and clipped by the
+card's own `overflow-hidden`, so it costs the card **no vertical space** — which
+is what keeps the four cards aligned. Its geometry is tuned so the text clears
+the clip at both card widths: measured 8px top / 7px right margin at 302px
+(desktop) and at 320px (mobile rail). A first attempt at `w-[180px] top-[22px]`
+rendered as **"OPULAR CHOIC"** on the phone.
+
+**2. The packages section was never on the axis.** It was still a bare
+`<section>` with `padding: 40px 16px`, sitting at **x=16** while every other band
+sat at x=64 — I wrapped every other section but missed this one. Now in
+`<Section>`; all bands measured at the same x.
+
+**3. One typeface for section headings.** Every `<h2>` section heading is now
+Bodoni. Nine sections were split between Bodoni and Inter; the CMS block renderer
+(`Component/cms/blocks.jsx`, 3 headings) was the last holdout and is why "Our
+Track Record" stayed sans.
+
+**4. Gutters.** `Section` `lg:px-12 → lg:px-6`. With `<main>`'s own 16px that is
+a **40px page gutter**, down from 64. Band padding 32 → 28. Content starts at 68px
+instead of 96px: **+56px of usable width per row** at 1440.
+
+**5. Mobile swipe rails.**
+
+| | Before | After |
+|---|---|---|
+| Portfolio | 3,007px (3.6 screens) | **935px** (1.1) |
+| Packages | 2,509px (3 screens) | **984px** (1.2) |
+| Whole page | 19,287px (22.9 screens) | **15,875px** (18.8) |
+
+Both rails bleed right only so their left edge stays on the axis, and become
+grids from `sm` up.
+
+**Also fixed: a heading that was a star.** The Track Record stat had the *number*
+in an `<h3>` and the *label* in a `<p>` — inverted — and until the count-up
+fired, the heading's entire text content was `★`. Now a `<dl>`: `<dt>` label,
+`<dd>` value, star `aria-hidden`, and the number renders immediately rather than
+leaving the element empty. Measured: **0 headings whose text is a star**.
+
+**Two self-inflicted misses, both caught by measuring rather than looking.**
+The ribbon clipped its own text on the phone. And `pr-12` on the card titles —
+added so the ribbon would not touch them — pushed the longest title to three
+lines and shifted that card's rows **32px** below its neighbours'. Three lines
+are now reserved for every title, so a long one cannot knock the rows out of
+step. Final: title 22, tagline 120, price 180, stats 262, list 344, CTA 494 —
+identical across all four.

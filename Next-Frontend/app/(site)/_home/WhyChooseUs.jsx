@@ -201,7 +201,7 @@ const WhyChooseUs = () => {
 
     return (
         <Section width="wide" rhythm="tight" id="whyToChooseUs" aria-labelledby="why-choose-heading">
-        <div className="px-5 py-10 sm:px-8 lg:py-16 relative overflow-hidden bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] lg:rounded-3xl sm:rounded-lg border-[#fed6c3] border-[1px] shadow-lg">
+        <div className="px-5 py-10 sm:px-7 lg:py-14 relative overflow-hidden bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] lg:rounded-3xl sm:rounded-lg border-[#fed6c3] border-[1px] shadow-lg">
             {/* Floating Hearts Decoration */}
             <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
                 {hearts?.map((heart, i) => (
@@ -245,7 +245,7 @@ const WhyChooseUs = () => {
                         <FiStar aria-hidden="true" className="inline mr-2 motion-safe:animate-pulse" />
                         Why We Stand Out
                     </div>
-                    <h2 id="why-choose-heading" className="text-3xl md:text-4xl font-bold text-[#5E2B17] mb-4">
+                    <h2 id="why-choose-heading" className="t-display-2 mx-auto mb-4 text-[#5E2B17]">
                         Why Choose{' '}
                         <br />
                         <span className="text-accent-ink">The Wedding Boys?</span>

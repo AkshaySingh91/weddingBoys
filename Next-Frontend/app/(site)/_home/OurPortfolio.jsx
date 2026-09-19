@@ -43,7 +43,18 @@ const api_url = process.env.NEXT_PUBLIC_API_URL;
 
 /* The tiles must match the real grid and the real tile height exactly, or the
    skeleton itself causes layout shift. */
-const GRID_CLASS = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8";
+/* Below sm this is a swipe rail, not a stack: eight photographs at full
+   width ran 3.6 screens on a phone. From sm up it is the grid. The rail
+   bleeds right only so its left edge stays on the section axis, and
+   scroll-pl mirrors that padding — without it snap-mandatory parks the
+   first tile flush and eats the inset. */
+const GRID_CLASS =
+    "flex snap-x snap-mandatory gap-4 overflow-x-auto scrollbar-none pb-2 "
+    + "-mr-5 pr-5 scroll-pl-0 "
+    + "sm:mr-0 sm:pr-0 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible "
+    + "md:grid-cols-3 lg:grid-cols-4 lg:gap-8";
+/* Rail tiles need an explicit width; grid cells must not keep it. */
+const TILE_WIDTH = "w-[78vw] shrink-0 snap-start sm:w-auto sm:shrink";
 const TILE_HEIGHT = "h-64 lg:h-80";
 
 const PortfolioSkeleton = () => (
@@ -56,7 +67,7 @@ const PortfolioSkeleton = () => (
         </div>
         <div className={GRID_CLASS}>
             {[...Array(8)].map((_, i) => (
-                <div key={i} className={`${TILE_HEIGHT} w-full bg-primary/20 rounded-xl animate-pulse`} />
+                <div key={i} className={`${TILE_HEIGHT} ${TILE_WIDTH} bg-primary/20 rounded-xl animate-pulse`} />
             ))}
         </div>
     </div>
@@ -158,7 +169,7 @@ export default function OurPortfolio() {
 
     return (
         <Section width="wide" rhythm="tight" id="ourPortfolio" aria-labelledby="portfolio-heading">
-            <div className="py-10 px-5 sm:px-6 lg:px-8 lg:py-12 bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] relative overflow-hidden lg:rounded-3xl sm:rounded-lg shadow-lg">
+            <div className="py-10 px-5 sm:px-7 lg:py-12 bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] relative overflow-hidden lg:rounded-3xl sm:rounded-lg shadow-lg">
 
                 {/* henna top border */}
                 <div className="absolute top-0 left-0 w-full" aria-hidden="true">
@@ -273,7 +284,7 @@ export default function OurPortfolio() {
                         </span>
                         <h2
                             id="portfolio-heading"
-                            className="text-desktopHeadlineMedium font-bold text-tertiary_on mt-4"
+                            className="t-display-2 mx-auto mt-4"
                         >
                             Moments We&apos;ve Captured
                         </h2>
@@ -342,7 +353,7 @@ export default function OurPortfolio() {
                                         key={item._id ?? item.url ?? index}
                                         initial={reduceMotion ? false : { scale: 0.9, opacity: 0 }}
                                         animate={{ scale: 1, opacity: 1 }}
-                                        className="relative group overflow-hidden rounded-xl shadow-xl"
+                                        className={`relative group overflow-hidden rounded-xl shadow-xl ${TILE_WIDTH}`}
                                     >
                                         {/* eslint-disable-next-line @next/next/no-img-element */}
                                         <img

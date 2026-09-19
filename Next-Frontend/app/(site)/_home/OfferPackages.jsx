@@ -9,6 +9,7 @@ import { FiHeart, FiAward, FiClock, FiUsers, FiChevronRight, FiCalendar } from '
 import CountUp from 'react-countup';
 import { useStudioDetails } from '@/Context/StudioDetailsContext.jsx';
 import PackageModal from '@/Component/PackageModal.jsx';
+import Section from '@/Component/ui/Section.jsx';
 
 const packages = [
     {
@@ -167,27 +168,35 @@ const PackageCard = ({ pkg, onOpen }) => {
                border on the popular ones against 1px elsewhere pushed their
                rows down by exactly 1px — visible when four cards are read
                across. */
-            className={`relative flex h-full flex-col overflow-hidden rounded-media border-2
+            className={`relative flex h-full w-[82vw] shrink-0 snap-start flex-col overflow-hidden
+                        rounded-media border-2 sm:w-auto sm:shrink
                         bg-ground-raised shadow-panel transition-transform duration-ui ease-standard
                         hover:-translate-y-1 focus-within:-translate-y-1
                         ${pkg.isPopular ? 'border-accent' : 'border-gold/35'}`}
         >
-            {/* Rendered on every card, labelled on two. Rendering it only on the
-                popular ones pushed their content down by 30px and broke the
-                row alignment across the four. */}
-            <div className={`flex h-[30px] shrink-0 items-center justify-center
-                             ${pkg.isPopular ? 'bg-accent' : ''}`}>
-                {pkg.isPopular && (
-                    <p className="flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.02em] text-white">
-                        <FiStar aria-hidden="true" className="h-3 w-3" />
-                        Popular choice
-                    </p>
-                )}
-            </div>
+            {/* The original diagonal corner ribbon, restored. Positioned
+                absolutely and clipped by the card's own overflow-hidden, so it
+                costs the card no vertical space — which is what keeps all four
+                cards' rows on the same baselines. The top band it replaces cost
+                30px and pushed two of the four down by exactly that. */}
+            {pkg.isPopular && (
+                <p className="pointer-events-none absolute -right-[58px] top-[30px] z-10 w-[196px]
+                              rotate-45 bg-accent py-1 text-center text-[9px] font-bold
+                              tracking-[0.06em] text-white shadow-panel">
+                    POPULAR CHOICE
+                </p>
+            )}
 
             <div className="flex flex-1 flex-col p-5">
                 {/* Two lines reserved: titles run one to three words or seven. */}
-                <h3 className="t-heading-2 min-h-[2.6em] max-w-none">{pkg.title}</h3>
+                {/* pr-12 on every title, not only the popular ones: the corner
+                    ribbon sits over that space, and padding only the two that
+                    have it would give the four cards different wrap points.
+                    Three lines reserved (3 x 1.3em leading) because the longest
+                    title needs three once the ribbon's space is taken out — with
+                    two reserved it grew and pushed that card's rows 32px below
+                    its neighbours'. */}
+                <h3 className="t-heading-2 min-h-[3.9em] max-w-none pr-12">{pkg.title}</h3>
                 <p className="t-body-sm mt-1 min-h-[3.2em] text-ink-muted">{pkg.tagline}</p>
 
                 <div className="mt-4 flex flex-wrap items-baseline gap-x-2 gap-y-1">
@@ -270,9 +279,8 @@ const PackagesSection = () => {
     }, []);
 
     return (<>
-        <section
-            id="pricing"
-            className="lg:py-10 sm:py-0 px-4 bg-gradient-to-b from-[#fedecf] to-[#faefe7]/50 relative overflow-hidden bg-opacity-50 lg:rounded-3xl sm:rounded-lg border-[#fed6c3] border-[1px]">
+        <Section width="wide" rhythm="tight" id="pricing" aria-labelledby="pricing-heading">
+        <div className="py-10 px-5 sm:px-7 lg:py-12 bg-gradient-to-b from-[#fedecf] to-[#faefe7]/50 relative overflow-hidden bg-opacity-50 lg:rounded-3xl sm:rounded-lg border-[#fed6c3] border-[1px]">
             {/* Decorative Elements */}
             <div className="absolute inset-0 pointer-events-none">
                 {/* Floating Hearts */}
@@ -348,13 +356,20 @@ const PackagesSection = () => {
 
                 {/* Four in one row on desktop, as a price table should be —
                     they exist to be compared against each other. */}
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6 items-stretch">
+                {/* A swipe rail on phones — four full-width cards ran 3 screens.
+                    From sm up it is the grid, four across at lg, which is what a
+                    price table should be. */}
+                <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto scrollbar-none pb-2
+                                -mr-5 pr-5
+                                sm:mr-0 sm:pr-0 sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible
+                                lg:grid-cols-4 lg:gap-6 sm:items-stretch">
                     {packages.map((pkg) => (
                         <PackageCard key={pkg.id} pkg={pkg} onOpen={setOpenPackage} />
                     ))}
                 </div>
             </div>
-        </section>
+        </div>
+        </Section>
 
         {openPackage && (
             <PackageModal
@@ -375,7 +390,7 @@ const PackagesSection = () => {
             <div className="text-center max-w-3xl mx-auto">
                 <div className="mb-6">
                     <FiHeart className="text-[#FF6969] w-12 h-12 mx-auto mb-4" />
-                    <h3 className="lg:text-desktopHeadlineSmall sm:text-mobileHeadlineSmall font-bold text-gray-900 mb-2 text-nowrap">
+                    <h3 className="font-display text-[24px] lg:text-[32px] font-semibold text-gray-900 mb-2">
                         Need Personal Assistance?
                     </h3>
                     <p className="text-gray-600">
@@ -485,7 +500,7 @@ const ComparativeCTA = ({ studioContact }) => {
                 </svg>
             </motion.div>
 
-            <h2 className="lg:text-desktopHeadlineMedium sm:text-mobileHeadlineMedium font-bold text-gray-900 relative z-10">
+            <h2 className="t-display-2 mx-auto text-gray-900 relative z-10">
                 Need a Custom Package?
                 {/* Animated Underline */}
                 <motion.div
@@ -606,20 +621,28 @@ const StatItem = ({ stat }) => {
                 <div className="inline-block bg-[#FF4D4D] text-white lg:p-4 sm:p-3 lg:rounded-2xl sm:rounded-md mb-3 lg:mb-6 transform group-hover:-rotate-12 transition-transform">
                     {stat.icon}
                 </div>
-                <h3 className="lg:text-desktopHeadlineMedium sm:text-mobileHeadlineMedium tracking-wider font-extrabold text-[#B33A3A] mb-2">
-                    {startCounter && (
-                        <CountUp
-                            end={stat.number}
-                            duration={2.5}
-                            separator=","
-                            suffix={stat.id !== 4 ? "+" : ""}
-                        />
-                    )}
-                    <span className="text-[#FFD700] ml-2">★</span>
-                </h3>
-                <p className="lg:text-desktopBodyMedium sm:text-mobileBodyMedium font-semibold text-secondary_on mb-2 text-nowrap">
-                    {stat.title}
-                </p>
+                {/* Was an <h3> holding the number, with the label in a <p>
+                    beneath — inverted, and until the counter fired the heading's
+                    entire text content was a star glyph. A stat is a term and a
+                    value, so it is a <dl>; the star is ornament. */}
+                <dl>
+                    <dd className="font-display text-[27px] lg:text-[40px] font-semibold tracking-wide text-[#B33A3A] mb-2">
+                        {startCounter
+                            ? (
+                                <CountUp
+                                    end={stat.number}
+                                    duration={2.5}
+                                    separator=","
+                                    suffix={stat.id !== 4 ? "+" : ""}
+                                />
+                            )
+                            : <span>{stat.number.toLocaleString('en-IN')}{stat.id !== 4 ? '+' : ''}</span>}
+                        <span aria-hidden="true" className="text-[#FFD700] ml-2">★</span>
+                    </dd>
+                    <dt className="lg:text-desktopBodyMedium sm:text-mobileBodyMedium font-semibold text-secondary_on mb-2 text-nowrap">
+                        {stat.title}
+                    </dt>
+                </dl>
                 <p className="lg:text-desktopBodySmall sm:text-mobileBodySmall text-[#74583E]">
                     {stat.description}
                 </p>
@@ -645,7 +668,7 @@ const TrackRecord = () => {
                     <div className="inline-block bg-[#FF4D4D] text-[#FFF0E6] px-6 py-2 rounded-full lg:text-desktopBodySmall sm:text-mobileBodySmall font-medium mb-6 shadow-lg">
                         <span className="drop-shadow-md text-nowrap">Our Legacy in Numbers</span>
                     </div>
-                    <h2 className="lg:text-desktopHeadlineMedium sm:text-mobileHeadlineSmall text-secondary_on mb-4">
+                    <h2 className="font-display text-[27px] lg:text-[40px] font-semibold text-secondary_on mb-4">
                         Crafting Timeless Memories Since 2020
                     </h2>
                     <p className="lg:text-desktopBodyLarge sm:text-mobileBodyLarge text-[#74583E] max-w-2xl mx-auto">

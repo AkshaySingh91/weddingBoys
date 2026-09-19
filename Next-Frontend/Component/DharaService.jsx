@@ -143,7 +143,7 @@ export default function DharaaStory() {
                     </svg>
                 </div>
 
-                <div className="max-w-7xl mx-auto px-5 py-10 sm:px-8 md:py-14 relative">
+                <div className="max-w-7xl mx-auto px-5 py-10 sm:px-7 md:py-12 relative">
                     {/* Brand lockup. `tracking-widest` (0.1em) was pulling the
                         wordmark apart; the name is the point, not the spacing. */}
                     <div className="flex flex-row items-center justify-center gap-4">
@@ -156,7 +156,7 @@ export default function DharaaStory() {
                         />
                         <h2
                             id="dharaa-heading"
-                            className="text-2xl md:text-3xl font-extrabold text-gray-900 leading-tight tracking-wide"
+                            className="font-display text-[26px] md:text-[34px] font-semibold text-gray-900 leading-tight tracking-wide"
                         >
                             {/* The space is load-bearing: `block` breaks the
                                 line visually but text content concatenates, so

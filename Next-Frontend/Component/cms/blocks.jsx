@@ -28,7 +28,7 @@ function SectionHeading({ title, subtitle }) {
     if (!title && !subtitle) return null;
     return (
         <div className="mb-8 text-center">
-            {title && <h2 className="text-3xl font-bold text-gray-900">{title}</h2>}
+            {title && <h2 className="t-display-2 mx-auto">{title}</h2>}
             {subtitle && <p className="mx-auto mt-2 max-w-2xl text-gray-500">{subtitle}</p>}
         </div>
     );
@@ -39,7 +39,7 @@ function SectionHeading({ title, subtitle }) {
 function HeadingBlock({ block }) {
     return (
         <div className="py-10 text-center">
-            {block.title && <h2 className="text-3xl font-bold text-gray-900">{block.title}</h2>}
+            {block.title && <h2 className="t-display-2 mx-auto">{block.title}</h2>}
             {block.subtitle && <p className="mt-2 text-gray-500">{block.subtitle}</p>}
         </div>
     );
@@ -48,7 +48,7 @@ function HeadingBlock({ block }) {
 function RichTextBlock({ block }) {
     return (
         <div className="mx-auto max-w-3xl py-10">
-            {block.title && <h2 className="mb-4 text-3xl font-bold text-gray-900">{block.title}</h2>}
+            {block.title && <h2 className="t-display-2 mx-auto mb-4">{block.title}</h2>}
             {block.body && <div className="prose prose-lg max-w-none text-gray-600" dangerouslySetInnerHTML={{ __html: block.body }} />}
         </div>
     );
@@ -212,7 +212,7 @@ function CtaBlock({ block }) {
     return (
         <section className="px-4 py-12">
             <div className="mx-auto max-w-4xl rounded-3xl bg-gradient-to-br from-rose-600 to-amber-500 p-10 text-center text-white">
-                {block.title && <h2 className="text-3xl font-bold">{block.title}</h2>}
+                {block.title && <h2 className="t-display-2 mx-auto">{block.title}</h2>}
                 {block.subtitle && <p className="mt-2 text-white/90">{block.subtitle}</p>}
                 {block.body && <p className="mx-auto mt-3 max-w-xl text-sm text-white/80">{block.body}</p>}
                 {block.link && (
