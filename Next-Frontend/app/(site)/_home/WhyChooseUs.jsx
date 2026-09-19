@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation, useReducedMotion } from 'framer-motion';
 import { FiCamera, FiFilm, FiBriefcase, FiZap, FiGlobe, FiHeart, FiStar } from 'react-icons/fi';
+import Section from '@/Component/ui/Section.jsx';
 
 // Simplified animations
 const containerVariants = {
@@ -17,11 +18,25 @@ const containerVariants = {
 };
 
 const TypewriterQuotes = React.memo(({ quotes }) => {
+    const reduceMotion = useReducedMotion();
     const [displayText, setDisplayText] = useState('');
     const [quoteIndex, setQuoteIndex] = useState(0);
 
     useEffect(() => {
         const currentQuote = quotes[quoteIndex];
+
+        // Under reduced motion the quote is rendered whole (derived below,
+        // not stored — a synchronous setState here is a cascading render) and
+        // simply rotates. A character-by-character rewrite is exactly the kind
+        // of continuous motion the preference asks us to stop.
+        if (reduceMotion) {
+            const hold = setTimeout(
+                () => setQuoteIndex((prev) => (prev + 1) % quotes.length),
+                6000,
+            );
+            return () => clearTimeout(hold);
+        }
+
         let timeoutId;
 
         function typeText(charIndex) {
@@ -41,16 +56,24 @@ const TypewriterQuotes = React.memo(({ quotes }) => {
         typeText(0);
 
         return () => clearTimeout(timeoutId);
-    }, [quoteIndex, quotes]);
+    }, [quoteIndex, quotes, reduceMotion]);
+
+    const visible = reduceMotion ? quotes[quoteIndex] : displayText;
 
     return (
         <motion.blockquote
-            className="mt-12 text-center italic text-lg text-secondary max-w-2xl mx-auto"
-            initial={{ opacity: 0 }}
+            className="mt-12 text-center italic text-lg text-ink-secondary max-w-2xl mx-auto"
+            initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
         >
-            {displayText}
-            <span className="ml-1 border-r-2 border-secondary animate-pulse" />
+            {/* The visible text is mid-rewrite most of the time, so assistive
+                technology reads the finished quote instead of a stream of
+                partial words. */}
+            <span aria-hidden="true">
+                {visible}
+                <span className="ml-1 border-r-2 border-accent motion-safe:animate-pulse" />
+            </span>
+            <span className="sr-only">{quotes[quoteIndex]}</span>
         </motion.blockquote>
     );
 });
@@ -77,7 +100,7 @@ const TiltCard = React.memo(({ icon, title, description }) => {
     return (
         <motion.div
             ref={cardRef}
-            className="p-6 rounded-lg shadow-lg bg-white relative overflow-hidden cursor-pointer"
+            className="p-6 rounded-media shadow-panel bg-ground-raised border border-gold/30 relative overflow-hidden h-full"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "0px 0px -100px 0px" }}
@@ -116,15 +139,11 @@ function makeHearts() {
     }));
 }
 
-const WhyChooseUs = () => {
-    const [hearts, setHearts] = useState(null);
-
-    useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setHearts(makeHearts());
-    }, []);
-
-    const features = [
+/* Module scope, not the render body. `quotes` was recreated on every render,
+   which both defeated TypewriterQuotes' React.memo and sat in its effect's
+   dependency array — so the typewriter restarted from scratch every time the
+   parent re-rendered. `features` rebuilt six JSX icon elements with it. */
+const FEATURES = [
         {
             icon: <FiZap className="w-6 h-6" />,
             title: "Decade of Expertise",
@@ -162,20 +181,29 @@ const WhyChooseUs = () => {
             description:
                 "We have a keen eye for genuine laughter, tears, and those spontaneous moments that make your day unique."
         },
-    ];
+];
 
-
-    const quotes = [
+const QUOTES = [
         "\"We don't just capture moments - we create timeless emotional artifacts.\"",
         "\"Every snapshot tells a unique story of love, laughter, and cherished memories.\"",
-        "\"Your love deserves to be celebrated with every frame, every smile, every tear.\""
-    ];
+    "\"Your love deserves to be celebrated with every frame, every smile, every tear.\""
+];
+
+const WhyChooseUs = () => {
+    const reduceMotion = useReducedMotion();
+    const [hearts, setHearts] = useState(null);
+
+    useEffect(() => {
+        if (reduceMotion) return;
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setHearts(makeHearts());
+    }, [reduceMotion]);
+
     return (
-        <section
-        id='whyToChooseUs'
-        className="px-4 sm:py-10 lg:py-16 relative overflow-hidden bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] sm:my-10 lg:my-8  lg:rounded-3xl sm:rounded-lg border-[#fed6c3] border-[1px] shadow-lg">
+        <Section width="wide" rhythm="tight" id="whyToChooseUs" aria-labelledby="why-choose-heading">
+        <div className="px-5 py-10 sm:px-8 lg:py-16 relative overflow-hidden bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] lg:rounded-3xl sm:rounded-lg border-[#fed6c3] border-[1px] shadow-lg">
             {/* Floating Hearts Decoration */}
-            <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
                 {hearts?.map((heart, i) => (
                     <motion.div
                         key={i}
@@ -214,15 +242,16 @@ const WhyChooseUs = () => {
                     viewport={{ once: true }}
                 >
                     <div className="bg-[#FF6969]/10 text-[#FF6969] px-6 py-2 rounded-full inline-block mb-4">
-                        <FiStar className="inline mr-2 animate-pulse" />
+                        <FiStar aria-hidden="true" className="inline mr-2 motion-safe:animate-pulse" />
                         Why We Stand Out
                     </div>
-                    <h2 className="text-3xl md:text-4xl font-bold text-[#5E2B17] mb-4 ">
-                        Why Choose
+                    <h2 id="why-choose-heading" className="text-3xl md:text-4xl font-bold text-[#5E2B17] mb-4">
+                        Why Choose{' '}
                         <br />
-                        <span className="text-[#FF6969]">The Wedding Boys?</span>
+                        <span className="text-accent-ink">The Wedding Boys?</span>
                     </h2>
                     <motion.div
+                        aria-hidden="true"
                         className="mx-auto w-24 h-1 bg-[#FF6969] rounded-full"
                         initial={{ scaleX: 0 }}
                         whileInView={{ scaleX: 1 }}
@@ -238,9 +267,9 @@ const WhyChooseUs = () => {
                     whileInView="visible"
                     viewport={{ once: true, margin: "0px 0px -100px 0px" }}
                 >
-                    {features.map((feature, index) => (
+                    {FEATURES.map((feature) => (
                         <motion.div
-                            key={index}
+                            key={feature.title}
                             variants={containerVariants}
                         >
                             <TiltCard {...feature} />
@@ -250,11 +279,12 @@ const WhyChooseUs = () => {
 
                 {/* Quote Section */}
                 <div className="relative mt-16">
-                    <FiHeart className="absolute -top-4 left-1/2 -translate-x-1/2 text-[#FF6969]/20 w-16 h-16" />
-                    <TypewriterQuotes quotes={quotes} />
+                    <FiHeart aria-hidden="true" className="absolute -top-4 left-1/2 -translate-x-1/2 text-[#FF6969]/20 w-16 h-16" />
+                    <TypewriterQuotes quotes={QUOTES} />
                 </div>
             </div>
-        </section>
+        </div>
+        </Section>
     );
 };
 
