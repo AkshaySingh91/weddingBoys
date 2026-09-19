@@ -65,6 +65,28 @@ const V4_ONLY = [
         'an arbitrary value like aspect-[4/3], or add it to theme.extend.aspectRatio',
         (m) => defined('aspectRatio', m.replace('aspect-', '')),
     ],
+    // Gradient stop positions ship on a 5% scale. `md:from-42%` and
+    // `md:to-78%` generated no CSS and left a two-stop gradient that washed a
+    // whole illustration out — the same silent failure as an off-scale opacity
+    // modifier, and just as invisible without measuring the computed style.
+    [
+        /\b(?:from|via|to)-(\d+)%/g,
+        'a multiple of 5 (from-40%, to-80%), or an arbitrary value like from-[42%]',
+        (m) => {
+            const n = Number(m.match(/(\d+)%/)[1]);
+            return n % 5 === 0 && n <= 100;
+        },
+    ],
+    // Opacity modifiers are on the same 5-step scale. `/94` and `/78` compiled
+    // to nothing even against channel-mapped colours.
+    [
+        /\b(?:bg|text|border|from|via|to|ring|fill|stroke|divide|outline|shadow|accent|caret|decoration|placeholder)-[a-z0-9-]+\/(\d+)\b/g,
+        'a multiple of 5 (/80, /95), or an arbitrary value like /[78]',
+        (m) => {
+            const n = Number(m.match(/\/(\d+)$/)[1]);
+            return n % 5 === 0 && n <= 100;
+        },
+    ],
 ];
 
 function* walk(dir) {

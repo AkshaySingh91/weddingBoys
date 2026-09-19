@@ -75,6 +75,28 @@ ground needed two separate reds to reach AA.
 
 Named by role. Components consume tokens only.
 
+### 3.0 The hierarchy — stated, because it drifts
+
+**Red is the primary brand colour.** Gold and cream are ornament and ground.
+They are not substitutes for red and must not quietly take its place.
+
+Client, verbatim, 2026-09-19: *"Our primary color is red dont forget this, gold
+& cream is just we can use for decorative or bg."*
+
+This was written down because the drift had already started: a headline on the
+home page was offered a gold treatment where the brand's own red belonged. When
+red fails contrast in a given position, the answer is **the red token that
+passes**, never a different hue:
+
+| Need | Token | Ratio |
+|---|---|---|
+| Red as a fill (buttons, chips, indicators) | `--accent` `#D9342A` | white on it **4.69:1** |
+| Red **as text** on ivory | `--accent-ink` `#A83824` | **5.99:1** |
+| Red as a tint or wash behind content | `--accent-wash` / `--accent-tint` | ground only |
+
+`--accent` used *as text* measures 4.36:1 and does not pass — that is the whole
+reason `--accent-ink` exists. Reach for it rather than reaching for gold.
+
 ### 3.1 Core
 
 | Token | Value | Role | Verified |

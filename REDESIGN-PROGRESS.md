@@ -615,3 +615,49 @@ Verified: films heading, first film card, services heading and first service
 card all at **x=64** at 1440 and **x=20** at 390. `docOverflowX` 0.
 
 Every remaining home section gets brought onto this axis as it is reworked.
+
+### Varanasi launch card — restyled (`VaranasiLaunchCard.jsx`)
+
+Chosen at the gate: countdown kept as-is · display face with **Varanasi in red** ·
+badge kept with its faults fixed.
+
+**Colour hierarchy corrected.** Client, verbatim: *"Our primary color is red
+dont forget this, gold & cream is just we can use for decorative or bg."* I had
+offered a gold treatment for the headline word where the brand's own red
+belonged. Recorded as DESIGN-SYSTEM.md §3.0 so it cannot drift again. When red
+fails contrast the answer is the red token that passes, never another hue.
+
+| | Was | Now |
+|---|---|---|
+| CTA fill | `#eb4b55`, white on it **3.70:1** | `--accent`, white **4.69:1** |
+| "Varanasi" | `#eb4b55` as text, **3.43:1** | `--accent-ink`, **5.71:1** — still red |
+| Heading | Inter 800 | Bodoni + `.rule-ornament` |
+| CTA element | `<button onClick={router.push}>` | `<a href="/varanasi">` |
+| Badge | `NEW BRANCH ALERT`, pulse always on | sentence case, accent token, `motion-safe:animate-ping` |
+| Container | bare `<div>`, heading at x=72 | `<Section>`, card at **x=64**, on the axis |
+| Countdown | re-rendered the whole card incl. `next/image` every second | isolated component; the tick touches four digits |
+
+**The countdown behaviour is unchanged by decision.** It remains hardcoded to
+10d 14h 59m 59s and restarts on every page load; the "20% off" has no real end
+date. I raised that this is false urgency and a listed dark pattern under the
+CCPA's *Guidelines for Prevention and Regulation of Dark Patterns, 2023*, and
+the client chose to keep it. Recorded here, not re-litigated. Reversing it later
+is small: give `START` a real end date and hide the block once it passes.
+
+**Three self-inflicted bugs, found by looking at my own screenshots**
+
+1. `via-accent-wash/90` with the falloff at the card edge washed the ghats out
+   to a ghost. The illustration is the best asset on the page.
+2. Retuning to `from-42% / to-78%` **compiled to nothing** — gradient stop
+   positions ship on Tailwind's 5-step scale, the same trap as `/94` and `/78`
+   on opacity. Computed style was a bare two-stop gradient with no percentages.
+3. The real cause was neither: `bg-accent-wash/90` sets background-**color**
+   while `md:bg-gradient-to-r` sets background-**image**. Different properties,
+   so the phone wash never switched off and flooded the card at every width.
+   The original code avoided this with a separate `md:hidden` element; merging
+   them lost it. `md:bg-transparent` is load-bearing.
+
+**Build guard extended** (`scripts/check-tailwind-classes.mjs`) to catch the
+class, not the instance: any `from-/via-/to-N%` or any opacity modifier `/N`
+off the 5-step scale now fails the build. Verified the rules fire on a planted
+case and that the repo is otherwise clean.
