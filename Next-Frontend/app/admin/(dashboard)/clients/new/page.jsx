@@ -42,6 +42,26 @@ const labelCls = 'mb-1.5 block text-[11px] font-semibold uppercase tracking-wide
 
 const DRAFT_KEY = 'wb_new_wedding_intake_draft';
 
+function computeSpanDisplay(start, end, season) {
+    if (!start && !end) return season ? `${season} Season` : '';
+    if (start && (!end || start === end)) {
+        const d = new Date(start + 'T00:00:00');
+        const formatted = isNaN(d.getTime()) ? start : d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+        return `${formatted} · Single-Day Celebration`;
+    }
+    if (start && end) {
+        const d1 = new Date(start + 'T00:00:00');
+        const d2 = new Date(end + 'T00:00:00');
+        if (!isNaN(d1.getTime()) && !isNaN(d2.getTime())) {
+            const diffDays = Math.round(Math.abs(d2 - d1) / (1000 * 60 * 60 * 24)) + 1;
+            const f1 = d1.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+            const f2 = d2.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+            return `${diffDays}-Day Celebration (${f1} – ${f2})`;
+        }
+    }
+    return '';
+}
+
 export default function AddClientWizard() {
     const router = useRouter();
     const [step, setStep] = useState(0);
@@ -49,6 +69,9 @@ export default function AddClientWizard() {
     // Couple & Location Profile
     const [bride, setBride] = useState('');
     const [groom, setGroom] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [season, setSeason] = useState('');
     const [weddingDate, setWeddingDate] = useState('');
     const [city, setCity] = useState('');
     const [venue, setVenue] = useState('');
@@ -56,6 +79,7 @@ export default function AddClientWizard() {
     const [coordinate, setCoordinate] = useState({ latitude: '', longitute: '' });
 
     const [clientId, setClientId] = useState(null);
+    const [hasStoredDraft, setHasStoredDraft] = useState(false);
     const [creating, setCreating] = useState(false);
     const [showDiscardModal, setShowDiscardModal] = useState(false);
     const [discarding, setDiscarding] = useState(false);
@@ -87,8 +111,14 @@ export default function AddClientWizard() {
             const saved = sessionStorage.getItem(DRAFT_KEY);
             if (saved) {
                 const p = JSON.parse(saved);
+                if (p.bride || p.groom || p.clientId) {
+                    setHasStoredDraft(true);
+                }
                 if (p.bride) setBride(p.bride);
                 if (p.groom) setGroom(p.groom);
+                if (p.startDate) setStartDate(p.startDate);
+                if (p.endDate) setEndDate(p.endDate);
+                if (p.season) setSeason(p.season);
                 if (p.weddingDate) setWeddingDate(p.weddingDate);
                 if (p.city) setCity(p.city);
                 if (p.venue) setVenue(p.venue);
@@ -108,11 +138,11 @@ export default function AddClientWizard() {
             sessionStorage.setItem(
                 DRAFT_KEY,
                 JSON.stringify({
-                    bride, groom, weddingDate, city, venue, isInMap, coordinate, clientId,
+                    bride, groom, startDate, endDate, season, weddingDate: startDate || weddingDate, city, venue, isInMap, coordinate, clientId,
                 })
             );
         } catch { /* ignore */ }
-    }, [bride, groom, weddingDate, city, venue, isInMap, coordinate, clientId]);
+    }, [bride, groom, startDate, endDate, season, weddingDate, city, venue, isInMap, coordinate, clientId]);
 
     // Load tag vocabulary and BTS schema
     useEffect(() => {
@@ -152,6 +182,7 @@ export default function AddClientWizard() {
     const photoItems = useMemo(() => portfolioItems.filter((i) => i.kind === 'Photo'), [portfolioItems]);
     const filmItems = useMemo(() => portfolioItems.filter((i) => i.kind === 'Video'), [portfolioItems]);
     const totalStorageBytes = useMemo(() => portfolioItems.reduce((acc, i) => acc + (i.media?.fileSize || 0), 0), [portfolioItems]);
+    const spanDisplay = useMemo(() => computeSpanDisplay(startDate, endDate, season), [startDate, endDate, season]);
 
     // Dynamic ceremony clusters grouping
     const ceremonyClusters = useMemo(() => {
@@ -197,6 +228,7 @@ export default function AddClientWizard() {
             return;
         }
         setCreating(true);
+        const spanDisplay = computeSpanDisplay(startDate, endDate, season);
         try {
             const res = await fetch(`${api_url}/api/admin/clients`, {
                 method: 'POST',
@@ -205,6 +237,14 @@ export default function AddClientWizard() {
                 body: JSON.stringify({
                     bride: bride.trim(),
                     groom: groom.trim(),
+                    status: 'Draft',
+                    weddingDate: startDate || weddingDate || null,
+                    celebrationDates: {
+                        startDate: startDate ? new Date(startDate) : null,
+                        endDate: endDate ? new Date(endDate) : null,
+                        season: season?.trim() || '',
+                        spanDisplay,
+                    },
                     isInMap,
                     coordinate: isInMap
                         ? { latitude: Number(coordinate.latitude), longitute: Number(coordinate.longitute) }
@@ -214,7 +254,7 @@ export default function AddClientWizard() {
             const data = await res.json();
             if (!res.ok) throw new Error(data.message || 'Could not create the client');
             setClientId(data.clientId);
-            fireMessage(`Initialized archive for ${bride} & ${groom}`, 'success');
+            fireMessage(`Initialized draft archive for ${bride} & ${groom}`, 'success');
             setStep(1);
         } catch (err) {
             fireMessage(err.message, 'error');
@@ -236,7 +276,7 @@ export default function AddClientWizard() {
                 next[key] = {
                     tags: item.tags || [],
                     eventGroup: item.eventGroup || '',
-                    shootDate: item.shootDate || weddingDate || '',
+                    shootDate: item.shootDate || startDate || weddingDate || '',
                     location: item.location || (city ? { city, venue } : {}),
                     isHero: Boolean(item.isHero),
                     heroPriority: item.heroPriority || 0,
@@ -264,7 +304,7 @@ export default function AddClientWizard() {
                 next[key] = {
                     tags: item.tags || [],
                     eventGroup: item.eventGroup || 'Highlights Film',
-                    shootDate: item.shootDate || weddingDate || '',
+                    shootDate: item.shootDate || startDate || weddingDate || '',
                     location: item.location || (city ? { city, venue } : {}),
                     isHero: Boolean(item.isHero),
                     heroPriority: item.heroPriority || 0,
@@ -330,6 +370,25 @@ export default function AddClientWizard() {
         }
     };
 
+    // Save as Draft & Exit to Workspace
+    const handleSaveAsDraftAndExit = async () => {
+        try {
+            if (clientId) {
+                await fetch(`${api_url}/api/admin/clients/${clientId}`, {
+                    method: 'PATCH',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'Draft' }),
+                });
+            }
+            try { sessionStorage.removeItem(DRAFT_KEY); } catch { /* ignore */ }
+            fireMessage('Saved draft wedding showcase. Access anytime in directory.', 'success');
+            router.push(`/admin/clients/${clientId}`);
+        } catch (err) {
+            fireMessage(err.message, 'error');
+        }
+    };
+
     // Publish Wedding Showcase & Exit to Workspace
     const handlePublishAndFinish = async () => {
         setPublishing(true);
@@ -345,6 +404,14 @@ export default function AddClientWizard() {
                         ids: unpublishedIds,
                         set: { status: 'Published' },
                     }),
+                });
+            }
+            if (clientId) {
+                await fetch(`${api_url}/api/admin/clients/${clientId}`, {
+                    method: 'PATCH',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'Published', publishAllItems: true }),
                 });
             }
             try { sessionStorage.removeItem(DRAFT_KEY); } catch { /* ignore */ }
@@ -425,6 +492,43 @@ export default function AddClientWizard() {
                 </div>
             )}
 
+            {/* Draft Resume Alert */}
+            {!clientId && hasStoredDraft && (bride || groom) && (
+                <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-amber-300 bg-amber-50/90 p-4 shadow-sm">
+                    <div className="flex items-center gap-3">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-200 text-amber-900">
+                            <Sparkle size={18} weight="fill" />
+                        </span>
+                        <div>
+                            <p className="text-xs font-bold text-amber-950">
+                                Unsaved Draft in Progress: {bride || 'Bride'} &amp; {groom || 'Groom'}
+                            </p>
+                            <p className="text-[11px] text-amber-800">
+                                You have form data saved in this browser session. You can continue editing or reset.
+                            </p>
+                        </div>
+                    </div>
+                    <button
+                        type="button"
+                        onClick={() => {
+                            try { sessionStorage.removeItem(DRAFT_KEY); } catch { /* ignore */ }
+                            setBride('');
+                            setGroom('');
+                            setStartDate('');
+                            setEndDate('');
+                            setSeason('');
+                            setCity('');
+                            setVenue('');
+                            setHasStoredDraft(false);
+                            fireMessage('Draft reset. Starting fresh.', 'info');
+                        }}
+                        className="rounded-xl border border-amber-300 bg-white px-3 py-1.5 text-xs font-semibold text-amber-950 hover:bg-amber-100 transition cursor-pointer"
+                    >
+                        Reset &amp; Start Fresh
+                    </button>
+                </div>
+            )}
+
             {/* Stepper Navigation */}
             <ol className="flex flex-wrap items-center gap-2">
                 {STEPS.map((s, i) => {
@@ -498,16 +602,96 @@ export default function AddClientWizard() {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
-                        <div>
-                            <label className={labelCls}>Wedding Date</label>
-                            <input
-                                type="date"
-                                className={field}
-                                value={weddingDate}
-                                onChange={(e) => setWeddingDate(e.target.value)}
-                            />
+                    {/* Celebration Dates & Span */}
+                    <div className="rounded-2xl border border-stone-200 bg-white p-4 space-y-3">
+                        <div className="flex items-center justify-between">
+                            <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-stone-700">
+                                <CalendarBlank size={16} className="text-amber-600" />
+                                Celebration Dates &amp; Span
+                            </span>
+                            {spanDisplay && (
+                                <Badge size="sm" variant="gold" className="font-semibold">
+                                    {spanDisplay}
+                                </Badge>
+                            )}
                         </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <div>
+                                <label className={labelCls}>Start Date / Day 1</label>
+                                <input
+                                    type="date"
+                                    className={field}
+                                    value={startDate}
+                                    onChange={(e) => {
+                                        setStartDate(e.target.value);
+                                        if (!endDate) setEndDate(e.target.value);
+                                    }}
+                                />
+                            </div>
+                            <div>
+                                <label className={labelCls}>End Date / Finale</label>
+                                <input
+                                    type="date"
+                                    className={field}
+                                    value={endDate}
+                                    min={startDate}
+                                    onChange={(e) => setEndDate(e.target.value)}
+                                />
+                            </div>
+                            <div>
+                                <label className={labelCls}>Season / Month (Optional)</label>
+                                <input
+                                    type="text"
+                                    className={field}
+                                    placeholder="e.g. Winter 2026 / Dec"
+                                    value={season}
+                                    onChange={(e) => setSeason(e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+                        {/* Quick preset duration buttons */}
+                        {startDate && (
+                            <div className="flex flex-wrap items-center gap-1.5 pt-1 text-[11px] text-stone-500">
+                                <span className="font-medium">Quick duration:</span>
+                                <button
+                                    type="button"
+                                    onClick={() => setEndDate(startDate)}
+                                    className={cn(
+                                        'rounded-md px-2 py-0.5 font-medium transition cursor-pointer',
+                                        endDate === startDate ? 'bg-amber-100 text-amber-900 font-bold' : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+                                    )}
+                                >
+                                    1 Day
+                                </button>
+                                {[2, 3, 4, 5].map((days) => {
+                                    const d = new Date(startDate + 'T00:00:00');
+                                    d.setDate(d.getDate() + days - 1);
+                                    const targetStr = d.toISOString().split('T')[0];
+                                    return (
+                                        <button
+                                            key={days}
+                                            type="button"
+                                            onClick={() => setEndDate(targetStr)}
+                                            className={cn(
+                                                'rounded-md px-2 py-0.5 font-medium transition cursor-pointer',
+                                                endDate === targetStr ? 'bg-amber-100 text-amber-900 font-bold' : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+                                            )}
+                                        >
+                                            {days} Days
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        )}
+
+                        <p className="text-[11px] text-stone-500 bg-amber-50/60 rounded-xl p-2.5 border border-amber-200/50">
+                            <span className="font-semibold text-amber-900">Ritual Scheduling:</span> Specific ritual dates (Haldi, Mehendi, Sangeet, Pheras, Reception) can be fine-tuned per ceremony cluster during media ingest in Step 2.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label className={labelCls}>City / Region</label>
                             <input
@@ -519,7 +703,7 @@ export default function AddClientWizard() {
                             />
                         </div>
                         <div>
-                            <label className={labelCls}>Venue</label>
+                            <label className={labelCls}>Venue / Palace</label>
                             <input
                                 type="text"
                                 className={field}
@@ -847,12 +1031,14 @@ export default function AddClientWizard() {
                         </Button>
 
                         <div className="flex items-center gap-3">
-                            <Link
-                                href={`/admin/clients/${clientId}`}
-                                className="rounded-xl border border-stone-200 bg-white px-4 py-2 text-xs font-semibold text-stone-700 hover:bg-stone-50 transition-colors"
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={handleSaveAsDraftAndExit}
+                                className="rounded-xl border border-stone-300 bg-white px-4 py-2 text-xs font-semibold text-stone-700 hover:bg-stone-50 transition-colors"
                             >
-                                Open Client Workspace
-                            </Link>
+                                Save as Draft &amp; View Workspace
+                            </Button>
 
                             <Button
                                 type="button"

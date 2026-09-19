@@ -9,6 +9,14 @@ const Client = new mongoose.Schema({
             type: String, require: true
         },
     },
+    celebrationDates: {
+        startDate: { type: Date },
+        endDate: { type: Date },
+        season: { type: String, trim: true },
+        spanDisplay: { type: String, trim: true },
+    },
+    weddingDate: { type: Date },
+    status: { type: String, enum: ['Draft', 'Published', 'Archived'], default: 'Draft', index: true },
     videos: [
         {
             _id: {

@@ -20,6 +20,9 @@ async function getAllClients(req, res, next) {
                 $project: {
                     clientId: "$_id",
                     clientName: "$clientName",
+                    celebrationDates: "$celebrationDates",
+                    weddingDate: "$weddingDate",
+                    status: { $ifNull: ["$status", "Draft"] },
                     timestamp: { $ifNull: ["$createdAt", new Date()] },
                     photos: { $ifNull: ["$photos", []] },
                     videos: { $ifNull: ["$videos", []] }
@@ -82,6 +85,9 @@ async function getAllClients(req, res, next) {
                 $project: {
                     clientId: 1,
                     clientName: 1,
+                    celebrationDates: 1,
+                    weddingDate: 1,
+                    status: 1,
                     timestamp: 1,
                     media: 1,
                 },

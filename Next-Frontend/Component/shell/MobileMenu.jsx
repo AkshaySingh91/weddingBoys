@@ -12,10 +12,20 @@
  */
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { PRIMARY_NAV, PRIMARY_CTA } from '@/lib/navigation.js';
+import { FiChevronRight, FiInstagram, FiYoutube, FiFacebook } from 'react-icons/fi';
+import { PRIMARY_NAV, PRIMARY_CTA, BRAND_TAGLINE } from '@/lib/navigation.js';
+import { useStudioDetails } from '@/Context/StudioDetailsContext.jsx';
 import Button from '@/Component/ui/Button.jsx';
+import NavIcon from './NavIcon.jsx';
+
+const SOCIALS = [
+    { label: 'Instagram', href: 'https://instagram.com/theweddingboys', Icon: FiInstagram },
+    { label: 'YouTube', href: 'https://youtube.com/@theweddingboys', Icon: FiYoutube },
+    { label: 'Facebook', href: 'https://facebook.com/theweddingboys', Icon: FiFacebook },
+];
 
 export default function MobileMenu({ open, onClose }) {
+    const { studioLogo } = useStudioDetails();
     const panelRef = useRef(null);
     const restoreTo = useRef(null);
 
@@ -75,8 +85,27 @@ export default function MobileMenu({ open, onClose }) {
                 className="absolute inset-y-0 right-0 flex w-full flex-col border-l
                            border-edge-subtle bg-ground sm:max-w-[400px]"
             >
-                <div className="flex items-center justify-between border-b border-edge-subtle px-5 py-4">
-                    <span className="t-label">Menu</span>
+                {/* The brand, not the word "Menu". A drawer that opens on a
+                    label tells you where you are in the UI; one that opens on the
+                    studio's mark tells you whose site you are in. */}
+                <div className="flex items-center justify-between gap-3 border-b border-gold/30
+                                bg-accent-tint px-5 py-4">
+                    <span className="flex min-w-0 items-center gap-3">
+                        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-pill
+                                         bg-ground-raised ring-1 ring-gold/60">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={studioLogo || '/companyLogo.png'} alt=""
+                                 className="h-full w-full rounded-pill object-contain p-1" />
+                        </span>
+                        <span className="flex min-w-0 flex-col leading-none">
+                            <span className="font-display text-[16px] font-semibold tracking-[0.06em] text-accent-ink">
+                                The Wedding Boys
+                            </span>
+                            <span className="mt-1 text-[8.5px] font-semibold uppercase tracking-[0.18em] text-ink-muted">
+                                {BRAND_TAGLINE}
+                            </span>
+                        </span>
+                    </span>
                     <button
                         type="button"
                         onClick={onClose}
@@ -91,44 +120,86 @@ export default function MobileMenu({ open, onClose }) {
                     </button>
                 </div>
 
-                <nav aria-label="Mobile" className="flex-1 overflow-y-auto px-2 py-3">
+                <nav aria-label="Mobile" className="flex-1 overflow-y-auto px-3 py-4">
                     {PRIMARY_NAV.map((item) => (
-                        <div key={item.label}>
+                        <div key={item.label} className="mb-1">
                             <Link
                                 href={item.href}
                                 onClick={onClose}
-                                className="flex min-h-[52px] items-center rounded-control px-3 text-[17px]
-                                           text-ink transition-colors duration-micro ease-standard
-                                           hover:bg-ground-sunk"
+                                className="group flex min-h-[54px] items-center gap-3 rounded-control px-3
+                                           transition-colors duration-micro ease-standard hover:bg-accent-wash"
                             >
-                                {item.label}
+                                <NavIcon name={item.icon} className="h-5 w-5 shrink-0 text-gold-strong" />
+                                <span className="flex-1 font-display text-[19px] text-ink">{item.label}</span>
+                                <FiChevronRight
+                                    aria-hidden="true"
+                                    className="h-4 w-4 shrink-0 text-ink-muted transition-transform
+                                               duration-micro ease-standard group-hover:translate-x-0.5"
+                                />
                             </Link>
-                            {/* Sub-destinations are listed, never hidden behind a second tap —
-                                there are at most four and the space exists. */}
+
+                            {/* Sub-destinations hang off a gold thread with a node
+                                at each stop — the ornament earns its place by
+                                showing they belong to the item above. */}
                             {item.panel && (
-                                <div className="mb-1 ml-3 border-l border-edge-subtle pl-3">
+                                <ul className="relative mb-2 ml-[34px] pl-4">
+                                    <span
+                                        aria-hidden="true"
+                                        className="absolute left-0 top-2 bottom-2 w-px bg-gold/45"
+                                    />
                                     {item.panel.map((sub) => (
-                                        <Link
-                                            key={sub.href}
-                                            href={sub.href}
-                                            onClick={onClose}
-                                            className="flex min-h-[44px] items-center rounded-control px-3
-                                                       text-[15px] text-ink-secondary transition-colors
-                                                       duration-micro ease-standard hover:bg-ground-sunk hover:text-ink"
-                                        >
-                                            {sub.label}
-                                        </Link>
+                                        <li key={sub.href} className="relative">
+                                            <span
+                                                aria-hidden="true"
+                                                className="absolute -left-4 top-1/2 h-1.5 w-1.5 -translate-y-1/2
+                                                           rotate-45 bg-gold"
+                                            />
+                                            <Link
+                                                href={sub.href}
+                                                onClick={onClose}
+                                                className="flex min-h-[44px] items-center rounded-control px-2
+                                                           text-[15px] text-ink-secondary transition-colors
+                                                           duration-micro ease-standard
+                                                           hover:bg-accent-wash hover:text-accent-ink"
+                                            >
+                                                {sub.label}
+                                            </Link>
+                                        </li>
                                     ))}
-                                </div>
+                                </ul>
                             )}
                         </div>
                     ))}
                 </nav>
 
-                <div className="border-t border-edge-subtle p-5">
-                    <Button href={PRIMARY_CTA.href} variant="primary" size="lg" className="w-full" onClick={onClose}>
+                <div className="border-t border-gold/30 bg-ground-sunk p-5">
+                    <Button href={PRIMARY_CTA.href} variant="primary" size="lg"
+                            className="w-full !rounded-pill" onClick={onClose}>
                         {PRIMARY_CTA.label}
                     </Button>
+
+                    <div className="mt-5 flex items-center justify-center gap-2">
+                        {SOCIALS.map(({ label, href, Icon }) => (
+                            <a
+                                key={label}
+                                href={href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`${label} — opens in a new tab`}
+                                className="grid h-11 w-11 place-items-center rounded-pill border border-gold/40
+                                           text-ink-secondary transition-colors duration-micro ease-standard
+                                           hover:border-gold hover:bg-accent-wash hover:text-accent-ink"
+                            >
+                                <Icon aria-hidden="true" className="h-[18px] w-[18px]" />
+                            </a>
+                        ))}
+                    </div>
+
+                    <div className="rule-ornament mt-5" aria-hidden="true" />
+                    <p className="mt-4 text-center text-[9.5px] font-semibold uppercase
+                                  tracking-[0.18em] text-ink-muted">
+                        Real people · Extraordinary stories
+                    </p>
                 </div>
             </div>
         </div>

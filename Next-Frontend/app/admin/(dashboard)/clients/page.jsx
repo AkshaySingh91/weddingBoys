@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import {
     MagnifyingGlass, Plus, CircleNotch, FilmSlate, ImageSquare, Star,
     WarningCircle, MapPin, HardDrives, CalendarBlank, ArrowsDownUp,
-    Trash, EyeSlash, TagSimple, DotsThree, PencilSimple,
+    Trash, EyeSlash, TagSimple, DotsThree, PencilSimple, Sparkle, Check,
 } from '@phosphor-icons/react';
 import useClients from '@/Hooks/useClients.jsx';
 import { Button } from '@/app/admin/components/ui/Button.jsx';
@@ -49,6 +49,7 @@ export default function ClientsPage() {
     const router = useRouter();
     const { clients, loading, busyId: busy, load, remove } = useClients();
 
+    const [statusTab, setStatusTab] = useState('all'); // 'all' | 'drafts' | 'published'
     const [search, setSearch] = useState('');
     const [sort, setSort] = useState('recent');
     const [filter, setFilter] = useState('');
@@ -62,6 +63,27 @@ export default function ClientsPage() {
     const [showVideoModal, setShowVideoModal] = useState(false);
 
     useEffect(() => { load(); }, [load]);
+
+    const isClientDraft = (c) => c.status === 'Draft' || (c.stats?.drafts > 0 && c.stats?.drafts === c.stats?.total) || ((c.stats?.total || 0) === 0);
+    const draftClientsCount = useMemo(() => clients.filter(isClientDraft).length, [clients]);
+    const publishedClientsCount = useMemo(() => clients.filter((c) => !isClientDraft(c)).length, [clients]);
+
+    const publishWedding = async (client) => {
+        setMenuFor(null);
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/clients/${client.clientId}`, {
+                method: 'PATCH',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: 'Published', publishAllItems: true }),
+            });
+            if (!res.ok) throw new Error('Could not publish wedding');
+            fireMessage(`${nameOf(client)} published to showcase!`, 'success');
+            load();
+        } catch (err) {
+            fireMessage(err.message, 'error');
+        }
+    };
 
     const destroy = (client) => {
         setMenuFor(null);
@@ -83,6 +105,11 @@ export default function ClientsPage() {
         const q = search.trim().toLowerCase();
         const active = FILTERS.find((f) => f.key === filter);
         return clients
+            .filter((c) => {
+                if (statusTab === 'drafts') return isClientDraft(c);
+                if (statusTab === 'published') return !isClientDraft(c);
+                return true;
+            })
             .filter((c) => !q
                 || nameOf(c).toLowerCase().includes(q)
                 || (c.stats?.cities || []).some((x) => x?.toLowerCase().includes(q))
@@ -94,7 +121,7 @@ export default function ClientsPage() {
                 if (sort === 'storage') return (b.stats?.storageBytes || 0) - (a.stats?.storageBytes || 0);
                 return new Date(b.timestamp || 0) - new Date(a.timestamp || 0);
             });
-    }, [clients, search, sort, filter]);
+    }, [clients, search, sort, filter, statusTab]);
 
     const totals = useMemo(() => clients.reduce((a, c) => ({
         videos: a.videos + (c.stats?.videos || 0),
@@ -127,6 +154,38 @@ export default function ClientsPage() {
                     Add a Wedding
                 </Button>
             </PageHeader>
+
+            {/* Status Tabs: All | Drafts | Published */}
+            <div className="flex items-center gap-2 border-b border-stone-200 pb-1">
+                {[
+                    { key: 'all', label: 'All Weddings', count: clients.length },
+                    { key: 'drafts', label: 'Drafts Only', count: draftClientsCount, activeCls: 'bg-amber-500 text-white' },
+                    { key: 'published', label: 'Published Only', count: publishedClientsCount, activeCls: 'bg-emerald-600 text-white' },
+                ].map((tab) => {
+                    const active = statusTab === tab.key;
+                    return (
+                        <button
+                            key={tab.key}
+                            type="button"
+                            onClick={() => setStatusTab(tab.key)}
+                            className={cn(
+                                'flex items-center gap-2 rounded-xl px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer select-none',
+                                active
+                                    ? tab.activeCls || 'bg-stone-900 text-white shadow-xs'
+                                    : 'bg-white border border-stone-200 text-stone-600 hover:bg-stone-50'
+                            )}
+                        >
+                            <span>{tab.label}</span>
+                            <span className={cn(
+                                'rounded-full px-1.5 py-0.2 text-[10px] font-bold font-mono',
+                                active ? 'bg-white/20 text-white' : 'bg-stone-100 text-stone-600'
+                            )}>
+                                {tab.count}
+                            </span>
+                        </button>
+                    );
+                })}
+            </div>
 
             {/* filters */}
             <div className="flex flex-wrap items-center gap-2">
@@ -190,13 +249,15 @@ export default function ClientsPage() {
                     {visible.map((c, i) => {
                         const s = c.stats || {};
                         const range = shootRange(s);
+                        const isDraft = isClientDraft(c);
+                        const displayDates = c.celebrationDates?.spanDisplay || range || monthYear(c.weddingDate);
                         const empty = (s.total || 0) === 0;
                         return (
                             <Reveal key={c.clientId} index={i}>
                                 <div className={cn(
                                     'group relative overflow-hidden rounded-2xl border bg-white transition-all duration-200',
                                     busy === c.clientId ? 'opacity-50' : 'hover:-translate-y-0.5 hover:shadow-lg',
-                                    'border-studio-border hover:border-studio-borderStrong',
+                                    isDraft ? 'border-amber-300/80 hover:border-amber-400' : 'border-studio-border hover:border-studio-borderStrong',
                                 )}>
                                     <Link href={`/admin/clients/${c.clientId}`} className="block">
                                         <span className="relative block aspect-[16/10] overflow-hidden bg-stone-100">
@@ -216,7 +277,7 @@ export default function ClientsPage() {
                                                     {nameOf(c)}
                                                 </span>
                                                 <span className="mt-0.5 flex flex-wrap items-center gap-x-2.5 text-[10px] text-white/80">
-                                                    {range && <span className="flex items-center gap-1"><CalendarBlank size={9} />{range}</span>}
+                                                    {displayDates && <span className="flex items-center gap-1"><CalendarBlank size={9} />{displayDates}</span>}
                                                     {s.cities?.[0] && <span className="flex items-center gap-1"><MapPin size={9} />{s.cities[0]}</span>}
                                                 </span>
                                             </span>
@@ -226,6 +287,24 @@ export default function ClientsPage() {
                                                     <Star size={9} weight="fill" /> {s.hero}
                                                 </span>
                                             )}
+
+                                            {/* Status Badge (Draft vs Published) */}
+                                            <span className="absolute right-2.5 top-2.5 flex items-center gap-1">
+                                                {isDraft ? (
+                                                    <span className="flex items-center gap-1.5 rounded-md bg-amber-500/95 px-2 py-0.5 text-[10px] font-bold text-white shadow-sm backdrop-blur-xs">
+                                                        <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+                                                        Draft Showcase
+                                                    </span>
+                                                ) : s.drafts > 0 ? (
+                                                    <span className="flex items-center gap-1 rounded-md bg-stone-900/80 px-1.5 py-0.5 text-[10px] font-medium text-amber-300 shadow-sm backdrop-blur-xs">
+                                                        {s.drafts} unpublished
+                                                    </span>
+                                                ) : (
+                                                    <span className="flex items-center gap-1 rounded-md bg-emerald-700/90 px-1.5 py-0.5 text-[10px] font-semibold text-white shadow-sm backdrop-blur-xs">
+                                                        Published
+                                                    </span>
+                                                )}
+                                            </span>
                                         </span>
                                     </Link>
 
@@ -287,11 +366,17 @@ export default function ClientsPage() {
                                             {menuFor === c.clientId && (
                                                 <>
                                                     <button type="button" aria-label="Close menu" className="fixed inset-0 z-10 cursor-default" onClick={() => setMenuFor(null)} />
-                                                    <div className="absolute bottom-full right-0 z-20 mb-1 w-44 overflow-hidden rounded-xl border border-studio-border bg-white py-1 shadow-lg">
+                                                    <div className="absolute bottom-full right-0 z-20 mb-1 w-48 overflow-hidden rounded-xl border border-studio-border bg-white py-1 shadow-lg">
                                                         <Link href={`/admin/clients/${c.clientId}`}
                                                             className="flex items-center gap-2 px-3 py-2 text-xs text-studio-ink hover:bg-stone-50">
-                                                            <PencilSimple size={13} /> Open
+                                                            <PencilSimple size={13} /> Open Workspace
                                                         </Link>
+                                                        {(isDraft || s.drafts > 0) && (
+                                                            <button type="button" onClick={() => publishWedding(c)}
+                                                                className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-amber-900 font-semibold hover:bg-amber-50 cursor-pointer">
+                                                                <Sparkle size={13} weight="fill" className="text-amber-600" /> Publish Showcase
+                                                            </button>
+                                                        )}
                                                         <div className="my-1 h-px bg-studio-border" />
                                                         <button type="button" onClick={() => destroy(c)}
                                                             className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-rose-700 hover:bg-rose-50">

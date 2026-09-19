@@ -46,6 +46,26 @@ const shootRange = (s) => {
     return a === b ? a : `${a} – ${b}`;
 };
 
+function computeSpanDisplay(start, end, season) {
+    if (!start && !end) return season ? `${season} Season` : '';
+    if (start && (!end || start === end)) {
+        const d = new Date(start + 'T00:00:00');
+        const formatted = isNaN(d.getTime()) ? start : d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+        return `${formatted} · Single-Day Celebration`;
+    }
+    if (start && end) {
+        const d1 = new Date(start + 'T00:00:00');
+        const d2 = new Date(end + 'T00:00:00');
+        if (!isNaN(d1.getTime()) && !isNaN(d2.getTime())) {
+            const diffDays = Math.round(Math.abs(d2 - d1) / (1000 * 60 * 60 * 24)) + 1;
+            const f1 = d1.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+            const f2 = d2.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+            return `${diffDays}-Day Celebration (${f1} – ${f2})`;
+        }
+    }
+    return '';
+}
+
 /** One card. Selection is a first-class action, not a hover afterthought. */
 function ItemCard({ item, selected, onToggle, onOpen, onDelete }) {
     const poster = posterOf(item);
@@ -165,6 +185,7 @@ export default function ClientWorkspace() {
     const [editing, setEditing] = useState(null);
     const [selected, setSelected] = useState(() => new Set());
     const [vocabulary, setVocabulary] = useState([]);
+    const [dbCeremonies, setDbCeremonies] = useState([]);
     const [showUpload, setShowUpload] = useState(false);
     const [showProfile, setShowProfile] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
@@ -172,16 +193,21 @@ export default function ClientWorkspace() {
     const [publishing, setPublishing] = useState(false);
     const [bulkTag, setBulkTag] = useState('');
     const [bulkCeremony, setBulkCeremony] = useState('');
-    const [form, setForm] = useState({ bride: '', groom: '', isInMap: false, latitude: '', longitute: '' });
+    const [form, setForm] = useState({
+        bride: '', groom: '', startDate: '', endDate: '', season: '',
+        isInMap: false, latitude: '', longitute: ''
+    });
     const loadedRef = useRef(false);
 
     // Dynamic ceremony groups present and counts
     const ceremonyGroups = useMemo(() => {
-        const defaults = ['Haldi', 'Mehendi', 'Sangeet', 'Wedding / Pheras', 'Reception', 'Pre-Wedding'];
+        const defaults = dbCeremonies.length > 0
+            ? dbCeremonies
+            : ['Haldi', 'Mehendi', 'Sangeet', 'Wedding / Pheras', 'Reception', 'Pre-Wedding', 'Candid & Portraits'];
         const custom = new Set(items.map((i) => i.eventGroup?.trim()).filter(Boolean));
         defaults.forEach((d) => custom.add(d));
         return Array.from(custom);
-    }, [items]);
+    }, [items, dbCeremonies]);
 
     const ceremonyCounts = useMemo(() => {
         const counts = {};
@@ -221,10 +247,19 @@ export default function ClientWorkspace() {
         loadedRef.current = true;
         (async () => {
             try {
-                const res = await fetch(`${api_url}/api/get-all-tags`, { credentials: 'include' });
-                if (res.ok) {
-                    const { allTags = [] } = await res.json();
+                const [tagRes, cerRes] = await Promise.all([
+                    fetch(`${api_url}/api/get-all-tags`, { credentials: 'include' }),
+                    fetch(`${api_url}/api/ceremonies`, { credentials: 'include' }),
+                ]);
+                if (tagRes.ok) {
+                    const { allTags = [] } = await tagRes.json();
                     setVocabulary([...new Set(allTags.flatMap((g) => g.tags || []))].sort());
+                }
+                if (cerRes.ok) {
+                    const data = await cerRes.json();
+                    if (data.ceremonies?.length) {
+                        setDbCeremonies(data.ceremonies.map((c) => c.name));
+                    }
                 }
             } catch { /* tags can still be typed by hand */ }
         })();
@@ -273,31 +308,57 @@ export default function ClientWorkspace() {
 
     const publishDrafts = async () => {
         const ids = items.filter((i) => i.status === 'Draft').map((i) => i._id);
-        if (!ids.length) return;
         setPublishing(true);
-        const ok = await bulkUpdate({ ids, set: { status: 'Published' } });
-        setPublishing(false);
-        if (ok) refresh();
+        try {
+            if (ids.length > 0) {
+                await bulkUpdate({ ids, set: { status: 'Published' } });
+            }
+            await saveProfile({ status: 'Published' });
+            fireMessage('Wedding showcase published!', 'success');
+            refresh();
+        } catch (err) {
+            fireMessage(err.message, 'error');
+        } finally {
+            setPublishing(false);
+        }
     };
 
     const openProfile = () => {
+        const cDates = client?.celebrationDates || {};
+        const startStr = cDates.startDate ? new Date(cDates.startDate).toISOString().split('T')[0] : (client?.weddingDate ? new Date(client.weddingDate).toISOString().split('T')[0] : '');
+        const endStr = cDates.endDate ? new Date(cDates.endDate).toISOString().split('T')[0] : '';
         setForm({
             bride: client?.clientName?.Bride || '',
             groom: client?.clientName?.Groom || '',
-            isInMap: false, latitude: '', longitute: '',
+            startDate: startStr,
+            endDate: endStr,
+            season: cDates.season || '',
+            isInMap: false,
+            latitude: '',
+            longitute: '',
         });
         setShowProfile((v) => !v);
         setMenuOpen(false);
     };
 
     const commitProfile = async () => {
+        const spanDisplay = computeSpanDisplay(form.startDate, form.endDate, form.season);
         const saved = await saveProfile({
-            bride: form.bride, groom: form.groom, isInMap: form.isInMap,
+            bride: form.bride,
+            groom: form.groom,
+            weddingDate: form.startDate || client?.weddingDate || null,
+            celebrationDates: {
+                startDate: form.startDate ? new Date(form.startDate) : null,
+                endDate: form.endDate ? new Date(form.endDate) : null,
+                season: form.season?.trim() || '',
+                spanDisplay,
+            },
+            isInMap: form.isInMap,
             coordinate: form.isInMap ? { latitude: Number(form.latitude), longitute: Number(form.longitute) } : null,
         });
         if (!saved) return;
         setShowProfile(false);
-        refresh();   // clientNameText is denormalised onto every placement
+        refresh(); // clientNameText is denormalised onto every placement
     };
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -353,19 +414,34 @@ export default function ClientWorkspace() {
     const name = [client?.clientName?.Bride, client?.clientName?.Groom].filter(Boolean).join(' & ');
     const drafts = items.filter((i) => i.status === 'Draft').length;
     const range = shootRange(stats);
+    const displayDates = client?.celebrationDates?.spanDisplay || range || monthYear(client?.weddingDate);
     const selectedItems = items.filter((i) => selected.has(i._id));
 
     return (
         <div className="space-y-6 font-sans">
             <PageHeader
-                title={name || 'Loading…'}
+                title={
+                    <span className="flex items-center gap-2.5">
+                        <span>{name || 'Loading…'}</span>
+                        {client?.status === 'Draft' ? (
+                            <Badge size="sm" variant="warning" className="font-bold">
+                                <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse mr-1" />
+                                Draft Showcase
+                            </Badge>
+                        ) : (
+                            <Badge size="sm" variant="success" className="font-bold">
+                                Published
+                            </Badge>
+                        )}
+                    </span>
+                }
                 subtitle={
                     stats ? (
                         <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
                             <span className="flex items-center gap-1"><FilmSlate size={12} />{stats.videos} films</span>
                             <span className="flex items-center gap-1"><ImageSquare size={12} />{stats.photos} photographs</span>
                             {stats.hero > 0 && <span className="flex items-center gap-1 text-studio-goldDark"><Star size={12} weight="fill" />{stats.hero} in hero</span>}
-                            {range && <span className="flex items-center gap-1"><CalendarBlank size={12} />{range}</span>}
+                            {displayDates && <span className="flex items-center gap-1"><CalendarBlank size={12} />{displayDates}</span>}
                             {stats.cities?.[0] && <span className="flex items-center gap-1"><MapPin size={12} />{stats.cities.slice(0, 2).join(', ')}</span>}
                             <span className="flex items-center gap-1"><HardDrives size={12} />{formatBytes(stats.storageBytes)}</span>
                         </span>
@@ -378,6 +454,17 @@ export default function ClientWorkspace() {
                 ]}
             >
                 <div className="flex shrink-0 items-center gap-2">
+                    {(client?.status === 'Draft' || drafts > 0) && (
+                        <Button
+                            variant="gold"
+                            size="sm"
+                            loading={publishing}
+                            onClick={publishDrafts}
+                            className="bg-amber-600 hover:bg-amber-700 text-white font-semibold shadow-xs"
+                        >
+                            Publish Showcase
+                        </Button>
+                    )}
                     <Button variant="terracotta" size="sm" icon={showUpload ? X : Plus} onClick={() => setShowUpload((v) => !v)}>
                         {showUpload ? 'Close' : 'Add media'}
                     </Button>
@@ -420,6 +507,37 @@ export default function ClientWorkspace() {
                         <div>
                             <span className={labelCls}>Groom</span>
                             <input className={field} value={form.groom} onChange={(e) => setForm((f) => ({ ...f, groom: e.target.value }))} />
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                        <div>
+                            <span className={labelCls}>Start Date</span>
+                            <input
+                                type="date"
+                                className={field}
+                                value={form.startDate}
+                                onChange={(e) => setForm((f) => ({ ...f, startDate: e.target.value }))}
+                            />
+                        </div>
+                        <div>
+                            <span className={labelCls}>End Date</span>
+                            <input
+                                type="date"
+                                className={field}
+                                min={form.startDate}
+                                value={form.endDate}
+                                onChange={(e) => setForm((f) => ({ ...f, endDate: e.target.value }))}
+                            />
+                        </div>
+                        <div>
+                            <span className={labelCls}>Season (Optional)</span>
+                            <input
+                                type="text"
+                                className={field}
+                                placeholder="e.g. Winter 2026"
+                                value={form.season}
+                                onChange={(e) => setForm((f) => ({ ...f, season: e.target.value }))}
+                            />
                         </div>
                     </div>
                     <div className="rounded-xl border border-studio-border bg-studio-card p-3">

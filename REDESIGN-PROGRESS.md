@@ -490,3 +490,50 @@ families** · build and both guards green · home page console errors **0**.
 including once from an orphaned `next-server` process holding port 3000 while the
 new server silently started on 3001. Every visual check here was re-taken after a
 hard restart (`kill -9` by port, `rm -rf .next`).
+
+
+---
+
+### Stage 2 (part 2) — brand identity restored — 2026-09-19
+
+Client review of part 1 was blunt and correct: the navbar was *"soulless… like a
+first-year student building a plain navbar"*, the hero's dome arch read like an
+*"entrance room"*, and the caption and play control sat *"lifted too upward"*.
+
+**The worst of it was a regression I introduced: I deleted the logo.** The
+original masthead carried the studio's monogram, a name, a tagline, an icon
+against every nav item and a pill CTA. I replaced all of it with a text wordmark
+on a flat bar and called it restraint. Removing a brand's only piece of visual
+identity is not restraint.
+
+| | Before this pass | After |
+|---|---|---|
+| Logo | **removed** | monogram in a gold ring, beside the name |
+| Tagline | none | `MUMBAI · INDIA · BEYOND` |
+| Nav items | plain text | icon + label, accent-wash hover |
+| CTA | square button | pill with a mail mark |
+| Hero frame | dome arch | `rounded-panel` with a gold hairline |
+| Hero caption | floating mid-frame | anchored to the floor |
+
+**The tagline does real work.** `MUMBAI · INDIA · BEYOND` settles the
+contradiction the audit logged as R-08 by stating the truth rather than picking a
+side — the studio is based in Mumbai, works across India, and travels. "Mumbai's
+premier" alone contradicted the footer; "India's premier" alone erased where they
+are.
+
+**The arch is not deleted, it is scoped.** A dome on a 1400×740 landscape frame
+reads as a doorway — the picture looks viewed-through rather than presented.
+`globals.css` now states it is for portrait and square media: portrait cards,
+team photographs, destination tiles.
+
+**Mobile menu rebuilt** to the reference the client supplied: brand lockup in a
+blush header rather than the word "MENU", an icon against every item, chevrons,
+sub-destinations hanging off a **gold thread with a diamond node at each stop**,
+a full-width pill CTA, gold-ringed social buttons, an ornamental rule and a
+`REAL PEOPLE · EXTRAORDINARY STORIES` sign-off.
+
+**Verified after the change:** overflow **0** at four widths · shell targets under
+44px **0** (one regression caught and fixed — the lockup squeezed the menu button
+to 27px at 390px, fixed with `shrink-0`) · unlabelled controls **0** · skip link
+first in tab order · **0** animating under reduced motion · fonts **3 files /
+176 KB** · console errors **0** · build and both guards green.

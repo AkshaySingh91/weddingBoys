@@ -29,40 +29,61 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { PRIMARY_NAV, PRIMARY_CTA } from '@/lib/navigation.js';
+import { FiMail } from 'react-icons/fi';
+import { PRIMARY_NAV, PRIMARY_CTA, BRAND_TAGLINE } from '@/lib/navigation.js';
+import { useStudioDetails } from '@/Context/StudioDetailsContext.jsx';
+import NavIcon from './NavIcon.jsx';
 import Button from '@/Component/ui/Button.jsx';
 import MobileMenu from './MobileMenu.jsx';
 
 /**
- * The wordmark stands alone.
+ * The brand lockup: mark, name, line.
  *
- * A first pass set a tracked-out uppercase descriptor beneath it — which is the
- * eyebrow-label anti-pattern this system bans, self-inflicted. The corrected
- * positioning line (R-08) lives in the footer, where it has room to be a
- * sentence rather than a label. One mark, no caption.
+ * A previous pass reduced this to a text wordmark on the argument that the mark
+ * was redundant. That was wrong — it stripped the only piece of visual identity
+ * in the masthead and left a row of plain links that could belong to any
+ * business. The monogram is the studio's face; it comes back, in a gold ring.
  */
-function Wordmark({ condensed }) {
+function BrandLockup({ condensed }) {
+    const { studioLogo } = useStudioDetails();
+
     return (
         <Link
             href="/"
-            className="flex min-h-[44px] items-center leading-none"
+            className="flex min-h-[44px] shrink-0 items-center gap-2.5 sm:gap-3.5"
             aria-label="The Wedding Boys — home"
         >
             <span
-                /*
-                  Sized down hard on a phone. At 16px with 0.15em tracking the
-                  wordmark needs ~184px, which against a 110px CTA and a 44px
-                  menu button in 350px of usable width wrapped it onto two lines
-                  and burst the 72px bar.
-                */
-                className={`whitespace-nowrap font-display font-semibold text-accent-ink transition-all
-                            duration-ui ease-standard
-                            tracking-[0.1em] sm:tracking-[0.15em]
-                            ${condensed
-                                ? 'text-[12px] sm:text-[15px] lg:text-[16px]'
-                                : 'text-[13px] sm:text-[16px] lg:text-[18px]'}`}
+                className={`relative grid shrink-0 place-items-center rounded-pill
+                            bg-ground-raised ring-1 ring-gold/60 transition-all duration-ui ease-standard
+                            ${condensed ? 'h-9 w-9 sm:h-10 sm:w-10' : 'h-10 w-10 sm:h-12 sm:w-12'}`}
             >
-                THE WEDDING BOYS
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                    src={studioLogo || '/companyLogo.png'}
+                    alt=""
+                    className="h-full w-full rounded-pill object-contain p-1"
+                />
+            </span>
+
+            <span className="flex min-w-0 flex-col justify-center leading-none">
+                <span
+                    className={`whitespace-nowrap font-display font-semibold text-accent-ink
+                                transition-all duration-ui ease-standard
+                                tracking-[0.06em] sm:tracking-[0.1em]
+                                ${condensed ? 'text-[14px] sm:text-[17px]' : 'text-[15px] sm:text-[19px]'}`}
+                >
+                    The Wedding Boys
+                </span>
+                {/* The line is part of the mark, not an eyebrow over a heading —
+                    it sits beneath the name and names the territory. */}
+                <span
+                    className={`mt-1 whitespace-nowrap font-sans text-[8.5px] font-semibold uppercase
+                                tracking-[0.18em] text-ink-muted transition-all duration-ui ease-standard
+                                sm:text-[9.5px] ${condensed ? 'h-0 overflow-hidden opacity-0' : 'opacity-100'}`}
+                >
+                    {BRAND_TAGLINE}
+                </span>
             </span>
         </Link>
     );
@@ -127,7 +148,7 @@ export default function SiteHeader() {
                             : 'h-header bg-accent-tint border-gold/30'}`}
         >
             <div className="mx-auto flex h-full max-w-wide items-center justify-between gap-3 px-4 sm:gap-6 sm:px-6 md:px-8 lg:px-12">
-                <Wordmark condensed={condensed} />
+                <BrandLockup condensed={condensed} />
 
                 <nav aria-label="Primary" className="hidden lg:flex items-center gap-1">
                     {PRIMARY_NAV.map((item) => {
@@ -144,10 +165,17 @@ export default function SiteHeader() {
                                     aria-current={active ? 'page' : undefined}
                                     aria-expanded={item.panel ? openPanel === item.label : undefined}
                                     onFocus={item.panel ? () => hold(item.label) : undefined}
-                                    className={`relative flex min-h-[44px] items-center px-3 text-[14px]
-                                                transition-colors duration-micro ease-standard
-                                                ${active ? 'text-accent-ink' : 'text-ink-secondary hover:text-accent-ink'}`}
+                                    className={`relative flex min-h-[44px] items-center gap-2 rounded-control px-3
+                                                text-[14px] transition-colors duration-micro ease-standard
+                                                ${active
+                                                    ? 'text-accent-ink'
+                                                    : 'text-ink-secondary hover:bg-accent-wash hover:text-accent-ink'}`}
                                 >
+                                    <NavIcon
+                                        name={item.icon}
+                                        className={`h-[15px] w-[15px] transition-colors duration-micro ease-standard
+                                                    ${active ? 'text-accent' : 'text-gold-strong'}`}
+                                    />
                                     {item.label}
                                     {/* Active mark is a gold thread, not a colour swap —
                                         it reads at a glance without shouting. */}
@@ -191,8 +219,14 @@ export default function SiteHeader() {
                     {/* Visible at every width — on a phone this is the whole
                         purpose of the bar, and hiding it behind the menu buried
                         the studio's only conversion action. */}
-                    <Button href={PRIMARY_CTA.href} variant="primary" size="sm" className="shrink-0">
+                    <Button
+                        href={PRIMARY_CTA.href}
+                        variant="primary"
+                        size="sm"
+                        className="shrink-0 !rounded-pill shadow-panel"
+                    >
                         {PRIMARY_CTA.label}
+                        <FiMail aria-hidden="true" className="h-4 w-4" />
                     </Button>
 
                     {/* One menu control, below 1024 only. */}
@@ -201,7 +235,10 @@ export default function SiteHeader() {
                         onClick={() => setMenuOpen(true)}
                         aria-label="Open menu"
                         aria-expanded={menuOpen}
-                        className="grid h-11 w-11 place-items-center rounded-control text-ink
+                        /* `shrink-0`: the bar is a flex row and at 390px the
+                           lockup squeezed this to 27px wide, under the 44px
+                           target minimum. */
+                        className="grid h-11 w-11 shrink-0 place-items-center rounded-control text-ink
                                    transition-colors duration-micro ease-standard hover:bg-ground-sunk lg:hidden"
                     >
                         <span aria-hidden="true" className="flex w-5 flex-col gap-[5px]">

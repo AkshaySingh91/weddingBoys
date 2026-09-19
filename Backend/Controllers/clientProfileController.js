@@ -40,13 +40,16 @@ async function setMapPin(clientId, coordinate) {
 // POST /api/admin/clients — create the entity only. No media.
 export async function createClient(req, res) {
     try {
-        const { bride, groom, isInMap, coordinate } = req.body || {};
+        const { bride, groom, isInMap, coordinate, celebrationDates, weddingDate, status } = req.body || {};
         if (!bride?.trim() || !groom?.trim()) {
             return res.status(400).json({ message: 'Both names are required' });
         }
 
         const client = await Client.create({
             clientName: { Bride: bride.trim(), Groom: groom.trim() },
+            celebrationDates: celebrationDates || {},
+            weddingDate: weddingDate || celebrationDates?.startDate || null,
+            status: status || 'Draft',
             videos: [],
             photos: [],
         });
@@ -62,19 +65,30 @@ export async function createClient(req, res) {
     }
 }
 
-// PATCH /api/admin/clients/:id — rename, and move or clear the map pin.
+// PATCH /api/admin/clients/:id — rename, celebration dates, status, and move or clear the map pin.
 export async function updateClientProfile(req, res) {
     try {
-        const { bride, groom, isInMap, coordinate } = req.body || {};
+        const { bride, groom, isInMap, coordinate, celebrationDates, weddingDate, status, publishAllItems } = req.body || {};
         const client = await Client.findById(req.params.id);
         if (!client) return res.status(404).json({ message: 'Client not found' });
 
         if (bride?.trim()) client.clientName.Bride = bride.trim();
         if (groom?.trim()) client.clientName.Groom = groom.trim();
+        if (celebrationDates !== undefined) client.celebrationDates = celebrationDates;
+        if (weddingDate !== undefined) client.weddingDate = weddingDate;
+        if (status !== undefined) client.status = status;
         await client.save();
 
         if (isInMap !== undefined) {
             await setMapPin(client._id, (isInMap === true || isInMap === 'true') ? coordinate : null);
+        }
+
+        // If publishAllItems is true or client status is set to Published, optionally publish all draft portfolio items
+        if (publishAllItems || status === 'Published') {
+            await PortfolioItem.updateMany(
+                { client: client._id, status: 'Draft' },
+                { $set: { status: 'Published', publishedAt: new Date() } }
+            );
         }
 
         // clientNameText is denormalised onto every placement so search can match

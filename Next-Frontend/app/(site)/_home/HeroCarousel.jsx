@@ -124,14 +124,16 @@ export default function HeroCarousel({ slides = [] }) {
               strip. `svh` rather than `vh` so the mobile browser chrome collapsing
               does not resize the hero mid-scroll.
 
-              The arch is the design system's framing device (DESIGN-SYSTEM.md §1)
-              and this is its primary appearance — a dome-topped mehrab, not a
-              rounded rectangle.
+              No arch here. A dome top on a full-width hero reads as a doorway —
+              the picture looks like it is being viewed through an entrance
+              rather than presented. The arch stays in the system for portrait
+              media, where the proportions suit it; a 1400×740 landscape frame is
+              not where it belongs.
             */}
             <div
                 ref={viewRef}
                 className="hero-banner group/hero relative isolate w-full overflow-hidden
-                           arch-soft border border-gold/35 bg-ground-sunk
+                           rounded-panel border border-gold/35 bg-ground-sunk shadow-panel
                            h-[58svh] min-h-[400px] max-h-[820px] sm:h-[64svh] lg:h-[74svh]"
             >
                 <div
@@ -189,7 +191,12 @@ export default function HeroCarousel({ slides = [] }) {
                 </div>
 
                 {/* ── Caption + play, on one baseline ───────────────────────── */}
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 p-5 sm:p-7 lg:p-9">
+                {/* Anchored to the floor of the frame. The previous version put
+                    the caption and the play control on one flex row whose height
+                    was driven by the indicators beneath, which floated both of
+                    them well above the lower edge. */}
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col gap-4
+                                px-5 pb-5 pt-16 sm:px-7 sm:pb-6 lg:px-10 lg:pb-8">
                     <div className="flex items-end justify-between gap-4">
                         <Link
                             href={`/films/${active.videoId}`}
@@ -229,7 +236,7 @@ export default function HeroCarousel({ slides = [] }) {
                     {/* Slide indicators — gold thread, and a real control rather
                         than decoration: each one selects its slide. */}
                     {multiple && (
-                        <div className="pointer-events-auto mt-5 flex items-center gap-2">
+                        <div className="pointer-events-auto -mb-2 flex items-center gap-2">
                             {slides.map((s2, i) => (
                                 <button
                                     key={s2.videoKey || `dot-${i}`}
@@ -237,7 +244,7 @@ export default function HeroCarousel({ slides = [] }) {
                                     onClick={() => goToSlide(i)}
                                     aria-label={`Show film ${i + 1} of ${slides.length}`}
                                     aria-current={i === currentSlide}
-                                    className="group/dot grid h-11 place-items-center px-1"
+                                    className="group/dot grid h-8 place-items-center px-1"
                                 >
                                     <span
                                         className={`block h-[3px] rounded-pill transition-all duration-ui ease-standard

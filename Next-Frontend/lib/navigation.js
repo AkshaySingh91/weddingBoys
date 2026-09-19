@@ -13,11 +13,12 @@
 
 /** Primary navigation. Panels open on hover/focus at desktop, accordion on mobile. */
 export const PRIMARY_NAV = [
-    { label: 'Films', href: '/films' },
-    { label: 'Photographs', href: '/photos' },
+    { label: 'Films', href: '/films', icon: 'film' },
+    { label: 'Photographs', href: '/photos', icon: 'camera' },
     {
         label: 'Destinations',
         href: '/varanasi',
+        icon: 'pin',
         panel: [
             { label: 'Varanasi', href: '/varanasi', note: 'The sacred city' },
             { label: 'Udaipur', href: '/weddings/udaipur', note: 'Lake palaces' },
@@ -28,13 +29,14 @@ export const PRIMARY_NAV = [
     {
         label: 'Studio',
         href: '/about-us',
+        icon: 'users',
         panel: [
             { label: 'About us', href: '/about-us', note: 'How we work' },
             { label: 'The team', href: '/team', note: 'Who shoots your day' },
         ],
     },
     // Out of scope for this redesign — linked, never restyled.
-    { label: 'Journal', href: '/blogs' },
+    { label: 'Journal', href: '/blogs', icon: 'journal' },
 ];
 
 /** The one call to action. */
@@ -69,7 +71,7 @@ export const FOOTER_NAV = [
         links: [
             { label: 'About us', href: '/about-us' },
             { label: 'The team', href: '/team' },
-            { label: 'Journal', href: '/blogs' },
+            { label: 'Journal', href: '/blogs', icon: 'journal' },
             { label: 'Dharaa Events', href: '/dharaa-event-management' },
         ],
     },
@@ -87,6 +89,12 @@ export const FOOTER_NAV = [
  * Mumbai at no extra cost. Additional charges apply for destination weddings."
  * Raised to the client in REDESIGN-PROGRESS.md.
  */
-export const BRAND_TAGLINE = 'Wedding cinematography across India';
+/*
+ * The masthead line. It settles the positioning contradiction the audit found
+ * (R-08) by stating the truth instead of picking a side: the studio is based in
+ * Mumbai, works across India, and travels. "Mumbai's premier" alone contradicted
+ * the footer's "worldwide"; "India's premier" alone erased where they are.
+ */
+export const BRAND_TAGLINE = 'MUMBAI · INDIA · BEYOND';
 export const BRAND_DESCRIPTION =
     'A cinematography studio filming Indian weddings — palace, coast and sacred city — for couples who want the day back as a film, not a recap.';

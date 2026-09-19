@@ -18,7 +18,13 @@
    "nav": 4
   },
   "skipLink": true,
-  "shellTargetsUnder44": [],
+  "shellTargetsUnder44": [
+   {
+    "tag": "button",
+    "label": "Open menu",
+    "size": "27x44"
+   }
+  ],
   "unlabelledShellLinks": 0
  },
  "tablet": {

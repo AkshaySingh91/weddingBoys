@@ -160,9 +160,11 @@
     repeating-linear-gradient(-45deg, var(--gold-soft) 0 1px, transparent 1px 9px);
 }
 
-/* The arch. A dome-topped frame, as in a palace mehrab — the site's framing
-   device for imagery. Recognisably Indo-Islamic and impossible to mistake for
-   the rounded rectangle every template uses. */
+/* The arch — a dome-topped mehrab frame.
+   FOR PORTRAIT AND SQUARE MEDIA ONLY. Applied to a wide landscape hero it reads
+   as a doorway: the picture looks like it is being viewed through an entrance
+   rather than presented, and the dome eats the top of the frame. Use it on
+   portrait cards, team photographs and destination tiles. */
 .arch      { border-radius: 999px 999px 4px 4px; }
 .arch-soft { border-radius: 140px 140px 4px 4px; }
 
