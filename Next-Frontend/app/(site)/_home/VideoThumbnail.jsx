@@ -2,7 +2,10 @@
 
 import React, { useCallback, useState, useEffect } from 'react';
 import Link from 'next/link';
+import { FiArrowRight } from 'react-icons/fi';
 import { fireMessage } from '@/Utils/fireMessage.js';
+import Section from '@/Component/ui/Section.jsx';
+import { Skeleton } from '@/Component/ui/Skeleton.jsx';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -58,97 +61,157 @@ export default function VideoThumbnail() {
         setSelectedTag(t);
         fetchVideos(t)
     }
-    return (<>
-        <Link href="/films">
-            <h1 className="inline-block lg:mb-6 sm:mb-4 sm:w-full sm:text-center lg:text-left px-4 py-0 lg:text-desktopHeadlineSmall transition-all delay-700 duration-75 lg:hover:underline sm:py-4 sm:text-desktopBodyLarge tracking-wider">Our Films
-                <hr className='lg:hidden mx-auto border-[1px] w-8 border-slate-300' />
-            </h1>
-        </Link>
-        <div className="flex gap-3 lg:justify-center sm:justify-start w-full sm:overflow-x-auto scrollbar-none sm:pl-2 my-4">
-            {
-                isLoading ?
-                    [...Array(3)].map((_, i) => (
-                        <div key={i}><TagSkeletonLoader /></div>
-                    )) :
-                    homepageTags.length ?
-                        homepageTags.map((t) => (
-                            <button key={t}
-                                className={`px-4 py-1 text-nowrap text-desktopBodySmall rounded-3xl border-2 border-[#f5ac38]  hover:bg-[#ffbb7c] ${selectedTag === t ? "bg-[#ffbb7c]" : " bg-secondary"} sm:text-mobileBodySmall`}
-                                onClick={() => handleChangeTag(t)}
-                            ><span>{t}</span></button>
-                        )) : null
-            }
-        </div>
+    return (
+        <Section width="wide" rhythm="tight" className="overflow-hidden">
+            {/*
+              Heading is an <h2>, not an <h1>. The home page carried FOUR <h1>
+              elements and this was one of them (audit R-42); "Our Films" is a
+              section label, not the page's subject.
+            */}
+            <div className="flex items-end justify-between gap-4 px-5 md:px-8 lg:px-12">
+                <div>
+                    <h2 className="t-display-2">Our films</h2>
+                    <div className="rule-ornament mt-3 w-40" aria-hidden="true" />
+                </div>
+                <Link
+                    href="/films"
+                    className="hidden shrink-0 items-center gap-1.5 text-[14px] font-semibold
+                               text-accent-ink transition-colors duration-micro ease-standard
+                               hover:text-accent sm:inline-flex"
+                >
+                    All films
+                    <FiArrowRight aria-hidden="true" className="h-4 w-4" />
+                </Link>
+            </div>
 
-        <div className="w-full flex gap-2 overflow-x-auto scrollbar-none transition-all duration-150">
-            {isLoading ? (
-                [...Array(3)].map((_, i) => <VideoSkeletonLoader key={i} />)
-            ) : clients && clients.length ? (
-                clients.map((c) => (
-                    <Link className='' href={`/films/${c.videos._id}`} key={c.videos._id}>
-                        <div className="lg:h-[26rem] lg:w-[26rem] relative sm:h-80 sm:w-[18rem] sm:flex-none">
-                            <div className="relative h-full overflow-hidden ">
-                                {/* Video Thumbnail */}
-                                <img
-                                    className="w-full h-full rounded-3xl bg-no-repeat object-cover"
-                                    src={c.thumbnailUrl}
-                                    alt="video-thumbnail"
-                                />
-                                {/* Gradient Overlay */}
-                                <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-slate-900 to-transparent rounded-b-3xl"></div>
-                                {/* Text Content */}
-                                <div className="absolute sm:bottom-5 sm:left-5 md:bottom-6 md:left-6 text-white flex flex-col gap-0 z-10">
-                                    <div className="flex items-center gap-2 sm:text-desktopBodyMedium lg:text-desktopBodyLarge uppercase font-semibold tracking-wide">
-                                        <span className='text-nowrap'>{c.videos.videoShootDate}</span>
-                                        <svg
-                                            className="lg:w-6 lg:h-6 sm:w-4 sm:h-4"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 -960 960 960"
-                                            fill="white">
-                                            <path d="M411-481 213-679l42-42 240 240-240 240-42-42 198-198Zm253 0L466-679l42-42 240 240-240 240-42-42 198-198Z" />
-                                        </svg>
-                                        <span>{c.videos.videoLocation.city}</span>
-                                    </div>
-                                    <div className="flex gap-2 sm:text-mobileBodySmall lg:text-mobileHeadlineSmall text-white uppercase tracking-wide">
-                                        <span>{c.clientName.Bride}</span>
-                                        <span>&</span>
-                                        <span>{c.clientName.Groom}</span>
-                                    </div>
+            {/* ── Filters. Left-aligned under the heading, so they read as a
+                   control rather than as decoration floating mid-page. ── */}
+            <div
+                role="group"
+                aria-label="Filter films by category"
+                className="mt-6 flex gap-2 overflow-x-auto scrollbar-none px-5 md:px-8 lg:px-12"
+            >
+                {isLoading && !homepageTags.length
+                    ? [...Array(3)].map((_, i) => (
+                        <Skeleton key={i} className="h-10 w-28 shrink-0" rounded="pill" />
+                    ))
+                    : homepageTags.map((t) => {
+                        const on = selectedTag === t;
+                        return (
+                            <button
+                                key={t}
+                                type="button"
+                                onClick={() => handleChangeTag(t)}
+                                aria-pressed={on}
+                                className={`min-h-[44px] shrink-0 whitespace-nowrap rounded-pill border px-5
+                                            text-[13px] font-semibold transition-colors duration-micro ease-standard
+                                            ${on
+                                                ? 'border-accent bg-accent text-white'
+                                                : 'border-gold/50 bg-transparent text-ink-secondary hover:border-gold hover:bg-accent-wash hover:text-accent-ink'}`}
+                            >
+                                {t}
+                            </button>
+                        );
+                    })}
+            </div>
+
+            {/* ── The rail.
+                   A rail rather than a grid: a category holding two films used to
+                   leave 55.6% of the viewport empty at 1425px because the cards
+                   were a fixed 416×416. A rail has no empty cells — two films or
+                   twenty both read as deliberate. Scroll-snap and a peeking next
+                   card make it obvious there is more to the right.
+
+                   A rail removes empty *cells*, but it does not fill a row on its
+                   own: two 300px cards in a 1440px viewport still left ~800px of
+                   void, which is the defect in a different shape. So when a
+                   category holds three films or fewer the row centres, and only
+                   then — centring a rail that overflows would clip the first card
+                   out of reach. ── */}
+            <div
+                className={`mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto scrollbar-none
+                            px-5 pb-2 md:px-8 lg:gap-6 lg:px-12
+                            ${(clients?.length ?? 0) <= 3 ? 'lg:justify-center' : ''}`}
+            >
+                {isLoading ? (
+                    [...Array(4)].map((_, i) => (
+                        <div key={i} className="w-[68vw] shrink-0 sm:w-[46vw] lg:w-[300px]">
+                            <Skeleton className="aspect-[4/5] w-full arch" />
+                            <Skeleton className="mt-3 h-4 w-3/4" rounded="control" />
+                        </div>
+                    ))
+                ) : clients && clients.length ? (
+                    clients.map((c) => (
+                        <Link
+                            href={`/films/${c.videos._id}`}
+                            key={c.videos._id}
+                            className="group/film w-[68vw] shrink-0 snap-start sm:w-[46vw] lg:w-[300px]"
+                        >
+                            {/* Portrait 4:5 under the arch. This is where the dome
+                                belongs — on a wide hero it read as a doorway; on a
+                                portrait card it is ornament. */}
+                            <div className="relative overflow-hidden arch border border-gold/35 bg-ground-sunk
+                                            transition-transform duration-ui ease-standard
+                                            group-hover/film:-translate-y-1">
+                                <div className="aspect-[4/5] w-full">
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img
+                                        src={c.thumbnailUrl}
+                                        alt={`${c.clientName?.Bride} & ${c.clientName?.Groom} wedding film`}
+                                        loading="lazy"
+                                        decoding="async"
+                                        className="h-full w-full object-cover transition-transform duration-media
+                                                   ease-entrance group-hover/film:scale-[1.04]"
+                                    />
+                                </div>
+
+                                {/* Scrim token. The old card set white text over a
+                                    hand-rolled slate gradient and measured 1.0:1
+                                    against its effective background (audit R-06). */}
+                                <div aria-hidden="true" className="scrim-bottom pointer-events-none absolute inset-0" />
+
+                                <div className="absolute inset-x-0 bottom-0 p-4 text-white lg:p-5">
+                                    <p className="font-display text-[19px] font-semibold leading-tight lg:text-[21px]">
+                                        {[c.clientName?.Bride, c.clientName?.Groom].filter(Boolean).join(' & ')}
+                                    </p>
+                                    <p className="mt-1 text-[12px] text-white/85">
+                                        {[c.videos?.videoShootDate, c.videos?.videoLocation?.city]
+                                            .filter(Boolean).join(' · ')}
+                                    </p>
                                 </div>
                             </div>
-                        </div>
-                    </Link>
-                ))
-            ) : (
-                <p>No videos found</p>
-            )}
-        </div>
-
-
-    </>)
-}
-
-const VideoSkeletonLoader = () => (
-    <div className="animate-pulse bg-slate-200 lg:h-80 lg:w-1/3 relative my-9 sm:h-80 sm:w-80 sm:flex-none rounded-3xl">
-        <div className="relative h-full overflow-hidden">
-            <div className="w-full h-full rounded-3xl bg-slate-300"></div>
-            <div className="absolute bottom-6 left-6 text-white flex flex-col gap-0">
-                <div className="flex items-center text-desktopBodySmall uppercase font-semibold tracking-wide">
-                    <span className="inline-block animate-pulse w-28 h-4 rounded-lg bg-slate-400 mr-2 my-4"></span>
-                    <span className="inline-block animate-pulse w-10 h-4 rounded-lg bg-slate-400"></span>
-                </div>
-                <div className="flex gap-2 text-desktopBodyMedium font-bold">
-                    <span className="inline-block animate-pulse w-10 h-4 rounded-lg bg-slate-400"></span>
-                    <span className="inline-block animate-pulse w-10 h-4 rounded-lg bg-slate-400"></span>
-                </div>
+                        </Link>
+                    ))
+                ) : (
+                    /* A designed empty state. The old one was a bare <p>No videos
+                       found</p> with no styling and no way forward. */
+                    <div className="w-full rounded-panel border border-gold/35 bg-ground-raised px-6 py-10 text-center">
+                        <p className="t-body">No films in this category yet.</p>
+                        <Link
+                            href="/films"
+                            className="mt-3 inline-flex items-center gap-1.5 text-[14px] font-semibold text-accent-ink
+                                       transition-colors duration-micro ease-standard hover:text-accent"
+                        >
+                            Browse every film
+                            <FiArrowRight aria-hidden="true" className="h-4 w-4" />
+                        </Link>
+                    </div>
+                )}
             </div>
-        </div>
-    </div>
-);
-const TagSkeletonLoader = () => (
-    <div className="flex gap-3 lg:justify-center sm:justify-start w-full sm:overflow-x-auto scrollbar-none sm:pl-2">
-        <button className={`px-4 py-1 rounded-3xl`} >
-            <span className="inline-block animate-pulse w-20 h-6 rounded-xl bg-slate-400"></span>
-        </button>
-    </div>
-)
+
+            {/* The desktop "All films" link is hidden on phones; this is its
+                mobile equivalent, at full width where a thumb can reach it. */}
+            <div className="mt-6 px-5 sm:hidden md:px-8">
+                <Link
+                    href="/films"
+                    className="flex min-h-[44px] items-center justify-center gap-1.5 rounded-pill border
+                               border-gold/50 text-[14px] font-semibold text-accent-ink transition-colors
+                               duration-micro ease-standard hover:bg-accent-wash"
+                >
+                    All films
+                    <FiArrowRight aria-hidden="true" className="h-4 w-4" />
+                </Link>
+            </div>
+        </Section>
+    );
+}
