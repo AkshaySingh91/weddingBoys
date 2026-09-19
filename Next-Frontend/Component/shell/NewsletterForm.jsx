@@ -75,16 +75,16 @@ export default function NewsletterForm({ className = '' }) {
                     placeholder="you@example.com"
                     aria-invalid={status === 'error'}
                     aria-describedby={message ? `${id}-msg` : undefined}
-                    className={`min-h-[44px] w-full rounded-control border bg-ink-raised px-3 text-[14px]
-                                text-bone placeholder:text-content-muted transition-colors duration-micro
+                    className={`min-h-[44px] w-full rounded-control border bg-ground-raised px-3 text-[14px]
+                                text-ink placeholder:text-ink-muted transition-colors duration-micro
                                 ease-standard ${status === 'error' ? 'border-state-error' : 'border-edge-subtle'}`}
                 />
                 <button
                     type="submit"
                     disabled={status === 'busy'}
                     className="min-h-[44px] shrink-0 rounded-control border border-edge-strong px-4 text-[13px]
-                               font-semibold text-bone transition-colors duration-micro ease-standard
-                               hover:border-brass disabled:text-content-muted"
+                               font-semibold text-ink transition-colors duration-micro ease-standard
+                               hover:border-gold-strong disabled:text-ink-muted"
                 >
                     {status === 'busy' ? 'Sending…' : 'Join'}
                 </button>

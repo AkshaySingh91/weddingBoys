@@ -35,12 +35,15 @@ export default function SiteFooter() {
     const year = new Date().getFullYear();
 
     return (
-        // The top rule is the one brass hairline in the shell. The accent is
-        // specified as a metallic rule, never a fill — this is where it shows.
-        <footer className="border-t border-brass/25 bg-ink-void">
-            <Section width="content" rhythm="tight">
+        // Gold thread at the top, jaali behind. The lattice is CSS-only (see
+        // globals.css) so there is no asset that can go missing — the ornament
+        // this replaces was a truncated base64 URI that never rendered once.
+        <footer className="relative border-t border-gold/40 bg-ground">
+            <div aria-hidden="true" className="jaali pointer-events-none absolute inset-0 opacity-[0.45]" />
+
+            <Section width="content" rhythm="tight" className="relative">
                 {/* The one closing call to action. */}
-                <div className="flex flex-col gap-8 border-b border-edge-subtle pb-10
+                <div className="flex flex-col gap-8 pb-10
                                 lg:flex-row lg:items-end lg:justify-between">
                     <div>
                         <h2 className="t-display-2">Tell us about your wedding</h2>
@@ -50,6 +53,8 @@ export default function SiteFooter() {
                         {PRIMARY_CTA.label}
                     </Button>
                 </div>
+
+                <div className="rule-ornament my-2" aria-hidden="true" />
 
                 <div className="grid grid-cols-2 gap-x-6 gap-y-8 py-10 md:grid-cols-4">
                     {FOOTER_NAV.map((col) => (
@@ -61,8 +66,8 @@ export default function SiteFooter() {
                                         <Link
                                             href={l.href}
                                             className="flex min-h-[44px] items-center text-[14px]
-                                                       text-content-secondary transition-colors
-                                                       duration-micro ease-standard hover:text-bone"
+                                                       text-ink-secondary transition-colors
+                                                       duration-micro ease-standard hover:text-ink"
                                         >
                                             {l.label}
                                         </Link>
@@ -95,8 +100,8 @@ export default function SiteFooter() {
                                     aria-label={`${s.label} — opens in a new tab`}
                                     className="grid h-11 w-11 place-items-center rounded-pill border
                                                border-edge-subtle text-[11px] font-semibold
-                                               text-content-secondary transition-colors duration-micro
-                                               ease-standard hover:border-brass hover:text-bone"
+                                               text-ink-secondary transition-colors duration-micro
+                                               ease-standard hover:border-gold-strong hover:text-ink"
                                 >
                                     {s.glyph}
                                 </a>

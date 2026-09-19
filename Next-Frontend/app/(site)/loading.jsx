@@ -11,7 +11,7 @@ export default function SiteLoading() {
     return (
         <div className="fixed inset-x-0 top-0 z-toast h-px bg-edge-subtle" role="status" aria-live="polite">
             <span className="sr-only">Loading</span>
-            <div className="h-full w-1/3 bg-brass motion-safe:animate-[wb-indeterminate_1.2s_var(--ease-standard)_infinite]" />
+            <div className="h-full w-1/3 bg-gold motion-safe:animate-[wb-indeterminate_1.2s_var(--ease-standard)_infinite]" />
         </div>
     );
 }

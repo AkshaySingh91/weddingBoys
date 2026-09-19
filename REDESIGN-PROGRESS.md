@@ -280,3 +280,54 @@ blog layout too, since `app/(journal)/layout.jsx` imports the shared `Footer`.
 The footer is global shell rather than blog content, and a dark footer beneath
 the blog's light editorial page is a conventional pairing — but it is a visible
 change to blog routes and is flagged here rather than buried.
+
+
+---
+
+### Direction revised 2026-09-19 — dark ground rejected
+
+The client reviewed the built dark theme and rejected it. The reasoning, in their
+words: it reads as a *"classical website look which is simple & professional"*
+but it *"kills creativity"*; Indian weddings are not Western weddings and the
+site should carry ornament, not strip it away.
+
+**That is the correct call and it overrides my Stage 0 argument.** I optimised
+for restraint on the theory that the weddings supply the abundance and the frame
+should be calm. On the built result that theory produced a page which was
+tasteful and characterless — and "characterless" is a worse failure for this
+brand than "too much".
+
+**What changed:** the surface only.
+
+| | Before | After |
+|---|---|---|
+| Ground | `#0B0A09` near-black | `#FBF6EE` warm ivory |
+| Ink | bone on dark | `#2A1B12` warm cocoa, 15.44:1 |
+| Accent | two reds (fill + text) needed for AA | **one** — `#A83824` does both (6.45 / 5.99) |
+| Ornament | none | arch · jaali · gold rule · corner brackets, all CSS-only |
+
+**What did NOT change** — every structural fix from Stage 1 survives: the single
+IA source, `<header>` landmark, skip link, designed focus ring, 44px targets,
+labelled controls, reduced-motion handling, font consolidation, error/loading
+boundaries, the `min-h` layout-shift fix, and all five primitives.
+
+**Re-verified on the light ground:** overflow 0 at four widths · 0 shell targets
+under 44px · 0 unlabelled controls · skip link first in tab order · 0 elements
+animating under reduced motion · fonts 4 files / 203 KB / 2 families · **shell
+contrast: 0 failures across 14 text nodes, 6.45–15.44:1** · build and guards green.
+
+**An honest trade-off this re-exposes.** `/team`'s white-text-on-photograph count
+goes **2 → 16**. The dark ground was *masking* that defect, not fixing it — white
+text over a photograph had a dark effective background by accident. On ivory it is
+visible again and must be repaired properly with the scrim tokens in Stage 5.
+That is the right outcome: the scrim was always the real fix, and `<Media>` now
+refuses to render an overlay without one.
+
+**Also improved on the light ground:** `/films` low-contrast 3 → **0**,
+`/contact` 4 → **1**.
+
+**Commit hygiene note:** the Stage 1 code landed in commit `7f47cfd`, which is
+labelled as the audit CORS correction — a `git add -A` from the repo root swept
+it in. That commit also contains two files I never touched
+(`Component/AdminSidebar.jsx`, `Hooks/useClients.jsx`) which were already
+modified in the working tree before this phase began.

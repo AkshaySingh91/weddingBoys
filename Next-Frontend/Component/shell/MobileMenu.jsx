@@ -61,7 +61,7 @@ export default function MobileMenu({ open, onClose }) {
                 type="button"
                 aria-label="Close menu"
                 onClick={onClose}
-                className="absolute inset-0 h-full w-full bg-ink-void/80 backdrop-blur-sm"
+                className="absolute inset-0 h-full w-full bg-ink/45 backdrop-blur-sm"
             />
 
             <div
@@ -73,7 +73,7 @@ export default function MobileMenu({ open, onClose }) {
                    sliver of the page showing, which reads as a rendering fault rather
                    than a deliberate reveal. */
                 className="absolute inset-y-0 right-0 flex w-full flex-col border-l
-                           border-edge-subtle bg-ink-void sm:max-w-[400px]"
+                           border-edge-subtle bg-ground sm:max-w-[400px]"
             >
                 <div className="flex items-center justify-between border-b border-edge-subtle px-5 py-4">
                     <span className="t-label">Menu</span>
@@ -81,8 +81,8 @@ export default function MobileMenu({ open, onClose }) {
                         type="button"
                         onClick={onClose}
                         aria-label="Close menu"
-                        className="grid h-11 w-11 place-items-center rounded-control text-bone
-                                   transition-colors duration-micro ease-standard hover:bg-ink-raised"
+                        className="grid h-11 w-11 place-items-center rounded-control text-ink
+                                   transition-colors duration-micro ease-standard hover:bg-ground-sunk"
                     >
                         <span aria-hidden="true" className="relative block h-4 w-4">
                             <span className="absolute left-0 top-1/2 h-px w-full rotate-45 bg-current" />
@@ -98,8 +98,8 @@ export default function MobileMenu({ open, onClose }) {
                                 href={item.href}
                                 onClick={onClose}
                                 className="flex min-h-[52px] items-center rounded-control px-3 text-[17px]
-                                           text-bone transition-colors duration-micro ease-standard
-                                           hover:bg-ink-raised"
+                                           text-ink transition-colors duration-micro ease-standard
+                                           hover:bg-ground-sunk"
                             >
                                 {item.label}
                             </Link>
@@ -113,8 +113,8 @@ export default function MobileMenu({ open, onClose }) {
                                             href={sub.href}
                                             onClick={onClose}
                                             className="flex min-h-[44px] items-center rounded-control px-3
-                                                       text-[15px] text-content-secondary transition-colors
-                                                       duration-micro ease-standard hover:bg-ink-raised hover:text-bone"
+                                                       text-[15px] text-ink-secondary transition-colors
+                                                       duration-micro ease-standard hover:bg-ground-sunk hover:text-ink"
                                         >
                                             {sub.label}
                                         </Link>

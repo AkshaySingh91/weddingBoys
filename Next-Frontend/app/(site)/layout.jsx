@@ -35,7 +35,7 @@ import SiteFooter from '@/Component/shell/SiteFooter.jsx';
  */
 export default function SiteLayout({ children }) {
   return (
-    <div className="min-h-screen bg-ink-void text-content-primary antialiased">
+    <div className="min-h-screen bg-ground text-ink antialiased">
       <ScrollOnTop />
 
       <a href="#main" className="skip-link">Skip to content</a>

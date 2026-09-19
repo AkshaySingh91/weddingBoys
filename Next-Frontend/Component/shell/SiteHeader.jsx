@@ -41,7 +41,7 @@ function Wordmark({ condensed }) {
             aria-label="The Wedding Boys — home"
         >
             <span
-                className={`font-display font-semibold tracking-[0.16em] text-bone transition-all
+                className={`font-display font-semibold tracking-[0.16em] text-ink transition-all
                             duration-ui ease-standard ${condensed ? 'text-[16px]' : 'text-[19px]'}`}
             >
                 THE WEDDING BOYS
@@ -105,7 +105,7 @@ export default function SiteHeader() {
         <header
             className={`fixed inset-x-0 top-0 z-header transition-all duration-ui ease-standard
                         ${condensed
-                            ? 'h-[var(--header-height-condensed)] bg-ink-void/86 backdrop-blur-md border-b border-edge-subtle'
+                            ? 'h-[var(--header-height-condensed)] bg-ground/92 backdrop-blur-md border-b border-gold/40'
                             : 'h-header bg-transparent border-b border-transparent'}`}
         >
             <div className="mx-auto flex h-full max-w-wide items-center justify-between gap-6 px-5 md:px-8 lg:px-12">
@@ -128,14 +128,14 @@ export default function SiteHeader() {
                                     onFocus={item.panel ? () => hold(item.label) : undefined}
                                     className={`relative flex min-h-[44px] items-center px-3.5 text-[14px]
                                                 transition-colors duration-micro ease-standard
-                                                ${active ? 'text-bone' : 'text-content-secondary hover:text-bone'}`}
+                                                ${active ? 'text-ink' : 'text-ink-secondary hover:text-ink'}`}
                                 >
                                     {item.label}
-                                    {/* Active mark is a brass hairline, not a colour swap —
+                                    {/* Active mark is a gold thread, not a colour swap —
                                         it reads at a glance without shouting. */}
                                     <span
                                         aria-hidden="true"
-                                        className={`absolute inset-x-3.5 bottom-2 h-px bg-brass transition-transform
+                                        className={`absolute inset-x-3.5 bottom-2 h-px bg-gold-strong transition-transform
                                                     duration-micro ease-standard origin-left
                                                     ${active ? 'scale-x-100' : 'scale-x-0'}`}
                                     />
@@ -145,8 +145,8 @@ export default function SiteHeader() {
                                     <div
                                         onMouseEnter={() => hold(item.label)}
                                         onMouseLeave={release}
-                                        className="absolute left-0 top-full min-w-[248px] border border-edge-subtle
-                                                   bg-ink-overlay p-2 shadow-overlay rounded-panel"
+                                        className="absolute left-0 top-full min-w-[248px] border border-gold/40
+                                                   bg-ground-raised p-2 shadow-overlay rounded-panel"
                                     >
                                         {item.panel.map((sub) => (
                                             <Link
@@ -154,9 +154,9 @@ export default function SiteHeader() {
                                                 href={sub.href}
                                                 className="flex min-h-[44px] flex-col justify-center rounded-control px-3 py-2
                                                            transition-colors duration-micro ease-standard
-                                                           hover:bg-ink-raised"
+                                                           hover:bg-ground-sunk"
                                             >
-                                                <span className="text-[14px] text-bone">{sub.label}</span>
+                                                <span className="text-[14px] text-ink">{sub.label}</span>
                                                 {sub.note && (
                                                     <span className="t-caption mt-0.5">{sub.note}</span>
                                                 )}
@@ -180,8 +180,8 @@ export default function SiteHeader() {
                         onClick={() => setMenuOpen(true)}
                         aria-label="Open menu"
                         aria-expanded={menuOpen}
-                        className="grid h-11 w-11 place-items-center rounded-control text-bone
-                                   transition-colors duration-micro ease-standard hover:bg-ink-raised lg:hidden"
+                        className="grid h-11 w-11 place-items-center rounded-control text-ink
+                                   transition-colors duration-micro ease-standard hover:bg-ground-sunk lg:hidden"
                     >
                         <span aria-hidden="true" className="flex w-5 flex-col gap-[5px]">
                             <span className="h-px w-full bg-current" />

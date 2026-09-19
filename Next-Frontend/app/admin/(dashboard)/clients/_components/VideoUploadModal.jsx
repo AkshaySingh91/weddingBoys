@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   X, FilmSlate, Plus, Trash, Check, Sparkle, Tag as TagIcon,
   CalendarBlank, MapPin, CircleNotch, ArrowClockwise, WarningCircle,
-  Star, SpeakerSimpleSlash, Repeat, Play, Pause, HardDrives
+  Star, SpeakerSimpleSlash, Repeat, Play, Pause, HardDrives, CheckCircle
 } from '@phosphor-icons/react';
 import { Dialog, DialogContent } from '@/app/admin/components/ui/Dialog.jsx';
 import { Button } from '@/app/admin/components/ui/Button.jsx';
@@ -16,7 +16,7 @@ import { cn } from '@/lib/utils.js';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL;
 
-const VIDEO_EVENT_PRESETS = [
+const DEFAULT_VIDEO_CEREMONIES = [
   'Teaser / Trailer',
   'Highlights Film',
   'Full Wedding Film',
@@ -83,7 +83,7 @@ function CircularProgressBadge({ progress = 0, status = 'queued', size = 56 }) {
 /**
  * Interactive Video Card with Real Playable HTML5 Preview
  */
-function StagedVideoPreview({ file, isUploading, isSelected, onToggleSelect, it, onUpdateOption, onRemove }) {
+function StagedVideoPreview({ file, isUploading, isDone, isSelected, onToggleSelect, it, onUpdateOption, onRemove, ceremonyOptions }) {
   const [objectUrl, setObjectUrl] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
@@ -98,63 +98,48 @@ function StagedVideoPreview({ file, isUploading, isSelected, onToggleSelect, it,
     };
   }, [file]);
 
-  const togglePlay = (e) => {
-    e.stopPropagation();
+  const togglePlay = () => {
     if (!videoRef.current) return;
     if (isPlaying) {
       videoRef.current.pause();
       setIsPlaying(false);
     } else {
-      videoRef.current.play();
-      setIsPlaying(true);
+      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
     }
   };
 
-  const handleLoadedMetadata = () => {
-    if (videoRef.current) {
-      setDuration(Math.round(videoRef.current.duration || 0));
-    }
+  const formatDuration = (sec) => {
+    if (!sec || isNaN(sec)) return '--:--';
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
   };
-
-  const formatSec = (s) => {
-    if (!s) return '0:00';
-    const m = Math.floor(s / 60);
-    const rem = Math.floor(s % 60);
-    return `${m}:${rem.toString().padStart(2, '0')}`;
-  };
-
-  const isItemUploading = it.status === 'uploading' || it.status === 'processing';
-  const isItemDone = it.status === 'done';
-  const isItemError = it.status === 'error';
 
   return (
     <div
-      onClick={() => !isUploading && onToggleSelect(it.id)}
       className={cn(
-        'group relative flex flex-col md:flex-row items-stretch gap-4 p-4 rounded-2xl border bg-white transition-all cursor-pointer select-none',
-        isSelected
+        'group rounded-2xl border bg-white p-4 transition-all flex flex-col sm:flex-row items-start sm:items-center gap-4',
+        isSelected && !isDone
           ? 'border-stone-900 ring-2 ring-stone-900/15 shadow-sm'
-          : 'border-stone-200/90 hover:border-stone-300'
+          : 'border-stone-200 hover:border-stone-300'
       )}
     >
-      {/* Left: Playable Video Viewport */}
-      <div className="relative aspect-video w-full md:w-56 shrink-0 overflow-hidden rounded-xl bg-stone-950 flex items-center justify-center group/vid">
-        {objectUrl ? (
+      {/* HTML5 Video Thumbnail Viewport */}
+      <div className="relative aspect-video w-full sm:w-56 shrink-0 overflow-hidden rounded-xl bg-stone-950 flex items-center justify-center">
+        {objectUrl && (
           <video
             ref={videoRef}
             src={objectUrl}
-            onLoadedMetadata={handleLoadedMetadata}
-            onEnded={() => setIsPlaying(false)}
-            playsInline
             muted
+            playsInline
+            onLoadedMetadata={(e) => setDuration(e.target.duration)}
+            onEnded={() => setIsPlaying(false)}
             className="h-full w-full object-cover"
           />
-        ) : (
-          <FilmSlate size={36} className="text-stone-600" />
         )}
 
         {/* Selection Checkbox */}
-        {!isUploading && (
+        {!isUploading && !isDone && (
           <button
             type="button"
             onClick={(e) => {
@@ -162,22 +147,29 @@ function StagedVideoPreview({ file, isUploading, isSelected, onToggleSelect, it,
               onToggleSelect(it.id);
             }}
             className={cn(
-              'absolute top-2 left-2 z-20 flex h-5 w-5 items-center justify-center rounded-md border transition-all shadow-xs',
+              'absolute top-2 left-2 z-20 flex h-5 w-5 items-center justify-center rounded-md border transition-all shadow-sm',
               isSelected
                 ? 'bg-stone-900 border-stone-900 text-white'
-                : 'bg-white/85 border-stone-300 text-transparent hover:border-stone-600'
+                : 'bg-white/85 border-stone-300 text-transparent hover:border-stone-700'
             )}
           >
             <Check size={11} weight="bold" />
           </button>
         )}
 
-        {/* Play/Pause Control Button */}
-        {!isItemUploading && !isItemDone && (
+        {/* Done Checkmark */}
+        {isDone && (
+          <div className="absolute top-2 right-2 z-20 flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-white shadow-sm">
+            <Check size={14} weight="bold" />
+          </div>
+        )}
+
+        {/* Play/Pause Button Overlay */}
+        {!isUploading && !isDone && (
           <button
             type="button"
             onClick={togglePlay}
-            className="absolute inset-0 z-10 flex items-center justify-center bg-black/25 opacity-0 group-hover/vid:opacity-100 hover:bg-black/40 transition-all text-white"
+            className="absolute inset-0 z-10 flex items-center justify-center bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity"
           >
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-stone-900/80 text-white shadow-md">
               {isPlaying ? <Pause size={18} weight="fill" /> : <Play size={18} weight="fill" className="ml-0.5" />}
@@ -185,107 +177,104 @@ function StagedVideoPreview({ file, isUploading, isSelected, onToggleSelect, it,
           </button>
         )}
 
-        {/* Duration Badge */}
-        {duration > 0 && (
-          <span className="absolute bottom-2 right-2 z-10 rounded-md bg-stone-900/80 px-1.5 py-0.5 font-mono text-[10px] text-white">
-            {formatSec(duration)}
-          </span>
-        )}
+        {/* Duration Chip */}
+        <div className="absolute bottom-2 right-2 z-10 rounded-md bg-black/70 px-1.5 py-0.5 font-mono text-[10px] text-white">
+          {formatDuration(duration)}
+        </div>
 
-        {/* Circular Percentage Loader Overlay during Upload */}
-        {(isItemUploading || isItemDone || isItemError) && (
+        {/* Upload Progress Loader */}
+        {(it.status === 'uploading' || it.status === 'processing') && (
           <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/60 backdrop-blur-[2px]">
-            <CircularProgressBadge progress={it.progress} status={it.status} size={56} />
+            <CircularProgressBadge progress={it.progress} status={it.status} size={52} />
           </div>
         )}
       </div>
 
-      {/* Middle: Video Information & Category */}
-      <div className="flex-1 min-w-0 space-y-2 flex flex-col justify-between">
-        <div>
-          <div className="flex items-center gap-2">
-            <p className="truncate font-sans text-xs sm:text-sm font-bold text-stone-900" title={it.name}>
+      {/* Video Attributes & Controls */}
+      <div className="flex-1 min-w-0 space-y-2.5 w-full">
+        <div className="flex items-start justify-between gap-2">
+          <div>
+            <h4 className="font-sans text-xs sm:text-sm font-bold text-stone-900 truncate" title={it.name}>
               {it.name}
-            </p>
-            <Badge size="sm" variant="neutral">{formatBytes(it.size)}</Badge>
+            </h4>
+            <p className="text-[11px] text-stone-500">{formatBytes(it.size)}</p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 mt-2">
-            <select
-              value={it.eventGroup}
-              disabled={isUploading}
-              onClick={(e) => e.stopPropagation()}
-              onChange={(e) => onUpdateOption(it.id, 'eventGroup', e.target.value)}
-              className="text-xs font-semibold rounded-lg border border-stone-200 bg-stone-50 px-2 py-1 text-stone-800 focus:outline-none focus:border-stone-900"
-            >
-              {VIDEO_EVENT_PRESETS.map((g) => (
-                <option key={g} value={g}>{g}</option>
-              ))}
-            </select>
-
-            {it.isHero && (
-              <span className="flex items-center gap-1 rounded-md bg-amber-400/20 border border-amber-300 px-2 py-0.5 text-[10px] font-semibold text-amber-900">
-                <Star size={11} weight="fill" className="text-amber-500" /> Hero Film
-              </span>
-            )}
-            {it.makeLoop && (
-              <span className="flex items-center gap-1 rounded-md bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10px] font-medium text-emerald-800">
-                <Repeat size={11} /> 8s Silent Loop
-              </span>
-            )}
-            {it.stripAudio && (
-              <span className="flex items-center gap-1 rounded-md bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-medium text-amber-800">
-                <SpeakerSimpleSlash size={11} /> Audio Stripped
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* Video Processing Toggles */}
-        <div className="flex flex-wrap items-center gap-3 pt-2 border-t border-stone-100 text-xs" onClick={(e) => e.stopPropagation()}>
-          <label className="flex items-center gap-1.5 cursor-pointer select-none">
-            <input
-              type="checkbox"
-              disabled={isUploading}
-              checked={it.isHero}
-              onChange={(e) => onUpdateOption(it.id, 'isHero', e.target.checked)}
-              className="rounded text-stone-900 accent-stone-900"
-            />
-            <span className="font-semibold text-stone-700">Hero Film</span>
-          </label>
-
-          <label className="flex items-center gap-1.5 cursor-pointer select-none">
-            <input
-              type="checkbox"
-              disabled={isUploading}
-              checked={it.makeLoop}
-              onChange={(e) => onUpdateOption(it.id, 'makeLoop', e.target.checked)}
-              className="rounded text-emerald-600 accent-emerald-600"
-            />
-            <span className="text-stone-700">Generate 8s Silent Loop</span>
-          </label>
-
-          <label className="flex items-center gap-1.5 cursor-pointer select-none">
-            <input
-              type="checkbox"
-              disabled={isUploading}
-              checked={it.stripAudio}
-              onChange={(e) => onUpdateOption(it.id, 'stripAudio', e.target.checked)}
-              className="rounded text-amber-600 accent-amber-600"
-            />
-            <span className="text-stone-700">Mute Audio</span>
-          </label>
-
-          {!isUploading && (
+          {!isUploading && !isDone && (
             <button
               type="button"
               onClick={() => onRemove(it.id)}
-              className="ml-auto text-stone-400 hover:text-rose-600 p-1 transition-colors"
-              title="Remove film"
+              className="text-stone-400 hover:text-rose-600 p-1 transition-colors"
             >
-              <Trash size={14} />
+              <Trash size={15} />
             </button>
           )}
+        </div>
+
+        {/* Film Options: Ceremony, Hero, Silent Loop, Strip Audio */}
+        <div className="flex flex-wrap items-center gap-2 pt-1">
+          {/* Ceremony Group */}
+          <select
+            disabled={isUploading || isDone}
+            value={it.eventGroup || ''}
+            onChange={(e) => onUpdateOption(it.id, 'eventGroup', e.target.value)}
+            className="text-xs rounded-xl border border-stone-200 bg-stone-50/70 px-2.5 py-1 text-stone-800 focus:outline-none focus:border-stone-900"
+          >
+            <option value="">Ceremony: General</option>
+            {ceremonyOptions.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+
+          {/* Hero Switch */}
+          <button
+            type="button"
+            disabled={isUploading || isDone}
+            onClick={() => onUpdateOption(it.id, 'isHero', !it.isHero)}
+            className={cn(
+              'flex items-center gap-1.5 rounded-xl border px-2.5 py-1 text-xs font-medium transition-all',
+              it.isHero
+                ? 'bg-amber-50 border-amber-300 text-amber-900 font-semibold'
+                : 'bg-white border-stone-200 text-stone-600 hover:border-stone-300'
+            )}
+          >
+            <Star size={13} weight={it.isHero ? 'fill' : 'regular'} className={it.isHero ? 'text-amber-600' : ''} />
+            <span>Hero Film</span>
+          </button>
+
+          {/* 8s Silent Loop Switch */}
+          <button
+            type="button"
+            disabled={isUploading || isDone}
+            onClick={() => onUpdateOption(it.id, 'makeLoop', !it.makeLoop)}
+            className={cn(
+              'flex items-center gap-1.5 rounded-xl border px-2.5 py-1 text-xs font-medium transition-all',
+              it.makeLoop
+                ? 'bg-purple-50 border-purple-300 text-purple-900 font-semibold'
+                : 'bg-white border-stone-200 text-stone-600 hover:border-stone-300'
+            )}
+          >
+            <Repeat size={13} weight={it.makeLoop ? 'bold' : 'regular'} className={it.makeLoop ? 'text-purple-600' : ''} />
+            <span>Generate 8s Loop</span>
+          </button>
+
+          {/* Strip Audio Switch */}
+          <button
+            type="button"
+            disabled={isUploading || isDone}
+            onClick={() => onUpdateOption(it.id, 'stripAudio', !it.stripAudio)}
+            className={cn(
+              'flex items-center gap-1.5 rounded-xl border px-2.5 py-1 text-xs font-medium transition-all',
+              it.stripAudio
+                ? 'bg-rose-50 border-rose-300 text-rose-900 font-semibold'
+                : 'bg-white border-stone-200 text-stone-600 hover:border-stone-300'
+            )}
+          >
+            <SpeakerSimpleSlash size={13} className={it.stripAudio ? 'text-rose-600' : ''} />
+            <span>Mute Audio</span>
+          </button>
         </div>
       </div>
     </div>
@@ -293,7 +282,7 @@ function StagedVideoPreview({ file, isUploading, isSelected, onToggleSelect, it,
 }
 
 /**
- * Concurrent Worker Pool for Videos (Concurrency limit 3)
+ * Concurrent Worker Pool for Video Uploads (e.g. 3 streams)
  */
 async function runConcurrentVideoPool(tasks, concurrency = 3) {
   const results = [];
@@ -316,12 +305,12 @@ async function runConcurrentVideoPool(tasks, concurrency = 3) {
   return results;
 }
 
-const EMPTY_FILES = [];
+const EMPTY_VIDEOS = [];
 
 export default function VideoUploadModal({
   open,
   onClose,
-  initialFiles = EMPTY_FILES,
+  initialFiles = EMPTY_VIDEOS,
   clientId,
   onUploadComplete,
 }) {
@@ -330,14 +319,33 @@ export default function VideoUploadModal({
   const [isUploading, setIsUploading] = useState(false);
   const [overallProgress, setOverallProgress] = useState(0);
   const [activeUploadsCount, setActiveUploadsCount] = useState(0);
-  const [commonGroup, setCommonGroup] = useState('Highlights Film');
   const [uploadFinished, setUploadFinished] = useState(false);
   const [uploadedResults, setUploadedResults] = useState([]);
+
+  // Dynamic Ceremonies for Videos
+  const [ceremonyOptions, setCeremonyOptions] = useState(DEFAULT_VIDEO_CEREMONIES);
 
   const fileInputRef = useRef(null);
   const prevOpenRef = useRef(false);
 
-  // Initialize staged items
+  // Fetch dynamic ceremonies
+  useEffect(() => {
+    async function fetchCeremonies() {
+      try {
+        const res = await fetch(`${api_url}/api/ceremonies`, { credentials: 'include' });
+        const data = await res.json();
+        if (data.ceremonies?.length) {
+          const names = data.ceremonies.map((c) => c.name);
+          setCeremonyOptions([...new Set([...names, ...DEFAULT_VIDEO_CEREMONIES])]);
+        }
+      } catch (e) {
+        console.warn('Ceremony fetch error for videos:', e);
+      }
+    }
+    fetchCeremonies();
+  }, []);
+
+  // Initialize staged video items
   useEffect(() => {
     const wasOpen = prevOpenRef.current;
     prevOpenRef.current = open;
@@ -362,14 +370,10 @@ export default function VideoUploadModal({
         progress: 0,
         status: 'queued',
         error: null,
-        eventGroup: 'Highlights Film',
-        makeLoop: false,
+        eventGroup: 'Full Wedding Film',
+        isHero: idx === 0,
+        makeLoop: true,
         stripAudio: false,
-        isHero: idx === 0, // designate first video as candidate hero
-        heroPriority: 1,
-        tags: [],
-        shootDate: '',
-        location: '',
         caption: '',
       }));
       setItems(newItems);
@@ -390,14 +394,10 @@ export default function VideoUploadModal({
       progress: 0,
       status: 'queued',
       error: null,
-      eventGroup: commonGroup || 'Highlights Film',
-      makeLoop: false,
+      eventGroup: 'Full Wedding Film',
+      isHero: items.length === 0 && idx === 0,
+      makeLoop: true,
       stripAudio: false,
-      isHero: false,
-      heroPriority: 0,
-      tags: [],
-      shootDate: '',
-      location: '',
       caption: '',
     }));
     setItems((prev) => [...prev, ...added]);
@@ -431,13 +431,18 @@ export default function VideoUploadModal({
     }
   };
 
-  const updateItemOption = (id, field, value) => {
+  const updateItemOption = (id, key, value) => {
     setItems((prev) =>
-      prev.map((it) => (it.id === id ? { ...it, [field]: value } : it))
+      prev.map((it) => {
+        if (key === 'isHero' && value === true) {
+          return it.id === id ? { ...it, isHero: true } : { ...it, isHero: false };
+        }
+        return it.id === id ? { ...it, [key]: value } : it;
+      })
     );
   };
 
-  // Perform Concurrent Video Uploads
+  // Parallel Video Upload Execution
   const startUpload = async () => {
     if (!items.length || isUploading) return;
     setIsUploading(true);
@@ -562,13 +567,13 @@ export default function VideoUploadModal({
         {/* Header */}
         <header className="flex items-center justify-between border-b border-[#E8DDD1] px-6 py-4 bg-white shrink-0">
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-stone-900 text-amber-400 shrink-0 shadow-xs">
+            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-stone-900 text-amber-400 shrink-0 shadow-sm">
               <FilmSlate size={22} weight="bold" />
             </span>
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-sm sm:text-base font-bold text-stone-900 font-sans tracking-tight">
-                  {uploadFinished ? 'Film Ingest & Transcode Summary' : 'Stage Wedding Films & Cinema'}
+                  {uploadFinished ? 'Film Ingest & Transcode Status' : 'Stage Wedding Films & Cinema'}
                 </h3>
                 <Badge size="sm" variant="neutral">
                   {items.length} film{items.length === 1 ? '' : 's'} · {formatBytes(totalBytes)}
@@ -598,76 +603,37 @@ export default function VideoUploadModal({
           </button>
         </header>
 
-        {/* Post-Upload Ingest Summary State */}
-        {uploadFinished ? (
-          <div className="flex-1 overflow-y-auto p-8 space-y-6 bg-[#FFFCF8]">
-            <div className="rounded-3xl border border-emerald-200 bg-emerald-50/60 p-6 flex items-start gap-4 shadow-sm">
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-600 text-white shrink-0 shadow-sm">
-                <Check size={28} weight="bold" />
-              </span>
-              <div className="space-y-1">
-                <h4 className="text-base font-bold text-emerald-950 font-sans">
-                  Video Ingest Complete: {doneCount} of {items.length} films ready!
-                </h4>
-                <p className="text-xs text-emerald-900/80 leading-relaxed max-w-2xl">
-                  Raw master video files have been safely uploaded to Cloudflare R2 bucket.
-                  FFmpeg worker jobs are queued to extract poster thumbnails, generate adaptive web streaming renditions, and generate 8-second silent teaser loops.
-                </p>
+        {/* Staged Video Cards List & Reassurance Status */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {uploadFinished ? (
+            /* Post-Upload Ingest Summary Banner */
+            <div className="bg-emerald-50/70 border-b border-emerald-200 px-6 py-4 flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-600 text-white shrink-0 shadow-sm">
+                  <CheckCircle size={22} weight="fill" />
+                </span>
+                <div>
+                  <h4 className="text-xs sm:text-sm font-bold text-emerald-950 font-sans">
+                    Video Ingest Complete: {doneCount} of {items.length} films ready!
+                  </h4>
+                  <p className="text-[11px] text-emerald-900/90 max-w-xl leading-relaxed">
+                    Master video files have been safely stored in your Cloudflare R2 bucket. Background FFmpeg transcoding is queued to generate adaptive streaming renditions and 8s teaser loops.
+                  </p>
+                </div>
               </div>
+
+              <Button
+                type="button"
+                variant="terracotta"
+                size="sm"
+                onClick={handleFinishAndExit}
+                className="shrink-0 text-xs font-semibold px-4"
+              >
+                Finish & View Client Gallery
+              </Button>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="rounded-2xl border border-[#E8DDD1] bg-white p-5 space-y-3">
-                <div className="flex items-center gap-2 text-stone-900 font-bold text-xs uppercase tracking-wider">
-                  <HardDrives size={18} className="text-amber-600" />
-                  <span>Video Processing Pipeline</span>
-                </div>
-                <div className="space-y-2 text-xs">
-                  <div className="flex items-center justify-between p-2 rounded-xl bg-stone-50 border border-stone-200/60">
-                    <span className="font-semibold text-stone-800">Master Source</span>
-                    <Badge size="sm" variant="success">Stored on R2</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-2 rounded-xl bg-stone-50 border border-stone-200/60">
-                    <span className="font-semibold text-stone-800">Web Renditions (1080p / 720p)</span>
-                    <Badge size="sm" variant="gold">Worker Queue</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-2 rounded-xl bg-stone-50 border border-stone-200/60">
-                    <span className="font-semibold text-stone-800">Poster Frame Extraction</span>
-                    <Badge size="sm" variant="gold">Background FFmpeg</Badge>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-2xl border border-[#E8DDD1] bg-white p-5 space-y-3">
-                <div className="flex items-center gap-2 text-stone-900 font-bold text-xs uppercase tracking-wider">
-                  <FilmSlate size={18} className="text-amber-600" />
-                  <span>Staged Films Summary</span>
-                </div>
-                <div className="space-y-1.5 text-xs text-stone-600">
-                  {items.map((it, idx) => (
-                    <div key={idx} className="flex items-center justify-between border-b border-stone-100 pb-1">
-                      <span className="font-semibold text-stone-900 truncate max-w-[200px]">{it.name}</span>
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-[10px] text-stone-500">{it.eventGroup}</span>
-                        {it.isHero && <Badge size="sm" variant="gold">Hero</Badge>}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {errorCount > 0 && (
-              <div className="rounded-2xl border border-rose-200 bg-rose-50/70 p-4 text-xs text-rose-900 flex items-center gap-3">
-                <WarningCircle size={20} className="text-rose-600 shrink-0" />
-                <span>{errorCount} video file(s) failed during network upload.</span>
-              </div>
-            )}
-          </div>
-        ) : (
-          /* Staged Video Cards List */
-          <div className="flex-1 flex flex-col overflow-hidden">
-            {/* Top Action Strip */}
+          ) : (
+            /* Top Action Strip */
             <div className="border-b border-[#E8DDD1] bg-[#FFFDF9] px-6 py-2.5 shrink-0 flex items-center justify-between text-xs">
               <div className="flex items-center gap-3">
                 <button
@@ -706,47 +672,50 @@ export default function VideoUploadModal({
                 </Button>
               </div>
             </div>
+          )}
 
-            <div className="flex-1 overflow-y-auto p-6 space-y-3.5 scrollbar-thin scrollbar-thumb-stone-200">
-              {!items.length ? (
-                <div className="flex flex-col items-center justify-center h-full text-center py-16 space-y-3">
-                  <span className="flex h-16 w-16 items-center justify-center rounded-3xl bg-stone-100 text-stone-700">
-                    <FilmSlate size={32} />
-                  </span>
-                  <div>
-                    <p className="text-sm font-semibold text-stone-800">No wedding films staged</p>
-                    <p className="text-xs text-stone-500">Pick or drop cinematic video files to stage for this wedding</p>
-                  </div>
-                  <Button
-                    type="button"
-                    variant="gold"
-                    size="sm"
-                    icon={Plus}
-                    onClick={() => fileInputRef.current?.click()}
-                    className="bg-stone-900 text-white hover:bg-stone-800"
-                  >
-                    Browse Video Files
-                  </Button>
+          {/* Staged Videos List with Playable Previews */}
+          <div className="flex-1 overflow-y-auto p-6 space-y-3.5 scrollbar-thin scrollbar-thumb-stone-200">
+            {!items.length ? (
+              <div className="flex flex-col items-center justify-center h-full text-center py-16 space-y-3">
+                <span className="flex h-16 w-16 items-center justify-center rounded-3xl bg-stone-100 text-stone-700">
+                  <FilmSlate size={32} />
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-stone-800">No wedding films staged</p>
+                  <p className="text-xs text-stone-500">Pick or drop cinematic video files to stage for this wedding</p>
                 </div>
-              ) : (
-                <div className="space-y-3">
-                  {items.map((it) => (
-                    <StagedVideoPreview
-                      key={it.id}
-                      it={it}
-                      file={it.file}
-                      isUploading={isUploading}
-                      isSelected={selectedIds.has(it.id)}
-                      onToggleSelect={toggleSelect}
-                      onUpdateOption={updateItemOption}
-                      onRemove={handleRemoveItem}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
+                <Button
+                  type="button"
+                  variant="gold"
+                  size="sm"
+                  icon={Plus}
+                  onClick={() => fileInputRef.current?.click()}
+                  className="bg-stone-900 text-white hover:bg-stone-800"
+                >
+                  Browse Video Files
+                </Button>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {items.map((it) => (
+                  <StagedVideoPreview
+                    key={it.id}
+                    it={it}
+                    file={it.file}
+                    isUploading={isUploading}
+                    isDone={uploadFinished && it.status === 'done'}
+                    isSelected={selectedIds.has(it.id)}
+                    onToggleSelect={toggleSelect}
+                    onUpdateOption={updateItemOption}
+                    onRemove={handleRemoveItem}
+                    ceremonyOptions={ceremonyOptions}
+                  />
+                ))}
+              </div>
+            )}
           </div>
-        )}
+        </div>
 
         {/* Footer Actions */}
         <footer className="flex items-center justify-between border-t border-[#E8DDD1] bg-white px-6 py-4 shrink-0">
@@ -755,18 +724,18 @@ export default function VideoUploadModal({
               <div className="flex items-center gap-2">
                 <CircleNotch size={18} className="animate-spin text-amber-600" />
                 <span className="text-xs font-semibold text-stone-800">
-                  Uploading Films ({activeUploadsCount} parallel streams · {overallProgress}% total)
+                  Uploading ({activeUploadsCount} concurrent streams · {overallProgress}% total)
                 </span>
               </div>
             )}
             {!isUploading && uploadFinished && (
               <span className="text-xs font-semibold text-emerald-700 flex items-center gap-1.5">
-                <Check size={16} weight="bold" /> {doneCount} films processed and linked to client gallery!
+                <Check size={16} weight="bold" /> {doneCount} films stored on Cloudflare R2.
               </span>
             )}
             {!isUploading && !uploadFinished && (
               <span className="text-xs text-stone-500">
-                {selectedIds.size} of {items.length} films selected
+                {selectedIds.size} of {items.length} films ready for upload
               </span>
             )}
           </div>
@@ -775,10 +744,10 @@ export default function VideoUploadModal({
             {uploadFinished ? (
               <Button
                 type="button"
-                variant="gold"
+                variant="terracotta"
                 size="sm"
                 onClick={handleFinishAndExit}
-                className="bg-stone-900 hover:bg-stone-800 text-white font-semibold px-5 shadow-xs"
+                className="font-semibold px-5 shadow-sm"
               >
                 Finish & View Client Gallery
               </Button>
@@ -797,15 +766,15 @@ export default function VideoUploadModal({
 
                 <Button
                   type="button"
-                  variant="gold"
+                  variant="terracotta"
                   size="sm"
                   loading={isUploading}
                   disabled={!items.length || isUploading}
                   icon={Sparkle}
                   onClick={startUpload}
-                  className="bg-stone-900 hover:bg-stone-800 text-white font-semibold shadow-xs"
+                  className="font-semibold shadow-sm px-4"
                 >
-                  Upload {items.length} Films
+                  Upload {items.length} Films (Parallel)
                 </Button>
               </>
             )}

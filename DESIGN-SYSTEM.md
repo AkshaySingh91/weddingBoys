@@ -1,181 +1,132 @@
 # The Wedding Boys — Design System
 
-**Status:** Stage 0 proposal, awaiting approval. No component code written yet.
+**Status:** Stage 0 approved. Direction revised 2026-09-19 after the first
+attempt (a dark ground) was built and rejected — see §1. Stage 1 built on this.
 **Scope:** public site only. Blog/editorial and admin are explicitly out of scope.
 **Evidence base:** `audit/` (70 defects; IDs referenced as `R-xx`).
 
 ---
 
-## 1. Design direction
+## 1. Design direction — revised 2026-09-19
 
-**The idea: lights down.**
+> **This replaces a first direction ("lights down", a near-black ground) that was
+> built, reviewed and rejected.** The rejection was right and the reasoning is
+> worth keeping: a restrained dark frame reads as Western editorial minimalism.
+> It made the site look calm and professional and *plain* — and plainness is a
+> poor description of an Indian wedding. The structural work from that pass
+> survives untouched; only the surface changed.
 
-This is a cinematography studio. Its product is light — what it does with a
-mandap at 8pm, with a havan fire, with the last twenty minutes before the sun
-drops behind a Udaipur palace. The current site presents that work on a bright
-cream page, which is the visual equivalent of screening a film with the house
-lights up.
+**The idea: under the arch.**
 
-So the interface goes dark and the work becomes the only lit thing on the page.
-Near-black ground, images full-bleed and unframed, type set quietly around them.
-Every surface that isn't a photograph recedes.
+Indian weddings are maximal on purpose. Marigold by the kilo, gold thread, red
+silk, a mandap built for one day and dismantled the next. A site that presents
+that work through a neutral grid is describing a different wedding — a Western
+one. So the ornament is part of the system rather than something applied on top
+of it, and it comes from the architecture the work is shot in.
 
-This is not a stylistic preference; it is true to the subject three times over.
-**Indian weddings are substantially night events** — the pheras, the aarti, the
-sangeet, the baraat under floodlights. **Their colour is riotous** — marigold,
-sindoor, gold thread, jewel silks — and those colours detonate against black and
-turn muddy against cream. And **a colourist grades in a darkened room** with
-neutral walls, precisely so the image can be judged truthfully; presenting on
-near-black is a professional signal that the secondary audience — planners,
-editors, rival cinematographers — will read instantly and correctly.
+Three devices carry it, all built in CSS so there is no asset to go missing:
 
-The emotional register is *restraint around abundance*. The weddings are
-maximal. The studio presenting them should not compete: it should be the calm,
-confident frame that lets a 400-person baraat look like cinema. Luxury here is
-not ornament, it is **editing** — the discipline to leave things out.
+- **The arch.** Imagery sits in a dome-topped mehrab frame, not a rounded
+  rectangle. This is the one memorable move — recognisably Indo-Islamic palace
+  architecture, and impossible to mistake for a template.
+- **Jaali.** The pierced lattice screen, drawn as two crossed hairline grids.
+  Used behind sections at low opacity, never under text.
+- **Gold thread.** Hairlines with diamond terminals, corner brackets. Metal as a
+  line, never as a fill — a gold *fill* is where luxury turns into a wedding
+  invitation.
 
-The one memorable thing a visitor should take away: **the photographs looked like
-they were lit from behind the screen.**
+The ground is warm ivory, the colour of raw silk and heavy card stock. Never a
+cool white: it turns every gold grey and does no favours to Indian skin tones.
 
-Two guards against the obvious failure modes. Dark plus gold tips very easily
-into wedding-invitation gaudiness, so metallics appear only as hairlines and
-small marks, never as fills. And dark plus serif tips into funeral, so the type
-must stay warm and the imagery must carry colour.
+The register is **rich but ordered**. The ornament is systematic — three devices,
+tokenised, used consistently — which is what separates decoration from mess. The
+failure mode to avoid is not "too much"; it is "arbitrary".
 
 ---
 
 ## 2. Resolving the brand conflict
 
-The audit found two competing systems: a hot pink/coral one (`#FF6969` ×125,
-`#FF5353` ×24, plus four more reds) and a brown-gold serif editorial one (footer,
-newsletter). There is in fact a third — `/varanasi`, in Cormorant Garamond and
-Cinzel, used on no other page (`R-41`).
+The audit found two competing systems — a hot pink/coral one (`#FF6969` ×125,
+`#FF5353` ×24, plus four more reds) and a brown-gold serif editorial one — plus a
+third on `/varanasi` in Cormorant and Cinzel.
 
-**Decision: adopt neither wholesale.**
+**The pink goes, on arithmetic rather than taste.** White on `#FF5353` is
+**3.17:1** and `#FF6969` on white is **2.81:1**; every CTA on the site inherits a
+pairing that cannot reach AA at body size. That is not a preference.
 
-You are right that the pink undercuts the position — it reads consumer-friendly
-and it is mathematically broken besides: white on `#FF5353` is **3.17:1** and
-`#FF6969` on white is **2.81:1**, so *every* CTA on the site inherits a pairing
-that cannot pass AA at body size (`R-05`, `R-28`). That is not a taste argument,
-it is arithmetic. The pink goes.
+**The warm editorial direction is kept and made specific.** The concern that sent
+the first attempt dark was real — warm cream plus terracotta plus Playfair is the
+most common output of generated design work, and the old footer already sat
+there. But the answer to "this looks generated" is not to remove colour. It is to
+add ornament that no generator reaches for: the arch, the jaali, the gold
+terminal. Cream is generic *undecorated*. Decorated, it is the room.
 
-But I want to argue against simply promoting the editorial cream-and-brown
-system, because doing so walks straight into the anti-pattern list you gave me.
-Warm cream + terracotta + Playfair Display is the single most common output of
-generated design work right now, and the current footer is already most of the
-way there. Shipping it would make the site look *tasteful and machine-made* — the
-exact failure this brief is trying to avoid, and a failure that the target
-audience, who look at a hundred wedding sites, will clock immediately.
+**The accent is sindoor** — `#A83824`, a deep vermilion. Culturally exact rather
+than decorative, and deep enough to read as expensive where `#FF6969` reads
+cheerful. **Marigold** joins it as ornament, and **gold** as the metal.
 
-So: **keep the editorial system's discipline — one serif, generous measure,
-restraint — and move the ground from cream to near-black.** That is the real
-choice. It inverts the site, differentiates it from every competitor in the
-category, makes the imagery the brightest thing on screen, and — usefully —
-makes the audit's single largest accessibility class (white text at 1.0:1 over
-photographs, `R-06`) structurally much easier to fix, because a dark scrim on a
-dark page is no longer a visual intrusion.
-
-**The accent becomes sindoor**, a deep vermilion. It is culturally exact rather
-than decorative — sindoor, the red of the lehenga, the tilak — and being deep
-rather than bright it reads expensive where `#FF6969` reads cheerful. It also
-resolves the six-reds problem by choosing one that is emphatically not a tint of
-the old one.
-
-**Brass** is the only metallic, and it is a hairline colour: rules, small marks,
-focus rings. Never a fill, never a gradient.
+One practical dividend of the light ground: at 6.45:1 for white-on-accent and
+5.99:1 for accent-on-ground, **a single accent value does both jobs**. The dark
+ground needed two separate reds to reach AA.
 
 ---
 
 ## 3. Colour
 
-Named by role, never by appearance. Every value below is a token; components
-consume tokens only.
+Named by role. Components consume tokens only.
 
 ### 3.1 Core
 
 | Token | Value | Role | Verified |
 |---|---|---|---|
-| `--ink-void` | `#0B0A09` | the page ground — warm near-black, not pure black | — |
-| `--ink-raised` | `#141210` | raised surface (cards, menus) | — |
-| `--ink-hairline` | `#241F1B` | borders, rules | — |
-| `--bone` | `#F2EDE6` | primary light text, rare light surfaces | **16.99:1** on void |
-| `--accent-fill` | `#A83824` | sindoor, as a **fill** | bone on it = **5.54:1** |
-| `--accent-text` | `#D9614A` | sindoor, as **text/icon on the ground** | **5.42:1** on void |
-| `--brass` | `#B08D57` | metallic hairline, focus ring | **6.40:1** on void |
+| `--ground` | `#FBF6EE` | the page — warm ivory | — |
+| `--ground-raised` | `#FFFFFF` | cards, panels | — |
+| `--ground-sunk` | `#F4EBDD` | wells, skeletons | — |
+| `--ground-deep` | `#2A1B12` | inverted sections | — |
+| `--ink-primary` | `#2A1B12` | headings, body | **15.44:1** |
+| `--ink-secondary` | `#5E4636` | supporting copy | **8.12:1** |
+| `--ink-muted` | `#7A6355` | meta, captions | **5.21:1** |
+| `--accent` | `#A83824` | sindoor — fill **and** text | white on it **6.45:1**; on ground **5.99:1** |
+| `--marigold` | `#E08B2C` | **ornament only** — 2.47:1 | never carries text |
+| `--marigold-ink` | `#A85B12` | saffron that must read | **4.68:1** |
+| `--gold` | `#C9A227` | ornament, arch edges — 2.25:1 | decorative only |
+| `--gold-strong` | `#A8862E` | rules that carry meaning | **3.19:1** |
+| `--focus-ring` | `#A83824` | 2px, 2px offset | **5.99:1** |
 
-**Why the accent is two tokens.** My first draft used a single `#C2412C` for
-both jobs and I computed the ratios before writing this line: bone on it is
-**4.41:1** and it is **3.85:1** as text on the ground — so it fails AA at body
-size in *both* directions. That is precisely the defect the audit found in the
-existing brand, where `#FF5353` and `#FF6969` are each stuck at 3.17 and 2.81
-(`R-05`, `R-28`). One red genuinely cannot do both jobs at AA. Splitting the
-role into a deep fill and a lighter text tint is the fix, and it is the single
-most important lesson the audit teaches about colour.
+Marigold and gold are deliberately below text thresholds and are **constrained to
+ornament** by the token names. A decorative colour that is allowed to become text
+is how the audit's 122 contrast failures happened.
 
-`#0B0A09` rather than `#000000` deliberately: pure black crushes on OLED, kills
-shadow detail in photographs, and reads cheap. The slight warmth flatters Indian
-skin tones and gold thread.
+### 3.2 Scrims — still mandatory
 
-### 3.2 Derived
+A light page does **not** make white text on a photograph legible. Every value is
+solved against a pure-white image, so the guarantee holds on a blown-out frame.
 
-| Token | Value | Role |
-|---|---|---|
-| `--text-primary` | `#F2EDE6` | body and headings on ground |
-| `--text-secondary` | `rgba(242,237,230,0.72)` | supporting copy |
-| `--text-muted` | `rgba(242,237,230,0.52)` | meta, captions |
-| `--text-on-accent` | `#F2EDE6` | text on accent fills — **bone, not black** (5.54:1) |
-| `--border-subtle` | `rgba(242,237,230,0.10)` | default hairline |
-| `--border-strong` | `rgba(242,237,230,0.22)` | emphasised edge |
-| `--accent-hover` | `#B33A26` | brightens on hover (bone 5.08:1) |
-| `--accent-press` | `#96301F` | darkens on press (bone 6.58:1) |
-| `--focus-ring` | `#B08D57` | brass, 2px, 2px offset (6.40:1) |
-
-Measured: `--text-secondary` **8.87:1**, `--text-muted` **5.03:1** on void;
-`--text-primary` **16.05:1** and `--text-muted` **4.76:1** on `--ink-raised`.
-
-**Rule:** `--accent-fill` is never used as text and `--accent-text` is never used
-as a fill. They are not interchangeable shades of one colour; they are two roles.
-
-### 3.3 Scrims — a named requirement, not an afterthought
-
-The audit found **296 text-over-image instances** and five at exactly **1.0:1**
-(`R-06`). Text is never placed on an image without one of these:
-
-Every value below was solved against the **worst case — a pure white image** —
-so the guarantee holds on a blown-out beach frame, not just on a dark mandap.
-
-| Token | Value | Use | Bone text, worst case |
+| Token | Value | Use | Worst case |
 |---|---|---|---|
-| `--scrim-base` | `rgba(11,10,9,0.66)` flat | small labels and captions on arbitrary imagery | **5.64:1** ✅ |
-| `--scrim-strong` | `rgba(11,10,9,0.74)` flat | body copy over imagery | **7.62:1** ✅ |
-| `--scrim-gradient-bottom` | `linear-gradient(to top, rgba(11,10,9,0.88) 0%, rgba(11,10,9,0.66) 30%, transparent 70%)` | captions anchored bottom | **5.64:1** at the 30% stop, 12.79:1 at the base ✅ |
-| `--scrim-gradient-hero` | `linear-gradient(to top, rgba(11,10,9,0.92) 0%, rgba(11,10,9,0.62) 55%, rgba(11,10,9,0.35) 100%)` | display copy over full-bleed stills | **4.85:1** at the 55% stop ✅ (display text needs 3.0) |
+| `--scrim-base` | `rgba(28,17,10,0.66)` | labels and captions on imagery | **5.6:1** |
+| `--scrim-strong` | `rgba(28,17,10,0.74)` | body copy on imagery | **7.6:1** |
+| `--scrim-gradient-bottom` | 0.88 → 0.66 → transparent | bottom-anchored captions | 5.6:1 at the 30% stop |
+| `--scrim-gradient-hero` | 0.92 → 0.62 → 0.35 | display copy over full-bleed | 4.85:1 at the 55% stop |
 
-**Text must sit within the band where the scrim is at or above its stated stop.**
-A caption placed at 60% height over `--scrim-gradient-bottom` is outside its
-guarantee and is a defect.
+**This is now the load-bearing fix for the audit's largest defect class.** On the
+dark ground, white-on-photograph text was masked — `/team` measured 2 low-contrast
+instances instead of 19 without anything being repaired. On ivory the problem is
+visible again and has to be solved properly: `<Media>` refuses to render an
+overlay without a scrim token.
 
-My first draft specified `--scrim-base` at `0.45`, which computes to **2.71:1**
-over white — it would have shipped the exact illegibility the audit documents
-(`R-06`, `R-21`). 0.66 is the minimum that holds.
+### 3.3 Ornament tokens
 
-**Rule:** any component rendering text over an image must apply a scrim token.
-This is enforceable in review — a text node over an `<img>` with no scrim class
-is a defect regardless of how it looks in one photograph.
+| Class | What it is |
+|---|---|
+| `.arch` / `.arch-soft` | dome-topped mehrab frame for imagery |
+| `.jaali` / `.jaali-dense` | pierced lattice, two crossed hairline grids |
+| `.rule-ornament` | gold rule with diamond terminals |
+| `.corners` | gold corner brackets for emphasised panels |
 
-### 3.4 Status
-
-`--status-success #4E8C6A`, `--status-error #D0523C`, `--status-warning #C08A3E`.
-Muted deliberately: a saturated system-red next to sindoor would compete.
-
-### 3.5 What we are *not* doing
-
-No cool greys. The audit found Tailwind's `slate`/`gray` defaults used throughout
-(`#94A3B8` as the most-used background on the site, `#E5E7EB` as the global
-border colour) sitting inside a warm palette (`R-18`). Every neutral here is
-derived from `--ink-void` or `--bone`, so it is warm by construction.
-
----
+All CSS-only. The ornament this replaces was a truncated base64 data URI that
+threw `ERR_INVALID_URL` on every page and never rendered once — ornament that
+depends on a file is ornament that can silently disappear.
 
 ## 4. Typography
 
@@ -377,8 +328,12 @@ text set quietly — never a broken-image glyph.
 
 The ones you named, all of which this system actively avoids:
 
-1. **Warm cream + terracotta as an unexamined default.** Explicitly rejected in
-   §2 — this is why the ground is near-black rather than the easier cream.
+1. **Warm cream + terracotta as an *unexamined* default.** The palette is warm,
+   deliberately — but it is not left bare. The guard against looking generated is
+   the ornament system (§3.3): the arch, the jaali, the gold terminal. A cream
+   page with no ornament is the anti-pattern; a cream page with a structured
+   decorative language is the brief. Going dark to dodge this was the first
+   attempt's mistake.
 2. **Identical rounded cards, one radius, same soft grey shadow.** Radius is
    mostly `0`; elevation is surface lightening; there is exactly one shadow and
    it is for floating chrome.

@@ -69,7 +69,8 @@ module.exports = {
       boxShadow: {
         xs: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
         '2xs': '0 1px 0 0 rgb(0 0 0 / 0.05)',
-        overlay: '0 24px 64px -12px rgba(0, 0, 0, 0.7)',
+        overlay: '0 24px 64px -12px rgba(42, 27, 18, 0.28)',
+        panel: '0 2px 10px -4px rgba(42, 27, 18, 0.14)',
       },
       blur: { xs: '2px' },
       aspectRatio: { '4/5': '4 / 5', '3/4': '3 / 4', '4/3': '4 / 3' },
@@ -131,26 +132,33 @@ module.exports = {
           The legacy `studio.*` block below stays until Stage 8 — the
           out-of-scope blog still consumes it.
         */
-        ink: {
-          void: 'var(--ink-void)',
-          raised: 'var(--ink-raised)',
-          overlay: 'var(--ink-overlay)',
-          hairline: 'var(--ink-hairline)',
+        ground: {
+          DEFAULT: 'var(--ground)',
+          raised: 'var(--ground-raised)',
+          sunk: 'var(--ground-sunk)',
+          deep: 'var(--ground-deep)',
         },
-        bone: 'var(--bone)',
+        ink: {
+          DEFAULT: 'var(--ink-primary)',
+          secondary: 'var(--ink-secondary)',
+          muted: 'var(--ink-muted)',
+          onAccent: 'var(--ink-on-accent)',
+          onDeep: 'var(--ink-on-deep)',
+        },
         accent: {
-          DEFAULT: 'var(--accent-fill)',
-          fill: 'var(--accent-fill)',
-          text: 'var(--accent-text)',
+          DEFAULT: 'var(--accent)',
           hover: 'var(--accent-hover)',
           press: 'var(--accent-press)',
+          wash: 'var(--accent-wash)',
         },
-        brass: 'var(--brass)',
-        content: {
-          primary: 'var(--text-primary)',
-          secondary: 'var(--text-secondary)',
-          muted: 'var(--text-muted)',
-          onAccent: 'var(--text-on-accent)',
+        marigold: {
+          DEFAULT: 'var(--marigold)',
+          ink: 'var(--marigold-ink)',
+        },
+        gold: {
+          DEFAULT: 'var(--gold)',
+          strong: 'var(--gold-strong)',
+          soft: 'var(--gold-soft)',
         },
         edge: {
           subtle: 'var(--border-subtle)',

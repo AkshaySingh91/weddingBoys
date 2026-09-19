@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { X, FilmSlate, ImageSquare, Star, MapPin, CalendarBlank } from '@phosphor-icons/react';
 import { Button } from '@/app/admin/components/ui/Button.jsx';
@@ -28,6 +28,24 @@ export default function MediaDetailsPanel({
 }) {
     const [tagInput, setTagInput] = useState('');
     const isVideo = media.mediaType === 'Video';
+
+    const [ceremonies, setCeremonies] = useState([
+        'Haldi', 'Mehendi', 'Sangeet', 'Wedding / Pheras', 'Reception', 'Pre-Wedding', 'Candid & Portraits'
+    ]);
+
+    useEffect(() => {
+        const api_url = process.env.NEXT_PUBLIC_API_URL;
+        async function fetchCeremonies() {
+            try {
+                const res = await fetch(`${api_url}/api/ceremonies`, { credentials: 'include' });
+                const data = await res.json();
+                if (data.ceremonies?.length) {
+                    setCeremonies(data.ceremonies.map((c) => c.name));
+                }
+            } catch { /* fallback */ }
+        }
+        fetchCeremonies();
+    }, []);
 
     const cityMatches = useMemo(() => {
         const q = (value.location?.city || '').trim().toLowerCase();
@@ -103,7 +121,7 @@ export default function MediaDetailsPanel({
                             )}
                         </div>
                         <div className="grid grid-cols-2 gap-1.5 mb-2">
-                            {['Haldi', 'Mehendi', 'Sangeet', 'Wedding / Pheras', 'Reception', 'Pre-Wedding', 'Candid & Portraits'].map((grp) => (
+                            {ceremonies.map((grp) => (
                                 <button
                                     key={grp}
                                     type="button"
@@ -111,7 +129,7 @@ export default function MediaDetailsPanel({
                                     className={cn(
                                         'rounded-lg px-2.5 py-1.5 text-[11px] font-medium transition text-left border cursor-pointer',
                                         value.eventGroup === grp
-                                            ? 'bg-amber-600 text-white border-amber-600 shadow-2xs font-semibold'
+                                            ? 'bg-amber-600 text-white border-amber-600 shadow-sm font-semibold'
                                             : 'bg-white text-stone-700 border-stone-200 hover:border-amber-400'
                                     )}
                                 >

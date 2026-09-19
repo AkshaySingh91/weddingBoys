@@ -81,7 +81,7 @@ export default function Media({
 
     return (
         <div
-            className={`relative overflow-hidden bg-ink-raised ${RATIOS[ratio]} ${className}`}
+            className={`relative overflow-hidden bg-ground-raised ${RATIOS[ratio]} ${className}`}
             style={{ backgroundColor: ground }}
             {...rest}
         >

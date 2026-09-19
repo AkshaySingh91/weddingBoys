@@ -15,24 +15,27 @@
 import Link from 'next/link';
 
 const VARIANTS = {
-    /* Sindoor fill. Bone text on --accent-fill is 5.54:1 — the old coral CTAs
-       were 3.17:1, which no amount of care could have fixed at that size. */
+    /* Sindoor fill. White on --accent is 6.45:1 — the old coral CTAs were
+       3.17:1, which no amount of care could have fixed at that size. */
     primary:
-        'bg-accent-fill text-content-onAccent hover:bg-accent-hover active:bg-accent-press '
-        + 'disabled:bg-ink-hairline disabled:text-content-muted',
-    /* Hairline. The default for anything that is not the page's single main action. */
+        'bg-accent text-ink-onAccent hover:bg-accent-hover active:bg-accent-press '
+        + 'disabled:bg-ground-sunk disabled:text-ink-muted',
+    /* Gold hairline. The default for anything that is not the page's single
+       main action — the metal is what makes it read as ornament rather than as
+       a generic outlined button. */
     secondary:
-        'bg-transparent text-content-primary border border-edge-strong '
-        + 'hover:border-brass hover:text-bone active:bg-ink-raised '
-        + 'disabled:border-edge-subtle disabled:text-content-muted',
+        'bg-transparent text-ink border border-gold-strong/60 '
+        + 'hover:border-gold-strong hover:bg-accent-wash active:bg-ground-sunk '
+        + 'disabled:border-edge-subtle disabled:text-ink-muted',
     /* Over imagery. Sits on its own scrim so it never depends on the photograph. */
     onMedia:
-        'bg-ink-void/70 text-bone backdrop-blur-sm border border-bone/20 '
-        + 'hover:bg-ink-void/85 hover:border-bone/40 active:bg-ink-void',
-    /* Text-only. Uses --accent-text (5.42:1 on the ground), never --accent-fill. */
+        'bg-ink/55 text-ink backdrop-blur-sm border border-ink/15 '
+        + 'hover:bg-ink/70 hover:border-ink/30 active:bg-ink/80',
+    /* Text-only. --accent reads at 5.99:1 on the ground, so on a light page one
+       accent value serves both fill and text — the dark ground needed two. */
     quiet:
-        'bg-transparent text-accent-text hover:text-bone active:text-accent-press '
-        + 'disabled:text-content-muted px-0',
+        'bg-transparent text-accent hover:text-ink active:text-accent-press '
+        + 'disabled:text-ink-muted px-0',
 };
 
 const SIZES = {
