@@ -87,7 +87,8 @@ const LaunchCountdown = memo(function LaunchCountdown() {
 function VaranasiLaunchCard() {
     return (
         <Section width="wide" rhythm="tight">
-            <div className="relative overflow-hidden rounded-media border border-gold/35 bg-accent-wash shadow-panel">
+            <div className="relative overflow-hidden rounded-media border border-gold/35 shadow-panel
+                            bg-gradient-to-b from-accent-tint to-accent-wash">
                 {/* The illustration, untouched. */}
                 <div className="absolute inset-0 z-0">
                     <Image
@@ -119,8 +120,8 @@ function VaranasiLaunchCard() {
                         it. */}
                     <div
                         aria-hidden="true"
-                        className="absolute inset-0 z-10 bg-accent-wash/90 md:bg-transparent
-                                   md:bg-gradient-to-r md:from-accent-wash md:from-35%
+                        className="absolute inset-0 z-10 bg-accent-tint/90 md:bg-transparent
+                                   md:bg-gradient-to-r md:from-accent-tint md:from-35%
                                    md:to-transparent md:to-70%"
                     />
                 </div>
