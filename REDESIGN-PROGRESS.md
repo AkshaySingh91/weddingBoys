@@ -777,3 +777,64 @@ SVGs given `aria-hidden`.
 The skeleton point is worth keeping: it drew square tiles against real 256/320px
 ones, so the grid resized the instant data arrived. A skeleton that does not
 match its content causes the exact layout shift skeletons exist to prevent.
+
+### Why Choose Us — the typewriter bug (`WhyChooseUs.jsx`)
+
+The visible symptom was a quote that never finished typing. The cause was not
+the typewriter: `features` and `quotes` were built **inside the render body**, so
+`quotes` was a new array identity every render. That defeated
+`TypewriterQuotes`' `React.memo` *and* sat in its effect's dependency array, so
+every parent re-render restarted it from character zero. Both hoisted to module
+scope.
+
+Also: heading read "Why Choose**The** Wedding Boys?" (the `<br>` broke the line,
+the text content did not); the accent word used `#FF6969` at 3.4:1 and is now
+`--accent-ink` at **5.02:1** — still red, since red is the primary; the
+typewriter had no reduced-motion path and now shows the quote whole, rotating
+every 6s; screen readers get the finished quote via `sr-only` rather than a
+stream of half-words; feature cards were `cursor-pointer` but not interactive.
+
+Raised, not changed: the first feature is titled **"Decade of Expertise"** and
+its own body text says **"5+ years"**.
+
+### Packages — four in a row, detail in a modal (`OfferPackages.jsx`, `PackageModal.jsx`)
+
+Client brief: four cards in one row, rounded rectangles, detail in a modal.
+
+**The bug behind the complaint.** Four packages sat in `grid lg:grid-cols-2` and
+each expanded *in place*. Expanding grew the **grid row**, so opening one
+stretched its neighbour to the same height — which is the "other one opens too
+with empty space" that was reported. It was never a second card opening; it was
+a grid row dragging its sibling along.
+
+**Also found:** every card rendered `{pkg.duration} Hours` and **no package
+object has a `duration` field** — all four have been showing the word "Hours"
+with nothing in front of it. Replaced with two figures derived from the data
+that actually exists: team size and deliverable count.
+
+| | Was | Now |
+|---|---|---|
+| Layout | 2×2, expanding in place | **4 in one row** (1 / 2 / 4), equal height |
+| Card heights | grew with content | **557px each**, measured identical |
+| Detail | inline expansion | modal — focus trap, restore, scroll lock, Escape, click-outside |
+| Popular ribbon | rotated 45° through the corner, clipping its own text | flat band on the top edge |
+| Exclusions | struck through inside the tick list | separated under "Not in this package" |
+| WhatsApp | `window.open(url,'_blank')` | `<a rel="noopener noreferrer">` |
+| Close target | — | 48×48 |
+| Modal CTA | — | 52px, pinned; reachable without scrolling 13 inclusions |
+
+Verified: 4 columns at 1440 (302px each), 2 at 640, 1 at 390; modal
+`aria-modal`/`aria-labelledby` set, focus lands on close, Escape closes, scroll
+unlocks, **focus returns to the exact button that opened it**; on a phone the
+modal is a full-bleed bottom sheet (390px wide, flush to the viewport bottom)
+with the CTA visible without scrolling. `docOverflowX` 0 throughout.
+
+**Content issues to raise (not changed)**
+
+1. **Two of four packages are `isPopular: true`** — "Popular choice" on half the
+   list carries no signal.
+2. **"We cover all locations in Mumbai at no extra cost. Additional charges
+   apply for destination weddings"** contradicts the masthead's
+   `MUMBAI · INDIA · BEYOND` and the Varanasi launch.
+3. This section's stats say **1000 Weddings Captured / 1500 Happy Clients /
+   5 Years**, against Our Story's **500 Weddings / 5 Years**. Same page.

@@ -3,11 +3,12 @@
 import React from "react"
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { FiCamera, FiVideo, FiStar, FiCheckCircle, FiPackage, FiMessageCircle, FiXCircle, FiPhone } from 'react-icons/fi';
+import { FiCamera, FiVideo, FiStar, FiCheckCircle, FiPackage, FiMessageCircle, FiPhone } from 'react-icons/fi';
 import { FaInfoCircle, FaCreditCard, FaGlobe } from "react-icons/fa";
-import { FiHeart, FiAward, FiClock, FiUsers, FiChevronDown, FiCalendar } from 'react-icons/fi';
+import { FiHeart, FiAward, FiClock, FiUsers, FiChevronRight, FiCalendar } from 'react-icons/fi';
 import CountUp from 'react-countup';
 import { useStudioDetails } from '@/Context/StudioDetailsContext.jsx';
+import PackageModal from '@/Component/PackageModal.jsx';
 
 const packages = [
     {
@@ -140,186 +141,97 @@ const createWhatsAppMessage = (pkg) => {
     return encodeURIComponent(message);
 };
 
-// Random values are generated client-side only (post-mount) so server and
-// client markup match on first paint — Math.random() during render would
-// otherwise produce a hydration mismatch under Next.js SSR (see
-// Component/Background.jsx for the established fix pattern).
-function makeSparkles() {
-    return Array.from({ length: 6 }, () => ({
-        initialX: Math.random() * 100,
-        animX0: Math.random() * 10,
-        animX1: Math.random() * 10 + 10,
-        duration: 4 + Math.random() * 4,
-        delay: Math.random() * 2,
-    }));
-}
-
-const PackageCard = ({ pkg, isExpanded, onToggle, studioContact }) => {
-    const [sparkles, setSparkles] = useState(null);
-
-    useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setSparkles(makeSparkles());
-    }, []);
+/**
+ * One package, at a glance.
+ *
+ * Was a tall expanding card in a two-column grid. Expanding grew the grid ROW,
+ * so opening one stretched its neighbour to match and left a column of empty
+ * card beside the detail. The detail now opens in PackageModal and the four
+ * cards keep their shape.
+ *
+ * Everything on this card is a comparison aid — name, price, saving, team size,
+ * deliverable count, and the first few inclusions. The full list is one tap
+ * away rather than pushed into the layout.
+ */
+const PackageCard = ({ pkg, onOpen }) => {
+    const save = Math.ceil(((pkg.total - pkg.offer) / pkg.total) * 100);
+    const included = pkg.includes.filter((i) => i.included);
+    const preview = included.slice(0, 4);
+    const moreCount = included.length - preview.length;
 
     return (
-        <motion.div
-            className="relative rounded-3xl p-8 mb-8 bg-gradient-to-br from-[#fdf1e9d9] to-[#f9e7db] hover:from-[#FFE9D9] hover:to-[#fbf3ef] shadow-lg overflow-hidden group"
-            transition={{ type: 'spring', stiffness: 300 }}
+        <article
+            className={`relative flex h-full flex-col overflow-hidden rounded-media bg-ground-raised
+                        shadow-panel transition-transform duration-ui ease-standard
+                        hover:-translate-y-1 focus-within:-translate-y-1
+                        ${pkg.isPopular ? 'border-2 border-accent' : 'border border-gold/35'}`}
         >
-            {/* Floating Sparkles */}
-            <div className="absolute inset-0 pointer-events-none -z-10">
-                {sparkles?.map((sparkle, i) => (
-                    <motion.div
-                        key={i}
-                        className="absolute w-2 h-2 rounded-full bg-[#FF6969]/20"
-                        initial={{ y: 0, x: sparkle.initialX }}
-                        animate={{
-                            y: [0, 100, 0],
-                            x: [sparkle.animX0, sparkle.animX1]
-                        }}
-                        transition={{
-                            duration: sparkle.duration,
-                            repeat: Infinity,
-                            delay: sparkle.delay
-                        }}
-                    />
-                ))}
-            </div>
-
-            {/* Golden Glow Effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#FFD700]/10 to-[#FFA500]/5 opacity-0 group-hover:opacity-100 transition-opacity -z-10" />
-            {/* Popular Ribbon */}
+            {/* A flat ribbon along the top edge. The old one was rotated 45°
+                through the corner, which clipped its own text on narrow cards. */}
             {pkg.isPopular && (
-                <div className="absolute top-6 -right-10 bg-gradient-to-r from-[#FF6969] to-[#FF4D4D] text-white px-12 py-2 rotate-45 shadow-lg flex items-center gap-2">
-                    <FiStar className="animate-pulse" />
-                    <span className="text-sm font-bold tracking-wide text-nowrap">POPULAR CHOICE</span>
-                </div>
+                <p className="flex items-center justify-center gap-1.5 bg-accent px-3 py-1.5
+                              text-[11px] font-semibold text-white">
+                    <FiStar aria-hidden="true" className="h-3 w-3" />
+                    Popular choice
+                </p>
             )}
 
-            {/* Package Header */}
-            <div className="mb-8 text-center">
-                <h3 className="lg:text-desktopHeadlineSmall sm:text-mobileHeadlineSmall font-bold text-gray-800 relative pb-4 ">
-                    {pkg.title}
-                </h3>
+            <div className="flex flex-1 flex-col p-5">
+                <h3 className="t-heading-2">{pkg.title}</h3>
+                <p className="t-caption mt-1">{pkg.tagline}</p>
 
-                <div className="mt-6 space-y-4">
-                    <div className="flex justify-center items-baseline gap-4">
-                        <span className="lg:text-desktopBodyLarge sm:text-mobileBodyLarge text-gray-400 line-through text-nowrap">₹{Number(pkg.total).toLocaleString()}/-</span>
-                        <span className="lg:text-desktopHeadlineSmall sm:text-mobileHeadlineSmall font-bold text-[#FF6969] text-nowrap">₹{Number(pkg.offer).toLocaleString()}/-</span>
-                    </div>
-                    <span className="inline-block bg-[#FF6969]/10 text-[#FF6969] px-4 py-2 rounded-full text-sm font-medium text-nowrap">
-                        Save {Math.ceil(((pkg.total - pkg.offer) / pkg.total) * 100)}% • Limited Offer!
+                <div className="mt-4 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                    <span className="font-display text-[26px] font-semibold text-accent-ink">
+                        ₹{Number(pkg.offer).toLocaleString('en-IN')}
+                    </span>
+                    <span className="text-[13px] text-ink-muted line-through">
+                        ₹{Number(pkg.total).toLocaleString('en-IN')}
                     </span>
                 </div>
-            </div>
+                <p className="mt-2 w-fit rounded-pill bg-accent-tint px-2.5 py-1 text-[12px] font-semibold text-accent-ink">
+                    Save {save}%
+                </p>
 
-            {/* Key Features Grid */}
-            <div className="grid grid-cols-2 gap-4 mb-8 mx-auto">
-                <div className="flex items-center gap-3 p-4 sm:py-2 bg-[#ffdccc] rounded-xl">
-                    <FiClock className="text-2xl text-[#FF6969] sm:text-xl" />
-                    <div  >
-                        <p className="text-xs text-gray-500 text-nowrap">Duration</p>
-                        <p className="font-medium text-nowrap">{pkg.duration} Hours</p>
+                {/* Two real, derived figures. The old card showed
+                    `{pkg.duration} Hours` and no package object has a `duration`
+                    field, so every card rendered the word "Hours" with nothing
+                    in front of it. */}
+                <dl className="mt-4 grid grid-cols-2 gap-2 border-y border-gold/25 py-3">
+                    <div>
+                        <dt className="t-caption">Team</dt>
+                        <dd className="text-[14px] font-semibold text-ink">{pkg.team.length} people</dd>
                     </div>
-                </div>
-                <div className="flex items-center gap-3 p-4  sm:py-2 bg-[#ffdccc] rounded-xl">
-                    <FiUsers className="text-2xl text-[#FF6969] sm:text-xl" />
-                    <div  >
-                        <p className="text-xs text-gray-500 text-nowrap">Team Members</p>
-                        <p className="font-medium text-nowrap">{pkg.team.length} Experts</p>
+                    <div>
+                        <dt className="t-caption">Deliverables</dt>
+                        <dd className="text-[14px] font-semibold text-ink">{included.length} items</dd>
                     </div>
-                </div>
-            </div>
+                </dl>
 
-            {/* Expandable Content */}
-            <AnimatePresence>
-                {isExpanded && (
-                    <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="border-t border-gray-100 pt-8"
-                    >
-                        {/* Team Section */}
-                        <div className="mb-8">
-                            <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                                <FiVideo className="text-[#FF6969]" />
-                                Your Dedicated Team
-                            </h4>
-                            <div className="grid gap-3">
-                                {pkg.team.map((member, idx) => (
-                                    <div key={idx} className="flex items-center gap-3 p-3 bg-[#FFF5F5] rounded-lg">
-                                        <FiCheckCircle className="text-[#FF6969]" />
-                                        <span className="text-gray-700">{member}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+                <ul className="mt-4 flex-1 space-y-2">
+                    {preview.map((item, i) => (
+                        <li key={i} className="flex items-start gap-2 text-[13px] text-ink-secondary">
+                            <FiCheckCircle aria-hidden="true" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent-ink" />
+                            {item.text}
+                        </li>
+                    ))}
+                    {moreCount > 0 && (
+                        <li className="pl-5 text-[13px] text-ink-muted">+{moreCount} more</li>
+                    )}
+                </ul>
 
-                        {/* Inclusions Section */}
-                        <div className="mb-8">
-                            <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                                <FiPackage className="text-[#FF6969]" />
-                                What&apos;s Included
-                            </h4>
-                            <div className="grid gap-3">
-                                {pkg.includes.map((item, idx) => (
-                                    <div key={idx} className={`flex items-center gap-3 p-3 rounded-lg ${item.included ? 'bg-[#FFF5F5]' : 'opacity-50'}`}>
-                                        {item.included ? (
-                                            <FiCheckCircle className="text-[#FF6969]" />
-                                        ) : (
-                                            <FiXCircle className="text-gray-400" />
-                                        )}
-                                        <span className={item.included ? 'text-gray-700' : 'text-gray-400 line-through'}>
-                                            {item.text}
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* CTA Section */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="bg-gradient-to-r from-[#f97d7d] to-[#FF4D4D] rounded-xl p-6 text-center shadow-lg"
-                        >
-                            <div className="mb-4">
-                                <p className="text-white text-lg font-bold mb-2">
-                                    🎉 Special Launch Offer!
-                                </p>
-                                <p className="text-white/90 text-sm">
-                                    Book now & get 2 free 8x10 premium prints
-                                </p>
-                            </div>
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                onClick={() => window.open(`https://wa.me/${studioContact?.[0] || ''}?text=${createWhatsAppMessage(pkg)}`, '_blank')}
-                                className="w-full bg-white text-[#FF6969] py-3 rounded-lg font-bold flex items-center justify-center gap-2"
-                            >
-                                <FiMessageCircle className="text-xl" />
-                                Instant Booking on WhatsApp
-                            </motion.button>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            {/* Expand Button */}
-            <button
-                onClick={() => onToggle(pkg.id)}
-                className="w-full mt-6 flex items-center justify-center gap-2 text-[#FF6969] hover:text-[#FF4D4D] font-medium"
-            >
-                {isExpanded ? 'Show Less Details' : 'View Complete Package'}
-                <motion.span
-                    animate={{ rotate: isExpanded ? 180 : 0 }}
+                <button
+                    type="button"
+                    onClick={() => onOpen(pkg)}
+                    className="mt-5 flex min-h-[44px] w-full items-center justify-center gap-1.5 rounded-pill
+                               border border-gold-strong/60 px-4 text-[14px] font-semibold text-ink
+                               transition-colors duration-micro ease-standard hover:bg-accent-wash
+                               hover:text-accent-ink focus-ring"
                 >
-                    <FiChevronDown />
-                </motion.span>
-            </button>
-        </motion.div>
+                    View full details
+                    <FiChevronRight aria-hidden="true" className="h-4 w-4" />
+                </button>
+            </div>
+        </article>
     );
 };
 
@@ -336,7 +248,7 @@ function makeHearts() {
 }
 
 const PackagesSection = () => {
-    const [expandedPackageId, setExpandedPackageId] = useState(null);
+    const [openPackage, setOpenPackage] = useState(null);
     const { studioContact } = useStudioDetails();
     const [hearts, setHearts] = useState(null);
 
@@ -422,19 +334,24 @@ const PackagesSection = () => {
                     </p>
                 </div>
 
-                <div className="grid lg:grid-cols-2 lg:gap-8 sm:gap-4">
+                {/* Four in one row on desktop, as a price table should be —
+                    they exist to be compared against each other. */}
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6 items-stretch">
                     {packages.map((pkg) => (
-                        <PackageCard
-                            key={pkg.id}
-                            pkg={pkg}
-                            isExpanded={expandedPackageId === pkg.id}
-                            onToggle={(id) => setExpandedPackageId(prev => prev === id ? null : id)}
-                            studioContact={studioContact}
-                        />
+                        <PackageCard key={pkg.id} pkg={pkg} onOpen={setOpenPackage} />
                     ))}
                 </div>
             </div>
         </section>
+
+        {openPackage && (
+            <PackageModal
+                pkg={openPackage}
+                whatsappHref={`https://wa.me/${studioContact?.[0] || ''}?text=${createWhatsAppMessage(openPackage)}`}
+                onClose={() => setOpenPackage(null)}
+            />
+        )}
+
         <ComparativeCTA studioContact={studioContact} />
         <TrackRecord />
         {/* Consultation CTA */}
