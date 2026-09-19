@@ -102,7 +102,14 @@
         which is why it stayed see-through over the hero video.
 
         The hex vars above stay for raw CSS (scrims, ornament); Tailwind maps to
-        these. Both must be edited together. ── */
+        these. Both must be edited together.
+
+        TWO WAYS THIS SILENTLY FAILS, both of which have already happened here:
+          1. A hex custom property with an alpha modifier — `bg-accent/60`
+             against `--accent: #D9342A` compiles to nothing. Hence the channels.
+          2. An alpha value off Tailwind's 5-step scale — `/94` and `/78` also
+             compile to nothing even with channels. Use multiples of 5, or an
+             arbitrary value like `/[94%]`. ── */
   --ground-rgb:        251 246 238;
   --ground-raised-rgb: 255 255 255;
   --ground-sunk-rgb:   244 235 221;

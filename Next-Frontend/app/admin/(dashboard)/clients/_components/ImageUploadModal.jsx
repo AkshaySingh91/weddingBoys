@@ -43,6 +43,196 @@ const TAG_PRESETS = [
   'Bride', 'Groom', 'Couple', 'Decor', 'Rituals', 'Candid', 'Family', 'Portraits', 'Baraat'
 ];
 
+const CEREMONY_THEMES = {
+  amber: {
+    bg: 'bg-amber-50/70',
+    border: 'border-amber-300',
+    badge: 'bg-amber-100 text-amber-900 border-amber-300',
+    accent: 'text-amber-700',
+  },
+  emerald: {
+    bg: 'bg-emerald-50/70',
+    border: 'border-emerald-300',
+    badge: 'bg-emerald-100 text-emerald-900 border-emerald-300',
+    accent: 'text-emerald-700',
+  },
+  purple: {
+    bg: 'bg-purple-50/70',
+    border: 'border-purple-300',
+    badge: 'bg-purple-100 text-purple-900 border-purple-300',
+    accent: 'text-purple-700',
+  },
+  indigo: {
+    bg: 'bg-indigo-50/70',
+    border: 'border-indigo-300',
+    badge: 'bg-indigo-100 text-indigo-900 border-indigo-300',
+    accent: 'text-indigo-700',
+  },
+  rose: {
+    bg: 'bg-rose-50/70',
+    border: 'border-rose-300',
+    badge: 'bg-rose-100 text-rose-900 border-rose-300',
+    accent: 'text-rose-700',
+  },
+  gold: {
+    bg: 'bg-yellow-50/70',
+    border: 'border-yellow-300',
+    badge: 'bg-yellow-100 text-yellow-900 border-yellow-300',
+    accent: 'text-yellow-700',
+  },
+  sky: {
+    bg: 'bg-sky-50/70',
+    border: 'border-sky-300',
+    badge: 'bg-sky-100 text-sky-900 border-sky-300',
+    accent: 'text-sky-700',
+  },
+  pink: {
+    bg: 'bg-pink-50/70',
+    border: 'border-pink-300',
+    badge: 'bg-pink-100 text-pink-900 border-pink-300',
+    accent: 'text-pink-700',
+  },
+  cyan: {
+    bg: 'bg-cyan-50/70',
+    border: 'border-cyan-300',
+    badge: 'bg-cyan-100 text-cyan-900 border-cyan-300',
+    accent: 'text-cyan-700',
+  },
+  orange: {
+    bg: 'bg-orange-50/70',
+    border: 'border-orange-300',
+    badge: 'bg-orange-100 text-orange-900 border-orange-300',
+    accent: 'text-orange-700',
+  },
+  neutral: {
+    bg: 'bg-stone-100/70',
+    border: 'border-stone-300',
+    badge: 'bg-stone-200 text-stone-800 border-stone-300',
+    accent: 'text-stone-700',
+  },
+};
+
+/**
+ * Individual Staged Photo Card with Group Selection Isolation & State Indicator
+ */
+function StagedPhotoCard({
+  it,
+  isSelected,
+  isDimmed,
+  isUploading,
+  uploadFinished,
+  onToggleSelect,
+  onRemove,
+}) {
+  const isItemUploading = it.status === 'uploading' || it.status === 'processing';
+  const isItemDone = it.status === 'done';
+  const isItemError = it.status === 'error';
+
+  return (
+    <motion.div
+      layout
+      key={it.id}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: isDimmed ? 0.45 : 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8 }}
+      transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+      onClick={() => {
+        if (!isUploading && !uploadFinished) {
+          onToggleSelect(it.id);
+        }
+      }}
+      className={cn(
+        'group relative flex flex-col overflow-hidden rounded-2xl border bg-white transition-all select-none',
+        !isUploading && !uploadFinished && !isDimmed && 'cursor-pointer hover:border-amber-400 hover:shadow-md',
+        isDimmed && 'cursor-not-allowed filter grayscale-[25%]',
+        isSelected && !uploadFinished
+          ? 'border-amber-600 ring-2 ring-amber-500/30 shadow-md'
+          : 'border-stone-200'
+      )}
+      title={isDimmed ? 'Deselect active group photos to select this' : undefined}
+    >
+      {/* Thumbnail Viewport */}
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-stone-100">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={it.previewUrl}
+          alt={it.name}
+          className={cn(
+            'h-full w-full object-cover transition-transform duration-300',
+            !isDimmed && 'group-hover:scale-105',
+            (isItemUploading || isItemDone) && 'filter brightness-[0.75]'
+          )}
+        />
+
+        {/* Checkbox (Pre-upload) */}
+        {!isUploading && !uploadFinished && (
+          <button
+            type="button"
+            disabled={isDimmed}
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleSelect(it.id);
+            }}
+            className={cn(
+              'absolute top-2 left-2 z-10 flex h-5 w-5 items-center justify-center rounded-md border transition-all shadow-sm',
+              isSelected
+                ? 'bg-amber-600 border-amber-600 text-white'
+                : isDimmed
+                ? 'bg-stone-100 border-stone-300 text-transparent opacity-50 cursor-not-allowed'
+                : 'bg-white/85 border-stone-300 text-transparent hover:border-amber-500'
+            )}
+          >
+            <Check size={11} weight="bold" />
+          </button>
+        )}
+
+        {/* Completed Checkmark Badge */}
+        {uploadFinished && (
+          <div className="absolute top-2 right-2 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-white shadow-sm">
+            <Check size={14} weight="bold" />
+          </div>
+        )}
+
+        {/* Remove Item */}
+        {!isUploading && !uploadFinished && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onRemove(it.id);
+            }}
+            className="absolute top-2 right-2 z-10 flex h-5 w-5 items-center justify-center rounded-md bg-stone-900/60 text-white opacity-0 group-hover:opacity-100 hover:bg-rose-600 transition-all"
+          >
+            <X size={11} />
+          </button>
+        )}
+
+        {/* Parallel Progress Badge */}
+        {(isItemUploading || (isItemDone && isUploading) || isItemError) && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/45 backdrop-blur-[2px]">
+            <CircularProgressBadge progress={it.progress} status={it.status} size={50} />
+          </div>
+        )}
+      </div>
+
+      {/* Metadata Summary on Card */}
+      <div className="p-2.5 space-y-1 bg-white">
+        <p className="truncate font-sans text-[11px] font-semibold text-stone-900" title={it.name}>
+          {it.name}
+        </p>
+        <div className="flex items-center justify-between text-[10px] text-stone-500">
+          <span>{formatBytes(it.size)}</span>
+          {it.shootDate ? (
+            <span className="truncate max-w-[80px] font-medium text-stone-600">{it.shootDate}</span>
+          ) : (
+            <span className="text-stone-400">No date</span>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 /**
  * Circular / Border Progress Indicator
  */
@@ -323,26 +513,114 @@ export default function ImageUploadModal({
     });
   };
 
+  // Grouping structures
+  const ceremonyGroups = useMemo(() => {
+    const map = new Map();
+    items.forEach((it) => {
+      const theme = it.eventGroup && it.eventGroup !== 'Unthemed' ? it.eventGroup : null;
+      if (theme) {
+        if (!map.has(theme)) map.set(theme, []);
+        map.get(theme).push(it);
+      }
+    });
+    return map;
+  }, [items]);
+
+  const unthemedItems = useMemo(() => {
+    return items.filter((it) => !it.eventGroup || it.eventGroup === 'Unthemed');
+  }, [items]);
+
+  // Active selection scope: when user selects an item, lock selection to that item's group
+  const activeSelectionGroup = useMemo(() => {
+    if (!selectedIds.size) return null;
+    for (const it of items) {
+      if (selectedIds.has(it.id)) {
+        return it.eventGroup && it.eventGroup !== 'Unthemed' ? it.eventGroup : 'Unthemed';
+      }
+    }
+    return null;
+  }, [selectedIds, items]);
+
+  const getCeremonyTheme = useCallback((themeName) => {
+    const match = ceremonies.find((c) => c.name === themeName);
+    const color = match?.color || 'amber';
+    return CEREMONY_THEMES[color] || CEREMONY_THEMES.amber;
+  }, [ceremonies]);
+
   const toggleSelect = (id) => {
+    if (isUploading || uploadFinished) return;
+    const targetItem = items.find((it) => it.id === id);
+    if (!targetItem) return;
+
+    const itemGroup = targetItem.eventGroup && targetItem.eventGroup !== 'Unthemed'
+      ? targetItem.eventGroup
+      : 'Unthemed';
+
     setSelectedIds((prev) => {
       const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
+      if (next.has(id)) {
+        next.delete(id);
+        return next;
+      }
+
+      // Group selection isolation: cannot mix items from different ceremony groups
+      if (activeSelectionGroup && activeSelectionGroup !== itemGroup) {
+        fireMessage(
+          `Cannot mix selections across groups. Currently selecting in "${activeSelectionGroup}". Deselect to pick from "${itemGroup}".`,
+          'warning'
+        );
+        return prev;
+      }
+
+      next.add(id);
       return next;
     });
   };
 
   const selectAll = () => {
-    if (selectedIds.size === items.length) {
+    if (selectedIds.size > 0) {
       setSelectedIds(new Set());
-    } else {
-      setSelectedIds(new Set(items.map((it) => it.id)));
+      return;
+    }
+    // Default to selecting all unthemed items for quick grouping
+    if (unthemedItems.length > 0) {
+      setSelectedIds(new Set(unthemedItems.map((it) => it.id)));
+    } else if (items.length > 0) {
+      const firstGroup = ceremonyGroups.keys().next().value;
+      if (firstGroup) {
+        const groupPhotos = ceremonyGroups.get(firstGroup) || [];
+        setSelectedIds(new Set(groupPhotos.map((it) => it.id)));
+      }
     }
   };
 
   const selectUnthemed = () => {
-    const unthemed = items.filter((it) => !it.eventGroup || it.eventGroup === 'Unthemed');
-    setSelectedIds(new Set(unthemed.map((it) => it.id)));
+    if (activeSelectionGroup === 'Unthemed' && selectedIds.size === unthemedItems.length) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(unthemedItems.map((it) => it.id)));
+    }
+  };
+
+  const selectGroup = (themeName) => {
+    const groupPhotos = ceremonyGroups.get(themeName) || [];
+    if (activeSelectionGroup === themeName && selectedIds.size === groupPhotos.length) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(groupPhotos.map((it) => it.id)));
+    }
+  };
+
+  const ungroupCeremony = (themeName) => {
+    if (isUploading || uploadFinished) return;
+    const count = items.filter((it) => it.eventGroup === themeName).length;
+    setItems((prev) =>
+      prev.map((it) => (it.eventGroup === themeName ? { ...it, eventGroup: 'Unthemed' } : it))
+    );
+    if (activeSelectionGroup === themeName) {
+      setSelectedIds(new Set());
+    }
+    fireMessage(`Ungrouped ${count} photos from ${themeName}`, 'info');
   };
 
   // Animated Ceremony Grouping & Reordering
@@ -376,8 +654,13 @@ export default function ImageUploadModal({
       return aTheme.localeCompare(bTheme);
     });
 
+    const count = selectedIds.size;
     setItems(reordered);
-    fireMessage(`Grouped ${selectedIds.size} photos into ${targetTheme}`, 'success');
+
+    // CRITICAL: Unselect all images after grouping so admin can cleanly select next group!
+    setSelectedIds(new Set());
+
+    fireMessage(`Grouped ${count} photos into ${targetTheme}!`, 'success');
   };
 
   const addCredit = () => {
@@ -600,35 +883,49 @@ export default function ImageUploadModal({
             {/* Action Ribbon Above Grid */}
             <div className="border-b border-[#E8DDD1] bg-[#FFFDF9] px-6 py-2.5 shrink-0 flex items-center justify-between text-xs">
               <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  disabled={isUploading || !items.length}
-                  onClick={selectAll}
-                  className="font-semibold text-stone-700 hover:text-stone-950 underline cursor-pointer text-xs"
-                >
-                  {selectedIds.size === items.length ? 'Deselect All' : `Select All (${items.length})`}
-                </button>
-                {unthemedCount > 0 && unthemedCount < items.length && (
+                {activeSelectionGroup ? (
                   <>
-                    <span className="text-stone-300">·</span>
+                    <span className="inline-flex items-center gap-1.5 font-bold text-amber-900 bg-amber-100/90 border border-amber-300/80 px-2.5 py-0.5 rounded-lg text-xs">
+                      <Sparkle size={12} weight="fill" className="text-amber-600" />
+                      Active Selection: {selectedIds.size} photo{selectedIds.size === 1 ? '' : 's'} in &quot;{activeSelectionGroup}&quot;
+                    </span>
                     <button
                       type="button"
                       disabled={isUploading}
-                      onClick={selectUnthemed}
-                      className="text-amber-700 hover:text-amber-900 font-medium underline cursor-pointer text-xs"
+                      onClick={() => setSelectedIds(new Set())}
+                      className="font-medium text-stone-600 hover:text-stone-950 underline cursor-pointer text-xs"
                     >
-                      Select Unthemed ({unthemedCount})
+                      Deselect All
                     </button>
                   </>
-                )}
-                <span className="text-stone-300">·</span>
-                <span className="text-stone-500 font-medium text-xs">
-                  {selectedIds.size} of {items.length} selected
-                </span>
-                {selectedIds.size > 0 && !uploadFinished && (
-                  <span className="text-amber-800 font-semibold bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-md text-[11px]">
-                    Ready to group into {curationTheme}
-                  </span>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      disabled={isUploading || !items.length}
+                      onClick={selectAll}
+                      className="font-semibold text-stone-700 hover:text-stone-950 underline cursor-pointer text-xs"
+                    >
+                      {selectedIds.size === items.length ? 'Deselect All' : `Select All (${items.length})`}
+                    </button>
+                    {unthemedItems.length > 0 && (
+                      <>
+                        <span className="text-stone-300">·</span>
+                        <button
+                          type="button"
+                          disabled={isUploading}
+                          onClick={selectUnthemed}
+                          className="text-amber-700 hover:text-amber-900 font-semibold underline cursor-pointer text-xs"
+                        >
+                          Select All Unassigned ({unthemedItems.length})
+                        </button>
+                      </>
+                    )}
+                    <span className="text-stone-300">·</span>
+                    <span className="text-stone-500 font-medium text-xs">
+                      {selectedIds.size} of {items.length} selected
+                    </span>
+                  </>
                 )}
               </div>
 
@@ -657,7 +954,7 @@ export default function ImageUploadModal({
               )}
             </div>
 
-            {/* Framer Motion Grid Viewport */}
+            {/* Staged Photos Viewport: Grouped into Dashed Ceremony Theme Containers */}
             <div className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-stone-200 space-y-6">
               {!items.length ? (
                 <div className="flex flex-col items-center justify-center h-full text-center py-16 space-y-3">
@@ -679,120 +976,177 @@ export default function ImageUploadModal({
                   </Button>
                 </div>
               ) : (
-                /* Animated Grid with Framer Motion Layout */
-                <motion.div
-                  layout
-                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5"
-                >
+                <div className="space-y-6">
+                  {/* 1. Grouped Ceremony Clusters (each in light theme container with dashed border) */}
                   <AnimatePresence>
-                    {items.map((it) => {
-                      const isSelected = selectedIds.has(it.id);
-                      const isItemUploading = it.status === 'uploading' || it.status === 'processing';
-                      const isItemDone = it.status === 'done';
-                      const isItemError = it.status === 'error';
-                      const hasTheme = it.eventGroup && it.eventGroup !== 'Unthemed';
+                    {Array.from(ceremonyGroups.entries()).map(([ceremonyName, groupItems]) => {
+                      const themeStyle = getCeremonyTheme(ceremonyName);
+                      const sampleItem = groupItems[0];
+                      const isGroupActive = activeSelectionGroup === ceremonyName;
 
                       return (
                         <motion.div
                           layout
-                          key={it.id}
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0, scale: 0.8 }}
+                          key={`ceremony-group-${ceremonyName}`}
+                          initial={{ opacity: 0, y: 15 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, scale: 0.95 }}
                           transition={{ type: 'spring', stiffness: 350, damping: 28 }}
-                          onClick={() => !isUploading && !uploadFinished && toggleSelect(it.id)}
                           className={cn(
-                            'group relative flex flex-col overflow-hidden rounded-2xl border bg-white transition-all select-none',
-                            !isUploading && !uploadFinished && 'cursor-pointer',
-                            isSelected && !uploadFinished
-                              ? 'border-amber-600 ring-2 ring-amber-500/25 shadow-sm'
-                              : 'border-stone-200 hover:border-stone-300'
+                            'rounded-3xl border-2 border-dashed p-4 sm:p-5 transition-all shadow-sm',
+                            themeStyle.bg,
+                            themeStyle.border
                           )}
                         >
-                          {/* Thumbnail Viewport */}
-                          <div className="relative aspect-[4/3] w-full overflow-hidden bg-stone-100">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={it.previewUrl}
-                              alt={it.name}
-                              className={cn(
-                                'h-full w-full object-cover transition-transform duration-300 group-hover:scale-105',
-                                (isItemUploading || isItemDone) && 'filter brightness-[0.75]'
-                              )}
-                            />
-
-                            {/* Checkbox (Pre-upload) */}
-                            {!isUploading && !uploadFinished && (
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  toggleSelect(it.id);
-                                }}
-                                className={cn(
-                                  'absolute top-2 left-2 z-10 flex h-5 w-5 items-center justify-center rounded-md border transition-all shadow-sm',
-                                  isSelected
-                                    ? 'bg-amber-600 border-amber-600 text-white'
-                                    : 'bg-white/85 border-stone-300 text-transparent hover:border-amber-500'
-                                )}
-                              >
-                                <Check size={11} weight="bold" />
-                              </button>
-                            )}
-
-                            {/* Completed Checkmark Badge */}
-                            {uploadFinished && (
-                              <div className="absolute top-2 right-2 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-white shadow-sm">
-                                <Check size={14} weight="bold" />
+                          {/* Group Header Bar */}
+                          <div className="flex flex-wrap items-center justify-between gap-3 pb-3 mb-3 border-b border-black/5">
+                            <div className="flex flex-wrap items-center gap-2.5">
+                              <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-white shadow-xs">
+                                <Sparkle size={14} className={themeStyle.accent} weight="fill" />
+                              </span>
+                              <div className="flex items-center gap-2">
+                                <h4 className="font-sans text-xs sm:text-sm font-bold text-stone-900 tracking-tight">
+                                  {ceremonyName}
+                                </h4>
+                                <span className={cn('text-[11px] font-semibold px-2 py-0.5 rounded-full border shadow-xs', themeStyle.badge)}>
+                                  {groupItems.length} photo{groupItems.length === 1 ? '' : 's'}
+                                </span>
                               </div>
-                            )}
 
-                            {/* Remove Item */}
+                              {/* Shoot Date & Venue Pills */}
+                              {sampleItem?.shootDate && (
+                                <span className="inline-flex items-center gap-1 text-[11px] text-stone-600 bg-white/85 px-2.5 py-0.5 rounded-lg border border-stone-200/80 shadow-xs">
+                                  <CalendarBlank size={12} className="text-stone-400" />
+                                  {sampleItem.shootDate}
+                                </span>
+                              )}
+                              {sampleItem?.city && (
+                                <span className="inline-flex items-center gap-1 text-[11px] text-stone-600 bg-white/85 px-2.5 py-0.5 rounded-lg border border-stone-200/80 shadow-xs">
+                                  <MapPin size={12} className="text-stone-400" />
+                                  {sampleItem.city}{sampleItem.venue ? ` · ${sampleItem.venue}` : ''}
+                                </span>
+                              )}
+                              {sampleItem?.credits?.length > 0 && (
+                                <span className="inline-flex items-center gap-1 text-[11px] text-stone-600 bg-white/85 px-2.5 py-0.5 rounded-lg border border-stone-200/80 shadow-xs">
+                                  <Users size={12} className="text-stone-400" />
+                                  {sampleItem.credits.map((c) => c.name).join(', ')}
+                                </span>
+                              )}
+                            </div>
+
+                            {/* Group Selection Actions */}
                             {!isUploading && !uploadFinished && (
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleRemoveItem(it.id);
-                                }}
-                                className="absolute top-2 right-2 z-10 flex h-5 w-5 items-center justify-center rounded-md bg-stone-900/60 text-white opacity-0 group-hover:opacity-100 hover:bg-rose-600 transition-all"
-                              >
-                                <X size={11} />
-                              </button>
-                            )}
-
-                            {/* Parallel Progress Badge */}
-                            {(isItemUploading || (isItemDone && isUploading) || isItemError) && (
-                              <div className="absolute inset-0 flex items-center justify-center bg-black/45 backdrop-blur-[2px]">
-                                <CircularProgressBadge progress={it.progress} status={it.status} size={50} />
+                              <div className="flex items-center gap-2 text-xs">
+                                <button
+                                  type="button"
+                                  onClick={() => selectGroup(ceremonyName)}
+                                  className="font-semibold text-stone-700 hover:text-stone-950 underline cursor-pointer text-[11px]"
+                                >
+                                  {isGroupActive && selectedIds.size === groupItems.length ? 'Deselect Group' : 'Select Group'}
+                                </button>
+                                <span className="text-stone-300">·</span>
+                                <button
+                                  type="button"
+                                  onClick={() => ungroupCeremony(ceremonyName)}
+                                  className="font-semibold text-rose-600 hover:text-rose-700 underline cursor-pointer text-[11px]"
+                                >
+                                  Ungroup
+                                </button>
                               </div>
                             )}
                           </div>
 
-                          {/* Metadata Summary on Card */}
-                          <div className="p-2.5 space-y-1 bg-white">
-                            <p className="truncate font-sans text-[11px] font-semibold text-stone-900" title={it.name}>
-                              {it.name}
-                            </p>
-                            <div className="flex items-center justify-between text-[10px] text-stone-500">
-                              <span>{formatBytes(it.size)}</span>
-                              <span
-                                className={cn(
-                                  'rounded-md px-1.5 py-0.5 font-semibold text-[10px] transition-colors',
-                                  hasTheme
-                                    ? 'bg-amber-50 border border-amber-300 text-amber-900'
-                                    : 'bg-stone-100 text-stone-500 border border-stone-200'
-                                )}
-                              >
-                                {it.eventGroup || 'Unthemed'}
-                              </span>
-                            </div>
+                          {/* Photos Grid for this Ceremony Group */}
+                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5">
+                            {groupItems.map((it) => {
+                              const isSelected = selectedIds.has(it.id);
+                              const isDimmed = Boolean(activeSelectionGroup && activeSelectionGroup !== ceremonyName);
+
+                              return (
+                                <StagedPhotoCard
+                                  key={it.id}
+                                  it={it}
+                                  isSelected={isSelected}
+                                  isDimmed={isDimmed}
+                                  isUploading={isUploading}
+                                  uploadFinished={uploadFinished}
+                                  onToggleSelect={toggleSelect}
+                                  onRemove={handleRemoveItem}
+                                />
+                              );
+                            })}
                           </div>
                         </motion.div>
                       );
                     })}
                   </AnimatePresence>
-                </motion.div>
+
+                  {/* 2. Unthemed / Unassigned Photos Container */}
+                  {unthemedItems.length > 0 && (
+                    <motion.div
+                      layout
+                      key="ceremony-group-unthemed"
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+                      className={cn(
+                        'rounded-3xl border border-dashed border-stone-300/90 bg-stone-50/60 p-4 sm:p-5 transition-all',
+                        ceremonyGroups.size > 0 && 'border-stone-300'
+                      )}
+                    >
+                      {/* Header */}
+                      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 mb-3 border-b border-stone-200/80">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h4 className="font-sans text-xs sm:text-sm font-bold text-stone-800 tracking-tight">
+                              {ceremonyGroups.size > 0 ? 'Unassigned Photos' : 'Staged Photographs'}
+                            </h4>
+                            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-stone-200/80 text-stone-700">
+                              {unthemedItems.length} photo{unthemedItems.length === 1 ? '' : 's'} ready to group
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-stone-500 mt-0.5">
+                            Select photos below, pick a ritual in the right panel, and click &quot;Group into...&quot;
+                          </p>
+                        </div>
+
+                        {!isUploading && !uploadFinished && (
+                          <button
+                            type="button"
+                            onClick={selectUnthemed}
+                            className="font-semibold text-amber-700 hover:text-amber-900 underline cursor-pointer text-xs"
+                          >
+                            {activeSelectionGroup === 'Unthemed' && selectedIds.size === unthemedItems.length
+                              ? 'Deselect Unassigned'
+                              : `Select All Unassigned (${unthemedItems.length})`}
+                          </button>
+                        )}
+                      </div>
+
+                      {/* Unthemed Photo Grid */}
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5">
+                        {unthemedItems.map((it) => {
+                          const isSelected = selectedIds.has(it.id);
+                          const isDimmed = Boolean(activeSelectionGroup && activeSelectionGroup !== 'Unthemed');
+
+                          return (
+                            <StagedPhotoCard
+                              key={it.id}
+                              it={it}
+                              isSelected={isSelected}
+                              isDimmed={isDimmed}
+                              isUploading={isUploading}
+                              uploadFinished={uploadFinished}
+                              onToggleSelect={toggleSelect}
+                              onRemove={handleRemoveItem}
+                            />
+                          );
+                        })}
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
               )}
             </div>
           </div>
@@ -1050,9 +1404,16 @@ export default function ImageUploadModal({
                       size="sm"
                       disabled={!selectedIds.size || isUploading}
                       onClick={() => handleGroupSelected(curationTheme)}
-                      className="w-full bg-stone-900 hover:bg-stone-800 text-white font-semibold shadow-sm py-2"
+                      className={cn(
+                        'w-full font-semibold shadow-sm py-2 transition-all',
+                        selectedIds.size
+                          ? 'bg-stone-900 hover:bg-stone-800 text-white cursor-pointer'
+                          : 'bg-stone-100 text-stone-400 cursor-not-allowed border border-stone-200'
+                      )}
                     >
-                      Group {selectedIds.size} Photos into {curationTheme}
+                      {selectedIds.size > 0
+                        ? `Group ${selectedIds.size} Photo${selectedIds.size === 1 ? '' : 's'} into ${curationTheme}`
+                        : `Select photos to group into ${curationTheme}`}
                     </Button>
                   </div>
                 </div>

@@ -1,14 +1,14 @@
 {
  "mobile": {
   "rest": {
-   "height": 96,
-   "bg": "rgba(0, 0, 0, 0)",
+   "height": 72,
+   "bg": "rgb(251, 227, 220)",
    "blur": "none"
   },
   "condensed": {
-   "height": 64,
-   "bg": "rgba(0, 0, 0, 0)",
-   "blur": "blur(12px)"
+   "height": 58,
+   "bg": "rgb(251, 246, 238)",
+   "blur": "none"
   },
   "overflowX": 0,
   "landmarks": {
@@ -23,14 +23,14 @@
  },
  "tablet": {
   "rest": {
-   "height": 96,
-   "bg": "rgba(0, 0, 0, 0)",
+   "height": 72,
+   "bg": "rgb(251, 227, 220)",
    "blur": "none"
   },
   "condensed": {
-   "height": 64,
-   "bg": "rgba(0, 0, 0, 0)",
-   "blur": "blur(12px)"
+   "height": 58,
+   "bg": "rgb(251, 246, 238)",
+   "blur": "none"
   },
   "overflowX": 0,
   "landmarks": {
@@ -45,14 +45,14 @@
  },
  "laptop": {
   "rest": {
-   "height": 96,
-   "bg": "rgba(0, 0, 0, 0)",
+   "height": 72,
+   "bg": "rgb(251, 227, 220)",
    "blur": "none"
   },
   "condensed": {
-   "height": 64,
-   "bg": "rgba(0, 0, 0, 0)",
-   "blur": "blur(12px)"
+   "height": 58,
+   "bg": "rgb(251, 246, 238)",
+   "blur": "none"
   },
   "overflowX": 0,
   "landmarks": {
@@ -67,14 +67,14 @@
  },
  "desktop": {
   "rest": {
-   "height": 96,
-   "bg": "rgba(0, 0, 0, 0)",
+   "height": 72,
+   "bg": "rgb(251, 227, 220)",
    "blur": "none"
   },
   "condensed": {
-   "height": 64,
-   "bg": "rgba(0, 0, 0, 0)",
-   "blur": "blur(12px)"
+   "height": 58,
+   "bg": "rgb(251, 246, 238)",
+   "blur": "none"
   },
   "overflowX": 0,
   "landmarks": {
@@ -168,7 +168,7 @@
   },
   {
    "tag": "a",
-   "label": "Enquire",
+   "label": "Get Quote",
    "outline": "solid 2px rgb(168, 56, 36)",
    "visible": true
   }
@@ -177,14 +177,13 @@
   "stillAnimating": 0
  },
  "fonts": {
-  "files": 4,
-  "kb": 203,
+  "files": 3,
+  "kb": 176,
   "faces": 43,
   "loaded": [
    "Inter",
    "Inter Fallback",
-   "Bodoni Moda",
-   "__nextjs-Geist"
+   "Bodoni Moda"
   ]
  }
 }

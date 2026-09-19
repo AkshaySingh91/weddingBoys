@@ -421,3 +421,72 @@ footer's job — it already carries one.
 
 Films listing and detail (Stage 3), gallery (Stage 4), the `/weddings/[city]`
 pages themselves (Stage 8). Home will link to them; it will not restyle them.
+
+
+---
+
+### Stage 2 (part 1) — navbar, hero and film player — 2026-09-19
+
+**Scope changed on instruction: improve every component in place, do not merge
+or remove any.** The 15→8 consolidation proposed above is withdrawn. The page
+stays long (19,823px on mobile); that trade-off is the client's call and is
+recorded rather than quietly worked around.
+
+#### Navbar
+- **Legibility bug fixed.** The bar was transparent until 72px of scroll and sits
+  over the hero video, so dark ink on transparent left the navigation invisible.
+  Both states are now **fully opaque**.
+- **Root cause was systemic.** Tailwind's alpha modifier compiles to nothing
+  against a hex custom property — 13 shell classes were silently dead, including
+  the header's own background. Token colours now carry channel forms.
+  A second trap found the same day: an alpha value **off Tailwind's 5-step
+  scale** (`/94`, `/78`) also compiles to nothing *even with channels*. Both are
+  documented in `globals.css` beside the tokens.
+- 96px → **72px** (58px condensed); blush-cream ground, gold hairline; wordmark
+  in the studio red.
+- **"Enquire" → "Get Quote"**, and the CTA red restored: `#FF5353` carries white
+  at 3.17:1 and cannot reach AA, so **`#D9342A`** — the brightest red that does,
+  at **4.69:1**. Fills use it; accent text uses `#A83824` (5.99:1) because the
+  fill red is 4.36:1 on ivory.
+- CTA now visible at **every** width; it had been hidden behind the menu on phones.
+- Wordmark scaled on phones, where it wrapped to two lines and burst the bar.
+
+#### Hero
+- Fixed `h-[33rem]` → viewport-relative (`58svh` → `74svh`, clamped 400–820px).
+  `svh` so collapsing mobile browser chrome does not resize it mid-scroll.
+- **The arch appears** — this is the design system's framing device in its
+  primary position.
+- Caption uses the **scrim token** (guaranteed 5.6:1) instead of a hand-rolled
+  `from-black/60`; name set in Bodoni.
+- Play control: labelled, 56–64px, gold-ringed — was an unlabelled 48px
+  `bg-white/10` circle.
+- Slide indicators added as **real controls** that select their slide.
+- Prev/next hidden with a single slide, and revealed on hover at desktop.
+- **React duplicate-key warning fixed** — `videoKey` is not unique across slides.
+  The home page now reports **0 console errors**.
+- Removed a `FEATURED FILM` eyebrow I had added by reflex — a tracked-out
+  uppercase kicker is on this system's own anti-pattern list.
+
+#### Film player experience
+- New `Component/FilmLightbox.jsx` replaces a bare `bg-black/90` div: entrance
+  (fade + rise + scale from 96%, instant under reduced motion), **warm
+  `--ground-deep` ground with a jaali screen** rather than black, focus trap,
+  focus restore, scroll lock, Escape and click-outside to close, 48px close
+  target, and the film title kept visible.
+- `Component/Videoplayer.jsx` **themed**: its grey/blue glassmorphism — including
+  a literal **blue** shadow `rgba(31,38,135,0.37)` — replaced with warm ground,
+  gold hairlines and a **studio-red progress fill**. Off-theme classes: 0.
+- Player no longer carries its own `max-w` ladder, which had produced a small
+  player floating inside a large panel.
+- Mobile: full-bleed film (a 16:9 frame in 390px is only ~200px tall, so width is
+  height), roomier control bar, scrub tooltip kept inside the frame.
+
+**Verified:** header 72→58px at all four widths · overflow **0** · shell targets
+under 44px **0** · unlabelled controls **0** · skip link first in tab order ·
+**0** elements animating under reduced motion · fonts **3 files / 176 KB / 2
+families** · build and both guards green · home page console errors **0**.
+
+**Note on the dev server.** It served stale output three times during this stage,
+including once from an orphaned `next-server` process holding port 3000 while the
+new server silently started on 3001. Every visual check here was re-taken after a
+hard restart (`kill -9` by port, `rm -rf .next`).

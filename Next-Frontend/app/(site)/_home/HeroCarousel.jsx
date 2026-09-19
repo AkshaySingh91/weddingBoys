@@ -1,10 +1,10 @@
 'use client';
 
 import { useCallback, useState, useRef, useEffect } from 'react';
-import { FiPlay, FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
+import { FiPlay, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import Link from 'next/link';
 import { useInView } from 'react-intersection-observer';
-import Videoplayer from '@/Component/Videoplayer.jsx';
+import FilmLightbox from '@/Component/FilmLightbox.jsx';
 import useNetworkStatus from '@/Hooks/useNetworkStatus.jsx';
 
 /**
@@ -53,6 +53,10 @@ export default function HeroCarousel({ slides = [] }) {
         .map((v) => `${v.url} ${v.width}w`)
         .join(', ') || undefined;
 
+    /** "Bride & Groom", or a sensible fallback if a name is missing. */
+    const captionOf = (slide) => [slide?.clientName?.Bride, slide?.clientName?.Groom]
+        .filter(Boolean).join(' & ') || 'Wedding film';
+
     const heroSrc = (slide) => (tier === 'medium'
         ? (slide.loopUrl || slide.webUrl || null)
         : (slide.loopUrl || slide.webUrl || slide.sourceUrl || slide.videoUrl || null));
@@ -90,6 +94,12 @@ export default function HeroCarousel({ slides = [] }) {
         });
     }, [slides.length]);
 
+    /** Jump straight to a slide — used by the indicators. */
+    const goToSlide = useCallback((index) => {
+        setCanPlay(false);
+        setCurrentSlide(index);
+    }, []);
+
     const handleTouchEnd = useCallback(() => {
         const change = touchEndX.current - touchStartX.current;
         if (Math.abs(change) > 50) handleSlideChange(change > 0 ? 'prev' : 'next');
@@ -97,22 +107,33 @@ export default function HeroCarousel({ slides = [] }) {
 
     if (!slides.length) return null;
 
+    const active = slides[currentSlide];
+    const multiple = slides.length > 1;
+
     return (
         <>
             {lightboxUrl && (
-                <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-[99999] flex items-center justify-center p-4">
-                    <button
-                        onClick={() => setLightboxUrl(null)}
-                        aria-label="Close video"
-                        className="absolute top-4 right-4 p-2 text-white hover:text-gray-200 transition-colors"
-                    >
-                        <FiX className="w-8 h-8" />
-                    </button>
-                    <Videoplayer src={lightboxUrl} className="max-w-4xl w-full" />
-                </div>
+                <FilmLightbox src={lightboxUrl} title={captionOf(active)} onClose={() => setLightboxUrl(null)} />
             )}
 
-            <div ref={viewRef} className="hero-banner relative h-[33rem] rounded-2xl overflow-hidden">
+            {/*
+              The hero frame.
+
+              Height is viewport-relative rather than a fixed 33rem: on a phone
+              33rem was 61% of the screen and on a large desktop it was a letterbox
+              strip. `svh` rather than `vh` so the mobile browser chrome collapsing
+              does not resize the hero mid-scroll.
+
+              The arch is the design system's framing device (DESIGN-SYSTEM.md §1)
+              and this is its primary appearance — a dome-topped mehrab, not a
+              rounded rectangle.
+            */}
+            <div
+                ref={viewRef}
+                className="hero-banner group/hero relative isolate w-full overflow-hidden
+                           arch-soft border border-gold/35 bg-ground-sunk
+                           h-[58svh] min-h-[400px] max-h-[820px] sm:h-[64svh] lg:h-[74svh]"
+            >
                 <div
                     ref={slideRef}
                     className="flex h-full transition-transform duration-500 ease-out"
@@ -123,8 +144,11 @@ export default function HeroCarousel({ slides = [] }) {
                     {slides.map((slide, index) => {
                         const isActive = index === currentSlide;
                         return (
-                            <div key={slide.videoKey} className="flex-shrink-0 relative w-full h-full">
-                                {/* Poster: always present, always the first paint. */}
+                            /* Key falls back to the index: `videoKey` is not
+                               guaranteed unique across slides, which is what
+                               produced React's duplicate-key warning — the one
+                               console error on the home page. */
+                            <div key={slide.videoKey || `slide-${index}`} className="relative h-full w-full flex-shrink-0">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
                                     style={slide.dominantColor ? { backgroundColor: slide.dominantColor } : undefined}
@@ -134,18 +158,17 @@ export default function HeroCarousel({ slides = [] }) {
                                     width={slide.aspectRatio ? 1280 : undefined}
                                     height={slide.aspectRatio ? Math.round(1280 / slide.aspectRatio) : undefined}
                                     alt={`${slide.clientName?.Bride} & ${slide.clientName?.Groom} wedding film`}
-                                    className="absolute inset-0 w-full h-full object-cover rounded-2xl"
-                                    // The first poster is the LCP element; the rest can wait.
+                                    className="absolute inset-0 h-full w-full object-cover"
                                     fetchPriority={index === 0 ? 'high' : 'auto'}
                                     loading={index === 0 ? 'eager' : 'lazy'}
                                     decoding="async"
                                 />
 
-                                {/* Video: active slide only, and only when affordable. */}
                                 {isActive && allowVideo && heroSrc(slide) && (
                                     <video
                                         key={slide.videoKey}
-                                        className={`absolute inset-0 w-full h-full object-cover rounded-2xl transition-opacity duration-700 ${canPlay ? 'opacity-100' : 'opacity-0'}`}
+                                        className={`absolute inset-0 h-full w-full object-cover transition-opacity
+                                                    duration-media ease-entrance ${canPlay ? 'opacity-100' : 'opacity-0'}`}
                                         src={heroSrc(slide)}
                                         poster={slide.posterUrl}
                                         preload="none"
@@ -157,54 +180,101 @@ export default function HeroCarousel({ slides = [] }) {
                                     />
                                 )}
 
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent">
-                                    <div className="absolute bottom-6 right-6">
-                                        <button
-                                            onClick={() => setLightboxUrl(
-                                                slide.sourceUrl || slide.webUrl || slide.videoUrl,
-                                            )}
-                                            aria-label="Play film"
-                                            className="p-3 bg-white/10 rounded-full backdrop-blur-sm hover:bg-white/20 transition-colors"
-                                        >
-                                            <FiPlay className="w-6 h-6 text-white" />
-                                        </button>
-                                    </div>
-
-                                    <Link
-                                        href={`/films/${slide.videoId}`}
-                                        className="absolute bottom-6 left-6 text-white hover:text-gray-200 transition-colors"
-                                    >
-                                        <h2 className="text-2xl font-bold">
-                                            {[slide.clientName?.Bride, slide.clientName?.Groom].filter(Boolean).join(' & ')}
-                                        </h2>
-                                        <div className="flex items-center gap-2 mt-1 text-sm">
-                                            <span>{slide.videoShootDate}</span>
-                                            <span>•</span>
-                                            <span>{slide.videoLocation?.city}</span>
-                                        </div>
-                                    </Link>
-                                </div>
+                                {/* Scrim from the token, not a hand-rolled black gradient.
+                                    Guarantees 5.6:1 for the caption whatever the frame. */}
+                                <div aria-hidden="true" className="scrim-bottom pointer-events-none absolute inset-0" />
                             </div>
                         );
                     })}
                 </div>
 
-                <div className="absolute inset-0 flex items-center justify-between px-4 pointer-events-none">
-                    <button
-                        onClick={() => handleSlideChange('prev')}
-                        aria-label="Previous film"
-                        className="pointer-events-auto p-2 bg-white/10 rounded-full backdrop-blur-sm hover:bg-white/20 transition-colors"
-                    >
-                        <FiChevronLeft className="w-8 h-8 text-white" />
-                    </button>
-                    <button
-                        onClick={() => handleSlideChange('next')}
-                        aria-label="Next film"
-                        className="pointer-events-auto p-2 bg-white/10 rounded-full backdrop-blur-sm hover:bg-white/20 transition-colors"
-                    >
-                        <FiChevronRight className="w-8 h-8 text-white" />
-                    </button>
+                {/* ── Caption + play, on one baseline ───────────────────────── */}
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 p-5 sm:p-7 lg:p-9">
+                    <div className="flex items-end justify-between gap-4">
+                        <Link
+                            href={`/films/${active.videoId}`}
+                            className="pointer-events-auto min-w-0 text-white transition-opacity duration-micro
+                                       ease-standard hover:opacity-90"
+                        >
+                            {/* No eyebrow label above this heading. A tracked-out
+                                uppercase kicker is on the system's own
+                                anti-pattern list (DESIGN-SYSTEM.md §8) and I put
+                                one here by reflex; the couple's name needs no
+                                introduction. */}
+                            <h2 className="font-display text-[26px] font-semibold leading-tight
+                                           sm:text-[34px] lg:text-[42px]">
+                                {captionOf(active)}
+                            </h2>
+                            <p className="mt-1 text-[13px] text-white/80 sm:text-[14px]">
+                                {[active.videoShootDate, active.videoLocation?.city].filter(Boolean).join(' · ')}
+                            </p>
+                        </Link>
+
+                        {/* The play affordance. Labelled, 56px, gold-ringed — the
+                            old one was an unlabelled 48px white-on-white/10 circle. */}
+                        <button
+                            type="button"
+                            onClick={() => setLightboxUrl(active.sourceUrl || active.webUrl || active.videoUrl)}
+                            aria-label={`Play film — ${captionOf(active)}`}
+                            className="pointer-events-auto grid h-14 w-14 shrink-0 place-items-center rounded-pill
+                                       border border-gold/70 bg-ink/45 text-white backdrop-blur-sm
+                                       transition-all duration-micro ease-standard
+                                       hover:scale-105 hover:border-gold hover:bg-accent
+                                       active:scale-95 sm:h-16 sm:w-16"
+                        >
+                            <FiPlay className="ml-0.5 h-6 w-6" />
+                        </button>
+                    </div>
+
+                    {/* Slide indicators — gold thread, and a real control rather
+                        than decoration: each one selects its slide. */}
+                    {multiple && (
+                        <div className="pointer-events-auto mt-5 flex items-center gap-2">
+                            {slides.map((s2, i) => (
+                                <button
+                                    key={s2.videoKey || `dot-${i}`}
+                                    type="button"
+                                    onClick={() => goToSlide(i)}
+                                    aria-label={`Show film ${i + 1} of ${slides.length}`}
+                                    aria-current={i === currentSlide}
+                                    className="group/dot grid h-11 place-items-center px-1"
+                                >
+                                    <span
+                                        className={`block h-[3px] rounded-pill transition-all duration-ui ease-standard
+                                                    ${i === currentSlide
+                                                        ? 'w-9 bg-gold'
+                                                        : 'w-4 bg-white/45 group-hover/dot:bg-white/80'}`}
+                                    />
+                                </button>
+                            ))}
+                        </div>
+                    )}
                 </div>
+
+                {/* ── Prev / next. Hidden with a single slide, and revealed on
+                       hover at desktop so they do not sit on the photograph
+                       permanently. Always visible on touch, which has no hover. ── */}
+                {multiple && (
+                    <div className="pointer-events-none absolute inset-y-0 inset-x-0 flex items-center justify-between px-3 sm:px-4">
+                        {[['prev', FiChevronLeft, 'Previous film'], ['next', FiChevronRight, 'Next film']].map(
+                            ([dir, Icon, label]) => (
+                                <button
+                                    key={dir}
+                                    type="button"
+                                    onClick={() => handleSlideChange(dir)}
+                                    aria-label={label}
+                                    className="pointer-events-auto grid h-11 w-11 place-items-center rounded-pill
+                                               border border-white/25 bg-ink/40 text-white backdrop-blur-sm
+                                               transition-all duration-micro ease-standard
+                                               hover:border-gold hover:bg-ink/65 active:scale-95
+                                               lg:opacity-0 lg:group-hover/hero:opacity-100 lg:focus-visible:opacity-100"
+                                >
+                                    <Icon className="h-5 w-5" />
+                                </button>
+                            ),
+                        )}
+                    </div>
+                )}
             </div>
         </>
     );

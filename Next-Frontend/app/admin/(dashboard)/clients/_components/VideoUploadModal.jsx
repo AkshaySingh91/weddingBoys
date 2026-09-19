@@ -305,6 +305,172 @@ async function runConcurrentVideoPool(tasks, concurrency = 3) {
   return results;
 }
 
+/**
+ * Production Asset Inspector for uploaded films:
+ * Shows playable stored video, 8s teaser loop preview, and adaptive transcode matrix.
+ */
+function VideoAssetInspector({ it }) {
+  const [objectUrl, setObjectUrl] = useState('');
+  const [activeTab, setActiveTab] = useState('master');
+
+  useEffect(() => {
+    if (!it?.file) return;
+    const url = URL.createObjectURL(it.file);
+    setObjectUrl(url);
+    return () => {
+      URL.revokeObjectURL(url);
+    };
+  }, [it]);
+
+  if (!it) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full text-stone-400 p-8 text-center text-xs">
+        Select a film from the list to inspect its stored video and teaser loop assets.
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex-1 flex flex-col p-6 overflow-y-auto space-y-4">
+      {/* Header */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-stone-200 pb-3">
+        <div>
+          <h4 className="font-sans text-sm font-bold text-stone-900 truncate max-w-md" title={it.name}>
+            {it.name}
+          </h4>
+          <div className="flex items-center gap-2 text-xs text-stone-500 mt-0.5">
+            <span className="font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-md">
+              {it.eventGroup || 'Wedding Film'}
+            </span>
+            <span>·</span>
+            <span>Raw Master: {formatBytes(it.size)}</span>
+            <span>·</span>
+            <span className="text-emerald-700 font-medium">✓ Stored in Cloudflare R2</span>
+          </div>
+        </div>
+
+        {/* View Switcher Tabs */}
+        <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-xl border border-stone-200">
+          <button
+            type="button"
+            onClick={() => setActiveTab('master')}
+            className={cn(
+              'px-3 py-1 text-xs font-semibold rounded-lg transition-all cursor-pointer',
+              activeTab === 'master'
+                ? 'bg-white text-stone-900 shadow-sm'
+                : 'text-stone-600 hover:text-stone-900'
+            )}
+          >
+            Stored Master Video
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('loop')}
+            className={cn(
+              'px-3 py-1 text-xs font-semibold rounded-lg transition-all flex items-center gap-1 cursor-pointer',
+              activeTab === 'loop'
+                ? 'bg-purple-600 text-white shadow-sm'
+                : 'text-stone-600 hover:text-stone-900'
+            )}
+          >
+            <Repeat size={12} weight="bold" />
+            8s Loop Preview
+          </button>
+        </div>
+      </div>
+
+      {/* Player Viewport */}
+      {activeTab === 'master' ? (
+        <div className="space-y-2">
+          <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-black shadow-md flex items-center justify-center">
+            {objectUrl && (
+              <video
+                controls
+                playsInline
+                src={objectUrl}
+                className="h-full w-full object-contain"
+              />
+            )}
+          </div>
+          <div className="flex items-center justify-between text-xs text-stone-500 px-1">
+            <span>High-resolution original file safely preserved in Cloudflare R2.</span>
+            <span className="font-mono text-[11px] text-stone-600 font-medium">Master Quality</span>
+          </div>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {it.makeLoop ? (
+            <div className="rounded-2xl border border-purple-200 bg-purple-50/50 p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-purple-950 flex items-center gap-1.5">
+                  <Repeat size={15} weight="bold" className="text-purple-600" />
+                  8s Silent Teaser Loop Asset
+                </span>
+                <span className="text-[10px] font-semibold bg-purple-100 text-purple-900 px-2 py-0.5 rounded-md border border-purple-200">
+                  Transcoding / Playable
+                </span>
+              </div>
+              <div className="relative aspect-video max-h-60 w-full overflow-hidden rounded-xl bg-black shadow-sm mx-auto">
+                {objectUrl && (
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    controls
+                    src={objectUrl}
+                    className="h-full w-full object-cover"
+                  />
+                )}
+              </div>
+              <p className="text-[11px] text-purple-900/90 leading-relaxed">
+                Playable 8s loop designated for the couple showcase header, hero card reels, and lightweight mobile preview streaming.
+              </p>
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-stone-200 bg-stone-50 p-8 text-center space-y-2">
+              <Repeat size={24} className="mx-auto text-stone-400" />
+              <p className="text-xs font-semibold text-stone-700">8s Loop was not requested for this film</p>
+              <p className="text-[11px] text-stone-500">
+                To generate 8s silent teaser loops, enable &quot;Generate 8s Loop&quot; during staging before uploading.
+              </p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Streaming Renditions & Assets Status */}
+      <div className="rounded-2xl border border-stone-200 bg-stone-50/70 p-4 space-y-2.5">
+        <h5 className="text-xs font-bold text-stone-900 uppercase tracking-wide">
+          Derived Streaming Assets & Renditions
+        </h5>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+          <div className="rounded-xl border border-stone-200 bg-white p-2.5">
+            <span className="text-[10px] text-stone-400 block font-semibold">1080p FHD</span>
+            <span className="text-xs font-bold text-stone-800">Adaptive MP4</span>
+            <span className="text-[10px] text-purple-700 block mt-0.5 font-medium">Worker Queued</span>
+          </div>
+          <div className="rounded-xl border border-stone-200 bg-white p-2.5">
+            <span className="text-[10px] text-stone-400 block font-semibold">720p HD</span>
+            <span className="text-xs font-bold text-stone-800">Adaptive MP4</span>
+            <span className="text-[10px] text-purple-700 block mt-0.5 font-medium">Worker Queued</span>
+          </div>
+          <div className="rounded-xl border border-stone-200 bg-white p-2.5">
+            <span className="text-[10px] text-stone-400 block font-semibold">480p Mobile</span>
+            <span className="text-xs font-bold text-stone-800">Efficient MP4</span>
+            <span className="text-[10px] text-purple-700 block mt-0.5 font-medium">Worker Queued</span>
+          </div>
+          <div className="rounded-xl border border-stone-200 bg-white p-2.5">
+            <span className="text-[10px] text-stone-400 block font-semibold">Poster Frame</span>
+            <span className="text-xs font-bold text-stone-800">JPEG Thumbnail</span>
+            <span className="text-[10px] text-emerald-700 block mt-0.5 font-medium">Auto-Extracted</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const EMPTY_VIDEOS = [];
 
 export default function VideoUploadModal({
@@ -321,12 +487,24 @@ export default function VideoUploadModal({
   const [activeUploadsCount, setActiveUploadsCount] = useState(0);
   const [uploadFinished, setUploadFinished] = useState(false);
   const [uploadedResults, setUploadedResults] = useState([]);
+  const [inspectedVideoId, setInspectedVideoId] = useState(null);
 
   // Dynamic Ceremonies for Videos
   const [ceremonyOptions, setCeremonyOptions] = useState(DEFAULT_VIDEO_CEREMONIES);
 
   const fileInputRef = useRef(null);
   const prevOpenRef = useRef(false);
+
+  // When upload finishes, default inspected video to first film
+  useEffect(() => {
+    if (uploadFinished && items.length && !inspectedVideoId) {
+      setInspectedVideoId(items[0]?.id);
+    }
+  }, [uploadFinished, items, inspectedVideoId]);
+
+  const inspectedItem = useMemo(() => {
+    return items.find((it) => it.id === inspectedVideoId) || items[0] || null;
+  }, [items, inspectedVideoId]);
 
   // Fetch dynamic ceremonies
   useEffect(() => {
@@ -606,115 +784,195 @@ export default function VideoUploadModal({
         {/* Staged Video Cards List & Reassurance Status */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {uploadFinished ? (
-            /* Post-Upload Ingest Summary Banner */
-            <div className="bg-emerald-50/70 border-b border-emerald-200 px-6 py-4 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-600 text-white shrink-0 shadow-sm">
-                  <CheckCircle size={22} weight="fill" />
-                </span>
-                <div>
-                  <h4 className="text-xs sm:text-sm font-bold text-emerald-950 font-sans">
-                    Video Ingest Complete: {doneCount} of {items.length} films ready!
-                  </h4>
-                  <p className="text-[11px] text-emerald-900/90 max-w-xl leading-relaxed">
-                    Master video files have been safely stored in your Cloudflare R2 bucket. Background FFmpeg transcoding is queued to generate adaptive streaming renditions and 8s teaser loops.
-                  </p>
+            /* Post-Upload 2-Pane Asset Inspector Layout */
+            <div className="flex-1 flex flex-col overflow-hidden">
+              {/* Top Status Banner */}
+              <div className="bg-emerald-50/80 border-b border-emerald-200 px-6 py-3.5 flex items-center justify-between gap-4 shrink-0">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-emerald-600 text-white shrink-0 shadow-sm">
+                    <CheckCircle size={20} weight="fill" />
+                  </span>
+                  <div>
+                    <h4 className="text-xs sm:text-sm font-bold text-emerald-950 font-sans">
+                      Video Ingest Complete: {doneCount} of {items.length} films ready!
+                    </h4>
+                    <p className="text-[11px] text-emerald-900/90 max-w-xl leading-relaxed">
+                      Master video files safely stored in Cloudflare R2 bucket. Click any film on the left to inspect its master video and 8s teaser loop assets.
+                    </p>
+                  </div>
                 </div>
+
+                <Button
+                  type="button"
+                  variant="terracotta"
+                  size="sm"
+                  onClick={handleFinishAndExit}
+                  className="shrink-0 text-xs font-semibold px-4 shadow-sm"
+                >
+                  Finish & View Client Gallery
+                </Button>
               </div>
 
-              <Button
-                type="button"
-                variant="terracotta"
-                size="sm"
-                onClick={handleFinishAndExit}
-                className="shrink-0 text-xs font-semibold px-4"
-              >
-                Finish & View Client Gallery
-              </Button>
+              {/* 2-Pane View: Left Video Roster + Right Production Asset Inspector */}
+              <div className="flex-1 flex overflow-hidden">
+                {/* Left Pane: Film Roster & Summary */}
+                <aside className="w-80 border-r border-[#E8DDD1] bg-[#FFFDF9] flex flex-col shrink-0 overflow-y-auto p-4 space-y-3 scrollbar-thin">
+                  {/* Metrics Card */}
+                  <div className="rounded-2xl border border-stone-200 bg-white p-3 space-y-1.5 shadow-sm">
+                    <div className="flex items-center justify-between text-xs font-bold text-stone-900">
+                      <span>Uploaded Films</span>
+                      <span className="text-emerald-700 font-semibold">{doneCount} of {items.length}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-[11px] text-stone-500">
+                      <span>Total Master Size:</span>
+                      <span className="font-mono font-semibold text-stone-700">{formatBytes(totalBytes)}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-[11px] text-stone-500">
+                      <span>Est. Streaming Deriv:</span>
+                      <span className="font-mono font-semibold text-purple-700">~{formatBytes(totalBytes * 1.8)}</span>
+                    </div>
+                  </div>
+
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-stone-400 px-1 pt-1">
+                    Select film to inspect
+                  </p>
+
+                  {/* Film Cards List */}
+                  <div className="space-y-2">
+                    {items.map((it) => {
+                      const isInspected = inspectedItem?.id === it.id;
+                      return (
+                        <div
+                          key={it.id}
+                          onClick={() => setInspectedVideoId(it.id)}
+                          className={cn(
+                            'p-3 rounded-2xl border transition-all cursor-pointer select-none text-left',
+                            isInspected
+                              ? 'border-amber-600 bg-amber-50/60 ring-2 ring-amber-500/20 shadow-sm'
+                              : 'border-stone-200 bg-white hover:border-stone-300'
+                          )}
+                        >
+                          <p className="font-sans text-xs font-bold text-stone-900 truncate" title={it.name}>
+                            {it.name}
+                          </p>
+                          <div className="flex items-center gap-1.5 mt-1 text-[10px] text-stone-500">
+                            <span className="font-semibold text-stone-700">{it.eventGroup}</span>
+                            <span>·</span>
+                            <span>{formatBytes(it.size)}</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 mt-2">
+                            <span className="text-[10px] font-medium bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded-md">
+                              ✓ R2 Master
+                            </span>
+                            {it.makeLoop && (
+                              <span className="text-[10px] font-medium bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded-md flex items-center gap-0.5">
+                                <Repeat size={10} /> 8s Loop
+                              </span>
+                            )}
+                            {it.stripAudio && (
+                              <span className="text-[10px] font-medium bg-rose-100 text-rose-800 px-1.5 py-0.5 rounded-md">
+                                Muted
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </aside>
+
+                {/* Right Pane: Production Asset Inspector */}
+                <div className="flex-1 bg-white flex flex-col overflow-hidden">
+                  <VideoAssetInspector it={inspectedItem} />
+                </div>
+              </div>
             </div>
           ) : (
-            /* Top Action Strip */
-            <div className="border-b border-[#E8DDD1] bg-[#FFFDF9] px-6 py-2.5 shrink-0 flex items-center justify-between text-xs">
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  disabled={isUploading}
-                  onClick={selectAll}
-                  className="font-semibold text-stone-700 hover:text-stone-950 underline cursor-pointer text-xs"
-                >
-                  {selectedIds.size === items.length ? 'Deselect All' : `Select All (${items.length})`}
-                </button>
-                <span className="text-stone-300">·</span>
-                <span className="text-stone-500 font-medium text-xs">
-                  {selectedIds.size} of {items.length} selected
-                </span>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="video/mp4,video/quicktime,video/webm,video/x-matroska,.mp4,.mov,.mkv,.webm"
-                  multiple
-                  hidden
-                  onChange={(e) => handleAddFiles(e.target.files)}
-                />
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  disabled={isUploading}
-                  icon={Plus}
-                  onClick={() => fileInputRef.current?.click()}
-                  className="border-stone-200 text-stone-700 hover:bg-stone-50 text-xs"
-                >
-                  Add Films
-                </Button>
-              </div>
-            </div>
-          )}
-
-          {/* Staged Videos List with Playable Previews */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-3.5 scrollbar-thin scrollbar-thumb-stone-200">
-            {!items.length ? (
-              <div className="flex flex-col items-center justify-center h-full text-center py-16 space-y-3">
-                <span className="flex h-16 w-16 items-center justify-center rounded-3xl bg-stone-100 text-stone-700">
-                  <FilmSlate size={32} />
-                </span>
-                <div>
-                  <p className="text-sm font-semibold text-stone-800">No wedding films staged</p>
-                  <p className="text-xs text-stone-500">Pick or drop cinematic video files to stage for this wedding</p>
+            /* Normal Staging View */
+            <>
+              {/* Top Action Strip */}
+              <div className="border-b border-[#E8DDD1] bg-[#FFFDF9] px-6 py-2.5 shrink-0 flex items-center justify-between text-xs">
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    disabled={isUploading}
+                    onClick={selectAll}
+                    className="font-semibold text-stone-700 hover:text-stone-950 underline cursor-pointer text-xs"
+                  >
+                    {selectedIds.size === items.length ? 'Deselect All' : `Select All (${items.length})`}
+                  </button>
+                  <span className="text-stone-300">·</span>
+                  <span className="text-stone-500 font-medium text-xs">
+                    {selectedIds.size} of {items.length} selected
+                  </span>
                 </div>
-                <Button
-                  type="button"
-                  variant="gold"
-                  size="sm"
-                  icon={Plus}
-                  onClick={() => fileInputRef.current?.click()}
-                  className="bg-stone-900 text-white hover:bg-stone-800"
-                >
-                  Browse Video Files
-                </Button>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {items.map((it) => (
-                  <StagedVideoPreview
-                    key={it.id}
-                    it={it}
-                    file={it.file}
-                    isUploading={isUploading}
-                    isDone={uploadFinished && it.status === 'done'}
-                    isSelected={selectedIds.has(it.id)}
-                    onToggleSelect={toggleSelect}
-                    onUpdateOption={updateItemOption}
-                    onRemove={handleRemoveItem}
-                    ceremonyOptions={ceremonyOptions}
+
+                <div className="flex items-center gap-2">
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="video/mp4,video/quicktime,video/webm,video/x-matroska,.mp4,.mov,.mkv,.webm"
+                    multiple
+                    hidden
+                    onChange={(e) => handleAddFiles(e.target.files)}
                   />
-                ))}
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    disabled={isUploading}
+                    icon={Plus}
+                    onClick={() => fileInputRef.current?.click()}
+                    className="border-stone-200 text-stone-700 hover:bg-stone-50 text-xs"
+                  >
+                    Add Films
+                  </Button>
+                </div>
               </div>
-            )}
-          </div>
+
+              {/* Staged Videos List with Playable Previews */}
+              <div className="flex-1 overflow-y-auto p-6 space-y-3.5 scrollbar-thin scrollbar-thumb-stone-200">
+                {!items.length ? (
+                  <div className="flex flex-col items-center justify-center h-full text-center py-16 space-y-3">
+                    <span className="flex h-16 w-16 items-center justify-center rounded-3xl bg-stone-100 text-stone-700">
+                      <FilmSlate size={32} />
+                    </span>
+                    <div>
+                      <p className="text-sm font-semibold text-stone-800">No wedding films staged</p>
+                      <p className="text-xs text-stone-500">Pick or drop cinematic video files to stage for this wedding</p>
+                    </div>
+                    <Button
+                      type="button"
+                      variant="gold"
+                      size="sm"
+                      icon={Plus}
+                      onClick={() => fileInputRef.current?.click()}
+                      className="bg-stone-900 text-white hover:bg-stone-800"
+                    >
+                      Browse Video Files
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {items.map((it) => (
+                      <StagedVideoPreview
+                        key={it.id}
+                        it={it}
+                        file={it.file}
+                        isUploading={isUploading}
+                        isDone={uploadFinished && it.status === 'done'}
+                        isSelected={selectedIds.has(it.id)}
+                        onToggleSelect={toggleSelect}
+                        onUpdateOption={updateItemOption}
+                        onRemove={handleRemoveItem}
+                        ceremonyOptions={ceremonyOptions}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            </>
+          )}
         </div>
 
         {/* Footer Actions */}

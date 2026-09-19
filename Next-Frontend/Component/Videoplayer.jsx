@@ -180,11 +180,15 @@ const VideoPlayer = ({ src }) => {
 
 
   return (
-    <div ref={containerRef} className={"relative bg-black lg:max-w-4xl md:max-w-2xl transition-transform duration-100  rounded-t-xl aspect-[16/9] w-full max-w-md sm:max-w-lg xl:max-w-6xl mx-auto"}>
+    <div ref={containerRef} /* Fills whatever frame it is placed in. It previously carried its own
+         max-w ladder (md -> lg -> 4xl -> 6xl) which fought every container it
+         was dropped into — inside the lightbox it produced a small player
+         floating in a large panel. */
+      className="group/player relative mx-auto aspect-[16/9] w-full bg-black">
       <video
         loop playsInline
         ref={videoRef}
-        className="w-full h-full object-cover rounded-t-xl"
+        className="h-full w-full object-contain"
         onTimeUpdate={handleProgress}
         onLoadedMetadata={handleLoadedMetadata}
         src={newSrc}
@@ -192,9 +196,9 @@ const VideoPlayer = ({ src }) => {
         type="video/mp4"
       ></video>
 
-      <div className={`bottom-control-panel absolute bottom-0 left-0 right-0 text-white p-1 flex lg:gap-4  item-center mb-2 mx-2 rounded-md bg-[rgba(155,155,155,0.25)] shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-sm border border-[rgba(255,255,255,0.18)] sm:gap-2
+      <div className={`bottom-control-panel absolute bottom-0 left-0 right-0 text-white px-2 py-2 sm:py-1.5 flex items-center gap-2 lg:gap-4 mb-2 mx-2 rounded-control bg-ground-deep/80 backdrop-blur-md border border-gold/30 shadow-overlay sm:gap-2
       ${isFullScreen ? "z-50" : ""}`}>
-        <div className="duration-control flex lg:gap-2 bg-gray-500 bg-opacity-35 rounded-md bg-[rgba(0,0,0,0.87)] shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-[2px] px-2 sm:gap-1">
+        <div className="duration-control flex lg:gap-2 rounded-control px-2 sm:gap-1">
           <div className="left-skip h-fit w-fit">
             <button className="flex justify-center items-center" onClick={handleLeftSkip}>
               <svg className="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" ><path d="M860-240 500-480l360-240v480Zm-400 0L100-480l360-240v480Zm-80-240Zm400 0Zm-400 90v-180l-136 90 136 90Zm400 0v-180l-136 90 136 90Z" /></svg>
@@ -219,8 +223,8 @@ const VideoPlayer = ({ src }) => {
 
           </div>
         </div>
-        <div className="video-length flex items-end bg-gray-500 bg-opacity-35 rounded-md bg-[rgba(0,0,0,0.87)] shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-[2px] px-2 pb-2 flex-auto">
-          <div className="group  relative w-full h-1 bg-gray-600 rounded-md cursor-pointer hover:h-2 transition-all duration-100" ref={progressRef} onClick={handleScrub}
+        <div className="video-length flex items-end rounded-control px-2 pb-2 flex-auto">
+          <div className="group relative h-1.5 w-full cursor-pointer rounded-pill bg-white/25 transition-all duration-micro ease-standard hover:h-2.5" ref={progressRef} onClick={handleScrub}
             onMouseMove={(e) => {
               if (isDragging) {
                 handleScrub(e)
@@ -240,19 +244,19 @@ const VideoPlayer = ({ src }) => {
             onTouchStart={(e) => {
               setIsDragging(true);
             }}>
-            <div style={{ width: `${currentTime / duration * 100}%` }} className={`relative current-progress h-1 bg-gray-200 rounded-md group-hover:h-2 transition-all duration-100`}
+            <div style={{ width: `${currentTime / duration * 100}%` }} className={`current-progress relative h-full rounded-pill bg-accent transition-all duration-micro ease-standard`}
             >
-              <div className="flex items-center absolute -top-8 left-full current-time-tooltip bg-black text-white w-fit rounded-lg">
+              <div className="current-time-tooltip pointer-events-none absolute -top-9 left-1/2 flex w-fit -translate-x-1/2 items-center rounded-control border border-gold/30 bg-ground-deep px-1.5 text-white">
                 <span className='text-[12px] px-2 py-1  whitespace-nowrap'> {Number.parseInt(currentTime / 60) <= 9 ? '0' + Number.parseInt(currentTime / 60) : Number.parseInt(currentTime / 60)} : {Number.parseInt(currentTime % 60) <= 9 ? '0' + Number.parseInt(currentTime % 60) : Number.parseInt(currentTime % 60)} </span>
                 <span
-                  className="absolute bottom-[-6px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-black"
+                  className="absolute bottom-[-6px] left-1/2 h-0 w-0 -translate-x-1/2 transform border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-[color:var(--ground-deep)]"
                 ></span>
 
               </div>
             </div>
           </div>
         </div>
-        <div className="right-control relative flex items-center bg-gray-500 bg-opacity-35 rounded-md bg-[rgba(0,0,0,0.87)] shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-[2px] px-2 lg:gap-2 sm:gap-1">
+        <div className="right-control relative flex items-center rounded-control px-2 lg:gap-2 sm:gap-1">
           <div className="relative speaker  h-fit w-fit transition-all duration-200">
             <button className="relative speaker-btn flex justify-center items-center" onClick={toggleMute} onMouseEnter={() => setIsVolumeChanging(true)}>
               {isMuted ?
@@ -271,7 +275,7 @@ const VideoPlayer = ({ src }) => {
                     value={volume}
                     onChange={handleVolumeChange}
                     orient="vertical"
-                    className="h-2 w-28 transform -rotate-90  appearance-none  dark:bg-gray-700 bg-gray-400 rounded-lg cursor-pointer "
+                    className="h-2 w-28 transform -rotate-90  appearance-none  cursor-pointer rounded-pill bg-white/30 "
                   />
                 </div> : null
             }
@@ -282,7 +286,7 @@ const VideoPlayer = ({ src }) => {
               <svg className="w-5 h-5 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z" /></svg>
             </button>
             {issettingsOpen && (
-              <div className="settings-wrapper absolute bottom-full right-0 h-20 flex flex-col rounded-md bg-[rgba(155,155,155,0.5)] shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-sm border border-[rgba(255,255,255,0.18)] my-2 w-40 justify-evenly" >
+              <div className="settings-wrapper absolute bottom-full right-0 h-20 flex flex-col rounded-md bg-ground-deep/95 backdrop-blur-md border border-gold/35 shadow-overlay my-2 w-40 justify-evenly" >
                 <div className="speed-control w-full">
                   <button className="flex justify-evenly text-sm gap-2 w-full py-2 px-2 hover:bg-[rgba(155,155,155,0.4)]" onClick={handleIsSpeedSettingOpen}>
                     <span>Speed</span>
@@ -299,32 +303,32 @@ const VideoPlayer = ({ src }) => {
               </div>
             )}
             {isSpeedSettingOpen && (
-              <div className="speed-wrapper absolute bottom-full right-0 h-fit flex flex-col rounded-md bg-[rgba(155,155,155,0.5)] shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-sm border border-[rgba(255,255,255,0.18)] my-2 w-40 justify-evenly" >
+              <div className="speed-wrapper absolute bottom-full right-0 h-fit flex flex-col rounded-md bg-ground-deep/95 backdrop-blur-md border border-gold/35 shadow-overlay my-2 w-40 justify-evenly" >
                 <button className="flex justify-between px-2 py-2 items-center text-sm" onClick={handleIsSpeedSettingOpen}>
                   <svg className="w-4 h-4 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z" /></svg>
                   <span> Speed</span>
                 </button>
                 <div className="flex flex-col p-2 text-sm gap-1">
-                  <button onClick={handleSpeedChange} className="text-left hover:bg-slate-300 hover:bg-opacity-60 px-2 rounded-md" value="0.25">0.25x</button>
-                  <button onClick={handleSpeedChange} className="text-left hover:bg-slate-300 hover:bg-opacity-60 px-2 rounded-md" value="0.5">0.5x</button>
-                  <button onClick={handleSpeedChange} className="text-left hover:bg-slate-300 hover:bg-opacity-60 px-2 rounded-md" value="1">Normal</button>
-                  <button onClick={handleSpeedChange} className="text-left hover:bg-slate-300 hover:bg-opacity-60 px-2 rounded-md" value="1.5">1.5x</button>
-                  <button onClick={handleSpeedChange} className="text-left hover:bg-slate-300 hover:bg-opacity-60 px-2 rounded-md" value="2">2x</button>
+                  <button onClick={handleSpeedChange} className="rounded-control px-3 py-2 text-left text-[13px] transition-colors duration-micro ease-standard hover:bg-accent hover:text-white" value="0.25">0.25x</button>
+                  <button onClick={handleSpeedChange} className="rounded-control px-3 py-2 text-left text-[13px] transition-colors duration-micro ease-standard hover:bg-accent hover:text-white" value="0.5">0.5x</button>
+                  <button onClick={handleSpeedChange} className="rounded-control px-3 py-2 text-left text-[13px] transition-colors duration-micro ease-standard hover:bg-accent hover:text-white" value="1">Normal</button>
+                  <button onClick={handleSpeedChange} className="rounded-control px-3 py-2 text-left text-[13px] transition-colors duration-micro ease-standard hover:bg-accent hover:text-white" value="1.5">1.5x</button>
+                  <button onClick={handleSpeedChange} className="rounded-control px-3 py-2 text-left text-[13px] transition-colors duration-micro ease-standard hover:bg-accent hover:text-white" value="2">2x</button>
                 </div>
               </div>
             )}
             {isQualitySettingOpen && (
-              <div className="settings-wrapper absolute bottom-full right-0 h-fit flex flex-col rounded-md bg-[rgba(155,155,155,0.5)] shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-sm border border-[rgba(255,255,255,0.18)] my-2 w-40 justify-evenly" >
+              <div className="settings-wrapper absolute bottom-full right-0 h-fit flex flex-col rounded-md bg-ground-deep/95 backdrop-blur-md border border-gold/35 shadow-overlay my-2 w-40 justify-evenly" >
                 <button className="back-btn flex   justify-between px-2 py-2 items-center text-sm" onClick={handleIsQualitySettingOpen}>
                   <svg className="w-4 h-4 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z" /></svg>
                   <span> Quality</span>
                 </button>
                 <div className="quality-options flex flex-col p-2 text-sm gap-1">
-                  <button onClick={handleQualityChange} className="text-left hover:bg-slate-300 hover:bg-opacity-60 px-2 rounded-md" value="Auto">Auto</button>
-                  <button onClick={handleQualityChange} className="text-left hover:bg-slate-300 hover:bg-opacity-60 px-2 rounded-md" value="1080">1080p</button>
-                  <button onClick={handleQualityChange} className="text-left hover:bg-slate-300 hover:bg-opacity-60 px-2 rounded-md" value="720">720p</button>
-                  <button onClick={handleQualityChange} className="text-left hover:bg-slate-300 hover:bg-opacity-60 px-2 rounded-md" value="480">480p</button>
-                  <button onClick={handleQualityChange} className="text-left hover:bg-slate-300 hover:bg-opacity-60 px-2 rounded-md" value="360">360p</button>
+                  <button onClick={handleQualityChange} className="rounded-control px-3 py-2 text-left text-[13px] transition-colors duration-micro ease-standard hover:bg-accent hover:text-white" value="Auto">Auto</button>
+                  <button onClick={handleQualityChange} className="rounded-control px-3 py-2 text-left text-[13px] transition-colors duration-micro ease-standard hover:bg-accent hover:text-white" value="1080">1080p</button>
+                  <button onClick={handleQualityChange} className="rounded-control px-3 py-2 text-left text-[13px] transition-colors duration-micro ease-standard hover:bg-accent hover:text-white" value="720">720p</button>
+                  <button onClick={handleQualityChange} className="rounded-control px-3 py-2 text-left text-[13px] transition-colors duration-micro ease-standard hover:bg-accent hover:text-white" value="480">480p</button>
+                  <button onClick={handleQualityChange} className="rounded-control px-3 py-2 text-left text-[13px] transition-colors duration-micro ease-standard hover:bg-accent hover:text-white" value="360">360p</button>
                 </div>
               </div>
             )}
