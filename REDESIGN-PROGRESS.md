@@ -567,3 +567,51 @@ Caption contrast over the scrim ≈ 10.6:1. Build green.
 The arch is **not** removed from the system — it stays for portrait media
 composed for it. It is removed from film stills, where it crops the top of the
 frame.
+
+### Our Magical Offerings — rebuilt (`OurService.jsx`)
+
+Chosen at the gate: re-skinned 3×2 grid · each card to its real destination ·
+four on mobile with the rest one tap away.
+
+Six services kept — same count, same titles, same descriptions. Nothing removed.
+
+**Defects fixed**
+
+| | Was | Now |
+|---|---|---|
+| Card ground | `#9a724e51` / `#e4b88f67` alternating raw hex | one `bg-ground-raised` card; the photographs differentiate |
+| Border | `border-2 border-slate-300` = `rgb(203,213,225)` | `border-gold/35` = `rgba(201,162,39,0.35)` |
+| Corner ornament | `bg-pink-200/50` | same shape, `bg-marigold/30` |
+| Icon puck | `bg-primary`, no ring | ivory `bg-ground/90`, gold ring, `accent-ink` glyph |
+| Heading face | Inter | Bodoni Moda + `.rule-ornament`, matching the film row |
+| Links | **all six → `/photos`**, "Explore Gallery" ×6 | `/films` · `/photos`×3 · `/contact`×2, each labelled with its destination |
+| Closing CTA | `<button onClick={window.open(url,'_blank')}>` | `<a>` with `rel="noopener noreferrer"` |
+| Background | SVG grid stroked `#fff` @ 0.2 on cream — drew nothing | the site's `.jaali` |
+| Skeleton | `bg-gray-200 animate-pulse` | the warm `.skeleton` |
+| Text align | centred in all six | left, matching the rest of the page |
+
+**Whole card is clickable** via `after:absolute after:inset-0` on the single
+anchor — one interactive element per card, no nested `<a>`.
+
+**Mobile** 3,172px → **2,304px** collapsed (4 of 6), 3,154px expanded.
+`aria-expanded` / `aria-controls` wired; the control stays mounted through the
+toggle so a keyboard user does not lose focus.
+
+### The section axis — established (R-63 on the home page)
+
+Measuring the home page's 22 `<h1>`/`<h2>` elements at 1440 found them at **16
+different x positions** (16, 32, 57, 64, 72, 73, 89, 112, 137, 161, 215, 265,
+612, 616, 795). No two sections agreed, so there was no consensus to match.
+
+The axis is now **the `Section` gutter** — `max-w-wide` + `px-5 md:px-8
+lg:px-12`, landing at x=64 at 1440. The film row had been double-padding
+(Section gutter *plus* another `px-12`) to let its rail bleed, which put it at
+112 — 48px off every other section. Fixed by bleeding **right only**
+(`-mr-* pr-*`) instead of padding symmetrically, so the rail still runs past the
+gutter while its left edge stays on the axis. This also removed the need for
+`scroll-pl-*`.
+
+Verified: films heading, first film card, services heading and first service
+card all at **x=64** at 1440 and **x=20** at 390. `docOverflowX` 0.
+
+Every remaining home section gets brought onto this axis as it is reworked.

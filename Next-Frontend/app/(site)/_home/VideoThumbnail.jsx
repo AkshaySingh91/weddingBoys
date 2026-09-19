@@ -68,7 +68,7 @@ export default function VideoThumbnail() {
               elements and this was one of them (audit R-42); "Our Films" is a
               section label, not the page's subject.
             */}
-            <div className="flex items-end justify-between gap-4 px-5 md:px-8 lg:px-12">
+            <div className="flex items-end justify-between gap-4">
                 <div>
                     <h2 className="t-display-2">Our films</h2>
                     <div className="rule-ornament mt-2.5 w-36" aria-hidden="true" />
@@ -89,7 +89,8 @@ export default function VideoThumbnail() {
             <div
                 role="group"
                 aria-label="Filter films by category"
-                className="mt-4 flex gap-2 overflow-x-auto scrollbar-none px-5 md:px-8 lg:px-12"
+                className="mt-4 flex gap-2 overflow-x-auto scrollbar-none
+                           -mr-5 pr-5 md:-mr-8 md:pr-8 lg:-mr-12 lg:pr-12"
             >
                 {isLoading && !homepageTags.length
                     ? [...Array(3)].map((_, i) => (
@@ -127,12 +128,13 @@ export default function VideoThumbnail() {
                    from the heading and read worse than the space it was hiding.
                    The row starts where the heading starts. ── */}
             <div
-                /* scroll-pl mirrors px. Without it snap-mandatory parks the
-                   first card flush against the scrollport and swallows the
-                   rail's own left padding — measured scrollLeft:20 at 390px,
-                   which put the cards 20px left of the heading they belong to. */
+                /* Bleeds right, not left. The rail's left edge is the section
+                   axis; only its right edge runs past the gutter so the next
+                   card peeks. An earlier symmetric px-* pushed the cards 48px
+                   inboard of their own heading, and snap-mandatory then ate
+                   that padding anyway (measured scrollLeft:20 at 390px). */
                 className="mt-5 flex snap-x snap-mandatory gap-3 overflow-x-auto scrollbar-none
-                           px-5 scroll-pl-5 pb-2 md:px-8 md:scroll-pl-8 lg:gap-4 lg:px-12 lg:scroll-pl-12"
+                           pb-2 -mr-5 pr-5 md:-mr-8 md:pr-8 lg:gap-4 lg:-mr-12 lg:pr-12"
             >
                 {isLoading ? (
                     [...Array(4)].map((_, i) => (
@@ -203,7 +205,7 @@ export default function VideoThumbnail() {
 
             {/* The desktop "All films" link is hidden on phones; this is its
                 mobile equivalent, at full width where a thumb can reach it. */}
-            <div className="mt-5 px-5 sm:hidden md:px-8">
+            <div className="mt-5 sm:hidden">
                 <Link
                     href="/films"
                     className="flex min-h-[44px] items-center justify-center gap-1.5 rounded-pill border
