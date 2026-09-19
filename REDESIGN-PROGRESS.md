@@ -16,7 +16,7 @@ re-read both before touching code.
 | Stage | Scope | Status | Closes |
 |---|---|---|---|
 | **0** | Design direction + tokens + `DESIGN-SYSTEM.md` | **✅ Approved 2026-09-19** | defines R-15 R-16 R-17 R-18 R-46 R-47 R-63 R-66 R-67 |
-| **1** | Primitives & global shell | **⏸ Proposed, awaiting approval** | R-05 R-07 R-08 R-14 R-19 R-22 R-30 R-31 R-32 R-34 R-39 R-40 R-45 R-58 R-65 + lands Stage 0 tokens |
+| **1** | Primitives & global shell | **✅ Built & verified 2026-09-19 — awaiting gate** | R-05 R-07 R-08 R-14 R-19 R-22 R-30 R-31 R-32 R-34 R-39 R-40 R-45 R-58 R-65 + lands Stage 0 tokens |
 | **2** | Home | Not started | R-06¹ R-23 R-26¹ R-42 R-48 R-49 |
 | **3** | Films (listing, rows, detail) | Not started | R-12² R-24² R-26 R-27² R-28 |
 | **4** | Gallery / Photos | Not started | R-13 R-20 R-38 R-43 R-58 R-59 |
@@ -181,3 +181,102 @@ R-58 R-65, and lands R-15 R-16 R-17 R-18 R-46 R-47 R-63 R-66 R-67.
 **Deliberately left for later:** every page body (Stages 2–8); the films taxonomy
 and duplicate-record content issues (client decisions); `/varanasi` assets
 (`X-06`).
+
+
+---
+
+### Stage 1 — built and verified 2026-09-19
+
+**Shipped.** Tokens (`app/globals.css` + `tailwind.config.js`), 11 type-role
+classes, primitives (`Button`, `Chip`, `Section`, `Skeleton`, `Media`), shell
+(`SiteHeader`, `MobileMenu`, `SiteFooter`, `NewsletterForm`), one IA source
+(`lib/navigation.js`), route `error.jsx` and `loading.jsx`.
+
+**Verified across 390 / 768 / 1440 / 1920:**
+
+| Check | Result |
+|---|---|
+| Horizontal overflow | **0** at all four widths |
+| Header condense | 96 → 64px at 72px scroll, all widths |
+| Shell targets < 44px | **0** (was 13–25 per page) |
+| Unlabelled shell controls | **0** (was 44 icon buttons) |
+| Keyboard | 14 stops, first is **Skip to content**, **0** without a visible focus ring |
+| Reduced motion | **0** elements still animating (was 46 infinite loops) |
+| Fonts on `/` | **4 files / 203 KB / 2 families** (was 12 / 352 KB / 8) |
+| `<header>` landmark | present on every page (was 0 of 11) |
+| Build + guards | green |
+
+**Side effect worth noting:** `/team`'s low-contrast count fell **19 → 2** before
+the page was touched. The dark ground gives white-on-photograph text a dark
+effective background, which was the Stage 0 argument and is now measured.
+
+**Four defects found in my own work, all by measuring:**
+
+1. **Duplicate `boxShadow` key** in `tailwind.config.js` silently overrode the
+   existing `xs`/`2xs` definitions, breaking 53 admin class names. The build
+   guard caught it. Merged.
+2. **Duplicate `transitionDuration` key**, same mistake, broke `duration-600` in
+   a blog file. Merged.
+3. **`calc(100svh-var(--header-height))`** is invalid CSS without spaces around
+   the minus — the browser dropped it silently and the rule never applied.
+   Tailwind needs `calc(100svh_-_var(--header-height))`.
+4. **A tracked-out uppercase descriptor under the wordmark** — the eyebrow-label
+   anti-pattern this system bans, self-inflicted. Removed; the positioning line
+   lives in the footer where it can be a sentence.
+
+**Layout-shift class fixed at the shell level.** `main` now reserves
+`100svh - header`. Without it a client-fetched page renders an empty main, the
+footer sits inside the viewport at y=96, and arriving content shoves it down.
+Measured on `/films`: footer top 96 → 1097px at ~330ms. The audit blamed the
+footer (R-10); the footer was only the largest thing that moved.
+
+| Page | CLS before | after |
+|---|---:|---:|
+| `/team` mobile | 1.594 | **0.016** |
+| `/weddings/udaipur` laptop | 0.708 | **0.000** |
+| `/` laptop | 0.078 | 0.107 ⚠ |
+
+**Measurement correction — the Phase 1 production numbers were partly invalid.**
+The build was served on :3100, which the backend's CORS allowlist rejects, so
+client-fetched pages were measured with **no data**. Re-measured on a valid
+origin the real figures are far worse: `/films` mobile LCP **5,636ms**, `/team`
+**4,428ms**, `/photos` **4,128ms** with CLS **1.678**. That last number
+independently confirms the 1.70 measured in development and settles P-04.
+`audit/06-PERFORMANCE.md` is corrected.
+
+**Page weight, on pages that were validly comparable:**
+
+| Page (laptop) | Before | After |
+|---|---:|---:|
+| `/varanasi` | 24,295 KB | **18,841 KB** |
+| `/dharaa-…` | 1,960 KB | **1,417 KB** |
+| `/contact` | 1,065 KB | **976 KB** |
+| `/about-us` | 4,096 KB | 3,996 KB |
+
+**Closed:** R-05 R-07 R-08 R-19 R-22 R-30 R-31 R-32 R-34 R-39 R-40 R-45 R-58
+R-65, and landed R-15 R-16 R-17 R-18 R-46 R-47 R-63 R-66 R-67.
+
+**R-14 could not be closed and is reassigned.** `cloudflareLoader.js:30` passes
+local `/`-prefixed sources through unresized, and with a custom loader
+configured Next's built-in optimiser endpoint is **disabled** — verified,
+`/_next/image` returns **404**. There is no component-level fix: local assets
+have no variants at any size. This is the same root cause as `X-06` (assets that
+never entered the media pipeline) and belongs with it in the admin media backlog.
+
+**Carried to later stages:**
+- `/` CLS 0.107 and 4 × `<h1>`, plus a `HeroCarousel` missing-key React error → **Stage 2**
+- `/photos` CLS 1.678 → **Stage 4**
+- Mobile LCP 4–5.6s on client-fetched list pages → **Stages 3, 4, 5**
+- Home page overflows 16px at 390px; currently contained by `overflow-x-clip` → **Stage 2**
+- `/team` CLS 0.379 mobile → **Stage 5**
+
+**Raised to the client, not changed:** `OfferPackages.jsx:119` still promises
+"all locations in Mumbai at no extra cost. Additional charges apply for
+destination weddings", which contradicts the destination positioning. Commercial
+decision, not a copy fix.
+
+**Note on the blog.** `SiteFooter` replaces the old footer for the out-of-scope
+blog layout too, since `app/(journal)/layout.jsx` imports the shared `Footer`.
+The footer is global shell rather than blog content, and a dark footer beneath
+the blog's light editorial page is a conventional pairing — but it is a visible
+change to blog routes and is flagged here rather than buried.
