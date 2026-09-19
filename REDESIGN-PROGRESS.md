@@ -838,3 +838,47 @@ with the CTA visible without scrolling. `docOverflowX` 0 throughout.
    `MUMBAI · INDIA · BEYOND` and the Varanasi launch.
 3. This section's stats say **1000 Weddings Captured / 1500 Happy Clients /
    5 Years**, against Our Story's **500 Weddings / 5 Years**. Same page.
+
+### Packages — type ladder, row alignment, modal rework (review pass 2)
+
+**The type inconsistency had a specific cause.** The section used the legacy
+scale: `desktopHeadlineMedium: 40px` for the heading and
+**`desktopHeadlineSmall: 32px` for a paragraph**, over 13px card text. A
+40 → 32 → 13 ladder with nothing in between is why headings read huge and
+content read tiny. Now on the design-system roles:
+
+| | px |
+|---|---|
+| Section heading | 40 |
+| Card price | 28 |
+| Card title | 24 |
+| Section lead | 19 |
+| Card stat | 15 |
+| Card list item | 14 |
+
+**Row alignment across the four cards.** Two causes, both fixed:
+
+1. The popular badge was rendered only on the two popular cards, pushing their
+   content down by its own 30px. The strip is now rendered on **every** card and
+   labelled on two.
+2. `border-2` on popular cards against `border` on the others shifted their rows
+   by **exactly 1px** — visible when four cards are read across. Every card is
+   `border-2` now; only the colour differs.
+
+Measured offsets from each card's top, all four cards: title **52**, tagline
+**118**, price **179**, stats **261**, list **343**, CTA **493**. Identical.
+Card heights 559 × 4.
+
+**Modal reworked.** The left-bordered "Best for" callout, the boxed team chips
+and a 14px list read as three different components in one panel. Now two
+primitives — `Detail` (a titled group) and `Row` (a line item) — so groups
+cannot drift apart. Verified: **0 elements with any left border**, all group
+headings 15px, all list items 15px.
+
+**A build-guard gap worth recording.** Replacing the card by slicing between two
+markers also swallowed `makeHearts`, which sat between them. `npm run build`
+**passed** — it is a ReferenceError at mount, not a compile error — and the whole
+packages section rendered into an error boundary. Caught only by reading the
+browser console after the change. The lesson: a green build is not evidence a
+client component renders. Check the console on the page after any structural
+edit.

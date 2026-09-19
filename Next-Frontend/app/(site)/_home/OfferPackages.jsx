@@ -145,13 +145,15 @@ const createWhatsAppMessage = (pkg) => {
  * One package, at a glance.
  *
  * Was a tall expanding card in a two-column grid. Expanding grew the grid ROW,
- * so opening one stretched its neighbour to match and left a column of empty
- * card beside the detail. The detail now opens in PackageModal and the four
- * cards keep their shape.
+ * so opening one stretched its neighbour and left a column of empty card beside
+ * the detail. The detail now opens in PackageModal and the four cards keep
+ * their shape.
  *
- * Everything on this card is a comparison aid — name, price, saving, team size,
- * deliverable count, and the first few inclusions. The full list is one tap
- * away rather than pushed into the layout.
+ * **Every zone has a reserved height** so the four cards line up row for row:
+ * badge, title, tagline, price, the team/deliverables rule, then the list. A
+ * one-line title next to a two-line title would otherwise push every row below
+ * it out of step, and the popular badge would push two of the four down by its
+ * own height. Measured across all four; the rows share a baseline.
  */
 const PackageCard = ({ pkg, onOpen }) => {
     const save = Math.ceil(((pkg.total - pkg.offer) / pkg.total) * 100);
@@ -161,34 +163,42 @@ const PackageCard = ({ pkg, onOpen }) => {
 
     return (
         <article
-            className={`relative flex h-full flex-col overflow-hidden rounded-media bg-ground-raised
-                        shadow-panel transition-transform duration-ui ease-standard
+            /* border-2 on every card, colour is the only difference. A 2px
+               border on the popular ones against 1px elsewhere pushed their
+               rows down by exactly 1px — visible when four cards are read
+               across. */
+            className={`relative flex h-full flex-col overflow-hidden rounded-media border-2
+                        bg-ground-raised shadow-panel transition-transform duration-ui ease-standard
                         hover:-translate-y-1 focus-within:-translate-y-1
-                        ${pkg.isPopular ? 'border-2 border-accent' : 'border border-gold/35'}`}
+                        ${pkg.isPopular ? 'border-accent' : 'border-gold/35'}`}
         >
-            {/* A flat ribbon along the top edge. The old one was rotated 45°
-                through the corner, which clipped its own text on narrow cards. */}
-            {pkg.isPopular && (
-                <p className="flex items-center justify-center gap-1.5 bg-accent px-3 py-1.5
-                              text-[11px] font-semibold text-white">
-                    <FiStar aria-hidden="true" className="h-3 w-3" />
-                    Popular choice
-                </p>
-            )}
+            {/* Rendered on every card, labelled on two. Rendering it only on the
+                popular ones pushed their content down by 30px and broke the
+                row alignment across the four. */}
+            <div className={`flex h-[30px] shrink-0 items-center justify-center
+                             ${pkg.isPopular ? 'bg-accent' : ''}`}>
+                {pkg.isPopular && (
+                    <p className="flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.02em] text-white">
+                        <FiStar aria-hidden="true" className="h-3 w-3" />
+                        Popular choice
+                    </p>
+                )}
+            </div>
 
             <div className="flex flex-1 flex-col p-5">
-                <h3 className="t-heading-2">{pkg.title}</h3>
-                <p className="t-caption mt-1">{pkg.tagline}</p>
+                {/* Two lines reserved: titles run one to three words or seven. */}
+                <h3 className="t-heading-2 min-h-[2.6em] max-w-none">{pkg.title}</h3>
+                <p className="t-body-sm mt-1 min-h-[3.2em] text-ink-muted">{pkg.tagline}</p>
 
                 <div className="mt-4 flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                    <span className="font-display text-[26px] font-semibold text-accent-ink">
+                    <span className="font-display text-[28px] font-semibold leading-none text-accent-ink">
                         ₹{Number(pkg.offer).toLocaleString('en-IN')}
                     </span>
-                    <span className="text-[13px] text-ink-muted line-through">
+                    <span className="text-[14px] text-ink-muted line-through">
                         ₹{Number(pkg.total).toLocaleString('en-IN')}
                     </span>
                 </div>
-                <p className="mt-2 w-fit rounded-pill bg-accent-tint px-2.5 py-1 text-[12px] font-semibold text-accent-ink">
+                <p className="mt-2.5 w-fit rounded-pill bg-accent-tint px-2.5 py-1 text-[12px] font-semibold text-accent-ink">
                     Save {save}%
                 </p>
 
@@ -198,24 +208,24 @@ const PackageCard = ({ pkg, onOpen }) => {
                     in front of it. */}
                 <dl className="mt-4 grid grid-cols-2 gap-2 border-y border-gold/25 py-3">
                     <div>
-                        <dt className="t-caption">Team</dt>
-                        <dd className="text-[14px] font-semibold text-ink">{pkg.team.length} people</dd>
+                        <dt className="text-[12px] text-ink-muted">Team</dt>
+                        <dd className="text-[15px] font-semibold text-ink">{pkg.team.length} people</dd>
                     </div>
                     <div>
-                        <dt className="t-caption">Deliverables</dt>
-                        <dd className="text-[14px] font-semibold text-ink">{included.length} items</dd>
+                        <dt className="text-[12px] text-ink-muted">Deliverables</dt>
+                        <dd className="text-[15px] font-semibold text-ink">{included.length} items</dd>
                     </div>
                 </dl>
 
                 <ul className="mt-4 flex-1 space-y-2">
                     {preview.map((item, i) => (
-                        <li key={i} className="flex items-start gap-2 text-[13px] text-ink-secondary">
-                            <FiCheckCircle aria-hidden="true" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent-ink" />
+                        <li key={i} className="flex items-start gap-2 text-[14px] leading-snug text-ink-secondary">
+                            <FiCheckCircle aria-hidden="true" className="mt-[3px] h-3.5 w-3.5 shrink-0 text-accent-ink" />
                             {item.text}
                         </li>
                     ))}
                     {moreCount > 0 && (
-                        <li className="pl-5 text-[13px] text-ink-muted">+{moreCount} more</li>
+                        <li className="pl-[22px] text-[14px] text-ink-muted">+{moreCount} more</li>
                     )}
                 </ul>
 
@@ -235,7 +245,9 @@ const PackageCard = ({ pkg, onOpen }) => {
     );
 };
 
-// Random values for PackagesSection's floating hearts decoration.
+// Random values for PackagesSection's floating hearts decoration. Generated
+// client-side only (post-mount) so server and client markup match on first
+// paint — Math.random() during render is a hydration mismatch under SSR.
 function makeHearts() {
     return Array.from({ length: 8 }, () => ({
         initialX: Math.random() * 100,
@@ -326,10 +338,10 @@ const PackagesSection = () => {
                         <FiStar className="inline mr-2" />
                         Most Chosen Packages
                     </div>
-                    <h2 className="lg:text-desktopHeadlineMedium sm:text-mobileHeadlineMedium font-bold text-gray-900 mb-4">
+                    <h2 id="pricing-heading" className="t-display-2 mx-auto mb-4">
                         Perfect Plans for Your Perfect Day
                     </h2>
-                    <p className="lg:text-desktopHeadlineSmall sm:text-mobileBodyLarge text-gray-600 max-w-2xl mx-auto">
+                    <p className="t-body-lead mx-auto max-w-2xl">
                         Tailored packages that capture every magical moment of your wedding journey
                     </p>
                 </div>

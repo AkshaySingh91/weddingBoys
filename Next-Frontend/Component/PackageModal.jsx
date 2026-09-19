@@ -20,8 +20,37 @@
 import { useEffect, useRef, useState } from 'react';
 import {
     FiX, FiCheckCircle, FiXCircle, FiUsers, FiPackage,
-    FiMessageCircle, FiTag,
+    FiMessageCircle, FiStar,
 } from 'react-icons/fi';
+
+/** One titled group. Every group in the panel is built from this, so they
+ *  cannot drift apart in size or spacing the way hand-rolled ones did. */
+function Detail({ icon: Icon, title, muted = false, children }) {
+    return (
+        <section className="mt-7">
+            <h3 className={`flex items-center gap-2 text-[15px] font-semibold
+                            ${muted ? 'text-ink-muted' : 'text-ink'}`}>
+                <Icon aria-hidden="true" className={`h-4 w-4 ${muted ? 'text-ink-muted' : 'text-accent-ink'}`} />
+                {title}
+            </h3>
+            <ul className="mt-3 space-y-2.5">{children}</ul>
+        </section>
+    );
+}
+
+/** One line item. */
+function Row({ tone, children }) {
+    const on = tone === 'on';
+    return (
+        <li className={`flex items-start gap-2.5 text-[15px] leading-snug
+                        ${on ? 'text-ink-secondary' : 'text-ink-muted'}`}>
+            {on
+                ? <FiCheckCircle aria-hidden="true" className="mt-[3px] h-4 w-4 shrink-0 text-accent-ink" />
+                : <FiXCircle aria-hidden="true" className="mt-[3px] h-4 w-4 shrink-0" />}
+            {children}
+        </li>
+    );
+}
 
 export default function PackageModal({ pkg, whatsappHref, onClose }) {
     const panelRef = useRef(null);
@@ -91,36 +120,36 @@ export default function PackageModal({ pkg, whatsappHref, onClose }) {
                             rounded-t-media
                             ${shown ? 'translate-y-0 opacity-100 sm:scale-100' : 'translate-y-4 opacity-0 sm:scale-[0.96]'}`}
             >
-                {/* ── Header: stays put while the body scrolls, so the price and
-                       the close button are never scrolled away from. ── */}
-                <div className="relative shrink-0 border-b border-gold/30 bg-accent-wash px-5 py-5 sm:px-7">
+                {/* ── Header. Stays put while the body scrolls, so the price
+                       and the close control are never scrolled away from. ── */}
+                <div className="relative shrink-0 border-b border-gold/30 bg-accent-wash px-6 py-6 sm:px-8">
                     <button
                         type="button"
                         onClick={onClose}
                         aria-label="Close package details"
-                        className="absolute right-3 top-3 grid h-12 w-12 place-items-center rounded-pill
-                                   border border-gold/40 bg-ground text-ink transition-colors
-                                   duration-micro ease-standard hover:bg-ground-sunk focus-ring"
+                        className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-pill
+                                   text-ink-secondary transition-colors duration-micro ease-standard
+                                   hover:bg-ground hover:text-ink focus-ring"
                     >
                         <FiX aria-hidden="true" className="h-5 w-5" />
                     </button>
 
                     {pkg.isPopular && (
-                        <p className="mb-2 inline-flex items-center gap-1.5 rounded-pill bg-accent
-                                      px-3 py-1 text-[11px] font-semibold text-white">
-                            <FiTag aria-hidden="true" className="h-3 w-3" />
+                        <p className="mb-2.5 inline-flex items-center gap-1.5 rounded-pill bg-accent
+                                      px-2.5 py-1 text-[11px] font-semibold tracking-[0.02em] text-white">
+                            <FiStar aria-hidden="true" className="h-3 w-3" />
                             Popular choice
                         </p>
                     )}
 
-                    <h2 id="package-modal-title" className="t-display-2 pr-14">{pkg.title}</h2>
-                    <p className="t-body-sm mt-1">{pkg.tagline}</p>
+                    <h2 id="package-modal-title" className="t-display-2 max-w-none pr-12">{pkg.title}</h2>
+                    <p className="t-body-sm mt-1.5 text-ink-muted">{pkg.tagline}</p>
 
-                    <div className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                        <span className="font-display text-[30px] font-semibold text-accent-ink">
+                    <div className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                        <span className="font-display text-[34px] font-semibold leading-none text-accent-ink">
                             ₹{Number(pkg.offer).toLocaleString('en-IN')}
                         </span>
-                        <span className="t-body-sm text-ink-muted line-through">
+                        <span className="text-[15px] text-ink-muted line-through">
                             ₹{Number(pkg.total).toLocaleString('en-IN')}
                         </span>
                         <span className="rounded-pill bg-accent-tint px-2.5 py-1 text-[12px] font-semibold text-accent-ink">
@@ -129,67 +158,47 @@ export default function PackageModal({ pkg, whatsappHref, onClose }) {
                     </div>
                 </div>
 
-                {/* ── Body ── */}
-                <div className="min-h-0 flex-1 overflow-y-auto px-5 py-6 sm:px-7">
-                    <p className="t-body">{pkg.description}</p>
+                {/* ── Body. One ground, one type ladder: 19px lead, 15px section
+                       headings, 15px items. The first pass mixed a bordered
+                       callout, boxed team chips and 14px list text, which read
+                       as three different components in one panel. ── */}
+                <div className="min-h-0 flex-1 overflow-y-auto bg-ground px-6 py-6 sm:px-8">
+                    <p className="text-[17px] leading-relaxed text-ink-secondary">{pkg.description}</p>
 
                     {pkg.recommendedFor && (
-                        <p className="t-body-sm mt-3 rounded-panel border-l-2 border-gold-strong bg-ground-sunk px-3 py-2">
-                            <span className="font-semibold text-ink">Best for:</span> {pkg.recommendedFor}
+                        <p className="mt-4 text-[15px] text-ink-secondary">
+                            <span className="font-semibold text-ink">Best for</span>
+                            <span className="mx-2 text-gold-strong" aria-hidden="true">·</span>
+                            {pkg.recommendedFor}
                         </p>
                     )}
 
-                    <h3 className="t-heading-3 mt-7 flex items-center gap-2">
-                        <FiUsers aria-hidden="true" className="h-4 w-4 text-accent-ink" />
-                        Your team — {pkg.team.length} {pkg.team.length === 1 ? 'person' : 'people'}
-                    </h3>
-                    <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+                    <Detail
+                        icon={FiUsers}
+                        title={`Your team — ${pkg.team.length} ${pkg.team.length === 1 ? 'person' : 'people'}`}
+                    >
                         {pkg.team.map((member, i) => (
-                            <li
-                                key={`${member}-${i}`}
-                                className="flex items-center gap-2 rounded-panel border border-gold/25
-                                           bg-ground-raised px-3 py-2 text-[14px] text-ink-secondary"
-                            >
-                                <FiCheckCircle aria-hidden="true" className="h-4 w-4 shrink-0 text-accent-ink" />
-                                {member}
-                            </li>
+                            <Row key={`${member}-${i}`} tone="on">{member}</Row>
                         ))}
-                    </ul>
+                    </Detail>
 
-                    <h3 className="t-heading-3 mt-7 flex items-center gap-2">
-                        <FiPackage aria-hidden="true" className="h-4 w-4 text-accent-ink" />
-                        What&apos;s included
-                    </h3>
-                    <ul className="mt-3 grid gap-2">
-                        {included.map((item, i) => (
-                            <li key={`in-${i}`} className="flex items-start gap-2 text-[14px] text-ink-secondary">
-                                <FiCheckCircle aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-accent-ink" />
-                                {item.text}
-                            </li>
-                        ))}
-                    </ul>
+                    <Detail icon={FiPackage} title="What's included">
+                        {included.map((item, i) => <Row key={`in-${i}`} tone="on">{item.text}</Row>)}
+                    </Detail>
 
-                    {/* Exclusions are separated rather than struck through in the
-                        same list. A line-through item in a list of ticks reads as
-                        "included, then cancelled" at a glance. */}
+                    {/* Exclusions are separated rather than struck through inside
+                        the tick list, where they read as "included, then
+                        cancelled" at a glance. */}
                     {excluded.length > 0 && (
-                        <>
-                            <h3 className="t-label mt-6">Not in this package</h3>
-                            <ul className="mt-2 grid gap-2">
-                                {excluded.map((item, i) => (
-                                    <li key={`ex-${i}`} className="flex items-start gap-2 text-[14px] text-ink-muted">
-                                        <FiXCircle aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0" />
-                                        {item.text}
-                                    </li>
-                                ))}
-                            </ul>
-                        </>
+                        <Detail icon={FiXCircle} title="Not in this package" muted>
+                            {excluded.map((item, i) => <Row key={`ex-${i}`} tone="off">{item.text}</Row>)}
+                        </Detail>
                     )}
                 </div>
 
-                {/* ── Footer: the action stays reachable without scrolling to the
-                       bottom of thirteen inclusions. ── */}
-                <div className="shrink-0 border-t border-gold/30 bg-ground-raised px-5 py-4 sm:px-7
+                {/* ── Footer. The action stays reachable without scrolling past
+                       thirteen inclusions. ── */}
+                <div className="shrink-0 border-t border-gold/30 bg-ground-raised px-6 py-4 sm:px-8
                                 pb-[max(1rem,env(safe-area-inset-bottom))]">
                     <a
                         href={whatsappHref}
@@ -203,7 +212,7 @@ export default function PackageModal({ pkg, whatsappHref, onClose }) {
                         <FiMessageCircle aria-hidden="true" className="h-5 w-5" />
                         Enquire about this package
                     </a>
-                    <p className="t-caption mt-2 text-center">
+                    <p className="mt-2 text-center text-[13px] text-ink-muted">
                         Opens WhatsApp with your package details filled in.
                     </p>
                 </div>
