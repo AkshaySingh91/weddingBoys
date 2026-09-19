@@ -27,6 +27,8 @@ import {
   ChatCircleDots,
   ChartLineUp,
   PenNib,
+  CalendarHeart,
+  Gear,
 } from '@phosphor-icons/react';
 import { useStudioDetails } from '@/Context/StudioDetailsContext.jsx';
 import { useAuth } from '@/Context/AdminAuthContext.jsx';
@@ -152,18 +154,6 @@ export default function AdminSidebar({
           path: '/admin/clients/new',
           icon: Camera,
         },
-        {
-          id: 'tags',
-          label: 'Portfolio Tags',
-          path: '/admin/website-setting/add-tags',
-          icon: Tag,
-        },
-        {
-          id: 'bts',
-          label: 'BTS Roles',
-          path: '/admin/website-setting/bts-schema-manager',
-          icon: ShieldWarning,
-        },
       ],
     },
     {
@@ -212,10 +202,10 @@ export default function AdminSidebar({
       group: 'Studio Governance',
       items: [
         {
-          id: 'studio-setting',
-          label: 'Studio Contact & Info',
-          path: '/admin/studio-setting',
-          icon: AddressBook,
+          id: 'settings',
+          label: 'Studio Settings',
+          path: '/admin/settings',
+          icon: Gear,
         },
         ...(isSuperAdmin
           ? [

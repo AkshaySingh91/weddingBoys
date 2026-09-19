@@ -36,17 +36,24 @@ export default function useClients() {
      * forced, so the caller is asked twice: once for the delete, and again to
      * confirm pulling live work off the public site.
      *
-     * @param {(msg: string) => boolean} confirmForce asked only on a 409
+     * @param {(msg: string) => boolean | { purgeMedia?: boolean, confirmForce?: (msg: string) => boolean }} confirmForceOrOptions
      */
-    const remove = useCallback(async (clientId, confirmForce) => {
+    const remove = useCallback(async (clientId, confirmForceOrOptions, maybeOptions = {}) => {
         setBusyId(clientId);
+        const isOptionsObject = typeof confirmForceOrOptions === 'object' && confirmForceOrOptions !== null;
+        const confirmForce = isOptionsObject ? confirmForceOrOptions.confirmForce : confirmForceOrOptions;
+        const options = isOptionsObject ? confirmForceOrOptions : maybeOptions;
+        const purgeMedia = !!options?.purgeMedia;
+        const baseQuery = purgeMedia ? '?purge=true' : '';
+        const forceQuery = purgeMedia ? '?force=true&purge=true' : '?force=true';
+
         try {
-            let res = await fetch(`${api_url}/api/admin/clients/${clientId}`, { method: 'DELETE', credentials: 'include' });
+            let res = await fetch(`${api_url}/api/admin/clients/${clientId}${baseQuery}`, { method: 'DELETE', credentials: 'include' });
             let data = await res.json();
 
             if (res.status === 409 && data.requiresForce) {
                 if (!confirmForce?.(data.message)) return false;
-                res = await fetch(`${api_url}/api/admin/clients/${clientId}?force=true`, { method: 'DELETE', credentials: 'include' });
+                res = await fetch(`${api_url}/api/admin/clients/${clientId}${forceQuery}`, { method: 'DELETE', credentials: 'include' });
                 data = await res.json();
             }
             if (!res.ok) throw new Error(data.message || 'Could not delete');

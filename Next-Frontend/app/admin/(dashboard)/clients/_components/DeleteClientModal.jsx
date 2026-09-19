@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import {
   WarningCircle, Trash, X, FilmSlate, ImageSquare, ShieldCheck,
 } from '@phosphor-icons/react';
@@ -25,6 +26,12 @@ export default function DeleteClientModal({
   loading = false,
   isDraft = false,
 }) {
+  const [purgeMedia, setPurgeMedia] = useState(false);
+
+  useEffect(() => {
+    if (open) setPurgeMedia(false);
+  }, [open]);
+
   const bride = client?.clientName?.Bride || '';
   const groom = client?.clientName?.Groom || '';
   const clientName = [bride, groom].filter(Boolean).join(' & ') || 'Untitled Wedding';
@@ -44,7 +51,12 @@ export default function DeleteClientModal({
           {/* Header */}
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-center gap-2.5">
-              <span className="flex items-center justify-center h-10 w-10 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 shrink-0">
+              <span className={cn(
+                "flex items-center justify-center h-10 w-10 rounded-xl shrink-0 border transition-colors",
+                purgeMedia
+                  ? "bg-rose-100 border-rose-300 text-rose-700"
+                  : "bg-rose-50 border-rose-200 text-rose-600"
+              )}>
                 <WarningCircle size={22} weight="fill" />
               </span>
               <div>
@@ -109,14 +121,46 @@ export default function DeleteClientModal({
             </p>
           </div>
 
-          {/* Asset Preservation Note */}
+          {/* Cloudflare R2 Media Purge Option */}
           {!isDraft && (
-            <div className="rounded-xl border border-emerald-200/80 bg-emerald-50/60 p-3 text-[11px] text-emerald-950 flex items-start gap-2">
-              <ShieldCheck size={16} weight="fill" className="text-emerald-600 shrink-0 mt-0.5" />
-              <p className="leading-relaxed text-emerald-900/90">
-                <span className="font-semibold text-emerald-950">Zero file data loss:</span> Raw master media files are NOT deleted from cloud storage. They will be safely returned to the <span className="font-medium text-emerald-950">Unassigned Backlog</span> in your Media Library.
-              </p>
+            <div className="rounded-xl border border-stone-200 bg-stone-50/80 p-3 space-y-2">
+              <label className="flex items-start gap-2.5 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={purgeMedia}
+                  onChange={(e) => setPurgeMedia(e.target.checked)}
+                  disabled={loading}
+                  className="mt-0.5 h-4 w-4 rounded border-stone-300 text-rose-600 focus:ring-rose-500 cursor-pointer"
+                />
+                <div className="text-xs">
+                  <span className="font-semibold text-stone-900">
+                    Permanently purge all media files from Cloudflare R2
+                  </span>
+                  <p className="text-[11px] text-stone-500 mt-0.5 leading-snug">
+                    By default, raw footage is preserved in the library backlog. Check this to completely wipe master files, web variants, and posters from cloud storage.
+                  </p>
+                </div>
+              </label>
             </div>
+          )}
+
+          {/* Asset Preservation or Purge Alert */}
+          {!isDraft && (
+            purgeMedia ? (
+              <div className="rounded-xl border border-rose-300 bg-rose-50/90 p-3 text-[11px] text-rose-950 flex items-start gap-2">
+                <WarningCircle size={16} weight="fill" className="text-rose-600 shrink-0 mt-0.5" />
+                <p className="leading-relaxed text-rose-900 font-medium">
+                  <span className="font-bold text-rose-950">Irreversible Action:</span> All raw files and responsive web variants for this client will be permanently deleted from Cloudflare R2 storage bucket.
+                </p>
+              </div>
+            ) : (
+              <div className="rounded-xl border border-emerald-200/80 bg-emerald-50/60 p-3 text-[11px] text-emerald-950 flex items-start gap-2">
+                <ShieldCheck size={16} weight="fill" className="text-emerald-600 shrink-0 mt-0.5" />
+                <p className="leading-relaxed text-emerald-900/90">
+                  <span className="font-semibold text-emerald-950">Zero file data loss:</span> Raw master media files are NOT deleted from cloud storage. They will be safely returned to the <span className="font-medium text-emerald-950">Unassigned Backlog</span> in your Media Library.
+                </p>
+              </div>
+            )
           )}
 
           {/* Action Buttons */}
@@ -137,10 +181,19 @@ export default function DeleteClientModal({
               size="sm"
               loading={loading}
               icon={Trash}
-              onClick={onConfirm}
-              className="bg-rose-600 hover:bg-rose-700 text-white font-medium shadow-xs"
+              onClick={() => onConfirm?.({ purgeMedia })}
+              className={cn(
+                "text-white font-medium shadow-sm transition-colors",
+                purgeMedia
+                  ? "bg-rose-700 hover:bg-rose-800"
+                  : "bg-rose-600 hover:bg-rose-700"
+              )}
             >
-              {isDraft ? 'Discard Draft' : 'Delete Wedding Archive'}
+              {isDraft
+                ? 'Discard Draft'
+                : purgeMedia
+                  ? 'Permanently Wipe Client & R2 Media'
+                  : 'Delete Wedding Archive'}
             </Button>
           </div>
         </div>

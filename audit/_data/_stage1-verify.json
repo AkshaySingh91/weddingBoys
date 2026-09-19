@@ -1,0 +1,190 @@
+{
+ "mobile": {
+  "rest": {
+   "height": 96,
+   "bg": "rgba(0, 0, 0, 0)",
+   "blur": "none"
+  },
+  "condensed": {
+   "height": 64,
+   "bg": "rgba(0, 0, 0, 0)",
+   "blur": "blur(12px)"
+  },
+  "overflowX": 0,
+  "landmarks": {
+   "header": 1,
+   "main": 1,
+   "footer": 1,
+   "nav": 4
+  },
+  "skipLink": true,
+  "shellTargetsUnder44": [],
+  "unlabelledShellLinks": 0
+ },
+ "tablet": {
+  "rest": {
+   "height": 96,
+   "bg": "rgba(0, 0, 0, 0)",
+   "blur": "none"
+  },
+  "condensed": {
+   "height": 64,
+   "bg": "rgba(0, 0, 0, 0)",
+   "blur": "blur(12px)"
+  },
+  "overflowX": 0,
+  "landmarks": {
+   "header": 1,
+   "main": 1,
+   "footer": 1,
+   "nav": 4
+  },
+  "skipLink": true,
+  "shellTargetsUnder44": [],
+  "unlabelledShellLinks": 0
+ },
+ "laptop": {
+  "rest": {
+   "height": 96,
+   "bg": "rgba(0, 0, 0, 0)",
+   "blur": "none"
+  },
+  "condensed": {
+   "height": 64,
+   "bg": "rgba(0, 0, 0, 0)",
+   "blur": "blur(12px)"
+  },
+  "overflowX": 0,
+  "landmarks": {
+   "header": 1,
+   "main": 1,
+   "footer": 1,
+   "nav": 4
+  },
+  "skipLink": true,
+  "shellTargetsUnder44": [],
+  "unlabelledShellLinks": 0
+ },
+ "desktop": {
+  "rest": {
+   "height": 96,
+   "bg": "rgba(0, 0, 0, 0)",
+   "blur": "none"
+  },
+  "condensed": {
+   "height": 64,
+   "bg": "rgba(0, 0, 0, 0)",
+   "blur": "blur(12px)"
+  },
+  "overflowX": 0,
+  "landmarks": {
+   "header": 1,
+   "main": 1,
+   "footer": 1,
+   "nav": 4
+  },
+  "skipLink": true,
+  "shellTargetsUnder44": [],
+  "unlabelledShellLinks": 0
+ },
+ "keyboard": [
+  {
+   "tag": "a",
+   "label": "Skip to content",
+   "outline": "solid 2px rgb(176, 141, 87)",
+   "visible": true
+  },
+  {
+   "tag": "a",
+   "label": "The Wedding Boys — home",
+   "outline": "solid 2px rgb(176, 141, 87)",
+   "visible": true
+  },
+  {
+   "tag": "a",
+   "label": "Films",
+   "outline": "solid 2px rgb(176, 141, 87)",
+   "visible": true
+  },
+  {
+   "tag": "a",
+   "label": "Photographs",
+   "outline": "solid 2px rgb(176, 141, 87)",
+   "visible": true
+  },
+  {
+   "tag": "a",
+   "label": "Destinations",
+   "outline": "solid 2px rgb(176, 141, 87)",
+   "visible": true
+  },
+  {
+   "tag": "a",
+   "label": "VaranasiThe sacred city",
+   "outline": "solid 2px rgb(176, 141, 87)",
+   "visible": true
+  },
+  {
+   "tag": "a",
+   "label": "UdaipurLake palaces",
+   "outline": "solid 2px rgb(176, 141, 87)",
+   "visible": true
+  },
+  {
+   "tag": "a",
+   "label": "JaipurRoyal Rajasthan",
+   "outline": "solid 2px rgb(176, 141, 87)",
+   "visible": true
+  },
+  {
+   "tag": "a",
+   "label": "GoaCoastal",
+   "outline": "solid 2px rgb(176, 141, 87)",
+   "visible": true
+  },
+  {
+   "tag": "a",
+   "label": "Studio",
+   "outline": "solid 2px rgb(176, 141, 87)",
+   "visible": true
+  },
+  {
+   "tag": "a",
+   "label": "About usHow we work",
+   "outline": "solid 2px rgb(176, 141, 87)",
+   "visible": true
+  },
+  {
+   "tag": "a",
+   "label": "The teamWho shoots your day",
+   "outline": "solid 2px rgb(176, 141, 87)",
+   "visible": true
+  },
+  {
+   "tag": "a",
+   "label": "Journal",
+   "outline": "solid 2px rgb(176, 141, 87)",
+   "visible": true
+  },
+  {
+   "tag": "a",
+   "label": "Enquire",
+   "outline": "solid 2px rgb(176, 141, 87)",
+   "visible": true
+  }
+ ],
+ "reducedMotion": {
+  "stillAnimating": 0
+ },
+ "fonts": {
+  "files": 4,
+  "kb": 203,
+  "faces": 43,
+  "loaded": [
+   "Inter",
+   "Inter Fallback",
+   "Bodoni Moda",
+   "__nextjs-Geist"
+  ]
+ }
+}

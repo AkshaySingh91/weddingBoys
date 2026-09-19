@@ -63,6 +63,8 @@ import { startBlogPublishScheduler } from './Services/blogPublishScheduler.js';
 import uploadRoute from './Routes/Admin/uploadRoute.js'
 // portfolio: assign media to clients, cross-client curation
 import portfolioRoute from './Routes/Admin/portfolioRoute.js'
+// wedding ceremonies master taxonomy (Haldi, Mehendi, Sangeet, etc.)
+import ceremonyRoute from './Routes/Admin/ceremonyRoute.js'
 
 // all this route wont required authentication
 app.use(HomePageRoute)
@@ -77,6 +79,8 @@ app.use(publicCommentRoute)
 app.use(publicBlogAnalyticsRoute)
 app.use(publicContentRoute)
 app.use(pricingConfigRoute)
+// ceremonies master taxonomy — public list + verifyToken-guarded admin CRUD
+app.use(ceremonyRoute)
 // enterprise auth (login/refresh/logout/forgot/reset) — guards applied per-route
 app.use(authV2Route)
 // user management — guards applied per-route (SuperAdmin for mutations)

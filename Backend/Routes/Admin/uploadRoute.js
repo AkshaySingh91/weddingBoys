@@ -9,7 +9,7 @@ const Route = express.Router();
 
 // Direct browser→R2 upload control plane. No route here receives file bytes;
 // multer is deliberately absent.
-Route.use(verifyToken);
+Route.use('/api/admin/uploads', verifyToken);
 
 Route.post('/api/admin/uploads/create', createUpload);
 Route.get('/api/admin/uploads/resumable', listResumableUploads);

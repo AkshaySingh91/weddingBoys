@@ -328,13 +328,15 @@ export default function ClientWorkspace() {
         refresh();
     };
 
-    const confirmDelete = async () => {
+    const confirmDelete = async ({ purgeMedia } = {}) => {
         setDeleteLoading(true);
+        const baseQuery = purgeMedia ? '?purge=true' : '';
+        const forceQuery = purgeMedia ? '?force=true&purge=true' : '?force=true';
         try {
-            let res = await fetch(`${api_url}/api/admin/clients/${id}`, { method: 'DELETE', credentials: 'include' });
+            let res = await fetch(`${api_url}/api/admin/clients/${id}${baseQuery}`, { method: 'DELETE', credentials: 'include' });
             let data = await res.json();
             if (res.status === 409 && data.requiresForce) {
-                res = await fetch(`${api_url}/api/admin/clients/${id}?force=true`, { method: 'DELETE', credentials: 'include' });
+                res = await fetch(`${api_url}/api/admin/clients/${id}${forceQuery}`, { method: 'DELETE', credentials: 'include' });
                 data = await res.json();
             }
             if (!res.ok) throw new Error(data.message || 'Could not delete');

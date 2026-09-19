@@ -14,6 +14,7 @@ import PortfolioItem from '../Models/PortfolioItem.js';
 import Media from '../Models/Media.js';
 import { rollupByClient, storageByClient, EMPTY_STATS } from '../Services/clientStats.js';
 import WebsiteSettingSchema from '../Models/WebsiteSettingSchema.js';
+import { deleteSingleMediaDoc } from './mediaController.js';
 
 const nameOf = (c) => [c?.clientName?.Bride, c?.clientName?.Groom].filter(Boolean).join(' & ');
 
@@ -154,19 +155,43 @@ export async function deleteClient(req, res) {
         const items = await PortfolioItem.find({ client: id }).select('media').lean();
         const mediaIds = items.map((i) => i.media).filter(Boolean);
 
+        const purgeMedia = req.query.purge === 'true' || req.query.purgeMedia === 'true';
+
         await PortfolioItem.deleteMany({ client: id });
-        if (mediaIds.length) {
+
+        let purgedCount = 0;
+        let releasedCount = 0;
+
+        if (purgeMedia) {
+            // Find all media owned by client or attached via portfolio items
+            const allClientMedia = await Media.find({
+                $or: [
+                    { ownerType: 'Client', ownerId: String(id) },
+                    { _id: { $in: mediaIds } },
+                ],
+            });
+
+            await Promise.allSettled(allClientMedia.map((m) => deleteSingleMediaDoc(m)));
+            const purgedIds = allClientMedia.map((m) => m._id);
+            if (purgedIds.length) {
+                await Media.deleteMany({ _id: { $in: purgedIds } });
+            }
+            purgedCount = purgedIds.length;
+        } else if (mediaIds.length) {
             await Media.updateMany({ _id: { $in: mediaIds } }, {
                 $set: { ownerType: 'System', ownerId: null },
             });
+            releasedCount = mediaIds.length;
         }
+
         await setMapPin(client._id, null);
         await Client.deleteOne({ _id: client._id });
 
         return res.status(200).json({
             message: `${nameOf(client)} removed`,
             removedItems: items.length,
-            releasedAssets: mediaIds.length,
+            releasedAssets: releasedCount,
+            purgedAssets: purgedCount,
         });
     } catch (error) {
         console.error('deleteClient error:', error);

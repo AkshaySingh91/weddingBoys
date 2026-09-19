@@ -42,8 +42,35 @@ module.exports = {
        * caught at build time.
        */
       scale: { 102: '1.02', 103: '1.03', 104: '1.04' },
-      transitionDuration: { 600: '600ms' },
-      boxShadow: { xs: '0 1px 2px 0 rgb(0 0 0 / 0.05)', '2xs': '0 1px 0 0 rgb(0 0 0 / 0.05)' },
+      /*
+        Motion tokens. `600` stays for the blog (out of scope) — it is what keeps
+        check-tailwind-classes.mjs from flagging `duration-600` there. A second
+        `transitionDuration` key declared below silently overrode it and failed
+        the build; same mistake as boxShadow, caught the same way.
+      */
+      transitionDuration: {
+        600: '600ms',
+        micro: 'var(--motion-micro)',
+        ui: 'var(--motion-ui)',
+        entrance: 'var(--motion-entrance)',
+        media: 'var(--motion-media)',
+        page: 'var(--motion-page)',
+      },
+      /*
+        Elevation on the public site's near-black ground comes from surface
+        lightening, not shadow — a drop shadow is close to invisible there. One
+        real shadow exists, `overlay`, for genuinely floating chrome.
+
+        `xs` and `2xs` stay: they are v4 spellings that admin uses in 53 places,
+        and defining them here is what keeps check-tailwind-classes.mjs from
+        flagging them. Declaring a second `boxShadow` key below silently
+        overrode these and broke the build — the guard caught it.
+      */
+      boxShadow: {
+        xs: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+        '2xs': '0 1px 0 0 rgb(0 0 0 / 0.05)',
+        overlay: '0 24px 64px -12px rgba(0, 0, 0, 0.7)',
+      },
       blur: { xs: '2px' },
       aspectRatio: { '4/5': '4 / 5', '3/4': '3 / 4', '4/3': '4 / 3' },
       backgroundColor: {
@@ -54,7 +81,37 @@ module.exports = {
         tertiary: '#5E6572',
         tertiary_on: '#2F2F2F',
       },
+      /* One radius set, mapped to component types. Deliberately austere: sharp
+         corners read more expensive, and it counters the identical-rounded-cards
+         tell. 4 values replacing 10. */
+      borderRadius: {
+        none: '0',
+        control: '2px',
+        panel: '4px',
+        pill: '999px',
+      },
+      zIndex: {
+        base: '0', raised: '10', sticky: '100',
+        header: '200', overlay: '300', modal: '400', toast: '500',
+      },
+      maxWidth: {
+        prose: '720px',
+        content: '1180px',
+        wide: '1440px',
+      },
+      transitionTimingFunction: {
+        standard: 'var(--ease-standard)',
+        entrance: 'var(--ease-entrance)',
+        page: 'var(--ease-page)',
+      },
+      spacing: {
+        section: 'var(--section)',
+        'section-tight': 'var(--section-tight)',
+        'section-loose': 'var(--section-loose)',
+        header: 'var(--header-height)',
+      },
       fontFamily: {
+        display: ['var(--font-display)', 'Bodoni Moda', 'Didot', 'Times New Roman', 'serif'],
         sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
         primary: ['var(--font-inter)', 'sans-serif'],
         serif: ['var(--font-playfair)', 'var(--font-dmserif)', 'Georgia', 'serif'],
@@ -67,6 +124,44 @@ module.exports = {
         lora: ['var(--font-lora)', 'serif'],
       },
       colors: {
+        /*
+          ── Design-system tokens (DESIGN-SYSTEM.md) ──────────────────────────
+          Public-site components consume ONLY these. Values live as CSS custom
+          properties in globals.css so utilities and raw CSS cannot diverge.
+          The legacy `studio.*` block below stays until Stage 8 — the
+          out-of-scope blog still consumes it.
+        */
+        ink: {
+          void: 'var(--ink-void)',
+          raised: 'var(--ink-raised)',
+          overlay: 'var(--ink-overlay)',
+          hairline: 'var(--ink-hairline)',
+        },
+        bone: 'var(--bone)',
+        accent: {
+          DEFAULT: 'var(--accent-fill)',
+          fill: 'var(--accent-fill)',
+          text: 'var(--accent-text)',
+          hover: 'var(--accent-hover)',
+          press: 'var(--accent-press)',
+        },
+        brass: 'var(--brass)',
+        content: {
+          primary: 'var(--text-primary)',
+          secondary: 'var(--text-secondary)',
+          muted: 'var(--text-muted)',
+          onAccent: 'var(--text-on-accent)',
+        },
+        edge: {
+          subtle: 'var(--border-subtle)',
+          strong: 'var(--border-strong)',
+        },
+        state: {
+          success: 'var(--status-success)',
+          error: 'var(--status-error)',
+          warning: 'var(--status-warning)',
+        },
+
         primary: '#1C1917',
         studio: {
           canvas: '#F7F4EF',

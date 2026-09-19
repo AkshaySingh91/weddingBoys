@@ -5,6 +5,15 @@
  * styles (identical CSS and DOM) but useless for performance: dev serves
  * unminified bundles, no static optimisation, and a development React. Every
  * number in 06-PERFORMANCE.md comes from here instead.
+ *
+ * ⚠ ORIGIN MATTERS. The backend's CORS allowlist contains `localhost:3000` only.
+ * Serving the production build on :3100 means every client-side fetch is blocked,
+ * so list pages (films, allfilms, photos, team, search) render EMPTY and their
+ * numbers describe a data-less page. The Phase 1 production figures were taken
+ * that way and understate those pages badly.
+ *
+ * To measure them truthfully: stop the dev server, run the production build on
+ * port 3000, and point BASE at it.
  */
 import { writeFileSync } from 'node:fs';
 import { launch, openPage } from './cdp.mjs';

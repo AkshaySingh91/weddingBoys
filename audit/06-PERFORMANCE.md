@@ -26,6 +26,30 @@ Profiles: **mobile-4g** = 390×844 throttled to 9 Mbps / 150ms RTT;
 **laptop** = 1440×900 unthrottled. Neither runs the scroll pass, so these are
 **initial-load** weights.
 
+**⚠ Correction, 2026-09-19 (found during Stage 1).** These figures were captured
+with the production build served on **port 3100**. The backend's CORS allowlist
+contains `localhost:3000` only, so every client-side fetch on :3100 was blocked
+and the **list pages rendered with no data**. The numbers below for `/films`,
+`/allfilms`, `/photos`, `/team` and `/search-result` therefore describe empty
+pages and understate them badly — `/photos` reporting `img 0KB` was the tell.
+
+Re-measured on a CORS-valid origin, with real data, the same pages read:
+
+| Page | LCP mobile-4g | CLS mobile |
+|---|---:|---:|
+| `/films` | **5,636ms** | 0.016 |
+| `/team` | **4,428ms** | 0.379 |
+| `/allfilms` | **4,160ms** | 0.286 |
+| `/photos` | **4,128ms** | **1.678** |
+| `/films/[id]` | 2,288ms | 0.089 |
+
+`/photos` at **1.678** independently corroborates the 1.70 measured in
+development with a scroll pass — the gallery's layout shift is real and is not a
+dev artefact (P-04 above is settled).
+
+Statically-rendered pages (`/`, `/about-us`, `/varanasi`, `/contact`,
+`/dharaa-…`) were unaffected by the CORS block and their figures stand.
+
 Raw data: `audit/_data/_perf-production.json`.
 
 ---

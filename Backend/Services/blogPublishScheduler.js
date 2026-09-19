@@ -40,7 +40,7 @@ export function startBlogPublishScheduler() {
                         template: post.template,
                         editedBy: post.author,
                         reason: 'scheduled-publish-auto',
-                    }).save().catch(() => {});
+                    }).save().catch(() => { });
                 }
 
                 // Trigger Next.js on-demand ISR revalidation

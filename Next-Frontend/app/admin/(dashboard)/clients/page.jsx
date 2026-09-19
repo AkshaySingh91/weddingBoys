@@ -68,11 +68,11 @@ export default function ClientsPage() {
         setDeletingClient(client);
     };
 
-    const confirmDelete = async () => {
+    const confirmDelete = async (options = {}) => {
         if (!deletingClient) return;
         setDeleteLoading(true);
         try {
-            const ok = await remove(deletingClient.clientId, () => true);
+            const ok = await remove(deletingClient.clientId, () => true, options);
             if (ok) setDeletingClient(null);
         } finally {
             setDeleteLoading(false);

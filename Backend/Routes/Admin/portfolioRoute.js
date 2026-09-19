@@ -6,7 +6,7 @@ import {
 } from '../../Controllers/portfolioController.js';
 
 const Route = express.Router();
-Route.use(verifyToken);
+Route.use('/api/admin/portfolio', verifyToken);
 
 Route.get('/api/admin/portfolio', listPortfolio);
 Route.post('/api/admin/portfolio', assignToClient);

@@ -2,6 +2,202 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   DESIGN TOKENS — the single source of truth. See DESIGN-SYSTEM.md.
+   ═══════════════════════════════════════════════════════════════════════════
+
+   Every value a public-site component uses comes from here. The rule is
+   enforceable: no arbitrary `[#hex]` in app/(site)/** or Component/**.
+
+   Baseline being replaced: 176 colour values, 37 font sizes, 132 line-heights,
+   41 spacing values, 25 container widths, 18 shadows, 9 z-indexes.
+
+   The legacy `studio.*` palette in tailwind.config.js stays until Stage 8 —
+   the out-of-scope blog still consumes it.
+   ─────────────────────────────────────────────────────────────────────────── */
+:root {
+  /* ── Ground. Warm near-black, never #000: pure black crushes on OLED,
+        kills shadow detail in photographs, and reads cheap. ── */
+  --ink-void:     #0B0A09;
+  --ink-raised:   #141210;
+  --ink-overlay:  #1A1714;
+  --ink-hairline: #241F1B;
+
+  --bone: #F2EDE6;
+
+  /* ── Accent: sindoor, split into two roles.
+        A single red cannot do both jobs at AA — verified. The fill carries bone
+        text at 5.54:1; the text tint reads 5.42:1 on the ground. Using either
+        in the other's place fails, which is exactly the defect the audit found
+        in the old brand (#FF5353 = 3.17:1, #FF6969 = 2.81:1). ── */
+  --accent-fill:  #A83824;
+  --accent-text:  #D9614A;
+  --accent-hover: #B33A26;
+  --accent-press: #96301F;
+
+  --brass: #B08D57;
+
+  /* ── Text on the ground ── */
+  --text-primary:   #F2EDE6;                    /* 16.99:1 */
+  --text-secondary: rgba(242, 237, 230, 0.72);  /*  8.87:1 */
+  --text-muted:     rgba(242, 237, 230, 0.52);  /*  5.03:1 */
+  --text-on-accent: #F2EDE6;                    /*  5.54:1 on --accent-fill */
+
+  --border-subtle: rgba(242, 237, 230, 0.10);
+  --border-strong: rgba(242, 237, 230, 0.22);
+  --focus-ring:    #B08D57;                     /*  6.40:1 */
+
+  --status-success: #4E8C6A;
+  --status-error:   #D0523C;
+  --status-warning: #C08A3E;
+
+  /* ── Scrims. Solved against a pure-white image, so the guarantee holds on a
+        blown-out beach frame and not only on a dark mandap. A first draft at
+        0.45 computed to 2.71:1 and would have reproduced the audit's
+        white-on-white defect. ── */
+  --scrim-base:   rgba(11, 10, 9, 0.66);  /* 5.64:1 worst case */
+  --scrim-strong: rgba(11, 10, 9, 0.74);  /* 7.62:1 worst case */
+  --scrim-gradient-bottom: linear-gradient(to top,
+      rgba(11, 10, 9, 0.88) 0%, rgba(11, 10, 9, 0.66) 30%, transparent 70%);
+  --scrim-gradient-hero: linear-gradient(to top,
+      rgba(11, 10, 9, 0.92) 0%, rgba(11, 10, 9, 0.62) 55%, rgba(11, 10, 9, 0.35) 100%);
+
+  /* ── Section rhythm (the base 4px scale lives in tailwind.config) ── */
+  --section-tight: 48px;
+  --section:       64px;
+  --section-loose: 96px;
+
+  /* ── Motion. Five durations and three easings, from nine and three.
+        Philosophy: motion confirms, it does not perform. ── */
+  --motion-micro:    120ms;
+  --motion-ui:       220ms;
+  --motion-entrance: 520ms;
+  --motion-media:    900ms;
+  --motion-page:     320ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0.38, 0.9);
+  --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-page:     cubic-bezier(0.4, 0, 0.2, 1);
+
+  --header-height:            96px;
+  --header-height-condensed:  64px;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --section-tight: 64px;
+    --section:       96px;
+    --section-loose: 160px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TYPE ROLES
+   ═══════════════════════════════════════════════════════════════════════════
+   Shipped as classes, not loose utility stacks, so a heading cannot be
+   assembled ad hoc. 11 roles replacing 37 rendered sizes.
+
+   Mobile is a separate decision, not a scale-down: display sizes compress hard
+   because line count matters more than drama on a phone; body sizes do not move
+   at all and never go below 16px.
+   ─────────────────────────────────────────────────────────────────────────── */
+.t-display-hero,
+.t-display-1,
+.t-display-2 {
+  font-family: var(--font-display), 'Bodoni Moda', Didot, 'Times New Roman', serif;
+  font-weight: 500;
+  font-optical-sizing: auto;
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+
+.t-display-hero { font-size: 40px; line-height: 1.02; letter-spacing: -0.02em;  max-width: 14ch; }
+.t-display-1    { font-size: 32px; line-height: 1.08; letter-spacing: -0.015em; max-width: 18ch; }
+.t-display-2    { font-size: 27px; line-height: 1.12; letter-spacing: -0.01em;  max-width: 22ch; }
+
+.t-heading-1, .t-heading-2, .t-heading-3 {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+.t-heading-1 { font-size: 24px; line-height: 1.22; letter-spacing: -0.005em; max-width: 30ch; }
+.t-heading-2 { font-size: 20px; line-height: 1.30; max-width: 34ch; }
+.t-heading-3 { font-size: 17px; line-height: 1.38; max-width: 40ch; }
+
+.t-body-lead, .t-body, .t-body-sm, .t-caption, .t-label {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+}
+.t-body-lead { font-size: 17px; line-height: 1.62; color: var(--text-secondary); max-width: 66ch; }
+.t-body      { font-size: 16px; line-height: 1.68; color: var(--text-secondary); max-width: 68ch; }
+.t-body-sm   { font-size: 14px; line-height: 1.60; color: var(--text-secondary); max-width: 62ch; }
+.t-caption   { font-size: 13px; line-height: 1.45; letter-spacing: 0.01em; color: var(--text-muted); max-width: 48ch; }
+
+/* The one uppercase role. Genuine labels only — form fields, nav, metadata.
+   Never a decorative eyebrow above a heading. */
+.t-label {
+  font-size: 12px; line-height: 1.30; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted);
+}
+
+@media (min-width: 1024px) {
+  .t-display-hero { font-size: 76px; }
+  .t-display-1    { font-size: 56px; }
+  .t-display-2    { font-size: 40px; }
+  .t-heading-1    { font-size: 30px; }
+  .t-heading-2    { font-size: 24px; }
+  .t-heading-3    { font-size: 19px; }
+  .t-body-lead    { font-size: 19px; }
+}
+
+/* ── Focus. The site previously had no designed focus state at all: all 460
+      measured rings were browser defaults. ── */
+.focus-ring:focus-visible,
+a:focus-visible, button:focus-visible,
+input:focus-visible, select:focus-visible, textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── Skip link. None existed; most pages present ~45 tab stops before content. ── */
+.skip-link {
+  position: absolute; left: 16px; top: -100px; z-index: 500;
+  padding: 12px 20px; background: var(--accent-fill); color: var(--text-on-accent);
+  border-radius: 2px; font-size: 14px; font-weight: 600;
+  transition: top var(--motion-micro) var(--ease-standard);
+}
+.skip-link:focus { top: 16px; }
+
+/* ── Scrim utilities. Any text over an image must carry one of these. ── */
+.scrim-base   { background: var(--scrim-base); }
+.scrim-strong { background: var(--scrim-strong); }
+.scrim-bottom { background: var(--scrim-gradient-bottom); }
+.scrim-hero   { background: var(--scrim-gradient-hero); }
+
+/* ── Skeletons. Built from the raised surface, never grey: the old ones used
+      Tailwind slate-400, a cool blue-grey that read as broken. ── */
+@keyframes wb-shimmer { 0% { background-position: -160% 0; } 100% { background-position: 260% 0; } }
+.skeleton {
+  background-color: var(--ink-raised);
+  background-image: linear-gradient(90deg,
+    transparent 0%, rgba(242, 237, 230, 0.06) 50%, transparent 100%);
+  background-size: 220% 100%;
+  animation: wb-shimmer 1.6s var(--ease-standard) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton { animation: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: var(--motion-micro) !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
 /*
   Smooth scrolling belongs to anchor navigation, not to every element.
 
@@ -1090,3 +1286,9 @@ html {
   long line loses that entirely.
 */
 .cover-legend { white-space: pre-line; }
+
+/* Indeterminate route-progress hairline — see app/(site)/loading.jsx */
+@keyframes wb-indeterminate {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}
