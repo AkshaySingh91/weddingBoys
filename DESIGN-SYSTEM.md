@@ -454,18 +454,61 @@ Rules:
 
 ---
 
-## 11. Open questions for the gate
+## 11. Gate decisions — resolved 2026-09-19
 
-1. **Bodoni Moda or Cormorant Garamond** for display (§4.2). I recommend Bodoni.
-2. **Does the dark ground extend to every page**, or do `/contact` and
-   `/weddings/[city]` get a light variant for form legibility and local SEO copy?
-   My recommendation: dark everywhere, with `--ink-raised` panels doing the work
-   on form-heavy pages. Consistency matters more than convenience here.
-3. **`/varanasi` (`R-41`)** is currently its own design language and is the
-   best-art-directed page on the site. Fold it into this system in Stage 8, or
-   keep it as a deliberate set-piece with its own type? I lean to folding it in —
-   one system, or it isn't a system.
-4. **Three content issues need client input, not code**: the films taxonomy
-   (Varanasi and Solapur filed under "Beach", `R-12`), the duplicated crew and
-   team entries (`R-24`), and the unverified "12,000 couples" / two "1000+"
-   figures (`F-01`–`F-03`). I will not mutate data to fix these.
+All four were delegated back to me. Recorded here as decisions, not options.
+
+**1. Display face: Bodoni Moda.** The braver and more differentiated choice, and
+the one that avoids the wedding-industry Playfair/Cormorant default. The obvious
+objection is that a cold didone sits oddly on warm, emotional, family events —
+and that objection is answered by where the warmth actually lives. The palette is
+warm by construction (`#0B0A09` is a warm black, `#F2EDE6` a warm bone, the
+accent is sindoor, the metallic is brass); the weddings themselves supply
+abundance. The type's job is to be the disciplined, precise frame around that.
+Warm ground, exact letterforms — the tension is the point.
+
+Binding mitigations stand: display face at **≥28px only**, minimum weight
+**500**, `opsz` axis set so small optical sizes thicken hairlines. Didone
+hairlines on near-black are a real risk, not a theoretical one.
+
+**2. Dark ground on every page, including `/contact`.** A light contact page
+would read as a different website at the exact moment a visitor is deciding
+whether to trust this one. Form legibility is solved with `--ink-raised` panels
+and properly designed fields, not by changing the ground. The audit's contact
+findings are behavioural anyway — silent failure, no keyboard submit — none of
+them are luminance problems.
+
+**3. `/varanasi` folds into the system.** One system, or it is not a system. Its
+Cormorant/Cinzel styling is retired in Stage 8. Its *composition* — the pinned
+horizontal panels, the full-bleed stills — is the best art direction on the site
+and is kept; only the tokens change.
+
+**4. Typography consolidates 8 declared families → 2.** Confirmed: 48
+`@font-face` rules, 12 files, 352 KB on the home page today, to render two
+families. Bodoni Moda + Inter, roughly 90 KB.
+
+---
+
+## 12. Out of scope, and why — `/varanasi` page weight (`R-09`)
+
+`/varanasi` loads **24.3 MB**. Phase 1 recorded this as a Critical performance
+defect. **That classification was wrong**, and the correction matters because it
+changes who owns the fix.
+
+The page's assets have never been migrated into the studio's media pipeline.
+Verified: every heavy asset is either a local `@/Asset` import served from
+`/_next/static/media/` or a raw file in `public/director-frames/` — **146 files,
+21 MB, committed to the repository**. Not one of them is served from
+`media.theweddingboys.in`, which carries the rest of the site's imagery and
+applies the variant ladder, format negotiation and CDN caching.
+
+The mechanism is therefore not a design decision to repair in this redesign. It
+is an unmigrated asset set, and the migration is blocked on admin-panel work —
+adding the ability to select a **group of images as a frame sequence**, which
+would then be ingested, transcoded and served optimised like everything else.
+
+**Consequence for Phase 2:** Stage 8 restyles `/varanasi` to these tokens and
+does **not** attempt to hand-optimise its assets. R-09 is reassigned to the admin
+media-pipeline backlog, outside this redesign. It remains the single largest
+performance number on the site and should not be forgotten — but compressing 146
+frames by hand would be throwaway work that the pipeline will redo properly.

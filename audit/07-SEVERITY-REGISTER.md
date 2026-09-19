@@ -25,7 +25,6 @@ Effort: **S** ≤ half a day · **M** ≤ 3 days · **L** > 3 days
 | **R-06** | `/team`, `/about-us`, `/` | Accessibility | White text over photos with **no scrim** — measured **1.0:1** (incl. `/team`'s `<h1>`) | computed, 5 elements | Critical | M | 2 |
 | **R-07** | all pages | IA | **3 of 4 primary nav items are inert on 13 of 14 pages** (`#pricing`/`#process`/`#services` exist only on `/`) | `Navbar.jsx:26-29` | Critical | M | 1 |
 | **R-08** | all pages | Positioning | Header says Mumbai, footer says India/worldwide, pricing says **destination surcharge** | `Footer.jsx:105` vs `OfferPackages.jsx:119` | Critical | S | 1 |
-| **R-09** | `/varanasi` | Performance | **24.3 MB** page (23.5 MB images, 250 requests) | `_perf-production.json` | Critical | L | 3 |
 | **R-10** | `/team` | Performance | **CLS 1.5944** on mobile, traced to the global footer | `_perf-production.json` | Critical | M | 3 |
 | **R-11** | 404 | Accessibility | "404" at 128px renders `#000000` on `#111827` = **1.18:1** | computed | Critical | S | 2 |
 | **R-12** | `/films` | Content / trust | **"Beach" contains Varanasi and Solapur** — 0 of 2 correct; "North India" 2 of 4 | rendered taxonomy | Critical | S | 1 |
@@ -122,6 +121,7 @@ Effort: **S** ≤ half a day · **M** ≤ 3 days · **L** > 3 days
 | **X-03** | Grey blocks on `/` "Our Magical Offerings" | **Lazy-load pop-in**, not broken images and not skeletons. All six load. My first screenshot captured the loading state. |
 | **X-04** | `/about-us` "failed timeline component" | The timeline **renders correctly** — 5 cards, 59 laid-out elements. The perceived void is its alternating layout. |
 | **X-05** | Floating WhatsApp button as global shell | **Not global** — defined and rendered only on `/contact` (`ContactClient.jsx:18,337`). |
+| **X-06** | **R-09** — `/varanasi` 24.3 MB | **Reclassified 2026-09-19, not a redesign defect.** The page's assets were never migrated into the studio's media pipeline: every heavy asset is a local `@/Asset` import or a raw file in `public/director-frames/` (**146 files, 21 MB in the repo**), none served from `media.theweddingboys.in`. Blocked on admin-panel work to select an image group as a frame sequence, after which the existing ingest/variant pipeline optimises it. **Reassigned to the admin media backlog**; Stage 8 restyles the page but does not hand-optimise its assets. |
 
 ---
 
@@ -129,10 +129,10 @@ Effort: **S** ≤ half a day · **M** ≤ 3 days · **L** > 3 days
 
 | Severity | Count |
 |---|---:|
-| Critical | **14** |
+| Critical | **13** |
 | High | **27** |
 | Medium | **24** |
 | Low | **5** |
-| **Total defects** | **70** |
+| **Total defects** | **69** |
 | Client flags | 3 |
-| Resolved / not defects | 5 |
+| Resolved / not defects | 6 |

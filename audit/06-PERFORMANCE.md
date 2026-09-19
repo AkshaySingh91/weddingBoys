@@ -44,7 +44,18 @@ Raw data: `audit/_data/_perf-production.json`.
 | `/films` | 715 KB | 42 KB | 44 | — |
 | `/weddings/udaipur` | 682 KB | — | 47 | — |
 
-### P-01 — `/varanasi` ships 24 MB on a single page view — **Critical**
+### P-01 — `/varanasi` ships 24 MB on a single page view — **reclassified, see below**
+
+> **Update 2026-09-19.** Reclassified from Critical defect to **out-of-scope
+> backlog item** (`X-06`). The cause is not a design decision: this page's assets
+> were never migrated into the studio's media pipeline. Verified — every heavy
+> asset is a local `@/Asset` import (`/_next/static/media/`) or a raw file in
+> `public/director-frames/` (**146 files, 21 MB committed to the repo**), and
+> **none** is served from `media.theweddingboys.in`, which carries the rest of
+> the site's imagery with variant ladders and CDN caching. The fix is blocked on
+> admin-panel work to select an image group as a frame sequence; the existing
+> ingest pipeline then optimises it. The measurements below stand and remain the
+> largest performance number on the site.
 
 **23.5 MB of images across 217 image requests.** Two mechanisms:
 
@@ -217,9 +228,9 @@ Development figures were higher across the board (`/photos` 180ms, `/varanasi`
 
 | Finding | Page(s) | Measured |
 |---|---|---|
-| 24 MB page | `/varanasi` | 23.5 MB images, 217 requests |
-| 214-frame image sequence | `/varanasi` | ~230 KB × ~214 |
-| Multi-MB PNGs | `/varanasi` | 6 MB in 3 files |
+| 24 MB page *(out of scope — `X-06`, admin media backlog)* | `/varanasi` | 23.5 MB images, 217 requests |
+| 146-file frame sequence *(same)* | `/varanasi` | 21 MB in `public/director-frames/` |
+| Multi-MB PNGs *(same)* | `/varanasi` | 6 MB in 3 files |
 | 1.9 MB single JPEG | `/about-us` | `aboutPageImg7.jpg` |
 | Footer-driven CLS | `/team`, `/films/[id]` | 1.59 / 0.85 |
 | Infinite-scroll CLS | `/photos` | 1.70 (dev, with scroll) |

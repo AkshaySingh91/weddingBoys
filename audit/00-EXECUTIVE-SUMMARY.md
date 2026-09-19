@@ -70,9 +70,10 @@ whose product is *place*, this is the most quietly disqualifying content on the
 site. *(R-12, R-27)*
 
 **8. `/varanasi` ships 24.3 MB.** 23.5 MB of images across 250 requests — a
-214-frame scroll sequence at ~230 KB each, plus 6 MB in three PNGs. Measured on a
-production build with a cold cache. It is also the page the home page pushes
-hardest. *(R-09)*
+146-file scroll sequence at ~230 KB each, plus 6 MB in three PNGs. Measured on a
+production build with a cold cache. *(Reclassified 2026-09-19 as `X-06`: these
+assets were never migrated into the media pipeline — none is served from
+`media.theweddingboys.in`. Owned by the admin media backlog, not this redesign.)*
 
 **9. The gallery's only heading is "YOU HAVE REACH THE END !"** `/photos` has no
 `<h1>`. Its single content heading is the infinite-scroll terminator — a
