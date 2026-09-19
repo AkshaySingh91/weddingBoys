@@ -537,3 +537,33 @@ a full-width pill CTA, gold-ringed social buttons, an ornamental rule and a
 to 27px at 390px, fixed with `shrink-0`) · unlabelled controls **0** · skip link
 first in tab order · **0** animating under reduced motion · fonts **3 files /
 176 KB** · console errors **0** · build and both guards green.
+
+### Film row — corrected after review (commit `64c02a6`)
+
+The portrait-4:5-under-the-arch treatment was rejected on review against the
+previous UI. Four things were wrong and all four are fixed:
+
+| Raised | Was | Now |
+|---|---|---|
+| "make it square only" | `aspect-[4/5]` + `.arch` | `aspect-square`, `rounded-media` (20px) |
+| "left side align" | `lg:justify-center` when ≤3 films | always left; first card shares the heading's x |
+| "spacing is too much" | `mt-8` rail, `mt-6` filters, 838px section | `mt-5` / `mt-4`, 692px section at 1440 |
+| "previous look more good" | 300px cards | 420px at lg, 78vw on phones |
+
+New token: `borderRadius.media = 20px`. The scale held 0 / 2 / 4 / 999 and none
+of them suit a photograph — the previous UI was right to round its film cards
+generously.
+
+Bug found while verifying: `snap-mandatory` parked the first card flush against
+the scrollport and swallowed the rail's own `px-5`, measured `scrollLeft: 20` at
+390px. `scroll-pl-*` mirroring `px-*` fixes it. **This is a class of bug, not an
+instance** — any snapped rail with padding has it. Checked: this is the only
+snap rail on the site so far; the pattern is noted here for the ones to come.
+
+Measured at 390 / 768 / 1440 / 1920: first card x = heading x at every width,
+`railScrollLeft` 0, `docOverflowX` 0, frame square at 304 / 338 / 420 / 420.
+Caption contrast over the scrim ≈ 10.6:1. Build green.
+
+The arch is **not** removed from the system — it stays for portrait media
+composed for it. It is removed from film stills, where it crops the top of the
+frame.
