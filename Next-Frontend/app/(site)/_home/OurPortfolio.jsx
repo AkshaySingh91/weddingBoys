@@ -288,7 +288,7 @@ export default function OurPortfolio() {
                         >
                             Moments We&apos;ve Captured
                         </h2>
-                        <p className="sm:text-mobileBodyLarge lg:text-desktopBodyLarge text-tertiary_on mt-4 max-w-2xl mx-auto">
+                        <p className="t-body-lead mt-4 mx-auto text-tertiary_on">
                             Browse our collection of wedding stories from across Mumbai and beyond, showcasing our artistic approach to wedding photography and cinematography.
                         </p>
                     </div>

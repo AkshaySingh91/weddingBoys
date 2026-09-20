@@ -399,30 +399,30 @@ const PackagesSection = () => {
                 </div>
 
                 <div className="flex flex-col sm:flex-row justify-center gap-4  ">
-                    <motion.button
-                        onClick={() =>
-                            window.open(
-                                `https://wa.me/${studioContact[0]}?text=${encodeURIComponent(
-                                    "Hello! I'm interested in discussing a quote with you. Please get in touch."
-                                )}`,
-                                '_blank'
-                            )
-                        }
+                    <motion.a
+                        href={`https://wa.me/${studioContact?.[0] || ''}?text=${encodeURIComponent(
+                            "Hello! I'm interested in discussing a quote with you. Please get in touch."
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         whileHover={{ scale: 1.05 }}
-                        className="sm:text-modileBodySmall bg-[#FF4D4D] text-white lg:px-8 py-3 sm:px-4 rounded-lg flex items-center justify-center gap-2 text-nowrap"
+                        className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-pill
+                                   bg-[#FF4D4D] px-8 py-3 text-[15px] font-semibold text-white"
                     >
-                        <FiCalendar className="sm:h-4 sm:w-4 lg:h-8 lg:w-8" />
+                        <FiCalendar aria-hidden="true" className="h-5 w-5" />
                         Free Consultation
-                    </motion.button>
+                    </motion.a>
 
-                    <motion.button
-                        onClick={() => (window.location.href = `tel:${studioContact[1]}`)}
+                    <motion.a
+                        href={`tel:${studioContact?.[1] || ''}`}
                         whileHover={{ scale: 1.05 }}
-                        className="sm:text-modileBodySmall bg-white text-[#FF6969] lg:px-8 py-3 sm:px-4 rounded-lg border-2 border-[#FF6969] flex items-center justify-center gap-2 text-nowrap"
+                        className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-pill
+                                   border-2 border-[#FF6969] bg-white px-8 py-3 text-[15px] font-semibold
+                                   text-[#FF6969]"
                     >
-                        <FiPhone className="sm:h-4 sm:w-4 lg:h-8 lg:w-8" />
+                        <FiPhone aria-hidden="true" className="h-5 w-5" />
                         Instant Call Back
-                    </motion.button>
+                    </motion.a>
 
                 </div>
             </div>
@@ -453,10 +453,14 @@ const ComparativeCTA = ({ studioContact }) => {
     }, []);
 
     return (
+        <Section width="wide" rhythm="tight" aria-labelledby="custom-package-heading">
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="relative bg-[#FAF1E6] lg:p-8 sm:p-6 lg:rounded-3xl sm:rounded-lg -mx-4 lg:mt-8 sm:mt-4 text-center bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] overflow-hidden"
+            /* Was `-mx-4` on a bare motion.div: it sat off the page axis that
+               every other band shares, and the negative margin pushed it wider
+               than its own container. Band padding matches the others. */
+            className="relative px-5 py-10 sm:px-7 lg:py-12 lg:rounded-3xl sm:rounded-lg text-center bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] overflow-hidden"
         >
             {/* Decorative Elements */}
             <div className="absolute top-0 left-0 w-full -translate-y-1/3">
@@ -500,7 +504,7 @@ const ComparativeCTA = ({ studioContact }) => {
                 </svg>
             </motion.div>
 
-            <h2 className="t-display-2 mx-auto text-gray-900 relative z-10">
+            <h2 id="custom-package-heading" className="t-display-2 mx-auto text-gray-900 relative z-10">
                 Need a Custom Package?
                 {/* Animated Underline */}
                 <motion.div
@@ -511,22 +515,25 @@ const ComparativeCTA = ({ studioContact }) => {
                 />
             </h2>
 
-            <p className="mt-4 text-gray-600 max-w-2xl mx-auto relative z-10">
+            <p className="t-body-lead mt-4 mx-auto relative z-10 text-gray-600">
                 We understand that every wedding is unique. Contact us to create a tailored photography and cinematography
                 package that perfectly fits your specific requirements and budget.
             </p>
 
             <div className="mt-6 relative z-10">
-                <motion.button
-                    onClick={() => window.open(
-                        `https://wa.me/${studioContact?.[0] || ''}?text=${encodeURIComponent(
-                            "Hello! I'm interested in booking your studio for my event. " +
-                            "Could you please share available dates and package details?"
-                        )}`,
-                        '_blank'
-                    )}
+                {/* Was a <button> calling window.open(url,'_blank') — the same
+                    defect fixed in the services and Varanasi sections. A
+                    destination is a link: middle-clickable, keyboard-openable,
+                    and no window.opener handed to the new tab. */}
+                <motion.a
+                    href={`https://wa.me/${studioContact?.[0] || ''}?text=${encodeURIComponent(
+                        "Hello! I'm interested in booking your studio for my event. "
+                        + "Could you please share available dates and package details?"
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     whileHover={{ scale: 1.05 }}
-                    className="flex mx-auto justify-between items-center bg-[#FF4D4D] text-white font-semibold py-3 px-6 rounded-md shadow-lg hover:bg-red-400 transition-all relative overflow-hidden"
+                    className="inline-flex mx-auto min-h-[48px] justify-center items-center bg-[#FF4D4D] text-white font-semibold py-3 px-6 rounded-pill shadow-lg hover:bg-red-400 transition-all relative overflow-hidden"
                 >
                     {/* Button Sparkle */}
                     <motion.div
@@ -537,15 +544,15 @@ const ComparativeCTA = ({ studioContact }) => {
                         <FiStar className="w-8 h-8 text-[#FFD700]" />
                     </motion.div>
 
-                    <FiVideo className="mr-2" />
+                    <FiVideo aria-hidden="true" className="mr-2" />
                     Schedule Free Consultation
-                </motion.button>
+                </motion.a>
             </div>
 
-            <div className="lg:mt-12 sm:mt-6 grid sm:grid-cols-1 lg:grid-cols-3 gap-6 relative z-10">
-                {features.map((feature, index) => (
+            <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-3 lg:gap-6 relative z-10">
+                {features.map((feature) => (
                     <motion.div
-                        key={index}
+                        key={feature.title}
                         className="bg-[#FDFAF6] p-6 rounded-lg lg:shadow-md hover:shadow-xl transition-all relative overflow-hidden group"
                         whileHover={{ y: -5 }}
                     >
@@ -555,10 +562,10 @@ const ComparativeCTA = ({ studioContact }) => {
                         <div className="flex items-center justify-center lg:mb-4 mx-auto bg-red-100 p-4 rounded-full w-fit group-hover:bg-[#FFD700]/20 transition-colors">
                             {feature.icon}
                         </div>
-                        <h3 className="lg:text-desktopBodyMedium sm:text-mobileBodyMedium font-semibold text-gray-900">
+                        <h3 className="t-heading-3 mx-auto text-gray-900">
                             {feature.title}
                         </h3>
-                        <p className="lg:text-desktopBodySmall sm:text-mobileBodySmall mt-2 text-gray-600">
+                        <p className="t-body-sm mx-auto mt-2 text-gray-600">
                             {feature.description}
                         </p>
 
@@ -569,7 +576,7 @@ const ComparativeCTA = ({ studioContact }) => {
             </div>
 
             {/* Floating Particles */}
-            <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
                 {particles?.map((particle, i) => (
                     <motion.div
                         key={i}
@@ -592,6 +599,7 @@ const ComparativeCTA = ({ studioContact }) => {
                 ))}
             </div>
         </motion.div>
+        </Section>
     )
 }
 
@@ -639,11 +647,11 @@ const StatItem = ({ stat }) => {
                             : <span>{stat.number.toLocaleString('en-IN')}{stat.id !== 4 ? '+' : ''}</span>}
                         <span aria-hidden="true" className="text-[#FFD700] ml-2">★</span>
                     </dd>
-                    <dt className="lg:text-desktopBodyMedium sm:text-mobileBodyMedium font-semibold text-secondary_on mb-2 text-nowrap">
+                    <dt className="t-heading-3 mx-auto mb-1 text-secondary_on">
                         {stat.title}
                     </dt>
                 </dl>
-                <p className="lg:text-desktopBodySmall sm:text-mobileBodySmall text-[#74583E]">
+                <p className="t-body-sm mx-auto text-[#74583E]">
                     {stat.description}
                 </p>
             </div>
@@ -656,8 +664,12 @@ const StatItem = ({ stat }) => {
 
 const TrackRecord = () => {
     return (
-        <section className="lg:py-10 lg:mt-5 lg:rounded-3xl sm:rounded-lg -mx-4 bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] relative overflow-hidden">
-            <div className="max-w-6xl mx-auto px-6 py-4">
+        <Section width="wide" rhythm="tight" aria-labelledby="legacy-heading">
+        <div className="lg:rounded-3xl sm:rounded-lg bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] relative overflow-hidden">
+            {/* Was `-mx-4` on a bare <section> whose inner container was
+                max-w-6xl: it measured 1455px against a 1425px viewport and its
+                content started at x=152 while every other band starts at 40. */}
+            <div className="px-5 py-10 sm:px-7 lg:py-12">
                 {/* Section Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -665,20 +677,20 @@ const TrackRecord = () => {
                     viewport={{ once: true, margin: "0px 0px -100px 0px" }}
                     className="text-center lg:mb-12 sm:mb-8"
                 >
-                    <div className="inline-block bg-[#FF4D4D] text-[#FFF0E6] px-6 py-2 rounded-full lg:text-desktopBodySmall sm:text-mobileBodySmall font-medium mb-6 shadow-lg">
-                        <span className="drop-shadow-md text-nowrap">Our Legacy in Numbers</span>
-                    </div>
-                    <h2 className="font-display text-[27px] lg:text-[40px] font-semibold text-secondary_on mb-4">
+                    <p className="inline-block bg-[#FF4D4D] text-[#FFF0E6] px-5 py-1.5 rounded-pill text-[13px] font-semibold mb-5 shadow-lg">
+                        <span className="drop-shadow-md">Our Legacy in Numbers</span>
+                    </p>
+                    <h2 id="legacy-heading" className="t-display-2 mx-auto mb-4 text-secondary_on">
                         Crafting Timeless Memories Since 2020
                     </h2>
-                    <p className="lg:text-desktopBodyLarge sm:text-mobileBodyLarge text-[#74583E] max-w-2xl mx-auto">
+                    <p className="t-body-lead mx-auto text-[#74583E]">
                         Trusted by generations, our lens has witnessed countless stories of love,
                         tradition, and celebration.
                     </p>
                 </motion.div>
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8 sm:gap-4">
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
                     {stats.map((stat) => (
                         <StatItem key={stat.id} stat={stat} />
                     ))}
@@ -689,7 +701,7 @@ const TrackRecord = () => {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    className="text-center mt-12 text-mobileBodySmall text-[#74583E] text-nowrap"
+                    className="t-caption mx-auto mt-10 text-center text-[#74583E]"
                 >
                     *Verified through client records & vendor partnerships
                 </motion.div>
@@ -698,7 +710,8 @@ const TrackRecord = () => {
                 <div className="absolute top-0 left-0 w-40 h-40 bg-[#f6c2b9c9] rounded-full -translate-x-1/2 -translate-y-1/2" />
                 <div className="absolute bottom-0 right-0 w-48 h-48 bg-[#FF4D4D]/10 rounded-full translate-x-1/2 translate-y-1/2" />
             </div>
-        </section>
+        </div>
+        </Section>
     );
 };
 

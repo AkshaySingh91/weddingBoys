@@ -932,3 +932,40 @@ lines and shifted that card's rows **32px** below its neighbours'. Three lines
 are now reserved for every title, so a long one cannot knock the rows out of
 step. Final: title 22, tagline 120, price 180, stats 262, list 344, CTA 494 —
 identical across all four.
+
+### "Our Legacy in Numbers" and "Need a Custom Package" — brought onto the system
+
+Both were still on their original geometry and type. Neither was inside
+`<Section>`, and **both used `-mx-4`**, the same negative-margin pattern that
+broke the portfolio.
+
+| | Was | Now |
+|---|---|---|
+| Legacy section width | **1455px against a 1425px viewport** (`-mx-4`) | inside `<Section>`; band x=40, w=1375 |
+| Legacy inner container | `max-w-6xl` → content began at **x=152** | `max-w-wide`, content on the axis |
+| Custom Package wrapper | bare `motion.div`, `-mx-4`, not a landmark | `<Section aria-labelledby>` |
+| Band padding | `lg:p-8 sm:p-6` / `px-6 py-4` | `px-5 py-10 sm:px-7 lg:py-12`, as every other band |
+| Legacy lead | 22px | **19px** |
+| Custom Package lead | **no size class at all** — fell back to the 16px base | **19px** |
+| Legacy heading | `font-display text-[27px]/[40px]` ad hoc | `t-display-2` |
+| Stat label / description | `desktopBodyMedium` / `desktopBodySmall` | `t-heading-3` / `t-body-sm` |
+| Info card title / body | `desktopBodyMedium` / `desktopBodySmall` | `t-heading-3` / `t-body-sm`, as the service cards |
+| Stats grid | no base gap, `sm:grid-cols-1 lg:grid-cols-3` | `grid-cols-1 gap-5 sm:grid-cols-3` |
+
+After this every section lead on the home page measures **19px** (the hero
+caption at 14px is a different role), every section heading is Bodoni, and every
+band sits at x=40.
+
+**Three defects found while measuring**
+
+1. **`sm:text-modileBodySmall`** — "modile", not "mobile" — on two buttons. A
+   typo that generates no CSS at all, so those buttons never had their mobile
+   size. Site-wide grep: only these two.
+2. **`text-nowrap` on a full sentence**: *"\*Verified through client records &
+   vendor partnerships"* could not wrap on a phone. Six `text-nowrap` nodes in
+   that section; **0** remain on the page.
+3. **Three more `window.open(url,'_blank')` buttons** — Free Consultation,
+   Instant Call Back, Schedule Free Consultation. Same defect fixed in the
+   services and Varanasi sections. All now anchors with `rel="noopener
+   noreferrer"`; the phone one is a `tel:` link. Measured: **0 window.open
+   buttons left in these sections**.
