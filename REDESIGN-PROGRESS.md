@@ -969,3 +969,56 @@ band sits at x=40.
    services and Varanasi sections. All now anchors with `rel="noopener
    noreferrer"`; the phone one is a `tel:` link. Measured: **0 window.open
    buttons left in these sections**.
+
+### Our Approach — sticky stacking cards (`OurApproach.jsx`)
+
+A first attempt at a pinned "cinematic chapters" sequence (GSAP ScrollTrigger,
+five film-still chapters) was built, reviewed and **reverted at the client's
+call** before commit. Restore tag `home-before-approach` marks the state it was
+reverted to. This is the second design: sticky stacking cards, Framer Motion.
+
+**Mechanics.** One `useScroll` over the list; card scale, the step counter and
+the progress line all read that same normalised progress, so they cannot fall
+out of step. Each card is `position: sticky`, so the stack piles up on scroll
+and unpiles on scroll-back with no JavaScript involved in the pinning itself.
+No one-shot animations anywhere.
+
+**Reversibility, measured.** Approaching the same scroll position from above and
+from below gives **drift 0.00000** — identical state. (A first measurement
+suggested 0.014; that was the sampling wait, not the logic, and re-measuring
+with a proper settle showed zero.)
+
+**Four bugs found and fixed during the build**
+
+1. **`overflow-hidden` on the band silently broke `position: sticky` in every
+   descendant** — the mechanism the whole section runs on. Measured: the counter
+   scrolled 1,123px off the top. This project's own notes already record that
+   trap and I walked into it anyway. `overflow-x-clip` instead.
+2. **The counter ticker moved by whole columns, not whole digits.** A percentage
+   `y` resolves against the animated element's own height; the column is five
+   digits tall, so `-200%` moved 280px where 56px was wanted, leaving the slot
+   empty. Now `-(i * 100 / total)%`.
+3. **Stacked cards were dimmed to 0.75 opacity**, which made them translucent —
+   two earlier headings were legible straight through the card on top. Cards are
+   opaque; depth comes from scale and shadow.
+4. **`useScroll` ran under `prefers-reduced-motion`**, where its target is never
+   rendered: *"Target ref is defined but not hydrated"* in the console. Hooks
+   cannot be conditional, so the scroll machinery moved into a child component
+   that only mounts when the stack does.
+
+**Fallbacks.** Below `md`, and under reduced motion at any width, there is no
+stacking and no `useScroll` at all — five plain cards, all at opacity 1.
+Verified: reduced motion mounts zero sticky elements and renders all five steps.
+
+**Deliberate deviations from the brief**, all following standing client rules:
+Bodoni Moda rather than Playfair/Cormorant (every section heading was just
+unified onto Bodoni); no glassmorphism (project anti-pattern, and previously
+rejected on the video player); existing ground/gold/accent tokens rather than
+new hex values; JSX rather than TypeScript (the project is JavaScript).
+
+Also: this removes the **last `<h1>`** from the home page — it carried four
+(R-42), and the count is now **0** outside the hero.
+
+**Not carried over from the reverted attempt:** Track Record is still rendered
+inside `OfferPackages`, i.e. *before* Our Approach. The client had chosen to
+move it after; that change was reverted with the rest and has not been redone.
