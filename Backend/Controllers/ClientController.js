@@ -108,15 +108,17 @@ async function getAllClients(req, res, next) {
         // Resolved together rather than in a serial await-per-client loop.
         // mediaUrlForKey batches within a microtask, so this is one lookup.
         const updatedClientDetails = await Promise.all(clientDetails.map(async (client) => {
+            const clientStats = rollup.get(client.clientId) || {};
             const key = client.media?.thumbnailMetaData?.key || client.media?.photoMetaData?.key;
-            const thumbnailUrl = key ? await mediaUrl(key) : "";
+            const legacyThumb = key ? await mediaUrl(key) : "";
+            const thumbnailUrl = clientStats.coverImage || legacyThumb || "";
             return {
                 ...client,
                 media: { ...client.media, thumbnailUrl },
                 stats: {
                     videos: 0, photos: 0, hero: 0, drafts: 0, untagged: 0,
                     tags: [], cities: [], firstShoot: null, lastShoot: null,
-                    ...(rollup.get(client.clientId) || {}),
+                    ...clientStats,
                     storageBytes: storage.get(client.clientId)?.bytes || 0,
                     assetCount: storage.get(client.clientId)?.assets || 0,
                 },

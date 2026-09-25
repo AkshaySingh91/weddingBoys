@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import {
     MagnifyingGlass, Plus, CircleNotch, FilmSlate, ImageSquare, Star,
     WarningCircle, MapPin, HardDrives, CalendarBlank, ArrowsDownUp,
-    Trash, EyeSlash, TagSimple, DotsThree, PencilSimple, Sparkle, Check,
+    Trash, EyeSlash, Eye, TagSimple, DotsThree, PencilSimple, Sparkle, Check,
 } from '@phosphor-icons/react';
 import useClients from '@/Hooks/useClients.jsx';
 import { Button } from '@/app/admin/components/ui/Button.jsx';
@@ -79,6 +79,23 @@ export default function ClientsPage() {
             });
             if (!res.ok) throw new Error('Could not publish wedding');
             fireMessage(`${nameOf(client)} published to showcase!`, 'success');
+            load();
+        } catch (err) {
+            fireMessage(err.message, 'error');
+        }
+    };
+
+    const makeDraft = async (client) => {
+        setMenuFor(null);
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/clients/${client.clientId}`, {
+                method: 'PATCH',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: 'Draft' }),
+            });
+            if (!res.ok) throw new Error('Could not unpublish wedding');
+            fireMessage(`${nameOf(client)} moved to draft`, 'success');
             load();
         } catch (err) {
             fireMessage(err.message, 'error');
@@ -375,6 +392,12 @@ export default function ClientsPage() {
                                                             <button type="button" onClick={() => publishWedding(c)}
                                                                 className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-amber-900 font-semibold hover:bg-amber-50 cursor-pointer">
                                                                 <Sparkle size={13} weight="fill" className="text-amber-600" /> Publish Showcase
+                                                            </button>
+                                                        )}
+                                                        {!isDraft && (
+                                                            <button type="button" onClick={() => makeDraft(c)}
+                                                                className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-amber-700 hover:bg-amber-50 cursor-pointer">
+                                                                <EyeSlash size={13} /> Unpublish
                                                             </button>
                                                         )}
                                                         <div className="my-1 h-px bg-studio-border" />

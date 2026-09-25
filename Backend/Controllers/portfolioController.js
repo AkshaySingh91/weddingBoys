@@ -14,6 +14,7 @@ import PortfolioItem from '../Models/PortfolioItem.js';
 import Media from '../Models/Media.js';
 import Client from '../Models/ClientSchema.js';
 import { deleteSingleMediaDoc } from './mediaController.js';
+import { renderFromMedia } from '../Services/portfolioSync.js';
 
 const MAX_BULK = 500;
 
@@ -28,28 +29,11 @@ const MAX_BULK = 500;
 const searchClauses = (q) => {
     const rx = new RegExp(String(q).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
     return [{ tags: rx }, { clientNameText: rx }, { title: rx },
-        { caption: rx }, { 'location.city': rx }, { 'location.state': rx }];
+    { caption: rx }, { 'location.city': rx }, { 'location.state': rx }];
 };
 
-const renderFromMedia = (media) => {
-    if (!media) return {};
-    return {
-        posterUrl: media.video?.posterUrl,
-        blurDataURL: media.blurDataURL,
-        dominantColor: media.dominantColor,
-        aspectRatio: media.aspectRatio,
-        width: media.width,
-        height: media.height,
-        ...(media.mediaType === 'Image' ? { imageUrl: media.cdnUrl || media.publicUrl } : {}),
-        ...(media.mediaType === 'Video' ? {
-            loopUrl: media.video?.loopUrl,
-            webUrl: media.video?.webUrl,
-            sourceUrl: media.video?.sourceUrl || media.cdnUrl,
-            durationSec: media.duration,
-        } : {}),
-        syncedAt: new Date(),
-    };
-};
+// renderFromMedia is imported from Services/portfolioSync.js — single source of
+// truth shared by this controller, the backfill, and the worker.
 
 // GET /api/admin/portfolio
 export async function listPortfolio(req, res) {
@@ -85,10 +69,28 @@ export async function listPortfolio(req, res) {
                 .skip((Math.max(1, parseInt(page, 10)) - 1) * lim)
                 .limit(lim)
                 .populate('client', 'clientName')
-                .populate('media', 'status cdnUrl publicUrl mediaType imageVariants video')
+                .populate('media', 'status cdnUrl publicUrl mediaType imageVariants video fileSize originalFileName')
                 .lean(),
             PortfolioItem.countDocuments(filter),
         ]);
+
+        // Heal stale render: if Media is Ready but render is still empty
+        // (race between worker sync and this read), re-compute inline and
+        // fire-and-forget persist so future reads don't repeat.
+        const staleIds = [];
+        for (const item of items) {
+            if (!item.render?.posterUrl && !item.render?.imageUrl && item.media?.status === 'Ready') {
+                const fresh = renderFromMedia(item.media);
+                item.render = { ...(item.render || {}), ...fresh };
+                staleIds.push(item._id);
+            }
+        }
+        if (staleIds.length) {
+            Promise.allSettled(staleIds.map(id => {
+                const item = items.find(i => String(i._id) === String(id));
+                return PortfolioItem.updateOne({ _id: id }, { $set: { render: item.render } });
+            })).catch(() => { });
+        }
 
         return res.status(200).json({
             items, total, page: parseInt(page, 10), limit: lim,
@@ -176,6 +178,7 @@ export async function assignToClient(req, res) {
             },
         });
 
+        await item.populate('media', 'status cdnUrl publicUrl mediaType imageVariants video fileSize originalFileName');
         return res.status(201).json({ item });
     } catch (error) {
         console.error('assignToClient error:', error);
@@ -289,9 +292,9 @@ export async function removePortfolioItem(req, res) {
         }
 
         await PortfolioItem.deleteOne({ _id: item._id });
-        return res.status(200).json({ 
-            message: req.query.purgeMedia === 'true' ? 'Permanently purged from R2 and portfolio' : 'Removed from portfolio', 
-            id: item._id 
+        return res.status(200).json({
+            message: req.query.purgeMedia === 'true' ? 'Permanently purged from R2 and portfolio' : 'Removed from portfolio',
+            id: item._id
         });
     } catch (error) {
         return res.status(500).json({ message: error.message });

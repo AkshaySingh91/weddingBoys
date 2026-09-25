@@ -12,7 +12,12 @@ import AssetBreakdown from '@/app/admin/components/AssetBreakdown.jsx';
 const field = 'w-full rounded-lg border border-[#E5DCD3] bg-white px-3 py-2 text-xs text-stone-800 outline-none focus:border-[#8C532B] focus:ring-2 focus:ring-[#8C532B]/15';
 const label = 'mb-1 block text-[11px] font-medium uppercase tracking-wide text-stone-500';
 
-export const posterFor = (m) => m?.video?.posterUrl || m?.cdnUrl || m?.publicUrl || m?.url || null;
+const isVideoFileUrl = (url) => typeof url === 'string' && /\.(mp4|mov|webm|mkv)(\?.*)?$/i.test(url);
+
+export const posterFor = (m) => {
+    const candidate = m?.video?.posterUrl || m?.posterUrl || (!m?.mediaType || m?.mediaType === 'Image' ? (m?.cdnUrl || m?.publicUrl || m?.url) : null);
+    return isVideoFileUrl(candidate) ? null : candidate;
+};
 
 /**
  * Metadata for one uploaded asset.
@@ -75,6 +80,7 @@ export default function MediaDetailsPanel({
     };
 
     const poster = posterFor(media);
+    const videoUrl = isVideo ? (media.video?.webUrl || media.video?.sourceUrl || media.cdnUrl || media.publicUrl) : null;
     const unused = (vocabulary || []).filter((t) => !value.tags.includes(t));
 
     return (
@@ -97,9 +103,16 @@ export default function MediaDetailsPanel({
                 </header>
 
                 <div className="min-h-0 flex-1 space-y-4 overflow-y-auto p-4">
-                    <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-stone-100">
+                    <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-stone-950">
                         {poster ? (
-                            <Image src={poster} alt={media.originalFileName || 'preview'} fill sizes="400px" className="object-cover" />
+                            <Image src={poster} alt={media.originalFileName || 'preview'} fill unoptimized sizes="400px" className="object-cover" />
+                        ) : isVideo && videoUrl ? (
+                            <video
+                                src={videoUrl}
+                                controls
+                                playsInline
+                                className="h-full w-full object-contain"
+                            />
                         ) : (
                             <span className="flex h-full w-full items-center justify-center text-stone-400">
                                 {isVideo ? <FilmSlate size={26} /> : <ImageSquare size={26} />}

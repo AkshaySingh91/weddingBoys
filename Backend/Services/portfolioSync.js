@@ -13,7 +13,7 @@ import PortfolioItem from '../Models/PortfolioItem.js';
 import Client from '../Models/ClientSchema.js';
 import Media from '../Models/Media.js';
 
-const renderFromMedia = (media, poster) => {
+export const renderFromMedia = (media, poster) => {
     if (!media) return {};
     return {
         posterUrl: poster?.cdnUrl || poster?.publicUrl || media.video?.posterUrl,

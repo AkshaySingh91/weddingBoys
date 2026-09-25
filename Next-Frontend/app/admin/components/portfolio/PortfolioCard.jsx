@@ -5,7 +5,12 @@ import { FilmSlate, ImageSquare, Star, Check, WarningCircle } from '@phosphor-ic
 import { Badge } from '@/app/admin/components/ui/Badge.jsx';
 import { cn } from '@/lib/utils.js';
 
-export const posterOf = (i) => i?.render?.posterUrl || i?.render?.imageUrl || null;
+const isVideoFileUrl = (url) => typeof url === 'string' && /\.(mp4|mov|webm|mkv)(\?.*)?$/i.test(url);
+
+export const posterOf = (i) => {
+    const p = i?.render?.posterUrl || i?.media?.video?.posterUrl || i?.render?.imageUrl || (!i?.kind || i?.kind === 'Photo' ? (i?.media?.cdnUrl || i?.media?.publicUrl) : null);
+    return isVideoFileUrl(p) ? null : p;
+};
 
 export const nameOf = (i) => {
     const n = i?.client?.clientName;
@@ -16,6 +21,7 @@ export const nameOf = (i) => {
 export default function PortfolioCard({ item, selected, onToggle, onOpen }) {
     const poster = posterOf(item);
     const isVideo = item.kind === 'Video';
+    const videoStreamUrl = isVideo ? (item.render?.webUrl || item.render?.loopUrl || item.render?.sourceUrl || item.media?.cdnUrl || item.media?.publicUrl) : null;
     // A placement whose asset row vanished still renders — showing it is the only
     // way an admin can find and fix it.
     const orphaned = !item.media;
@@ -52,12 +58,26 @@ export default function PortfolioCard({ item, selected, onToggle, onOpen }) {
                         src={poster}
                         alt={item.title || nameOf(item)}
                         fill
+                        unoptimized
                         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 220px"
                         className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                         {...(item.render?.blurDataURL
                             ? { placeholder: 'blur', blurDataURL: item.render.blurDataURL }
                             : {})}
                     />
+                ) : isVideo && videoStreamUrl ? (
+                    <div className="relative h-full w-full bg-black">
+                        <video
+                            src={`${videoStreamUrl}#t=0.001`}
+                            preload="metadata"
+                            muted
+                            playsInline
+                            className="h-full w-full object-cover pointer-events-none"
+                        />
+                        <span className="absolute bottom-1.5 left-1.5 flex items-center gap-1 rounded bg-black/70 px-1 py-0.5 text-[9px] font-medium text-white">
+                            <FilmSlate size={10} /> Video
+                        </span>
+                    </div>
                 ) : (
                     <span className="flex h-full w-full items-center justify-center text-stone-400">
                         {isVideo ? <FilmSlate size={30} /> : <ImageSquare size={30} />}

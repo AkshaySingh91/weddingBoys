@@ -98,6 +98,7 @@ export default function AddClientWizard() {
 
     // Staged portfolio items for this wedding
     const [portfolioItems, setPortfolioItems] = useState([]);
+    const [mediaCategoryFilter, setMediaCategoryFilter] = useState(''); // '' | 'Photo' | 'Video'
     const [details, setDetails] = useState({}); // mediaId -> metadata
     const [editing, setEditing] = useState(null); // mediaId
     const [vocabulary, setVocabulary] = useState([]);
@@ -164,36 +165,54 @@ export default function AddClientWizard() {
     }, []);
 
     // Load existing portfolio items if clientId was restored
-    useEffect(() => {
+    const reloadPortfolioItems = useCallback(async () => {
         if (!clientId) return;
-        (async () => {
-            try {
-                const res = await fetch(`${api_url}/api/admin/portfolio?client=${clientId}&limit=200`, { credentials: 'include' });
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.items?.length) {
-                        setPortfolioItems(data.items);
-                    }
+        try {
+            const res = await fetch(`${api_url}/api/admin/portfolio?client=${clientId}&limit=200`, { credentials: 'include' });
+            if (res.ok) {
+                const data = await res.json();
+                if (data.items) {
+                    setPortfolioItems(data.items);
                 }
-            } catch { /* ignore */ }
-        })();
+            }
+        } catch { /* ignore */ }
     }, [clientId]);
+
+    useEffect(() => {
+        reloadPortfolioItems();
+    }, [reloadPortfolioItems]);
+
+    // Auto-sync: poll while any item is still being processed by the worker.
+    // Once the worker finishes, render data (poster, webUrl, etc.) will be
+    // available and thumbnails will replace the gray placeholders.
+    useEffect(() => {
+        const hasPending = portfolioItems.some((i) => i.media?.status === 'Processing');
+        if (!hasPending || !clientId) return;
+        const timer = setInterval(() => reloadPortfolioItems(), 8000);
+        return () => clearInterval(timer);
+    }, [portfolioItems, clientId, reloadPortfolioItems]);
 
     const photoItems = useMemo(() => portfolioItems.filter((i) => i.kind === 'Photo'), [portfolioItems]);
     const filmItems = useMemo(() => portfolioItems.filter((i) => i.kind === 'Video'), [portfolioItems]);
     const totalStorageBytes = useMemo(() => portfolioItems.reduce((acc, i) => acc + (i.media?.fileSize || 0), 0), [portfolioItems]);
     const spanDisplay = useMemo(() => computeSpanDisplay(startDate, endDate, season), [startDate, endDate, season]);
 
+    // Filtered items based on active media category
+    const filteredPortfolioItems = useMemo(() => {
+        if (!mediaCategoryFilter) return portfolioItems;
+        return portfolioItems.filter((i) => i.kind === mediaCategoryFilter);
+    }, [portfolioItems, mediaCategoryFilter]);
+
     // Dynamic ceremony clusters grouping
     const ceremonyClusters = useMemo(() => {
         const clusters = {};
-        for (const item of portfolioItems) {
+        for (const item of filteredPortfolioItems) {
             const group = item.eventGroup?.trim() || (item.kind === 'Video' ? 'Films & Cinema' : 'Untagged');
             if (!clusters[group]) clusters[group] = [];
             clusters[group].push(item);
         }
         return clusters;
-    }, [portfolioItems]);
+    }, [filteredPortfolioItems]);
 
     // Discard draft wedding
     const handleDiscardClient = async () => {
@@ -289,6 +308,7 @@ export default function AddClientWizard() {
         });
         setShowPhotoModal(false);
         setStagedPhotos([]);
+        reloadPortfolioItems();
     };
 
     // Callback when VideoUploadModal finishes uploading items
@@ -317,6 +337,7 @@ export default function AddClientWizard() {
         });
         setShowVideoModal(false);
         setStagedVideos([]);
+        reloadPortfolioItems();
     };
 
     // File selection handlers for Photo Dropzone
@@ -932,9 +953,48 @@ export default function AddClientWizard() {
                                         All staged captures are clustered by wedding ceremony. Click any item to fine-tune metadata.
                                     </p>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    <Badge size="sm" variant="terracotta">{photoItems.length} Photos</Badge>
-                                    <Badge size="sm" variant="neutral">{filmItems.length} Films</Badge>
+                                <div className="flex flex-wrap items-center gap-2">
+                                    {/* Category Filter Switcher */}
+                                    <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-xl border border-stone-200">
+                                        <button
+                                            type="button"
+                                            onClick={() => setMediaCategoryFilter('')}
+                                            className={cn(
+                                                'px-3 py-1 text-xs font-semibold rounded-lg transition cursor-pointer',
+                                                mediaCategoryFilter === ''
+                                                    ? 'bg-white text-stone-900 shadow-xs'
+                                                    : 'text-stone-600 hover:text-stone-900'
+                                            )}
+                                        >
+                                            All ({portfolioItems.length})
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setMediaCategoryFilter('Photo')}
+                                            className={cn(
+                                                'px-3 py-1 text-xs font-semibold rounded-lg transition flex items-center gap-1.5 cursor-pointer',
+                                                mediaCategoryFilter === 'Photo'
+                                                    ? 'bg-amber-600 text-white shadow-xs'
+                                                    : 'text-stone-600 hover:text-stone-900'
+                                            )}
+                                        >
+                                            <ImageSquare size={13} />
+                                            Photos ({photoItems.length})
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setMediaCategoryFilter('Video')}
+                                            className={cn(
+                                                'px-3 py-1 text-xs font-semibold rounded-lg transition flex items-center gap-1.5 cursor-pointer',
+                                                mediaCategoryFilter === 'Video'
+                                                    ? 'bg-stone-900 text-white shadow-xs'
+                                                    : 'text-stone-600 hover:text-stone-900'
+                                            )}
+                                        >
+                                            <FilmSlate size={13} />
+                                            Films ({filmItems.length})
+                                        </button>
+                                    </div>
                                     <Badge size="sm" variant="neutral">{formatBytes(totalStorageBytes)}</Badge>
                                 </div>
                             </div>
@@ -959,14 +1019,17 @@ export default function AddClientWizard() {
 
                                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
                                             {clusterItems.map((item) => {
-                                                const poster = item.render?.posterUrl || item.render?.imageUrl || item.media?.cdnUrl || item.media?.publicUrl;
                                                 const isVideo = item.kind === 'Video';
+                                                const isVideoFile = (url) => typeof url === 'string' && /\.(mp4|mov|webm|mkv)(\?.*)?$/i.test(url);
+                                                const rawPoster = item.render?.posterUrl || item.media?.video?.posterUrl || item.render?.imageUrl || (!isVideo && (item.media?.cdnUrl || item.media?.publicUrl));
+                                                const poster = isVideoFile(rawPoster) ? null : rawPoster;
+                                                const videoStreamUrl = isVideo ? (item.render?.webUrl || item.render?.sourceUrl || item.render?.loopUrl || item.media?.cdnUrl || item.media?.publicUrl) : null;
 
                                                 return (
                                                     <button
                                                         key={item._id}
                                                         type="button"
-                                                        onClick={() => setEditing(item.mediaId || item._id)}
+                                                        onClick={() => setEditing(item.mediaId || item.media?._id || item._id)}
                                                         className="group relative overflow-hidden rounded-2xl border border-stone-200 bg-stone-50 text-left transition-all hover:border-stone-400 hover:shadow-xs cursor-pointer select-none"
                                                     >
                                                         <div className="relative aspect-[4/3] w-full overflow-hidden bg-stone-100">
@@ -977,6 +1040,19 @@ export default function AddClientWizard() {
                                                                     alt={item.title || 'Portfolio item'}
                                                                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                                                                 />
+                                                            ) : isVideo && videoStreamUrl ? (
+                                                                <div className="relative h-full w-full bg-black">
+                                                                    <video
+                                                                        src={`${videoStreamUrl}#t=0.001`}
+                                                                        preload="metadata"
+                                                                        muted
+                                                                        playsInline
+                                                                        className="h-full w-full object-cover pointer-events-none"
+                                                                    />
+                                                                    <span className="absolute bottom-1.5 left-1.5 flex items-center gap-1 rounded bg-black/70 px-1 py-0.5 text-[9px] font-medium text-white">
+                                                                        <FilmSlate size={10} /> Video
+                                                                    </span>
+                                                                </div>
                                                             ) : (
                                                                 <div className="flex h-full w-full items-center justify-center text-stone-400">
                                                                     {isVideo ? <FilmSlate size={24} /> : <ImageSquare size={24} />}
@@ -1083,6 +1159,7 @@ export default function AddClientWizard() {
                 onClose={() => {
                     setShowPhotoModal(false);
                     setStagedPhotos([]);
+                    reloadPortfolioItems();
                 }}
                 initialFiles={stagedPhotos}
                 clientId={clientId}
@@ -1095,6 +1172,7 @@ export default function AddClientWizard() {
                 onClose={() => {
                     setShowVideoModal(false);
                     setStagedVideos([]);
+                    reloadPortfolioItems();
                 }}
                 initialFiles={stagedVideos}
                 clientId={clientId}

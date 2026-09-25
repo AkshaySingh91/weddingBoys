@@ -89,6 +89,11 @@ export async function updateClientProfile(req, res) {
                 { client: client._id, status: 'Draft' },
                 { $set: { status: 'Published', publishedAt: new Date() } }
             );
+        } else if (status === 'Draft') {
+            await PortfolioItem.updateMany(
+                { client: client._id },
+                { $set: { status: 'Draft' } }
+            );
         }
 
         // clientNameText is denormalised onto every placement so search can match

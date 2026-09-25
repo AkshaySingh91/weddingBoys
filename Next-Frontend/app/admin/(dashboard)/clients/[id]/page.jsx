@@ -36,7 +36,16 @@ const KIND_TABS = [
     { key: 'Photo', label: 'Photographs', icon: ImageSquare },
 ];
 
-const posterOf = (i) => i?.render?.posterUrl || i?.render?.imageUrl || i?.media?.cdnUrl || i?.media?.publicUrl || null;
+const isVideoUrl = (url) => typeof url === 'string' && /\.(mp4|mov|webm|mkv)(\?.*)?$/i.test(url);
+const posterOf = (i) => {
+    const candidates = [
+        i?.render?.posterUrl,
+        i?.media?.video?.posterUrl,
+        i?.render?.imageUrl,
+        i?.kind !== 'Video' ? (i?.media?.cdnUrl || i?.media?.publicUrl) : null,
+    ];
+    return candidates.find((u) => u && !isVideoUrl(u)) || null;
+};
 const monthYear = (d) => (d ? new Date(d).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' }) : null);
 
 const shootRange = (s) => {
@@ -72,6 +81,7 @@ function ItemCard({ item, selected, onToggle, onOpen, onDelete }) {
     const isVideo = item.kind === 'Video';
     const draft = item.status !== 'Published';
     const isProcessing = item.media?.status === 'Processing';
+    const videoStreamUrl = isVideo ? (item.render?.webUrl || item.render?.sourceUrl || item.render?.loopUrl || item.media?.cdnUrl || item.media?.publicUrl) : null;
     const [imgError, setImgError] = useState(false);
 
     return (
@@ -96,6 +106,19 @@ function ItemCard({ item, selected, onToggle, onOpen, onDelete }) {
                         className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                         {...(item.render?.blurDataURL ? { placeholder: 'blur', blurDataURL: item.render.blurDataURL } : {})}
                     />
+                ) : isVideo && videoStreamUrl ? (
+                    <div className="relative h-full w-full bg-black">
+                        <video
+                            src={`${videoStreamUrl}#t=0.001`}
+                            preload="metadata"
+                            muted
+                            playsInline
+                            className="h-full w-full object-cover pointer-events-none"
+                        />
+                        <span className="absolute bottom-1.5 left-1.5 flex items-center gap-1 rounded bg-black/70 px-1 py-0.5 text-[9px] font-medium text-white">
+                            <FilmSlate size={10} /> Video
+                        </span>
+                    </div>
                 ) : (
                     <span className="flex h-full w-full items-center justify-center text-stone-400 bg-stone-100">
                         {isVideo ? <FilmSlate size={26} /> : <ImageSquare size={26} />}
@@ -484,6 +507,18 @@ export default function ClientWorkspace() {
                                         className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-studio-ink hover:bg-stone-50">
                                         <UploadSimple size={13} /> Upload films or photos
                                     </button>
+                                    <div className="my-1 h-px bg-studio-border" />
+                                    {client?.status === 'Published' ? (
+                                        <button type="button" onClick={async () => { setMenuOpen(false); await saveProfile({ status: 'Draft' }); refresh(); fireMessage('Moved to draft', 'success'); }}
+                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-amber-700 hover:bg-amber-50 cursor-pointer">
+                                            <EyeSlash size={13} /> Unpublish showcase
+                                        </button>
+                                    ) : (
+                                        <button type="button" onClick={async () => { setMenuOpen(false); await saveProfile({ status: 'Published' }); refresh(); fireMessage('Published to showcase!', 'success'); }}
+                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-emerald-700 hover:bg-emerald-50 cursor-pointer">
+                                            <Eye size={13} /> Publish showcase
+                                        </button>
+                                    )}
                                     <div className="my-1 h-px bg-studio-border" />
                                     <button type="button" onClick={() => { setShowDeleteModal(true); setMenuOpen(false); }}
                                         className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-rose-600 hover:bg-rose-50 cursor-pointer">

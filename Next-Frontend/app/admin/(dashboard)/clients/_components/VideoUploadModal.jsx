@@ -104,7 +104,7 @@ function StagedVideoPreview({ file, isUploading, isDone, isSelected, onToggleSel
       videoRef.current.pause();
       setIsPlaying(false);
     } else {
-      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => { });
     }
   };
 
@@ -494,6 +494,7 @@ export default function VideoUploadModal({
 
   const fileInputRef = useRef(null);
   const prevOpenRef = useRef(false);
+  const uploadedPlacementsRef = useRef([]);
 
   // When upload finishes, default inspected video to first film
   useEffect(() => {
@@ -697,6 +698,7 @@ export default function VideoUploadModal({
 
         const { item: portfolioDoc } = await portRes.json();
         uploadedPlacements.push(portfolioDoc);
+        uploadedPlacementsRef.current.push(portfolioDoc);
 
         completedBytes += item.size;
         setOverallProgress(Math.round((completedBytes / totalBytes) * 100));
@@ -728,16 +730,23 @@ export default function VideoUploadModal({
     }
   };
 
-  const handleFinishAndExit = () => {
-    onUploadComplete?.(uploadedResults);
+  const safeClose = () => {
+    const toReturn = uploadedResults.length > 0 ? uploadedResults : uploadedPlacementsRef.current;
+    if (toReturn.length > 0) {
+      onUploadComplete?.(toReturn);
+    }
     onClose();
+  };
+
+  const handleFinishAndExit = () => {
+    safeClose();
   };
 
   const doneCount = items.filter((it) => it.status === 'done').length;
   const errorCount = items.filter((it) => it.status === 'error').length;
 
   return (
-    <Dialog open={open} onOpenChange={(v) => !v && !isUploading && onClose()}>
+    <Dialog open={open} onOpenChange={(v) => !v && !isUploading && safeClose()}>
       <DialogContent
         hideCloseButton
         className="max-w-4xl w-[95vw] h-[85vh] max-h-[820px] p-0 overflow-hidden flex flex-col rounded-3xl border border-[#E8DDD1] bg-[#FFFCF8] shadow-2xl"
@@ -773,7 +782,7 @@ export default function VideoUploadModal({
           <button
             type="button"
             disabled={isUploading}
-            onClick={uploadFinished ? handleFinishAndExit : onClose}
+            onClick={safeClose}
             className="flex items-center justify-center h-8 w-8 rounded-xl text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors disabled:opacity-50"
           >
             <X size={16} />
@@ -1016,7 +1025,7 @@ export default function VideoUploadModal({
                   variant="outline"
                   size="sm"
                   disabled={isUploading}
-                  onClick={onClose}
+                  onClick={safeClose}
                   className="border-stone-200 text-stone-700 hover:bg-stone-50"
                 >
                   Cancel

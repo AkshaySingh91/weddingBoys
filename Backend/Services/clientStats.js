@@ -73,8 +73,42 @@ const PROJECT_STAGE = {
 export async function rollupByClient(clientId) {
     const rows = await PortfolioItem.aggregate([
         ...(clientId ? [{ $match: { client: new mongoose.Types.ObjectId(String(clientId)) } }] : []),
-        { $group: GROUP_STAGE },
-        { $project: PROJECT_STAGE },
+        // Pull in the Media doc so we can fall back to its poster/cdn URLs
+        // when the denormalized render cache is still empty (worker pending).
+        {
+            $lookup: {
+                from: 'media',
+                localField: 'media',
+                foreignField: '_id',
+                as: '_mediaDocs',
+            },
+        },
+        {
+            $addFields: {
+                _media: { $arrayElemAt: ['$_mediaDocs', 0] },
+            },
+        },
+        { $sort: { isHero: -1, heroPriority: -1, generalPriority: -1, _id: -1 } },
+        {
+            $group: {
+                ...GROUP_STAGE,
+                coverImage: {
+                    $first: {
+                        $ifNull: [
+                            '$render.posterUrl',
+                            { $ifNull: [
+                                '$render.imageUrl',
+                                { $ifNull: [
+                                    '$_media.video.posterUrl',
+                                    { $ifNull: ['$_media.cdnUrl', null] },
+                                ] },
+                            ] },
+                        ],
+                    },
+                },
+            },
+        },
+        { $project: { ...PROJECT_STAGE, coverImage: 1 } },
     ]);
     return new Map(rows.map(({ _id, ...rest }) => [String(_id), rest]));
 }

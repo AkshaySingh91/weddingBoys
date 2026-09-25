@@ -345,6 +345,7 @@ export default function ImageUploadModal({
 
   const fileInputRef = useRef(null);
   const prevOpenRef = useRef(false);
+  const uploadedPlacementsRef = useRef([]);
   const itemsRef = useRef(items);
   useEffect(() => {
     itemsRef.current = items;
@@ -761,6 +762,7 @@ export default function ImageUploadModal({
 
         const { item: portfolioDoc } = await portRes.json();
         uploadedPlacements.push(portfolioDoc);
+        uploadedPlacementsRef.current.push(portfolioDoc);
 
         completedBytes += item.size;
         setOverallProgress(Math.round((completedBytes / totalBytes) * 100));
@@ -796,9 +798,16 @@ export default function ImageUploadModal({
     }
   };
 
-  const handleFinishAndExit = () => {
-    onUploadComplete?.(uploadedResults);
+  const safeClose = () => {
+    const toReturn = uploadedResults.length > 0 ? uploadedResults : uploadedPlacementsRef.current;
+    if (toReturn.length > 0) {
+      onUploadComplete?.(toReturn);
+    }
     onClose();
+  };
+
+  const handleFinishAndExit = () => {
+    safeClose();
   };
 
   const doneCount = items.filter((it) => it.status === 'done').length;
@@ -817,7 +826,7 @@ export default function ImageUploadModal({
   }, [items]);
 
   return (
-    <Dialog open={open} onOpenChange={(v) => !v && !isUploading && onClose()}>
+    <Dialog open={open} onOpenChange={(v) => !v && !isUploading && safeClose()}>
       <DialogContent
         hideCloseButton
         className="max-w-6xl w-[96vw] h-[90vh] max-h-[880px] p-0 overflow-hidden flex flex-col rounded-3xl border border-[#E8DDD1] bg-[#FFFCF8] shadow-2xl"
@@ -867,7 +876,7 @@ export default function ImageUploadModal({
             <button
               type="button"
               disabled={isUploading}
-              onClick={uploadFinished ? handleFinishAndExit : onClose}
+              onClick={safeClose}
               className="flex items-center justify-center h-8 w-8 rounded-xl text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors disabled:opacity-50"
             >
               <X size={16} />
@@ -1463,7 +1472,7 @@ export default function ImageUploadModal({
                   variant="outline"
                   size="sm"
                   disabled={isUploading}
-                  onClick={onClose}
+                  onClick={safeClose}
                   className="border-stone-200 text-stone-700 hover:bg-stone-50"
                 >
                   Cancel

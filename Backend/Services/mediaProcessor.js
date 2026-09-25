@@ -9,6 +9,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
 import Media from '../Models/Media.js';
+import PortfolioItem from '../Models/PortfolioItem.js';
+import { renderFromMedia } from './portfolioSync.js';
 import {
     downloadToFile, uploadFile, putObject,
     generateBlurDataURL, VARIANT_WIDTHS_PUBLIC,
@@ -141,6 +143,18 @@ export async function processVideo(media, options = {}) {
         media.status = 'Ready';
         media.processing = { ...(media.processing || {}), lastError: null };
         await media.save();
+
+        // Keep all PortfolioItem placements in sync with newly generated video derivatives & poster
+        try {
+            const render = renderFromMedia(media);
+            await PortfolioItem.updateMany(
+                { media: media._id },
+                { $set: { render } }
+            );
+        } catch (syncErr) {
+            console.error('PortfolioItem sync error after video transcode:', syncErr);
+        }
+
         return media;
     } finally {
         await fs.rm(dir, { recursive: true, force: true });
@@ -187,6 +201,18 @@ export async function processImage(media) {
         media.status = 'Ready';
         media.processing = { ...(media.processing || {}), lastError: null };
         await media.save();
+
+        // Keep all PortfolioItem placements in sync with newly generated image derivatives
+        try {
+            const render = renderFromMedia(media);
+            await PortfolioItem.updateMany(
+                { media: media._id },
+                { $set: { render } }
+            );
+        } catch (syncErr) {
+            console.error('PortfolioItem sync error after image derivatives:', syncErr);
+        }
+
         return media;
     } finally {
         await fs.rm(dir, { recursive: true, force: true });
