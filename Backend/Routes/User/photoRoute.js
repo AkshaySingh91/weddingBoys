@@ -62,6 +62,8 @@ Route.get("/api/photos", getAllPhotos)
 async function getSpecificPhoto(req, res, next) {
     try {
         const { id = null } = req.params
+        // A malformed id is "not found" on both paths, not a CastError 500.
+        if (!portfolio.isItemId(id)) return res.status(404).json({ message: 'Photo not found' });
 
         // Resolves by new _id or legacy subdoc id, preserving published URLs.
         if (id && portfolio.portfolioReadsEnabled()) {
@@ -72,7 +74,7 @@ async function getSpecificPhoto(req, res, next) {
             });
             return res.status(200).json({
                 clientName: item.client?.clientName,
-                selectedPhoto: portfolio.toLegacyPhotoRow(item),
+                selectedPhoto: { ...portfolio.toLegacyPhotoRow(item), photoShootDate: portfolio.monthYear(item.shootDate) },
                 remainingPhotos: siblings.map(portfolio.toLegacyPhotoRow),
             });
         }
@@ -135,11 +137,14 @@ async function getRecommendedPhotos(req, res, next) {
     try {
         const { id } = req.params;
         const { page = 1, limit = 10 } = req.query; // Infinite scrolling support
+        if (!portfolio.isItemId(id)) return res.status(404).json({ message: 'Photo not found' });
         if (portfolio.portfolioReadsEnabled()) {
             const item = await portfolio.findById(id);
-            if (!item) return res.status(404).json({ message: 'Photo not found' });
+            if (!item || item.kind !== 'Photo') return res.status(404).json({ message: 'Photo not found' });
             const recs = await portfolio.findRecommended({ item, page: parseInt(page), limit: parseInt(limit) });
-            return res.status(200).json({ recommendedPhotos: recs.map(portfolio.toLegacyPhotoRow) });
+            return res.status(200).json({
+                recommendedPhotos: recs.map((r) => ({ ...portfolio.toLegacyPhotoRow(r), photoShootDate: portfolio.monthYear(r.shootDate) })),
+            });
         }
 
         // Fetch the selected photo to get its tags

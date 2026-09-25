@@ -12,7 +12,14 @@
  * read `Client.videos[].mediaId`: that field was never persisted, because the
  * path is undeclared on ClientSchema and Mongoose strict mode discarded it.
  *
- *   node scripts/backfillPortfolioItems.js [--dry-run] [--verify] [--client=<id>] [--refresh-links]
+ *   node scripts/backfillPortfolioItems.js [--dry-run | --apply | --verify | --rollback=<runId>]
+ *                                          [--client=<id>] [--refresh-links]
+ *
+ * Follows the shared script contract (scripts/lib/runLog.js): with no mode it is
+ * a dry run — it used to write on a bare invocation. --apply records every item
+ * it creates or re-links; --rollback=<runId> deletes the items that run created
+ * and restores the links it replaced, except where the item has changed since,
+ * which it keeps and lists.
  *
  * CREATE-ONLY by default. A re-run never overwrites what an admin has since
  * edited. The original script `$set` tags, hero flags, priorities, location,
@@ -35,8 +42,10 @@ import mongoose from 'mongoose';
 
 dotenv.config();
 
-const DRY = process.argv.includes('--dry-run');
-const VERIFY_ONLY = process.argv.includes('--verify');
+const { parseMode, startRun, loadRun, markRolledBack } = await import('./lib/runLog.js');
+const { mode, runId: ROLLBACK_ID } = parseMode();
+const DRY = mode === 'dryRun';
+const VERIFY_ONLY = mode === 'verify';
 const ONE = (process.argv.find((a) => a.startsWith('--client=')) || '').split('=')[1];
 const REFRESH_LINKS = process.argv.includes('--refresh-links');
 
@@ -47,6 +56,54 @@ const WebsiteSetting = (await import('../Models/WebsiteSettingSchema.js')).defau
 const { renderFromMedia } = await import('../Services/portfolioRender.js');
 
 await mongoose.connect(process.env.MONGO_URI);
+console.log(`database "${mongoose.connection.db.databaseName}" · mode ${mode}`);
+
+// What an admin can edit. A rollback leaves any item whose values here differ
+// from what the run wrote, because deleting it would delete that edit.
+const fingerprint = (d) => JSON.stringify({
+    tags: [...(d.tags || [])],
+    status: d.status ?? null,
+    isHero: Boolean(d.isHero),
+    heroPriority: d.heroPriority ?? 0,
+    generalPriority: d.generalPriority ?? 0,
+    title: d.title ?? null,
+    caption: d.caption ?? null,
+    eventGroup: d.eventGroup || '',
+    shootDate: d.shootDate ? new Date(d.shootDate).getTime() : null,
+    location: ['country', 'state', 'city', 'venue'].map((k) => d.location?.[k] ?? null),
+    credits: (d.credits || []).map((c) => [c.name ?? null, c.role ?? null]),
+});
+const LINK_KEYS = ['media', 'mediaId', 'poster', 'posterMediaId', 'render', 'legacy'];
+const linksOf = (d) => Object.fromEntries(LINK_KEYS.map((k) => [k, d?.[k] ?? null]));
+
+if (mode === 'rollback') {
+    const { changes } = await loadRun('backfillPortfolioItems', ROLLBACK_ID)
+        .catch(async (error) => { console.error(error.message); await mongoose.disconnect(); process.exit(1); });
+    const kept = [];
+    let deleted = 0;
+    let restored = 0;
+    for (const c of changes) {
+        const current = await PortfolioItem.findById(c.docId).lean();
+        if (!current) continue;
+        if (c.op === 'create') {
+            if (fingerprint(current) !== c.fingerprint) { kept.push(`${c.docId} (edited since the run)`); continue; }
+            await PortfolioItem.deleteOne({ _id: c.docId });
+            deleted += 1;
+        } else if (c.op === 'refresh') {
+            if (JSON.stringify(linksOf(current)) !== JSON.stringify(c.after)) { kept.push(`${c.docId} (links changed since the run)`); continue; }
+            await PortfolioItem.updateOne({ _id: c.docId }, { $set: c.before }, { timestamps: false });
+            restored += 1;
+        }
+    }
+    console.log(`rolled back ${ROLLBACK_ID}: deleted ${deleted} created item(s), restored links on ${restored}`);
+    if (kept.length) {
+        console.log(`kept ${kept.length} item(s) that changed after the run:`);
+        kept.slice(0, 20).forEach((k) => console.log('   ' + k));
+    }
+    await markRolledBack(ROLLBACK_ID, { deleted, restored, kept: kept.length });
+    await mongoose.disconnect();
+    process.exit(0);
+}
 
 const stats = { videos: 0, photos: 0, noMedia: 0, reversedCredits: 0, upserts: 0 };
 const anomalies = [];
@@ -255,9 +312,33 @@ console.log(`${DRY ? '[dry-run] ' : ''}would create ${toCreate}, leave ${existin
     + (REFRESH_LINKS ? ` (links refreshed on ${existingIds.size})` : ''));
 
 if (!DRY && ops.length) {
-    const res = await PortfolioItem.bulkWrite(ops, { ordered: false });
-    stats.upserts = (res.upsertedCount || 0) + (res.modifiedCount || 0);
-    console.log(`created ${res.upsertedCount || 0}, links refreshed ${res.modifiedCount || 0}`);
+    const run = await startRun('backfillPortfolioItems');
+    try {
+        const refreshIds = REFRESH_LINKS ? ops.map((o) => o.updateOne.filter._id).filter((id) => existingIds.has(String(id))) : [];
+        const beforeLinks = new Map((await PortfolioItem.find({ _id: { $in: refreshIds } }).lean())
+            .map((d) => [String(d._id), linksOf(d)]));
+
+        const res = await PortfolioItem.bulkWrite(ops, { ordered: false });
+        stats.upserts = (res.upsertedCount || 0) + (res.modifiedCount || 0);
+
+        // Record from the database, not from the ops, so the fingerprint is
+        // exactly what a later rollback will compare against.
+        const createdIds = Object.values(res.upsertedIds || {});
+        for (const d of await PortfolioItem.find({ _id: { $in: createdIds } }).lean()) {
+            await run.record({ op: 'create', docId: d._id, fingerprint: fingerprint(d) });
+        }
+        for (const d of await PortfolioItem.find({ _id: { $in: refreshIds } }).lean()) {
+            const before = beforeLinks.get(String(d._id));
+            if (JSON.stringify(before) !== JSON.stringify(linksOf(d))) {
+                await run.record({ op: 'refresh', docId: d._id, before, after: linksOf(d) });
+            }
+        }
+        console.log(`created ${res.upsertedCount || 0}, links refreshed ${res.modifiedCount || 0}`);
+        await run.finish({ created: res.upsertedCount || 0, refreshed: res.modifiedCount || 0 });
+    } catch (error) {
+        await run.fail(error);
+        throw error;
+    }
 }
 
 if (anomalies.length) {

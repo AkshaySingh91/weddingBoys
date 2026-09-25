@@ -197,6 +197,32 @@ Route.get("/api/map-clients", async (req, res) => {
             return res.status(404).json({ message: "Settings not found" });
         }
         const clientIds = clientOnMap.mapDisplayClient.map((client) => client.clientId);
+        const coordinateOf = (id) => clientOnMap.mapDisplayClient.find((c) => String(c.clientId) === String(id))?.coordinate;
+
+        // PortfolioItem path. Without it, a wedding added through Add Wedding
+        // (which leaves the embedded arrays empty) could be pinned but never shown.
+        if (portfolio.portfolioReadsEnabled()) {
+            const [clients, features] = await Promise.all([
+                ClientSchema.find({ _id: { $in: clientIds } }).select('clientName').lean(),
+                portfolio.findMapFeatures(clientIds),
+            ]);
+            const pins = clients.flatMap((client) => {
+                const { video, photo } = features.get(String(client._id)) || {};
+                const row = video && portfolio.toLegacyVideoRow(video);
+                // Same rule as below: a pin is only drawn with a film poster to show.
+                if (!row?.thumbnailUrl) return [];
+                return [{
+                    coordinate: coordinateOf(client._id),
+                    clientId: String(client._id),
+                    clientName: client.clientName,
+                    photo: photo ? portfolio.toLegacyPhotoRow(photo) : null,
+                    video: row.videos,
+                    url: row.thumbnailUrl,
+                }];
+            });
+            return res.status(200).json({ clients: pins });
+        }
+
         const clients = await ClientSchema.find({ _id: { $in: clientIds } });
 
         let result = clients.map((client) => {
@@ -231,7 +257,7 @@ Route.get("/api/map-clients", async (req, res) => {
                 highestPriorityVideo.videoShootDate = formattedDate;
             }
             // Add coordinates for each client
-            const coordinate = clientOnMap.mapDisplayClient.find((c) => (c.clientId.toString() === _id.toString()))?.coordinate;
+            const coordinate = coordinateOf(_id);
             // Return the final client object
             return {
                 coordinate,
@@ -269,6 +295,15 @@ async function getHomePhotos(req, res, next) {
     try {
         // Read category from query string; default to "All Work" (which means no filtering)
         const category = req.query.category || "All Work";
+
+        // PortfolioItem path — the home grid never showed wizard-added photos.
+        if (portfolio.portfolioReadsEnabled()) {
+            const items = await portfolio.findHomePhotos({ category });
+            return res.status(200).json({
+                photos: items.map((i) => ({ ...portfolio.toLegacyPhotoRow(i), client: i.client?.clientName })),
+            });
+        }
+
         const matchStage = category === "All Work" ? [] : [category];
         const pipeline = [
             // Unwind photos array so each photo becomes a document

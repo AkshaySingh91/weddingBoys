@@ -129,3 +129,41 @@ EditDrawer, DeleteClientModal). Dead `Component/VideoDetailsForm.jsx` and
 
 Found, not fixed here: 2 of dev's 3 map pins belong to clients that no longer exist —
 added to the Phase 1 cutover report; the map itself is retired in Phase 7.
+
+### Phase 1 (preparation) — the v2 read path made complete; cut-over tooling
+Flag still off in production: no visible change until `PORTFOLIO_READS=v2` is set.
+Runbook and rehearsal results: `PORTFOLIO-CUTOVER-RUNBOOK.md`.
+
+- **v2 responses carry what the pages read.** `photos[].photoMetaData.url` (film page
+  gallery) and `thumbnailMetaData.url` (recommended strip, map) were missing, so v2 would
+  have shown broken images. Detail and recommended dates use the legacy "September 2024".
+- **v2 branches for `/api/home/sample-photos` and `/api/map-clients`**, which had none,
+  so wizard weddings could never reach the home grid or the map. The home grid keeps the
+  legacy pick (lowest `generalPriority` first, 8).
+- **Malformed ids → 404 on both paths.** The film detail route had no try/catch, so a bad
+  id hung the request (Express 4 does not catch async errors).
+- **Legacy bug fixed:** a film page showed the date of its wedding's last other film
+  (`selectedVideo.videoShootDate` was overwritten inside the siblings loop). Found by parity.
+- Hero ties are broken by `_id`, so equal priorities keep one order.
+- `scripts/lib/runLog.js`: the shared `--dry-run | --apply | --verify | --rollback=<runId>`
+  contract. The backfill now follows it — **a bare run is a dry run** (it used to write) —
+  and records what it creates or re-links. Rollback deletes created items unless their
+  editorial fields changed since (then kept and listed), and restores replaced links.
+  Tested on a production copy: create 2 → edit 1 → rollback deleted 1, kept 1; a second
+  rollback is refused; re-link rollback restored the prior poster.
+- `scripts/cutoverReport.js` (read-only, exit 1 on blockers), `scripts/parityCheck.js`
+  (two servers, every endpoint and media URL), `Next-Frontend/scripts/checkSitemapUrls.mjs`
+  (checks the API behind client-rendered film/photo pages).
+- Rehearsal on a fresh production copy: **0 blockers; parity nothing broken** (80 checks,
+  6 film pages, 27 photo pages, all media URLs load); differences are only tie orders.
+  The copy was dropped afterwards.
+- Acceptance on dev (v2): the wizard film appears in `/allfilms` and its "Beach" row; its
+  page has the video, date and 2 gallery photos with URLs; its photos reach the home grid.
+  Browser: a legacy film page (Anshu & Abhishek) rendered from v2 with no broken content.
+
+Found:
+- **Production is served by the older SPA**, whose admin uses the legacy client and tag
+  editors retired in 0.2 → deploying this backend removes wedding/tag editing from the old
+  admin. Deploy the Next frontend with it (runbook §0).
+- Company logo points at a deleted media record (file 404) — owner re-uploads.
+- 20 published photos have Archived media records; files still served.

@@ -82,7 +82,19 @@ Route.get("/api/videos", async (req, res) => {
     }
 });
 // it will give specific video details 
+// Neither path could answer a malformed id: the lookup threw a CastError, and with
+// no try/catch (Express 4 does not catch async errors) the request simply hung.
 async function getSpecificVideo(req, res, next) {
+    try {
+        if (!portfolio.isItemId(req.params.id)) return res.status(404).json({ message: 'Video not found' });
+        return await getSpecificVideoById(req, res);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error.message });
+    }
+}
+
+async function getSpecificVideoById(req, res) {
     const { id = null } = req.params
 
     // PortfolioItem path. Resolves by either the new _id or the old subdoc id,
@@ -98,7 +110,11 @@ async function getSpecificVideo(req, res, next) {
         const row = portfolio.toLegacyVideoRow(item);
         return res.status(200).json({
             clientName: item.client?.clientName,
-            selectedVideo: { ...row.videos, url: row.url, loopUrl: row.loopUrl, thumbnailUrl: row.thumbnailUrl },
+            selectedVideo: {
+                ...row.videos,
+                videoShootDate: portfolio.monthYear(item.shootDate),
+                url: row.url, loopUrl: row.loopUrl, thumbnailUrl: row.thumbnailUrl,
+            },
             remainingVideos: siblings.map((s2) => {
                 const r = portfolio.toLegacyVideoRow(s2);
                 return { ...r.videos, thumbnailMetaData: { ...r.videos.thumbnailMetaData, url: r.thumbnailUrl } };
@@ -141,7 +157,9 @@ async function getSpecificVideo(req, res, next) {
             if (otherVideo.videoMetaData && otherVideo.videoMetaData.key)
                 otherVideo.thumbnailMetaData.url = await mediaUrl(otherVideo.thumbnailMetaData.key)
             let date = `${months[new Date(otherVideo.videoShootDate).getMonth()]} ${new Date(otherVideo.videoShootDate).getFullYear()}`
-            selectedVideo.videoShootDate = date;
+            // Was `selectedVideo.videoShootDate = date`, so a film page showed the
+            // shoot date of the wedding's last other film instead of its own.
+            otherVideo.videoShootDate = date;
         }
         // get all photo of client
         const allPhotos = remainingPhotoAndVideo.photos.map((p) => ({ ...p, _id: p._id.toString() }))
@@ -168,15 +186,20 @@ async function getRecommendedVideos(req, res, next) {
     try {
         const { id } = req.params;
         const { page = 1, limit = 10 } = req.query; // Infinite scrolling support
+        if (!portfolio.isItemId(id)) return res.status(404).json({ message: 'videos not found' });
 
         if (portfolio.portfolioReadsEnabled()) {
             const item = await portfolio.findById(id);
-            if (!item) return res.status(404).json({ message: 'videos not found' });
+            if (!item || item.kind !== 'Video') return res.status(404).json({ message: 'videos not found' });
             const recs = await portfolio.findRecommended({ item, page: parseInt(page), limit: parseInt(limit) });
             return res.status(200).json({
                 recommendedVideos: recs.map((r) => {
                     const row = portfolio.toLegacyVideoRow(r);
-                    return { ...row.videos, clientName: row.clientName, url: row.thumbnailUrl, thumbnailUrl: row.thumbnailUrl };
+                    return {
+                        ...row.videos,
+                        videoShootDate: portfolio.monthYear(r.shootDate),
+                        clientName: row.clientName, url: row.thumbnailUrl, thumbnailUrl: row.thumbnailUrl,
+                    };
                 }),
             });
         }

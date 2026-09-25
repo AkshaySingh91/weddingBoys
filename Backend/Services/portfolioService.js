@@ -26,6 +26,20 @@ const displayDate = (d) => {
     return Number.isNaN(dt.getTime()) ? null : `${dt.getDate()} ${MONTHS[dt.getMonth()]}`;
 };
 
+/** The legacy detail and recommended routes use "September 2024" instead. */
+const monthYear = (d) => {
+    if (!d) return null;
+    const dt = new Date(d);
+    return Number.isNaN(dt.getTime()) ? null : `${MONTHS[dt.getMonth()]} ${dt.getFullYear()}`;
+};
+
+/**
+ * Ids arrive from public URLs. Anything that is not 24 hex characters would make
+ * Mongoose throw a CastError, so it is treated as "not found" rather than a 500.
+ * (`isValidObjectId` is not enough: it accepts any 12-character string.)
+ */
+export const isItemId = (id) => /^[a-f0-9]{24}$/i.test(String(id || ''));
+
 const parseTags = (tag) => String(tag || '').split(',').map((t) => t.trim()).filter(Boolean);
 
 /* ------------------------------------------------------------------ queries */
@@ -41,6 +55,7 @@ export async function findFeed({ kind, tags = [], page = 1, limit = 10 }) {
 }
 
 export async function findById(id) {
+    if (!isItemId(id)) return null;
     return PortfolioItem.findOne({
         $or: [{ _id: id }, { 'legacy.subdocId': id }],
         status: 'Published',
@@ -68,9 +83,45 @@ export async function findRecommended({ item, page = 1, limit = 10 }) {
         .lean();
 }
 
+/**
+ * Home "Our portfolio" grid. Reproduces the legacy pick exactly — lowest
+ * generalPriority first, 8 photos — so the cut-over does not reshuffle the home
+ * page. Which photos lead is an editorial choice that Phase 5 hands to the admin.
+ */
+export async function findHomePhotos({ category, limit = 8 }) {
+    const all = !category || category === 'All Work';
+    return PortfolioItem.find({ kind: 'Photo', status: 'Published', ...(all ? {} : { tags: category }) })
+        .sort({ generalPriority: 1, _id: 1 })
+        .limit(limit)
+        .populate('client', 'clientName')
+        .lean();
+}
+
+/**
+ * The representative film and photo of each wedding on the map, chosen the way
+ * the legacy route chose them: the highest-priority hero film, otherwise the
+ * highest general priority; the photo with the highest general priority.
+ * One query for every pinned wedding instead of loading each client's arrays.
+ */
+export async function findMapFeatures(clientIds) {
+    const items = await PortfolioItem.find({ client: { $in: clientIds }, status: 'Published' })
+        .sort(FEED_SORT)
+        .lean();
+    const byClient = new Map();
+    for (const i of items) {
+        const key = String(i.client);
+        const entry = byClient.get(key) || { video: null, photo: null };
+        if (i.kind === 'Video' && !entry.video) entry.video = i;
+        if (i.kind === 'Photo' && !entry.photo) entry.photo = i;
+        byClient.set(key, entry);
+    }
+    return byClient;
+}
+
 export async function findHeroVideos(limit = 12) {
+    // `_id` breaks ties so equal priorities keep one order across requests.
     return PortfolioItem.find({ kind: 'Video', isHero: true, status: 'Published' })
-        .sort({ heroPriority: -1 })
+        .sort({ heroPriority: -1, _id: -1 })
         .limit(limit)
         .populate('client', 'clientName')
         .lean();
@@ -127,7 +178,8 @@ export function toLegacyVideoRow(i) {
         videos: {
             _id: String(i._id),
             videoMetaData: { key: i.legacy?.s3Key },
-            thumbnailMetaData: { key: i.legacy?.thumbnailS3Key },
+            // `url` here is what the film page's recommended strip and the map read.
+            thumbnailMetaData: { key: i.legacy?.thumbnailS3Key, url: posterOf(i) },
             tags: i.tags || [],
             videoShootDate: displayDate(i.shootDate),
             isHeroVideo: i.isHero,
@@ -150,7 +202,8 @@ export function toLegacyVideoRow(i) {
 export function toLegacyPhotoRow(i) {
     return {
         _id: String(i._id),
-        photoMetaData: { key: i.legacy?.s3Key },
+        // `url` here is what the film page's photo gallery reads.
+        photoMetaData: { key: i.legacy?.s3Key, url: i.render?.imageUrl || null },
         tags: i.tags || [],
         photoShootDate: i.shootDate,
         photoLocation: i.location || {},
@@ -186,4 +239,4 @@ export function toLegacyHeroSlide(i) {
     };
 }
 
-export { parseTags, displayDate };
+export { parseTags, displayDate, monthYear };
