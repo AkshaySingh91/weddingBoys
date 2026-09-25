@@ -10,7 +10,7 @@ import path from 'node:path';
 import sharp from 'sharp';
 import Media from '../Models/Media.js';
 import PortfolioItem from '../Models/PortfolioItem.js';
-import { renderFromMedia } from './portfolioSync.js';
+import { syncRenderForMedia } from './portfolioRender.js';
 import {
     downloadToFile, uploadFile, putObject,
     generateBlurDataURL, VARIANT_WIDTHS_PUBLIC,
@@ -146,11 +146,9 @@ export async function processVideo(media, options = {}) {
 
         // Keep all PortfolioItem placements in sync with newly generated video derivatives & poster
         try {
-            const render = renderFromMedia(media);
-            await PortfolioItem.updateMany(
-                { media: media._id },
-                { $set: { render } }
-            );
+            // Poster-safe: never replaces a hand-picked film poster with the
+            // auto-extracted frame (Services/portfolioRender.js).
+            await syncRenderForMedia(media);
         } catch (syncErr) {
             console.error('PortfolioItem sync error after video transcode:', syncErr);
         }
@@ -204,11 +202,9 @@ export async function processImage(media) {
 
         // Keep all PortfolioItem placements in sync with newly generated image derivatives
         try {
-            const render = renderFromMedia(media);
-            await PortfolioItem.updateMany(
-                { media: media._id },
-                { $set: { render } }
-            );
+            // Poster-safe: never replaces a hand-picked film poster with the
+            // auto-extracted frame (Services/portfolioRender.js).
+            await syncRenderForMedia(media);
         } catch (syncErr) {
             console.error('PortfolioItem sync error after image derivatives:', syncErr);
         }

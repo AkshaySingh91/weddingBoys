@@ -44,6 +44,7 @@ const PortfolioItem = (await import('../Models/PortfolioItem.js')).default;
 const Client = (await import('../Models/ClientSchema.js')).default;
 const Media = (await import('../Models/Media.js')).default;
 const WebsiteSetting = (await import('../Models/WebsiteSettingSchema.js')).default;
+const { renderFromMedia } = await import('../Services/portfolioRender.js');
 
 await mongoose.connect(process.env.MONGO_URI);
 
@@ -83,26 +84,6 @@ function toCredits(bts = [], ctx) {
     });
 }
 
-function renderFromMedia(media, poster) {
-    if (!media) return {};
-    const posterUrl = poster?.cdnUrl || poster?.publicUrl || media.video?.posterUrl;
-    return {
-        posterUrl,
-        blurDataURL: media.blurDataURL,
-        dominantColor: media.dominantColor,
-        aspectRatio: media.aspectRatio,
-        width: media.width,
-        height: media.height,
-        ...(media.mediaType === 'Image' ? { imageUrl: media.cdnUrl || media.publicUrl } : {}),
-        ...(media.mediaType === 'Video' ? {
-            loopUrl: media.video?.loopUrl,
-            webUrl: media.video?.webUrl,
-            sourceUrl: media.video?.sourceUrl || media.cdnUrl,
-            durationSec: media.duration,
-        } : {}),
-        syncedAt: new Date(),
-    };
-}
 
 // Sanity-check the role vocabulary itself before trusting it.
 // btsRoleSchema is `{ title: role, key: person }`. Rows entered the other way

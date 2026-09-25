@@ -508,12 +508,11 @@ export default function ClientWorkspace() {
                                         <UploadSimple size={13} /> Upload films or photos
                                     </button>
                                     <div className="my-1 h-px bg-studio-border" />
-                                    {client?.status === 'Published' ? (
-                                        <button type="button" onClick={async () => { setMenuOpen(false); await saveProfile({ status: 'Draft' }); refresh(); fireMessage('Moved to draft', 'success'); }}
-                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-amber-700 hover:bg-amber-50 cursor-pointer">
-                                            <EyeSlash size={13} /> Unpublish showcase
-                                        </button>
-                                    ) : (
+                                    {/* "Unpublish showcase" is withheld until plan phase 2: the
+                                        wedding's own status is not yet a public gate, so it would
+                                        have claimed "unpublished" while every item stayed live.
+                                        Hide items per item meanwhile (select › Hide). */}
+                                    {client?.status !== 'Published' && (
                                         <button type="button" onClick={async () => { setMenuOpen(false); await saveProfile({ status: 'Published' }); refresh(); fireMessage('Published to showcase!', 'success'); }}
                                             className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-emerald-700 hover:bg-emerald-50 cursor-pointer">
                                             <Eye size={13} /> Publish showcase

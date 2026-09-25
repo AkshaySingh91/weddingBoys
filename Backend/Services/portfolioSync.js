@@ -13,25 +13,10 @@ import PortfolioItem from '../Models/PortfolioItem.js';
 import Client from '../Models/ClientSchema.js';
 import Media from '../Models/Media.js';
 
-export const renderFromMedia = (media, poster) => {
-    if (!media) return {};
-    return {
-        posterUrl: poster?.cdnUrl || poster?.publicUrl || media.video?.posterUrl,
-        blurDataURL: media.blurDataURL,
-        dominantColor: media.dominantColor,
-        aspectRatio: media.aspectRatio,
-        width: media.width,
-        height: media.height,
-        ...(media.mediaType === 'Image' ? { imageUrl: media.cdnUrl || media.publicUrl } : {}),
-        ...(media.mediaType === 'Video' ? {
-            loopUrl: media.video?.loopUrl,
-            webUrl: media.video?.webUrl,
-            sourceUrl: media.video?.sourceUrl || media.cdnUrl,
-            durationSec: media.duration,
-        } : {}),
-        syncedAt: new Date(),
-    };
-};
+// Moved to Services/portfolioRender.js. Re-exported for the legacy sync below,
+// which is removed in the Phase 1 clean-up.
+import { renderFromMedia } from './portfolioRender.js';
+export { renderFromMedia };
 
 /**
  * Rebuild every PortfolioItem for one client, and remove items whose subdocument

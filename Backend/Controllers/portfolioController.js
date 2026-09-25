@@ -14,7 +14,7 @@ import PortfolioItem from '../Models/PortfolioItem.js';
 import Media from '../Models/Media.js';
 import Client from '../Models/ClientSchema.js';
 import { deleteSingleMediaDoc } from './mediaController.js';
-import { renderFromMedia } from '../Services/portfolioSync.js';
+import { renderFromMedia } from '../Services/portfolioRender.js';
 
 const MAX_BULK = 500;
 
@@ -32,7 +32,7 @@ const searchClauses = (q) => {
     { caption: rx }, { 'location.city': rx }, { 'location.state': rx }];
 };
 
-// renderFromMedia is imported from Services/portfolioSync.js — single source of
+// renderFromMedia is imported from Services/portfolioRender.js — single source of
 // truth shared by this controller, the backfill, and the worker.
 
 // GET /api/admin/portfolio
@@ -81,6 +81,9 @@ export async function listPortfolio(req, res) {
         for (const item of items) {
             if (!item.render?.posterUrl && !item.render?.imageUrl && item.media?.status === 'Ready') {
                 const fresh = renderFromMedia(item.media);
+                // An item with its own poster keeps it; the auto frame is only a
+                // fallback for items that have none.
+                if (item.poster) delete fresh.posterUrl;
                 item.render = { ...(item.render || {}), ...fresh };
                 staleIds.push(item._id);
             }

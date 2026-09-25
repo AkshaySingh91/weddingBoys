@@ -89,12 +89,12 @@ export async function updateClientProfile(req, res) {
                 { client: client._id, status: 'Draft' },
                 { $set: { status: 'Published', publishedAt: new Date() } }
             );
-        } else if (status === 'Draft') {
-            await PortfolioItem.updateMany(
-                { client: client._id },
-                { $set: { status: 'Draft' } }
-            );
         }
+        // Deliberately no cascade for status === 'Draft'. Setting every item to
+        // Draft on unpublish erased which items the admin had hidden on purpose,
+        // so the publish branch above then exposed them on the next republish.
+        // A non-destructive wedding-level gate replaces this in plan phase 2;
+        // until then an admin hides work per item (workspace › select › Hide).
 
         // clientNameText is denormalised onto every placement so search can match
         // a couple's name without a join; a rename has to reach those too.

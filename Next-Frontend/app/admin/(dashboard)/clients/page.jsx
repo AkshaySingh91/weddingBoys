@@ -85,23 +85,6 @@ export default function ClientsPage() {
         }
     };
 
-    const makeDraft = async (client) => {
-        setMenuFor(null);
-        try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/clients/${client.clientId}`, {
-                method: 'PATCH',
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status: 'Draft' }),
-            });
-            if (!res.ok) throw new Error('Could not unpublish wedding');
-            fireMessage(`${nameOf(client)} moved to draft`, 'success');
-            load();
-        } catch (err) {
-            fireMessage(err.message, 'error');
-        }
-    };
-
     const destroy = (client) => {
         setMenuFor(null);
         setDeletingClient(client);
@@ -392,12 +375,6 @@ export default function ClientsPage() {
                                                             <button type="button" onClick={() => publishWedding(c)}
                                                                 className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-amber-900 font-semibold hover:bg-amber-50 cursor-pointer">
                                                                 <Sparkle size={13} weight="fill" className="text-amber-600" /> Publish Showcase
-                                                            </button>
-                                                        )}
-                                                        {!isDraft && (
-                                                            <button type="button" onClick={() => makeDraft(c)}
-                                                                className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-amber-700 hover:bg-amber-50 cursor-pointer">
-                                                                <EyeSlash size={13} /> Unpublish
                                                             </button>
                                                         )}
                                                         <div className="my-1 h-px bg-studio-border" />

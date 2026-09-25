@@ -59,3 +59,27 @@ can never pick up production's pending jobs.
 - The live taxonomy has a **"Caste"** category (7 tags). `/allfilms` renders one public
   filter per category, so visitors can filter weddings by caste. Needs a decision before
   Phase 3 migrates categories into tag groups.
+
+### Owner WIP committed (`748b637`)
+The owner's ~1,220 lines of in-progress admin work, committed unmodified at their request.
+It compiled; it carried 4 new `react-hooks/set-state-in-effect` lint errors and the Draft
+cascade below.
+
+### Phase 0.3 — hand-picked posters can no longer be overwritten
+- New `Services/portfolioRender.js`: one `renderFromMedia` builder and one writer,
+  `syncRenderForMedia`, used by the worker, the controller, the backfill (its private
+  duplicate removed) and `scripts/syncPortfolioRenders.js` (now with `--dry-run`).
+- The worker had done `$set: { render }` on every item using a file, replacing a
+  hand-picked poster with the auto frame. The writer now refreshes everything except
+  `posterUrl` on items that have their own `poster`.
+- Measured on the production snapshot: 6 films have a hand-picked poster, all 6 intact
+  (the risk was latent). After a full `syncPortfolioRenders` run on dev: still 6/6.
+
+### Phase 0.4 — the Draft cascade removed
+- `clientProfileController.js` no longer sets every item to Draft when a wedding is
+  unpublished (that erased which items were hidden on purpose, and the next publish
+  exposed them). Proven on dev: PATCH a published wedding to Draft → its 3 items stay
+  Published.
+- The two "Unpublish" buttons are withheld until Phase 2: the wedding's own status is not
+  a public gate yet, so they would have said "unpublished" while everything stayed live.
+  Meanwhile work is hidden per item (workspace › select › Hide).
