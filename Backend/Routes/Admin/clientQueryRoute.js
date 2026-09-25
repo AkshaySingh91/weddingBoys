@@ -1,7 +1,7 @@
 import express from 'express'
 import authenticateAdmin from '../../Middleware/authenticateAdmin.js'
 
-import { getAllClients, getSingleClientDetails, checkClientDetails, sendPutUrlsForNewClient, AddNewClient, validateClientUpdatedDetails, sendPutUrlsForNewMedia, updateClientDetails } from "../../Controllers/ClientController.js"
+import { getAllClients, getSingleClientDetails } from "../../Controllers/ClientController.js"
 import { createClient, updateClientProfile, getClientStats, deleteClient } from "../../Controllers/clientProfileController.js"
 
 const clientQueryRoute = express.Router();
@@ -25,15 +25,26 @@ clientQueryRoute.delete('/api/admin/clients/:id', deleteClient)
 clientQueryRoute.get('/api/admin/client/:id', getSingleClientDetails)
 
 /***************************************************/
-// while adding new client validate their details 
-clientQueryRoute.post("/api/admin/add-client/validate-details", checkClientDetails, sendPutUrlsForNewClient)
-// after validating new client details & sending puturls user media will upload on s3 & we have to save keys & other meta
-clientQueryRoute.post("/api/admin/add-client/save-details", AddNewClient)
-
-/***************************************************/
-// for existing client when details are updated like new media added validate it 
-clientQueryRoute.put('/api/admin/client/:id/validate-details', validateClientUpdatedDetails, sendPutUrlsForNewMedia)
-clientQueryRoute.put('/api/admin/client/:id/save-details', updateClientDetails)
+// Retired: the pre-wizard client editor.
+//
+// These saved into the embedded Client.videos[] / photos[] and then ran
+// syncClientPortfolio, which overwrites tags, hero flags and priorities from
+// those arrays, forces every item to Published, and DELETES every portfolio
+// item that is not in them — i.e. every photo and film uploaded through the
+// current Add Wedding wizard. No frontend calls them any more. They answer 410
+// rather than 404 so a forgotten tool fails loudly and says why, and each hit is
+// logged so we find out if something still depends on them.
+const gone = (req, res) => {
+    console.warn(`[410] retired legacy client route: ${req.method} ${req.originalUrl}`);
+    return res.status(410).json({
+        message: 'This client editor has been retired. Use Add Wedding (/admin/clients/new) or the wedding workspace.',
+        retired: true,
+    });
+};
+clientQueryRoute.post("/api/admin/add-client/validate-details", gone)
+clientQueryRoute.post("/api/admin/add-client/save-details", gone)
+clientQueryRoute.put('/api/admin/client/:id/validate-details', gone)
+clientQueryRoute.put('/api/admin/client/:id/save-details', gone)
 
 
 

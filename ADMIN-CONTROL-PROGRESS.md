@@ -35,3 +35,27 @@ can never pick up production's pending jobs.
   delete outside it (R2 and legacy S3). Production leaves the variable unset — unchanged.
 - The guard reads the environment on every call, not at import: ES module imports are
   hoisted, and a value captured before `dotenv` runs would disarm it silently.
+
+### Phase 0.2 — data-loss paths closed
+- **Legacy client editor retired.** The four routes in `Routes/Admin/clientQueryRoute.js`
+  that ran `syncClientPortfolio` — which deletes every wizard upload for that wedding —
+  now answer `410 Gone` and log each hit. No frontend called them. Done at the router,
+  so `ClientController.js` (which holds uncommitted work) was not touched; the dead
+  controllers go in the Phase 1 clean-up.
+- **Bulk tag save retired** (`PUT /api/admin/tags` → 410). New additive
+  `POST /api/admin/tags/:tagType/terms {label}`: normalises spacing, rejects commas,
+  and refuses a case-insensitive duplicate in ANY category (409 names where it lives).
+  Tested on dev: new term 200, case variant 409, cross-category duplicate 409, unknown
+  category 404, empty/comma 400.
+- **Backfill is create-only.** Editorial fields are `$setOnInsert`; link fields refresh
+  only with `--refresh-links`; `timestamps:false`. Proven on dev: an admin edit to tags,
+  status, hero and priority survives both a re-run and `--refresh-links`, and a plain
+  re-run changes 0 documents and 0 `updatedAt` values. (Two test runs before the
+  timestamp fix bumped `updatedAt` on 33 legacy items — dev copy only.)
+- **`--verify` by id:** dev shows 33 embedded subdocs → 33 items, missing 0, plus
+  **3 wizard-created items** that the old count check would have called "drift".
+
+### Content finding to raise
+- The live taxonomy has a **"Caste"** category (7 tags). `/allfilms` renders one public
+  filter per category, so visitors can filter weddings by caste. Needs a decision before
+  Phase 3 migrates categories into tag groups.

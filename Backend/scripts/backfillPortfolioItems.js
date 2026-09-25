@@ -12,7 +12,23 @@
  * read `Client.videos[].mediaId`: that field was never persisted, because the
  * path is undeclared on ClientSchema and Mongoose strict mode discarded it.
  *
- *   node scripts/backfillPortfolioItems.js [--dry-run] [--verify] [--client=<id>]
+ *   node scripts/backfillPortfolioItems.js [--dry-run] [--verify] [--client=<id>] [--refresh-links]
+ *
+ * CREATE-ONLY by default. A re-run never overwrites what an admin has since
+ * edited. The original script `$set` tags, hero flags, priorities, location,
+ * credits and `status: 'Published'` on EVERY run — so running it again after any
+ * admin edit silently reverted the edit and republished anything hidden.
+ *
+ *   editorial fields  (title, tags, shootDate, location, isHero, heroPriority,
+ *                      generalPriority, credits, clientNameText, status)
+ *                     → written only when the item is first created.
+ *   link fields       (media, mediaId, poster, posterMediaId, render, legacy)
+ *                     → also written only on create, unless --refresh-links, which
+ *                       re-points existing items at their assets and nothing else.
+ *
+ * --verify compares by ID, not by count: every embedded subdoc must have an item
+ * whose `legacy.subdocId` is that subdoc. A count comparison stopped meaning
+ * anything the moment the wizard began creating items with no legacy twin.
  */
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
@@ -22,6 +38,7 @@ dotenv.config();
 const DRY = process.argv.includes('--dry-run');
 const VERIFY_ONLY = process.argv.includes('--verify');
 const ONE = (process.argv.find((a) => a.startsWith('--client=')) || '').split('=')[1];
+const REFRESH_LINKS = process.argv.includes('--refresh-links');
 
 const PortfolioItem = (await import('../Models/PortfolioItem.js')).default;
 const Client = (await import('../Models/ClientSchema.js')).default;
@@ -107,16 +124,31 @@ const filter = ONE ? { _id: ONE } : {};
 const clients = await Client.find(filter).lean();
 
 if (VERIFY_ONLY) {
-    let embedded = 0;
-    for (const c of clients) embedded += (c.videos || []).length + (c.photos || []).length;
-    const items = await PortfolioItem.countDocuments(ONE ? { client: ONE } : {});
-    console.log(`embedded subdocs: ${embedded}`);
-    console.log(`portfolio items : ${items}`);
-    console.log(embedded === items ? '✔ counts reconcile' : `✖ drift of ${Math.abs(embedded - items)}`);
-    const orphan = await PortfolioItem.countDocuments({ media: null });
-    if (orphan) console.warn(`⚠ ${orphan} item(s) have no Media doc (asset never migrated)`);
+    const subdocIds = new Set();
+    for (const c of clients) {
+        for (const v of c.videos || []) subdocIds.add(String(v._id));
+        for (const p of c.photos || []) subdocIds.add(String(p._id));
+    }
+    const scope = ONE ? { client: new mongoose.Types.ObjectId(ONE) } : {};
+    const items = await PortfolioItem.find(scope, { 'legacy.subdocId': 1, media: 1, render: 1, kind: 1, status: 1, client: 1 }).lean();
+
+    const linked = new Set(items.filter((i) => i.legacy?.subdocId).map((i) => String(i.legacy.subdocId)));
+    const missing = [...subdocIds].filter((id) => !linked.has(id));
+    const extra = items.filter((i) => i.legacy?.subdocId && !subdocIds.has(String(i.legacy.subdocId)));
+    const native = items.filter((i) => !i.legacy?.subdocId);
+    const nullMedia = items.filter((i) => !i.media);
+    const emptyRender = items.filter((i) => !(i.render?.posterUrl || i.render?.imageUrl || i.render?.sourceUrl));
+
+    console.log(`embedded subdocs            : ${subdocIds.size}`);
+    console.log(`portfolio items             : ${items.length}`);
+    console.log(`  missing (subdoc, no item) : ${missing.length}${missing.length ? '  ✖ ' + missing.slice(0, 5).join(', ') : ''}`);
+    console.log(`  extra (item, subdoc gone) : ${extra.length}`);
+    console.log(`  native (wizard-created)   : ${native.length}`);
+    console.log(`  no Media linked           : ${nullMedia.length}`);
+    console.log(`  empty render (no URL)     : ${emptyRender.length}`);
+    console.log(missing.length === 0 ? '✔ every embedded subdoc has its item' : '✖ backfill incomplete');
     await mongoose.disconnect();
-    process.exit(0);
+    process.exit(missing.length === 0 ? 0 : 1);
 }
 
 // heroPriority as it actually renders today comes from WebsiteSetting, which is
@@ -213,10 +245,38 @@ for (const c of clients) {
 
 console.log(`${DRY ? '[dry-run] ' : ''}${clients.length} client(s) → ${stats.videos} video(s), ${stats.photos} photo(s)`);
 
+// The op builders above describe a full item. Split each one so that editorial
+// fields are only ever written on insert, and link fields only on insert or with
+// --refresh-links. `$setOnInsert` and `$set` never share a field, as Mongo requires.
+const LINK_FIELDS = new Set(['media', 'mediaId', 'poster', 'posterMediaId', 'render', 'legacy']);
+for (const op of ops) {
+    const u = op.updateOne.update;
+    const onInsert = { ...u.$setOnInsert };
+    const refresh = {};
+    for (const [field, value] of Object.entries(u.$set || {})) {
+        if (REFRESH_LINKS && LINK_FIELDS.has(field)) refresh[field] = value;
+        else onInsert[field] = value;
+    }
+    op.updateOne.update = Object.keys(refresh).length
+        ? { $setOnInsert: onInsert, $set: refresh }
+        : { $setOnInsert: onInsert };
+    // Mongoose otherwise adds `$set: { updatedAt }` to every op, so a no-op
+    // re-run stamped all items as just edited — corrupting the admin's "last
+    // edited" and any publish date later derived from updatedAt.
+    op.updateOne.timestamps = false;
+}
+
+const existingIds = new Set((await PortfolioItem.find(
+    { _id: { $in: ops.map((o) => o.updateOne.filter._id) } }, { _id: 1 },
+).lean()).map((d) => String(d._id)));
+const toCreate = ops.filter((o) => !existingIds.has(String(o.updateOne.filter._id))).length;
+console.log(`${DRY ? '[dry-run] ' : ''}would create ${toCreate}, leave ${existingIds.size} existing item(s) untouched`
+    + (REFRESH_LINKS ? ` (links refreshed on ${existingIds.size})` : ''));
+
 if (!DRY && ops.length) {
     const res = await PortfolioItem.bulkWrite(ops, { ordered: false });
     stats.upserts = (res.upsertedCount || 0) + (res.modifiedCount || 0);
-    console.log(`upserted ${res.upsertedCount || 0}, updated ${res.modifiedCount || 0}`);
+    console.log(`created ${res.upsertedCount || 0}, links refreshed ${res.modifiedCount || 0}`);
 }
 
 if (anomalies.length) {

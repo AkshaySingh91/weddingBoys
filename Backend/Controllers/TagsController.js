@@ -25,6 +25,59 @@ async function addNewTagCategory(req, res) {
         res.status(500).json({ message: error.message })
     }
 }
+/**
+ * Add ONE term to an existing category. Additive and nothing else.
+ *
+ * Replaces the category editor's bulk save (`PUT /api/admin/tags`), which was
+ * retired: it deleted every tag and recreated the list, orphaned the old strings
+ * on portfolio items, lost renames, and could half-complete. Rename, merge and
+ * delete arrive with the unified tag system (plan phase 3), where items reference
+ * tags by id and those operations are safe.
+ *
+ *   POST /api/admin/tags/:tagType/terms   { label }
+ *   200 { tagType, tags }   404 no such category   409 already exists (any category)   400 invalid
+ */
+const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+async function addTermToCategory(req, res) {
+    try {
+        const tagType = String(req.params.tagType || '').trim();
+        let label = String(req.body?.label ?? '').replace(/\s+/g, ' ').trim();
+
+        if (!label) return res.status(400).json({ message: 'A tag label is required.' });
+        if (label.length > 60) return res.status(400).json({ message: 'Keep tag labels under 60 characters.' });
+        // Tags are split on commas when they reach the public filters, so a comma
+        // inside a label would silently become two tags that match nothing.
+        if (label.includes(',')) return res.status(400).json({ message: 'Tag labels cannot contain commas.' });
+
+        // Same convention the category creator uses.
+        label = label.charAt(0).toUpperCase() + label.slice(1);
+
+        const category = await Tags.findOne({ tagType: new RegExp(`^${escapeRegex(tagType)}$`, 'i') });
+        if (!category) return res.status(404).json({ message: `No tag category named "${tagType}".` });
+
+        // Case-insensitive across EVERY category. Public matching is exact, so
+        // "haldi" beside "Haldi" would split the same work across two rows.
+        const clash = await Tags.findOne({ tags: new RegExp(`^${escapeRegex(label)}$`, 'i') }, { tagType: 1, tags: 1 });
+        if (clash) {
+            const existing = clash.tags.find((t) => t.toLowerCase() === label.toLowerCase());
+            return res.status(409).json({
+                message: `"${existing}" already exists in ${clash.tagType}.`,
+                existing, existingIn: clash.tagType,
+            });
+        }
+
+        const updated = await Tags.findOneAndUpdate(
+            { _id: category._id },
+            { $addToSet: { tags: label } },
+            { new: true },
+        );
+        return res.status(200).json({ tagType: updated.tagType, tags: updated.tags });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
+
 // it will add new tag in existing category or delete some tag 
 async function verifyTagInExistingCategory(req, res, next) {
     try {
@@ -294,4 +347,4 @@ async function addNewTagOnFilmPage(req, res, next) {
     }
 }
 
-export { getAllTags, addNewTagCategory, verifyTagInExistingCategory, updateTagInExistingCategory, addNewTagOnHomePage, addNewTagOnFilmPage, addNewTagOnPhotoPage }
+export { getAllTags, addNewTagCategory, verifyTagInExistingCategory, updateTagInExistingCategory, addNewTagOnHomePage, addNewTagOnFilmPage, addNewTagOnPhotoPage, addTermToCategory }
