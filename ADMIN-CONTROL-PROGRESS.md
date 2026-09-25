@@ -55,10 +55,16 @@ can never pick up production's pending jobs.
 - **`--verify` by id:** dev shows 33 embedded subdocs → 33 items, missing 0, plus
   **3 wizard-created items** that the old count check would have called "drift".
 
-### Content finding to raise
-- The live taxonomy has a **"Caste"** category (7 tags). `/allfilms` renders one public
-  filter per category, so visitors can filter weddings by caste. Needs a decision before
-  Phase 3 migrates categories into tag groups.
+### "Caste" category — corrected and renamed
+- First reported as a caste filter. **Wrong:** the category is *named* "Caste" but holds
+  religions — Hindu, Muslim, Sikh, Christian, Jain, Buddhist, Parsi — carried by 31 of 36
+  published items. Couples legitimately search for a filmmaker who knows their tradition,
+  so the owner chose to **rename it "Tradition" and keep it public**.
+- `scripts/renameTagCategory.js --from=Caste --to=Tradition [--dry-run]`: one document
+  (items store the tag strings, never the category name), idempotent, refuses to merge
+  into an existing category. Done on dev. **Production: run by the owner** with
+  `MONGO_URI=<production uri> node scripts/renameTagCategory.js --from=Caste --to=Tradition`
+  (dotenv does not override a variable already set on the command line).
 
 ### Owner WIP committed (`748b637`)
 The owner's ~1,220 lines of in-progress admin work, committed unmodified at their request.
