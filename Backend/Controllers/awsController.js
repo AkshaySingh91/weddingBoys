@@ -1,3 +1,4 @@
+import { canDeleteKey } from '../Services/storageGuard.js';
 import { S3Client, GetObjectCommand, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
@@ -39,6 +40,9 @@ async function putObjectUrl(key, type, expiresIn = 60 * 5) {
     }
 }
 async function deleteObject(key) {
+    // Legacy S3 holds production originals only; a guarded (non-production)
+    // environment never created anything there, so it never deletes anything there.
+    if (!canDeleteKey(key, 'S3 delete')) return;
     try {
         const command = new DeleteObjectCommand({
             Bucket: process.env.S3_BUCKET_NAME,

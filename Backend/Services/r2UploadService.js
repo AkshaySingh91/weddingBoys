@@ -25,6 +25,7 @@ import {
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import sharp from 'sharp';
 import crypto from 'node:crypto';
+import { withStoragePrefix, assertWritableKey, canDeleteKey } from './storageGuard.js';
 
 // R2 lives in the same Cloudflare account as Stream, so CLOUDFLARE_ACCOUNT_ID
 // is accepted as the account id. The public origin is R2_PUBLIC_URL (the custom
@@ -106,7 +107,9 @@ export function buildBaseKey({ ownerType = 'System', ownerId, slot, mediaId }) {
     const scope = ownerType === 'Client' && ownerId ? `/${ownerId}`
         : ownerType === 'Website' && slot ? `/${slot}`
             : '';
-    return `${domain}${scope}/${id}`;
+    // In a guarded (non-production) environment every new key lives under
+    // STORAGE_KEY_PREFIX — see storageGuard.js.
+    return withStoragePrefix(`${domain}${scope}/${id}`);
 }
 
 // The old fallback here returned `${R2_ENDPOINT}/${BUCKET}/${key}` — the PRIVATE
@@ -124,6 +127,7 @@ const cdnUrl = (key) => {
 };
 
 async function putObject(key, body, contentType, cacheControl = IMMUTABLE_CACHE_CONTROL) {
+    assertWritableKey(key, 'put');
     await r2.send(new PutObjectCommand({
         Bucket: BUCKET,
         Key: key,
@@ -283,6 +287,7 @@ export const partCountFor = (fileSize) => Math.max(1, Math.ceil(fileSize / PART_
 
 /** Presigned PUT for a whole small object (images, posters). */
 export async function signSinglePut({ key, contentType, expiresIn = 3600 }) {
+    assertWritableKey(key, 'presign');
     return getSignedUrl(r2, new PutObjectCommand({
         Bucket: BUCKET,
         Key: key,
@@ -299,6 +304,7 @@ export async function signSinglePut({ key, contentType, expiresIn = 3600 }) {
  * Omitting them ships every large video with no cache header at all.
  */
 export async function createMultipart({ key, contentType }) {
+    assertWritableKey(key, 'multipart-create');
     const out = await r2.send(new CreateMultipartUploadCommand({
         Bucket: BUCKET,
         Key: key,
@@ -386,6 +392,7 @@ export async function downloadToFile(key, destPath) {
 
 /** Upload a local file to R2 by streaming it from disk. */
 export async function uploadFile(key, filePath, contentType) {
+    assertWritableKey(key, 'upload');
     const { createReadStream } = await import('node:fs');
     const { stat } = await import('node:fs/promises');
     const { size } = await stat(filePath);
@@ -401,6 +408,7 @@ export async function uploadFile(key, filePath, contentType) {
 }
 
 export async function deleteFromR2(storageKey) {
+    if (!canDeleteKey(storageKey, 'R2 delete')) return;
     await r2.send(new DeleteObjectCommand({ Bucket: BUCKET, Key: storageKey }));
 }
 
