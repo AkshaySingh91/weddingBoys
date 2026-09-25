@@ -30,10 +30,65 @@ const nameOf = (c) => [c?.clientName?.Bride, c?.clientName?.Groom].filter(Boolea
  */
 async function setMapPin(clientId, coordinate) {
     await WebsiteSettingSchema.updateOne({}, { $pull: { mapDisplayClient: { clientId } } });
-    if (coordinate && coordinate.latitude !== undefined && coordinate.longitute !== undefined) {
+    if (coordinate) {
         await WebsiteSettingSchema.updateOne({}, {
             $push: { mapDisplayClient: { clientId, coordinate } },
         });
+    }
+}
+
+/**
+ * Read `isInMap` + `coordinate` from a request body.
+ *
+ * Both coordinates must be real numbers in range. `Number('')` and
+ * `Number(null)` are 0, so the old `!== undefined` check pinned a couple with
+ * blank fields at (0, 0); and on edit, an invalid pin silently removed the
+ * existing one. Now a bad pin is a 400 and nothing changes.
+ *
+ * @returns {{ error: string } | { coordinate: {latitude:number, longitute:number} | null }}
+ */
+function readMapPin(isInMap, coordinate) {
+    if (!(isInMap === true || isInMap === 'true')) return { coordinate: null };
+    const num = (v) => (typeof v === 'number' ? v : (typeof v === 'string' && v.trim() !== '' ? Number(v) : NaN));
+    const latitude = num(coordinate?.latitude);
+    const longitute = num(coordinate?.longitute);
+    if (!Number.isFinite(latitude) || !Number.isFinite(longitute)
+        || Math.abs(latitude) > 90 || Math.abs(longitute) > 180) {
+        return { error: 'A map pin needs both latitude (-90 to 90) and longitude (-180 to 180) as numbers.' };
+    }
+    return { coordinate: { latitude, longitute } };
+}
+
+/** The couple's current pin, in the shape the profile form edits. */
+async function mapPinOf(clientId) {
+    const settings = await WebsiteSettingSchema.findOne(
+        { 'mapDisplayClient.clientId': clientId },
+        { 'mapDisplayClient.$': 1 },
+    ).lean();
+    const coordinate = settings?.mapDisplayClient?.[0]?.coordinate || null;
+    return { isInMap: Boolean(coordinate), coordinate };
+}
+
+/**
+ * GET /api/admin/clients/:id — the profile the workspace edits, map pin included.
+ *
+ * The workspace used to open its profile form with the pin blank (nothing
+ * returned it), so saving a rename sent `isInMap: false` and deleted the pin.
+ */
+export async function getClientProfile(req, res) {
+    try {
+        const { id } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: 'Invalid client id' });
+        }
+        const client = await Client.findById(id)
+            .select('clientName celebrationDates weddingDate status createdAt updatedAt')
+            .lean();
+        if (!client) return res.status(404).json({ message: 'Client not found' });
+        return res.status(200).json({ client: { ...client, mapPin: await mapPinOf(client._id) } });
+    } catch (error) {
+        console.error('getClientProfile error:', error);
+        return res.status(500).json({ message: error.message });
     }
 }
 
@@ -44,6 +99,8 @@ export async function createClient(req, res) {
         if (!bride?.trim() || !groom?.trim()) {
             return res.status(400).json({ message: 'Both names are required' });
         }
+        const pin = readMapPin(isInMap, coordinate);
+        if (pin.error) return res.status(400).json({ message: pin.error });
 
         const client = await Client.create({
             clientName: { Bride: bride.trim(), Groom: groom.trim() },
@@ -54,9 +111,7 @@ export async function createClient(req, res) {
             photos: [],
         });
 
-        if (isInMap === true || isInMap === 'true') {
-            await setMapPin(client._id, coordinate);
-        }
+        if (pin.coordinate) await setMapPin(client._id, pin.coordinate);
 
         return res.status(201).json({ client, clientId: String(client._id) });
     } catch (error) {
@@ -69,6 +124,8 @@ export async function createClient(req, res) {
 export async function updateClientProfile(req, res) {
     try {
         const { bride, groom, isInMap, coordinate, celebrationDates, weddingDate, status, publishAllItems } = req.body || {};
+        const pin = isInMap !== undefined ? readMapPin(isInMap, coordinate) : null;
+        if (pin?.error) return res.status(400).json({ message: pin.error });
         const client = await Client.findById(req.params.id);
         if (!client) return res.status(404).json({ message: 'Client not found' });
 
@@ -79,9 +136,7 @@ export async function updateClientProfile(req, res) {
         if (status !== undefined) client.status = status;
         await client.save();
 
-        if (isInMap !== undefined) {
-            await setMapPin(client._id, (isInMap === true || isInMap === 'true') ? coordinate : null);
-        }
+        if (pin) await setMapPin(client._id, pin.coordinate);
 
         // If publishAllItems is true or client status is set to Published, optionally publish all draft portfolio items
         if (publishAllItems || status === 'Published') {
@@ -101,7 +156,7 @@ export async function updateClientProfile(req, res) {
         const clientNameText = nameOf(client);
         await PortfolioItem.updateMany({ client: client._id }, { $set: { clientNameText } });
 
-        return res.status(200).json({ client });
+        return res.status(200).json({ client: { ...client.toObject(), mapPin: await mapPinOf(client._id) } });
     } catch (error) {
         console.error('updateClientProfile error:', error);
         return res.status(500).json({ message: error.message });

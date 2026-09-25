@@ -89,3 +89,43 @@ cascade below.
 - The two "Unpublish" buttons are withheld until Phase 2: the wedding's own status is not
   a public gate yet, so they would have said "unpublished" while everything stayed live.
   Meanwhile work is hidden per item (workspace › select › Hide).
+
+### Phase 0.5 — Add Wedding and the wedding workspace tell the truth
+Wizard (`clients/new`):
+- **No duplicate weddings.** Once the client exists, Back → Continue sends a PATCH (button
+  reads "Save & Continue"); a 404 there means the draft was deleted elsewhere and the next
+  press creates it afresh.
+- **Detail edits are debounced** (600 ms after the last keystroke, latest edit per item) and
+  flushed when the panel closes, before Save-as-draft / Publish, and on leaving the page.
+  Measured: 14 keystrokes → 1 PATCH.
+- **Every save checks the response and stops at the first failure.** Offline Publish now
+  shows an error, sends one request, and stays on the page (it used to toast success and
+  navigate away). A failed detail save keeps the edit queued for the next flush.
+- **Discard honours "purge files"** (`?purge=true`).
+- **Map pin: both coordinates numeric and in range, or no pin** — in the browser
+  (`clients/_lib/mapPin.js`) and in the API (400). Blank fields used to pin at (0, 0).
+- Priority / hero-priority inputs removed from the details panel: they were never sent.
+  Films are no longer hero by default (the first film of every upload batch used to join
+  the home hero).
+
+Workspace (`clients/[id]`):
+- **Its header buttons were invisible** — Add media, Edit couple & map pin, Publish
+  showcase, Delete. `PageHeader` rendered only an `actions` prop and four pages passed
+  `children` (also: clients list, users, films settings). It now renders either.
+- New `GET /api/admin/clients/:id` returns the profile **with its map pin**; the edit form
+  starts from it, and a save sends pin fields only if the admin touched them, so a rename
+  can no longer drop the pin. PATCH returns the pin too. The hook no longer uses the legacy
+  `GET /api/admin/client/:id` (now unused; deleted with the legacy code in Phase 1).
+- Polling only while something is Processing (it polled forever whenever a Draft existed),
+  8 s easing to 60 s, stopping after 15 minutes.
+- Publish stops if the bulk update or the wedding update fails.
+- **Delete never forces itself.** When published work would be pulled, the server's 409
+  turns the modal into "type the couple's names" (clients list and workspace alike).
+  Verified in the browser: button disabled until the names match; case and spacing ignored.
+
+Lint: the owner-WIP `set-state-in-effect` errors are fixed (wizard, VideoUploadModal ×2,
+EditDrawer, DeleteClientModal). Dead `Component/VideoDetailsForm.jsx` and
+`PhotoDetailsForm.jsx` deleted (no importers).
+
+Found, not fixed here: 2 of dev's 3 map pins belong to clients that no longer exist —
+added to the Phase 1 cutover report; the map itself is retired in Phase 7.

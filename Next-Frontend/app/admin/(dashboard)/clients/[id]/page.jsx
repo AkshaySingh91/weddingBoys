@@ -24,8 +24,14 @@ import DeleteClientModal from '../_components/DeleteClientModal.jsx';
 import DeleteMediaModal from '../_components/DeleteMediaModal.jsx';
 import ImageUploadModal from '../_components/ImageUploadModal.jsx';
 import VideoUploadModal from '../_components/VideoUploadModal.jsx';
+import { pinFromForm, PIN_ERROR } from '../_lib/mapPin.js';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL;
+
+// Refresh while the worker is processing: 8 s, easing to once a minute, for at most 15 minutes.
+const POLL_FIRST_MS = 8000;
+const POLL_MAX_MS = 60000;
+const POLL_GIVE_UP_MS = 15 * 60 * 1000;
 
 const field = 'w-full rounded-lg border border-studio-border bg-white px-3 py-2 text-sm text-studio-ink outline-none focus:border-studio-terracotta focus:ring-2 focus:ring-studio-terracotta/15';
 const labelCls = 'mb-1 block text-[11px] font-medium uppercase tracking-wide text-studio-inkMuted';
@@ -218,7 +224,7 @@ export default function ClientWorkspace() {
     const [bulkCeremony, setBulkCeremony] = useState('');
     const [form, setForm] = useState({
         bride: '', groom: '', startDate: '', endDate: '', season: '',
-        isInMap: false, latitude: '', longitute: ''
+        isInMap: false, latitude: '', longitute: '', pinTouched: false,
     });
     const loadedRef = useRef(false);
 
@@ -329,20 +335,18 @@ export default function ClientWorkspace() {
         if (await bulkUpdate({ ids, ...body })) refresh();
     };
 
+    // Both hooks report their own errors and return null on failure; stop there
+    // rather than announcing a publish that did not happen.
     const publishDrafts = async () => {
         const ids = items.filter((i) => i.status === 'Draft').map((i) => i._id);
         setPublishing(true);
         try {
-            if (ids.length > 0) {
-                await bulkUpdate({ ids, set: { status: 'Published' } });
-            }
-            await saveProfile({ status: 'Published' });
+            if (ids.length > 0 && !(await bulkUpdate({ ids, set: { status: 'Published' } }))) return;
+            if (!(await saveProfile({ status: 'Published' }))) return;
             fireMessage('Wedding showcase published!', 'success');
-            refresh();
-        } catch (err) {
-            fireMessage(err.message, 'error');
         } finally {
             setPublishing(false);
+            refresh();
         }
     };
 
@@ -356,15 +360,22 @@ export default function ClientWorkspace() {
             startDate: startStr,
             endDate: endStr,
             season: cDates.season || '',
-            isInMap: false,
-            latitude: '',
-            longitute: '',
+            isInMap: Boolean(client?.mapPin?.isInMap),
+            latitude: String(client?.mapPin?.coordinate?.latitude ?? ''),
+            longitute: String(client?.mapPin?.coordinate?.longitute ?? ''),
+            pinTouched: false,
         });
         setShowProfile((v) => !v);
         setMenuOpen(false);
     };
 
     const commitProfile = async () => {
+        // The pin is sent only when the admin changed it, so a rename can never move or drop it.
+        const pin = form.pinTouched ? pinFromForm(form.isInMap, form) : null;
+        if (pin && !pin.ok) {
+            fireMessage(PIN_ERROR, 'error');
+            return;
+        }
         const spanDisplay = computeSpanDisplay(form.startDate, form.endDate, form.season);
         const saved = await saveProfile({
             bride: form.bride,
@@ -376,8 +387,7 @@ export default function ClientWorkspace() {
                 season: form.season?.trim() || '',
                 spanDisplay,
             },
-            isInMap: form.isInMap,
-            coordinate: form.isInMap ? { latitude: Number(form.latitude), longitute: Number(form.longitute) } : null,
+            ...(pin ? { isInMap: pin.isInMap, coordinate: pin.coordinate } : {}),
         });
         if (!saved) return;
         setShowProfile(false);
@@ -386,20 +396,29 @@ export default function ClientWorkspace() {
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
+    const [deleteForceRequired, setDeleteForceRequired] = useState(null);
 
     // Media deletion state
     const [deleteMediaTarget, setDeleteMediaTarget] = useState([]);
     const [showDeleteMediaModal, setShowDeleteMediaModal] = useState(false);
 
-    // Auto-sync polling when any items are Processing or Draft
+    // Poll only while the worker has something to finish. It used to poll every
+    // 8 s whenever a Draft existed — forever, since a draft never changes by itself.
+    const hasProcessing = items.some((i) => i.media?.status === 'Processing');
     useEffect(() => {
-        const hasPending = items.some((i) => i.media?.status === 'Processing' || i.status === 'Draft');
-        if (!hasPending) return;
-        const timer = setInterval(() => {
+        if (!hasProcessing) return;
+        const startedAt = Date.now();
+        let delay = POLL_FIRST_MS;
+        let timer;
+        const tick = () => {
+            if (Date.now() - startedAt > POLL_GIVE_UP_MS) return;
             fetchItems(query, { reset: true, pageNum: 1, limit: 120 });
-        }, 8000);
-        return () => clearInterval(timer);
-    }, [items, fetchItems, query]);
+            delay = Math.min(delay * 1.5, POLL_MAX_MS);
+            timer = setTimeout(tick, delay);
+        };
+        timer = setTimeout(tick, delay);
+        return () => clearTimeout(timer);
+    }, [hasProcessing, fetchItems, query]);
 
     const confirmDeleteMedia = async ({ ids, purgeMedia }) => {
         for (const itemId of ids) {
@@ -412,16 +431,19 @@ export default function ClientWorkspace() {
         refresh();
     };
 
-    const confirmDelete = async ({ purgeMedia } = {}) => {
+    // Never forces by itself: a 409 puts the modal into "type the names" mode.
+    const confirmDelete = async ({ purgeMedia = false, force = false } = {}) => {
         setDeleteLoading(true);
-        const baseQuery = purgeMedia ? '?purge=true' : '';
-        const forceQuery = purgeMedia ? '?force=true&purge=true' : '?force=true';
+        const params = new URLSearchParams();
+        if (force) params.set('force', 'true');
+        if (purgeMedia) params.set('purge', 'true');
+        const qs = params.toString() ? `?${params}` : '';
         try {
-            let res = await fetch(`${api_url}/api/admin/clients/${id}${baseQuery}`, { method: 'DELETE', credentials: 'include' });
-            let data = await res.json();
+            const res = await fetch(`${api_url}/api/admin/clients/${id}${qs}`, { method: 'DELETE', credentials: 'include' });
+            const data = await res.json().catch(() => ({}));
             if (res.status === 409 && data.requiresForce) {
-                res = await fetch(`${api_url}/api/admin/clients/${id}${forceQuery}`, { method: 'DELETE', credentials: 'include' });
-                data = await res.json();
+                setDeleteForceRequired(data.message);
+                return;
             }
             if (!res.ok) throw new Error(data.message || 'Could not delete');
             fireMessage(data.message, 'success');
@@ -577,7 +599,7 @@ export default function ClientWorkspace() {
                     <div className="rounded-xl border border-studio-border bg-studio-card p-3">
                         <label className="flex cursor-pointer items-center gap-2 text-xs text-studio-inkSecondary">
                             <input type="checkbox" checked={form.isInMap} className="h-3.5 w-3.5 accent-studio-terracotta"
-                                onChange={(e) => setForm((f) => ({ ...f, isInMap: e.target.checked }))} />
+                                onChange={(e) => setForm((f) => ({ ...f, isInMap: e.target.checked, pinTouched: true }))} />
                             <MapPin size={13} className="text-studio-terracotta" />
                             Pin this wedding on the destination map
                         </label>
@@ -586,12 +608,12 @@ export default function ClientWorkspace() {
                                 <div>
                                     <span className={labelCls}>Latitude</span>
                                     <input type="number" step="any" className={field} value={form.latitude}
-                                        onChange={(e) => setForm((f) => ({ ...f, latitude: e.target.value }))} />
+                                        onChange={(e) => setForm((f) => ({ ...f, latitude: e.target.value, pinTouched: true }))} />
                                 </div>
                                 <div>
                                     <span className={labelCls}>Longitude</span>
                                     <input type="number" step="any" className={field} value={form.longitute}
-                                        onChange={(e) => setForm((f) => ({ ...f, longitute: e.target.value }))} />
+                                        onChange={(e) => setForm((f) => ({ ...f, longitute: e.target.value, pinTouched: true }))} />
                                 </div>
                             </div>
                         </Collapse>
@@ -912,7 +934,8 @@ export default function ClientWorkspace() {
                 open={showDeleteModal}
                 client={client}
                 loading={deleteLoading}
-                onClose={() => setShowDeleteModal(false)}
+                forceRequired={deleteForceRequired}
+                onClose={() => { setShowDeleteModal(false); setDeleteForceRequired(null); }}
                 onConfirm={confirmDelete}
             />
 

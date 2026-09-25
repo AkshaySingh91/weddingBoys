@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import {
@@ -51,17 +51,16 @@ const initialForm = (item) => ({
     credits: (item.credits || []).map((c) => ({ name: c.name || '', role: c.role || '' })),
 });
 
+const noopSubscribe = () => () => {};
+
 export default function EditDrawer({ item, vocabulary, saving, onClose, onSave, onDelete }) {
-    const [mounted, setMounted] = useState(false);
+    // true only in the browser (the drawer portals into document.body); no effect needed.
+    const mounted = useSyncExternalStore(noopSubscribe, () => true, () => false);
     const [form, setForm] = useState(() => initialForm(item));
     const [activeTab, setActiveTab] = useState('details'); // 'details' | 'derivatives'
     const [tagInput, setTagInput] = useState('');
     const [mediaDoc, setMediaDoc] = useState(item?.media || null);
     const [copiedUrl, setCopiedUrl] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
 
     const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
     const setLoc = (k, v) => setForm((f) => ({ ...f, location: { ...f.location, [k]: v } }));

@@ -2,7 +2,7 @@ import express from 'express'
 import authenticateAdmin from '../../Middleware/authenticateAdmin.js'
 
 import { getAllClients, getSingleClientDetails } from "../../Controllers/ClientController.js"
-import { createClient, updateClientProfile, getClientStats, deleteClient } from "../../Controllers/clientProfileController.js"
+import { createClient, getClientProfile, updateClientProfile, getClientStats, deleteClient } from "../../Controllers/clientProfileController.js"
 
 const clientQueryRoute = express.Router();
 // check if admin is requesting or not 
@@ -18,6 +18,7 @@ clientQueryRoute.get('/api/admin/clients/', getAllClients)
 clientQueryRoute.post('/api/admin/clients', createClient)
 // `/stats` before `/:id` so Express does not match it as an id.
 clientQueryRoute.get('/api/admin/clients/:id/stats', getClientStats)
+clientQueryRoute.get('/api/admin/clients/:id', getClientProfile)
 clientQueryRoute.patch('/api/admin/clients/:id', updateClientProfile)
 clientQueryRoute.delete('/api/admin/clients/:id', deleteClient)
 

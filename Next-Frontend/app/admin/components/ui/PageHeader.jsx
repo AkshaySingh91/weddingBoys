@@ -10,8 +10,12 @@ export function PageHeader({
   breadcrumbs = [],
   badge,
   actions,
+  children,
   className,
 }) {
+  // Four pages pass their buttons as children; the slot used to render only
+  // `actions`, so those buttons (Add media, Edit profile, Delete…) never appeared.
+  const slot = actions ?? children;
   return (
     <div className={cn('space-y-2 border-b-[0.5px] border-stone-200 pb-5 font-sans', className)}>
       {/* Optional Breadcrumb trail */}
@@ -57,9 +61,9 @@ export function PageHeader({
         </div>
 
         {/* Action Buttons Slot */}
-        {actions && (
+        {slot && (
           <div className="flex items-center gap-2.5 shrink-0 flex-wrap">
-            {actions}
+            {slot}
           </div>
         )}
       </div>

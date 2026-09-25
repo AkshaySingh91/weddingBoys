@@ -189,17 +189,12 @@ export default function MediaDetailsPanel({
                         )}
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3">
-                        <div>
-                            <span className={label}><CalendarBlank size={10} className="mb-px inline" /> Shoot date</span>
-                            <input type="date" className={field} value={value.shootDate || ''}
-                                onChange={(e) => set({ shootDate: e.target.value })} />
-                        </div>
-                        <div>
-                            <span className={label}>Priority</span>
-                            <input type="number" className={field} value={value.generalPriority}
-                                onChange={(e) => set({ generalPriority: e.target.value })} />
-                        </div>
+                    {/* No priority inputs: the wizard never sent them. Hero order is set in
+                        Home › Hero, and row order moves to collections (plan phase 5). */}
+                    <div>
+                        <span className={label}><CalendarBlank size={10} className="mb-px inline" /> Shoot date</span>
+                        <input type="date" className={field} value={value.shootDate || ''}
+                            onChange={(e) => set({ shootDate: e.target.value })} />
                     </div>
 
                     <div>
@@ -239,13 +234,6 @@ export default function MediaDetailsPanel({
                                 <Star size={12} weight={value.isHero ? 'fill' : 'regular'} className="text-amber-500" />
                                 Show in the homepage hero carousel
                             </label>
-                            {value.isHero && (
-                                <div className="mt-2">
-                                    <span className={label}>Hero priority</span>
-                                    <input type="number" className={field} value={value.heroPriority}
-                                        onChange={(e) => set({ heroPriority: e.target.value })} />
-                                </div>
-                            )}
                         </div>
                     )}
 

@@ -38,24 +38,25 @@ export default function useClients() {
      *
      * @param {(msg: string) => boolean | { purgeMedia?: boolean, confirmForce?: (msg: string) => boolean }} confirmForceOrOptions
      */
-    const remove = useCallback(async (clientId, confirmForceOrOptions, maybeOptions = {}) => {
+    /**
+     * Delete a wedding. Never forces on its own: when published work would be
+     * pulled off the site the server answers 409, and this returns
+     * `{ forceRequired: message }` so the caller can ask the admin to type the
+     * couple's names before retrying with `force: true`.
+     *
+     * @returns {Promise<true | false | { forceRequired: string }>}
+     */
+    const remove = useCallback(async (clientId, { purgeMedia = false, force = false } = {}) => {
         setBusyId(clientId);
-        const isOptionsObject = typeof confirmForceOrOptions === 'object' && confirmForceOrOptions !== null;
-        const confirmForce = isOptionsObject ? confirmForceOrOptions.confirmForce : confirmForceOrOptions;
-        const options = isOptionsObject ? confirmForceOrOptions : maybeOptions;
-        const purgeMedia = !!options?.purgeMedia;
-        const baseQuery = purgeMedia ? '?purge=true' : '';
-        const forceQuery = purgeMedia ? '?force=true&purge=true' : '?force=true';
+        const params = new URLSearchParams();
+        if (force) params.set('force', 'true');
+        if (purgeMedia) params.set('purge', 'true');
+        const qs = params.toString() ? `?${params}` : '';
 
         try {
-            let res = await fetch(`${api_url}/api/admin/clients/${clientId}${baseQuery}`, { method: 'DELETE', credentials: 'include' });
-            let data = await res.json();
-
-            if (res.status === 409 && data.requiresForce) {
-                if (!confirmForce?.(data.message)) return false;
-                res = await fetch(`${api_url}/api/admin/clients/${clientId}${forceQuery}`, { method: 'DELETE', credentials: 'include' });
-                data = await res.json();
-            }
+            const res = await fetch(`${api_url}/api/admin/clients/${clientId}${qs}`, { method: 'DELETE', credentials: 'include' });
+            const data = await res.json().catch(() => ({}));
+            if (res.status === 409 && data.requiresForce) return { forceRequired: data.message };
             if (!res.ok) throw new Error(data.message || 'Could not delete');
 
             setClients((prev) => prev.filter((c) => c.clientId !== clientId));

@@ -22,10 +22,10 @@ export default function useClientProfile(clientId) {
         setLoading(true);
         try {
             const [cRes, sRes] = await Promise.all([
-                fetch(`${api_url}/api/admin/client/${clientId}`, { credentials: 'include' }),
+                fetch(`${api_url}/api/admin/clients/${clientId}`, { credentials: 'include' }),
                 fetch(`${api_url}/api/admin/clients/${clientId}/stats`, { credentials: 'include' }),
             ]);
-            if (cRes.ok) setClient((await cRes.json()).clientDetails);
+            if (cRes.ok) setClient((await cRes.json()).client);
             if (sRes.ok) setStats((await sRes.json()).stats);
         } catch (err) {
             fireMessage(err.message, 'error');

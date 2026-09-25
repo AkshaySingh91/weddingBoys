@@ -56,6 +56,7 @@ export default function ClientsPage() {
     const [menuFor, setMenuFor] = useState(null);
     const [deletingClient, setDeletingClient] = useState(null);
     const [deleteLoading, setDeleteLoading] = useState(false);
+    const [forceRequired, setForceRequired] = useState(null); // server message when published work would be pulled
 
     // Quick direct upload state
     const [uploadingClientId, setUploadingClientId] = useState(null);
@@ -94,11 +95,17 @@ export default function ClientsPage() {
         if (!deletingClient) return;
         setDeleteLoading(true);
         try {
-            const ok = await remove(deletingClient.clientId, () => true, options);
-            if (ok) setDeletingClient(null);
+            const result = await remove(deletingClient.clientId, options);
+            if (result?.forceRequired) setForceRequired(result.forceRequired);
+            else if (result) closeDelete();
         } finally {
             setDeleteLoading(false);
         }
+    };
+
+    const closeDelete = () => {
+        setDeletingClient(null);
+        setForceRequired(null);
     };
 
     const visible = useMemo(() => {
@@ -398,7 +405,8 @@ export default function ClientsPage() {
                 open={Boolean(deletingClient)}
                 client={deletingClient}
                 loading={deleteLoading}
-                onClose={() => setDeletingClient(null)}
+                forceRequired={forceRequired}
+                onClose={closeDelete}
                 onConfirm={confirmDelete}
             />
 

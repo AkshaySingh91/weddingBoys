@@ -19,6 +19,7 @@ import MediaDetailsPanel from './_components/MediaDetailsPanel.jsx';
 import DeleteClientModal from '../_components/DeleteClientModal.jsx';
 import ImageUploadModal from '../_components/ImageUploadModal.jsx';
 import VideoUploadModal from '../_components/VideoUploadModal.jsx';
+import { pinFromForm, PIN_ERROR } from '../_lib/mapPin.js';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -41,6 +42,30 @@ const field = 'w-full rounded-xl border border-stone-200 bg-white px-3.5 py-2.5 
 const labelCls = 'mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-stone-600';
 
 const DRAFT_KEY = 'wb_new_wedding_intake_draft';
+
+// A detail edit is sent this long after the last keystroke, not on every one.
+const DETAIL_SAVE_DELAY_MS = 600;
+
+/** The server's message for a failed response, or `fallback`. */
+async function errorFrom(res, fallback) {
+    try {
+        const data = await res.json();
+        return data?.message || fallback;
+    } catch {
+        return fallback;
+    }
+}
+
+async function fetchClientItems(clientId) {
+    try {
+        const res = await fetch(`${api_url}/api/admin/portfolio?client=${clientId}&limit=200`, { credentials: 'include' });
+        if (!res.ok) return null;
+        const data = await res.json();
+        return data.items || null;
+    } catch {
+        return null;
+    }
+}
 
 function computeSpanDisplay(start, end, season) {
     if (!start && !end) return season ? `${season} Season` : '';
@@ -105,6 +130,8 @@ export default function AddClientWizard() {
     const [btsRoles, setBtsRoles] = useState([]);
     const [publishing, setPublishing] = useState(false);
     const loadedRef = useRef(false);
+    const pendingSaves = useRef(new Map()); // itemId -> { item, val }, latest edit only
+    const saveTimer = useRef(null);
 
     // Restore draft from sessionStorage
     useEffect(() => {
@@ -113,6 +140,8 @@ export default function AddClientWizard() {
             if (saved) {
                 const p = JSON.parse(saved);
                 if (p.bride || p.groom || p.clientId) {
+                    // sessionStorage only exists after hydration, so this cannot be initial state.
+                    // eslint-disable-next-line react-hooks/set-state-in-effect
                     setHasStoredDraft(true);
                 }
                 if (p.bride) setBride(p.bride);
@@ -167,20 +196,18 @@ export default function AddClientWizard() {
     // Load existing portfolio items if clientId was restored
     const reloadPortfolioItems = useCallback(async () => {
         if (!clientId) return;
-        try {
-            const res = await fetch(`${api_url}/api/admin/portfolio?client=${clientId}&limit=200`, { credentials: 'include' });
-            if (res.ok) {
-                const data = await res.json();
-                if (data.items) {
-                    setPortfolioItems(data.items);
-                }
-            }
-        } catch { /* ignore */ }
+        const items = await fetchClientItems(clientId);
+        if (items) setPortfolioItems(items);
     }, [clientId]);
 
     useEffect(() => {
-        reloadPortfolioItems();
-    }, [reloadPortfolioItems]);
+        if (!clientId) return;
+        let cancelled = false;
+        fetchClientItems(clientId).then((items) => {
+            if (!cancelled && items) setPortfolioItems(items);
+        });
+        return () => { cancelled = true; };
+    }, [clientId]);
 
     // Auto-sync: poll while any item is still being processed by the worker.
     // Once the worker finishes, render data (poster, webUrl, etc.) will be
@@ -215,7 +242,10 @@ export default function AddClientWizard() {
     }, [filteredPortfolioItems]);
 
     // Discard draft wedding
-    const handleDiscardClient = async () => {
+    const handleDiscardClient = async ({ purgeMedia = false } = {}) => {
+        // Edits to a wedding that is being thrown away must not be sent afterwards.
+        clearTimeout(saveTimer.current);
+        pendingSaves.current.clear();
         if (!clientId) {
             try { sessionStorage.removeItem(DRAFT_KEY); } catch { /* ignore */ }
             router.push('/admin/clients');
@@ -223,12 +253,11 @@ export default function AddClientWizard() {
         }
         setDiscarding(true);
         try {
-            const res = await fetch(`${api_url}/api/admin/clients/${clientId}`, {
+            const res = await fetch(`${api_url}/api/admin/clients/${clientId}${purgeMedia ? '?purge=true' : ''}`, {
                 method: 'DELETE',
                 credentials: 'include',
             });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.message || 'Could not discard draft');
+            if (!res.ok) throw new Error(await errorFrom(res, 'Could not discard draft'));
             fireMessage('Draft wedding discarded', 'success');
             try { sessionStorage.removeItem(DRAFT_KEY); } catch { /* ignore */ }
             setShowDiscardModal(false);
@@ -240,40 +269,54 @@ export default function AddClientWizard() {
         }
     };
 
-    // Initialize client record
+    // Create the client record — or, once it exists (the admin came Back to
+    // step 1), update it. Posting again made a second, duplicate client.
     const createClient = async () => {
         if (!bride.trim() || !groom.trim()) {
             fireMessage('Both bride and groom names are required', 'error');
             return;
         }
+        const pin = pinFromForm(isInMap, coordinate);
+        if (!pin.ok) {
+            fireMessage(PIN_ERROR, 'error');
+            return;
+        }
         setCreating(true);
         const spanDisplay = computeSpanDisplay(startDate, endDate, season);
+        const profile = {
+            bride: bride.trim(),
+            groom: groom.trim(),
+            weddingDate: startDate || weddingDate || null,
+            celebrationDates: {
+                startDate: startDate ? new Date(startDate) : null,
+                endDate: endDate ? new Date(endDate) : null,
+                season: season?.trim() || '',
+                spanDisplay,
+            },
+            isInMap: pin.isInMap,
+            coordinate: pin.coordinate,
+        };
         try {
-            const res = await fetch(`${api_url}/api/admin/clients`, {
-                method: 'POST',
+            const res = await fetch(`${api_url}/api/admin/clients${clientId ? `/${clientId}` : ''}`, {
+                method: clientId ? 'PATCH' : 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    bride: bride.trim(),
-                    groom: groom.trim(),
-                    status: 'Draft',
-                    weddingDate: startDate || weddingDate || null,
-                    celebrationDates: {
-                        startDate: startDate ? new Date(startDate) : null,
-                        endDate: endDate ? new Date(endDate) : null,
-                        season: season?.trim() || '',
-                        spanDisplay,
-                    },
-                    isInMap,
-                    coordinate: isInMap
-                        ? { latitude: Number(coordinate.latitude), longitute: Number(coordinate.longitute) }
-                        : null,
-                }),
+                body: JSON.stringify(clientId ? profile : { ...profile, status: 'Draft' }),
             });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.message || 'Could not create the client');
-            setClientId(data.clientId);
-            fireMessage(`Initialized draft archive for ${bride} & ${groom}`, 'success');
+            if (clientId && res.status === 404) {
+                // The restored draft was deleted elsewhere; the next Continue creates it afresh.
+                setClientId(null);
+                setPortfolioItems([]);
+                throw new Error('This draft wedding no longer exists. Press the button again to create it.');
+            }
+            if (!res.ok) throw new Error(await errorFrom(res, clientId ? 'Could not update the couple' : 'Could not create the client'));
+            if (clientId) {
+                fireMessage(`Updated ${bride} & ${groom}`, 'success');
+            } else {
+                const data = await res.json();
+                setClientId(data.clientId);
+                fireMessage(`Initialized draft archive for ${bride} & ${groom}`, 'success');
+            }
             setStep(1);
         } catch (err) {
             fireMessage(err.message, 'error');
@@ -362,62 +405,98 @@ export default function AddClientWizard() {
         setShowVideoModal(true);
     };
 
-    // Save individual detail edit from MediaDetailsPanel
-    const handleSaveDetail = async (key, updatedVal) => {
-        setDetails((prev) => ({ ...prev, [key]: updatedVal }));
-        const item = portfolioItems.find((a) => (a.mediaId || a._id) === key);
-        if (item) {
+    /**
+     * Send every queued detail edit. Returns false (and says why) on the first
+     * failure; that edit and the ones after it stay queued for the next flush.
+     */
+    const flushDetailSaves = useCallback(async () => {
+        clearTimeout(saveTimer.current);
+        saveTimer.current = null;
+        const batch = [...pendingSaves.current.values()];
+        pendingSaves.current.clear();
+        for (let i = 0; i < batch.length; i++) {
+            const { item, val } = batch[i];
             try {
-                await fetch(`${api_url}/api/admin/portfolio/${item._id}`, {
+                const res = await fetch(`${api_url}/api/admin/portfolio/${item._id}`, {
                     method: 'PATCH',
                     credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        eventGroup: updatedVal.eventGroup,
-                        tags: updatedVal.tags,
-                        shootDate: updatedVal.shootDate || undefined,
-                        location: updatedVal.location,
-                        caption: updatedVal.caption,
-                        credits: updatedVal.credits,
-                        isHero: item.kind === 'Video' ? Boolean(updatedVal.isHero) : false,
+                        eventGroup: val.eventGroup,
+                        tags: val.tags,
+                        shootDate: val.shootDate || undefined,
+                        location: val.location,
+                        caption: val.caption,
+                        credits: val.credits,
+                        isHero: item.kind === 'Video' ? Boolean(val.isHero) : false,
                     }),
                 });
-                setPortfolioItems((prev) =>
-                    prev.map((i) => (i._id === item._id ? { ...i, ...updatedVal } : i))
-                );
-            } catch (e) {
-                console.error('Failed to sync item update', e);
+                if (!res.ok) throw new Error(await errorFrom(res, 'Could not save the details'));
+            } catch (err) {
+                // Requeue what did not reach the server, unless a newer edit is already waiting.
+                for (const rest of batch.slice(i)) {
+                    if (!pendingSaves.current.has(rest.item._id)) pendingSaves.current.set(rest.item._id, rest);
+                }
+                fireMessage(`${err.message} — your changes are kept; try again.`, 'error');
+                return false;
             }
         }
+        return true;
+    }, []);
+
+    // Edits still queued when the page goes away are sent rather than dropped.
+    useEffect(() => () => { flushDetailSaves(); }, [flushDetailSaves]);
+
+    // Detail edits from MediaDetailsPanel arrive per keystroke; the latest one
+    // per item is sent once typing pauses, or when the panel closes.
+    const handleSaveDetail = (key, updatedVal) => {
+        setDetails((prev) => ({ ...prev, [key]: updatedVal }));
+        const item = portfolioItems.find((a) => (a.mediaId || a._id) === key);
+        if (!item) return;
+        setPortfolioItems((prev) =>
+            prev.map((i) => (i._id === item._id ? { ...i, ...updatedVal } : i))
+        );
+        pendingSaves.current.set(item._id, { item, val: updatedVal });
+        clearTimeout(saveTimer.current);
+        saveTimer.current = setTimeout(flushDetailSaves, DETAIL_SAVE_DELAY_MS);
+    };
+
+    const closeDetails = () => {
+        setEditing(null);
+        flushDetailSaves();
     };
 
     // Save as Draft & Exit to Workspace
     const handleSaveAsDraftAndExit = async () => {
         try {
+            if (!(await flushDetailSaves())) return;
             if (clientId) {
-                await fetch(`${api_url}/api/admin/clients/${clientId}`, {
+                const res = await fetch(`${api_url}/api/admin/clients/${clientId}`, {
                     method: 'PATCH',
                     credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ status: 'Draft' }),
                 });
+                if (!res.ok) throw new Error(await errorFrom(res, 'Could not save the draft'));
             }
             try { sessionStorage.removeItem(DRAFT_KEY); } catch { /* ignore */ }
             fireMessage('Saved draft wedding showcase. Access anytime in directory.', 'success');
-            router.push(`/admin/clients/${clientId}`);
+            router.push(clientId ? `/admin/clients/${clientId}` : '/admin/clients');
         } catch (err) {
             fireMessage(err.message, 'error');
         }
     };
 
-    // Publish Wedding Showcase & Exit to Workspace
+    // Publish Wedding Showcase & Exit to Workspace. Each step must succeed
+    // before the next runs; nothing reports success that did not happen.
     const handlePublishAndFinish = async () => {
+        if (!clientId) return;
         setPublishing(true);
         try {
-            // Ensure all items are in Published status
+            if (!(await flushDetailSaves())) return;
             const unpublishedIds = portfolioItems.filter((i) => i.status !== 'Published').map((i) => i._id);
             if (unpublishedIds.length > 0) {
-                await fetch(`${api_url}/api/admin/portfolio/bulk`, {
+                const res = await fetch(`${api_url}/api/admin/portfolio/bulk`, {
                     method: 'PATCH',
                     credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
@@ -426,15 +505,15 @@ export default function AddClientWizard() {
                         set: { status: 'Published' },
                     }),
                 });
+                if (!res.ok) throw new Error(await errorFrom(res, 'Could not publish the photos and films'));
             }
-            if (clientId) {
-                await fetch(`${api_url}/api/admin/clients/${clientId}`, {
-                    method: 'PATCH',
-                    credentials: 'include',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ status: 'Published', publishAllItems: true }),
-                });
-            }
+            const res = await fetch(`${api_url}/api/admin/clients/${clientId}`, {
+                method: 'PATCH',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: 'Published', publishAllItems: true }),
+            });
+            if (!res.ok) throw new Error(await errorFrom(res, 'Could not publish the wedding'));
             try { sessionStorage.removeItem(DRAFT_KEY); } catch { /* ignore */ }
             fireMessage(`Wedding showcase published with ${portfolioItems.length} captures!`, 'success');
             router.push(`/admin/clients/${clientId}`);
@@ -794,7 +873,7 @@ export default function AddClientWizard() {
                             onClick={createClient}
                             className="px-6 py-2.5 bg-stone-900 hover:bg-stone-800 text-white font-semibold"
                         >
-                            Create &amp; Start Ingest Studio
+                            {clientId ? 'Save & Continue' : 'Create & Start Ingest Studio'}
                         </Button>
                     </div>
                 </section>
@@ -1140,7 +1219,7 @@ export default function AddClientWizard() {
                     vocabulary={vocabulary}
                     btsRoles={btsRoles}
                     onChange={(updatedVal) => handleSaveDetail(editing, updatedVal)}
-                    onClose={() => setEditing(null)}
+                    onClose={closeDetails}
                 />
             )}
 

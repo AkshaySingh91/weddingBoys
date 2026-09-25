@@ -92,6 +92,8 @@ function StagedVideoPreview({ file, isUploading, isDone, isSelected, onToggleSel
   useEffect(() => {
     if (!file) return;
     const url = URL.createObjectURL(file);
+    // Syncing with an external resource: the URL must be revoked by this effect's cleanup.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setObjectUrl(url);
     return () => {
       URL.revokeObjectURL(url);
@@ -316,6 +318,8 @@ function VideoAssetInspector({ it }) {
   useEffect(() => {
     if (!it?.file) return;
     const url = URL.createObjectURL(it.file);
+    // Syncing with an external resource: the URL must be revoked by this effect's cleanup.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setObjectUrl(url);
     return () => {
       URL.revokeObjectURL(url);
@@ -550,7 +554,7 @@ export default function VideoUploadModal({
         status: 'queued',
         error: null,
         eventGroup: 'Full Wedding Film',
-        isHero: idx === 0,
+        isHero: false, // opt-in only: the first film of every batch used to join the home hero
         makeLoop: true,
         stripAudio: false,
         caption: '',
@@ -574,7 +578,7 @@ export default function VideoUploadModal({
       status: 'queued',
       error: null,
       eventGroup: 'Full Wedding Film',
-      isHero: items.length === 0 && idx === 0,
+      isHero: false,
       makeLoop: true,
       stripAudio: false,
       caption: '',

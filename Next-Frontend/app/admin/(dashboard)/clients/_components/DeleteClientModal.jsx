@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   WarningCircle, Trash, X, FilmSlate, ImageSquare, ShieldCheck,
 } from '@phosphor-icons/react';
@@ -16,7 +16,10 @@ import { cn } from '@/lib/utils.js';
  * 1. Live site impact: films & photographs will be pulled from public showcase.
  * 2. Asset preservation: raw files are NOT deleted from cloud storage;
  *    they safely return to the Unassigned Media Library backlog.
- * 3. Supports force-delete confirmation if live published placements exist.
+ * 3. When the server refuses because published work would be pulled off the
+ *    site (`forceRequired` = its message), the admin must type the couple's
+ *    names before the delete is retried with `force: true`. It used to retry
+ *    with force automatically, so the server's guard never reached a human.
  */
 export default function DeleteClientModal({
   open,
@@ -25,16 +28,26 @@ export default function DeleteClientModal({
   client,
   loading = false,
   isDraft = false,
+  forceRequired = null,
 }) {
   const [purgeMedia, setPurgeMedia] = useState(false);
+  const [typed, setTyped] = useState('');
 
-  useEffect(() => {
-    if (open) setPurgeMedia(false);
-  }, [open]);
+  // Start clean each time the modal opens (adjusted during render, not in an effect).
+  const [wasOpen, setWasOpen] = useState(open);
+  if (open !== wasOpen) {
+    setWasOpen(open);
+    if (open) {
+      setPurgeMedia(false);
+      setTyped('');
+    }
+  }
 
   const bride = client?.clientName?.Bride || '';
   const groom = client?.clientName?.Groom || '';
   const clientName = [bride, groom].filter(Boolean).join(' & ') || 'Untitled Wedding';
+  const squash = (s) => s.toLowerCase().replace(/\s+/g, ' ').trim();
+  const typedMatches = squash(typed) === squash(clientName);
 
   const stats = client?.stats || {};
   const videoCount = stats.videos || client?.videos?.length || 0;
@@ -163,6 +176,26 @@ export default function DeleteClientModal({
             )
           )}
 
+          {/* Published work would be pulled: make the admin type the names */}
+          {forceRequired && (
+            <div className="rounded-xl border border-rose-300 bg-rose-50/90 p-3 space-y-2">
+              <p className="text-[11px] leading-relaxed text-rose-900">
+                <span className="font-bold text-rose-950">{forceRequired}</span> Deleting will take it down now.
+                Type <span className="font-semibold text-rose-950">{clientName}</span> to confirm.
+              </p>
+              <input
+                type="text"
+                value={typed}
+                onChange={(e) => setTyped(e.target.value)}
+                disabled={loading}
+                autoFocus
+                aria-label={`Type ${clientName} to confirm`}
+                placeholder={clientName}
+                className="w-full rounded-lg border border-rose-200 bg-white px-3 py-2 text-xs text-stone-900 outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-500/15 placeholder:text-stone-300"
+              />
+            </div>
+          )}
+
           {/* Action Buttons */}
           <div className="flex items-center justify-end gap-2.5 pt-2">
             <Button
@@ -181,7 +214,8 @@ export default function DeleteClientModal({
               size="sm"
               loading={loading}
               icon={Trash}
-              onClick={() => onConfirm?.({ purgeMedia })}
+              disabled={Boolean(forceRequired) && !typedMatches}
+              onClick={() => onConfirm?.({ purgeMedia, force: Boolean(forceRequired) })}
               className={cn(
                 "text-white font-medium shadow-sm transition-colors",
                 purgeMedia
@@ -191,7 +225,9 @@ export default function DeleteClientModal({
             >
               {isDraft
                 ? 'Discard Draft'
-                : purgeMedia
+                : forceRequired
+                  ? 'Take Down & Delete'
+                  : purgeMedia
                   ? 'Permanently Wipe Client & R2 Media'
                   : 'Delete Wedding Archive'}
             </Button>
