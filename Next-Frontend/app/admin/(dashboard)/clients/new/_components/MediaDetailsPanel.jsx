@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo } from 'react';
 import Image from 'next/image';
 import { X, FilmSlate, ImageSquare, Star, MapPin, CalendarBlank } from '@phosphor-icons/react';
 import { Button } from '@/app/admin/components/ui/Button.jsx';
@@ -8,6 +8,7 @@ import { indianLocations } from '@/Utils/Data.js';
 import { formatBytes } from '@/Utils/format.js';
 import { cn } from '@/lib/utils.js';
 import AssetBreakdown from '@/app/admin/components/AssetBreakdown.jsx';
+import TagPicker from '@/app/admin/components/taxonomy/TagPicker.jsx';
 
 const field = 'w-full rounded-lg border border-[#E5DCD3] bg-white px-3 py-2 text-xs text-stone-800 outline-none focus:border-[#8C532B] focus:ring-2 focus:ring-[#8C532B]/15';
 const label = 'mb-1 block text-[11px] font-medium uppercase tracking-wide text-stone-500';
@@ -29,28 +30,9 @@ export const posterFor = (m) => {
  * its numbering.
  */
 export default function MediaDetailsPanel({
-    media, value, vocabulary, btsRoles, onChange, onClose,
+    media, value, taxonomy, btsRoles, onChange, onClose,
 }) {
-    const [tagInput, setTagInput] = useState('');
     const isVideo = media.mediaType === 'Video';
-
-    const [ceremonies, setCeremonies] = useState([
-        'Haldi', 'Mehendi', 'Sangeet', 'Wedding / Pheras', 'Reception', 'Pre-Wedding', 'Candid & Portraits'
-    ]);
-
-    useEffect(() => {
-        const api_url = process.env.NEXT_PUBLIC_API_URL;
-        async function fetchCeremonies() {
-            try {
-                const res = await fetch(`${api_url}/api/ceremonies`, { credentials: 'include' });
-                const data = await res.json();
-                if (data.ceremonies?.length) {
-                    setCeremonies(data.ceremonies.map((c) => c.name));
-                }
-            } catch { /* fallback */ }
-        }
-        fetchCeremonies();
-    }, []);
 
     const cityMatches = useMemo(() => {
         const q = (value.location?.city || '').trim().toLowerCase();
@@ -63,13 +45,6 @@ export default function MediaDetailsPanel({
     const set = (patch) => onChange({ ...value, ...patch });
     const setLoc = (patch) => onChange({ ...value, location: { ...value.location, ...patch } });
 
-    const addTag = (raw) => {
-        const t = raw.trim();
-        if (!t || value.tags.includes(t)) { setTagInput(''); return; }
-        set({ tags: [...value.tags, t] });
-        setTagInput('');
-    };
-
     const toggleCredit = (role, name) => {
         const exists = value.credits.find((c) => c.role === role);
         if (exists && exists.name === name) {
@@ -81,7 +56,6 @@ export default function MediaDetailsPanel({
 
     const poster = posterFor(media);
     const videoUrl = isVideo ? (media.video?.webUrl || media.video?.sourceUrl || media.cdnUrl || media.publicUrl) : null;
-    const unused = (vocabulary || []).filter((t) => !value.tags.includes(t));
 
     return (
         <div className="fixed inset-0 z-50 flex justify-end">
@@ -121,71 +95,18 @@ export default function MediaDetailsPanel({
                     </div>
 
                     <div>
-                        <div className="flex items-center justify-between mb-1">
-                            <span className={label}>Event Ceremony / Theme</span>
-                            {value.eventGroup && (
-                                <button
-                                    type="button"
-                                    onClick={() => set({ eventGroup: '' })}
-                                    className="text-[10px] text-amber-700 hover:underline cursor-pointer"
-                                >
-                                    Clear
-                                </button>
-                            )}
-                        </div>
-                        <div className="grid grid-cols-2 gap-1.5 mb-2">
-                            {ceremonies.map((grp) => (
-                                <button
-                                    key={grp}
-                                    type="button"
-                                    onClick={() => set({ eventGroup: value.eventGroup === grp ? '' : grp })}
-                                    className={cn(
-                                        'rounded-lg px-2.5 py-1.5 text-[11px] font-medium transition text-left border cursor-pointer',
-                                        value.eventGroup === grp
-                                            ? 'bg-amber-600 text-white border-amber-600 shadow-sm font-semibold'
-                                            : 'bg-white text-stone-700 border-stone-200 hover:border-amber-400'
-                                    )}
-                                >
-                                    {grp}
-                                </button>
-                            ))}
-                        </div>
-                        <input
-                            className={field}
-                            value={value.eventGroup || ''}
-                            placeholder="Or enter custom ceremony (e.g. Cocktail, Baraat)..."
-                            onChange={(e) => set({ eventGroup: e.target.value })}
-                        />
-                    </div>
-
-                    <div>
                         <span className={label}>Tags — these decide which rows it appears in</span>
-                        <div className="mb-2 flex flex-wrap gap-1.5">
-                            {(value.tags || []).map((t) => (
-                                <button key={t} type="button"
-                                    onClick={() => set({ tags: (value.tags || []).filter((x) => x !== t) })}
-                                    className="flex items-center gap-1 rounded-md border border-[#E8D7C5] bg-[#FAF1E6] px-2 py-0.5 text-[11px] text-[#74583E] hover:border-rose-300 hover:bg-rose-50 hover:text-rose-700">
-                                    {t} <X size={9} />
-                                </button>
-                            ))}
-                            {!(value.tags || []).length && (
-                                <span className="text-[11px] text-amber-700">
-                                    Untagged — it will not appear anywhere on the site.
-                                </span>
-                            )}
-                        </div>
-                        <input className={field} value={tagInput} placeholder="Type a tag and press Enter"
-                            onChange={(e) => setTagInput(e.target.value)}
-                            onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addTag(tagInput); } }} />
-                        {unused.length > 0 && (
-                            <div className="mt-2 flex flex-wrap gap-1">
-                                {unused.slice(0, 16).map((t) => (
-                                    <button key={t} type="button" onClick={() => addTag(t)}
-                                        className="rounded-md border border-stone-200 bg-white px-1.5 py-0.5 text-[10px] text-stone-600 hover:border-[#8C532B] hover:text-[#8C532B]">
-                                        + {t}
-                                    </button>
-                                ))}
-                            </div>
+                        <TagPicker
+                            taxonomy={taxonomy}
+                            kind={isVideo ? 'Video' : 'Photo'}
+                            value={value.tagIds || []}
+                            onChange={(tagIds) => set({ tagIds })}
+                            compact
+                        />
+                        {!(value.tagIds || []).length && (
+                            <p className="mt-2 text-[11px] text-amber-700">
+                                Untagged — it will not appear in any row on the site.
+                            </p>
                         )}
                     </div>
 

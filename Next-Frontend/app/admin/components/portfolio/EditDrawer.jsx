@@ -13,22 +13,14 @@ import AssetBreakdown, { derivativesOf } from '@/app/admin/components/AssetBreak
 import { formatBytes, formatDuration } from '@/Utils/format.js';
 import { cn } from '@/lib/utils.js';
 import { posterOf, nameOf } from './PortfolioCard.jsx';
+import TagPicker from '@/app/admin/components/taxonomy/TagPicker.jsx';
+import useTaxonomy from '@/Hooks/useTaxonomy.jsx';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL;
 
 const inputClass = 'w-full rounded-xl border border-stone-200 bg-white px-3.5 py-2.5 text-sm text-stone-900 placeholder:text-stone-400 outline-none transition-all focus:border-[#D9342A] focus:ring-2 focus:ring-[#D9342A]/15';
 const labelClass = 'mb-1.5 block text-xs font-semibold text-stone-700';
 const sectionHeaderClass = 'text-xs font-semibold uppercase tracking-wider text-stone-500';
-
-const CEREMONY_PRESETS = [
-    'Haldi',
-    'Mehendi',
-    'Sangeet',
-    'Wedding / Pheras',
-    'Reception',
-    'Pre-Wedding',
-    'Candid & Portraits',
-];
 
 /** `<input type="date">` needs yyyy-mm-dd; the API returns an ISO timestamp. */
 const toDateInput = (d) => {
@@ -40,8 +32,9 @@ const toDateInput = (d) => {
 const initialForm = (item) => ({
     title: item.title || '',
     caption: item.caption || '',
-    eventGroup: item.eventGroup || '',
-    tags: [...(item.tags || [])],
+    // Tags are ids from the tag system; the item's `tags` / `eventGroup` strings
+    // are copies the server writes from them.
+    tagIds: (item.tagIds || []).map(String),
     shootDate: toDateInput(item.shootDate),
     location: { ...(item.location || {}) },
     generalPriority: item.generalPriority ?? 0,
@@ -53,12 +46,12 @@ const initialForm = (item) => ({
 
 const noopSubscribe = () => () => {};
 
-export default function EditDrawer({ item, vocabulary, saving, onClose, onSave, onDelete }) {
+export default function EditDrawer({ item, saving, onClose, onSave, onDelete }) {
     // true only in the browser (the drawer portals into document.body); no effect needed.
     const mounted = useSyncExternalStore(noopSubscribe, () => true, () => false);
     const [form, setForm] = useState(() => initialForm(item));
     const [activeTab, setActiveTab] = useState('details'); // 'details' | 'derivatives'
-    const [tagInput, setTagInput] = useState('');
+    const taxonomy = useTaxonomy();
     const [mediaDoc, setMediaDoc] = useState(item?.media || null);
     const [copiedUrl, setCopiedUrl] = useState(false);
 
@@ -91,17 +84,9 @@ export default function EditDrawer({ item, vocabulary, saving, onClose, onSave, 
         };
     }, [mediaId]);
 
-    const addTag = (raw) => {
-        const t = raw.trim().replace(/^#/, '');
-        if (!t) return;
-        setForm((f) => (f.tags.includes(t) ? f : { ...f, tags: [...f.tags, t] }));
-        setTagInput('');
-    };
-
     const submit = useCallback(() => {
         onSave(item._id, {
             ...form,
-            eventGroup: form.eventGroup || '',
             shootDate: form.shootDate || null,
             generalPriority: Number(form.generalPriority) || 0,
             heroPriority: Number(form.heroPriority) || 0,
@@ -133,7 +118,6 @@ export default function EditDrawer({ item, vocabulary, saving, onClose, onSave, 
     const photoUrl = item.render?.imageUrl || mediaDoc?.cdnUrl || mediaDoc?.publicUrl || poster || '';
 
     const publicHref = isVideo ? `/films/${item._id}` : `/photos/${item._id}`;
-    const unused = (vocabulary || []).filter((t) => !form.tags.includes(t));
 
     const { rows: derivatives } = useMemo(() => derivativesOf(mediaDoc || item.media), [mediaDoc, item.media]);
 
@@ -328,51 +312,6 @@ export default function EditDrawer({ item, vocabulary, saving, onClose, onSave, 
                                 </div>
                             </div>
 
-                            {/* Event Ceremony Selector */}
-                            <div className="rounded-2xl border border-stone-200 bg-white p-5 space-y-4 shadow-xs">
-                                <div className="flex items-center justify-between">
-                                    <span className={sectionHeaderClass}>Event Ceremony / Wedding Theme</span>
-                                    {form.eventGroup && (
-                                        <button
-                                            type="button"
-                                            onClick={() => set('eventGroup', '')}
-                                            className="text-xs font-medium text-[#D9342A] hover:underline cursor-pointer"
-                                        >
-                                            Clear Selection
-                                        </button>
-                                    )}
-                                </div>
-
-                                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                                    {CEREMONY_PRESETS.map((grp) => {
-                                        const isSelected = form.eventGroup === grp;
-                                        return (
-                                            <button
-                                                key={grp}
-                                                type="button"
-                                                onClick={() => set('eventGroup', isSelected ? '' : grp)}
-                                                className={cn(
-                                                    'rounded-xl px-3.5 py-2.5 text-xs font-medium transition text-left border cursor-pointer flex items-center justify-between',
-                                                    isSelected
-                                                        ? 'bg-[#D9342A] text-white border-[#D9342A] shadow-xs'
-                                                        : 'bg-stone-50 text-stone-700 border-stone-200 hover:border-[#D9342A]/40 hover:bg-stone-100'
-                                                )}
-                                            >
-                                                <span>{grp}</span>
-                                                {isSelected && <Check size={13} weight="bold" />}
-                                            </button>
-                                        );
-                                    })}
-                                </div>
-
-                                <input
-                                    className={inputClass}
-                                    value={form.eventGroup || ''}
-                                    placeholder="Or enter custom ceremony (e.g. Cocktail Night, Baraat Procession)..."
-                                    onChange={(e) => set('eventGroup', e.target.value)}
-                                />
-                            </div>
-
                             {/* Hero Feature Reel Controls (For Videos) */}
                             {isVideo && (
                                 <div className="rounded-2xl border border-amber-200 bg-amber-50/40 p-5 space-y-4 shadow-xs">
@@ -440,72 +379,18 @@ export default function EditDrawer({ item, vocabulary, saving, onClose, onSave, 
                                 </div>
                             </div>
 
-                            {/* Taxonomy Tags */}
+                            {/* Tags: the tag system (Ceremony, Film type, categories) */}
                             <div className="rounded-2xl border border-stone-200 bg-white p-5 space-y-4 shadow-xs">
                                 <div className="flex items-center justify-between">
-                                    <label className={labelClass}>Taxonomy Tags</label>
-                                    <span className="text-xs text-stone-400">
-                                        {form.tags.length} linked
-                                    </span>
+                                    <span className={sectionHeaderClass}>Tags</span>
+                                    <span className="text-xs text-stone-400">{form.tagIds.length} selected</span>
                                 </div>
-
-                                <div className="flex flex-wrap gap-2">
-                                    {form.tags.map((t) => (
-                                        <button
-                                            key={t}
-                                            type="button"
-                                            onClick={() => set('tags', form.tags.filter((x) => x !== t))}
-                                            className="group flex items-center gap-1.5 rounded-xl border border-red-200 bg-red-50/70 px-3 py-1 text-xs font-medium text-[#A83824] hover:border-red-300 hover:bg-red-100 transition cursor-pointer"
-                                        >
-                                            <span>#{t}</span>
-                                            <X size={11} weight="bold" />
-                                        </button>
-                                    ))}
-                                    {!form.tags.length && <span className="text-xs text-stone-400">No tags assigned yet.</span>}
-                                </div>
-
-                                <div className="flex gap-2">
-                                    <input
-                                        className={inputClass}
-                                        value={tagInput}
-                                        placeholder="Type tag and press Enter (e.g. royal, varmala, sunset)..."
-                                        onChange={(e) => setTagInput(e.target.value)}
-                                        onKeyDown={(e) => {
-                                            if (e.key === 'Enter' || e.key === ',') {
-                                                e.preventDefault();
-                                                addTag(tagInput);
-                                            }
-                                        }}
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => addTag(tagInput)}
-                                        disabled={!tagInput.trim()}
-                                        className="px-4 py-2.5 rounded-xl bg-stone-900 hover:bg-stone-800 disabled:opacity-40 text-white text-xs font-semibold transition cursor-pointer shrink-0"
-                                    >
-                                        Add
-                                    </button>
-                                </div>
-
-                                {unused.length > 0 && (
-                                    <div className="pt-2 border-t border-stone-100">
-                                        <span className="text-xs text-stone-500 block mb-2">
-                                            Quick Add Suggested Tags:
-                                        </span>
-                                        <div className="flex flex-wrap gap-1.5">
-                                            {unused.slice(0, 12).map((t) => (
-                                                <button
-                                                    key={t}
-                                                    type="button"
-                                                    onClick={() => addTag(t)}
-                                                    className="rounded-lg border border-stone-200 bg-stone-50 px-2.5 py-1 text-xs font-medium text-stone-600 hover:border-[#D9342A] hover:text-[#D9342A] hover:bg-white transition cursor-pointer"
-                                                >
-                                                    + {t}
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
+                                <TagPicker
+                                    taxonomy={taxonomy}
+                                    kind={item.kind}
+                                    value={form.tagIds}
+                                    onChange={(ids) => set('tagIds', ids)}
+                                />
                             </div>
 
                             {/* Shoot Date & Publishing Status */}

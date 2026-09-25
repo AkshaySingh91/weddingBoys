@@ -9,6 +9,7 @@ import * as portfolio from '../../Services/portfolioService.js';
 const mediaUrl = (key) => mediaUrlForKey(key, getObjectUrl);
 
 import { getAllTags } from "../../Controllers/TagsController.js"
+import { publicTaxonomy } from '../../Services/taxonomy.js';
 const Route = express.Router();
 
 // it will get all videos with inc order of priority for given tags
@@ -272,5 +273,15 @@ async function getRecommendedVideos(req, res, next) {
 }
 
 Route.get("/api/get-all-tags", getAllTags);
+
+// The tag system, public: every visible group (Ceremony, Film type, the
+// categories) with its visible tags, in the order the admin set.
+Route.get("/api/tags", async (req, res) => {
+    try {
+        res.status(200).json({ groups: await publicTaxonomy() });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 
 export default Route;

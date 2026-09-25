@@ -65,6 +65,7 @@ import uploadRoute from './Routes/Admin/uploadRoute.js'
 import portfolioRoute from './Routes/Admin/portfolioRoute.js'
 // wedding ceremonies master taxonomy (Haldi, Mehendi, Sangeet, etc.)
 import ceremonyRoute from './Routes/Admin/ceremonyRoute.js'
+import taxonomyRoute from './Routes/Admin/taxonomyRoute.js'
 
 // all this route wont required authentication
 app.use(HomePageRoute)
@@ -81,6 +82,8 @@ app.use(publicContentRoute)
 app.use(pricingConfigRoute)
 // ceremonies master taxonomy — public list + verifyToken-guarded admin CRUD
 app.use(ceremonyRoute)
+// tag system admin — verifyToken scoped to /api/admin/taxonomy inside the router
+app.use(taxonomyRoute)
 // enterprise auth (login/refresh/logout/forgot/reset) — guards applied per-route
 app.use(authV2Route)
 // user management — guards applied per-route (SuperAdmin for mutations)

@@ -1,4 +1,5 @@
 import Ceremony from '../Models/CeremonySchema.js';
+import { taxonomyExists, legacyCeremonies } from '../Services/taxonomy.js';
 
 const DEFAULT_CEREMONIES = [
     { name: 'Haldi', slug: 'haldi', order: 1, color: 'amber', description: 'Turmeric ritual & blessings' },
@@ -27,8 +28,12 @@ async function ensureDefaultCeremonies() {
 }
 
 // GET /api/ceremonies or /api/admin/ceremonies
+// Once the tag system exists, ceremonies are the Ceremony tag group: this
+// answers from it, in the same shape, and never writes (it used to seed the
+// defaults back on every GET, so deleting one was impossible).
 export async function listCeremonies(req, res) {
     try {
+        if (await taxonomyExists()) return res.status(200).json({ ceremonies: await legacyCeremonies() });
         await ensureDefaultCeremonies();
         const isAdmin = req.path.includes('/admin');
         const filter = isAdmin ? {} : { isActive: true };

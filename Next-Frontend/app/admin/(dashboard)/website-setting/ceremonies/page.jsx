@@ -8,7 +8,7 @@ export default function CeremoniesRedirectPage() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace('/admin/settings?tab=ceremonies');
+    router.replace('/admin/settings?tab=tags');
   }, [router]);
 
   return (

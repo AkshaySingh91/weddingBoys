@@ -17,9 +17,21 @@ import { deleteSingleMediaDoc } from './mediaController.js';
 import { renderFromMedia } from '../Services/portfolioRender.js';
 import { PUBLIC_GATE, explainVisibility, readinessOf } from '../Services/portfolioVisibility.js';
 import { revalidatePortfolio } from '../Services/revalidate.js';
+import { resolveTagParam, tagFieldsFor, TaxonomyError, loadTaxonomy, validateTagIds, mirrorsFor } from '../Services/taxonomy.js';
 
 const MAX_BULK = 500;
 const MEDIA_FIELDS = 'status cdnUrl publicUrl mediaType imageVariants video fileSize originalFileName processing.lastError';
+
+/**
+ * Tags are written as `tagIds` only (plan phase 3); the `tags` / `eventGroup`
+ * strings are copies the server derives. A caller still sending the strings
+ * is a screen that was missed, so it gets a clear 400 instead of a silent drop.
+ */
+function refuseTagStrings(body) {
+    const sent = ['tags', 'eventGroup'].filter((k) => body?.[k] !== undefined && !(Array.isArray(body[k]) && !body[k].length) && body[k] !== '');
+    return sent.length ? `Send tags as tagIds (ids from /api/admin/taxonomy), not ${sent.join(' / ')}` : null;
+}
+const taxonomyFail = (res, error) => res.status(error.status || 400).json({ message: error.message, ...(error.details || {}) });
 
 /** Adds `visibility: { public, reasons }` for the admin's chips. */
 const withVisibility = (item) => ({ ...item, visibility: explainVisibility(item, item.media) });
@@ -76,7 +88,7 @@ export async function listPortfolio(req, res) {
         const filter = {
             ...(kind ? { kind } : {}),
             ...(client ? { client } : {}),
-            ...(tag ? { tags: { $in: String(tag).split(',').map((t) => t.trim()).filter(Boolean) } } : {}),
+            ...(tag ? { tagIds: { $in: await resolveTagParam(String(tag).split(',')) } } : {}),
             ...(eventGroup ? { eventGroup: String(eventGroup).trim() } : {}),
             ...(isHero !== undefined ? { isHero: isHero === 'true' } : {}),
             ...(status ? { status } : {}),
@@ -147,13 +159,15 @@ export async function assignToClient(req, res) {
     try {
         const {
             media: mediaObjectId, mediaId, client: clientId,
-            kind, tags = [], eventGroup, shootDate, location = {},
+            kind, tagIds = [], shootDate, location = {},
             generalPriority = 0, isHero = false, heroPriority = 0, caption,
             credits = [], title, status,
         } = req.body || {};
 
         if (!clientId) return res.status(400).json({ message: 'client is required' });
         if (!mediaObjectId && !mediaId) return res.status(400).json({ message: 'media or mediaId is required' });
+        const stringTags = refuseTagStrings(req.body);
+        if (stringTags) return res.status(400).json({ message: stringTags });
 
         const media = await Media.findOne(
             mediaObjectId ? { _id: mediaObjectId } : { mediaId },
@@ -176,6 +190,8 @@ export async function assignToClient(req, res) {
         }
 
         const clientNameText = [clientDoc.clientName?.Bride, clientDoc.clientName?.Groom].filter(Boolean).join(' & ');
+        let tagFields;
+        try { tagFields = await tagFieldsFor(tagIds, resolvedKind); } catch (e) { if (e instanceof TaxonomyError) return taxonomyFail(res, e); throw e; }
 
         // Explicit intent wins. Otherwise (D7): into a draft wedding the item is
         // meant to go live with the wedding; into a live wedding it waits hidden
@@ -196,8 +212,7 @@ export async function assignToClient(req, res) {
             title: title || clientNameText,
             caption,
             credits,
-            tags,
-            eventGroup: eventGroup?.trim() || '',
+            ...tagFields,
             shootDate,
             location,
             generalPriority,
@@ -219,7 +234,7 @@ export async function assignToClient(req, res) {
             $set: {
                 ownerType: 'Client',
                 ownerId: String(clientDoc._id),
-                ...(eventGroup !== undefined ? { eventGroup: eventGroup.trim() } : {})
+                ...(tagFields.eventGroup ? { eventGroup: tagFields.eventGroup } : {}),
             },
         });
 
@@ -236,10 +251,18 @@ export async function assignToClient(req, res) {
 // PATCH /api/admin/portfolio/:id
 export async function updatePortfolioItem(req, res) {
     try {
-        const ALLOWED = ['tags', 'eventGroup', 'shootDate', 'location', 'generalPriority', 'isHero',
+        const ALLOWED = ['shootDate', 'location', 'generalPriority', 'isHero',
             'heroPriority', 'caption', 'title', 'status', 'credits'];
         const patch = {};
         for (const k of ALLOWED) if (req.body[k] !== undefined) patch[k] = req.body[k];
+        const stringTags = refuseTagStrings(req.body);
+        if (stringTags) return res.status(400).json({ message: stringTags });
+        if (req.body.tagIds !== undefined) {
+            if (!mongoose.isValidObjectId(req.params.id)) return res.status(404).json({ message: 'Portfolio item not found' });
+            const current = await PortfolioItem.findById(req.params.id).select('kind').lean();
+            if (!current) return res.status(404).json({ message: 'Portfolio item not found' });
+            try { Object.assign(patch, await tagFieldsFor(req.body.tagIds, current.kind)); } catch (e) { if (e instanceof TaxonomyError) return taxonomyFail(res, e); throw e; }
+        }
 
         const item = await PortfolioItem.findByIdAndUpdate(req.params.id, { $set: patch }, { new: true, runValidators: true })
             .populate('media', MEDIA_FIELDS).lean();
@@ -264,7 +287,10 @@ export async function updatePortfolioItem(req, res) {
  */
 export async function bulkUpdatePortfolio(req, res) {
     try {
-        const { ids, filter: rawFilter, all, expectedCount, set = {}, tags = {}, shiftPriority } = req.body || {};
+        const { ids, filter: rawFilter, all, expectedCount, set = {}, tagIds: tagOps, shiftPriority } = req.body || {};
+        if (req.body?.tags !== undefined || set.eventGroup !== undefined) {
+            return res.status(400).json({ message: 'Change tags with tagIds: { add, remove, replace } (ids from /api/admin/taxonomy)' });
+        }
 
         let filter;
         if (Array.isArray(ids) && ids.length) {
@@ -284,18 +310,22 @@ export async function bulkUpdatePortfolio(req, res) {
         }
 
         const update = {};
-        const ALLOWED_SET = ['isHero', 'heroPriority', 'generalPriority', 'status', 'eventGroup'];
+        const ALLOWED_SET = ['isHero', 'heroPriority', 'generalPriority', 'status'];
         const $set = {};
         for (const k of ALLOWED_SET) if (set[k] !== undefined) $set[k] = set[k];
         if (Object.keys($set).length) update.$set = $set;
-        if (tags.add?.length) update.$addToSet = { tags: { $each: tags.add } };
-        if (tags.remove?.length) update.$pullAll = { tags: tags.remove };
         if (Number.isFinite(shiftPriority)) update.$inc = { generalPriority: shiftPriority };
-        if (tags.replace) { update.$set = { ...(update.$set || {}), tags: tags.replace }; }
+        const hasTagOps = tagOps && (tagOps.add?.length || tagOps.remove?.length || Array.isArray(tagOps.replace));
 
-        if (!Object.keys(update).length) return res.status(400).json({ message: 'Nothing to change' });
+        if (!Object.keys(update).length && !hasTagOps) return res.status(400).json({ message: 'Nothing to change' });
 
-        const result = await PortfolioItem.updateMany(filter, update);
+        let tagResult = { changed: 0, failures: [] };
+        if (hasTagOps) {
+            try { tagResult = await applyBulkTagOps(filter, tagOps); } catch (e) { if (e instanceof TaxonomyError) return taxonomyFail(res, e); throw e; }
+        }
+        const result = Object.keys(update).length
+            ? await PortfolioItem.updateMany(filter, update)
+            : { matchedCount: await PortfolioItem.countDocuments(filter), modifiedCount: tagResult.changed };
         await PortfolioItem.updateMany({ ...filter, ...PUBLIC_GATE, publishedAt: null }, { $set: { publishedAt: new Date() } }, { timestamps: false });
         revalidatePortfolio();
 
@@ -306,11 +336,56 @@ export async function bulkUpdatePortfolio(req, res) {
             PortfolioItem.countDocuments({ ...filter, ...PUBLIC_GATE }),
             PortfolioItem.countDocuments({ ...filter, status: 'Published', $nor: [PUBLIC_GATE] }),
         ]);
-        return res.status(200).json({ matched: result.matchedCount, modified: result.modifiedCount, nowPublic, waiting });
+        return res.status(200).json({
+            matched: result.matchedCount, modified: Math.max(result.modifiedCount, tagResult.changed),
+            nowPublic, waiting,
+            ...(tagResult.failures.length ? { tagFailures: tagResult.failures } : {}),
+        });
     } catch (error) {
         console.error('bulkUpdatePortfolio error:', error);
         return res.status(500).json({ message: error.message });
     }
+}
+
+/**
+ * Bulk tag edits, item by item, because the rules are per item: a tag must fit
+ * the item's kind, and adding to a one-per-item group (Ceremony, Film type)
+ * REPLACES the item's current tag in that group instead of adding a second.
+ * Items a tag cannot apply to are skipped and reported, not failed as a batch.
+ */
+async function applyBulkTagOps(filter, { add = [], remove = [], replace } = {}) {
+    const all = [...add, ...remove, ...(Array.isArray(replace) ? replace : [])];
+    // Each id must exist. One at a time: together they may legitimately name two
+    // ceremonies (replace one, add another); the per-item check below decides.
+    for (const id of new Set(all.map(String))) await validateTagIds([id], null);
+    const tax = await loadTaxonomy();
+    const groupOf = (id) => String(tax.tagById.get(String(id))?.group);
+    const singleGroups = new Set(tax.groups.filter((g) => g.cardinality === 'single').map((g) => String(g._id)));
+
+    const items = await PortfolioItem.find(filter).select('kind tagIds').limit(MAX_BULK + 1).lean();
+    if (items.length > MAX_BULK) throw new TaxonomyError(400, `Tag edits apply to at most ${MAX_BULK} items at a time`);
+
+    const ops = [];
+    const failures = [];
+    for (const item of items) {
+        let next = Array.isArray(replace) ? replace.map(String) : (item.tagIds || []).map(String);
+        next = next.filter((id) => !remove.map(String).includes(id));
+        for (const id of add.map(String)) {
+            const g = groupOf(id);
+            if (singleGroups.has(g)) next = next.filter((x) => groupOf(x) !== g);
+            if (!next.includes(id)) next.push(id);
+        }
+        if (JSON.stringify(next) === JSON.stringify((item.tagIds || []).map(String))) continue;
+        try {
+            const tagIds = await validateTagIds(next, item.kind);
+            ops.push({ updateOne: { filter: { _id: item._id }, update: { $set: { tagIds, ...mirrorsFor(tagIds, tax) } } } });
+        } catch (e) {
+            if (!(e instanceof TaxonomyError)) throw e;
+            failures.push({ itemId: item._id, message: e.message });
+        }
+    }
+    if (ops.length) await PortfolioItem.bulkWrite(ops, { ordered: false });
+    return { changed: ops.length, failures };
 }
 
 /**

@@ -12,19 +12,15 @@ import { Badge } from '@/app/admin/components/ui/Badge.jsx';
 import { formatBytes } from '@/Utils/format.js';
 import { createUpload } from '@/lib/upload/multipartUploader.js';
 import { fireMessage } from '@/Utils/fireMessage.js';
+import useTaxonomy from '@/Hooks/useTaxonomy.jsx';
 import { cn } from '@/lib/utils.js';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL;
 
-const DEFAULT_VIDEO_CEREMONIES = [
-  'Teaser / Trailer',
-  'Highlights Film',
-  'Full Wedding Film',
-  'Pre-Wedding Film',
-  'Sangeet Night',
-  'Haldi & Mehendi',
-  'Reception Party',
-];
+// A film's type and its ceremony are separate tag groups (Settings › Portfolio
+// Tags): Film type is one per film (Teaser, Highlights, Full Wedding Film…),
+// Ceremony one per item. They used to be one mixed list stored as eventGroup.
+const DEFAULT_FILM_TYPE = 'Full Wedding Film';
 
 /**
  * Circular / Border Progress Indicator for Videos
@@ -83,7 +79,7 @@ function CircularProgressBadge({ progress = 0, status = 'queued', size = 56 }) {
 /**
  * Interactive Video Card with Real Playable HTML5 Preview
  */
-function StagedVideoPreview({ file, isUploading, isDone, isSelected, onToggleSelect, it, onUpdateOption, onRemove, ceremonyOptions }) {
+function StagedVideoPreview({ file, isUploading, isDone, isSelected, onToggleSelect, it, onUpdateOption, onRemove, ceremonyOptions, filmTypeOptions }) {
   const [objectUrl, setObjectUrl] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
@@ -215,7 +211,21 @@ function StagedVideoPreview({ file, isUploading, isDone, isSelected, onToggleSel
 
         {/* Film Options: Ceremony, Hero, Silent Loop, Strip Audio */}
         <div className="flex flex-wrap items-center gap-2 pt-1">
-          {/* Ceremony Group */}
+          {/* Film type (one per film) */}
+          <select
+            disabled={isUploading || isDone}
+            value={it.filmType || ''}
+            onChange={(e) => onUpdateOption(it.id, 'filmType', e.target.value)}
+            className="text-xs rounded-xl border border-stone-200 bg-stone-50/70 px-2.5 py-1 text-stone-800 focus:outline-none focus:border-stone-900"
+          >
+            <option value="">Film type: none</option>
+            {filmTypeOptions.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+          {/* Ceremony (one per film) */}
           <select
             disabled={isUploading || isDone}
             value={it.eventGroup || ''}
@@ -344,7 +354,7 @@ function VideoAssetInspector({ it }) {
           </h4>
           <div className="flex items-center gap-2 text-xs text-stone-500 mt-0.5">
             <span className="font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-md">
-              {it.eventGroup || 'Wedding Film'}
+              {[it.filmType, it.eventGroup].filter(Boolean).join(' · ') || 'Wedding Film'}
             </span>
             <span>·</span>
             <span>Raw Master: {formatBytes(it.size)}</span>
@@ -493,8 +503,10 @@ export default function VideoUploadModal({
   const [uploadedResults, setUploadedResults] = useState([]);
   const [inspectedVideoId, setInspectedVideoId] = useState(null);
 
-  // Dynamic Ceremonies for Videos
-  const [ceremonyOptions, setCeremonyOptions] = useState(DEFAULT_VIDEO_CEREMONIES);
+  // Options come from the tag system; labels are turned into tag ids on upload.
+  const taxonomy = useTaxonomy();
+  const ceremonyOptions = useMemo(() => (taxonomy.groupByKey.get('ceremony')?.tags || []).filter((t) => !t.hidden).map((t) => t.label), [taxonomy.groupByKey]);
+  const filmTypeOptions = useMemo(() => (taxonomy.groupByKey.get('film-type')?.tags || []).filter((t) => !t.hidden).map((t) => t.label), [taxonomy.groupByKey]);
 
   const fileInputRef = useRef(null);
   const prevOpenRef = useRef(false);
@@ -510,23 +522,6 @@ export default function VideoUploadModal({
   const inspectedItem = useMemo(() => {
     return items.find((it) => it.id === inspectedVideoId) || items[0] || null;
   }, [items, inspectedVideoId]);
-
-  // Fetch dynamic ceremonies
-  useEffect(() => {
-    async function fetchCeremonies() {
-      try {
-        const res = await fetch(`${api_url}/api/ceremonies`, { credentials: 'include' });
-        const data = await res.json();
-        if (data.ceremonies?.length) {
-          const names = data.ceremonies.map((c) => c.name);
-          setCeremonyOptions([...new Set([...names, ...DEFAULT_VIDEO_CEREMONIES])]);
-        }
-      } catch (e) {
-        console.warn('Ceremony fetch error for videos:', e);
-      }
-    }
-    fetchCeremonies();
-  }, []);
 
   // Initialize staged video items
   useEffect(() => {
@@ -553,7 +548,8 @@ export default function VideoUploadModal({
         progress: 0,
         status: 'queued',
         error: null,
-        eventGroup: 'Full Wedding Film',
+        filmType: DEFAULT_FILM_TYPE,
+        eventGroup: '',
         isHero: false, // opt-in only: the first film of every batch used to join the home hero
         makeLoop: true,
         stripAudio: false,
@@ -577,7 +573,8 @@ export default function VideoUploadModal({
       progress: 0,
       status: 'queued',
       error: null,
-      eventGroup: 'Full Wedding Film',
+      filmType: DEFAULT_FILM_TYPE,
+      eventGroup: '',
       isHero: false,
       makeLoop: true,
       stripAudio: false,
@@ -675,7 +672,12 @@ export default function VideoUploadModal({
           prev.map((it) => (it.id === item.id ? { ...it, status: 'processing', progress: 95 } : it))
         );
 
-        // Step 2: Assign to Client Portfolio Item
+        // Step 2: Assign to Client Portfolio Item, tagged by id (a typed tag the
+        // tag system does not have yet is created in Unsorted).
+        const { ids: tagIds, failures: tagFailures } = await taxonomy.idsFromLabels('Video', {
+          ceremony: item.eventGroup, filmType: item.filmType, tags: item.tags || [],
+        });
+        if (tagFailures.length) fireMessage(`Some tags were skipped: ${tagFailures.join(', ')}`, 'error');
         const portRes = await fetch(`${api_url}/api/admin/portfolio`, {
           method: 'POST',
           credentials: 'include',
@@ -684,8 +686,7 @@ export default function VideoUploadModal({
             media: media._id,
             client: clientId,
             kind: 'Video',
-            tags: item.tags || [],
-            eventGroup: item.eventGroup || '',
+            tagIds,
             isHero: Boolean(item.isHero),
             heroPriority: item.isHero ? 1 : 0,
             shootDate: item.shootDate || undefined,
@@ -870,7 +871,7 @@ export default function VideoUploadModal({
                             {it.name}
                           </p>
                           <div className="flex items-center gap-1.5 mt-1 text-[10px] text-stone-500">
-                            <span className="font-semibold text-stone-700">{it.eventGroup}</span>
+                            <span className="font-semibold text-stone-700">{[it.filmType, it.eventGroup].filter(Boolean).join(' · ')}</span>
                             <span>·</span>
                             <span>{formatBytes(it.size)}</span>
                           </div>
@@ -980,6 +981,7 @@ export default function VideoUploadModal({
                         onUpdateOption={updateItemOption}
                         onRemove={handleRemoveItem}
                         ceremonyOptions={ceremonyOptions}
+                        filmTypeOptions={filmTypeOptions}
                       />
                     ))}
                   </div>

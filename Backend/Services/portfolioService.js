@@ -11,6 +11,7 @@
  */
 import PortfolioItem from '../Models/PortfolioItem.js';
 import { PUBLIC_GATE } from './portfolioVisibility.js';
+import { resolveTagParam } from './taxonomy.js';
 
 /** `PORTFOLIO_READS=v2` switches the public routes onto this service. */
 export const portfolioReadsEnabled = () => process.env.PORTFOLIO_READS === 'v2';
@@ -45,8 +46,21 @@ const parseTags = (tag) => String(tag || '').split(',').map((t) => t.trim()).fil
 
 /* ------------------------------------------------------------------ queries */
 
+/**
+ * Tag filters match by tag id (Services/taxonomy.js): a label, slug or old name
+ * all find the same films, so a renamed or merged tag keeps its rows. A value
+ * that names no tag matches nothing, as the exact string match did.
+ */
+async function tagFilter(values) {
+    if (!values?.length) return {};
+    const ids = await resolveTagParam(values);
+    return ids.length ? { tagIds: { $in: ids } } : null;
+}
+
 export async function findFeed({ kind, tags = [], page = 1, limit = 10 }) {
-    const filter = { kind, ...PUBLIC_GATE, ...(tags.length ? { tags: { $in: tags } } : {}) };
+    const byTag = await tagFilter(tags);
+    if (!byTag) return [];
+    const filter = { kind, ...PUBLIC_GATE, ...byTag };
     return PortfolioItem.find(filter)
         .sort(FEED_SORT)
         .skip((Math.max(1, page) - 1) * limit)
@@ -72,10 +86,10 @@ export async function findSiblings({ clientId, kind, excludeId, limit = 50 }) {
 
 /** Tag overlap, excluding this item. Bounded — the legacy route's $limit was commented out. */
 export async function findRecommended({ item, page = 1, limit = 10 }) {
-    if (!item?.tags?.length) return [];
+    if (!item?.tagIds?.length) return [];
     return PortfolioItem.find({
         kind: item.kind, ...PUBLIC_GATE,
-        tags: { $in: item.tags },
+        tagIds: { $in: item.tagIds },
         _id: { $ne: item._id },
     }).sort({ heroPriority: -1, generalPriority: -1, _id: -1 })
         .skip((Math.max(1, page) - 1) * limit)
@@ -91,7 +105,9 @@ export async function findRecommended({ item, page = 1, limit = 10 }) {
  */
 export async function findHomePhotos({ category, limit = 8 }) {
     const all = !category || category === 'All Work';
-    return PortfolioItem.find({ kind: 'Photo', ...PUBLIC_GATE, ...(all ? {} : { tags: category }) })
+    const byTag = all ? {} : await tagFilter([category]);
+    if (!byTag) return [];
+    return PortfolioItem.find({ kind: 'Photo', ...PUBLIC_GATE, ...byTag })
         .sort({ generalPriority: 1, _id: 1 })
         .limit(limit)
         .populate('client', 'clientName')
@@ -145,12 +161,15 @@ export async function search({ query, kind, page = 1, limit = 10 }) {
     const q = String(query || '').trim();
     if (!q) return [];
     const rx = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+    // A search that names a tag, even by an old name, also finds its items.
+    const tagIds = await resolveTagParam([q]);
 
     return PortfolioItem.find({
         ...(kind ? { kind } : {}),
         ...PUBLIC_GATE,
         $or: [
             { tags: rx },
+            ...(tagIds.length ? [{ tagIds: { $in: tagIds } }] : []),
             { clientNameText: rx },
             { title: rx },
             { caption: rx },

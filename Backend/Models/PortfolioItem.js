@@ -43,6 +43,13 @@ const portfolioItemSchema = new mongoose.Schema({
     // ---- editorial ----
     title: { type: String, trim: true },
     caption: { type: String, trim: true },
+    // The taxonomy (Models/Tag.js). The source of truth for what an item is
+    // tagged with; validated per group by Services/taxonomy.js.
+    tagIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag' }],
+    // Label copies of tagIds, written by the server on every change, kept for
+    // one release for search and anything still reading strings:
+    //   tags        every tag except the ceremony
+    //   eventGroup  the ceremony
     tags: [{ type: String, trim: true }],
     eventGroup: { type: String, trim: true, default: '', index: true },
 
@@ -134,10 +141,11 @@ portfolioItemSchema.index(
     { name: 'feed' },
 );
 // The public gate (status, clientStatus, mediaReady) as equality prefixes,
-// then the feed sort. Supersedes `feed`, which is dropped with the legacy data.
+// then the feed sort, then the tag ids rows filter on. Supersedes `feed`,
+// which is dropped with the legacy data.
 portfolioItemSchema.index(
-    { kind: 1, status: 1, clientStatus: 1, mediaReady: 1, isHero: -1, heroPriority: -1, generalPriority: -1, _id: -1, tags: 1 },
-    { name: 'publicFeed' },
+    { kind: 1, status: 1, clientStatus: 1, mediaReady: 1, isHero: -1, heroPriority: -1, generalPriority: -1, _id: -1, tagIds: 1 },
+    { name: 'publicFeedByTag' },
 );
 portfolioItemSchema.index(
     { client: 1, kind: 1, isHero: -1, heroPriority: -1, generalPriority: -1 },
@@ -155,6 +163,7 @@ portfolioItemSchema.index({ media: 1 }, { name: 'byMedia', sparse: true });
 portfolioItemSchema.index({ 'legacy.subdocId': 1 }, { name: 'legacySubdoc', unique: true, sparse: true });
 portfolioItemSchema.index({ 'legacy.s3Key': 1 }, { name: 'legacyKey', sparse: true });
 portfolioItemSchema.index({ tags: 1, kind: 1, status: 1 }, { name: 'tagOverlap' });
+portfolioItemSchema.index({ tagIds: 1, kind: 1, status: 1 }, { name: 'byTag' });
 portfolioItemSchema.index({ status: 1, updatedAt: -1 }, { name: 'adminList' });
 // No text index: the app connects with Stable API `strict: true`, under which
 // `$text` is rejected outright. Search uses an escaped regex $or over

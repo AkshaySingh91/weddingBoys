@@ -1,12 +1,12 @@
 import express from 'express'
 const Route = express.Router();
 import authenticateAdmin from "../../Middleware/authenticateAdmin.js"
-import { addNewTagCategory, addTermToCategory, addNewTagOnHomePage, addNewTagOnFilmPage, addNewTagOnPhotoPage } from "../../Controllers/TagsController.js"
+import { addNewTagCategory, addTermToCategory, addNewTagOnHomePage, addNewTagOnFilmPage, addNewTagOnPhotoPage, requireKnownRowTags, retiredOnceTaxonomy } from "../../Controllers/TagsController.js"
 
 Route.use(authenticateAdmin)
 
-Route.post("/api/admin/tags", addNewTagCategory)
-Route.post("/api/admin/tags/:tagType/terms", addTermToCategory)
+Route.post("/api/admin/tags", retiredOnceTaxonomy, addNewTagCategory)
+Route.post("/api/admin/tags/:tagType/terms", retiredOnceTaxonomy, addTermToCategory)
 // Retired: the bulk "replace every tag" save. It deleted the whole vocabulary and
 // recreated it, orphaning strings already stored on portfolio items, losing
 // renames, and half-completing on a duplicate. Rename / merge / delete return
@@ -20,8 +20,8 @@ Route.put("/api/admin/tags", (req, res) => {
 })
 /*************************************************/
 
-Route.post("/api/admin/homepage/tags", addNewTagOnHomePage)
-Route.post("/api/admin/filmpage/tags", addNewTagOnFilmPage)
-Route.post("/api/admin/photopage/tags", addNewTagOnPhotoPage)
+Route.post("/api/admin/homepage/tags", requireKnownRowTags, addNewTagOnHomePage)
+Route.post("/api/admin/filmpage/tags", requireKnownRowTags, addNewTagOnFilmPage)
+Route.post("/api/admin/photopage/tags", requireKnownRowTags, addNewTagOnPhotoPage)
 
 export default Route

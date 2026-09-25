@@ -97,6 +97,8 @@ export default function usePortfolio() {
             // by the wedding being a draft or a file still processing.
             const waiting = data.waiting ? ` · ${data.waiting} waiting (draft wedding or processing)` : '';
             fireMessage(`Updated ${data.modified} of ${data.matched} · ${data.nowPublic ?? 0} live${waiting}`, 'success');
+            // A tag that does not fit some items (e.g. a film type on photos) skips them.
+            if (data.tagFailures?.length) fireMessage(`${data.tagFailures.length} item(s) skipped: ${data.tagFailures[0].message}`, 'error');
             return data;
         } catch (err) {
             fireMessage(err.message, 'error');

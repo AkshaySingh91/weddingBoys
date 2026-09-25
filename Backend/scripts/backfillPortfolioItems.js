@@ -291,6 +291,19 @@ for (const c of clients) {
 
 console.log(`${DRY ? '[dry-run] ' : ''}${clients.length} client(s) → ${stats.videos} video(s), ${stats.photos} photo(s)`);
 
+// Once the tag system exists, new items are tagged by id like every other item
+// (scripts/migrateTagsToTaxonomy.js); the strings become the derived copies.
+const { taxonomyExists, loadTaxonomy, idsForLegacyStrings, mirrorsFor } = await import('../Services/taxonomy.js');
+if (await taxonomyExists()) {
+    const tax = await loadTaxonomy();
+    for (const op of ops) {
+        const fields = op.updateOne.update.$set;
+        const { ids, unresolved } = idsForLegacyStrings(fields.tags, tax);
+        unresolved.forEach((u) => anomalies.push(`item ${op.updateOne.filter._id}: tag "${u}" matches no tag — add it in the tag manager, then re-run`));
+        Object.assign(fields, { tagIds: ids, ...mirrorsFor(ids, tax) });
+    }
+}
+
 // The op builders above describe a full item. Split each one so that editorial
 // fields are only ever written on insert, and link fields only on insert or with
 // --refresh-links. `$setOnInsert` and `$set` never share a field, as Mongo requires.

@@ -1,0 +1,22 @@
+{
+  "_readme": [
+    "Choices for scripts/migrateTagsToTaxonomy.js. Edit, then re-run --dry-run.",
+    "tagRenames: an item tag string -> the existing tag it should become (typos, case variants).",
+    "eventGroups: an item's ceremony/film value -> 'ceremony:<label>' or 'film-type:<label>', or null to put it in the hidden Unsorted group.",
+    "Combined values such as 'Haldi & Mehendi' are yours to decide: one ceremony, or leave in Unsorted.",
+    "filmTypes: the Film type group (films only, one per film)."
+  ],
+  "tagRenames": {
+    "Cassic": "Classic"
+  },
+  "eventGroups": {
+    "Teaser / Trailer": "film-type:Teaser / Trailer",
+    "Highlights Film": "film-type:Highlights",
+    "Full Wedding Film": "film-type:Full Wedding Film",
+    "Pre-Wedding Film": "ceremony:Pre-Wedding",
+    "Sangeet Night": "ceremony:Sangeet",
+    "Reception Party": "ceremony:Reception",
+    "Haldi & Mehendi": null
+  },
+  "filmTypes": ["Teaser / Trailer", "Highlights", "Full Wedding Film", "Reel"]
+}

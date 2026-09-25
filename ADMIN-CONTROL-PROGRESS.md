@@ -217,3 +217,64 @@ Verified:
 - Browser: workspace chips, menu (Unpublish/Archive) and the dialog ("5 items are live").
 - Dev env: `FRONTEND_URL` + a dev-only `REVALIDATION_SECRET` added to the gitignored
   `Backend/.env` and `Next-Frontend/.env.local`.
+
+### Phase 3 — one tag system
+Three loose-string systems (the `Tags` categories, the `Ceremony` list, the hardcoded lists
+in the upload modals) become one: `TagGroup` → `Tag` (collection `taxonomytags`; the default
+name would have been `tags`, the old category collection), with a `TagOperation` log.
+Items store `tagIds`; `tags` / `eventGroup` are label copies the server writes
+(`Services/taxonomy.js`), kept one release for search and anything still reading strings.
+
+- **Groups:** Ceremony (one per item, from the Ceremony collection), Film type (one per film,
+  films only — D6), the seven old categories (same names and order), Unsorted (hidden, holds
+  strings that matched nothing so no tag is lost).
+- **Rules** enforced on every item write: the tag exists, fits the item's kind, and at most
+  one per one-per-item group. Item writes take `tagIds` only; strings get a 400 naming the
+  fix. Bulk add into a one-per-item group replaces the item's current tag; misfits are skipped
+  and reported.
+- **Public reads resolve `?tag=` by label, slug or old name, case-insensitively**, to ids:
+  `?tag=classic`, `?tag=Cassic` and `?tag=Classic` return the same films. Search also
+  matches tags by old names. New index `publicFeedByTag` (the Phase 2 `publicFeed`, keyed on
+  the strings, was dropped on dev; production never had it).
+- **Admin API** `/api/admin/taxonomy/*` (verifyToken scoped to that prefix): groups
+  create/edit/reorder/delete-when-empty; tags create/rename/move/merge (with dry-run
+  preview)/delete-when-unused/reorder; usage per tag; changes log with **Undo** (newest per tag
+  first). Rename keeps the old name as an alias and rewrites the home / films row lists; merge
+  folds the source's names into the target.
+- **Guard while production reads legacy:** renaming, merging or deleting a tag that is in use
+  answers 409 — production matches films by the tag's text, so those rows would empty.
+  Creating, moving, reordering and hiding work.
+- **Compatibility:** `/api/get-all-tags` answers from the taxonomy in the old shape (same
+  content — /allfilms filters unchanged); `/api/ceremonies` answers from the Ceremony group and
+  no longer writes on GET; the old category/term/ceremony writes answer 410 once the taxonomy
+  exists; page-row setters refuse a row naming no tag. New public `GET /api/tags`.
+- **Admin UI:** Settings › Portfolio Tags (`TagsSettingsTab`) replaces the category editor and
+  the Ceremonies tab (old URLs redirect); shared `TagPicker` + `Hooks/useTaxonomy.jsx` in the
+  edit drawer, the wizard's details panel and the workspace bulk bar (tag / ceremony by id,
+  "No ceremony"). Upload modals keep their UX but take their lists from the taxonomy and send
+  ids; the video modal splits Film type from Ceremony; typed new tags land in Unsorted.
+  Removed hardcoded lists: `CEREMONY_PRESETS`, `DEFAULT_VIDEO_CEREMONIES`, `TAG_PRESETS`,
+  `DEFAULT_CEREMONIES`, the details-panel fallback. The Settings tab state now comes from the
+  URL (fixes a set-state-in-effect lint error there).
+- **Migration** `scripts/migrateTagsToTaxonomy.js` + `tag-migration-map.json` (typo merges,
+  where each old ceremony/film value goes, the film types): reports near-duplicates, Unsorted
+  strings, page rows; refuses if a row would match no tag. Backfill tags new items by id
+  (category before a same-named ceremony). Cut-over report blocks until it has run.
+
+Verified:
+- `npm test`: 13/13 (new taxonomy tests found a real bug: a leading `#` survived when the label
+  started with spaces).
+- Dev: dry-run → apply → verify → rollback → apply (10 groups, 68 tags, 36 items; "Cassic" →
+  Classic kept as an alias; Bride/Portraits/Baraat/Rituals from wizard tests → Unsorted).
+- Dev API acceptance, **33/33**: usage counts equal `countDocuments({tagIds})`; shims identical
+  to the old data; `?tag=Cassic|classic` = the Classic set; two ceremonies → 400; film type on
+  a photo → 400; tag strings → 400; bulk ceremony replaces; rename "Garden" → home row title
+  follows, same films, old name resolves, copies rewritten; duplicate / comma → 409 / 400;
+  merge preview + merge + undo restores exactly the source's items and the target's aliases;
+  undo rename; used tag and row tag cannot be deleted; unknown row → 400; old ceremony write →
+  410; on a legacy-mode server a used tag's rename → 409, an unused one works.
+- Browser: the tag manager (usage, row badges, merge preview, changes with Undo); the drawer's
+  picker shows the item's tags in every group it can use. `next build` passes.
+
+Found, not fixed: the edit drawer requests `GET /api/admin/media/:mediaId`, a route that does
+not exist (404 each time; it falls back to the item's populated media).

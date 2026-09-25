@@ -14,20 +14,10 @@ import { Badge } from '@/app/admin/components/ui/Badge.jsx';
 import { formatBytes } from '@/Utils/format.js';
 import { createUpload } from '@/lib/upload/multipartUploader.js';
 import { fireMessage } from '@/Utils/fireMessage.js';
+import useTaxonomy from '@/Hooks/useTaxonomy.jsx';
 import { cn } from '@/lib/utils.js';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL;
-
-const DEFAULT_CEREMONIES = [
-  { name: 'Haldi', color: 'amber' },
-  { name: 'Mehendi', color: 'emerald' },
-  { name: 'Sangeet', color: 'purple' },
-  { name: 'Cocktail', color: 'indigo' },
-  { name: 'Wedding / Pheras', color: 'rose' },
-  { name: 'Reception', color: 'gold' },
-  { name: 'Pre-Wedding', color: 'sky' },
-  { name: 'Candid & Portraits', color: 'neutral' },
-];
 
 const DEFAULT_BTS_ROLES = [
   'Lead Photographer',
@@ -37,10 +27,6 @@ const DEFAULT_BTS_ROLES = [
   'Traditional Video',
   'Chief Editor',
   'Colorist',
-];
-
-const TAG_PRESETS = [
-  'Bride', 'Groom', 'Couple', 'Decor', 'Rituals', 'Candid', 'Family', 'Portraits', 'Baraat'
 ];
 
 const CEREMONY_THEMES = {
@@ -327,8 +313,18 @@ export default function ImageUploadModal({
   const [uploadedResults, setUploadedResults] = useState([]);
 
   // Dynamic Ceremonies Taxonomy
-  const [ceremonies, setCeremonies] = useState(DEFAULT_CEREMONIES);
-  const [curationTheme, setCurationTheme] = useState('Haldi');
+  // Ceremonies are the Ceremony tag group (read through /api/ceremonies below);
+  // the first one becomes the default theme once they load.
+  const [ceremonies, setCeremonies] = useState([]);
+  const [curationTheme, setCurationTheme] = useState('');
+  // Tag suggestions: the photo tags used most, from the tag system.
+  const taxonomy = useTaxonomy();
+  const tagSuggestions = useMemo(() => taxonomy.groupsFor('Photo')
+    .filter((g) => g.cardinality === 'multi')
+    .flatMap((g) => (g.tags || []).filter((t) => !t.hidden))
+    .sort((a, b) => (b.usage?.Photo || 0) - (a.usage?.Photo || 0))
+    .slice(0, 14)
+    .map((t) => t.label), [taxonomy]);
 
   // Dynamic BTS Crew Roles
   const [btsRolePresets, setBtsRolePresets] = useState(DEFAULT_BTS_ROLES);
@@ -737,7 +733,13 @@ export default function ImageUploadModal({
           prev.map((it) => (it.id === item.id ? { ...it, status: 'processing', progress: 95 } : it))
         );
 
-        // Step 2: Create PortfolioItem placement with all curated metadata & BTS credits
+        // Step 2: Create PortfolioItem placement with all curated metadata & BTS
+        // credits, tagged by id (a typed tag the tag system lacks lands in Unsorted).
+        const { ids: tagIds, failures: tagFailures } = await taxonomy.idsFromLabels('Photo', {
+          ceremony: item.eventGroup && item.eventGroup !== 'Unthemed' ? item.eventGroup : '',
+          tags: item.tags || [],
+        });
+        if (tagFailures.length) fireMessage(`Some tags were skipped: ${tagFailures.join(', ')}`, 'error');
         const portRes = await fetch(`${api_url}/api/admin/portfolio`, {
           method: 'POST',
           credentials: 'include',
@@ -746,8 +748,7 @@ export default function ImageUploadModal({
             media: media._id,
             client: clientId,
             kind: 'Photo',
-            tags: item.tags || [],
-            eventGroup: item.eventGroup !== 'Unthemed' ? item.eventGroup : '',
+            tagIds,
             shootDate: item.shootDate || undefined,
             location: (item.city || item.venue) ? { city: item.city, venue: item.venue } : undefined,
             credits: item.credits || [],
@@ -1368,7 +1369,7 @@ export default function ImageUploadModal({
                       Curated Tags
                     </label>
                     <div className="flex flex-wrap gap-1">
-                      {TAG_PRESETS.map((tag) => (
+                      {tagSuggestions.map((tag) => (
                         <button
                           key={tag}
                           type="button"

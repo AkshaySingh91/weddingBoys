@@ -16,6 +16,7 @@ import { formatBytes } from '@/Utils/format.js';
 import { cn } from '@/lib/utils.js';
 import { PageHeader } from '@/app/admin/components/ui/PageHeader.jsx';
 import MediaDetailsPanel from './_components/MediaDetailsPanel.jsx';
+import useTaxonomy from '@/Hooks/useTaxonomy.jsx';
 import DeleteClientModal from '../_components/DeleteClientModal.jsx';
 import ImageUploadModal from '../_components/ImageUploadModal.jsx';
 import VideoUploadModal from '../_components/VideoUploadModal.jsx';
@@ -126,7 +127,8 @@ export default function AddClientWizard() {
     const [mediaCategoryFilter, setMediaCategoryFilter] = useState(''); // '' | 'Photo' | 'Video'
     const [details, setDetails] = useState({}); // mediaId -> metadata
     const [editing, setEditing] = useState(null); // mediaId
-    const [vocabulary, setVocabulary] = useState([]);
+    // The tag system; details carry tag ids (the server writes the label copies).
+    const taxonomy = useTaxonomy();
     const [btsRoles, setBtsRoles] = useState([]);
     const [publishing, setPublishing] = useState(false);
     const loadedRef = useRef(false);
@@ -174,22 +176,15 @@ export default function AddClientWizard() {
         } catch { /* ignore */ }
     }, [bride, groom, startDate, endDate, season, weddingDate, city, venue, isInMap, coordinate, clientId]);
 
-    // Load tag vocabulary and BTS schema
+    // Load the BTS schema (tags come from useTaxonomy)
     useEffect(() => {
         if (loadedRef.current) return;
         loadedRef.current = true;
         (async () => {
             try {
-                const [tagRes, btsRes] = await Promise.all([
-                    fetch(`${api_url}/api/get-all-tags`, { credentials: 'include' }),
-                    fetch(`${api_url}/api/bts-schema/`, { credentials: 'include' }),
-                ]);
-                if (tagRes.ok) {
-                    const { allTags = [] } = await tagRes.json();
-                    setVocabulary([...new Set(allTags.flatMap((g) => g.tags || []))].sort());
-                }
+                const btsRes = await fetch(`${api_url}/api/bts-schema/`, { credentials: 'include' });
                 if (btsRes.ok) setBtsRoles((await btsRes.json()).schema || []);
-            } catch { /* tags can still be typed manually */ }
+            } catch { /* crew can still be added later */ }
         })();
     }, []);
 
@@ -336,8 +331,7 @@ export default function AddClientWizard() {
             for (const item of newPlacements) {
                 const key = item.mediaId || item.media?._id || item._id;
                 next[key] = {
-                    tags: item.tags || [],
-                    eventGroup: item.eventGroup || '',
+                    tagIds: (item.tagIds || []).map(String),
                     shootDate: item.shootDate || startDate || weddingDate || '',
                     location: item.location || (city ? { city, venue } : {}),
                     isHero: Boolean(item.isHero),
@@ -365,8 +359,7 @@ export default function AddClientWizard() {
             for (const item of newPlacements) {
                 const key = item.mediaId || item.media?._id || item._id;
                 next[key] = {
-                    tags: item.tags || [],
-                    eventGroup: item.eventGroup || 'Highlights Film',
+                    tagIds: (item.tagIds || []).map(String),
                     shootDate: item.shootDate || startDate || weddingDate || '',
                     location: item.location || (city ? { city, venue } : {}),
                     isHero: Boolean(item.isHero),
@@ -422,8 +415,7 @@ export default function AddClientWizard() {
                     credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        eventGroup: val.eventGroup,
-                        tags: val.tags,
+                        tagIds: val.tagIds || [],
                         shootDate: val.shootDate || undefined,
                         location: val.location,
                         caption: val.caption,
@@ -529,8 +521,7 @@ export default function AddClientWizard() {
 
     const editingItem = portfolioItems.find((a) => (a.mediaId || a._id) === editing);
     const editingDetails = editing ? (details[editing] || {
-        tags: editingItem?.tags || [],
-        eventGroup: editingItem?.eventGroup || '',
+        tagIds: (editingItem?.tagIds || []).map(String),
         shootDate: editingItem?.shootDate || '',
         location: editingItem?.location || {},
         isHero: Boolean(editingItem?.isHero),
@@ -1219,7 +1210,7 @@ export default function AddClientWizard() {
                 <MediaDetailsPanel
                     media={editingItem.media || editingItem}
                     value={editingDetails}
-                    vocabulary={vocabulary}
+                    taxonomy={taxonomy}
                     btsRoles={btsRoles}
                     onChange={(updatedVal) => handleSaveDetail(editing, updatedVal)}
                     onClose={closeDetails}

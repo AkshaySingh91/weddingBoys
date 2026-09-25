@@ -78,6 +78,13 @@ if (unmigrated.length) {
     blocker(`${unmigrated.length} item(s) lack clientStatus/mediaReady — v2 would hide them. Run scripts/migrateVisibility.js --apply first`,
         unmigrated.slice(0, 10).map(label));
 }
+// Tag rows match by tag id since plan phase 3 (scripts/migrateTagsToTaxonomy.js).
+const taxonomyGroups = await col('taggroups').countDocuments();
+const untagged = items.filter((i) => (i.tags?.length || i.eventGroup) && !Array.isArray(i.tagIds));
+if (!taxonomyGroups || untagged.length) {
+    blocker(`${taxonomyGroups ? untagged.length : items.length} item(s) have no tag ids — v2 tag rows would be empty. Run scripts/migrateTagsToTaxonomy.js --apply first`,
+        untagged.slice(0, 10).map(label));
+}
 const isPublic = (i) => i.status === 'Published' && i.clientStatus === 'Published' && i.mediaReady === true;
 const published = items.filter(isPublic);
 const broken = published.filter((i) => !showable(i));

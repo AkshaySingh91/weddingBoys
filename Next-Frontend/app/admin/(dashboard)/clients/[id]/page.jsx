@@ -27,6 +27,7 @@ import VideoUploadModal from '../_components/VideoUploadModal.jsx';
 import WeddingStatusDialog from '../_components/WeddingStatusDialog.jsx';
 import { pinFromForm, PIN_ERROR } from '../_lib/mapPin.js';
 import { visibilityChip } from '../_lib/visibility.js';
+import useTaxonomy from '@/Hooks/useTaxonomy.jsx';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -210,8 +211,8 @@ export default function ClientWorkspace() {
     const [eventGroupFilter, setEventGroupFilter] = useState('');
     const [editing, setEditing] = useState(null);
     const [selected, setSelected] = useState(() => new Set());
-    const [vocabulary, setVocabulary] = useState([]);
-    const [dbCeremonies, setDbCeremonies] = useState([]);
+    // The tag system: bulk edits send tag ids; the ceremony filter reads its labels.
+    const taxonomy = useTaxonomy();
     const [showUpload, setShowUpload] = useState(false);
     const [showProfile, setShowProfile] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
@@ -225,17 +226,14 @@ export default function ClientWorkspace() {
         bride: '', groom: '', startDate: '', endDate: '', season: '',
         isInMap: false, latitude: '', longitute: '', pinTouched: false,
     });
-    const loadedRef = useRef(false);
 
     // Dynamic ceremony groups present and counts
+    const ceremonyTags = useMemo(() => taxonomy.groupByKey.get('ceremony')?.tags || [], [taxonomy.groupByKey]);
     const ceremonyGroups = useMemo(() => {
-        const defaults = dbCeremonies.length > 0
-            ? dbCeremonies
-            : ['Haldi', 'Mehendi', 'Sangeet', 'Wedding / Pheras', 'Reception', 'Pre-Wedding', 'Candid & Portraits'];
-        const custom = new Set(items.map((i) => i.eventGroup?.trim()).filter(Boolean));
-        defaults.forEach((d) => custom.add(d));
-        return Array.from(custom);
-    }, [items, dbCeremonies]);
+        const all = new Set(ceremonyTags.map((t) => t.label));
+        items.forEach((i) => { if (i.eventGroup?.trim()) all.add(i.eventGroup.trim()); });
+        return Array.from(all);
+    }, [items, ceremonyTags]);
 
     const ceremonyCounts = useMemo(() => {
         const counts = {};
@@ -269,29 +267,6 @@ export default function ClientWorkspace() {
 
     useEffect(() => { loadClient(); }, [loadClient]);
     useEffect(() => { fetchItems(query, { reset: true, pageNum: 1, limit: 120 }); }, [query, fetchItems]);
-
-    useEffect(() => {
-        if (loadedRef.current) return;
-        loadedRef.current = true;
-        (async () => {
-            try {
-                const [tagRes, cerRes] = await Promise.all([
-                    fetch(`${api_url}/api/get-all-tags`, { credentials: 'include' }),
-                    fetch(`${api_url}/api/ceremonies`, { credentials: 'include' }),
-                ]);
-                if (tagRes.ok) {
-                    const { allTags = [] } = await tagRes.json();
-                    setVocabulary([...new Set(allTags.flatMap((g) => g.tags || []))].sort());
-                }
-                if (cerRes.ok) {
-                    const data = await cerRes.json();
-                    if (data.ceremonies?.length) {
-                        setDbCeremonies(data.ceremonies.map((c) => c.name));
-                    }
-                }
-            } catch { /* tags can still be typed by hand */ }
-        })();
-    }, []);
 
     const refresh = useCallback(() => {
         fetchItems(query, { reset: true, pageNum: 1, limit: 120 });
@@ -858,15 +833,20 @@ export default function ClientWorkspace() {
             <Collapse open={selected.size > 0}>
                 <div className="sticky top-2 z-30 flex flex-wrap items-center gap-2 rounded-xl border border-studio-terracotta/30 bg-studio-obsidian p-2.5 text-white shadow-lg">
                     <span className="px-1 text-xs font-medium">{selected.size} selected</span>
+                    {/* Tag ids; the server skips items a tag cannot apply to and says so. */}
                     <select value={bulkTag} onChange={(e) => setBulkTag(e.target.value)}
                         className="h-7 rounded-lg border border-white/15 bg-white/10 px-2 text-[11px] text-white outline-none">
                         <option value="" className="text-studio-ink">Choose a tag…</option>
-                        {vocabulary.map((t) => <option key={t} value={t} className="text-studio-ink">{t}</option>)}
+                        {taxonomy.groupsFor(null).filter((g) => g.key !== 'ceremony').map((g) => (
+                            <optgroup key={g._id} label={g.label} className="text-studio-ink">
+                                {(g.tags || []).filter((t) => !t.hidden).map((t) => <option key={t._id} value={t._id} className="text-studio-ink">{t.label}</option>)}
+                            </optgroup>
+                        ))}
                     </select>
                     <Button variant="secondary" size="sm" icon={TagIcon} disabled={!bulkTag}
-                        onClick={() => runBulk({ tags: { add: [bulkTag] } })}>Add</Button>
+                        onClick={() => runBulk({ tagIds: { add: [bulkTag] } })}>Add</Button>
                     <Button variant="secondary" size="sm" disabled={!bulkTag}
-                        onClick={() => runBulk({ tags: { remove: [bulkTag] } })}>Remove</Button>
+                        onClick={() => runBulk({ tagIds: { remove: [bulkTag] } })}>Remove</Button>
 
                     <span className="h-5 w-px bg-white/15" />
                     {/* Move to Ceremony Reassignment */}
@@ -874,17 +854,20 @@ export default function ClientWorkspace() {
                         value={bulkCeremony}
                         onChange={(e) => {
                             const val = e.target.value;
-                            if (val) {
-                                runBulk({ set: { eventGroup: val } });
-                                setBulkCeremony('');
-                            }
+                            if (!val) return;
+                            // Ceremony is one per item: adding one replaces the current one.
+                            runBulk(val === '__none'
+                                ? { tagIds: { remove: ceremonyTags.map((t) => t._id) } }
+                                : { tagIds: { add: [val] } });
+                            setBulkCeremony('');
                         }}
                         className="h-7 rounded-lg border border-amber-400/40 bg-white/15 px-2 text-[11px] text-amber-200 font-semibold outline-none"
                     >
                         <option value="" className="text-studio-ink font-normal">Move to Ceremony…</option>
-                        {ceremonyGroups.map((g) => (
-                            <option key={g} value={g} className="text-studio-ink">{g}</option>
+                        {ceremonyTags.map((t) => (
+                            <option key={t._id} value={t._id} className="text-studio-ink">{t.label}</option>
                         ))}
+                        <option value="__none" className="text-studio-ink">No ceremony</option>
                     </select>
 
                     <span className="h-5 w-px bg-white/15" />
@@ -954,7 +937,6 @@ export default function ClientWorkspace() {
                 <EditDrawer
                     key={editing._id}
                     item={editing}
-                    vocabulary={vocabulary}
                     saving={saving}
                     onClose={() => setEditing(null)}
                     onDelete={(item) => {

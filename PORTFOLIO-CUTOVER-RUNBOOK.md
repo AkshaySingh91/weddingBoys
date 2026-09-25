@@ -48,6 +48,9 @@ Choose one:
    node scripts/migrateVisibility.js --dry-run             # NEWLY PUBLIC must be 0
    node scripts/migrateVisibility.js --apply               # prints a run id
    node scripts/migrateVisibility.js --verify
+   node scripts/migrateTagsToTaxonomy.js --dry-run         # review Unsorted and the map
+   node scripts/migrateTagsToTaxonomy.js --apply
+   node scripts/migrateTagsToTaxonomy.js --verify
    node scripts/cutoverReport.js                           # must say "no blockers"
    ```
 4. Run two backends on the copy and compare them (both read-only, no worker needed):
@@ -67,11 +70,15 @@ Choose one:
 2. `node scripts/migrateVisibility.js --apply`, then `--verify`. Note the run id. **Required
    since Phase 2:** public reads need each item's `clientStatus` and `mediaReady`, so without
    this the v2 site shows nothing (the cut-over report blocks on it).
-3. `node scripts/cutoverReport.js` against production: **no blockers**.
-4. Set `PORTFOLIO_READS=v2` on the backend and restart it.
-5. Smoke test: `/`, `/films`, `/allfilms`, `/photos`, five film pages and five photo pages.
+3. `node scripts/migrateTagsToTaxonomy.js --apply`, then `--verify`. **Required since Phase 3:**
+   v2 rows match films by tag id. Safe to run before the switch at any time: production's
+   legacy reads never look at it. (Edit `scripts/tag-migration-map.json` first if the dry run
+   shows tags in Unsorted that belong somewhere.)
+4. `node scripts/cutoverReport.js` against production: **no blockers**.
+5. Set `PORTFOLIO_READS=v2` on the backend and restart it.
+6. Smoke test: `/`, `/films`, `/allfilms`, `/photos`, five film pages and five photo pages.
    On a film page, check the gallery and "recommended" thumbnails load.
-6. Once the Next frontend is live, check the sitemap (from `Next-Frontend/`):
+7. Once the Next frontend is live, check the sitemap (from `Next-Frontend/`):
    `node scripts/checkSitemapUrls.mjs --site=https://theweddingboys.in --api=<api origin>`.
    It checks each film and photo through the API, because those pages always answer 200.
 
@@ -104,6 +111,7 @@ What visitors will notice:
 |---|---|---|
 | Hero: same 4 films, different order | all four have priority 6, a tie | set the order in Admin › Hero before switching |
 | "North India" row and home grid (All Work, Wedding): same items, different order | ties; the old film rows also regrouped by wedding after sorting, so their order was effectively random | none, or set priorities |
+| One film joins the Classic rows | it was tagged "Cassic"; the tag migration merges the typo into Classic (the old spelling still resolves) | none |
 | Film pages show their **own** shoot date | the old route overwrote it with the wedding's last other film's date (fixed on both paths) | none |
 | Malformed film/photo ids return 404 | they used to hang (no error handling) | none |
 
@@ -129,4 +137,5 @@ Found along the way (not caused by the switch):
 | `scripts/parityCheck.js` | no | same API on both read paths, plus every media URL |
 | `Next-Frontend/scripts/checkSitemapUrls.mjs` | no | every sitemap URL, film and photo lookups through the API |
 | `scripts/migrateVisibility.js` | with `--apply` / `--rollback` | fills `clientStatus`, `mediaReady`, `publishedAt`; never makes anything newly public |
+| `scripts/migrateTagsToTaxonomy.js` | with `--apply` / `--rollback` | builds the tag system from the old categories, ceremonies and item strings (`tag-migration-map.json`) |
 | `scripts/lib/runLog.js` | `scriptruns`, `scriptrunchanges` | shared `--dry-run / --apply / --verify / --rollback` contract |

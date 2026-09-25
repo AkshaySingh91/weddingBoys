@@ -1,9 +1,8 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
-  CalendarHeart,
   Buildings,
   Tag,
   ShieldWarning,
@@ -17,19 +16,13 @@ import {
   Sparkle,
   CircleNotch,
 } from '@phosphor-icons/react';
-import CeremoniesSettingsTab from './_components/CeremoniesSettingsTab.jsx';
+import TagsSettingsTab from './_components/TagsSettingsTab.jsx';
 import StudioContact from '../studio-setting/_components/StudioContact.jsx';
 import AdminInviteCode from '../studio-setting/_components/AdminInviteCode.jsx';
 import { Button } from '@/app/admin/components/ui/Button.jsx';
 import { cn } from '@/lib/utils.js';
 
 const SETTINGS_SECTIONS = [
-  {
-    id: 'ceremonies',
-    label: 'Ceremonies & Events',
-    icon: CalendarHeart,
-    description: 'Configure event rituals for client intake, filters & storytelling.',
-  },
   {
     id: 'studio',
     label: 'Company & Studio Info',
@@ -40,7 +33,7 @@ const SETTINGS_SECTIONS = [
     id: 'tags',
     label: 'Portfolio Tags',
     icon: Tag,
-    description: 'Manage curated tags for wedding photo and video categorization.',
+    description: 'Ceremonies, film types and every tag a film or photo can carry.',
   },
   {
     id: 'bts',
@@ -86,19 +79,13 @@ const SETTINGS_SECTIONS = [
 function SettingsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const initialTab = searchParams.get('tab') || 'ceremonies';
-  const [activeTab, setActiveTab] = useState(initialTab);
+  // Ceremonies are a group in Portfolio Tags now; old links to ?tab=ceremonies land there.
+  // The URL is the tab state (no copy to keep in sync).
+  const tabAlias = (t) => (t === 'ceremonies' ? 'tags' : t);
+  const activeTab = tabAlias(searchParams.get('tab')) || 'tags';
   const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
-    const tabFromUrl = searchParams.get('tab');
-    if (tabFromUrl && tabFromUrl !== activeTab) {
-      setActiveTab(tabFromUrl);
-    }
-  }, [searchParams, activeTab]);
-
   const handleSelectTab = (tabId) => {
-    setActiveTab(tabId);
     router.replace(`/admin/settings?tab=${tabId}`, { scroll: false });
   };
 
@@ -183,9 +170,6 @@ function SettingsContent() {
 
         {/* Right Main Content Pane */}
         <div className="md:col-span-8 lg:col-span-9 rounded-2xl border border-[#E8DDD1] bg-white p-5 sm:p-7 shadow-sm min-h-[520px]">
-          {/* Tab 1: Ceremonies & Events */}
-          {activeTab === 'ceremonies' && <CeremoniesSettingsTab />}
-
           {/* Tab 2: Studio & Company Info */}
           {activeTab === 'studio' && (
             <div className="space-y-6 animate-in fade-in duration-200">
@@ -204,51 +188,8 @@ function SettingsContent() {
             </div>
           )}
 
-          {/* Tab 3: Portfolio Tags */}
-          {activeTab === 'tags' && (
-            <div className="space-y-6 animate-in fade-in duration-200">
-              <div className="flex items-center justify-between pb-4 border-b border-[#E8DDD1]">
-                <div>
-                  <h2 className="text-lg font-bold text-stone-900 tracking-tight font-serif flex items-center gap-2">
-                    <Tag size={20} className="text-[#A3603A]" weight="duotone" />
-                    Portfolio Tags & Taxonomy
-                  </h2>
-                  <p className="text-xs text-stone-500 mt-0.5">
-                    Keywords and creative categories for photo and video curation.
-                  </p>
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  icon={ArrowSquareOut}
-                  onClick={() => router.push('/admin/website-setting/add-tags')}
-                  className="text-xs"
-                >
-                  Open Tag Manager
-                </Button>
-              </div>
-
-              <div className="rounded-xl border border-stone-200 bg-stone-50/60 p-6 text-center space-y-3">
-                <Tag size={32} className="text-stone-400 mx-auto" />
-                <div className="space-y-1">
-                  <h3 className="text-sm font-semibold text-stone-800">
-                    Centralized Tag System
-                  </h3>
-                  <p className="text-xs text-stone-500 max-w-md mx-auto">
-                    Manage categories like Destination, Lighting, Drone, Portraits, and Custom Tags across your media library.
-                  </p>
-                </div>
-                <Button
-                  variant="terracotta"
-                  size="sm"
-                  onClick={() => router.push('/admin/website-setting/add-tags')}
-                  className="mt-2 text-xs"
-                >
-                  Manage Portfolio Tags
-                </Button>
-              </div>
-            </div>
-          )}
+          {/* Portfolio Tags: the tag system, ceremonies included */}
+          {activeTab === 'tags' && <TagsSettingsTab />}
 
           {/* Tab 4: BTS Crew Roles */}
           {activeTab === 'bts' && (

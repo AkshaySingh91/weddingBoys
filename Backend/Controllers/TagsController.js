@@ -1,10 +1,13 @@
 import Tags from '../Models/TagsSchema.js'
 import websiteSettingsSchema from "../Models/WebsiteSettingSchema.js"
 import clientSchema from "../Models/ClientSchema.js"
+import { taxonomyExists, legacyTagCategories, resolveTagParam } from '../Services/taxonomy.js'
 // this will get all tag with their category
+// Once the tag system exists (scripts/migrateTagsToTaxonomy.js) this answers
+// from it, in the same shape; until then from the old `Tags` collection.
 async function getAllTags(req, res, next) {
     try {
-        const allTags = await Tags.find();
+        const allTags = (await taxonomyExists()) ? await legacyTagCategories() : await Tags.find();
         res.status(200).json({ allTags })
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -347,4 +350,33 @@ async function addNewTagOnFilmPage(req, res, next) {
     }
 }
 
-export { getAllTags, addNewTagCategory, verifyTagInExistingCategory, updateTagInExistingCategory, addNewTagOnHomePage, addNewTagOnFilmPage, addNewTagOnPhotoPage, addTermToCategory }
+/**
+ * Middleware for the three page-row setters: once the tag system exists, every
+ * row must name a real tag (label, slug or old name). Rows were free strings,
+ * so a typo made a row that silently showed nothing.
+ */
+async function requireKnownRowTags(req, res, next) {
+    try {
+        const rows = req.body?.newAddedTags;
+        if (!Array.isArray(rows) || !rows.every((r) => typeof r === 'string')) {
+            return res.status(400).json({ message: 'newAddedTags must be a list of tag names' });
+        }
+        if (await taxonomyExists()) {
+            const unknown = [];
+            for (const r of rows) if (!(await resolveTagParam([r])).length) unknown.push(r);
+            if (unknown.length) return res.status(400).json({ message: `No tag called ${unknown.map((u) => `"${u}"`).join(', ')}`, unknown });
+        }
+        return next();
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+/** The old category editor's writes, once the tag manager has replaced them. */
+async function retiredOnceTaxonomy(req, res, next) {
+    if (!(await taxonomyExists())) return next();
+    console.warn(`[410] retired tag write (tag manager exists): ${req.method} ${req.originalUrl}`);
+    return res.status(410).json({ message: 'Tags are managed in Settings › Portfolio Tags now.', retired: true });
+}
+
+export { requireKnownRowTags, retiredOnceTaxonomy, getAllTags, addNewTagCategory, verifyTagInExistingCategory, updateTagInExistingCategory, addNewTagOnHomePage, addNewTagOnFilmPage, addNewTagOnPhotoPage, addTermToCategory }
