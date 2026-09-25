@@ -1022,3 +1022,45 @@ Also: this removes the **last `<h1>`** from the home page — it carried four
 **Not carried over from the reverted attempt:** Track Record is still rendered
 inside `OfferPackages`, i.e. *before* Our Approach. The client had chosen to
 move it after; that change was reverted with the rest and has not been redone.
+
+### Our Approach — a hand of cards (third design, `OurApproach.jsx`)
+
+Built to the client's reference image. Three columns at `lg`: step list left,
+fanned deck centre, active step right. Scrolling deals the next card to the
+front.
+
+Two earlier designs preceded this one — a pinned "cinematic chapters" sequence
+(reverted before commit) and sticky stacking cards (commit `a46cf87`). Tag
+`home-before-approach` still marks the pre-Approach state.
+
+**Mechanics.** Scroll over the track resolves to one integer `active` index.
+Every card animates to a slot that is a pure function of `index - active`:
+upcoming cards fan back and left, the active card sits square at the front, dealt
+cards slide off right. Springs do the travel, so a fast scroll deals several
+cards in one continuous motion. The step list and the arrows move the *scroll
+position* rather than setting state, so there is one source of truth.
+
+Verified: the front card advances **0,1,2,3,4** in lockstep with the panel title,
+the list highlight and the progress bar.
+
+**Dropped from the reference**, as asked: the large phone icon, and the three
+invented feature points beside it. Sub-labels reuse the existing step themes
+rather than inventing copy.
+
+**Images.** `/Asset/home/our-approch-step-<n>.png`. Only step 1 exists; the other
+four 404 and fall back to a warm panel carrying the step number, so the deck
+never has a hole. They will pick up the real photographs automatically as the
+files are added.
+
+**Fixed while building**
+
+| | |
+|---|---|
+| Fan overlapped the left column | measured **165px** of the deepest card across the intro copy. The deck is right-anchored in its column and the fan is tighter; clearance is now **52px**, measured against glyph bounds rather than element boxes |
+| Shade only on the photo branch | fallback panels stayed bright while real photographs behind the front card sat back |
+
+**Raise: `our-approch-step-1.png` is 1254×1254 and 2.03MB.** `next.config` uses a
+custom Cloudflare loader, which means `/_next/image` is bypassed — so that file
+ships at full weight to every visitor. As a JPEG or WebP at this display size
+(300px wide) it would be **under 100KB**. Worth converting before the other four
+are added, or the section will carry roughly 10MB of PNG.
