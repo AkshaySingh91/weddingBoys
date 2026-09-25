@@ -511,11 +511,14 @@ export default function AddClientWizard() {
                 method: 'PATCH',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status: 'Published', publishAllItems: true }),
+                body: JSON.stringify({ status: 'Published' }),
             });
             if (!res.ok) throw new Error(await errorFrom(res, 'Could not publish the wedding'));
+            const { publicItems = 0 } = await res.json();
             try { sessionStorage.removeItem(DRAFT_KEY); } catch { /* ignore */ }
-            fireMessage(`Wedding showcase published with ${portfolioItems.length} captures!`, 'success');
+            // Files still processing go live by themselves when they finish.
+            const waiting = portfolioItems.length - publicItems;
+            fireMessage(`Wedding published · ${publicItems} live${waiting > 0 ? `, ${waiting} will follow once processed` : ''}`, 'success');
             router.push(`/admin/clients/${clientId}`);
         } catch (err) {
             fireMessage(err.message, 'error');

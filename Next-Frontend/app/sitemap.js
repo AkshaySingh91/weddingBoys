@@ -24,9 +24,11 @@ const STATIC_ROUTES = [
 
 // Every fetch here fails soft: a sitemap missing a section is recoverable, a
 // build that crashes because the API blipped is not.
+// Tagged `portfolio` so publishing a film or photo refreshes the sitemap at once
+// (Backend/Services/revalidate.js) instead of within the hour.
 async function safeJson(path) {
     try {
-        const res = await fetch(`${api_url}${path}`, { next: { revalidate } });
+        const res = await fetch(`${api_url}${path}`, { next: { revalidate, tags: ['portfolio'] } });
         if (!res.ok) return null;
         return await res.json();
     } catch {

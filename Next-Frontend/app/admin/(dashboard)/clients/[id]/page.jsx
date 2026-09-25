@@ -24,7 +24,9 @@ import DeleteClientModal from '../_components/DeleteClientModal.jsx';
 import DeleteMediaModal from '../_components/DeleteMediaModal.jsx';
 import ImageUploadModal from '../_components/ImageUploadModal.jsx';
 import VideoUploadModal from '../_components/VideoUploadModal.jsx';
+import WeddingStatusDialog from '../_components/WeddingStatusDialog.jsx';
 import { pinFromForm, PIN_ERROR } from '../_lib/mapPin.js';
+import { visibilityChip } from '../_lib/visibility.js';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -85,8 +87,8 @@ function computeSpanDisplay(start, end, season) {
 function ItemCard({ item, selected, onToggle, onOpen, onDelete }) {
     const poster = posterOf(item);
     const isVideo = item.kind === 'Video';
-    const draft = item.status !== 'Published';
-    const isProcessing = item.media?.status === 'Processing';
+    // Whether visitors can see it, and if not why (server-computed).
+    const chip = visibilityChip(item);
     const videoStreamUrl = isVideo ? (item.render?.webUrl || item.render?.sourceUrl || item.render?.loopUrl || item.media?.cdnUrl || item.media?.publicUrl) : null;
     const [imgError, setImgError] = useState(false);
 
@@ -139,14 +141,9 @@ function ItemCard({ item, selected, onToggle, onOpen, onDelete }) {
                             <Star size={9} weight="fill" /> {item.heroPriority}
                         </span>
                     )}
-                    {isProcessing && (
-                        <span className="rounded-md bg-amber-500/90 px-1.5 py-0.5 text-[10px] font-semibold text-white animate-pulse">
-                            Processing
-                        </span>
-                    )}
-                    {!isProcessing && draft && (
-                        <span className="rounded-md bg-studio-obsidian/85 px-1.5 py-0.5 text-[10px] font-semibold text-white">
-                            {item.status}
+                    {chip && (
+                        <span title={chip.title} className={cn('rounded-md px-1.5 py-0.5 text-[10px] font-semibold text-white', chip.cls)}>
+                            {chip.label}
                         </span>
                     )}
                 </span>
@@ -220,6 +217,8 @@ export default function ClientWorkspace() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [assigning, setAssigning] = useState(false);
     const [publishing, setPublishing] = useState(false);
+    // 'Draft' | 'Archived' while the take-it-off-the-site confirmation is open.
+    const [statusTarget, setStatusTarget] = useState(null);
     const [bulkTag, setBulkTag] = useState('');
     const [bulkCeremony, setBulkCeremony] = useState('');
     const [form, setForm] = useState({
@@ -310,21 +309,24 @@ export default function ClientWorkspace() {
 
     /**
      * Uploading inside a wedding means the work belongs to it, so the placement
-     * is created here — previously the uploaded Media was discarded and the page
-     * (which lists placements) stayed empty. Draft on purpose: `/api/photos`
-     * applies no tag filter, so publishing on arrival would put unreviewed work
-     * straight onto the public gallery.
+     * is created here. No status is sent: the server decides (plan D7). Into a
+     * live wedding new work waits hidden until reviewed; into a draft wedding it
+     * goes live together with the wedding.
      */
     const placeUploaded = async (media) => {
         setAssigning(true);
         const failures = [];
         for (const m of media) {
-            const res = await assignMedia({ media: m._id, client: id, status: 'Draft' });
+            const res = await assignMedia({ media: m._id, client: id });
             if (res.error && res.status !== 409) failures.push(`${m.originalFileName || m.mediaId}: ${res.error}`);
         }
         setAssigning(false);
         const placed = media.length - failures.length;
-        if (placed) fireMessage(`${placed} added as draft`, 'success');
+        if (placed) {
+            fireMessage(client?.status === 'Published'
+                ? `${placed} added, hidden until you publish ${placed === 1 ? 'it' : 'them'}`
+                : `${placed} added; ${placed === 1 ? 'it goes' : 'they go'} live with the wedding`, 'success');
+        }
         failures.forEach((f) => fireMessage(f, 'error'));
         refresh();
     };
@@ -335,15 +337,35 @@ export default function ClientWorkspace() {
         if (await bulkUpdate({ ids, ...body })) refresh();
     };
 
-    // Both hooks report their own errors and return null on failure; stop there
-    // rather than announcing a publish that did not happen.
-    const publishDrafts = async () => {
-        const ids = items.filter((i) => i.status === 'Draft').map((i) => i._id);
+    /**
+     * The wedding's status is a gate over its items, not a cascade: publishing
+     * shows every item that is itself Published and ready, and unpublishing
+     * hides them all without touching their own settings, so a republish brings
+     * back exactly the same set. The hook reports its own error and returns null.
+     */
+    const setWeddingStatus = async (status) => {
         setPublishing(true);
         try {
-            if (ids.length > 0 && !(await bulkUpdate({ ids, set: { status: 'Published' } }))) return;
-            if (!(await saveProfile({ status: 'Published' }))) return;
-            fireMessage('Wedding showcase published!', 'success');
+            const saved = await saveProfile({ status }, { quiet: true });
+            if (!saved) return;
+            const n = saved.publicItems ?? 0;
+            fireMessage(status === 'Published'
+                ? `Wedding published · ${n} item${n === 1 ? '' : 's'} live`
+                : `Wedding ${status === 'Archived' ? 'archived' : 'unpublished'} · off the site`, 'success');
+        } finally {
+            setPublishing(false);
+            setStatusTarget(null);
+            refresh();
+        }
+    };
+
+    /** Publish the items an admin hid (or that arrived into the live wedding). */
+    const publishHidden = async () => {
+        const ids = items.filter((i) => i.status !== 'Published').map((i) => i._id);
+        if (!ids.length) return;
+        setPublishing(true);
+        try {
+            await bulkUpdate({ ids, set: { status: 'Published' } });
         } finally {
             setPublishing(false);
             refresh();
@@ -457,7 +479,9 @@ export default function ClientWorkspace() {
     };
 
     const name = [client?.clientName?.Bride, client?.clientName?.Groom].filter(Boolean).join(' & ');
-    const drafts = items.filter((i) => i.status === 'Draft').length;
+    // Items the admin hid, or that arrived into the live wedding and wait for review.
+    const drafts = items.filter((i) => i.status !== 'Published').length;
+    const liveCount = items.filter((i) => i.visibility?.public).length;
     const range = shootRange(stats);
     const displayDates = client?.celebrationDates?.spanDisplay || range || monthYear(client?.weddingDate);
     const selectedItems = items.filter((i) => selected.has(i._id));
@@ -468,16 +492,20 @@ export default function ClientWorkspace() {
                 title={
                     <span className="flex items-center gap-2.5">
                         <span>{name || 'Loading…'}</span>
-                        {client?.status === 'Draft' ? (
-                            <Badge size="sm" variant="warning" className="font-bold">
-                                <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse mr-1" />
-                                Draft Showcase
-                            </Badge>
-                        ) : (
+                        {client?.status === 'Published' ? (
                             <Badge size="sm" variant="success" className="font-bold">
                                 Published
                             </Badge>
-                        )}
+                        ) : client?.status === 'Archived' ? (
+                            <Badge size="sm" variant="neutral" className="font-bold">
+                                Archived
+                            </Badge>
+                        ) : client ? (
+                            <Badge size="sm" variant="warning" className="font-bold">
+                                <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse mr-1" />
+                                Draft · not on the site
+                            </Badge>
+                        ) : null}
                     </span>
                 }
                 subtitle={
@@ -499,15 +527,15 @@ export default function ClientWorkspace() {
                 ]}
             >
                 <div className="flex shrink-0 items-center gap-2">
-                    {(client?.status === 'Draft' || drafts > 0) && (
+                    {client && client.status !== 'Published' && (
                         <Button
                             variant="gold"
                             size="sm"
                             loading={publishing}
-                            onClick={publishDrafts}
+                            onClick={() => setWeddingStatus('Published')}
                             className="bg-amber-600 hover:bg-amber-700 text-white font-semibold shadow-xs"
                         >
-                            Publish Showcase
+                            Publish wedding
                         </Button>
                     )}
                     <Button variant="terracotta" size="sm" icon={showUpload ? X : Plus} onClick={() => setShowUpload((v) => !v)}>
@@ -530,14 +558,22 @@ export default function ClientWorkspace() {
                                         <UploadSimple size={13} /> Upload films or photos
                                     </button>
                                     <div className="my-1 h-px bg-studio-border" />
-                                    {/* "Unpublish showcase" is withheld until plan phase 2: the
-                                        wedding's own status is not yet a public gate, so it would
-                                        have claimed "unpublished" while every item stayed live.
-                                        Hide items per item meanwhile (select › Hide). */}
                                     {client?.status !== 'Published' && (
-                                        <button type="button" onClick={async () => { setMenuOpen(false); await saveProfile({ status: 'Published' }); refresh(); fireMessage('Published to showcase!', 'success'); }}
+                                        <button type="button" onClick={() => { setMenuOpen(false); setWeddingStatus('Published'); }}
                                             className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-emerald-700 hover:bg-emerald-50 cursor-pointer">
-                                            <Eye size={13} /> Publish showcase
+                                            <Eye size={13} /> Publish wedding
+                                        </button>
+                                    )}
+                                    {client?.status === 'Published' && (
+                                        <button type="button" onClick={() => { setMenuOpen(false); setStatusTarget('Draft'); }}
+                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-studio-ink hover:bg-stone-50 cursor-pointer">
+                                            <EyeSlash size={13} /> Unpublish wedding…
+                                        </button>
+                                    )}
+                                    {client && client.status !== 'Archived' && (
+                                        <button type="button" onClick={() => { setMenuOpen(false); setStatusTarget('Archived'); }}
+                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-studio-ink hover:bg-stone-50 cursor-pointer">
+                                            <HardDrives size={13} /> Archive wedding…
                                         </button>
                                     )}
                                     <div className="my-1 h-px bg-studio-border" />
@@ -740,11 +776,12 @@ export default function ClientWorkspace() {
                 <div className="flex flex-wrap items-center gap-3 rounded-xl border border-studio-gold/40 bg-studio-goldLight px-3 py-2.5">
                     <EyeSlash size={15} className="text-studio-goldDark" />
                     <p className="flex-1 text-xs text-studio-terracottaDark">
-                        <span className="font-medium">{drafts} item{drafts === 1 ? '' : 's'} not published.</span>
-                        {' '}Visitors cannot see {drafts === 1 ? 'it' : 'them'} yet.
+                        <span className="font-medium">{drafts} item{drafts === 1 ? '' : 's'} hidden.</span>
+                        {' '}Visitors cannot see {drafts === 1 ? 'it' : 'them'}
+                        {client?.status === 'Published' ? '.' : ', even once the wedding is published.'}
                     </p>
-                    <Button variant="primary" size="sm" loading={publishing} onClick={publishDrafts}>
-                        Publish {drafts === 1 ? 'it' : 'all'}
+                    <Button variant="primary" size="sm" loading={publishing} onClick={publishHidden}>
+                        Publish {drafts === 1 ? 'it' : `all ${drafts}`}
                     </Button>
                 </div>
             </Collapse>
@@ -929,6 +966,14 @@ export default function ClientWorkspace() {
                     }}
                 />
             )}
+
+            <WeddingStatusDialog
+                target={statusTarget}
+                liveCount={liveCount}
+                loading={publishing}
+                onConfirm={setWeddingStatus}
+                onClose={() => setStatusTarget(null)}
+            />
 
             <DeleteClientModal
                 open={showDeleteModal}

@@ -10,6 +10,7 @@
  * cut-over is invisible to the frontend and reversible with one env var.
  */
 import PortfolioItem from '../Models/PortfolioItem.js';
+import { PUBLIC_GATE } from './portfolioVisibility.js';
 
 /** `PORTFOLIO_READS=v2` switches the public routes onto this service. */
 export const portfolioReadsEnabled = () => process.env.PORTFOLIO_READS === 'v2';
@@ -45,7 +46,7 @@ const parseTags = (tag) => String(tag || '').split(',').map((t) => t.trim()).fil
 /* ------------------------------------------------------------------ queries */
 
 export async function findFeed({ kind, tags = [], page = 1, limit = 10 }) {
-    const filter = { kind, status: 'Published', ...(tags.length ? { tags: { $in: tags } } : {}) };
+    const filter = { kind, ...PUBLIC_GATE, ...(tags.length ? { tags: { $in: tags } } : {}) };
     return PortfolioItem.find(filter)
         .sort(FEED_SORT)
         .skip((Math.max(1, page) - 1) * limit)
@@ -58,13 +59,13 @@ export async function findById(id) {
     if (!isItemId(id)) return null;
     return PortfolioItem.findOne({
         $or: [{ _id: id }, { 'legacy.subdocId': id }],
-        status: 'Published',
+        ...PUBLIC_GATE,
     }).populate('client', 'clientName').lean();
 }
 
 export async function findSiblings({ clientId, kind, excludeId, limit = 50 }) {
     return PortfolioItem.find({
-        client: clientId, kind, status: 'Published',
+        client: clientId, kind, ...PUBLIC_GATE,
         ...(excludeId ? { _id: { $ne: excludeId } } : {}),
     }).sort(FEED_SORT).limit(limit).populate('client', 'clientName').lean();
 }
@@ -73,7 +74,7 @@ export async function findSiblings({ clientId, kind, excludeId, limit = 50 }) {
 export async function findRecommended({ item, page = 1, limit = 10 }) {
     if (!item?.tags?.length) return [];
     return PortfolioItem.find({
-        kind: item.kind, status: 'Published',
+        kind: item.kind, ...PUBLIC_GATE,
         tags: { $in: item.tags },
         _id: { $ne: item._id },
     }).sort({ heroPriority: -1, generalPriority: -1, _id: -1 })
@@ -90,7 +91,7 @@ export async function findRecommended({ item, page = 1, limit = 10 }) {
  */
 export async function findHomePhotos({ category, limit = 8 }) {
     const all = !category || category === 'All Work';
-    return PortfolioItem.find({ kind: 'Photo', status: 'Published', ...(all ? {} : { tags: category }) })
+    return PortfolioItem.find({ kind: 'Photo', ...PUBLIC_GATE, ...(all ? {} : { tags: category }) })
         .sort({ generalPriority: 1, _id: 1 })
         .limit(limit)
         .populate('client', 'clientName')
@@ -104,7 +105,7 @@ export async function findHomePhotos({ category, limit = 8 }) {
  * One query for every pinned wedding instead of loading each client's arrays.
  */
 export async function findMapFeatures(clientIds) {
-    const items = await PortfolioItem.find({ client: { $in: clientIds }, status: 'Published' })
+    const items = await PortfolioItem.find({ client: { $in: clientIds }, ...PUBLIC_GATE })
         .sort(FEED_SORT)
         .lean();
     const byClient = new Map();
@@ -120,7 +121,7 @@ export async function findMapFeatures(clientIds) {
 
 export async function findHeroVideos(limit = 12) {
     // `_id` breaks ties so equal priorities keep one order across requests.
-    return PortfolioItem.find({ kind: 'Video', isHero: true, status: 'Published' })
+    return PortfolioItem.find({ kind: 'Video', isHero: true, ...PUBLIC_GATE })
         .sort({ heroPriority: -1, _id: -1 })
         .limit(limit)
         .populate('client', 'clientName')
@@ -147,7 +148,7 @@ export async function search({ query, kind, page = 1, limit = 10 }) {
 
     return PortfolioItem.find({
         ...(kind ? { kind } : {}),
-        status: 'Published',
+        ...PUBLIC_GATE,
         $or: [
             { tags: rx },
             { clientNameText: rx },

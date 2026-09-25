@@ -16,7 +16,11 @@ const Client = new mongoose.Schema({
         spanDisplay: { type: String, trim: true },
     },
     weddingDate: { type: Date },
+    // Authoritative for the wedding; copied onto its items by
+    // Services/portfolioVisibility.js setClientStatus(), never written directly.
     status: { type: String, enum: ['Draft', 'Published', 'Archived'], default: 'Draft', index: true },
+    publishedAt: { type: Date },
+    archivedAt: { type: Date },
     videos: [
         {
             _id: {

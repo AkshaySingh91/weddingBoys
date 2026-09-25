@@ -71,7 +71,15 @@ info(`${subdocs.length} embedded film/photo(s), ${items.length} item(s): `
 const showable = (i) => (i.kind === 'Photo'
     ? Boolean(i.render?.imageUrl)
     : Boolean((i.render?.webUrl || i.render?.sourceUrl || i.render?.loopUrl) && i.render?.posterUrl));
-const published = items.filter((i) => i.status === 'Published');
+// The public rule (Services/portfolioVisibility.js). Its fields are filled by
+// scripts/migrateVisibility.js; until that has run, v2 would show nothing.
+const unmigrated = items.filter((i) => i.clientStatus === undefined || i.mediaReady === undefined);
+if (unmigrated.length) {
+    blocker(`${unmigrated.length} item(s) lack clientStatus/mediaReady — v2 would hide them. Run scripts/migrateVisibility.js --apply first`,
+        unmigrated.slice(0, 10).map(label));
+}
+const isPublic = (i) => i.status === 'Published' && i.clientStatus === 'Published' && i.mediaReady === true;
+const published = items.filter(isPublic);
 const broken = published.filter((i) => !showable(i));
 if (broken.length) {
     blocker(`${broken.length} published item(s) have nothing to show (a photo with no image, a film with no video or poster)`,
@@ -89,10 +97,10 @@ if (notReady.length) {
 /* ---------------------------------------------------- what visitors lose */
 const hidden = subdocs
     .map((s) => ({ s, item: itemByLegacy.get(id(s.sub._id)) }))
-    .filter(({ item }) => item && item.status !== 'Published');
+    .filter(({ item }) => item && !isPublic(item));
 if (hidden.length) {
-    review(`${hidden.length} film/photo(s) visible today would be hidden (their item is not Published — hidden in the admin)`,
-        hidden.map(({ item }) => `${label(item)}  status ${item.status}`));
+    review(`${hidden.length} film/photo(s) visible today would be hidden (hidden in the admin, wedding not published, or media not ready)`,
+        hidden.map(({ item }) => `${label(item)}  status ${item.status} · wedding ${item.clientStatus} · ready ${item.mediaReady}`));
 }
 
 /* --------------------------------------------------- what visitors gain */
@@ -104,7 +112,7 @@ for (const i of items.filter((x) => !x.legacy?.subdocId)) {
 }
 const nativeRows = [...nativeByClient.entries()].map(([cid, list]) => {
     const c = clientById.get(cid);
-    const pub = list.filter((i) => i.status === 'Published').length;
+    const pub = list.filter(isPublic).length;
     const created = list.map((i) => i.createdAt).filter(Boolean).sort((a, b) => a - b)[0];
     return {
         goesLive: pub > 0,
@@ -126,7 +134,7 @@ const legacyHero = (settings?.heroVideos || []).slice()
         return v ? id(v._id) : null;
     })
     .filter(Boolean);
-const v2Hero = items.filter((i) => i.kind === 'Video' && i.isHero && i.status === 'Published')
+const v2Hero = items.filter((i) => i.kind === 'Video' && i.isHero && isPublic(i))
     .sort((a, b) => ((b.heroPriority ?? 0) - (a.heroPriority ?? 0)) || id(b._id).localeCompare(id(a._id)))
     .slice(0, 12)
     .map((i) => id(i._id));

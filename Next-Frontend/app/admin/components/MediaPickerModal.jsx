@@ -158,7 +158,9 @@ export default function MediaPickerModal({
             if (focused?._id === media._id) setFocused(null);
             setSelected((prev) => prev.filter((id) => id !== media._id));
         } catch (err) {
-            fireMessage(err.message, 'error');
+            // In use by the portfolio: deleting it here, with no way to see
+            // which weddings lose it, is too easy to do by accident.
+            fireMessage(err.placements ? `${err.message} Delete it from the Media page to confirm.` : err.message, 'error');
         }
     };
 

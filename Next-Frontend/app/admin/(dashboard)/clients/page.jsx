@@ -76,10 +76,12 @@ export default function ClientsPage() {
                 method: 'PATCH',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status: 'Published', publishAllItems: true }),
+                // Publishing is a gate, not a cascade: items the admin hid stay hidden.
+                body: JSON.stringify({ status: 'Published' }),
             });
-            if (!res.ok) throw new Error('Could not publish wedding');
-            fireMessage(`${nameOf(client)} published to showcase!`, 'success');
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(data.message || 'Could not publish wedding');
+            fireMessage(`${nameOf(client)} published · ${data.publicItems ?? 0} item${data.publicItems === 1 ? '' : 's'} live`, 'success');
             load();
         } catch (err) {
             fireMessage(err.message, 'error');

@@ -15,7 +15,7 @@ const api_url = process.env.NEXT_PUBLIC_API_URL;
  */
 async function fetchHeroSlides() {
     try {
-        const res = await fetch(`${api_url}/api/hero-videos`, { next: { revalidate: 300 } });
+        const res = await fetch(`${api_url}/api/hero-videos`, { next: { revalidate: 300, tags: ['portfolio'] } });
         if (!res.ok) return [];
         const data = await res.json();
         return Array.isArray(data.heroVideos) ? data.heroVideos : [];

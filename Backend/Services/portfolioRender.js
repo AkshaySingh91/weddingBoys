@@ -12,6 +12,7 @@
  * an item that has its own `poster`.
  */
 import PortfolioItem from '../Models/PortfolioItem.js';
+import { markMediaReady } from './portfolioVisibility.js';
 
 /** Build the render cache for an item from its Media (and optional poster Media). */
 export const renderFromMedia = (media, poster) => {
@@ -46,7 +47,10 @@ const dotted = (obj) => Object.fromEntries(
  *   - items whose poster IS `media`   → just `posterUrl` (a custom poster image
  *                                       that has itself just finished processing).
  *
- * @returns {{ full: number, keptPoster: number, posterUpdated: number }} modified counts
+ * Then recomputes `mediaReady` on those items, which is what makes a
+ * Published-intent upload go live by itself once processing finishes.
+ *
+ * @returns {{ full: number, keptPoster: number, posterUpdated: number, nowPublic: number }}
  */
 export async function syncRenderForMedia(media) {
     const render = renderFromMedia(media);
@@ -70,9 +74,12 @@ export async function syncRenderForMedia(media) {
         );
     }
 
+    const nowPublic = await markMediaReady(media);
+
     return {
         full: full.modifiedCount || 0,
         keptPoster: kept.modifiedCount || 0,
         posterUpdated: posterUpdated.modifiedCount || 0,
+        nowPublic: nowPublic.length,
     };
 }

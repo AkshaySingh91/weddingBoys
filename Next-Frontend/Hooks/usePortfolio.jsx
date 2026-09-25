@@ -92,7 +92,11 @@ export default function usePortfolio() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body),
             });
-            fireMessage(`Updated ${data.modified} of ${data.matched}`, 'success');
+            // Say what visitors will see, not how many rows changed: "live" is
+            // what passes the public gate, "waiting" is meant to be live but held
+            // by the wedding being a draft or a file still processing.
+            const waiting = data.waiting ? ` · ${data.waiting} waiting (draft wedding or processing)` : '';
+            fireMessage(`Updated ${data.modified} of ${data.matched} · ${data.nowPublic ?? 0} live${waiting}`, 'success');
             return data;
         } catch (err) {
             fireMessage(err.message, 'error');

@@ -751,7 +751,8 @@ export default function ImageUploadModal({
             shootDate: item.shootDate || undefined,
             location: (item.city || item.venue) ? { city: item.city, venue: item.venue } : undefined,
             credits: item.credits || [],
-            status: 'Published',
+            // No status: the server decides (plan D7) — live with the wedding if
+            // it is a draft, hidden for review if it is already published.
           }),
         });
 

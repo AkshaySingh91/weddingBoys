@@ -691,7 +691,8 @@ export default function VideoUploadModal({
             shootDate: item.shootDate || undefined,
             location: item.location ? { city: item.location } : undefined,
             caption: item.caption,
-            status: 'Published',
+            // No status: the server decides (plan D7) — live with the wedding if
+            // it is a draft, hidden for review if it is already published.
           }),
         });
 

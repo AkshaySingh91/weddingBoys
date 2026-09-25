@@ -15,6 +15,10 @@ import Media from '../Models/Media.js';
 import { rollupByClient, storageByClient, EMPTY_STATS } from '../Services/clientStats.js';
 import WebsiteSettingSchema from '../Models/WebsiteSettingSchema.js';
 import { deleteSingleMediaDoc } from './mediaController.js';
+import { PUBLIC_GATE, setClientStatus, markMediaGone } from '../Services/portfolioVisibility.js';
+import { revalidatePortfolio } from '../Services/revalidate.js';
+
+const STATUSES = ['Draft', 'Published', 'Archived'];
 
 const nameOf = (c) => [c?.clientName?.Bride, c?.clientName?.Groom].filter(Boolean).join(' & ');
 
@@ -101,12 +105,14 @@ export async function createClient(req, res) {
         }
         const pin = readMapPin(isInMap, coordinate);
         if (pin.error) return res.status(400).json({ message: pin.error });
+        if (status !== undefined && !STATUSES.includes(status)) return res.status(400).json({ message: `status must be one of ${STATUSES.join(', ')}` });
 
         const client = await Client.create({
             clientName: { Bride: bride.trim(), Groom: groom.trim() },
             celebrationDates: celebrationDates || {},
             weddingDate: weddingDate || celebrationDates?.startDate || null,
             status: status || 'Draft',
+            ...(status === 'Published' ? { publishedAt: new Date() } : {}),
             videos: [],
             photos: [],
         });
@@ -123,40 +129,40 @@ export async function createClient(req, res) {
 // PATCH /api/admin/clients/:id — rename, celebration dates, status, and move or clear the map pin.
 export async function updateClientProfile(req, res) {
     try {
-        const { bride, groom, isInMap, coordinate, celebrationDates, weddingDate, status, publishAllItems } = req.body || {};
+        const { bride, groom, isInMap, coordinate, celebrationDates, weddingDate, status } = req.body || {};
         const pin = isInMap !== undefined ? readMapPin(isInMap, coordinate) : null;
         if (pin?.error) return res.status(400).json({ message: pin.error });
-        const client = await Client.findById(req.params.id);
+        if (status !== undefined && !STATUSES.includes(status)) return res.status(400).json({ message: `status must be one of ${STATUSES.join(', ')}` });
+        let client = await Client.findById(req.params.id);
         if (!client) return res.status(404).json({ message: 'Client not found' });
 
         if (bride?.trim()) client.clientName.Bride = bride.trim();
         if (groom?.trim()) client.clientName.Groom = groom.trim();
         if (celebrationDates !== undefined) client.celebrationDates = celebrationDates;
         if (weddingDate !== undefined) client.weddingDate = weddingDate;
-        if (status !== undefined) client.status = status;
         await client.save();
 
         if (pin) await setMapPin(client._id, pin.coordinate);
 
-        // If publishAllItems is true or client status is set to Published, optionally publish all draft portfolio items
-        if (publishAllItems || status === 'Published') {
-            await PortfolioItem.updateMany(
-                { client: client._id, status: 'Draft' },
-                { $set: { status: 'Published', publishedAt: new Date() } }
-            );
+        // The wedding's status is a gate, not a cascade: items keep their own
+        // status, so unpublish → republish brings back exactly what was live and
+        // an item hidden on purpose stays hidden. (This used to set every Draft
+        // item to Published on publish — re-exposing hidden work. The old
+        // `publishAllItems` flag is ignored; publishing hidden items is an
+        // explicit bulk action in the workspace.)
+        let publicItems;
+        if (status !== undefined && status !== client.status) {
+            ({ client, publicItems } = await setClientStatus(client._id, status));
         }
-        // Deliberately no cascade for status === 'Draft'. Setting every item to
-        // Draft on unpublish erased which items the admin had hidden on purpose,
-        // so the publish branch above then exposed them on the next republish.
-        // A non-destructive wedding-level gate replaces this in plan phase 2;
-        // until then an admin hides work per item (workspace › select › Hide).
 
         // clientNameText is denormalised onto every placement so search can match
         // a couple's name without a join; a rename has to reach those too.
         const clientNameText = nameOf(client);
-        await PortfolioItem.updateMany({ client: client._id }, { $set: { clientNameText } });
+        const renamed = await PortfolioItem.updateMany({ client: client._id, clientNameText: { $ne: clientNameText } }, { $set: { clientNameText } });
+        if (renamed.modifiedCount) revalidatePortfolio();
 
-        return res.status(200).json({ client: { ...client.toObject(), mapPin: await mapPinOf(client._id) } });
+        if (publicItems === undefined) publicItems = await PortfolioItem.countDocuments({ client: client._id, ...PUBLIC_GATE });
+        return res.status(200).json({ client: { ...client.toObject(), mapPin: await mapPinOf(client._id) }, publicItems });
     } catch (error) {
         console.error('updateClientProfile error:', error);
         return res.status(500).json({ message: error.message });
@@ -217,10 +223,12 @@ export async function deleteClient(req, res) {
         const client = await Client.findById(id);
         if (!client) return res.status(404).json({ message: 'Client not found' });
 
-        const published = await PortfolioItem.countDocuments({ client: id, status: 'Published' });
+        // Only work visitors can actually see counts: a draft wedding's items are
+        // not on the site whatever their own status says.
+        const published = await PortfolioItem.countDocuments({ client: id, ...PUBLIC_GATE });
         if (published > 0 && req.query.force !== 'true') {
             return res.status(409).json({
-                message: `${nameOf(client)} still has ${published} published item${published === 1 ? '' : 's'} on the public site.`,
+                message: `${nameOf(client)} still has ${published} item${published === 1 ? '' : 's'} live on the public site.`,
                 publishedCount: published,
                 requiresForce: true,
             });
@@ -247,6 +255,8 @@ export async function deleteClient(req, res) {
 
             await Promise.allSettled(allClientMedia.map((m) => deleteSingleMediaDoc(m)));
             const purgedIds = allClientMedia.map((m) => m._id);
+            // A purged file may be another wedding's custom poster.
+            await Promise.all(purgedIds.map((m) => markMediaGone(m)));
             if (purgedIds.length) {
                 await Media.deleteMany({ _id: { $in: purgedIds } });
             }
@@ -260,6 +270,7 @@ export async function deleteClient(req, res) {
 
         await setMapPin(client._id, null);
         await Client.deleteOne({ _id: client._id });
+        revalidatePortfolio();
 
         return res.status(200).json({
             message: `${nameOf(client)} removed`,

@@ -54,6 +54,7 @@ const Client = (await import('../Models/ClientSchema.js')).default;
 const Media = (await import('../Models/Media.js')).default;
 const WebsiteSetting = (await import('../Models/WebsiteSettingSchema.js')).default;
 const { renderFromMedia } = await import('../Services/portfolioRender.js');
+const { baselineClientStatus, baselineMediaReady } = await import('./lib/visibilityBaseline.js');
 
 await mongoose.connect(process.env.MONGO_URI);
 console.log(`database "${mongoose.connection.db.databaseName}" · mode ${mode}`);
@@ -198,6 +199,9 @@ const ops = [];
 
 for (const c of clients) {
     const clientNameText = [c.clientName?.Bride, c.clientName?.Groom].filter(Boolean).join(' & ');
+    // The public gate's copies, set as migrateVisibility.js would (insert-only).
+    const clientStatus = baselineClientStatus(c);
+    const readyFor = (kind, subdocId, media, render) => baselineMediaReady({ kind, render, legacy: { subdocId } }, media?.status);
 
     const keys = [];
     for (const v of c.videos || []) {
@@ -237,6 +241,8 @@ for (const c of clients) {
                         credits: toCredits(v.bts, `client ${c._id} video ${v._id}`),
                         clientNameText,
                         status: 'Published',
+                        clientStatus,
+                        mediaReady: readyFor('Video', v._id, media, renderFromMedia(media, poster)),
                         render: renderFromMedia(media, poster),
                         legacy: {
                             subdocId: v._id, source: 'client.videos',
@@ -271,6 +277,8 @@ for (const c of clients) {
                         generalPriority: p.generalPriority ?? 0,
                         clientNameText,
                         status: 'Published',
+                        clientStatus,
+                        mediaReady: readyFor('Photo', p._id, media, renderFromMedia(media, null)),
                         render: renderFromMedia(media, null),
                         legacy: { subdocId: p._id, source: 'client.photos', s3Key: p.photoMetaData?.key },
                     },

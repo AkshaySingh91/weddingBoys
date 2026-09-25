@@ -114,16 +114,22 @@ export default function useMediaLibrary({ ownerType = 'System' } = {}) {
     /**
      * Batch Operations
      */
-    const batchDeleteMedia = useCallback(async (ids) => {
+    /**
+     * Files a portfolio item shows are refused (409) unless `force`: deleting
+     * them takes those items off the site. Returns true, false, or
+     * `{ placements }` when the admin has to confirm that.
+     */
+    const batchDeleteMedia = useCallback(async (ids, { force = false } = {}) => {
         if (!ids || !ids.length) return false;
         try {
             const res = await fetch(`${api_url}/api/admin/media/batch-delete`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ids }),
+                body: JSON.stringify({ ids, force }),
             });
             const data = await res.json();
+            if (res.status === 409 && data.requiresForce) return { placements: data.placements || [] };
             if (res.status >= 300) throw new Error(data.message || 'Batch delete failed');
 
             const idSet = new Set(ids);
@@ -220,12 +226,18 @@ export default function useMediaLibrary({ ownerType = 'System' } = {}) {
         return data.media;
     }, []);
 
-    const deleteMedia = useCallback(async (id) => {
-        const res = await fetch(`${api_url}/api/admin/media/${id}`, {
+    /** Throws; a file in use throws with `placements` unless `force` (see batchDeleteMedia). */
+    const deleteMedia = useCallback(async (id, { force = false } = {}) => {
+        const res = await fetch(`${api_url}/api/admin/media/${id}${force ? '?force=true' : ''}`, {
             method: 'DELETE',
             credentials: 'include',
         });
         const data = await res.json();
+        if (res.status === 409 && data.requiresForce) {
+            const err = new Error(data.message);
+            err.placements = data.placements || [];
+            throw err;
+        }
         if (res.status >= 300) throw new Error(data.message || 'Delete failed');
         setItems((prev) => prev.filter((m) => m._id !== id));
         setSelectedIds((prev) => prev.filter((itemId) => itemId !== id));

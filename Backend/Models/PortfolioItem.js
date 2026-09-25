@@ -62,8 +62,19 @@ const portfolioItemSchema = new mongoose.Schema({
     // module load, so every document created in a process run shared one value.
     generalPriority: { type: Number, default: 0 },
 
+    // The admin's intent for THIS item. Publishing, unpublishing or archiving the
+    // wedding never rewrites it, so what an admin hid stays hidden.
     status: { type: String, enum: ['Draft', 'Published', 'Archived'], default: 'Published' },
+    // First time the item actually became visible to the public.
     publishedAt: { type: Date },
+
+    // Server-maintained copies, so the public gate is one indexed equality match
+    // (Services/portfolioVisibility.js is their only writer):
+    //   clientStatus — the wedding's status, copied by setClientStatus();
+    //   mediaReady   — the asset has finished processing and there is something
+    //                  to show, maintained by markMediaReady() / markMediaGone().
+    clientStatus: { type: String, enum: ['Draft', 'Published', 'Archived'], default: 'Draft' },
+    mediaReady: { type: Boolean, default: false },
 
     /**
      * Behind-the-scenes credits, carried over from `Client.videos[].bts`.
@@ -121,6 +132,12 @@ const portfolioItemSchema = new mongoose.Schema({
 portfolioItemSchema.index(
     { kind: 1, status: 1, isHero: -1, heroPriority: -1, generalPriority: -1, _id: -1, tags: 1 },
     { name: 'feed' },
+);
+// The public gate (status, clientStatus, mediaReady) as equality prefixes,
+// then the feed sort. Supersedes `feed`, which is dropped with the legacy data.
+portfolioItemSchema.index(
+    { kind: 1, status: 1, clientStatus: 1, mediaReady: 1, isHero: -1, heroPriority: -1, generalPriority: -1, _id: -1, tags: 1 },
+    { name: 'publicFeed' },
 );
 portfolioItemSchema.index(
     { client: 1, kind: 1, isHero: -1, heroPriority: -1, generalPriority: -1 },

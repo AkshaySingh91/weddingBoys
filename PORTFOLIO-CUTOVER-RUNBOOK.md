@@ -45,6 +45,9 @@ Choose one:
    node scripts/backfillPortfolioItems.js --dry-run
    node scripts/backfillPortfolioItems.js --apply          # prints a run id
    node scripts/backfillPortfolioItems.js --verify         # must say "missing 0"
+   node scripts/migrateVisibility.js --dry-run             # NEWLY PUBLIC must be 0
+   node scripts/migrateVisibility.js --apply               # prints a run id
+   node scripts/migrateVisibility.js --verify
    node scripts/cutoverReport.js                           # must say "no blockers"
    ```
 4. Run two backends on the copy and compare them (both read-only, no worker needed):
@@ -61,16 +64,26 @@ Choose one:
 
 1. `node scripts/backfillPortfolioItems.js --apply` against production. Note the run id.
    `--verify` must say `missing 0`.
-2. `node scripts/cutoverReport.js` against production: **no blockers**.
-3. Set `PORTFOLIO_READS=v2` on the backend and restart it.
-4. Smoke test: `/`, `/films`, `/allfilms`, `/photos`, five film pages and five photo pages.
+2. `node scripts/migrateVisibility.js --apply`, then `--verify`. Note the run id. **Required
+   since Phase 2:** public reads need each item's `clientStatus` and `mediaReady`, so without
+   this the v2 site shows nothing (the cut-over report blocks on it).
+3. `node scripts/cutoverReport.js` against production: **no blockers**.
+4. Set `PORTFOLIO_READS=v2` on the backend and restart it.
+5. Smoke test: `/`, `/films`, `/allfilms`, `/photos`, five film pages and five photo pages.
    On a film page, check the gallery and "recommended" thumbnails load.
-5. Once the Next frontend is live, check the sitemap (from `Next-Frontend/`):
+6. Once the Next frontend is live, check the sitemap (from `Next-Frontend/`):
    `node scripts/checkSitemapUrls.mjs --site=https://theweddingboys.in --api=<api origin>`.
    It checks each film and photo through the API, because those pages always answer 200.
 
 **Rollback** (only before the first admin edit): unset `PORTFOLIO_READS`, restart. The backfill
-run can also be undone with `--rollback=<run id>`; it keeps any item edited since.
+and visibility runs can also be undone with `--rollback=<run id>`; both keep anything edited since.
+
+**Instant refresh (Phase 2).** Set on the backend `FRONTEND_URL=<the Next site's origin>` and
+`REVALIDATION_SECRET=<a new random value>`, and the same `REVALIDATION_SECRET` on the Next
+server. Without them, publishes still appear, just after the cache windows (hero 5 min,
+home 1 min, sitemap 1 h). Note: once `REVALIDATION_SECRET` is set, the blog editor's
+browser-side refresh stops working, because it sends the old public fallback secret. Blog pages
+then refresh within the hour until the blog fix, which should also rotate that secret.
 
 **After 7 quiet days:** delete the legacy branches (`videoRoute`, `photoRoute`,
 `homePageRoute`, `searchRoute`), the retired write controllers, `portfolioSync.js`,
@@ -115,4 +128,5 @@ Found along the way (not caused by the switch):
 | `scripts/cutoverReport.js` | no | blockers and visible changes, from the database |
 | `scripts/parityCheck.js` | no | same API on both read paths, plus every media URL |
 | `Next-Frontend/scripts/checkSitemapUrls.mjs` | no | every sitemap URL, film and photo lookups through the API |
+| `scripts/migrateVisibility.js` | with `--apply` / `--rollback` | fills `clientStatus`, `mediaReady`, `publishedAt`; never makes anything newly public |
 | `scripts/lib/runLog.js` | `scriptruns`, `scriptrunchanges` | shared `--dry-run / --apply / --verify / --rollback` contract |

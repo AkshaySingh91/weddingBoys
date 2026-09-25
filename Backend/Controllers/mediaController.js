@@ -1,5 +1,6 @@
 // controllers/mediaController.js
 import Media from '../Models/Media.js';
+import { markMediaGone, placementsOf } from '../Services/portfolioVisibility.js';
 import { putObjectUrl, deleteObject, generatePublicUrl } from './awsController.js';
 import { ingestImage, ingestVideo, deleteFromR2 } from '../Services/r2UploadService.js';
 import {
@@ -401,14 +402,44 @@ const deleteSingleMediaDoc = async (media) => {
     return media._id;
 };
 
-// DELETE /api/admin/media/:id
+/** What the admin sees in the in-use warning: whose wedding, file or poster, live or not. */
+const describePlacement = (p, ids) => ({
+    itemId: p._id,
+    kind: p.kind,
+    wedding: [p.client?.clientName?.Bride, p.client?.clientName?.Groom].filter(Boolean).join(' & ') || 'Unknown wedding',
+    clientId: p.client?._id,
+    usedAs: ids.has(String(p.media)) ? 'file' : 'poster',
+    live: p.status === 'Published' && p.clientStatus === 'Published' && p.mediaReady,
+});
+
+/**
+ * Deleting a file that a portfolio item shows used to leave the item Published
+ * with dead URLs — a broken tile on the live site. Now the delete is refused
+ * with the list of placements unless `force`, and a forced delete takes those
+ * items off the site (markMediaGone) instead of leaving them broken.
+ */
+async function refuseIfPlaced(ids, force, res) {
+    if (force) return false;
+    const placements = await placementsOf(ids);
+    if (!placements.length) return false;
+    res.status(409).json({
+        message: `In use by ${placements.length} portfolio item(s). Deleting takes them off the site.`,
+        requiresForce: true,
+        placements: placements.map((p) => describePlacement(p, new Set(ids.map(String)))),
+    });
+    return true;
+}
+
+// DELETE /api/admin/media/:id[?force=true]
 // Removes the physical S3/R2 object and soft-deletes the record (status Archived).
 const deleteMedia = async (req, res) => {
     try {
         const media = await Media.findById(req.params.id);
         if (!media) return res.status(404).json({ message: 'Media not found' });
+        if (await refuseIfPlaced([media._id], req.query.force === 'true', res)) return;
 
         const id = await deleteSingleMediaDoc(media);
+        await markMediaGone(id);
         res.json({ message: 'Media archived', id });
     } catch (error) {
         console.error('deleteMedia error:', error);
@@ -420,15 +451,17 @@ const deleteMedia = async (req, res) => {
 // Body: { ids: [string] }
 const batchDeleteMedia = async (req, res) => {
     try {
-        const { ids } = req.body;
+        const { ids, force = false } = req.body;
         if (!Array.isArray(ids) || ids.length === 0) {
             return res.status(400).json({ message: 'No media IDs provided' });
         }
         const docs = await Media.find({ _id: { $in: ids } });
         if (!docs.length) return res.status(404).json({ message: 'No matching media found' });
+        if (await refuseIfPlaced(docs.map((d) => d._id), force === true, res)) return;
 
         const results = await Promise.allSettled(docs.map((doc) => deleteSingleMediaDoc(doc)));
         const deletedIds = results.filter((r) => r.status === 'fulfilled').map((r) => r.value);
+        await Promise.all(deletedIds.map((id) => markMediaGone(id)));
         res.json({ message: `${deletedIds.length} assets archived`, deletedIds });
     } catch (error) {
         console.error('batchDeleteMedia error:', error);

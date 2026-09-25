@@ -167,3 +167,53 @@ Found:
   admin. Deploy the Next frontend with it (runbook §0).
 - Company logo points at a deleted media record (file 404) — owner re-uploads.
 - 20 published photos have Archived media records; files still served.
+
+### Phase 2 — publishing lifecycle and instant refresh
+One public rule (`Services/portfolioVisibility.js`): an item is public when its own
+`status` is Published (admin intent), its wedding is Published (`clientStatus`, copied)
+and its file is ready (`mediaReady`). Every public finder uses `PUBLIC_GATE`; a new
+`publicFeed` index serves it. The module is the only writer of the two copies:
+`setClientStatus`, `markMediaReady` (called by the render sync, so by the worker),
+`markMediaGone`.
+
+- **Wedding status is a gate, not a cascade.** Unpublish → republish brings back exactly the
+  previous set; an item hidden on purpose stays hidden. The old "publish sets every Draft item
+  to Published" (and the `publishAllItems` flag) is gone.
+- **Uploads (D7):** no status sent → into a draft wedding Published intent (live with the
+  wedding); into a live wedding Draft (hidden until reviewed). Processing no longer forces
+  Draft: the item goes live by itself when the worker finishes. The upload modals and the
+  workspace stopped forcing a status.
+- **Deleting a file in use** → `409` listing the placements (wedding, file or poster, live);
+  `?force` / `{force:true}` deletes and takes those items off the site (poster placements fall
+  back to the film's own frame) instead of leaving broken tiles. Media page shows the list and
+  asks again; the picker refuses and points to the Media page.
+- **Bulk filter whitelist:** the free-form `filter` reached Mongo as sent (`$where`, `$regex`…);
+  now only whitelisted fields with plain values or `$in`. Bulk answers `nowPublic` / `waiting`.
+- **Instant refresh:** `Services/revalidate.js` (2 s coalescing) → the Next route's new tag
+  branch, `revalidateTag(tag, { expire: 0 })`, with **no fallback secret**. Tags: hero and
+  sitemap `portfolio`, CMS pages `page:<key>` (triggered on CMS save/delete too).
+- **Admin:** card chips (Live / Hidden / Processing / Processing failed / File missing /
+  Wedding is draft / Wedding archived, tooltip lists every reason); header Publish wedding,
+  Unpublish…, Archive… (confirm dialog with the live count); "N items hidden → Publish all N".
+- `scripts/migrateVisibility.js` (contract modes; shared rules in
+  `scripts/lib/visibilityBaseline.js`, also used by the backfill): weddings with no status →
+  Published if they have embedded work; items copy it; readiness from render + Media;
+  Add Wedding drafts in draft weddings → Published intent. Refuses if anything would become
+  newly public. The cut-over report now blocks until it has run.
+
+Verified:
+- `npm test` (new `Backend/tests`, `node --test`): 9/9.
+- Production copy: dry-run newly public 0, no longer public 0; apply → verify → rollback →
+  re-apply; 33 public = exactly the 33 production shows; "test & test" drafts → Published
+  intent, still hidden (wedding Draft). Backfill re-create gets the same fields. Copy dropped.
+- Dev: migration applied (36/36 public). Acceptance script against the dev API with the
+  worker running, **21/21**: draft-wedding upload reasons `wedding-draft` / `+processing` →
+  worker finishes → `wedding-draft`; publish → 2 live; hide one, unpublish → gone, item status
+  untouched; republish → exactly the previous set; upload into live wedding → hidden; delete
+  placed file → 409 (single and batch) → forced → off the site, reason `asset-missing`;
+  `$where` / `$regex` bulk filters → 400; invalid wedding status → 400. Test data removed.
+- Production build on :3001: after a hero change the cached home page still showed the old
+  film; after the `portfolio` revalidate the next request did not. Hero restored.
+- Browser: workspace chips, menu (Unpublish/Archive) and the dialog ("5 items are live").
+- Dev env: `FRONTEND_URL` + a dev-only `REVALIDATION_SECRET` added to the gitignored
+  `Backend/.env` and `Next-Frontend/.env.local`.

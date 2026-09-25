@@ -34,8 +34,13 @@ export default function useClientProfile(clientId) {
         }
     }, [clientId]);
 
-    /** Rename the couple, and set, move or clear the map pin. */
-    const saveProfile = useCallback(async (patch) => {
+    /**
+     * Rename the couple, set, move or clear the map pin, or change the wedding's
+     * status. Returns the client plus `publicItems` (how many of its items
+     * visitors can now see), or null on failure. `quiet` skips the generic toast
+     * for callers that say something more specific.
+     */
+    const saveProfile = useCallback(async (patch, { quiet = false } = {}) => {
         setSaving(true);
         try {
             const res = await fetch(`${api_url}/api/admin/clients/${clientId}`, {
@@ -47,8 +52,8 @@ export default function useClientProfile(clientId) {
             const data = await res.json();
             if (!res.ok) throw new Error(data.message || 'Could not save');
             setClient(data.client);
-            fireMessage('Saved', 'success');
-            return data.client;
+            if (!quiet) fireMessage('Saved', 'success');
+            return { ...data.client, publicItems: data.publicItems };
         } catch (err) {
             fireMessage(err.message, 'error');
             return null;

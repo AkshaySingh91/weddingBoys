@@ -17,7 +17,7 @@ async function fetchPage(slug) {
     // duplicate URL for the same content.
     if (RESERVED_CMS_PAGE_KEYS.has(String(slug).toLowerCase())) return null;
     try {
-        const res = await fetch(`${api_url}/api/content/${slug}`, { next: { revalidate: 3600 } });
+        const res = await fetch(`${api_url}/api/content/${slug}`, { next: { revalidate: 3600, tags: [`page:${slug}`] } });
         if (!res.ok) return null;
         const data = await res.json();
         return data.page || null;

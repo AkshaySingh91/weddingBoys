@@ -15,8 +15,37 @@ import Media from '../Models/Media.js';
 import Client from '../Models/ClientSchema.js';
 import { deleteSingleMediaDoc } from './mediaController.js';
 import { renderFromMedia } from '../Services/portfolioRender.js';
+import { PUBLIC_GATE, explainVisibility, readinessOf } from '../Services/portfolioVisibility.js';
+import { revalidatePortfolio } from '../Services/revalidate.js';
 
 const MAX_BULK = 500;
+const MEDIA_FIELDS = 'status cdnUrl publicUrl mediaType imageVariants video fileSize originalFileName processing.lastError';
+
+/** Adds `visibility: { public, reasons }` for the admin's chips. */
+const withVisibility = (item) => ({ ...item, visibility: explainVisibility(item, item.media) });
+
+/**
+ * The bulk endpoint's `filter` used to be passed to Mongo as sent, so any
+ * operator ($where, $expr, a regex on any field) reached the query. Only these
+ * fields, with plain values or `$in` of plain values, are accepted now.
+ */
+const BULK_FILTER_FIELDS = new Set(['client', 'kind', 'status', 'clientStatus', 'eventGroup', 'isHero', 'tags', 'mediaReady']);
+const isPlain = (v) => ['string', 'boolean', 'number'].includes(typeof v);
+function safeBulkFilter(raw) {
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+    const out = {};
+    for (const [k, v] of Object.entries(raw)) {
+        if (!BULK_FILTER_FIELDS.has(k)) return null;
+        if (isPlain(v)) out[k] = v;
+        else if (v && typeof v === 'object' && Object.keys(v).length === 1 && Array.isArray(v.$in) && v.$in.every(isPlain)) out[k] = { $in: v.$in };
+        else return null;
+    }
+    if (out.client !== undefined) {
+        if (!mongoose.isValidObjectId(out.client)) return null;
+        out.client = new mongoose.Types.ObjectId(String(out.client));
+    }
+    return Object.keys(out).length ? out : null;
+}
 
 /**
  * Admin search clauses.
@@ -69,7 +98,7 @@ export async function listPortfolio(req, res) {
                 .skip((Math.max(1, parseInt(page, 10)) - 1) * lim)
                 .limit(lim)
                 .populate('client', 'clientName')
-                .populate('media', 'status cdnUrl publicUrl mediaType imageVariants video fileSize originalFileName')
+                .populate('media', MEDIA_FIELDS)
                 .lean(),
             PortfolioItem.countDocuments(filter),
         ]);
@@ -85,18 +114,19 @@ export async function listPortfolio(req, res) {
                 // fallback for items that have none.
                 if (item.poster) delete fresh.posterUrl;
                 item.render = { ...(item.render || {}), ...fresh };
+                item.mediaReady = readinessOf(item, item.media.status);
                 staleIds.push(item._id);
             }
         }
         if (staleIds.length) {
             Promise.allSettled(staleIds.map(id => {
                 const item = items.find(i => String(i._id) === String(id));
-                return PortfolioItem.updateOne({ _id: id }, { $set: { render: item.render } });
-            })).catch(() => { });
+                return PortfolioItem.updateOne({ _id: id }, { $set: { render: item.render, mediaReady: item.mediaReady } });
+            })).then(() => { if (staleIds.length) revalidatePortfolio(); }).catch(() => { });
         }
 
         return res.status(200).json({
-            items, total, page: parseInt(page, 10), limit: lim,
+            items: items.map(withVisibility), total, page: parseInt(page, 10), limit: lim,
             hasMore: (parseInt(page, 10) - 1) * lim + items.length < total,
         });
     } catch (error) {
@@ -147,6 +177,17 @@ export async function assignToClient(req, res) {
 
         const clientNameText = [clientDoc.clientName?.Bride, clientDoc.clientName?.Groom].filter(Boolean).join(' & ');
 
+        // Explicit intent wins. Otherwise (D7): into a draft wedding the item is
+        // meant to go live with the wedding; into a live wedding it waits hidden
+        // until someone has reviewed it. Processing no longer forces Draft —
+        // `mediaReady` keeps it off the site until the worker has finished, and
+        // then it appears by itself.
+        const clientStatus = clientDoc.status || 'Draft';
+        const intent = status === 'Draft' || status === 'Published'
+            ? status
+            : (clientStatus === 'Published' ? 'Draft' : 'Published');
+        const render = renderFromMedia(media);
+
         const item = await PortfolioItem.create({
             kind: resolvedKind,
             client: clientDoc._id,
@@ -163,15 +204,16 @@ export async function assignToClient(req, res) {
             isHero: resolvedKind === 'Video' ? Boolean(isHero) : false,
             heroPriority: resolvedKind === 'Video' ? heroPriority : 0,
             clientNameText,
-            // An asset still being transcoded is not servable yet; the worker
-            // publishes it when the renditions exist. A caller may also ask for
-            // Draft explicitly — uploading inside a wedding creates the
-            // placement immediately, but nothing should reach the public
-            // gallery before someone has looked at it. Never let a caller force
-            // Published onto an asset that is not Ready.
-            status: media.status === 'Ready' ? (status === 'Draft' ? 'Draft' : 'Published') : 'Draft',
-            render: renderFromMedia(media),
+            status: intent,
+            clientStatus,
+            mediaReady: readinessOf({ kind: resolvedKind, render }, media.status),
+            render,
         });
+        if (item.status === 'Published' && item.clientStatus === 'Published' && item.mediaReady) {
+            item.publishedAt = new Date();
+            await item.save();
+            revalidatePortfolio();
+        }
 
         await Media.updateOne({ _id: media._id }, {
             $set: {
@@ -181,8 +223,10 @@ export async function assignToClient(req, res) {
             },
         });
 
-        await item.populate('media', 'status cdnUrl publicUrl mediaType imageVariants video fileSize originalFileName');
-        return res.status(201).json({ item });
+        await item.populate('media', MEDIA_FIELDS);
+        const plain = item.toObject();
+        const visibility = explainVisibility(plain, plain.media);
+        return res.status(201).json({ item: { ...plain, visibility }, visibility });
     } catch (error) {
         console.error('assignToClient error:', error);
         return res.status(500).json({ message: error.message });
@@ -197,9 +241,16 @@ export async function updatePortfolioItem(req, res) {
         const patch = {};
         for (const k of ALLOWED) if (req.body[k] !== undefined) patch[k] = req.body[k];
 
-        const item = await PortfolioItem.findByIdAndUpdate(req.params.id, { $set: patch }, { new: true, runValidators: true });
+        const item = await PortfolioItem.findByIdAndUpdate(req.params.id, { $set: patch }, { new: true, runValidators: true })
+            .populate('media', MEDIA_FIELDS).lean();
         if (!item) return res.status(404).json({ message: 'Portfolio item not found' });
-        return res.status(200).json({ item });
+        const visibility = explainVisibility(item, item.media);
+        if (visibility.public && !item.publishedAt) {
+            item.publishedAt = new Date();
+            await PortfolioItem.updateOne({ _id: item._id }, { $set: { publishedAt: item.publishedAt } }, { timestamps: false });
+        }
+        revalidatePortfolio();
+        return res.status(200).json({ item: { ...item, visibility }, visibility });
     } catch (error) {
         return res.status(400).json({ message: error.message });
     }
@@ -220,7 +271,10 @@ export async function bulkUpdatePortfolio(req, res) {
             if (ids.length > MAX_BULK) return res.status(400).json({ message: `At most ${MAX_BULK} ids per call` });
             filter = { _id: { $in: ids.map((i) => new mongoose.Types.ObjectId(i)) } };
         } else if (all && rawFilter) {
-            filter = rawFilter;
+            filter = safeBulkFilter(rawFilter);
+            if (!filter) {
+                return res.status(400).json({ message: `filter may use only ${[...BULK_FILTER_FIELDS].join(', ')}, with plain values or $in` });
+            }
             const count = await PortfolioItem.countDocuments(filter);
             if (count !== expectedCount) {
                 return res.status(409).json({ message: `Filter matches ${count} items, expected ${expectedCount}`, count });
@@ -242,7 +296,17 @@ export async function bulkUpdatePortfolio(req, res) {
         if (!Object.keys(update).length) return res.status(400).json({ message: 'Nothing to change' });
 
         const result = await PortfolioItem.updateMany(filter, update);
-        return res.status(200).json({ matched: result.matchedCount, modified: result.modifiedCount });
+        await PortfolioItem.updateMany({ ...filter, ...PUBLIC_GATE, publishedAt: null }, { $set: { publishedAt: new Date() } }, { timestamps: false });
+        revalidatePortfolio();
+
+        // What the admin needs to hear after "Publish": how many are live now,
+        // and how many are meant to be but are waiting on the wedding or on
+        // processing.
+        const [nowPublic, waiting] = await Promise.all([
+            PortfolioItem.countDocuments({ ...filter, ...PUBLIC_GATE }),
+            PortfolioItem.countDocuments({ ...filter, status: 'Published', $nor: [PUBLIC_GATE] }),
+        ]);
+        return res.status(200).json({ matched: result.matchedCount, modified: result.modifiedCount, nowPublic, waiting });
     } catch (error) {
         console.error('bulkUpdatePortfolio error:', error);
         return res.status(500).json({ message: error.message });
@@ -267,6 +331,7 @@ export async function setHeroSet(req, res) {
             updateOne: { filter: { _id: id, kind: 'Video' }, update: { $set: { isHero: true, heroPriority: ids.length - idx } } },
         }));
         if (ops.length) await PortfolioItem.bulkWrite(ops, { ordered: false });
+        revalidatePortfolio();
 
         return res.status(200).json({ heroCount: await PortfolioItem.countDocuments({ isHero: true }) });
     } catch (error) {
@@ -295,6 +360,7 @@ export async function removePortfolioItem(req, res) {
         }
 
         await PortfolioItem.deleteOne({ _id: item._id });
+        revalidatePortfolio();
         return res.status(200).json({
             message: req.query.purgeMedia === 'true' ? 'Permanently purged from R2 and portfolio' : 'Removed from portfolio',
             id: item._id

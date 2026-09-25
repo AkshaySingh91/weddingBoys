@@ -4,6 +4,7 @@ import PageContent, { BLOCK_TYPES } from '../Models/PageContent.js';
 import { getObjectUrl } from './awsController.js';
 import { resolveMedia, mediaUrlForKey } from '../Utils/mediaUrl.js';
 import { ensureDefaultBlocks } from '../Utils/pageLayouts.js';
+import { queueRevalidate } from '../Services/revalidate.js';
 
 // ---- media serialization ---------------------------------------------------
 
@@ -242,6 +243,8 @@ export async function upsertPageContent(req, res) {
 
         const populated = await populateMedia(PageContent.findById(page._id));
         const serialized = await serializePage(populated);
+        // The page is cached for up to an hour (home: a minute); drop it now.
+        queueRevalidate({ tags: [`page:${pageKey}`] });
         return res.status(200).json({ message: 'Content saved', page: serialized });
     } catch (error) {
         console.error('upsertPageContent error:', error);
@@ -253,6 +256,7 @@ export async function upsertPageContent(req, res) {
 export async function deletePage(req, res) {
     try {
         await PageContent.deleteOne({ pageKey: req.params.pageKey.toLowerCase() });
+        queueRevalidate({ tags: [`page:${req.params.pageKey.toLowerCase()}`] });
         return res.status(200).json({ message: 'Page deleted' });
     } catch (error) {
         console.error('deletePage error:', error);

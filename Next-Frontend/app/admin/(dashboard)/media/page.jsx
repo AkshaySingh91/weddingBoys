@@ -209,6 +209,8 @@ export default function MediaLibraryPage() {
   const [deletingMedia, setDeletingMedia] = useState(null);
   const [batchDeleting, setBatchDeleting] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  // Portfolio placements that would be taken off the site; set by a 409.
+  const [inUse, setInUse] = useState(null);
   const [batchBusy, setBatchBusy] = useState(false);
 
   const handleFiles = (fileList) => {
@@ -243,21 +245,29 @@ export default function MediaLibraryPage() {
     setBatchDeleting(true);
   };
 
+  // First press: a file shown on the site comes back 409 with where it is used,
+  // and the modal asks again. Second press deletes with `force`, which takes
+  // those portfolio items off the site instead of leaving broken tiles.
   const confirmDeleteAction = async () => {
     setDeleteLoading(true);
+    const force = Boolean(inUse);
     try {
       if (deletingMedia) {
-        await deleteMedia(deletingMedia._id);
+        await deleteMedia(deletingMedia._id, { force });
         setFocused(null);
         setDeletingMedia(null);
+        setInUse(null);
         fireMessage('Asset permanently removed', 'success');
       } else if (batchDeleting && selectedIds.length > 0) {
-        await batchDeleteMedia(selectedIds);
+        const result = await batchDeleteMedia(selectedIds, { force });
+        if (result?.placements) { setInUse(result.placements); return; }
         setBatchDeleting(false);
+        setInUse(null);
       }
       refresh();
     } catch (err) {
-      fireMessage(err.message, 'error');
+      if (err.placements) setInUse(err.placements);
+      else fireMessage(err.message, 'error');
     } finally {
       setDeleteLoading(false);
     }
@@ -880,9 +890,11 @@ export default function MediaLibraryPage() {
         media={deletingMedia}
         batchCount={batchDeleting ? selectedIds.length : 0}
         loading={deleteLoading}
+        inUse={inUse}
         onClose={() => {
           setDeletingMedia(null);
           setBatchDeleting(false);
+          setInUse(null);
         }}
         onConfirm={confirmDeleteAction}
       />

@@ -23,7 +23,9 @@ export default function DeleteConfirmModal({
   media,
   batchCount = 0,
   loading = false,
+  inUse = null,
 }) {
+  const live = (inUse || []).filter((p) => p.live).length;
   const isBatch = batchCount > 1 || (!media && batchCount > 0);
   const url = media ? urlOf(media) : '';
   const derivativeCount = media?.imageVariants?.length || media?.video?.renditions?.length || 0;
@@ -118,6 +120,24 @@ export default function DeleteConfirmModal({
             </div>
           )}
 
+          {/* In use by the portfolio: the server refused the first attempt. */}
+          {inUse?.length > 0 && (
+            <div className="rounded-xl border border-rose-300 bg-rose-50 p-3 text-xs text-rose-950 space-y-2">
+              <p className="font-semibold">
+                Used by {inUse.length} portfolio item{inUse.length === 1 ? '' : 's'}
+                {live > 0 ? `, ${live} live on the site` : ''}. Deleting takes {inUse.length === 1 ? 'it' : 'them'} off the site.
+              </p>
+              <ul className="space-y-0.5 text-[11px] text-rose-900">
+                {inUse.slice(0, 6).map((p) => (
+                  <li key={`${p.itemId}-${p.usedAs}`}>
+                    {p.wedding} · {p.kind === 'Video' ? 'film' : 'photo'}{p.usedAs === 'poster' ? ' poster' : ''}{p.live ? ' · live' : ''}
+                  </li>
+                ))}
+                {inUse.length > 6 && <li>…and {inUse.length - 6} more</li>}
+              </ul>
+            </div>
+          )}
+
           {/* Consequence Disclosure */}
           <div className="rounded-xl border border-rose-100 bg-rose-50/40 p-3 text-xs text-stone-600 leading-relaxed font-sans">
             <p className="text-[11px] text-rose-950 font-medium">
@@ -146,7 +166,9 @@ export default function DeleteConfirmModal({
             onClick={onConfirm}
             className="font-semibold shadow-xs"
           >
-            {isBatch ? `Delete ${batchCount} Assets Permanently` : 'Delete Permanently'}
+            {inUse?.length
+              ? 'Delete and take off the site'
+              : isBatch ? `Delete ${batchCount} Assets Permanently` : 'Delete Permanently'}
           </Button>
         </div>
       </DialogContent>
