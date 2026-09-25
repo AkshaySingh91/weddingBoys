@@ -1064,3 +1064,43 @@ custom Cloudflare loader, which means `/_next/image` is bypassed — so that fil
 ships at full weight to every visitor. As a JPEG or WebP at this display size
 (300px wide) it would be **under 100KB**. Worth converting before the other four
 are added, or the section will carry roughly 10MB of PNG.
+
+### Our Approach — the mobile deck
+
+Desktop's three columns become one: compact header, horizontal pill stepper,
+swipeable card deck, detail sheet, and a bottom bar inside the thumb's reach.
+
+**Deliberately not scroll-hijacked.** The analysis offered a hybrid that pins the
+section and converts vertical scroll into card advances. Declined, and the client
+agreed: it overrides the browser's own scroll physics, fights iOS momentum
+scrolling, and traps anyone who just wants to get past the section. Scrolling
+scrolls; swiping deals. Two gestures, no conflict.
+
+**Gesture.** Only the top card is draggable. It tracks the thumb with elastic
+resistance and tilts up to ±8° with the drag, then advances past 100px of travel
+**or** on a fast flick, so a quick gesture need not cover the full distance.
+Measured: mid-drag transform `-99px` with a `-3.6°` tilt; a 40px slow drag
+springs back to **exactly x=0** and stays on the same step.
+
+**Everything stays in lockstep** — card, title, step label, progress bar and
+active pill — verified across forward, backward and a direct pill jump:
+`0 → 1 → 2 → 3 → 2 → 4`.
+
+**Images: only the active card and the next one are fetched.** All five are 2MB
+PNGs, so loading them up front costs ~10MB on a phone. Verified: at step 1 only
+step‑2 is requested, not 3/4/5. Swiping back does not blank, because the browser
+has already cached what it fetched — so no high-water-mark state is needed.
+
+**Where the spec's numbers were wrong.** It specified backing cards at `y +16 /
+scale 0.94` and `y +32 / scale 0.88`. Scaling a 375px card to 0.94 pulls its
+bottom edge up ~23px, so **+16px left card 02 entirely hidden behind card 01** —
+measured 0px of peek, and the deck read as a single card. The offset has to beat
+the scale: 26px per step, from centre origin. Now peeking **15px and 30px**,
+narrower by 18px and 35px.
+
+**Not built, by decision:** the three icon badges ("Understand your vision",
+"Discuss ideas", "Build a connection"). They come from the reference mockup, not
+this site, and inventing them would also put mobile out of step with desktop.
+
+Haptics are wired via `navigator.vibrate` behind a guard — Android Chrome only;
+iOS Safari has no Vibration API, so nothing depends on it.

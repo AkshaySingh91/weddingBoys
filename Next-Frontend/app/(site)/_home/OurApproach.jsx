@@ -28,7 +28,10 @@
  * deck: each step is an ordinary block with its image above its copy.
  */
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { motion, useScroll, useMotionValueEvent, useReducedMotion } from 'framer-motion';
+import {
+    motion, AnimatePresence, useScroll, useMotionValue, useMotionValueEvent,
+    useTransform, useReducedMotion,
+} from 'framer-motion';
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import Section from '@/Component/ui/Section.jsx';
 
@@ -65,7 +68,7 @@ const STEPS = [
     },
 ];
 
-const imageFor = (i) => `/Asset/home/our-approch-step-${i + 1}.png`;
+const imageFor = (i) => `/Asset/home/our-approch-step-${i + 1}.webp`;
 
 /** How much scroll each step gets while the stage is pinned. */
 const VH_PER_STEP = 70;
@@ -83,7 +86,7 @@ export default function OurApproach() {
                     ? <PlainSteps />
                     : (
                         <>
-                            <div className="lg:hidden"><PlainSteps /></div>
+                            <div className="lg:hidden"><MobileDeck /></div>
                             <div className="hidden lg:block"><Deck /></div>
                         </>
                     )}
@@ -336,8 +339,8 @@ function StepRow({ step, isActive, isLast, onSelect }) {
                     className={`grid h-9 w-9 shrink-0 place-items-center rounded-pill border text-[13px] font-semibold
                                 transition-colors duration-ui ease-standard
                                 ${isActive
-                                    ? 'border-accent bg-accent text-white'
-                                    : 'border-gold/45 bg-transparent text-ink-muted group-hover:border-gold-strong'}`}
+                            ? 'border-accent bg-accent text-white'
+                            : 'border-gold/45 bg-transparent text-ink-muted group-hover:border-gold-strong'}`}
                 >
                     {step.number}
                 </span>
@@ -379,7 +382,216 @@ function DeckButton({ label, disabled, onClick, children }) {
     );
 }
 
-/* ── Phones, tablets, and reduced motion ─────────────────────────────────── */
+/* ── Touch: a swipeable deck ─────────────────────────────────────────────── */
+
+/**
+ * The mobile deck.
+ *
+ * A direct port of the desktop three-column layout fails on a phone: three
+ * functional columns in 390px gives illegible type, and arrow-only navigation
+ * ignores what a thumb wants to do. So the same content becomes one column —
+ * pill stepper, swipeable deck, detail, bottom nav in the thumb zone.
+ *
+ * Deliberately NOT scroll-hijacked. Converting vertical scroll into card
+ * advances overrides the browser's own scroll physics, fights iOS momentum
+ * scrolling, and traps anyone who simply wants to get past the section. Here,
+ * scrolling scrolls and swiping deals: two gestures, no conflict.
+ */
+function MobileDeck() {
+    const [active, setActive] = useState(0);
+    const [direction, setDirection] = useState(1);
+    const pillsRef = useRef(null);
+    const last = STEPS.length - 1;
+
+    /* Only ever fetch the visible card and the one behind it. The step
+       photographs are multi-megabyte PNGs; loading all five up front costs
+       about 10MB on a phone. Swiping back is not a problem: the browser has
+       already cached those files, so an unmounted image remounts instantly. */
+    const reach = active + 1;
+
+    const go = useCallback((next) => {
+        const clamped = Math.min(last, Math.max(0, next));
+        setActive((prev) => {
+            if (prev === clamped) return prev;
+            setDirection(clamped > prev ? 1 : -1);
+            // Android Chrome only; iOS Safari has no Vibration API at all, so
+            // this is a bonus for some rather than a mechanism anything needs.
+            try { navigator.vibrate?.(8); } catch { /* not supported */ }
+            return clamped;
+        });
+    }, [last]);
+
+    // Keep the active pill in view as the deck advances.
+    useEffect(() => {
+        const pill = pillsRef.current?.children?.[active];
+        pill?.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+    }, [active]);
+
+    const step = STEPS[active];
+
+    return (
+        <div className="px-5 py-10 sm:px-7">
+            <p className="t-label">Our approach</p>
+            <h2 id="approach-heading" className="t-display-2 mt-2">
+                How We Craft Your Dream Wedding Story
+            </h2>
+            <p className="t-body-sm mt-3">
+                Our process combines artistic vision with meticulous planning — ensuring every
+                detail of your wedding is captured with passion and precision.
+            </p>
+
+            {/* ── Pill stepper: the vertical desktop list, laid on its side. ── */}
+            <div
+                ref={pillsRef}
+                role="tablist"
+                aria-label="Approach steps"
+                className="-mr-5 mt-6 flex gap-2 overflow-x-auto scrollbar-none pb-1 pr-5 sm:-mr-7 sm:pr-7"
+            >
+                {STEPS.map((s, i) => (
+                    <button
+                        key={s.number}
+                        type="button"
+                        role="tab"
+                        aria-selected={i === active}
+                        onClick={() => go(i)}
+                        className={`flex min-h-[44px] shrink-0 items-center gap-2 rounded-pill border px-4
+                                    text-[13px] font-semibold transition-colors duration-ui ease-standard
+                                    focus-ring
+                                    ${i === active
+                                ? 'border-accent bg-accent text-white'
+                                : 'border-gold/45 text-ink-secondary'}`}
+                    >
+                        <span className={i === active ? 'text-white/75' : 'text-ink-muted'}>{s.number}</span>
+                        {s.title.split(' ')[0]}
+                    </button>
+                ))}
+            </div>
+
+            {/* ── The deck ── */}
+            <div className="relative mx-auto mt-6 aspect-[4/5] w-full max-w-[340px]">
+                {STEPS.map((s, i) => (
+                    <SwipeCard
+                        key={s.number}
+                        step={s}
+                        index={i}
+                        active={active}
+                        withImage={i <= reach}
+                        onPrev={() => go(active - 1)}
+                        onNext={() => go(active + 1)}
+                    />
+                ))}
+            </div>
+
+            {/* ── Detail, cross-dissolved in step with the card. ── */}
+            <div aria-live="polite" aria-atomic="true" className="mt-7 min-h-[168px]">
+                <p className="t-label text-accent-ink">
+                    Step {step.number} / {String(STEPS.length).padStart(2, '0')}
+                </p>
+                <AnimatePresence mode="wait" initial={false}>
+                    <motion.div
+                        key={step.number}
+                        initial={{ opacity: 0, y: 12 * direction }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -12 * direction }}
+                        transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                        <h3 className="mt-1.5 font-display text-[26px] font-semibold leading-tight text-ink">
+                            {step.title}
+                        </h3>
+                        <p className="t-body-sm mt-2.5">{step.copy}</p>
+                    </motion.div>
+                </AnimatePresence>
+            </div>
+
+            {/* ── Bottom bar, inside the thumb's reach. ── */}
+            <div className="mt-6 flex items-center gap-4 border-t border-gold/40 pt-5">
+                <div aria-hidden="true" className="flex flex-1 items-center gap-1.5">
+                    {STEPS.map((s, i) => (
+                        <span
+                            key={s.number}
+                            className={`h-[3px] flex-1 rounded-pill transition-colors duration-ui ease-standard
+                                        ${i <= active ? 'bg-accent' : 'bg-gold/35'}`}
+                        />
+                    ))}
+                </div>
+                <div className="flex shrink-0 gap-2">
+                    <DeckButton label="Previous step" disabled={active === 0} onClick={() => go(active - 1)}>
+                        <FiArrowLeft aria-hidden="true" className="h-4 w-4" />
+                    </DeckButton>
+                    <DeckButton label="Next step" disabled={active === last} onClick={() => go(active + 1)}>
+                        <FiArrowRight aria-hidden="true" className="h-4 w-4" />
+                    </DeckButton>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+/**
+ * One swipeable card.
+ *
+ * Only the top card is draggable. It tracks the thumb with elastic resistance
+ * and tilts with the drag, then flings past a 30% threshold — or on a fast
+ * flick, so a quick gesture does not have to travel the full distance.
+ */
+function SwipeCard({ step, index, active, withImage, onPrev, onNext }) {
+    const rel = index - active;
+    const isTop = rel === 0;
+
+    const x = useMotionValue(0);
+    const rotate = useTransform(x, [-220, 0, 220], [-8, 0, 8]);
+
+    useEffect(() => { if (!isTop) x.set(0); }, [isTop, x]);
+
+    /* Behind the top card: shifted down and scaled back so the stack peeks out
+       beneath, which is what tells a thumb there is more here.
+
+       The offset has to beat the scale, or the stack is invisible. Scaling a
+       375px card to 0.94 pulls its bottom edge up ~23px from centre, so the
+       spec's +16px left card 02 entirely behind card 01 — measured 0px of
+       peek. 26px per step clears it with room to read. */
+    const slot = rel < 0
+        ? { x: -340, y: 0, scale: 0.92, opacity: 0, rotate: -10 }
+        : {
+            x: 0,
+            y: rel * 26,
+            scale: 1 - rel * 0.06,
+            opacity: rel > 2 ? 0 : [1, 0.7, 0.4][rel],
+            rotate: 0,
+        };
+
+    return (
+        <motion.figure
+            drag={isTop ? 'x' : false}
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.55}
+            onDragEnd={(_, info) => {
+                const far = Math.abs(info.offset.x) > 100;
+                const fast = Math.abs(info.velocity.x) > 450;
+                if (!far && !fast) return;
+                if (info.offset.x < 0) onNext(); else onPrev();
+            }}
+            style={{ x: isTop ? x : undefined, rotate: isTop ? rotate : 0, zIndex: STEPS.length - Math.abs(rel) }}
+            animate={isTop ? { y: 0, scale: 1, opacity: 1 } : slot}
+            initial={false}
+            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+            className={`absolute inset-0 overflow-hidden rounded-2xl border border-gold/30
+                        bg-ground-sunk shadow-overlay ${isTop ? 'cursor-grab active:cursor-grabbing touch-pan-y' : ''}`}
+            aria-hidden={!isTop}
+        >
+            {withImage
+                ? <StepImage index={index} title={step.title} dim={rel > 0} />
+                : <div className="h-full w-full bg-ground-sunk" />}
+
+            <figcaption className="absolute left-4 top-4 font-display text-[22px] font-semibold leading-none
+                                   text-white drop-shadow-[0_1px_6px_rgba(0,0,0,0.55)]">
+                {step.number}
+            </figcaption>
+        </motion.figure>
+    );
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────────────── */
 
 function PlainSteps() {
     const reduceMotion = useReducedMotion();
