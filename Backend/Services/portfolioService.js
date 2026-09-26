@@ -136,7 +136,20 @@ export async function findMapFeatures(clientIds) {
     return byClient;
 }
 
+/**
+ * The hero carousel. Once the `home-hero` collection exists
+ * (scripts/migrateRowsToCollections.js) it IS the hero: its pins in order, then
+ * its rule if one is set. Until then, the items flagged isHero.
+ */
 export async function findHeroVideos(limit = 12) {
+    const { default: Collection } = await import('../Models/Collection.js');
+    const { resolveCollection, HERO_KEY } = await import('./collectionResolver.js');
+    const hero = await Collection.findOne({ key: HERO_KEY, status: 'Published' }).lean();
+    if (hero) return (await resolveCollection(hero)).items;
+    return findHeroByFlag(limit);
+}
+
+async function findHeroByFlag(limit) {
     // `_id` breaks ties so equal priorities keep one order across requests.
     return PortfolioItem.find({ kind: 'Video', isHero: true, ...PUBLIC_GATE })
         .sort({ heroPriority: -1, _id: -1 })

@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { ImageSquare, ArrowCounterClockwise, Swap, LinkSimple } from '@phosphor-icons/react';
 import Uploader from '@/app/admin/components/Uploader.jsx';
 import { Button } from '@/app/admin/components/ui/Button.jsx';
@@ -33,6 +34,15 @@ export default function MediaControls({ item, onChanged }) {
     const [photos, setPhotos] = useState(null);
     const [busy, setBusy] = useState(false);
     const [showReplace, setShowReplace] = useState(false);
+    // The rows (collections) this item appears in, is pinned to, or is hidden from.
+    const [placements, setPlacements] = useState(null);
+    useEffect(() => {
+        let cancelled = false;
+        call(`/api/admin/portfolio/${item._id}/placements`, 'GET')
+            .then((r) => { if (!cancelled) setPlacements(r.placements || []); })
+            .catch(() => { if (!cancelled) setPlacements([]); });
+        return () => { cancelled = true; };
+    }, [item._id]);
     const chip = visibilityChip(item);
     const isVideo = item.kind === 'Video';
     const external = item.external?.provider;
@@ -85,6 +95,40 @@ export default function MediaControls({ item, onChanged }) {
                     {item.visibility.reasons.map((r) => <li key={r}>Not shown: {REASON_TEXT[r] || r}</li>)}
                 </ul>
             )}
+
+            <label className="flex items-center gap-2 text-xs text-stone-700">
+                <span className="font-semibold">Spotlight</span>
+                <input
+                    type="number" min={0} max={100} defaultValue={item.spotlight ?? 0}
+                    onBlur={async (e) => {
+                        const v = Math.min(100, Math.max(0, parseInt(e.target.value, 10) || 0));
+                        if (v === (item.spotlight ?? 0)) return;
+                        const r = await run(() => call(`/api/admin/portfolio/${item._id}`, 'PATCH', { spotlight: v }), 'Spotlight saved');
+                        if (r) onChanged?.({ spotlight: v });
+                    }}
+                    className="h-7 w-16 rounded border border-stone-300 px-2 text-xs"
+                />
+                <span className="text-stone-500">0–100; rows sorted &ldquo;Featured first&rdquo; show higher first</span>
+            </label>
+
+            <div className="space-y-1">
+                <p className="text-xs font-semibold text-stone-700">Appears in</p>
+                {placements === null ? <p className="text-xs text-stone-400">Checking rows…</p>
+                    : placements.length ? (
+                        <ul className="space-y-0.5 text-xs text-stone-600">
+                            {placements.map((p) => (
+                                <li key={p._id}>
+                                    <Link href={`/admin/collections/${p._id}`} className="text-[#D9342A] hover:underline">{p.title}</Link>
+                                    {p.shown ? ` — position ${p.position}` : ''}
+                                    {p.pinned ? ' (pinned)' : ''}
+                                    {p.hidden ? ' — hidden in this row' : ''}
+                                    {!p.shown && !p.hidden ? ' — pinned, not shown' : ''}
+                                    {p.status === 'Draft' ? ' · row is a draft' : ''}
+                                </li>
+                            ))}
+                        </ul>
+                    ) : <p className="text-xs text-stone-500">No row shows it.</p>}
+            </div>
 
             {external && (
                 <p className="flex items-center gap-1.5 text-xs text-stone-600">

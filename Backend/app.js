@@ -43,6 +43,8 @@ import HomePageRoute from "./Routes/User/homePageRoute.js"
 // it will give all videos  
 import videosRoute from './Routes/User/videoRoute.js'
 import weddingRoute from './Routes/User/weddingRoute.js'
+import collectionRoute from './Routes/User/collectionRoute.js'
+import adminCollectionRoute from './Routes/Admin/collectionRoute.js'
 import photosRoute from './Routes/User/photoRoute.js'
 import btsRoleRoutes from './Routes/Admin/btsRoleRoutes.js';
 import blogsRoute from './Routes/Admin/blogsRoute.js'
@@ -74,6 +76,7 @@ app.use(photosRoute)
 app.use(videosRoute)
 // public wedding story pages — must stay above clientEnquiryRoute (admin auth)
 app.use(weddingRoute)
+app.use(collectionRoute)
 app.use(studioDetailsRoute)
 app.use(submitEnquiryRoute)
 app.use(searchRoute)
@@ -87,6 +90,8 @@ app.use(pricingConfigRoute)
 app.use(ceremonyRoute)
 // tag system admin — verifyToken scoped to /api/admin/taxonomy inside the router
 app.use(taxonomyRoute)
+// collections (rows) admin — verifyToken scoped inside the router
+app.use(adminCollectionRoute)
 // enterprise auth (login/refresh/logout/forgot/reset) — guards applied per-route
 app.use(authV2Route)
 // user management — guards applied per-route (SuperAdmin for mutations)

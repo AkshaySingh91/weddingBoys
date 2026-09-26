@@ -63,6 +63,9 @@ const portfolioItemSchema = new mongoose.Schema({
         citySlug: { type: String, trim: true, lowercase: true },
         venue: { type: String, trim: true },
     },
+    // 0–100: how strongly to feature this item in rows sorted "featured"
+    // (Models/Collection.js). Unrelated to the old random generalPriority.
+    spotlight: { type: Number, min: 0, max: 100, default: 0 },
     // Position within its wedding (and ceremony) on the story page; set by the
     // admin's drag order. Lower first.
     order: { type: Number, default: 0 },

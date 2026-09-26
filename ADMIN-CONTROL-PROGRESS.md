@@ -358,3 +358,60 @@ now asks `/status` first (30 s memo, 1.5 s timeout, falls through on error): mis
 
 Not done from the plan, noted: the film page is still one client component (it was to be split
 into a server page for SEO); its new parts use design tokens but the page itself is the old style.
+
+### Phase 5 — rows: rule + pins (collections)
+**Model** `Collection` {key (immutable), title, subtitle, kind, rule {enabled, tagIds, match
+any|all, excludeTagIds, clientIds, citySlugs, shootDateFrom/To, maxPerWedding}, sort
+newestShoot|newestPublished|featured, limit 1–60, pinned (ordered), hidden, dedupe, status,
+system}. `PortfolioItem.spotlight` (0–100) drives the "featured" sort.
+
+**Resolver** `Services/collectionResolver.js` — the admin preview and the public site use the
+same code: pins in order (non-public pins skipped with their reasons) → rule over the public
+gate, excluding hidden, pins and (dedupe) what earlier rows on the page showed → sort with
+fixed tie-breakers ending in `_id` → per-wedding cap (pins count) → limit. Candidates are read a
+page at a time, so a full row stops reading. `explain` lists what is not shown and why
+(hidden in row, wedding cap, pinned beyond limit, shown earlier, not public + the item's
+reasons, wrong kind, deleted). Hero status plays no part in any row's order.
+
+**API.** Admin `/api/admin/collections` (list with thumbnails and counts; get with preview;
+live preview of an unsaved draft; create; edit; delete — system rows refused; pin at index /
+unpin / hide / unhide; reorder pins) and `/api/admin/portfolio/:id/placements`. Public
+`/api/collections/:key` and `/api/collections?keys=a,b,c` (a page's rows in order, dedupe
+across them). Both mounted above the auth-applying router.
+
+**Hero** is the `home-hero` collection (system, pins only): the v2 hero reads it (flag-based
+until it exists); Home › Hero keeps its contract and writes the pins; editing the hero row
+keeps the items' isHero / heroPriority flags in step (dropped in phase 7).
+**Integrity:** deleting an item or a wedding pulls it from every row's pins / hidden; a tag
+merge rewrites the rules using it (undo restores them); a tag used by a rule cannot be
+deleted, and the tag manager lists those rows next to the tag.
+
+**Admin UI.** Rows (sidebar) — list with thumbnails and "showing N of limit"; editor with
+settings, the rule builder (TagPicker in a new `free` mode — a rule may ask for "Haldi or
+Mehendi" —, excluded tags, cities, weddings, dates, per-wedding cap), pinned list (drag
+order), search to pin, the live preview (400 ms, Pin / Unpin / Hide on each card, position
+numbers) and "Not shown" with reasons; everything stays a draft until Save. The edit
+drawer gains "Appears in" (rows, positions, pinned / hidden) and Spotlight.
+
+**Migration** `scripts/migrateRowsToCollections.js`: `home-hero` (today's hero pinned in
+order), one row per Home "Our films" tag and per /films tag, one per home "Our portfolio"
+category; newest shoot first; create-only. Verify: hero identical; every row shows the same
+items as today where today's list fits the limit, and only today's matches where it does not.
+
+**Verified.**
+- `npm test`: 29/29 (the plan's own example: limit 4 with V4 pinned → V4, V1, V2, V3; the cap
+  counting pins; the limit; pins over the limit reported; paged candidates; the rule filter;
+  tie-breakers).
+- Dev: dry-run → apply → verify (hero 5 films same order; 8 film rows identical; photo rows
+  within today's matches) → rollback (hero falls back to flags, same 5) → re-apply → verify.
+- Dev API acceptance, **20/20**: draft preview; row = public API; pin to front, hide (listed
+  as hidden), reorder, wrong set 400, film on a photo row 400; cap 1 per wedding; dedupe across
+  two rows (and not alone); placements; a hidden item explained; hero row = /api/hero-videos;
+  the old Home › Hero call reorders the row; editing the row syncs the flags; system row not
+  deletable; a rule's tag not deletable; merge rewrites the rule and undo restores it. Hero
+  unchanged afterwards; test rows and tags removed.
+- Browser: Rows list; editor — limit 4, pinned an item from the preview (it leads,
+  "4 of 4 shown · 1 pinned · 15 match the rule"), saved, public row matched; reverted after.
+  A duplicate-key warning from the new sidebar entry fixed. `next build` passes.
+
+Pages still read their tag lists; phase 6 composes them from these rows.

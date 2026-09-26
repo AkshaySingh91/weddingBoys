@@ -10,6 +10,7 @@ import {
   BookOpenText,
   Sparkle,
   FilmSlate,
+  Rows,
   UsersThree,
   Camera,
   UserCheck,
@@ -170,6 +171,12 @@ export default function AdminSidebar({
           label: 'Films Page',
           path: '/admin/website-setting/films',
           icon: FilmSlate,
+        },
+        {
+          id: 'website-rows',
+          label: 'Rows',
+          path: '/admin/collections',
+          icon: Rows,
         },
         {
           id: 'website-teams',

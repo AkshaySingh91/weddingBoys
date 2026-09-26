@@ -19,6 +19,7 @@ import { PUBLIC_GATE, setClientStatus, markMediaGone } from '../Services/portfol
 import { revalidatePortfolio } from '../Services/revalidate.js';
 import { slugForNames, uniqueSlug, checkSlug, slugTaken, locationFrom } from '../Services/weddingProfile.js';
 import { explainVisibility } from '../Services/portfolioVisibility.js';
+import Collection from '../Models/Collection.js';
 
 const STATUSES = ['Draft', 'Published', 'Archived'];
 
@@ -399,6 +400,9 @@ export async function deleteClient(req, res) {
         const purgeMedia = req.query.purge === 'true' || req.query.purgeMedia === 'true';
 
         await PortfolioItem.deleteMany({ client: id });
+        // Rows must not keep pins to items that no longer exist.
+        const itemIds = items.map((i) => i._id);
+        await Collection.updateMany({}, { $pull: { pinned: { $in: itemIds }, hidden: { $in: itemIds } } });
 
         let purgedCount = 0;
         let releasedCount = 0;

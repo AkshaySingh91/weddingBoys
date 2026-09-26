@@ -54,6 +54,9 @@ Choose one:
    node scripts/backfillClientProfiles.js --dry-run         # slugs, cities, covers
    node scripts/backfillClientProfiles.js --apply
    node scripts/backfillClientProfiles.js --verify
+   node scripts/migrateRowsToCollections.js --dry-run       # the rows it will create
+   node scripts/migrateRowsToCollections.js --apply
+   node scripts/migrateRowsToCollections.js --verify        # hero identical, rows = today's
    node scripts/cutoverReport.js                           # must say "no blockers"
    ```
 4. Run two backends on the copy and compare them (both read-only, no worker needed):
@@ -79,11 +82,14 @@ Choose one:
    shows tags in Unsorted that belong somewhere.)
 4. `node scripts/backfillClientProfiles.js --apply`, then `--verify` (Phase 4): gives every
    wedding a story-page slug, a city from its items and a cover; creates the unique slug index.
-5. `node scripts/cutoverReport.js` against production: **no blockers**.
-6. Set `PORTFOLIO_READS=v2` on the backend and restart it.
-7. Smoke test: `/`, `/films`, `/allfilms`, `/photos`, five film pages and five photo pages.
+5. `node scripts/migrateRowsToCollections.js --apply`, then `--verify` (Phase 5): today's hero
+   and rows become collections (Admin › Rows). The v2 hero reads `home-hero`, pinned in today's
+   exact order; the legacy path never reads it.
+6. `node scripts/cutoverReport.js` against production: **no blockers**.
+7. Set `PORTFOLIO_READS=v2` on the backend and restart it.
+8. Smoke test: `/`, `/films`, `/allfilms`, `/photos`, five film pages and five photo pages.
    On a film page, check the gallery and "recommended" thumbnails load.
-8. Once the Next frontend is live, check the sitemap (from `Next-Frontend/`):
+9. Once the Next frontend is live, check the sitemap (from `Next-Frontend/`):
    `node scripts/checkSitemapUrls.mjs --site=https://theweddingboys.in --api=<api origin>`.
    It checks each film and photo through the API, because those pages always answer 200.
 
@@ -148,4 +154,5 @@ Found along the way (not caused by the switch):
 | `scripts/migrateVisibility.js` | with `--apply` / `--rollback` | fills `clientStatus`, `mediaReady`, `publishedAt`; never makes anything newly public |
 | `scripts/migrateTagsToTaxonomy.js` | with `--apply` / `--rollback` | builds the tag system from the old categories, ceremonies and item strings (`tag-migration-map.json`) |
 | `scripts/backfillClientProfiles.js` | with `--apply` / `--rollback` | story-page slugs, city, cover, item order for existing weddings |
+| `scripts/migrateRowsToCollections.js` | with `--apply` / `--rollback` | hero + home / films / portfolio rows as collections |
 | `scripts/lib/runLog.js` | `scriptruns`, `scriptrunchanges` | shared `--dry-run / --apply / --verify / --rollback` contract |

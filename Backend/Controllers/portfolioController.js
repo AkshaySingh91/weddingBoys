@@ -19,6 +19,8 @@ import { PUBLIC_GATE, explainVisibility, readinessOf } from '../Services/portfol
 import { revalidatePortfolio } from '../Services/revalidate.js';
 import { resolveTagParam, tagFieldsFor, TaxonomyError, loadTaxonomy, validateTagIds, mirrorsFor } from '../Services/taxonomy.js';
 import { locationFrom } from '../Services/weddingProfile.js';
+import Collection from '../Models/Collection.js';
+import { HERO_KEY } from '../Services/collectionResolver.js';
 import { lookupVideo, ExternalVideoError } from '../Services/externalVideo.js';
 
 /** New items join the end of their wedding's order. */
@@ -260,7 +262,7 @@ export async function assignToClient(req, res) {
 export async function updatePortfolioItem(req, res) {
     try {
         const ALLOWED = ['shootDate', 'location', 'generalPriority', 'isHero',
-            'heroPriority', 'caption', 'title', 'status', 'credits'];
+            'heroPriority', 'caption', 'title', 'status', 'credits', 'spotlight'];
         const patch = {};
         for (const k of ALLOWED) if (req.body[k] !== undefined) patch[k] = req.body[k];
         const stringTags = refuseTagStrings(req.body);
@@ -577,6 +579,8 @@ export async function setHeroSet(req, res) {
             updateOne: { filter: { _id: id, kind: 'Video' }, update: { $set: { isHero: true, heroPriority: ids.length - idx } } },
         }));
         if (ops.length) await PortfolioItem.bulkWrite(ops, { ordered: false });
+        // The hero is the `home-hero` collection: the list becomes its pins, in order.
+        await Collection.updateOne({ key: HERO_KEY }, { $set: { pinned: objIds } });
         revalidatePortfolio();
 
         return res.status(200).json({ heroCount: await PortfolioItem.countDocuments({ isHero: true }) });
@@ -606,6 +610,7 @@ export async function removePortfolioItem(req, res) {
         }
 
         await PortfolioItem.deleteOne({ _id: item._id });
+        await Collection.updateMany({}, { $pull: { pinned: item._id, hidden: item._id } });
         revalidatePortfolio();
         return res.status(200).json({
             message: req.query.purgeMedia === 'true' ? 'Permanently purged from R2 and portfolio' : 'Removed from portfolio',

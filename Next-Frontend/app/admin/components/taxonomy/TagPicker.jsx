@@ -15,8 +15,11 @@ import { fireMessage } from '@/Utils/fireMessage.js';
  * `allowCreate` adds an inline "add" per group.
  *
  *   <TagPicker taxonomy={tax} kind="Video" value={tagIds} onChange={setTagIds} />
+ *
+ * `free` drops the one-per-item rule: a row's rule may ask for "Haldi OR
+ * Mehendi", which no single item could carry.
  */
-export default function TagPicker({ taxonomy, kind, value = [], onChange, allowCreate = true, only, compact = false }) {
+export default function TagPicker({ taxonomy, kind, value = [], onChange, allowCreate = true, only, compact = false, free = false }) {
     const [adding, setAdding] = useState(null);   // group id with an open input
     const [draft, setDraft] = useState('');
     const selected = new Set((value || []).map(String));
@@ -30,7 +33,7 @@ export default function TagPicker({ taxonomy, kind, value = [], onChange, allowC
         let next = [...selected];
         if (selected.has(tagId)) next = next.filter((id) => id !== tagId);
         else {
-            if (group.cardinality === 'single') next = next.filter((id) => !inGroup.has(id));
+            if (group.cardinality === 'single' && !free) next = next.filter((id) => !inGroup.has(id));
             next.push(tagId);
         }
         onChange(next);
@@ -57,7 +60,7 @@ export default function TagPicker({ taxonomy, kind, value = [], onChange, allowC
                     <p className="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-stone-500">
                         {g.label}
                         <span className="font-normal normal-case tracking-normal text-stone-400">
-                            {g.cardinality === 'single' ? 'pick one' : 'any'}
+                            {g.cardinality === 'single' && !free ? 'pick one' : 'any'}
                         </span>
                     </p>
                     <div className="flex flex-wrap gap-1.5">

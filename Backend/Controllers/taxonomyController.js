@@ -16,6 +16,7 @@ import TagGroup from '../Models/TagGroup.js';
 import TagOperation from '../Models/TagOperation.js';
 import PortfolioItem from '../Models/PortfolioItem.js';
 import WebsiteSetting from '../Models/WebsiteSettingSchema.js';
+import Collection from '../Models/Collection.js';
 import {
     TaxonomyError, checkLabel, slugify, normaliseLabel, invalidateTaxonomy, loadTaxonomy,
     refreshMirrors, usageCounts, SYSTEM_GROUPS,
@@ -120,12 +121,16 @@ async function assertFreeInGroup(groupId, label, exceptId) {
 // GET /api/admin/taxonomy
 export const getTaxonomy = handle(async (_req, res) => {
     invalidateTaxonomy();
-    const [{ groups, tags }, usage, ws] = await Promise.all([
+    const [{ groups, tags }, usage, ws, rows] = await Promise.all([
         loadTaxonomy(), usageCounts(), WebsiteSetting.findOne().select(PAGE_LISTS.join(' ')).lean(),
+        Collection.find({}).select('title rule.tagIds rule.excludeTagIds').lean(),
     ]);
     const pageRowsOf = (t) => {
         const names = namesOf(t);
-        return PAGE_LISTS.filter((l) => (ws?.[l] || []).some((s) => names.has(normaliseLabel(s).toLowerCase()) || names.has(slugify(s)))).map((l) => PAGE_LIST_NAMES[l]);
+        const lists = PAGE_LISTS.filter((l) => (ws?.[l] || []).some((s) => names.has(normaliseLabel(s).toLowerCase()) || names.has(slugify(s)))).map((l) => PAGE_LIST_NAMES[l]);
+        // Rows (collections) whose rule uses the tag.
+        const inRules = rows.filter((c) => [...(c.rule?.tagIds || []), ...(c.rule?.excludeTagIds || [])].some((x) => String(x) === String(t._id))).map((c) => c.title);
+        return [...lists, ...inRules];
     };
     return res.status(200).json({
         legacyReads: !portfolioReadsEnabled(),
@@ -346,13 +351,23 @@ export const mergeTag = handle(async (req, res) => {
     target.aliases = [...aliases];
     await target.save();
     const pageLists = await rewritePageLists(source, target.label);
+    // Rows built on the source tag now use the target (their rules as they were
+    // are kept on the operation, for undo).
+    const rows = await Collection.find({ $or: [{ 'rule.tagIds': source._id }, { 'rule.excludeTagIds': source._id }] });
+    const rowsBefore = rows.map((c) => ({ _id: c._id, tagIds: [...c.rule.tagIds], excludeTagIds: [...c.rule.excludeTagIds] }));
+    const swapIn = (list) => [...new Set(list.map((x) => (String(x) === String(source._id) ? String(target._id) : String(x))))];
+    for (const c of rows) {
+        c.rule.tagIds = swapIn(c.rule.tagIds);
+        c.rule.excludeTagIds = swapIn(c.rule.excludeTagIds);
+        await c.save();
+    }
     const sourceDoc = source.toObject();
     await source.deleteOne();
     await refreshMirrors({ _id: { $in: itemIds } });
 
     const op = await TagOperation.create({
         type: 'merge', tag: target._id, summary: `Merged "${sourceDoc.label}" into "${target.label}" (${itemIds.length} item(s))`,
-        before: { source: sourceDoc, targetAliases: beforeTarget.aliases }, after: { target: target._id },
+        before: { source: sourceDoc, targetAliases: beforeTarget.aliases, rows: rowsBefore }, after: { target: target._id },
         items: itemIds, itemsHadTarget: hadIds, pageLists, by: who(req),
     });
     changed();
@@ -365,6 +380,8 @@ export const deleteTag = handle(async (req, res) => {
     const [used, lists] = await Promise.all([PortfolioItem.countDocuments({ tagIds: tag._id }), pageListsUsing(tag)]);
     if (used) throw new TaxonomyError(409, `${used} item(s) use "${tag.label}". Merge it into another tag instead.`, { usage: used });
     if (lists.length) throw new TaxonomyError(409, `"${tag.label}" is a row on: ${lists.map((l) => PAGE_LIST_NAMES[l]).join(', ')}. Remove the row first.`, { pageRows: lists });
+    const rules = await Collection.find({ $or: [{ 'rule.tagIds': tag._id }, { 'rule.excludeTagIds': tag._id }] }).select('title').lean();
+    if (rules.length) throw new TaxonomyError(409, `"${tag.label}" is in the rule of: ${rules.map((r) => r.title).join(', ')}. Change those rows first.`, { collections: rules.map((r) => r.title) });
     const before = tag.toObject();
     await tag.deleteOne();
     await TagOperation.create({ type: 'delete', tag: tag._id, summary: `Deleted "${before.label}"`, before, by: who(req) });
@@ -432,6 +449,9 @@ export const undoOperation = handle(async (req, res) => {
         if (had.size) await PortfolioItem.updateMany({ _id: { $in: op.itemsHadTarget } }, { $addToSet: { tagIds: source._id } });
         await Tag.updateOne({ _id: op.tag }, { $set: { aliases: op.before.targetAliases || [] } });
         if (op.pageLists) await restorePageLists(op.pageLists);
+        for (const r of op.before.rows || []) {
+            await Collection.updateOne({ _id: r._id }, { $set: { 'rule.tagIds': r.tagIds, 'rule.excludeTagIds': r.excludeTagIds } });
+        }
         await refreshMirrors({ _id: { $in: op.items || [] } });
     }
 
