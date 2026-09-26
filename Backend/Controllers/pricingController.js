@@ -1,5 +1,9 @@
 import { z } from 'zod';
 import PricingPackage from '../Models/PricingPackage.js';
+import { queueRevalidate } from '../Services/revalidate.js';
+
+// The home "Our packages" section is resolved into the home page (Services/pageComposer.js).
+const refreshHome = () => queueRevalidate({ tags: ['page:home'] });
 
 const badge = z.object({ label: z.string(), tone: z.enum(['popular', 'discount', 'new', 'custom']).optional() });
 const metric = z.object({ label: z.string(), value: z.string(), icon: z.string().optional() });
@@ -17,6 +21,9 @@ const packageSchema = z.object({
     badges: z.array(badge).optional(),
     metrics: z.array(metric).optional(),
     featureCategories: z.array(featureCategory).optional(),
+    team: z.array(z.string().trim().min(1)).max(20).optional(),
+    includes: z.array(z.object({ text: z.string().trim().min(1), included: z.boolean().optional() })).max(40).optional(),
+    recommendedFor: z.string().optional(),
     ctaLabel: z.string().optional(),
     ctaLink: z.string().optional(),
     isActive: z.boolean().optional(),
@@ -59,6 +66,7 @@ export async function createPackage(req, res) {
     try {
         const count = await PricingPackage.countDocuments();
         const pkg = await PricingPackage.create({ order: count, ...parsed.data });
+        refreshHome();
         res.status(201).json({ package: pkg });
     } catch (error) {
         console.error('createPackage error:', error);
@@ -73,6 +81,7 @@ export async function updatePackage(req, res) {
     try {
         const pkg = await PricingPackage.findByIdAndUpdate(req.params.id, parsed.data, { new: true, runValidators: true });
         if (!pkg) return res.status(404).json({ message: 'Package not found' });
+        refreshHome();
         res.status(200).json({ package: pkg });
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -82,7 +91,9 @@ export async function updatePackage(req, res) {
 // DELETE /api/admin/pricing/:id
 export async function deletePackage(req, res) {
     try {
-        await PricingPackage.deleteOne({ _id: req.params.id });
+        const { deletedCount } = await PricingPackage.deleteOne({ _id: req.params.id });
+        if (!deletedCount) return res.status(404).json({ message: 'Package not found' });
+        refreshHome();
         res.status(200).json({ message: 'Package deleted' });
     } catch (error) {
         res.status(500).json({ message: 'Server error' });
@@ -94,7 +105,8 @@ export async function reorderPackages(req, res) {
     try {
         const ids = Array.isArray(req.body.order) ? req.body.order : [];
         await Promise.all(ids.map((id, index) => PricingPackage.updateOne({ _id: id }, { order: index })));
-        const packages = await PricingPackage.find().sort({ order: 1 });
+        refreshHome();
+        const packages = await PricingPackage.find().sort({ order: 1, createdAt: 1 });
         res.status(200).json({ packages });
     } catch (error) {
         res.status(500).json({ message: 'Server error' });

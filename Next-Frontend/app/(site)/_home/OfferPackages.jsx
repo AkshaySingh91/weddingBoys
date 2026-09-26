@@ -1,109 +1,16 @@
 'use client';
 
 import React from "react"
-import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { FiCamera, FiVideo, FiStar, FiCheckCircle, FiPackage, FiMessageCircle, FiPhone } from 'react-icons/fi';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiVideo, FiStar, FiCheckCircle, FiPackage, FiMessageCircle, FiPhone } from 'react-icons/fi';
 import { FaInfoCircle, FaCreditCard, FaGlobe } from "react-icons/fa";
-import { FiHeart, FiAward, FiClock, FiUsers, FiChevronRight, FiCalendar } from 'react-icons/fi';
-import CountUp from 'react-countup';
+import { FiHeart, FiUsers, FiChevronRight, FiCalendar } from 'react-icons/fi';
 import { useStudioDetails } from '@/Context/StudioDetailsContext.jsx';
 import PackageModal from '@/Component/PackageModal.jsx';
 import Section from '@/Component/ui/Section.jsx';
+import { BUILT_IN_PACKAGES as packages } from '@/lib/builtInPackages.js';
 
-const packages = [
-    {
-        id: 1,
-        title: "Enchanted Pre-Wedding",
-        tagline: "Perfect for couples wanting storybook memories",
-        total: 50000,
-        offer: 40000,
-        team: ["1 Cinematographer", "1 Candid Photographer", "1 Drone Pilot"],
-        includes: [
-            { text: "Story Based Cinematic Teaser", included: true },
-            { text: "4-5 Min Cinematic Video", included: true },
-            { text: "Instagram Reels (2-3)", included: true },
-            { text: "35+ Retouched Photos", included: true },
-            { text: "Full RAW Data", included: true },
-            { text: "10 Save the Dates", included: true },
-            { text: "Complimentary Photo Book", included: true },
-            { text: "360° Virtual Tour", included: false },
-            { text: "Drone Cinematography", included: false },
-        ],
-        description: "Ideal for intimate pre-wedding shoots and save-the-date creation. Capture those delicate moments that tell your unique love story.",
-        isPopular: true,
-        recommendedFor: "Intimate pre-wedding shoots & creative save-the-dates"
-    },
-    {
-        id: 2,
-        title: "Basic Wedding Package",
-        tagline: "Essential coverage with a touch of elegance",
-        total: 100000,
-        offer: 85000,
-        team: ["1 Traditional Videographer", "1 Traditional Photographer", "1 Cinematographer"],
-        includes: [
-            { text: "Luxury Cinematic Teaser", included: true },
-            { text: "Luxury Cinematic Video", included: true },
-            { text: "Instagram Reels (2-3)", included: true },
-            { text: "35+ Retouched Photos", included: true },
-            { text: "Full Wedding Film in 4k", included: false },
-            { text: "300 PhotoBook Album", included: false },
-            { text: "Complimentary Couple Frame", included: false },
-            { text: "All Raw Data on Pendrive", included: true },
-        ],
-        description: "Great for couples who want essential coverage of their big day without extra frills. A perfect balance of creativity and tradition.",
-        isPopular: false,
-        recommendedFor: "Traditional wedding coverage on a budget"
-    },
-    {
-        id: 3,
-        title: "Premium 2-Day Wedding",
-        tagline: "An all-inclusive celebration of love",
-        total: 150000,
-        offer: 130000,
-        team: ["2 Traditional Videographers", "2 Traditional Photographers", "2 Cinematographers", "2 Candid Photographers", "1 Drone Pilot"],
-        includes: [
-            { text: "Luxury Cinematic Teaser", included: true },
-            { text: "Luxury Cinematic Video", included: true },
-            { text: "Instagram Reels (2-3)", included: true },
-            { text: "35+ Retouched Photos", included: true },
-            { text: "Full Wedding Film in 4k", included: true },
-            { text: "300 PhotoBook Album", included: true },
-            { text: "Complimentary Mini Book & Table Calendar", included: true },
-            { text: "Complimentary Couple Frame", included: true },
-            { text: "All Raw Data on Pendrive", included: true },
-        ],
-        description: "Perfect for a lavish 2-day wedding celebration where every detail matters. Relish every moment with comprehensive coverage.",
-        isPopular: false,
-        recommendedFor: "Large, elaborate weddings"
-    },
-    {
-        id: 4,
-        title: "Ultimate Wedding & Pre-Wedding Combo",
-        tagline: "For couples who want it all",
-        total: 240000,
-        offer: 210000,
-        team: ["2 Traditional Videographers", "2 Traditional Photographers", "2 Cinematographers", "2 Candid Photographers", "1 Drone Pilot"],
-        includes: [
-            { text: "Luxury Cinematic Teaser", included: true },
-            { text: "Luxury Cinematic Video", included: true },
-            { text: "Instagram Reels (2-3)", included: true },
-            { text: "35+ Retouched Photos", included: true },
-            { text: "Full Wedding Film in 4k", included: true },
-            { text: "300 PhotoBook Album", included: true },
-            { text: "Complimentary Mini Book & Table Calendar", included: true },
-            { text: "Complimentary Couple Frame", included: true },
-            { text: "All Raw Data on Pendrive", included: true },
-            { text: "Story Based Cinematic Teaser (Pre-Wedding)", included: true },
-            { text: "4-5 Min Cinematic Video (Pre-Wedding)", included: true },
-            { text: "Instagram Reels (Pre-Wedding)", included: true },
-            { text: "10 Save the Dates (Pre-Wedding)", included: true },
-        ],
-        description: "The ultimate combo for couples who desire comprehensive coverage for both pre-wedding and wedding events. Experience luxury in every frame.",
-        isPopular: true,
-        recommendedFor: "Couples who want complete, end-to-end coverage"
-    },
-];
 const features = [
     {
         icon: <FaInfoCircle className="text-red-600 text-3xl" />,
@@ -120,12 +27,6 @@ const features = [
         title: "Travel Coverage",
         description: "We cover all locations in Mumbai at no extra cost. Additional charges apply for destination weddings."
     }
-];
-const stats = [
-    { id: 1, number: 1000, title: 'Weddings Captured', icon: <FiCamera className="lg:text-3xl sm:text-2xl" />, description: 'Magical moments preserved' },
-    { id: 2, number: 25, title: 'Awards Won', icon: <FiAward className="lg:text-3xl sm:text-2xl" />, description: 'Industry recognition' },
-    { id: 3, number: 1500, title: 'Happy Clients', icon: <FiHeart className="lg:text-3xl sm:text-2xl" />, description: 'Satisfied families' },
-    { id: 4, number: 5, title: 'Years Experience', icon: <FiClock className="lg:text-3xl sm:text-2xl" />, description: 'In the industry' },
 ];
 
 // Function to create the WhatsApp message text
@@ -157,7 +58,8 @@ const createWhatsAppMessage = (pkg) => {
  * own height. Measured across all four; the rows share a baseline.
  */
 const PackageCard = ({ pkg, onOpen }) => {
-    const save = Math.ceil(((pkg.total - pkg.offer) / pkg.total) * 100);
+    // A package with no discount shows its one price and no "Save".
+    const save = pkg.total > pkg.offer ? Math.ceil(((pkg.total - pkg.offer) / pkg.total) * 100) : 0;
     const included = pkg.includes.filter((i) => i.included);
     const preview = included.slice(0, 4);
     const moreCount = included.length - preview.length;
@@ -203,11 +105,14 @@ const PackageCard = ({ pkg, onOpen }) => {
                     <span className="font-display text-[28px] font-semibold leading-none text-accent-ink">
                         ₹{Number(pkg.offer).toLocaleString('en-IN')}
                     </span>
-                    <span className="text-[14px] text-ink-muted line-through">
-                        ₹{Number(pkg.total).toLocaleString('en-IN')}
-                    </span>
+                    {save > 0 && (
+                        <span className="text-[14px] text-ink-muted line-through">
+                            ₹{Number(pkg.total).toLocaleString('en-IN')}
+                        </span>
+                    )}
                 </div>
-                <p className="mt-2.5 w-fit rounded-pill bg-accent-tint px-2.5 py-1 text-[12px] font-semibold text-accent-ink">
+                {/* Kept as an empty line without a discount, so the cards' rows stay level. */}
+                <p className={`mt-2.5 w-fit rounded-pill px-2.5 py-1 text-[12px] font-semibold ${save > 0 ? 'bg-accent-tint text-accent-ink' : 'invisible'}`}>
                     Save {save}%
                 </p>
 
@@ -268,7 +173,27 @@ function makeHearts() {
     }));
 }
 
-const PackagesSection = () => {
+/**
+ * A package from Admin › Pricing (plan phase 7), in the shape the cards and the
+ * modal read. `packages` (lib/builtInPackages.js) is the built-in fallback: shown until the
+ * first package is created there (Backend/scripts/seedPricingPackages.js copies
+ * it in), or when the section renders without the CMS.
+ */
+const fromPricing = (p) => ({
+    id: p._id,
+    title: p.name,
+    tagline: p.tagline,
+    total: p.originalPrice,
+    offer: p.discountedPrice ?? p.originalPrice,
+    team: p.team || [],
+    includes: p.includes || [],
+    description: p.description,
+    isPopular: p.isFeatured,
+    recommendedFor: p.recommendedFor,
+});
+
+const PackagesSection = ({ data }) => {
+    const list = Array.isArray(data?.packages) ? data.packages.map(fromPricing) : packages;
     const [openPackage, setOpenPackage] = useState(null);
     const { studioContact } = useStudioDetails();
     const [hearts, setHearts] = useState(null);
@@ -363,7 +288,7 @@ const PackagesSection = () => {
                                 -mr-5 pr-5
                                 sm:mr-0 sm:pr-0 sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible
                                 lg:grid-cols-4 lg:gap-6 sm:items-stretch">
-                    {packages.map((pkg) => (
+                    {list.map((pkg) => (
                         <PackageCard key={pkg.id} pkg={pkg} onOpen={setOpenPackage} />
                     ))}
                 </div>
@@ -380,7 +305,6 @@ const PackagesSection = () => {
         )}
 
         <ComparativeCTA studioContact={studioContact} />
-        <TrackRecord />
         {/* Consultation CTA */}
         <motion.div
             initial={{ opacity: 0 }}
@@ -602,118 +526,6 @@ const ComparativeCTA = ({ studioContact }) => {
         </Section>
     )
 }
-
-
-const StatItem = ({ stat }) => {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: "0px 0px -50px 0px" });
-    const [startCounter, setStartCounter] = useState(false);
-
-    if (isInView && !startCounter) {
-        setStartCounter(true);
-    }
-
-    return (
-        <motion.div
-            ref={ref}
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="bg-[#FDFAF6] text-primary rounded-2xl lg:p-8 sm:p-4 text-center shadow-lg hover:shadow-xl transition-all group relative overflow-hidden"
-        >
-            {/* Golden Flare */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#FFD700] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-
-            <div className="relative z-10">
-                <div className="inline-block bg-[#FF4D4D] text-white lg:p-4 sm:p-3 lg:rounded-2xl sm:rounded-md mb-3 lg:mb-6 transform group-hover:-rotate-12 transition-transform">
-                    {stat.icon}
-                </div>
-                {/* Was an <h3> holding the number, with the label in a <p>
-                    beneath — inverted, and until the counter fired the heading's
-                    entire text content was a star glyph. A stat is a term and a
-                    value, so it is a <dl>; the star is ornament. */}
-                <dl>
-                    <dd className="font-display text-[27px] lg:text-[40px] font-semibold tracking-wide text-[#B33A3A] mb-2">
-                        {startCounter
-                            ? (
-                                <CountUp
-                                    end={stat.number}
-                                    duration={2.5}
-                                    separator=","
-                                    suffix={stat.id !== 4 ? "+" : ""}
-                                />
-                            )
-                            : <span>{stat.number.toLocaleString('en-IN')}{stat.id !== 4 ? '+' : ''}</span>}
-                        <span aria-hidden="true" className="text-[#FFD700] ml-2">★</span>
-                    </dd>
-                    <dt className="t-heading-3 mx-auto mb-1 text-secondary_on">
-                        {stat.title}
-                    </dt>
-                </dl>
-                <p className="t-body-sm mx-auto text-[#74583E]">
-                    {stat.description}
-                </p>
-            </div>
-
-            {/* Animated Border */}
-            <div className="absolute inset-0 border-2 border-[#FFD700] opacity-0 group-hover:opacity-30 transition-opacity rounded-2xl" />
-        </motion.div>
-    );
-};
-
-const TrackRecord = () => {
-    return (
-        <Section width="wide" rhythm="tight" aria-labelledby="legacy-heading">
-        <div className="lg:rounded-3xl sm:rounded-lg bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] relative overflow-hidden">
-            {/* Was `-mx-4` on a bare <section> whose inner container was
-                max-w-6xl: it measured 1455px against a 1425px viewport and its
-                content started at x=152 while every other band starts at 40. */}
-            <div className="px-5 py-10 sm:px-7 lg:py-12">
-                {/* Section Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-                    className="text-center lg:mb-12 sm:mb-8"
-                >
-                    <p className="inline-block bg-[#FF4D4D] text-[#FFF0E6] px-5 py-1.5 rounded-pill text-[13px] font-semibold mb-5 shadow-lg">
-                        <span className="drop-shadow-md">Our Legacy in Numbers</span>
-                    </p>
-                    <h2 id="legacy-heading" className="t-display-2 mx-auto mb-4 text-secondary_on">
-                        Crafting Timeless Memories Since 2020
-                    </h2>
-                    <p className="t-body-lead mx-auto text-[#74583E]">
-                        Trusted by generations, our lens has witnessed countless stories of love,
-                        tradition, and celebration.
-                    </p>
-                </motion.div>
-
-                {/* Stats Grid */}
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-                    {stats.map((stat) => (
-                        <StatItem key={stat.id} stat={stat} />
-                    ))}
-                </div>
-
-                {/* Authenticity Note */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    className="t-caption mx-auto mt-10 text-center text-[#74583E]"
-                >
-                    *Verified through client records & vendor partnerships
-                </motion.div>
-
-                {/* Decorative Elements */}
-                <div className="absolute top-0 left-0 w-40 h-40 bg-[#f6c2b9c9] rounded-full -translate-x-1/2 -translate-y-1/2" />
-                <div className="absolute bottom-0 right-0 w-48 h-48 bg-[#FF4D4D]/10 rounded-full translate-x-1/2 translate-y-1/2" />
-            </div>
-        </div>
-        </Section>
-    );
-};
 
 
 export default PackagesSection;

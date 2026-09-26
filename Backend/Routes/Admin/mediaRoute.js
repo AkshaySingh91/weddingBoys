@@ -6,8 +6,6 @@ import {
     presignMediaUpload,
     confirmMediaUpload,
     ingestMediaUpload,
-    createStreamUploadUrl,
-    completeStreamUpload,
     listMedia,
     updateMedia,
     deleteMedia,
@@ -33,9 +31,13 @@ const acceptUpload = (req, res, next) => {
 
 // Server-side R2 ingestion (sharp optimize → R2 → Media doc). Images/docs.
 Route.post("/api/admin/media/upload", acceptUpload, ingestMediaUpload)
-// Cloudflare Stream direct-creator-upload: browser → Cloudflare (bypasses Node).
-Route.post("/api/admin/media/stream-upload-url", createStreamUploadUrl)
-Route.post("/api/admin/media/stream-complete", completeStreamUpload)
+// Cloudflare Stream direct uploads — retired (plan phase 7). Nothing calls them,
+// and they wrote Media records the schema rejects (provider 'Stream', status
+// 'Uploaded'). Videos go through the multipart upload and the worker.
+Route.post(["/api/admin/media/stream-upload-url", "/api/admin/media/stream-complete"], (req, res) => {
+    console.warn(`[410] retired Stream route: ${req.method} ${req.originalUrl}`);
+    return res.status(410).json({ message: 'Stream uploads are retired. Upload videos from the wedding workspace.' });
+})
 // Legacy S3 presigned direct-PUT path (kept for back-compat).
 Route.post("/api/admin/media/presign", presignMediaUpload)
 Route.post("/api/admin/media/confirm", confirmMediaUpload)

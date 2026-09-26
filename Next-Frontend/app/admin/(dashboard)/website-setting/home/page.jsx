@@ -1,27 +1,42 @@
 'use client';
 
+import { Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { PageHeader } from '@/app/admin/components/ui/PageHeader.jsx';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/app/admin/components/ui/Tabs.jsx';
 import Herobanner from './_components/Herobanner.jsx';
 import HeroCarouselManager from './_components/HeroCarouselManager.jsx';
 import Link from 'next/link';
-import Map from './_components/Map.jsx';
-import BtsTape from './_components/BtsTape.jsx';
+// The Heritage Map and BTS Tape tabs are retired (plan phase 7): no page of this
+// site reads their data. Their components (Map.jsx, BtsTape.jsx) stay for the
+// old site until it is replaced. The BTS photos live in Content › Home.
 import Review from './_components/Review.jsx';
 import {
   Sparkle,
   FilmSlate,
-  MapPin,
   Camera,
   Heart,
 } from '@phosphor-icons/react';
 
+const TABS = ['hero', 'showcase', 'bts', 'reviews'];
+
 export default function HomePageSetting() {
+  return (
+    <Suspense fallback={null}>
+      <HomeSettings />
+    </Suspense>
+  );
+}
+
+function HomeSettings() {
+  // ?tab=reviews opens a tab directly (the content editor links here).
+  const asked = useSearchParams().get('tab');
+  const initialTab = TABS.includes(asked) ? asked : 'hero';
   return (
     <div className="space-y-6 font-sans">
       <PageHeader
         title="Homepage Experience Curator"
-        subtitle="Control the opening hero video reel, showcase films, interactive heritage map, BTS production tape, and couple testimonials."
+        subtitle="Control the opening hero video reel, showcase films, behind-the-scenes photos and couple testimonials."
         breadcrumbs={[
           { label: 'Admin', href: '/admin/dashboard' },
           { label: 'Website Settings' },
@@ -29,7 +44,7 @@ export default function HomePageSetting() {
         ]}
       />
 
-      <Tabs defaultValue="hero" className="w-full space-y-6">
+      <Tabs defaultValue={initialTab} className="w-full space-y-6">
         <div className="overflow-x-auto pb-1 scrollbar-none">
           <TabsList className="h-12 bg-white p-1 border border-[#E5DCD3] shadow-sm rounded-2xl w-full sm:w-auto justify-start">
             <TabsTrigger value="hero" className="gap-2 px-4 py-2 text-xs">
@@ -40,13 +55,9 @@ export default function HomePageSetting() {
               <FilmSlate size={15} weight="fill" className="text-[#A3603A]" />
               <span>Showcase Reels</span>
             </TabsTrigger>
-            <TabsTrigger value="map" className="gap-2 px-4 py-2 text-xs">
-              <MapPin size={15} weight="fill" className="text-[#A3603A]" />
-              <span>Heritage Map</span>
-            </TabsTrigger>
             <TabsTrigger value="bts" className="gap-2 px-4 py-2 text-xs">
               <Camera size={15} weight="fill" className="text-[#A3603A]" />
-              <span>BTS Tape</span>
+              <span>Behind the scenes</span>
             </TabsTrigger>
             <TabsTrigger value="reviews" className="gap-2 px-4 py-2 text-xs">
               <Heart size={15} weight="fill" className="text-[#A3603A]" />
@@ -79,14 +90,17 @@ export default function HomePageSetting() {
           </div>
         </TabsContent>
 
-        {/* Tab 3: Heritage Map */}
-        <TabsContent value="map" className="mt-0">
-          <Map />
-        </TabsContent>
-
-        {/* Tab 4: BTS Tape */}
+        {/* Tab 3: Behind the scenes — edited in the home composition now */}
         <TabsContent value="bts" className="mt-0">
-          <BtsTape />
+          <div className="rounded-2xl border border-[#E7E2DA] bg-white p-6 space-y-3">
+            <h2 className="font-serif text-xl text-[#1C1917]">Behind the scenes</h2>
+            <p className="text-sm text-[#57534E] max-w-2xl">
+              The home page’s behind-the-scenes photos are the “Behind the Scenes” gallery in the home page composition. Add, remove and order them there.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <Link href="/admin/content/home" className="rounded-lg bg-[#1C1917] px-3.5 py-2 text-xs font-semibold text-white">Open home page composition</Link>
+            </div>
+          </div>
         </TabsContent>
 
         {/* Tab 5: Couple Reviews */}

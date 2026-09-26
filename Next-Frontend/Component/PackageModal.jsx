@@ -93,7 +93,7 @@ export default function PackageModal({ pkg, whatsappHref, onClose }) {
 
     if (!pkg) return null;
 
-    const save = Math.ceil(((pkg.total - pkg.offer) / pkg.total) * 100);
+    const save = pkg.total > pkg.offer ? Math.ceil(((pkg.total - pkg.offer) / pkg.total) * 100) : 0;
     const included = pkg.includes.filter((i) => i.included);
     const excluded = pkg.includes.filter((i) => !i.included);
 
@@ -149,12 +149,16 @@ export default function PackageModal({ pkg, whatsappHref, onClose }) {
                         <span className="font-display text-[34px] font-semibold leading-none text-accent-ink">
                             ₹{Number(pkg.offer).toLocaleString('en-IN')}
                         </span>
-                        <span className="text-[15px] text-ink-muted line-through">
-                            ₹{Number(pkg.total).toLocaleString('en-IN')}
-                        </span>
-                        <span className="rounded-pill bg-accent-tint px-2.5 py-1 text-[12px] font-semibold text-accent-ink">
-                            Save {save}%
-                        </span>
+                        {save > 0 && (
+                            <>
+                                <span className="text-[15px] text-ink-muted line-through">
+                                    ₹{Number(pkg.total).toLocaleString('en-IN')}
+                                </span>
+                                <span className="rounded-pill bg-accent-tint px-2.5 py-1 text-[12px] font-semibold text-accent-ink">
+                                    Save {save}%
+                                </span>
+                            </>
+                        )}
                     </div>
                 </div>
 

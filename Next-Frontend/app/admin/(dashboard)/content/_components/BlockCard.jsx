@@ -6,13 +6,24 @@ import {
     ChevronDown, ChevronUp, Eye, EyeOff, Trash2, ArrowUp, ArrowDown, Plus, GripVertical,
 } from 'lucide-react';
 import MediaField from './MediaField.jsx';
-import { BLOCK_CONFIG, fieldLabel, isTextarea, SECTION_OPTIONS, sectionLabel } from './config.js';
+import Link from 'next/link';
+import { BLOCK_CONFIG, fieldLabel, isTextarea, SECTION_OPTIONS, SECTION_SOURCES, sectionLabel } from './config.js';
 import SectionSettings, { hasSectionSettings } from './SectionSettings.jsx';
 
 const newItem = () => ({
     _id: Math.random().toString(36).slice(2, 10),
     title: '', subtitle: '', body: '', link: '', media: [], meta: {},
 });
+
+// Content that lives on another admin screen: say where, and link to it.
+function SourceNote({ source }) {
+    return (
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5">
+            <p className="text-xs text-gray-600">{source.text}</p>
+            <Link href={source.href} className="text-xs font-medium text-rose-600 hover:underline">{source.cta}</Link>
+        </div>
+    );
+}
 
 // A single registered text/textarea input bound to `name`.
 function Field({ name, label, textarea }) {
@@ -106,6 +117,8 @@ export default function BlockCard({ index, total, type, onMove, onRemove, dragHa
                             </label>
                             {hasSectionSettings(sectionComponent) ? (
                                 <SectionSettings base={base} component={sectionComponent} pageKey={pageKey} />
+                            ) : SECTION_SOURCES[sectionComponent] ? (
+                                <SourceNote source={SECTION_SOURCES[sectionComponent]} />
                             ) : (
                                 <p className="mt-2 text-xs text-gray-400">
                                     This section renders live from site data. Use show/hide and drag to control whether and where it appears.
@@ -119,7 +132,7 @@ export default function BlockCard({ index, total, type, onMove, onRemove, dragHa
                         <div className="grid gap-3 sm:grid-cols-2">
                             {cfg.fields.map((f) => (
                                 <div key={f} className={isTextarea(f) ? 'sm:col-span-2' : ''}>
-                                    <Field name={`${base}.${f}`} label={fieldLabel(f)} textarea={isTextarea(f)} />
+                                    <Field name={`${base}.${f}`} label={fieldLabel(f, cfg.labels)} textarea={isTextarea(f)} />
                                 </div>
                             ))}
                         </div>
@@ -134,6 +147,9 @@ export default function BlockCard({ index, total, type, onMove, onRemove, dragHa
                             <MediaControl name={`${base}.media`} mode={cfg.media} />
                         </div>
                     )}
+
+                    {/* Items edited on their own screen */}
+                    {cfg.source && <SourceNote source={cfg.source} />}
 
                     {/* Repeatable items (nested field array) */}
                     {cfg.item && (

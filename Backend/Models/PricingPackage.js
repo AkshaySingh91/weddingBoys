@@ -43,6 +43,16 @@ const pricingPackageSchema = new mongoose.Schema({
     metrics: [metricSchema],
     featureCategories: [featureCategorySchema],
 
+    // What the home "Our packages" cards show (plan phase 7): the crew, the
+    // deliverables (included or not, in order) and who the package suits.
+    team: [{ type: String, trim: true }],
+    includes: [{
+        _id: false,
+        text: { type: String, required: true, trim: true },
+        included: { type: Boolean, default: true },
+    }],
+    recommendedFor: { type: String, trim: true },
+
     // Call-to-action
     ctaLabel: { type: String, default: 'Enquire Now' },
     ctaLink: { type: String, default: '/contact' },

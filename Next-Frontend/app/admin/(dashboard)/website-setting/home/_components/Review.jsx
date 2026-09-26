@@ -3,6 +3,7 @@
 import { useCallback, useRef, useState, useEffect } from 'react';
 import { fireMessage } from '@/Utils/fireMessage.js';
 import ReviewEdit from './ReviewEdit.jsx';
+import WeddingSelect from './WeddingSelect.jsx';
 import { Button } from '@/app/admin/components/ui/Button.jsx';
 import { Input } from '@/app/admin/components/ui/Input.jsx';
 import { Textarea } from '@/app/admin/components/ui/Textarea.jsx';
@@ -47,6 +48,7 @@ export default function Review() {
     photo: null,
     reviewText: '',
     person: { name: '', gender: 'Bride' },
+    client: null,
   });
   const [file, setFile] = useState(null);
   const [filePreview, setFilePreview] = useState(null);
@@ -124,6 +126,7 @@ export default function Review() {
       photo: null,
       reviewText: '',
       person: { name: '', gender: 'Bride' },
+      client: null,
     });
     setIsAdding(false);
   };
@@ -350,6 +353,11 @@ export default function Review() {
                 ]}
               />
             </div>
+
+            <WeddingSelect
+              value={newReview.client}
+              onChange={(client) => setNewReview({ ...newReview, client })}
+            />
           </div>
 
           <DialogFooter>

@@ -6,6 +6,7 @@ import { Button } from '@/app/admin/components/ui/Button.jsx';
 import { Input } from '@/app/admin/components/ui/Input.jsx';
 import { Textarea } from '@/app/admin/components/ui/Textarea.jsx';
 import { Select } from '@/app/admin/components/ui/Select.jsx';
+import WeddingSelect from './WeddingSelect.jsx';
 import {
   Dialog,
   DialogContent,
@@ -246,6 +247,11 @@ export default function ReviewEdit({ setIsEditing, setEditingReview, editingRevi
               ]}
             />
           </div>
+
+          <WeddingSelect
+            value={editingReview?.client}
+            onChange={(client) => setEditingReview((prev) => ({ ...prev, client }))}
+          />
         </div>
 
         <DialogFooter>

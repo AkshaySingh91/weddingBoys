@@ -5,6 +5,7 @@
 // both contexts.
 import Image from 'next/image';
 import Link from 'next/link';
+import StatsBand from './StatsBand.jsx';
 
 const mediaUrl = (m) => m?.url || m?.cdnUrl || m?.publicUrl || '';
 const first = (arr) => (Array.isArray(arr) && arr.length ? arr[0] : null);
@@ -225,21 +226,10 @@ function CtaBlock({ block }) {
     );
 }
 
+// The track record, in the design it had inside "Our packages" (StatsBand is a
+// client component: it counts up when scrolled into view).
 function StatsBlock({ block }) {
-    const items = block.items || [];
-    return (
-        <section className="py-12">
-            <SectionHeading title={block.title} subtitle={block.subtitle} />
-            <div className="mx-auto grid max-w-4xl grid-cols-2 gap-6 px-4 sm:grid-cols-4">
-                {items.map((it, i) => (
-                    <div key={it._id || i} className="text-center">
-                        <p className="text-3xl font-bold text-rose-600">{it.title}</p>
-                        <p className="mt-1 text-sm text-gray-500">{it.subtitle}</p>
-                    </div>
-                ))}
-            </div>
-        </section>
-    );
+    return <StatsBand title={block.title} subtitle={block.subtitle} items={block.items} />;
 }
 
 export const BLOCK_RENDERERS = {

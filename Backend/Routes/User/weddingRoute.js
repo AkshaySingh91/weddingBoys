@@ -19,6 +19,9 @@ import PortfolioItem from '../../Models/PortfolioItem.js';
 import { PUBLIC_GATE } from '../../Services/portfolioVisibility.js';
 import { loadTaxonomy, SYSTEM_GROUPS } from '../../Services/taxonomy.js';
 import { toCard, toWeddingCard, crewOf } from '../../Services/cards.js';
+import ClientReview from '../../Models/ReviewSchema.js';
+import { resolveNode } from '../../Utils/mediaUrl.js';
+import { getObjectUrl } from '../../Controllers/awsController.js';
 
 const Route = express.Router();
 
@@ -148,6 +151,14 @@ Route.get('/api/weddings/:slug', async (req, res) => {
         const sameCity = client.location?.citySlug ? others.filter((o) => o.location?.citySlug === client.location.citySlug) : [];
         const related = (await cardsFor([...sameCity, ...others.filter((o) => !sameCity.includes(o))])).slice(0, 3);
 
+        // The couple's own words, when a review is linked to this wedding (Admin › Home › Couple reviews).
+        const reviews = await Promise.all((await ClientReview.find({ client: client._id }).sort({ createdAt: 1 }).lean()).map(async (r) => ({
+            name: r.person?.name || '',
+            role: r.person?.gender || '',
+            text: String(r.reviewText || '').trim().replace(/^["“]+|["”]+$/g, ''),
+            photoUrl: (r.photo?.mediaId || r.photo?.key) ? await resolveNode(r.photo, getObjectUrl).catch(() => null) : null,
+        })));
+
         return res.status(200).json({
             wedding: {
                 ...card,
@@ -162,6 +173,7 @@ Route.get('/api/weddings/:slug', async (req, res) => {
             films: items.filter((i) => i.kind === 'Video').map(toCard),
             ceremonies,
             crew: crewOf(items),
+            reviews,
             related,
         });
     } catch (error) {

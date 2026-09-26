@@ -411,7 +411,7 @@ export default function DashboardPage() {
               </Link>
 
               <Link
-                href="/admin/website-setting/films"
+                href="/admin/content/films"
                 className="flex items-center justify-between p-2.5 rounded-xl bg-stone-50/80 hover:bg-red-50/50 border border-stone-200/70 hover:border-red-100 transition-all group cursor-pointer"
               >
                 <div className="flex items-center gap-2.5">

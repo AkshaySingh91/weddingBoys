@@ -10,6 +10,7 @@ import OurApproach from './_home/OurApproach.jsx';
 import DharaService from '@/Component/DharaService.jsx';
 import VaranasiLaunchCard from './_home/VaranasiLaunchCard.jsx';
 import { CmsSection } from '@/Component/cms/CmsRender.jsx';
+import StatsBand from '@/Component/cms/StatsBand.jsx';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -52,6 +53,7 @@ export default async function HomePage() {
                     <OurPortfolio />
                     <WhyChooseUs />
                     <OfferPackages />
+                    <StatsBand />
                     <OurApproach />
                     <CmsSection pageKey="home" block="home-bts" />
                     <CmsSection pageKey="home" block="home-reviews" />

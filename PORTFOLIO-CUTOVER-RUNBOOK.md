@@ -60,6 +60,12 @@ Choose one:
    node scripts/migratePagesToComposition.js --dry-run
    node scripts/migratePagesToComposition.js --apply
    node scripts/migratePagesToComposition.js --verify       # pages show today's rows, in order
+   node scripts/consolidateHomeSources.js --dry-run         # stats once; team/reviews/BTS from their screens
+   node scripts/consolidateHomeSources.js --apply
+   node scripts/consolidateHomeSources.js --verify
+   node scripts/seedPricingPackages.js --dry-run            # the four packages into Admin › Pricing
+   node scripts/seedPricingPackages.js --apply
+   node scripts/seedPricingPackages.js --verify
    node scripts/cutoverReport.js                           # must say "no blockers"
    ```
 4. Run two backends on the copy and compare them (both read-only, no worker needed):
@@ -91,11 +97,17 @@ Choose one:
 6. `node scripts/migratePagesToComposition.js --apply`, then `--verify` (Phase 6): home, /films,
    /allfilms and /photos become compositions of those rows (Admin › Content), showing today's
    rows in today's order.
-7. `node scripts/cutoverReport.js` against production: **no blockers**.
-8. Set `PORTFOLIO_READS=v2` on the backend and restart it.
-9. Smoke test: `/`, `/films`, `/allfilms`, `/photos`, five film pages and five photo pages.
+7. `node scripts/consolidateHomeSources.js --apply`, then `--verify` (Phase 7): the track record
+   renders once (the CMS stats block, moved to just after "Our packages", in the packages' design);
+   "Meet the team" and the reviews always show Team and Couple reviews; BTS photos move into the
+   home "Behind the scenes" gallery. Then `node scripts/seedPricingPackages.js --apply` and `--verify`:
+   the four built-in packages become editable in Admin › Pricing (skip it if someone already used
+   Pricing's "Copy the site's packages"). Both only affect the Next site, so they can run any time.
+8. `node scripts/cutoverReport.js` against production: **no blockers**.
+9. Set `PORTFOLIO_READS=v2` on the backend and restart it.
+10. Smoke test: `/`, `/films`, `/allfilms`, `/photos`, five film pages and five photo pages.
    On a film page, check the gallery and "recommended" thumbnails load.
-10. Once the Next frontend is live, check the sitemap (from `Next-Frontend/`):
+11. Once the Next frontend is live, check the sitemap (from `Next-Frontend/`):
    `node scripts/checkSitemapUrls.mjs --site=https://theweddingboys.in --api=<api origin>`.
    It checks each film and photo through the API, because those pages always answer 200.
 
@@ -113,9 +125,31 @@ home 1 min, sitemap 1 h). Note: once `REVALIDATION_SECRET` is set, the blog edit
 browser-side refresh stops working, because it sends the old public fallback secret. Blog pages
 then refresh within the hour until the blog fix, which should also rotate that secret.
 
-**After 7 quiet days:** delete the legacy branches (`videoRoute`, `photoRoute`,
-`homePageRoute`, `searchRoute`), the retired write controllers, `portfolioSync.js`,
-`GET /api/admin/client/:id` and the flag itself.
+**After 7 quiet days (Phase 7): remove the old data.**
+
+```sh
+mongodump --uri="<production uri>" --db=test --out=backup-2-$(date +%F)
+PORTFOLIO_READS=v2 node scripts/contractLegacy.js --switched-on=<YYYY-MM-DD> --dry-run
+PORTFOLIO_READS=v2 node scripts/contractLegacy.js --switched-on=<YYYY-MM-DD> --apply --dump-dir=<safe folder>
+node scripts/contractLegacy.js --verify
+```
+
+It removes the films and photos embedded in each wedding, `WebsiteSettings.heroVideos` and
+`BtsPhotos`, and the `tags`, `ceremonies` and `sequences` collections. It refuses unless the
+switch date is 7+ days ago, every embedded item has its PortfolioItem, the tag manager exists
+and the BTS photos have moved. It writes everything it removes to `<dump-dir>/<run id>.json`
+first; `--rollback=<run id>` restores from that file. **From then on, unsetting
+`PORTFOLIO_READS` shows an empty site**, so the rollback window above is closed for good.
+
+It keeps, on purpose: item `tags` / `eventGroup` and hero flags (read by cards and the admin, and
+kept in step by the tag manager and Rows); the page tag lists (read only by the site's fallbacks
+when the CMS is unreachable); the map pins (the wizard still records one); the old indexes (their
+schema declarations would recreate them).
+
+Then, in a code change rather than a script: delete the legacy branches (`videoRoute`,
+`photoRoute`, `homePageRoute`, `searchRoute`), the retired write controllers, `portfolioSync.js`,
+`GET /api/admin/client/:id`, the old models and indexes, and the flag itself. That is left for
+after the soak because until then the branches are the rollback.
 
 ---
 
@@ -162,4 +196,7 @@ Found along the way (not caused by the switch):
 | `scripts/backfillClientProfiles.js` | with `--apply` / `--rollback` | story-page slugs, city, cover, item order for existing weddings |
 | `scripts/migrateRowsToCollections.js` | with `--apply` / `--rollback` | hero + home / films / portfolio rows as collections |
 | `scripts/migratePagesToComposition.js` | with `--apply` / `--rollback` | pages composed from rows: home tabs, /films rows, /allfilms and /photos filters |
+| `scripts/consolidateHomeSources.js` | with `--apply` / `--rollback` | stats once, after the packages; team, reviews and BTS read from their own screens |
+| `scripts/seedPricingPackages.js` | with `--apply` / `--rollback` | the four built-in packages into Admin › Pricing (only when it is empty) |
+| `scripts/contractLegacy.js` | with `--apply` / `--rollback` | after the soak: removes the old embedded data and collections, dump first |
 | `scripts/lib/runLog.js` | `scriptruns`, `scriptrunchanges` | shared `--dry-run / --apply / --verify / --rollback` contract |

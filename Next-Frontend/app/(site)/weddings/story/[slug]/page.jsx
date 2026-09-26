@@ -56,7 +56,7 @@ export default async function WeddingStoryPage({ params }) {
     if (story?.redirectTo) permanentRedirect(`/weddings/story/${story.redirectTo}`);
     if (!story) notFound();
 
-    const { wedding: w, films, ceremonies, crew, related } = story.data;
+    const { wedding: w, films, ceremonies, crew, related, reviews = [] } = story.data;
     const chapters = ceremonies.filter((c) => c.photos.length);
     const url = `${SITE_URL}/weddings/story/${w.slug}`;
 
@@ -161,6 +161,24 @@ export default async function WeddingStoryPage({ params }) {
                     </ul>
                 </Section>
             ))}
+
+            {/* The couple's own words: a review linked to this wedding in Admin › Home › Couple reviews. */}
+            {reviews.length > 0 && (
+                <Section width="prose" rhythm="normal" aria-labelledby="words-heading">
+                    <h2 id="words-heading" className="t-display-2 mb-8">In their words</h2>
+                    <div className="space-y-10">
+                        {reviews.map((r, i) => (
+                            <figure key={i}>
+                                <blockquote className="t-body-lead whitespace-pre-line">“{r.text}”</blockquote>
+                                <figcaption className="mt-4">
+                                    <span className="t-heading-3 block">{r.name}</span>
+                                    {r.role && <span className="t-caption">{r.role}</span>}
+                                </figcaption>
+                            </figure>
+                        ))}
+                    </div>
+                </Section>
+            )}
 
             {crew.length > 0 && (
                 <Section width="content" rhythm="normal" aria-labelledby="crew-heading">

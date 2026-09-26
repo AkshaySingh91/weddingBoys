@@ -1,5 +1,7 @@
 // controllers/embedController.js
 import Client from '../Models/ClientSchema.js';
+import PortfolioItem from '../Models/PortfolioItem.js';
+import { PUBLIC_GATE } from '../Services/portfolioVisibility.js';
 
 // Provider host allowlist for strict security (FR-EMBED-03)
 const ALLOWED_DOMAINS = [
@@ -263,45 +265,57 @@ export const resolveEmbed = async (req, res) => {
 /**
  * GET /api/admin/embed/clients?query=...
  * Search portfolio clients to 1-click embed studio films & photo stories.
+ *
+ * Reads the portfolio store (plan phase 7), public items only: a blog post is
+ * public, so it may embed only what the site already shows. It used to read the
+ * arrays embedded in each wedding, which never held a wizard-added wedding.
  */
 export const searchPortfolioClients = async (req, res) => {
     try {
         const q = (req.query.query || '').trim();
-        const filter = {};
+        const rx = q ? { $regex: q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' } : null;
 
-        if (q) {
-            filter.$or = [
-                { 'clientName.Bride': { $regex: q, $options: 'i' } },
-                { 'clientName.Groom': { $regex: q, $options: 'i' } },
-                { 'videos.tags': { $regex: q, $options: 'i' } },
-                { 'photos.tags': { $regex: q, $options: 'i' } },
-            ];
+        let clientFilter = {};
+        if (rx) {
+            // (Not `distinct`: the cluster runs the strict stable API, which refuses it.)
+            const hits = await PortfolioItem.find({
+                ...PUBLIC_GATE,
+                $or: [{ tags: rx }, { 'location.venue': rx }, { 'location.city': rx }],
+            }).select('client').limit(500).lean();
+            const byItem = [...new Set(hits.map((i) => String(i.client)))];
+            clientFilter = { $or: [{ 'clientName.Bride': rx }, { 'clientName.Groom': rx }, { _id: { $in: byItem } }] };
+        }
+        const clients = await Client.find(clientFilter).select('clientName createdAt').sort({ createdAt: -1 }).limit(60).lean();
+        const items = await PortfolioItem.find({ client: { $in: clients.map((c) => c._id) }, ...PUBLIC_GATE })
+            .sort({ order: 1, shootDate: 1, _id: 1 }).lean();
+        const byClient = new Map();
+        for (const i of items) {
+            const k = String(i.client);
+            if (!byClient.has(k)) byClient.set(k, []);
+            byClient.get(k).push(i);
         }
 
-        const clients = await Client.find(filter)
-            .sort({ createdAt: -1 })
-            .limit(20)
-            .lean();
-
-        const formatted = clients.map((c) => {
+        const formatted = clients.filter((c) => byClient.has(String(c._id))).slice(0, 20).map((c) => {
             const bride = c.clientName?.Bride || 'Bride';
             const groom = c.clientName?.Groom || 'Groom';
             const title = `${bride} & ${groom}`;
+            const own = byClient.get(String(c._id));
+            const venueOf = (i) => i.location?.venue || i.location?.city || '';
 
-            const videos = (c.videos || []).map((v) => ({
+            const videos = own.filter((i) => i.kind === 'Video' && (i.render?.webUrl || i.render?.sourceUrl)).map((v) => ({
                 id: v._id,
-                title: `${title} — Wedding Film`,
-                hlsUrl: v.videoMetaData?.hlsUrl || v.videoMetaData?.url || '',
-                streamUid: v.videoMetaData?.streamUid || null,
-                poster: v.thumbnailMetaData?.publicUrl || v.thumbnailMetaData?.url || '',
-                venue: v.videoLocation?.venue || v.videoLocation?.city || '',
+                title: v.title || `${title} — Wedding Film`,
+                hlsUrl: v.render.webUrl || v.render.sourceUrl,
+                streamUid: null,
+                poster: v.render?.posterUrl || '',
+                venue: venueOf(v),
                 tags: v.tags || [],
             }));
 
-            const photos = (c.photos || []).map((p) => ({
+            const photos = own.filter((i) => i.kind === 'Photo' && i.render?.imageUrl).map((p) => ({
                 id: p._id,
-                url: p.photoMetaData?.cdnUrl || p.photoMetaData?.publicUrl || p.photoMetaData?.url || '',
-                venue: p.photoLocation?.venue || p.photoLocation?.city || '',
+                url: p.render.imageUrl,
+                venue: venueOf(p),
                 tags: p.tags || [],
             }));
 

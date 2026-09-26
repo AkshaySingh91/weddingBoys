@@ -28,6 +28,12 @@ export const SECTION_OPTIONS = [
     { value: 'photoGallery', label: 'Photo gallery — /photos page' },
 ];
 
+// Sections and blocks whose content is edited on its own screen (plan phase 7:
+// one truth per thing). The editor links there instead of offering a copy.
+export const SECTION_SOURCES = {
+    packages: { text: 'The packages come from Pricing: add, edit, hide and order them there.', href: '/admin/pricing', cta: 'Open Pricing' },
+};
+
 export const sectionLabel = (value) => SECTION_OPTIONS.find((o) => o.value === value)?.label || 'Section';
 
 export const BLOCK_CONFIG = {
@@ -63,13 +69,13 @@ export const BLOCK_CONFIG = {
         label: 'Reviews',
         icon: MessageSquareQuote,
         fields: ['title'],
-        item: { media: 'single', mediaType: 'Image', fields: ['title', 'subtitle', 'body'], labels: { title: 'Person name', subtitle: 'Bride / Groom', body: 'Review text' } },
+        source: { text: 'The reviews come from Couple reviews, which can also show each one on its wedding’s story page.', href: '/admin/website-setting/home?tab=reviews', cta: 'Open Couple reviews' },
     },
     team: {
         label: 'Team',
         icon: Users,
         fields: ['title'],
-        item: { media: 'single', mediaType: 'Image', fields: ['title', 'subtitle', 'body'], labels: { title: 'Name', subtitle: 'Role', body: 'About' } },
+        source: { text: 'The people come from Team, which also feeds the /team page and the film credits.', href: '/admin/website-setting/teams', cta: 'Open Team' },
     },
     featureCards: {
         label: 'Feature cards',
@@ -85,8 +91,9 @@ export const BLOCK_CONFIG = {
     stats: {
         label: 'Stats',
         icon: BarChart3,
-        fields: ['title'],
-        item: { fields: ['title', 'subtitle'], labels: { title: 'Value', subtitle: 'Label' } },
+        fields: ['title', 'subtitle'],
+        labels: { title: 'Heading', subtitle: 'Lead' },
+        item: { fields: ['title', 'subtitle', 'body'], labels: { title: 'Value (e.g. 1000+)', subtitle: 'Label', body: 'One line beneath' } },
     },
     section: {
         label: 'Site section',
@@ -98,13 +105,15 @@ export const BLOCK_CONFIG = {
 export const BLOCK_TYPES = Object.keys(BLOCK_CONFIG);
 
 // Managed pages offered in the CMS (admins can add more via "New page").
+// (About and Contact were listed here, but /about-us and /contact never read a
+// CMS page, so edits to them changed nothing.)
 export const DEFAULT_PAGES = [
     { pageKey: 'home', title: 'Home' },
-    { pageKey: 'about', title: 'About Us' },
     { pageKey: 'films', title: 'Films' },
+    { pageKey: 'allfilms', title: 'All films' },
     { pageKey: 'photos', title: 'Photos' },
-    { pageKey: 'contact', title: 'Contact' },
 ];
+export const UNREAD_PAGES = new Set(['about', 'contact']);
 
 const FIELD_LABELS = {
     title: 'Title',

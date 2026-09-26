@@ -30,6 +30,7 @@ import {
   PenNib,
   CalendarHeart,
   Gear,
+  CurrencyInr,
 } from '@phosphor-icons/react';
 import { useStudioDetails } from '@/Context/StudioDetailsContext.jsx';
 import { useAuth } from '@/Context/AdminAuthContext.jsx';
@@ -84,6 +85,10 @@ export default function AdminSidebar({
     }
     if (path === '/admin/blogs/analytics') {
       return pathname === '/admin/blogs/analytics';
+    }
+    // /admin/content/films has its own entry ("Films Page").
+    if (path === '/admin/content') {
+      return pathname.startsWith('/admin/content') && !pathname.startsWith('/admin/content/films');
     }
     return pathname === path || (path !== '/admin' && pathname.startsWith(path));
   };
@@ -169,7 +174,7 @@ export default function AdminSidebar({
         {
           id: 'website-films',
           label: 'Films Page',
-          path: '/admin/website-setting/films',
+          path: '/admin/content/films',
           icon: FilmSlate,
         },
         {
@@ -183,6 +188,12 @@ export default function AdminSidebar({
           label: 'Team Page',
           path: '/admin/website-setting/teams',
           icon: UsersThree,
+        },
+        {
+          id: 'pricing',
+          label: 'Pricing',
+          path: '/admin/pricing',
+          icon: CurrencyInr,
         },
         {
           id: 'content',

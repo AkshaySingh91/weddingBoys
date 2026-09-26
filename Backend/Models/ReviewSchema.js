@@ -14,8 +14,11 @@ const ClientReviewSchema = new mongoose.Schema({
     reviewText: { type: String, trim: true, required: true },
     person: {
         name: { type: String, trim: true, required: true },
-        gender: { type: String, trim: true, required: true, enum: ["Bride", "Groom"] },
+        gender: { type: String, trim: true, required: true, enum: ["Bride", "Groom", "Couple", "Family"] },
     },
+    // Optional: the wedding this couple's review belongs to. Its story page
+    // (/weddings/story/<slug>) shows the review (plan phase 7).
+    client: { type: mongoose.Schema.Types.ObjectId, ref: 'Client', default: null, index: true },
 }, { timestamps: true });
 
 

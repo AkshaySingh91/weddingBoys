@@ -3,9 +3,26 @@ import authenticateAdmin from "../../Middleware/authenticateAdmin.js";
 import { putObjectUrl, deleteObject } from "../../Controllers/awsController.js"
 import ClientReview from "../../Models/ReviewSchema.js"
 import * as uuid from "uuid"
+import mongoose from "mongoose";
+import { queueRevalidate } from "../../Services/revalidate.js";
 
 const Route = express.Router();
 Route.use(authenticateAdmin)
+
+// Reviews feed the home "Love notes" section and, when linked to a wedding, its
+// story page (plan phase 7): refresh both after any successful change.
+// Scoped: this router sees every admin request.
+Route.use(['/api/admin/review', '/api/admin/reviews'], (req, res, next) => {
+    if (req.method !== 'GET') res.on('finish', () => { if (res.statusCode < 300) queueRevalidate({ tags: ['page:home', 'portfolio'] }) });
+    next();
+})
+
+// The admin form offers all four; the schema accepted only the first two, so a
+// "Couple" or "Family" review failed to save.
+const ROLES = ClientReview.schema.path('person.gender').enumValues;
+
+// The wedding a review belongs to: an id, or null to unlink. Anything else is ignored.
+const clientRef = (v) => (v === null || v === '' ? null : mongoose.isValidObjectId(v) ? v : undefined);
 
 // while adding new Review this will validate new reviews & send put url to upload reviewing client one photo 
 async function validateReviewAndSendPutUrl(req, res, next) {
@@ -28,7 +45,7 @@ async function validateReviewAndSendPutUrl(req, res, next) {
 // this will save new Review details 
 async function saveNewClientReview(req, res, next) {
     try {
-        if (!(req.body.newReview && req.body.key && req.body.newReview.reviewText && req.body.newReview.person && req.body.newReview.person.name && req.body.newReview.person.gender && (req.body.newReview.person.gender === "Bride" || req.body.newReview.person.gender === 'Groom') && req.body.newReview.person.name.trim() && req.body.newReview.reviewText.trim())) {
+        if (!(req.body.newReview && req.body.key && req.body.newReview.reviewText && req.body.newReview.person && req.body.newReview.person.name && req.body.newReview.person.gender && ROLES.includes(req.body.newReview.person.gender) && req.body.newReview.person.name.trim() && req.body.newReview.reviewText.trim())) {
             return res.status(400).json({ message: "Review details required" })
         }
         const { key, newReview } = req.body;
@@ -38,7 +55,8 @@ async function saveNewClientReview(req, res, next) {
             person: {
                 gender: newReview.person.gender,
                 name: newReview.person.name
-            }
+            },
+            client: clientRef(newReview.client) ?? null,
         })
         res.status(200).json({ message: 'New Review added.' })
     } catch (err) {
@@ -48,7 +66,7 @@ async function saveNewClientReview(req, res, next) {
 // validate updated review & if text updated send put url 
 async function validateUpdatedReviewAndSendPutUrl(req, res, next) {
     try { 
-        if (!(req.body.editingReview && req.body.editingReview.reviewText && req.body.editingReview.reviewText.trim() && req.body.editingReview.person && req.body.editingReview.person.name && req.body.editingReview.person.name.trim() && (req.body.editingReview.person.gender === 'Bride' || req.body.editingReview.person.gender === 'Groom'))) {
+        if (!(req.body.editingReview && req.body.editingReview.reviewText && req.body.editingReview.reviewText.trim() && req.body.editingReview.person && req.body.editingReview.person.name && req.body.editingReview.person.name.trim() && ROLES.includes(req.body.editingReview.person.gender))) {
             return res.status(400).json({ message: "Review details required" })
         } else if (!req.body.editingReview._id) {
             return res.status(400).json({ message: "Review ID required." })
@@ -78,7 +96,7 @@ async function validateUpdatedReviewAndSendPutUrl(req, res, next) {
 // this will save updated review details 
 async function saveUpdatedReview(req, res, next) {
     try {
-        if (!(req.body.editingReview && req.body.editingReview.reviewText && req.body.editingReview.reviewText.trim() && req.body.editingReview.person && req.body.editingReview.person.name && req.body.editingReview.person.name.trim() && (req.body.editingReview.person.gender === 'Bride' || req.body.editingReview.person.gender === 'Groom'))) {
+        if (!(req.body.editingReview && req.body.editingReview.reviewText && req.body.editingReview.reviewText.trim() && req.body.editingReview.person && req.body.editingReview.person.name && req.body.editingReview.person.name.trim() && ROLES.includes(req.body.editingReview.person.gender))) {
             return res.status(400).json({ message: "Review details required" })
         } else if (!req.body.editingReview._id) {
             return res.status(400).json({ message: "Review ID required." })
@@ -95,12 +113,15 @@ async function saveUpdatedReview(req, res, next) {
                 // new file delte old from s3
                 await deleteObject(review.photo.key);
             }
+            const client = clientRef(editingReview.client);
             await ClientReview.findByIdAndUpdate(_id, {
                 reviewText: editingReview.reviewText,
                 person: {
                     name: editingReview.person.name, gender: editingReview.person.gender
                 },
-                photo: { key: editingReview.photo.key }
+                // Same photo: keep its Media link (writing only the key dropped it).
+                photo: req.body.isNewFile ? { key: editingReview.photo.key } : { ...review.toObject().photo, key: editingReview.photo.key },
+                ...(client !== undefined && { client }),
             })
             return res.status(200).json({ message: "Client review has updated" });
         } else {

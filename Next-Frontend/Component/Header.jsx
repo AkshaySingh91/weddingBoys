@@ -46,6 +46,7 @@ const ROUTE_TITLES = {
   '/admin/website-setting/home': 'Home Experience',
   '/admin/website-setting/films': 'Films Page',
   '/admin/collections': 'Rows',
+  '/admin/pricing': 'Pricing',
   '/admin/website-setting/teams': 'Team Page',
   '/admin/website-setting/add-tags': 'Portfolio Tags',
   '/admin/website-setting/bts-schema-manager': 'BTS Roles',

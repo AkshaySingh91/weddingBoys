@@ -8,7 +8,7 @@ import { fireMessage } from '@/Utils/fireMessage.js';
 import { Button } from '@/app/admin/components/ui/Button.jsx';
 import { Badge } from '@/app/admin/components/ui/Badge.jsx';
 import { PageHeader } from '@/app/admin/components/ui/PageHeader.jsx';
-import { DEFAULT_PAGES } from './_components/config.js';
+import { DEFAULT_PAGES, UNREAD_PAGES } from './_components/config.js';
 
 export default function ContentPagesList() {
   const [pages, setPages] = useState(null);
@@ -23,7 +23,8 @@ export default function ContentPagesList() {
         if (cancelled) return;
         // Merge managed defaults with whatever already exists in the DB.
         const byKey = new Map(DEFAULT_PAGES.map((p) => [p.pageKey, { ...p, blockCount: 0, status: '—' }]));
-        for (const p of data.pages || []) byKey.set(p.pageKey, { ...byKey.get(p.pageKey), ...p });
+        // `about` / `contact` exist in older databases but no page reads them.
+        for (const p of data.pages || []) if (!UNREAD_PAGES.has(p.pageKey)) byKey.set(p.pageKey, { ...byKey.get(p.pageKey), ...p });
         setPages([...byKey.values()]);
       } catch (err) {
         if (!cancelled) {
