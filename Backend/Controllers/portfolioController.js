@@ -18,6 +18,11 @@ import { renderFromMedia } from '../Services/portfolioRender.js';
 import { PUBLIC_GATE, explainVisibility, readinessOf } from '../Services/portfolioVisibility.js';
 import { revalidatePortfolio } from '../Services/revalidate.js';
 import { resolveTagParam, tagFieldsFor, TaxonomyError, loadTaxonomy, validateTagIds, mirrorsFor } from '../Services/taxonomy.js';
+import { locationFrom } from '../Services/weddingProfile.js';
+import { lookupVideo, ExternalVideoError } from '../Services/externalVideo.js';
+
+/** New items join the end of their wedding's order. */
+const nextOrder = async (clientId) => ((await PortfolioItem.findOne({ client: clientId }).sort({ order: -1 }).select('order').lean())?.order ?? -1) + 1;
 
 const MAX_BULK = 500;
 const MEDIA_FIELDS = 'status cdnUrl publicUrl mediaType imageVariants video fileSize originalFileName processing.lastError';
@@ -101,6 +106,8 @@ export async function listPortfolio(req, res) {
             priority: { isHero: -1, heroPriority: -1, generalPriority: -1, _id: -1 },
             recent: { updatedAt: -1 },
             shootDate: { shootDate: -1, _id: -1 },
+            // The story page's order (the admin's arrangement).
+            order: { order: 1, shootDate: 1, _id: 1 },
         };
 
         const lim = Math.min(200, parseInt(limit, 10) || 40);
@@ -214,7 +221,8 @@ export async function assignToClient(req, res) {
             credits,
             ...tagFields,
             shootDate,
-            location,
+            location: locationFrom(location),
+            order: await nextOrder(clientDoc._id),
             generalPriority,
             isHero: resolvedKind === 'Video' ? Boolean(isHero) : false,
             heroPriority: resolvedKind === 'Video' ? heroPriority : 0,
@@ -257,6 +265,7 @@ export async function updatePortfolioItem(req, res) {
         for (const k of ALLOWED) if (req.body[k] !== undefined) patch[k] = req.body[k];
         const stringTags = refuseTagStrings(req.body);
         if (stringTags) return res.status(400).json({ message: stringTags });
+        if (patch.location !== undefined) patch.location = locationFrom(patch.location || {});
         if (req.body.tagIds !== undefined) {
             if (!mongoose.isValidObjectId(req.params.id)) return res.status(404).json({ message: 'Portfolio item not found' });
             const current = await PortfolioItem.findById(req.params.id).select('kind').lean();
@@ -343,6 +352,168 @@ export async function bulkUpdatePortfolio(req, res) {
         });
     } catch (error) {
         console.error('bulkUpdatePortfolio error:', error);
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+/**
+ * POST /api/admin/portfolio/external — a film hosted on YouTube or Vimeo (D8).
+ * { client, url, tagIds?, shootDate?, location?, title?, caption?, status? }
+ *
+ * The server looks the video up (title, poster, Vimeo duration). There is no
+ * file to process, so the item is ready at once and follows the same publish
+ * rules as an upload.
+ */
+export async function addExternalFilm(req, res) {
+    try {
+        const { client: clientId, url, tagIds = [], shootDate, location, title, caption, status } = req.body || {};
+        if (!mongoose.isValidObjectId(clientId)) return res.status(400).json({ message: 'client is required' });
+        const clientDoc = await Client.findById(clientId).lean();
+        if (!clientDoc) return res.status(404).json({ message: 'Client not found' });
+
+        let video;
+        try { video = await lookupVideo(url); } catch (e) { if (e instanceof ExternalVideoError) return res.status(e.status).json({ message: e.message }); throw e; }
+        const dup = await PortfolioItem.findOne({ client: clientId, 'external.provider': video.provider, 'external.videoId': video.videoId }).select('_id').lean();
+        if (dup) return res.status(409).json({ message: 'This video is already in the wedding', existingItemId: dup._id });
+
+        let tagFields;
+        try { tagFields = await tagFieldsFor(tagIds, 'Video'); } catch (e) { if (e instanceof TaxonomyError) return taxonomyFail(res, e); throw e; }
+        const clientNameText = [clientDoc.clientName?.Bride, clientDoc.clientName?.Groom].filter(Boolean).join(' & ');
+        const clientStatus = clientDoc.status || 'Draft';
+        const render = {
+            posterUrl: video.posterUrl,
+            embedUrl: video.embedUrl,
+            aspectRatio: video.width && video.height ? +(video.width / video.height).toFixed(4) : 16 / 9,
+            durationSec: video.durationSec,
+            syncedAt: new Date(),
+        };
+        const item = await PortfolioItem.create({
+            kind: 'Video',
+            client: clientDoc._id,
+            external: {
+                provider: video.provider, url: video.url, videoId: video.videoId,
+                title: video.title, posterUrl: video.posterUrl, durationSec: video.durationSec,
+            },
+            title: title || clientNameText,
+            caption: caption ?? video.title,
+            ...tagFields,
+            shootDate,
+            location: locationFrom(location),
+            order: await nextOrder(clientDoc._id),
+            clientNameText,
+            status: status === 'Draft' || status === 'Published' ? status : (clientStatus === 'Published' ? 'Draft' : 'Published'),
+            clientStatus,
+            mediaReady: Boolean(render.posterUrl),
+            render,
+        });
+        const visibility = explainVisibility(item.toObject(), { status: 'Ready' });
+        if (visibility.public) {
+            item.publishedAt = new Date();
+            await item.save();
+            revalidatePortfolio();
+        }
+        return res.status(201).json({ item: { ...item.toObject(), visibility }, visibility });
+    } catch (error) {
+        console.error('addExternalFilm error:', error);
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+/** The image URL to use as a poster: a ~1280px variant when there is one. */
+const posterUrlOf = (media) => {
+    const variants = (media.imageVariants || []).filter((v) => v.url).sort((a, b) => a.width - b.width);
+    return (variants.find((v) => v.width >= 1280) || variants[variants.length - 1])?.url || media.cdnUrl || media.publicUrl;
+};
+
+/**
+ * POST /api/admin/portfolio/:id/poster { media } — a chosen poster for a film.
+ * The image keeps its own immutable key, so the CDN can never serve the old
+ * frame for the new poster. DELETE goes back to the film's own frame.
+ */
+export async function setPoster(req, res) {
+    try {
+        if (!mongoose.isValidObjectId(req.params.id)) return res.status(404).json({ message: 'Portfolio item not found' });
+        const item = await PortfolioItem.findById(req.params.id);
+        if (!item) return res.status(404).json({ message: 'Portfolio item not found' });
+        if (item.kind !== 'Video') return res.status(400).json({ message: 'Only films have posters' });
+        const poster = await Media.findOne(mongoose.isValidObjectId(req.body?.media) ? { _id: req.body.media } : { mediaId: req.body?.media });
+        if (!poster) return res.status(404).json({ message: 'Media not found' });
+        if (poster.mediaType !== 'Image') return res.status(400).json({ message: 'A poster must be an image' });
+        if (poster.status !== 'Ready') return res.status(409).json({ message: 'That image is still processing; try again in a moment' });
+
+        item.poster = poster._id;
+        item.posterMediaId = poster.mediaId;
+        item.render = { ...(item.render?.toObject?.() || item.render || {}), posterUrl: posterUrlOf(poster) };
+        // A film with no frame of its own becomes showable once it has a poster.
+        const own = item.media ? await Media.findById(item.media).select('status').lean() : null;
+        item.mediaReady = item.external?.provider ? true : readinessOf(item, own?.status);
+        await item.save();
+        revalidatePortfolio();
+        return res.status(200).json({ item });
+    } catch (error) {
+        console.error('setPoster error:', error);
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+export async function removePoster(req, res) {
+    try {
+        if (!mongoose.isValidObjectId(req.params.id)) return res.status(404).json({ message: 'Portfolio item not found' });
+        const item = await PortfolioItem.findById(req.params.id);
+        if (!item) return res.status(404).json({ message: 'Portfolio item not found' });
+        const own = item.media ? await Media.findById(item.media).select('video.posterUrl status').lean() : null;
+        const fallback = own?.video?.posterUrl || item.external?.posterUrl || null;
+        item.poster = null;
+        item.posterMediaId = null;
+        item.render = { ...(item.render?.toObject?.() || item.render || {}), posterUrl: fallback };
+        item.mediaReady = item.external?.provider ? Boolean(fallback) : readinessOf(item, own?.status);
+        await item.save();
+        revalidatePortfolio();
+        return res.status(200).json({ item });
+    } catch (error) {
+        console.error('removePoster error:', error);
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+/**
+ * POST /api/admin/portfolio/:id/replace { media } — swap the file, keeping the
+ * item (its tags, order, place in rows, URL). A file that is still processing
+ * waits in `pendingMedia`; the live item keeps the old file until the worker
+ * swaps the new one in (Services/portfolioRender.js), so nothing breaks midway.
+ */
+export async function replaceFile(req, res) {
+    try {
+        if (!mongoose.isValidObjectId(req.params.id)) return res.status(404).json({ message: 'Portfolio item not found' });
+        const item = await PortfolioItem.findById(req.params.id);
+        if (!item) return res.status(404).json({ message: 'Portfolio item not found' });
+        if (item.external?.provider) return res.status(400).json({ message: 'This film is a YouTube / Vimeo link; add the new link instead' });
+        const media = await Media.findOne(mongoose.isValidObjectId(req.body?.media) ? { _id: req.body.media } : { mediaId: req.body?.media });
+        if (!media) return res.status(404).json({ message: 'Media not found' });
+        const kind = media.mediaType === 'Video' ? 'Video' : media.mediaType === 'Image' ? 'Photo' : null;
+        if (kind !== item.kind) return res.status(400).json({ message: `Replace a ${item.kind === 'Video' ? 'film with a video' : 'photo with an image'}` });
+        if (String(media._id) === String(item.media)) return res.status(400).json({ message: 'That is already this item\'s file' });
+        const other = await PortfolioItem.findOne({ _id: { $ne: item._id }, $or: [{ media: media._id }, { pendingMedia: media._id }] }).select('_id').lean();
+        if (other) return res.status(409).json({ message: 'That file is already used by another item', existingItemId: other._id });
+
+        await Media.updateOne({ _id: media._id }, { $set: { ownerType: 'Client', ownerId: String(item.client) } });
+        if (media.status !== 'Ready') {
+            item.pendingMedia = media._id;
+            await item.save();
+            return res.status(202).json({ item, pending: true, message: 'The new file replaces the old one when it has finished processing' });
+        }
+        const render = renderFromMedia(media);
+        if (item.poster) render.posterUrl = item.render?.posterUrl;
+        item.media = media._id;
+        item.mediaId = media.mediaId;
+        item.pendingMedia = undefined;
+        item.render = render;
+        item.mediaReady = readinessOf({ kind: item.kind, render }, media.status);
+        await item.save();
+        revalidatePortfolio();
+        return res.status(200).json({ item, pending: false });
+    } catch (error) {
+        console.error('replaceFile error:', error);
         return res.status(500).json({ message: error.message });
     }
 }

@@ -56,9 +56,49 @@ const isAdminHost = (host = '') => {
 const isLocalDevHost = (host = '') =>
     host.split(':')[0].toLowerCase().endsWith('.localhost');
 
-export function proxy(request) {
+/**
+ * Story pages: decide the status before any HTML streams.
+ *
+ * The (site) segment has a loading UI, so a page's response starts streaming
+ * with 200 before the page itself runs — `notFound()` and `permanentRedirect()`
+ * inside it can no longer change the status (next/dist/docs … loading.md,
+ * "Status Codes"). The docs' remedy is a fast check here: a missing story is a
+ * real 404 and an old slug a real 308, which is what search engines need.
+ * A 30 s memo keeps it to one small API call per story per half-minute; on any
+ * error the request simply continues and the page decides as before.
+ */
+const STORY_PATH = /^\/weddings\/story\/([^/]+)\/?$/;
+const storyMemo = new Map();
+async function storyStatus(slug) {
+    const hit = storyMemo.get(slug);
+    if (hit && Date.now() - hit.at < 30_000) return hit.value;
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/weddings/${encodeURIComponent(slug)}/status`, { signal: AbortSignal.timeout(1500) });
+        const value = res.status === 404 ? { status: 'missing' } : res.ok ? await res.json() : null;
+        if (value) storyMemo.set(slug, { at: Date.now(), value });
+        if (storyMemo.size > 500) storyMemo.delete(storyMemo.keys().next().value);
+        return value;
+    } catch {
+        return null;
+    }
+}
+
+export async function proxy(request) {
     const host = request.headers.get('host') || '';
     const { pathname } = request.nextUrl;
+
+    const story = pathname.match(STORY_PATH);
+    if (story && !isAdminHost(host)) {
+        const found = await storyStatus(decodeURIComponent(story[1]).toLowerCase());
+        if (found?.status === 'moved') {
+            return NextResponse.redirect(new URL(`/weddings/story/${found.slug}`, request.url), 308);
+        }
+        if (found?.status === 'missing') {
+            // The page renders its not-found UI; the status is set here, before streaming.
+            return NextResponse.rewrite(request.nextUrl, { status: 404 });
+        }
+        return NextResponse.next();
+    }
 
     // Non-admin host: serve the public marketing site untouched.
     if (!isAdminHost(host)) {

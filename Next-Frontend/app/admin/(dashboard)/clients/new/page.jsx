@@ -17,6 +17,8 @@ import { cn } from '@/lib/utils.js';
 import { PageHeader } from '@/app/admin/components/ui/PageHeader.jsx';
 import MediaDetailsPanel from './_components/MediaDetailsPanel.jsx';
 import useTaxonomy from '@/Hooks/useTaxonomy.jsx';
+import AddFilmLinkDialog from '../_components/AddFilmLinkDialog.jsx';
+import PublishChecklistDialog from '../_components/PublishChecklistDialog.jsx';
 import DeleteClientModal from '../_components/DeleteClientModal.jsx';
 import ImageUploadModal from '../_components/ImageUploadModal.jsx';
 import VideoUploadModal from '../_components/VideoUploadModal.jsx';
@@ -105,6 +107,12 @@ export default function AddClientWizard() {
     const [coordinate, setCoordinate] = useState({ latitude: '', longitute: '' });
 
     const [clientId, setClientId] = useState(null);
+    // The story page's address, set by the server on create.
+    const [slug, setSlug] = useState('');
+    // Sent with the create so a retried request returns the same wedding.
+    const [requestId, setRequestId] = useState('');
+    const [showLinkDialog, setShowLinkDialog] = useState(false);
+    const [showChecklist, setShowChecklist] = useState(false);
     const [hasStoredDraft, setHasStoredDraft] = useState(false);
     const [creating, setCreating] = useState(false);
     const [showDiscardModal, setShowDiscardModal] = useState(false);
@@ -156,6 +164,8 @@ export default function AddClientWizard() {
                 if (p.venue) setVenue(p.venue);
                 if (p.isInMap !== undefined) setIsInMap(p.isInMap);
                 if (p.coordinate) setCoordinate(p.coordinate);
+                if (p.slug) setSlug(p.slug);
+                if (p.requestId) setRequestId(p.requestId);
                 if (p.clientId) {
                     setClientId(p.clientId);
                     setStep(1);
@@ -170,11 +180,11 @@ export default function AddClientWizard() {
             sessionStorage.setItem(
                 DRAFT_KEY,
                 JSON.stringify({
-                    bride, groom, startDate, endDate, season, weddingDate: startDate || weddingDate, city, venue, isInMap, coordinate, clientId,
+                    bride, groom, startDate, endDate, season, weddingDate: startDate || weddingDate, city, venue, isInMap, coordinate, clientId, slug, requestId,
                 })
             );
         } catch { /* ignore */ }
-    }, [bride, groom, startDate, endDate, season, weddingDate, city, venue, isInMap, coordinate, clientId]);
+    }, [bride, groom, startDate, endDate, season, weddingDate, city, venue, isInMap, coordinate, clientId, slug, requestId]);
 
     // Load the BTS schema (tags come from useTaxonomy)
     useEffect(() => {
@@ -290,13 +300,18 @@ export default function AddClientWizard() {
             },
             isInMap: pin.isInMap,
             coordinate: pin.coordinate,
+            // Saved on the wedding (it used to be typed here and dropped).
+            city: city.trim(),
+            venue: venue.trim(),
         };
+        const createId = requestId || crypto.randomUUID();
+        if (!clientId && !requestId) setRequestId(createId);
         try {
             const res = await fetch(`${api_url}/api/admin/clients${clientId ? `/${clientId}` : ''}`, {
                 method: clientId ? 'PATCH' : 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(clientId ? profile : { ...profile, status: 'Draft' }),
+                body: JSON.stringify(clientId ? profile : { ...profile, status: 'Draft', createRequestId: createId }),
             });
             if (clientId && res.status === 404) {
                 // The restored draft was deleted elsewhere; the next Continue creates it afresh.
@@ -306,10 +321,13 @@ export default function AddClientWizard() {
             }
             if (!res.ok) throw new Error(await errorFrom(res, clientId ? 'Could not update the couple' : 'Could not create the client'));
             if (clientId) {
+                const data = await res.json().catch(() => ({}));
+                if (data.client?.slug) setSlug(data.client.slug);
                 fireMessage(`Updated ${bride} & ${groom}`, 'success');
             } else {
                 const data = await res.json();
                 setClientId(data.clientId);
+                if (data.client?.slug) setSlug(data.client.slug);
                 fireMessage(`Initialized draft archive for ${bride} & ${groom}`, 'success');
             }
             setStep(1);
@@ -613,8 +631,16 @@ export default function AddClientWizard() {
                             setSeason('');
                             setCity('');
                             setVenue('');
+                            // Forget the wedding this form was editing: without this the next
+                            // Continue renamed that existing draft to the new couple.
+                            const hadWedding = Boolean(clientId);
+                            setClientId(null);
+                            setPortfolioItems([]);
+                            setSlug('');
+                            setRequestId('');
+                            setStep(0);
                             setHasStoredDraft(false);
-                            fireMessage('Draft reset. Starting fresh.', 'info');
+                            fireMessage(hadWedding ? 'Starting fresh. The earlier draft stays in Weddings.' : 'Draft reset. Starting fresh.', 'info');
                         }}
                         className="rounded-xl border border-amber-300 bg-white px-3 py-1.5 text-xs font-semibold text-amber-950 hover:bg-amber-100 transition cursor-pointer"
                     >
@@ -807,6 +833,12 @@ export default function AddClientWizard() {
                             />
                         </div>
                     </div>
+                    {slug && (
+                        <p className="text-[11px] text-stone-500">
+                            Story page: <span className="font-mono text-stone-800">/weddings/story/{slug}</span>
+                            {' '}— live once the wedding is published; change it later in the wedding&apos;s workspace.
+                        </p>
+                    )}
 
                     {/* Destination Map Pinning */}
                     <div className="rounded-2xl border border-stone-200 bg-white p-4 space-y-3">
@@ -1004,6 +1036,15 @@ export default function AddClientWizard() {
                                 >
                                     Stage Films
                                 </Button>
+                                <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => setShowLinkDialog(true)}
+                                    className="mt-3 text-xs font-semibold"
+                                >
+                                    Add by YouTube / Vimeo link
+                                </Button>
                             </div>
 
                             <div className="flex items-center justify-between text-[11px] text-stone-500 border-t border-stone-100 pt-3">
@@ -1195,7 +1236,7 @@ export default function AddClientWizard() {
                                 loading={publishing}
                                 disabled={portfolioItems.length === 0}
                                 iconRight={ArrowRight}
-                                onClick={handlePublishAndFinish}
+                                onClick={async () => { if (await flushDetailSaves()) setShowChecklist(true); }}
                                 className="bg-stone-900 hover:bg-stone-800 text-white font-semibold px-6 py-2.5 shadow-xs"
                             >
                                 Publish Wedding Showcase ({portfolioItems.length})
@@ -1237,6 +1278,7 @@ export default function AddClientWizard() {
                 initialFiles={stagedPhotos}
                 clientId={clientId}
                 onUploadComplete={handlePhotoUploadComplete}
+                defaults={{ shootDate: startDate || weddingDate, city, venue }}
             />
 
             {/* Video Staging Modal */}
@@ -1250,6 +1292,25 @@ export default function AddClientWizard() {
                 initialFiles={stagedVideos}
                 clientId={clientId}
                 onUploadComplete={handleVideoUploadComplete}
+                defaults={{ shootDate: startDate || weddingDate, city, venue }}
+            />
+
+            <AddFilmLinkDialog
+                open={showLinkDialog}
+                onClose={() => setShowLinkDialog(false)}
+                clientId={clientId}
+                taxonomy={taxonomy}
+                defaults={{ shootDate: startDate || weddingDate, city, venue }}
+                onAdded={(item) => handleVideoUploadComplete([item])}
+            />
+
+            {/* "Review & publish": what goes live now, what follows, what will not show. */}
+            <PublishChecklistDialog
+                open={showChecklist}
+                clientId={clientId}
+                publishing={publishing}
+                onClose={() => setShowChecklist(false)}
+                onPublish={handlePublishAndFinish}
             />
         </div>
     );

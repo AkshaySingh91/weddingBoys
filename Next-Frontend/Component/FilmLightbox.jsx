@@ -24,6 +24,10 @@ import { useEffect, useRef, useState } from 'react';
 import { FiX } from 'react-icons/fi';
 import Videoplayer from '@/Component/Videoplayer.jsx';
 
+/** A YouTube (no-cookie) or Vimeo embed, as the API returns for films hosted there. */
+const EMBED = /^https:\/\/(www\.youtube-nocookie\.com\/embed\/|player\.vimeo\.com\/video\/)/;
+const withAutoplay = (url) => `${url}${url.includes('?') ? '&' : '?'}autoplay=1`;
+
 export default function FilmLightbox({ src, title, onClose }) {
     const panelRef = useRef(null);
     const restoreTo = useRef(null);
@@ -117,7 +121,20 @@ export default function FilmLightbox({ src, title, onClose }) {
                 {/* Gold-edged frame. Square corners here, not the arch: an arch
                     would crop the top of the picture, and the film is the point. */}
                 <div className="overflow-hidden border-y border-gold/45 bg-black shadow-overlay sm:rounded-panel sm:border">
-                    <Videoplayer src={src} />
+                    {EMBED.test(src || '') ? (
+                        // Films hosted on YouTube / Vimeo play in the host's player.
+                        <div className="relative aspect-video w-full">
+                            <iframe
+                                src={withAutoplay(src)}
+                                title={title || 'Wedding film'}
+                                allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+                                allowFullScreen
+                                className="absolute inset-0 h-full w-full border-0"
+                            />
+                        </div>
+                    ) : (
+                        <Videoplayer src={src} />
+                    )}
                 </div>
             </div>
         </div>

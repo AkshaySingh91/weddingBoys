@@ -302,6 +302,9 @@ export default function ImageUploadModal({
   initialFiles = EMPTY_FILES,
   clientId,
   onUploadComplete,
+  // The wedding's own date and place (and the ceremony being viewed), used
+  // wherever the admin has not typed one: { shootDate, city, venue, ceremony }.
+  defaults,
 }) {
   const [items, setItems] = useState([]);
   const [selectedIds, setSelectedIds] = useState(new Set());
@@ -441,6 +444,12 @@ export default function ImageUploadModal({
     }
 
     if (!wasOpen && initialFiles && initialFiles.length > 0) {
+      const date = curationDate || defaults?.shootDate || '';
+      const city = curationCity || defaults?.city || '';
+      const venue = curationVenue || defaults?.venue || '';
+      if (!curationDate && date) setCurationDate(date);
+      if (!curationCity && city) setCurationCity(city);
+      if (!curationVenue && venue) setCurationVenue(venue);
       const newItems = initialFiles.map((file, idx) => ({
         id: `${file.name}-${file.size}-${Date.now()}-${idx}`,
         file,
@@ -450,17 +459,18 @@ export default function ImageUploadModal({
         progress: 0,
         status: 'queued',
         error: null,
-        eventGroup: 'Unthemed',
+        eventGroup: defaults?.ceremony || 'Unthemed',
         tags: [...curationTags],
-        shootDate: curationDate || '',
-        city: curationCity || '',
-        venue: curationVenue || '',
+        shootDate: date,
+        city,
+        venue,
         credits: [...curationCredits],
       }));
       setItems(newItems);
       setSelectedIds(new Set(newItems.map((it) => it.id)));
     }
-  }, [open, initialFiles]);
+    // Only the open transition acts (prevOpenRef); re-runs while open or closed are no-ops.
+  }, [open, initialFiles, curationCity, curationCredits, curationDate, curationTags, curationVenue, defaults?.ceremony, defaults?.city, defaults?.shootDate, defaults?.venue]);
 
   // Clean up object URLs on unmount
   useEffect(() => {
@@ -789,7 +799,8 @@ export default function ImageUploadModal({
 
     setIsUploading(false);
     setUploadFinished(true);
-    setUploadedResults(uploadedPlacements);
+    // A retry adds to what earlier runs uploaded instead of replacing it.
+    setUploadedResults((prev) => [...prev, ...uploadedPlacements]);
 
     try {
       sessionStorage.removeItem(storageKey);
@@ -1206,15 +1217,23 @@ export default function ImageUploadModal({
 
                   {/* Action Buttons */}
                   <div className="pt-3 space-y-2">
-                    <Button
-                      type="button"
-                      variant="terracotta"
-                      size="sm"
-                      onClick={handleFinishAndExit}
-                      className="w-full text-xs font-semibold py-2.5"
-                    >
-                      Finish & View Client Gallery
-                    </Button>
+                    <div className="flex shrink-0 items-center gap-2">
+                      {/* Failed items keep their settings; a retry uploads only those. */}
+                      {errorCount > 0 && (
+                        <Button type="button" variant="outline" size="sm" onClick={startUpload} disabled={isUploading} className="text-xs">
+                          Retry {errorCount} failed
+                        </Button>
+                      )}
+                      <Button
+                        type="button"
+                        variant="terracotta"
+                        size="sm"
+                        onClick={handleFinishAndExit}
+                        className="w-full text-xs font-semibold py-2.5"
+                      >
+                        Finish & View Client Gallery
+                      </Button>
+                    </div>
                   </div>
                 </div>
               ) : (

@@ -29,6 +29,9 @@ function SpecificFilm() {
     const [clientName, setClientName] = useState({ Bride: "", Groom: "" })
     const [mainVideo, setMainVideo] = useState(null)
     const [clientPhotos, setClientPhotos] = useState([]);
+    // The wedding's story page (null unless it is public) and its other films.
+    const [wedding, setWedding] = useState(null);
+    const [siblings, setSiblings] = useState([]);
     const [recommendedVideos, setRecommendedVideos] = useState([]);
     const [currentPhotoSlide, setCurrentPhotoSlide] = useState(0);
     const [particles, setParticles] = useState(null);
@@ -108,6 +111,8 @@ function SpecificFilm() {
                 setClientName(data.clientName)
                 setMainVideo(data.selectedVideo)
                 setClientPhotos(data.photos)
+                setWedding(data.wedding || null)
+                setSiblings(data.remainingVideos || [])
             } catch (error) {
                 fireMessage(error, 'error')
             }
@@ -157,7 +162,18 @@ function SpecificFilm() {
                     className="mb-12 shadow-2xl rounded-2xl overflow-hidden border-2 border-[#FFDCCC]"
                 >
                     <div className="relative aspect-video sm:h-50 sm:w-full">
-                        <VideoPlayer src={mainVideo.url} />
+                        {mainVideo.embedUrl ? (
+                            // A film hosted on YouTube / Vimeo plays in the host's player.
+                            <iframe
+                                src={mainVideo.embedUrl}
+                                title={`${clientName.Bride} & ${clientName.Groom} — wedding film`}
+                                allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+                                allowFullScreen
+                                className="absolute inset-0 h-full w-full border-0"
+                            />
+                        ) : (
+                            <VideoPlayer src={mainVideo.url} />
+                        )}
                     </div>
                 </motion.div>
             )}
@@ -280,6 +296,38 @@ function SpecificFilm() {
                         </button>
                     </div>
                 </motion.section>
+            )}
+
+            {/* The rest of this wedding: its story page and its other films. */}
+            {(wedding || siblings.length > 0) && (
+                <section className="mb-16" aria-labelledby="this-wedding">
+                    <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+                        <h2 id="this-wedding" className="t-heading-1">More from this wedding</h2>
+                        {wedding && (
+                            <Link href={wedding.href} className="t-body-sm font-semibold text-accent-ink hover:text-ink">
+                                See the full wedding
+                            </Link>
+                        )}
+                    </div>
+                    {siblings.length > 0 && (
+                        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                            {siblings.map((v) => (
+                                <li key={v._id}>
+                                    <Link href={`/films/${v._id}`} className="group block">
+                                        <div className="relative aspect-video overflow-hidden border border-gold/40 bg-ground-sunk">
+                                            {v.thumbnailMetaData?.url && (
+                                                // eslint-disable-next-line @next/next/no-img-element -- CDN poster, sized by the grid
+                                                <img src={v.thumbnailMetaData.url} alt={`${clientName.Bride} & ${clientName.Groom}, film`}
+                                                    loading="lazy" className="h-full w-full object-cover transition-transform duration-media group-hover:scale-[1.03]" />
+                                            )}
+                                        </div>
+                                        <p className="t-caption mt-2">{v.videoShootDate || ''}</p>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </section>
             )}
 
             {/* Related Videos */}

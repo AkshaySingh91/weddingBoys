@@ -221,7 +221,7 @@ export default function HeroCarousel({ slides = [] }) {
                             old one was an unlabelled 48px white-on-white/10 circle. */}
                         <button
                             type="button"
-                            onClick={() => setLightboxUrl(active.sourceUrl || active.webUrl || active.videoUrl)}
+                            onClick={() => setLightboxUrl(active.sourceUrl || active.webUrl || active.videoUrl || active.embedUrl)}
                             aria-label={`Play film — ${captionOf(active)}`}
                             className="pointer-events-auto grid h-14 w-14 shrink-0 place-items-center rounded-pill
                                        border border-gold/70 bg-ink/45 text-white backdrop-blur-sm

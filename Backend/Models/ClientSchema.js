@@ -2,11 +2,13 @@ import mongoose from "mongoose";
 
 const Client = new mongoose.Schema({
     clientName: {
+        // `required` (it said `require`, which Mongoose ignores, so a wedding
+        // could be saved with no names).
         Bride: {
-            type: String, require: true
+            type: String, required: true, trim: true
         },
         Groom: {
-            type: String, require: true
+            type: String, required: true, trim: true
         },
     },
     celebrationDates: {
@@ -21,6 +23,30 @@ const Client = new mongoose.Schema({
     status: { type: String, enum: ['Draft', 'Published', 'Archived'], default: 'Draft', index: true },
     publishedAt: { type: Date },
     archivedAt: { type: Date },
+
+    // ---- the public story page: /weddings/story/<slug> -------------------
+    // `slug` is unique; earlier slugs stay in `slugHistory` so old links 301 to
+    // the current one. Sparse: weddings get one on create or from
+    // scripts/backfillClientProfiles.js.
+    slug: { type: String, trim: true, lowercase: true, index: { unique: true, sparse: true } },
+    slugHistory: { type: [{ type: String, lowercase: true }], index: true },
+    location: {
+        city: { type: String, trim: true },
+        citySlug: { type: String, trim: true, lowercase: true, index: true },
+        state: { type: String, trim: true },
+        country: { type: String, trim: true },
+        venue: { type: String, trim: true },
+    },
+    // The portfolio item whose poster or photo represents the wedding.
+    cover: { type: mongoose.Schema.Types.ObjectId, ref: 'PortfolioItem' },
+    featured: { type: Boolean, default: false },
+    story: {
+        intro: { type: String, trim: true },
+        enabled: { type: Boolean, default: true },
+    },
+    // Idempotent create: a retried POST with the same id returns the same wedding
+    // instead of a second one.
+    createRequestId: { type: String, index: { unique: true, sparse: true } },
     videos: [
         {
             _id: {

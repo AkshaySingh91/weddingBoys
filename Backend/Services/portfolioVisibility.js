@@ -26,10 +26,13 @@ export const PUBLIC_GATE = Object.freeze({ status: 'Published', clientStatus: 'P
 
 const PENDING = new Set(['Draft', 'Uploading', 'Processing']);
 
-/** There is something to show: a photo with an image, a film with a video and a poster. */
+/**
+ * There is something to show: a photo with an image, a film with a video (our
+ * file or a YouTube / Vimeo embed) and a poster.
+ */
 export function hasRender(kind, render = {}) {
     if (kind === 'Photo') return Boolean(render.imageUrl);
-    return Boolean((render.webUrl || render.sourceUrl || render.loopUrl) && render.posterUrl);
+    return Boolean((render.webUrl || render.sourceUrl || render.loopUrl || render.embedUrl) && render.posterUrl);
 }
 
 /** mediaReady for an item, from its render and its Media's status. */

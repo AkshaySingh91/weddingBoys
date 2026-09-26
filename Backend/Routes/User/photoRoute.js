@@ -75,6 +75,7 @@ async function getSpecificPhoto(req, res, next) {
             return res.status(200).json({
                 clientName: item.client?.clientName,
                 selectedPhoto: { ...portfolio.toLegacyPhotoRow(item), photoShootDate: portfolio.monthYear(item.shootDate) },
+                wedding: await portfolio.storyLinkFor(item.client?._id || item.client),
                 remainingPhotos: siblings.map(portfolio.toLegacyPhotoRow),
             });
         }
@@ -118,6 +119,7 @@ async function getSpecificPhoto(req, res, next) {
             }
             res.status(200).json({
                 clientName: clientData.clientName,
+                wedding: await portfolio.storyLinkFor(clientData._id),
                 selectedPhoto,
                 remainingPhotos: otherPhotos
             });

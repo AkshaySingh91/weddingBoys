@@ -15,6 +15,7 @@ import { cn } from '@/lib/utils.js';
 import { posterOf, nameOf } from './PortfolioCard.jsx';
 import TagPicker from '@/app/admin/components/taxonomy/TagPicker.jsx';
 import useTaxonomy from '@/Hooks/useTaxonomy.jsx';
+import MediaControls from './MediaControls.jsx';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -46,7 +47,7 @@ const initialForm = (item) => ({
 
 const noopSubscribe = () => () => {};
 
-export default function EditDrawer({ item, saving, onClose, onSave, onDelete }) {
+export default function EditDrawer({ item, saving, onClose, onSave, onDelete, onItemChanged }) {
     // true only in the browser (the drawer portals into document.body); no effect needed.
     const mounted = useSyncExternalStore(noopSubscribe, () => true, () => false);
     const [form, setForm] = useState(() => initialForm(item));
@@ -235,7 +236,16 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete }) 
                             <div className="space-y-2">
                                 <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-stone-950 shadow-md flex items-center justify-center group">
                                     {isVideo ? (
-                                        videoStreamUrl ? (
+                                        item.render?.embedUrl ? (
+                                            // A YouTube / Vimeo film: preview it in the host's player.
+                                            <iframe
+                                                src={item.render.embedUrl}
+                                                title={item.external?.title || 'Film'}
+                                                allow="autoplay; fullscreen; picture-in-picture"
+                                                allowFullScreen
+                                                className="h-full w-full border-0"
+                                            />
+                                        ) : videoStreamUrl ? (
                                             <video
                                                 controls
                                                 playsInline
@@ -378,6 +388,9 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete }) 
                                     />
                                 </div>
                             </div>
+
+                            {/* On the site: visibility reasons, poster, replace file */}
+                            <MediaControls item={item} onChanged={onItemChanged} />
 
                             {/* Tags: the tag system (Ceremony, Film type, categories) */}
                             <div className="rounded-2xl border border-stone-200 bg-white p-5 space-y-4 shadow-xs">

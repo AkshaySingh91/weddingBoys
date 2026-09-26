@@ -357,6 +357,8 @@ export const FEATURED_DESTINATIONS = {
  */
 export function getLocationBySlug(rawSlug = '') {
     const slug = String(rawSlug).trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+    // /weddings/story/<couple> is a wedding's story page, never a city.
+    if (slug === 'story') return null;
 
     if (FEATURED_DESTINATIONS[slug]) {
         return FEATURED_DESTINATIONS[slug];

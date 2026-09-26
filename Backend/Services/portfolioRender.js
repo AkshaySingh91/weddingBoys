@@ -53,6 +53,14 @@ const dotted = (obj) => Object.fromEntries(
  * @returns {{ full: number, keptPoster: number, posterUpdated: number, nowPublic: number }}
  */
 export async function syncRenderForMedia(media) {
+    // A replacement file waiting on this media goes live now that it is ready:
+    // the item switches to it, and the refresh below gives it the new render.
+    if (media.status === 'Ready') {
+        await PortfolioItem.updateMany(
+            { pendingMedia: media._id },
+            { $set: { media: media._id, mediaId: media.mediaId }, $unset: { pendingMedia: 1 } },
+        );
+    }
     const render = renderFromMedia(media);
     const { posterUrl, ...withoutPoster } = render;
 

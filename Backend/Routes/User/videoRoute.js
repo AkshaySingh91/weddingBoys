@@ -115,7 +115,9 @@ async function getSpecificVideoById(req, res) {
                 ...row.videos,
                 videoShootDate: portfolio.monthYear(item.shootDate),
                 url: row.url, loopUrl: row.loopUrl, thumbnailUrl: row.thumbnailUrl,
+                embedUrl: row.embedUrl, external: row.external,
             },
+            wedding: await portfolio.storyLinkFor(item.client?._id || item.client),
             remainingVideos: siblings.map((s2) => {
                 const r = portfolio.toLegacyVideoRow(s2);
                 return { ...r.videos, thumbnailMetaData: { ...r.videos.thumbnailMetaData, url: r.thumbnailUrl } };
@@ -170,6 +172,7 @@ async function getSpecificVideoById(req, res) {
         } 
         res.status(200).json({
             clientName: clientData.clientName,
+            wedding: await portfolio.storyLinkFor(clientData._id),
             selectedVideo,
             remainingVideos: otherVideos,
             photos: allPhotos

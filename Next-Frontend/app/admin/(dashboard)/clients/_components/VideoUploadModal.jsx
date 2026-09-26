@@ -493,6 +493,9 @@ export default function VideoUploadModal({
   initialFiles = EMPTY_VIDEOS,
   clientId,
   onUploadComplete,
+  // The wedding's own date and place (and the ceremony being viewed), used
+  // as each film's starting values: { shootDate, city, venue, ceremony }.
+  defaults,
 }) {
   const [items, setItems] = useState([]);
   const [selectedIds, setSelectedIds] = useState(new Set());
@@ -549,7 +552,10 @@ export default function VideoUploadModal({
         status: 'queued',
         error: null,
         filmType: DEFAULT_FILM_TYPE,
-        eventGroup: '',
+        eventGroup: defaults?.ceremony || '',
+        shootDate: defaults?.shootDate || '',
+        city: defaults?.city || '',
+        venue: defaults?.venue || '',
         isHero: false, // opt-in only: the first film of every batch used to join the home hero
         makeLoop: true,
         stripAudio: false,
@@ -558,7 +564,8 @@ export default function VideoUploadModal({
       setItems(newItems);
       setSelectedIds(new Set(newItems.map((it) => it.id)));
     }
-  }, [open, initialFiles]);
+    // Only the open transition acts (prevOpenRef); re-runs while open or closed are no-ops.
+  }, [open, initialFiles, defaults?.ceremony, defaults?.city, defaults?.shootDate, defaults?.venue]);
 
   const totalBytes = useMemo(() => items.reduce((acc, it) => acc + (it.size || 0), 0), [items]);
 
@@ -574,7 +581,10 @@ export default function VideoUploadModal({
       status: 'queued',
       error: null,
       filmType: DEFAULT_FILM_TYPE,
-      eventGroup: '',
+      eventGroup: defaults?.ceremony || '',
+      shootDate: defaults?.shootDate || '',
+      city: defaults?.city || '',
+      venue: defaults?.venue || '',
       isHero: false,
       makeLoop: true,
       stripAudio: false,
@@ -690,7 +700,7 @@ export default function VideoUploadModal({
             isHero: Boolean(item.isHero),
             heroPriority: item.isHero ? 1 : 0,
             shootDate: item.shootDate || undefined,
-            location: item.location ? { city: item.location } : undefined,
+            location: (item.city || item.venue) ? { city: item.city, venue: item.venue } : undefined,
             caption: item.caption,
             // No status: the server decides (plan D7) — live with the wedding if
             // it is a draft, hidden for review if it is already published.
@@ -729,7 +739,8 @@ export default function VideoUploadModal({
 
     setIsUploading(false);
     setUploadFinished(true);
-    setUploadedResults(uploadedPlacements);
+    // A retry adds to what earlier runs uploaded instead of replacing it.
+    setUploadedResults((prev) => [...prev, ...uploadedPlacements]);
 
     if (uploadedPlacements.length > 0) {
       fireMessage(`Uploaded and queued ${uploadedPlacements.length} wedding films!`, 'success');
@@ -817,15 +828,23 @@ export default function VideoUploadModal({
                   </div>
                 </div>
 
-                <Button
-                  type="button"
-                  variant="terracotta"
-                  size="sm"
-                  onClick={handleFinishAndExit}
-                  className="shrink-0 text-xs font-semibold px-4 shadow-sm"
-                >
-                  Finish & View Client Gallery
-                </Button>
+                <div className="flex shrink-0 items-center gap-2">
+                  {/* Failed items keep their settings; a retry uploads only those. */}
+                  {errorCount > 0 && (
+                    <Button type="button" variant="outline" size="sm" onClick={startUpload} disabled={isUploading} className="text-xs">
+                      Retry {errorCount} failed
+                    </Button>
+                  )}
+                  <Button
+                    type="button"
+                    variant="terracotta"
+                    size="sm"
+                    onClick={handleFinishAndExit}
+                    className="shrink-0 text-xs font-semibold px-4 shadow-sm"
+                  >
+                    Finish & View Client Gallery
+                  </Button>
+                </div>
               </div>
 
               {/* 2-Pane View: Left Video Roster + Right Production Asset Inspector */}

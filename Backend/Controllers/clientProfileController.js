@@ -17,6 +17,8 @@ import WebsiteSettingSchema from '../Models/WebsiteSettingSchema.js';
 import { deleteSingleMediaDoc } from './mediaController.js';
 import { PUBLIC_GATE, setClientStatus, markMediaGone } from '../Services/portfolioVisibility.js';
 import { revalidatePortfolio } from '../Services/revalidate.js';
+import { slugForNames, uniqueSlug, checkSlug, slugTaken, locationFrom } from '../Services/weddingProfile.js';
+import { explainVisibility } from '../Services/portfolioVisibility.js';
 
 const STATUSES = ['Draft', 'Published', 'Archived'];
 
@@ -86,7 +88,7 @@ export async function getClientProfile(req, res) {
             return res.status(400).json({ message: 'Invalid client id' });
         }
         const client = await Client.findById(id)
-            .select('clientName celebrationDates weddingDate status createdAt updatedAt')
+            .select('clientName celebrationDates weddingDate status publishedAt slug slugHistory location cover featured story createdAt updatedAt')
             .lean();
         if (!client) return res.status(404).json({ message: 'Client not found' });
         return res.status(200).json({ client: { ...client, mapPin: await mapPinOf(client._id) } });
@@ -99,7 +101,10 @@ export async function getClientProfile(req, res) {
 // POST /api/admin/clients — create the entity only. No media.
 export async function createClient(req, res) {
     try {
-        const { bride, groom, isInMap, coordinate, celebrationDates, weddingDate, status } = req.body || {};
+        const {
+            bride, groom, isInMap, coordinate, celebrationDates, weddingDate, status,
+            location, city, venue, state, story, createRequestId,
+        } = req.body || {};
         if (!bride?.trim() || !groom?.trim()) {
             return res.status(400).json({ message: 'Both names are required' });
         }
@@ -107,15 +112,39 @@ export async function createClient(req, res) {
         if (pin.error) return res.status(400).json({ message: pin.error });
         if (status !== undefined && !STATUSES.includes(status)) return res.status(400).json({ message: `status must be one of ${STATUSES.join(', ')}` });
 
-        const client = await Client.create({
-            clientName: { Bride: bride.trim(), Groom: groom.trim() },
-            celebrationDates: celebrationDates || {},
-            weddingDate: weddingDate || celebrationDates?.startDate || null,
-            status: status || 'Draft',
-            ...(status === 'Published' ? { publishedAt: new Date() } : {}),
-            videos: [],
-            photos: [],
-        });
+        // A retried create (double click, flaky network) returns the wedding the
+        // first request made instead of a second one.
+        const requestId = typeof createRequestId === 'string' && createRequestId.trim() ? createRequestId.trim().slice(0, 100) : undefined;
+        if (requestId) {
+            const existing = await Client.findOne({ createRequestId: requestId });
+            if (existing) return res.status(200).json({ client: existing, clientId: String(existing._id), repeated: true });
+        }
+
+        const date = new Date(weddingDate || celebrationDates?.startDate || NaN);
+        const slug = await uniqueSlug(slugForNames(bride.trim(), groom.trim()), { year: Number.isNaN(date.getTime()) ? undefined : date.getFullYear() });
+        let client;
+        try {
+            client = await Client.create({
+                clientName: { Bride: bride.trim(), Groom: groom.trim() },
+                celebrationDates: celebrationDates || {},
+                weddingDate: weddingDate || celebrationDates?.startDate || null,
+                status: status || 'Draft',
+                ...(status === 'Published' ? { publishedAt: new Date() } : {}),
+                slug,
+                location: locationFrom(location || { city, venue, state }),
+                story: { intro: typeof story?.intro === 'string' ? story.intro.trim() : undefined, enabled: story?.enabled !== false },
+                createRequestId: requestId,
+                videos: [],
+                photos: [],
+            });
+        } catch (error) {
+            // Two identical requests racing: the loser returns the winner's wedding.
+            if (error?.code === 11000 && requestId) {
+                const existing = await Client.findOne({ createRequestId: requestId });
+                if (existing) return res.status(200).json({ client: existing, clientId: String(existing._id), repeated: true });
+            }
+            throw error;
+        }
 
         if (pin.coordinate) await setMapPin(client._id, pin.coordinate);
 
@@ -129,7 +158,10 @@ export async function createClient(req, res) {
 // PATCH /api/admin/clients/:id — rename, celebration dates, status, and move or clear the map pin.
 export async function updateClientProfile(req, res) {
     try {
-        const { bride, groom, isInMap, coordinate, celebrationDates, weddingDate, status } = req.body || {};
+        const {
+            bride, groom, isInMap, coordinate, celebrationDates, weddingDate, status,
+            slug, location, city, venue, state, story, cover, featured,
+        } = req.body || {};
         const pin = isInMap !== undefined ? readMapPin(isInMap, coordinate) : null;
         if (pin?.error) return res.status(400).json({ message: pin.error });
         if (status !== undefined && !STATUSES.includes(status)) return res.status(400).json({ message: `status must be one of ${STATUSES.join(', ')}` });
@@ -140,7 +172,43 @@ export async function updateClientProfile(req, res) {
         if (groom?.trim()) client.clientName.Groom = groom.trim();
         if (celebrationDates !== undefined) client.celebrationDates = celebrationDates;
         if (weddingDate !== undefined) client.weddingDate = weddingDate;
+
+        // ---- the story page -------------------------------------------------
+        let storyChanged = false;
+        if (slug !== undefined && slug !== client.slug) {
+            let next;
+            try { next = checkSlug(slug); } catch (e) { return res.status(e.status || 400).json({ message: e.message }); }
+            if (await slugTaken(next, client._id)) return res.status(409).json({ message: `"${next}" is used by another wedding` });
+            // The old slug keeps working as a redirect to the new one.
+            const history = new Set([...(client.slugHistory || []), ...(client.slug ? [client.slug] : [])]);
+            history.delete(next);
+            client.slugHistory = [...history];
+            client.slug = next;
+            storyChanged = true;
+        }
+        if (location !== undefined || city !== undefined || venue !== undefined || state !== undefined) {
+            const current = client.location?.toObject?.() || client.location || {};
+            client.location = locationFrom({ ...current, ...(location || {}), ...(city !== undefined ? { city } : {}), ...(venue !== undefined ? { venue } : {}), ...(state !== undefined ? { state } : {}) });
+            storyChanged = true;
+        }
+        if (story !== undefined) {
+            if (typeof story?.intro === 'string') client.story.intro = story.intro.trim().slice(0, 2000);
+            if (story?.enabled !== undefined) client.story.enabled = Boolean(story.enabled);
+            storyChanged = true;
+        }
+        if (featured !== undefined) { client.featured = Boolean(featured); storyChanged = true; }
+        if (cover !== undefined) {
+            if (cover === null || cover === '') client.cover = undefined;
+            else {
+                if (!mongoose.isValidObjectId(cover) || !(await PortfolioItem.exists({ _id: cover, client: client._id }))) {
+                    return res.status(400).json({ message: 'The cover must be one of this wedding\'s films or photos' });
+                }
+                client.cover = cover;
+            }
+            storyChanged = true;
+        }
         await client.save();
+        if (storyChanged) revalidatePortfolio();
 
         if (pin) await setMapPin(client._id, pin.coordinate);
 
@@ -165,6 +233,97 @@ export async function updateClientProfile(req, res) {
         return res.status(200).json({ client: { ...client.toObject(), mapPin: await mapPinOf(client._id) }, publicItems });
     } catch (error) {
         console.error('updateClientProfile error:', error);
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+/**
+ * GET /api/admin/clients/:id/readiness — the "Review & publish" checklist.
+ *
+ * What goes live the moment the wedding is published, what follows later on its
+ * own (still processing), and what will not appear, with the reason. Blockers
+ * stop a publish; warnings are shown and may be ignored (plan: a missing
+ * ceremony warns, never blocks).
+ */
+export async function getClientReadiness(req, res) {
+    try {
+        const { id } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid client id' });
+        const client = await Client.findById(id).select('clientName status slug location cover story').lean();
+        if (!client) return res.status(404).json({ message: 'Client not found' });
+        const items = await PortfolioItem.find({ client: id })
+            .select('kind status clientStatus mediaReady tagIds eventGroup render media external')
+            .populate('media', 'status processing.lastError')
+            .lean();
+
+        // As if the wedding were published: the item's own status and its file decide.
+        const asPublished = items.map((i) => ({ item: i, v: explainVisibility({ ...i, clientStatus: 'Published' }, i.media) }));
+        const count = (reason) => asPublished.filter(({ v }) => v.reasons.includes(reason)).length;
+        const goesLive = asPublished.filter(({ v }) => v.public);
+        const counts = {
+            items: items.length,
+            films: items.filter((i) => i.kind === 'Video').length,
+            photos: items.filter((i) => i.kind === 'Photo').length,
+            goesLive: goesLive.length,
+            goesLiveFilms: goesLive.filter(({ item }) => item.kind === 'Video').length,
+            goesLivePhotos: goesLive.filter(({ item }) => item.kind === 'Photo').length,
+            processing: count('processing'),
+            failed: count('failed'),
+            missing: count('asset-missing'),
+            hidden: count('hidden-by-admin'),
+            untagged: items.filter((i) => !(i.tagIds || []).length).length,
+            noCeremony: items.filter((i) => !i.eventGroup).length,
+        };
+
+        const blockers = [];
+        const warnings = [];
+        if (!client.clientName?.Bride || !client.clientName?.Groom) blockers.push({ code: 'names', message: 'Both names are needed' });
+        if (!items.length) blockers.push({ code: 'empty', message: 'Add at least one film or photo' });
+        else if (!goesLive.length && !counts.processing) blockers.push({ code: 'nothing-live', message: 'Nothing would be visible: every item is hidden or its file is missing' });
+        if (counts.processing) warnings.push({ code: 'processing', message: `${counts.processing} still processing — they go live by themselves when ready` });
+        if (counts.failed) warnings.push({ code: 'failed', message: `${counts.failed} failed to process — re-upload or remove them` });
+        if (counts.missing) warnings.push({ code: 'missing', message: `${counts.missing} have a missing file and will not show` });
+        if (counts.hidden) warnings.push({ code: 'hidden', message: `${counts.hidden} are hidden and stay hidden` });
+        if (counts.untagged) warnings.push({ code: 'untagged', message: `${counts.untagged} have no tags, so they appear in no row (only on the story page)` });
+        if (counts.noCeremony) warnings.push({ code: 'no-ceremony', message: `${counts.noCeremony} have no ceremony — they appear under "More moments" on the story page` });
+        if (!client.location?.city) warnings.push({ code: 'no-city', message: 'No city — the story page and city pages cannot place it' });
+        if (!client.cover) warnings.push({ code: 'no-cover', message: 'No cover chosen — the first film or photo is used' });
+        if (client.story?.enabled === false) warnings.push({ code: 'story-off', message: 'The story page is turned off' });
+
+        return res.status(200).json({
+            status: client.status,
+            slug: client.slug,
+            storyUrl: client.slug && client.story?.enabled !== false ? `/weddings/story/${client.slug}` : null,
+            counts, blockers, warnings,
+            ready: blockers.length === 0,
+        });
+    } catch (error) {
+        console.error('getClientReadiness error:', error);
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+/**
+ * POST /api/admin/clients/:id/order { ids } — the admin's drag order.
+ * Items keep their relative order; any not listed follow, as they were.
+ */
+export async function reorderClientItems(req, res) {
+    try {
+        const { id } = req.params;
+        const { ids } = req.body || {};
+        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid client id' });
+        if (!Array.isArray(ids) || !ids.length || !ids.every((x) => mongoose.isValidObjectId(x))) {
+            return res.status(400).json({ message: 'ids must be a list of item ids' });
+        }
+        const owned = await PortfolioItem.find({ client: id, _id: { $in: ids } }).select('_id').lean();
+        if (owned.length !== new Set(ids.map(String)).size) return res.status(400).json({ message: 'Every id must be an item of this wedding' });
+        await PortfolioItem.bulkWrite(ids.map((itemId, order) => ({
+            updateOne: { filter: { _id: itemId, client: id }, update: { $set: { order } }, timestamps: false },
+        })));
+        revalidatePortfolio();
+        return res.status(200).json({ ok: true, ordered: ids.length });
+    } catch (error) {
+        console.error('reorderClientItems error:', error);
         return res.status(500).json({ message: error.message });
     }
 }

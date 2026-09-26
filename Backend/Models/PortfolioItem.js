@@ -60,7 +60,24 @@ const portfolioItemSchema = new mongoose.Schema({
         country: { type: String, trim: true },
         state: { type: String, trim: true },
         city: { type: String, trim: true },
+        citySlug: { type: String, trim: true, lowercase: true },
         venue: { type: String, trim: true },
+    },
+    // Position within its wedding (and ceremony) on the story page; set by the
+    // admin's drag order. Lower first.
+    order: { type: Number, default: 0 },
+    // A replacement file still processing. The worker swaps it in as `media`
+    // when it is ready, so the live item never shows a half-processed file.
+    pendingMedia: { type: mongoose.Schema.Types.ObjectId, ref: 'Media' },
+    // A film hosted on YouTube or Vimeo instead of our storage (plan D8). Such an
+    // item has no `media`; it is ready as soon as it is added.
+    external: {
+        provider: { type: String, enum: ['youtube', 'vimeo'] },
+        url: { type: String, trim: true },
+        videoId: { type: String, trim: true },
+        title: { type: String, trim: true },
+        posterUrl: { type: String, trim: true },
+        durationSec: { type: Number },
     },
 
     isHero: { type: Boolean, default: false },
@@ -117,6 +134,7 @@ const portfolioItemSchema = new mongoose.Schema({
         height: Number,
         imageUrl: String,                       // Photo
         loopUrl: String, webUrl: String, sourceUrl: String,   // Video
+        embedUrl: String,                                     // Video hosted on YouTube / Vimeo
         durationSec: Number,
         syncedAt: Date,
     },

@@ -51,6 +51,9 @@ Choose one:
    node scripts/migrateTagsToTaxonomy.js --dry-run         # review Unsorted and the map
    node scripts/migrateTagsToTaxonomy.js --apply
    node scripts/migrateTagsToTaxonomy.js --verify
+   node scripts/backfillClientProfiles.js --dry-run         # slugs, cities, covers
+   node scripts/backfillClientProfiles.js --apply
+   node scripts/backfillClientProfiles.js --verify
    node scripts/cutoverReport.js                           # must say "no blockers"
    ```
 4. Run two backends on the copy and compare them (both read-only, no worker needed):
@@ -74,16 +77,22 @@ Choose one:
    v2 rows match films by tag id. Safe to run before the switch at any time: production's
    legacy reads never look at it. (Edit `scripts/tag-migration-map.json` first if the dry run
    shows tags in Unsorted that belong somewhere.)
-4. `node scripts/cutoverReport.js` against production: **no blockers**.
-5. Set `PORTFOLIO_READS=v2` on the backend and restart it.
-6. Smoke test: `/`, `/films`, `/allfilms`, `/photos`, five film pages and five photo pages.
+4. `node scripts/backfillClientProfiles.js --apply`, then `--verify` (Phase 4): gives every
+   wedding a story-page slug, a city from its items and a cover; creates the unique slug index.
+5. `node scripts/cutoverReport.js` against production: **no blockers**.
+6. Set `PORTFOLIO_READS=v2` on the backend and restart it.
+7. Smoke test: `/`, `/films`, `/allfilms`, `/photos`, five film pages and five photo pages.
    On a film page, check the gallery and "recommended" thumbnails load.
-7. Once the Next frontend is live, check the sitemap (from `Next-Frontend/`):
+8. Once the Next frontend is live, check the sitemap (from `Next-Frontend/`):
    `node scripts/checkSitemapUrls.mjs --site=https://theweddingboys.in --api=<api origin>`.
    It checks each film and photo through the API, because those pages always answer 200.
 
 **Rollback** (only before the first admin edit): unset `PORTFOLIO_READS`, restart. The backfill
 and visibility runs can also be undone with `--rollback=<run id>`; both keep anything edited since.
+
+**Story pages (Phase 4)** — `/weddings` and `/weddings/story/<couple>` — read the new store
+directly, whatever `PORTFOLIO_READS` says. They appear as soon as the Next frontend is deployed
+and steps 2–4 have run; each needs the wedding Published, its story on, and one public item.
 
 **Instant refresh (Phase 2).** Set on the backend `FRONTEND_URL=<the Next site's origin>` and
 `REVALIDATION_SECRET=<a new random value>`, and the same `REVALIDATION_SECRET` on the Next
@@ -138,4 +147,5 @@ Found along the way (not caused by the switch):
 | `Next-Frontend/scripts/checkSitemapUrls.mjs` | no | every sitemap URL, film and photo lookups through the API |
 | `scripts/migrateVisibility.js` | with `--apply` / `--rollback` | fills `clientStatus`, `mediaReady`, `publishedAt`; never makes anything newly public |
 | `scripts/migrateTagsToTaxonomy.js` | with `--apply` / `--rollback` | builds the tag system from the old categories, ceremonies and item strings (`tag-migration-map.json`) |
+| `scripts/backfillClientProfiles.js` | with `--apply` / `--rollback` | story-page slugs, city, cover, item order for existing weddings |
 | `scripts/lib/runLog.js` | `scriptruns`, `scriptrunchanges` | shared `--dry-run / --apply / --verify / --rollback` contract |

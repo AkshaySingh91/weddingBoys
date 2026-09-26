@@ -13,6 +13,7 @@ const STATIC_ROUTES = [
     { path: '/', changeFrequency: 'weekly', priority: 1.0 },
     { path: '/films', changeFrequency: 'weekly', priority: 0.9 },
     { path: '/allfilms', changeFrequency: 'weekly', priority: 0.7 },
+    { path: '/weddings', changeFrequency: 'weekly', priority: 0.8 },
     { path: '/photos', changeFrequency: 'weekly', priority: 0.9 },
     { path: '/blogs', changeFrequency: 'daily', priority: 0.9 },
     { path: '/varanasi', changeFrequency: 'monthly', priority: 0.8 },
@@ -63,6 +64,19 @@ async function filmEntries() {
             changeFrequency: 'monthly',
             priority: 0.7,
         }));
+}
+
+// Wedding story pages — the fullest page about any one couple.
+async function weddingStoryEntries() {
+    const out = [];
+    for (let page = 1; page <= 20; page++) {
+        const data = await safeJson(`/api/weddings?limit=60&page=${page}`);
+        for (const w of data?.weddings || []) {
+            out.push({ url: `${SITE_URL}/weddings/story/${w.slug}`, changeFrequency: 'monthly', priority: 0.8 });
+        }
+        if (!data?.hasMore) break;
+    }
+    return out;
 }
 
 // Photo detail pages.
@@ -130,11 +144,12 @@ function destinationHubEntries() {
 export default async function sitemap() {
     const taken = new Set(STATIC_ROUTES.map((r) => r.path));
 
-    const [blogs, films, photos, cmsPages] = await Promise.all([
+    const [blogs, films, photos, cmsPages, stories] = await Promise.all([
         blogEntries(),
         filmEntries(),
         photoEntries(),
         cmsPageEntries(taken),
+        weddingStoryEntries(),
     ]);
 
     const staticEntries = STATIC_ROUTES.map(({ path, changeFrequency, priority }) => ({
@@ -152,6 +167,7 @@ export default async function sitemap() {
         ...destinationEntries,
         ...categoryEntries,
         ...blogs,
+        ...stories,
         ...films,
         ...photos,
         ...cmsPages,

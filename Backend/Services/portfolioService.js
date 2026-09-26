@@ -10,6 +10,7 @@
  * cut-over is invisible to the frontend and reversible with one env var.
  */
 import PortfolioItem from '../Models/PortfolioItem.js';
+import Client from '../Models/ClientSchema.js';
 import { PUBLIC_GATE } from './portfolioVisibility.js';
 import { resolveTagParam } from './taxonomy.js';
 
@@ -211,6 +212,9 @@ export function toLegacyVideoRow(i) {
         thumbnailUrl: posterOf(i),
         // Additions — the legacy shape had no way to express these.
         url: i.render?.webUrl || i.render?.sourceUrl || null,
+        // YouTube / Vimeo films (no `url`): play `embedUrl` in an iframe.
+        embedUrl: i.render?.embedUrl || null,
+        external: i.external?.provider ? { provider: i.external.provider, videoId: i.external.videoId } : null,
         loopUrl: i.render?.loopUrl || null,
         blurDataURL: i.render?.blurDataURL || null,
         dominantColor: i.render?.dominantColor || null,
@@ -256,6 +260,23 @@ export function toLegacyHeroSlide(i) {
         webUrl: i.render?.webUrl || null,
         sourceUrl: i.render?.sourceUrl || null,
         videoUrl: i.render?.loopUrl || i.render?.webUrl || i.render?.sourceUrl || null,
+        // A YouTube / Vimeo film has no loop to autoplay; the hero shows its poster.
+        embedUrl: i.render?.embedUrl || null,
+    };
+}
+
+/**
+ * The wedding's story page for a film or photo page's "Full wedding" link —
+ * only when that page is public (wedding published, story on, slug set).
+ */
+export async function storyLinkFor(clientId) {
+    if (!clientId) return null;
+    const c = await Client.findById(clientId).select('slug status story clientName').lean();
+    if (!c?.slug || c.status !== 'Published' || c.story?.enabled === false) return null;
+    return {
+        slug: c.slug,
+        href: `/weddings/story/${c.slug}`,
+        title: [c.clientName?.Bride, c.clientName?.Groom].filter(Boolean).join(' & '),
     };
 }
 

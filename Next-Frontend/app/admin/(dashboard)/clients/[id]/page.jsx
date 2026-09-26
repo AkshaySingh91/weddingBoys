@@ -25,6 +25,9 @@ import DeleteMediaModal from '../_components/DeleteMediaModal.jsx';
 import ImageUploadModal from '../_components/ImageUploadModal.jsx';
 import VideoUploadModal from '../_components/VideoUploadModal.jsx';
 import WeddingStatusDialog from '../_components/WeddingStatusDialog.jsx';
+import AddFilmLinkDialog from '../_components/AddFilmLinkDialog.jsx';
+import PublishChecklistDialog from '../_components/PublishChecklistDialog.jsx';
+import ArrangePanel from '../_components/ArrangePanel.jsx';
 import { pinFromForm, PIN_ERROR } from '../_lib/mapPin.js';
 import { visibilityChip } from '../_lib/visibility.js';
 import useTaxonomy from '@/Hooks/useTaxonomy.jsx';
@@ -85,7 +88,7 @@ function computeSpanDisplay(start, end, season) {
 }
 
 /** One card. Selection is a first-class action, not a hover afterthought. */
-function ItemCard({ item, selected, onToggle, onOpen, onDelete }) {
+function ItemCard({ item, selected, onToggle, onOpen, onDelete, isCover, onSetCover }) {
     const poster = posterOf(item);
     const isVideo = item.kind === 'Video';
     // Whether visitors can see it, and if not why (server-computed).
@@ -137,6 +140,9 @@ function ItemCard({ item, selected, onToggle, onOpen, onDelete }) {
                 <span className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/55 to-transparent opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
 
                 <span className="absolute right-2 top-2 flex gap-1">
+                    {isCover && (
+                        <span className="rounded-md bg-white/95 px-1.5 py-0.5 text-[10px] font-semibold text-studio-ink shadow-sm">Cover</span>
+                    )}
                     {item.isHero && (
                         <span className="flex items-center gap-0.5 rounded-md bg-studio-gold/95 px-1.5 py-0.5 text-[10px] font-semibold text-white shadow-sm">
                             <Star size={9} weight="fill" /> {item.heroPriority}
@@ -168,6 +174,15 @@ function ItemCard({ item, selected, onToggle, onOpen, onDelete }) {
                 <Check size={13} weight="bold" />
             </button>
 
+            {onSetCover && !isCover && (
+                <button
+                    type="button"
+                    onClick={(e) => { e.stopPropagation(); onSetCover(item); }}
+                    className="absolute bottom-2 right-10 z-10 rounded-md bg-stone-900/70 px-1.5 py-1 text-[10px] font-medium text-white opacity-0 shadow-sm transition-all group-hover:opacity-100 hover:bg-stone-900"
+                >
+                    Set as cover
+                </button>
+            )}
             {onDelete && (
                 <button
                     type="button"
@@ -220,11 +235,15 @@ export default function ClientWorkspace() {
     const [publishing, setPublishing] = useState(false);
     // 'Draft' | 'Archived' while the take-it-off-the-site confirmation is open.
     const [statusTarget, setStatusTarget] = useState(null);
+    const [showChecklist, setShowChecklist] = useState(false);
+    const [showLinkDialog, setShowLinkDialog] = useState(false);
+    const [arranging, setArranging] = useState(false);
     const [bulkTag, setBulkTag] = useState('');
     const [bulkCeremony, setBulkCeremony] = useState('');
     const [form, setForm] = useState({
         bride: '', groom: '', startDate: '', endDate: '', season: '',
         isInMap: false, latitude: '', longitute: '', pinTouched: false,
+        city: '', venue: '', state: '', slug: '', intro: '', storyEnabled: true,
     });
 
     // Dynamic ceremony groups present and counts
@@ -263,7 +282,8 @@ export default function ClientWorkspace() {
     const photoInputRef = useRef(null);
     const videoInputRef = useRef(null);
 
-    const query = useMemo(() => ({ client: id, kind, eventGroup: eventGroupFilter, status: '', sort: 'priority' }), [id, kind, eventGroupFilter]);
+    // Story-page order, so what the admin arranges is what the grid shows.
+    const query = useMemo(() => ({ client: id, kind, eventGroup: eventGroupFilter, status: '', sort: 'order' }), [id, kind, eventGroupFilter]);
 
     useEffect(() => { loadClient(); }, [loadClient]);
     useEffect(() => { fetchItems(query, { reset: true, pageNum: 1, limit: 120 }); }, [query, fetchItems]);
@@ -334,6 +354,12 @@ export default function ClientWorkspace() {
         }
     };
 
+    /** The item that represents the wedding on its story page and in wedding lists. */
+    const setCover = async (item) => {
+        const saved = await saveProfile({ cover: item._id }, { quiet: true });
+        if (saved) fireMessage('Cover set', 'success');
+    };
+
     /** Publish the items an admin hid (or that arrived into the live wedding). */
     const publishHidden = async () => {
         const ids = items.filter((i) => i.status !== 'Published').map((i) => i._id);
@@ -361,6 +387,12 @@ export default function ClientWorkspace() {
             latitude: String(client?.mapPin?.coordinate?.latitude ?? ''),
             longitute: String(client?.mapPin?.coordinate?.longitute ?? ''),
             pinTouched: false,
+            city: client?.location?.city || '',
+            venue: client?.location?.venue || '',
+            state: client?.location?.state || '',
+            slug: client?.slug || '',
+            intro: client?.story?.intro || '',
+            storyEnabled: client?.story?.enabled !== false,
         });
         setShowProfile((v) => !v);
         setMenuOpen(false);
@@ -385,6 +417,9 @@ export default function ClientWorkspace() {
                 spanDisplay,
             },
             ...(pin ? { isInMap: pin.isInMap, coordinate: pin.coordinate } : {}),
+            location: { city: form.city, venue: form.venue, state: form.state },
+            story: { intro: form.intro, enabled: form.storyEnabled },
+            ...(form.slug.trim() && form.slug.trim() !== client?.slug ? { slug: form.slug.trim().toLowerCase() } : {}),
         });
         if (!saved) return;
         setShowProfile(false);
@@ -457,6 +492,14 @@ export default function ClientWorkspace() {
     // Items the admin hid, or that arrived into the live wedding and wait for review.
     const drafts = items.filter((i) => i.status !== 'Published').length;
     const liveCount = items.filter((i) => i.visibility?.public).length;
+    // Where new uploads start: the wedding's own date and place, and the ceremony being viewed.
+    const uploadDefaults = {
+        shootDate: (() => { const d = client?.celebrationDates?.startDate || client?.weddingDate; return d ? new Date(d).toISOString().slice(0, 10) : ''; })(),
+        city: client?.location?.city || '',
+        venue: client?.location?.venue || '',
+        ceremony: eventGroupFilter || '',
+    };
+    const storyHref = client?.status === 'Published' && client?.slug && client?.story?.enabled !== false ? `/weddings/story/${client.slug}` : null;
     const range = shootRange(stats);
     const displayDates = client?.celebrationDates?.spanDisplay || range || monthYear(client?.weddingDate);
     const selectedItems = items.filter((i) => selected.has(i._id));
@@ -507,7 +550,7 @@ export default function ClientWorkspace() {
                             variant="gold"
                             size="sm"
                             loading={publishing}
-                            onClick={() => setWeddingStatus('Published')}
+                            onClick={() => setShowChecklist(true)}
                             className="bg-amber-600 hover:bg-amber-700 text-white font-semibold shadow-xs"
                         >
                             Publish wedding
@@ -532,9 +575,19 @@ export default function ClientWorkspace() {
                                         className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-studio-ink hover:bg-stone-50">
                                         <UploadSimple size={13} /> Upload films or photos
                                     </button>
+                                    <button type="button" onClick={() => { setShowLinkDialog(true); setMenuOpen(false); }}
+                                        className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-studio-ink hover:bg-stone-50">
+                                        <FilmSlate size={13} /> Add film by YouTube / Vimeo link
+                                    </button>
+                                    {storyHref && (
+                                        <a href={storyHref} target="_blank" rel="noreferrer"
+                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-studio-ink hover:bg-stone-50">
+                                            <ArrowSquareOut size={13} /> View story page
+                                        </a>
+                                    )}
                                     <div className="my-1 h-px bg-studio-border" />
                                     {client?.status !== 'Published' && (
-                                        <button type="button" onClick={() => { setMenuOpen(false); setWeddingStatus('Published'); }}
+                                        <button type="button" onClick={() => { setMenuOpen(false); setShowChecklist(true); }}
                                             className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-emerald-700 hover:bg-emerald-50 cursor-pointer">
                                             <Eye size={13} /> Publish wedding
                                         </button>
@@ -631,6 +684,35 @@ export default function ClientWorkspace() {
                         <p className="mt-2 text-[10px] text-studio-inkMuted">
                             Saving replaces this wedding&apos;s pin rather than adding another. Unticking removes it.
                         </p>
+                    </div>
+                    {/* Place and story page */}
+                    <div className="grid grid-cols-3 gap-3">
+                        {[['city', 'City'], ['venue', 'Venue'], ['state', 'State']].map(([k, l]) => (
+                            <div key={k}>
+                                <span className={labelCls}>{l}</span>
+                                <input className={field} value={form[k]} onChange={(e) => setForm((f) => ({ ...f, [k]: e.target.value }))} />
+                            </div>
+                        ))}
+                    </div>
+                    <div className="space-y-2 rounded-xl border border-studio-border p-3">
+                        <label className="flex items-center gap-2 text-xs font-medium text-studio-ink">
+                            <input type="checkbox" checked={form.storyEnabled} onChange={(e) => setForm((f) => ({ ...f, storyEnabled: e.target.checked }))} />
+                            Story page for this wedding
+                        </label>
+                        <div>
+                            <span className={labelCls}>Address</span>
+                            <div className="flex items-center gap-1 text-xs text-studio-inkMuted">
+                                <span>/weddings/story/</span>
+                                <input className={cn(field, 'font-mono')} value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))} />
+                            </div>
+                            <p className="mt-1 text-[10px] text-studio-inkMuted">Changing it keeps the old address working as a redirect.</p>
+                        </div>
+                        <div>
+                            <span className={labelCls}>Introduction</span>
+                            <textarea rows={3} className={field} value={form.intro} maxLength={2000}
+                                placeholder="A few lines about the couple and the celebration, shown at the top of the story page."
+                                onChange={(e) => setForm((f) => ({ ...f, intro: e.target.value }))} />
+                        </div>
                     </div>
                     <div className="flex justify-end gap-2">
                         <Button variant="outline" size="sm" onClick={() => setShowProfile(false)}>Cancel</Button>
@@ -777,6 +859,12 @@ export default function ClientWorkspace() {
 
             <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex flex-wrap items-center gap-2">
+                    <Button variant={arranging ? 'primary' : 'outline'} size="sm"
+                        disabled={!arranging && (Boolean(kind) || Boolean(eventGroupFilter))}
+                        title={kind || eventGroupFilter ? 'Show everything to arrange the story page' : 'Drag into story-page order'}
+                        onClick={() => setArranging((v) => !v)}>
+                        {arranging ? 'Arranging…' : 'Arrange'}
+                    </Button>
                     <div className="flex rounded-lg border border-studio-border bg-white p-0.5">
                         {KIND_TABS.map((t) => (
                             <button key={t.key} type="button" onClick={() => { setKind(t.key); setSelected(new Set()); }}
@@ -791,7 +879,7 @@ export default function ClientWorkspace() {
                     <div className="flex items-center gap-1 overflow-x-auto py-0.5">
                         {['', ...ceremonyGroups].map((eg) => {
                             const count = eg ? (ceremonyCounts[eg] || 0) : total;
-                            if (eg && count === 0 && !['Haldi', 'Mehendi', 'Sangeet', 'Wedding / Pheras'].includes(eg)) return null;
+                            if (eg && count === 0) return null;
                             return (
                                 <button
                                     key={eg}
@@ -909,6 +997,14 @@ export default function ClientWorkspace() {
                         Add media
                     </Button>
                 </div>
+            ) : arranging ? (
+                <ArrangePanel
+                    items={items}
+                    ceremonyOrder={ceremonyTags.map((t) => t.label)}
+                    clientId={id}
+                    onCancel={() => setArranging(false)}
+                    onSaved={() => { setArranging(false); refresh(); }}
+                />
             ) : (
                 <div className={cn(
                     'grid gap-3 transition-[grid-template-columns] duration-300',
@@ -927,6 +1023,8 @@ export default function ClientWorkspace() {
                                     setDeleteMediaTarget([it]);
                                     setShowDeleteMediaModal(true);
                                 }}
+                                isCover={String(client?.cover) === String(item._id)}
+                                onSetCover={setCover}
                             />
                         </Reveal>
                     ))}
@@ -945,6 +1043,11 @@ export default function ClientWorkspace() {
                     }}
                     onSave={async (itemId, patch) => {
                         if (await updateItem(itemId, patch)) { setEditing(null); refresh(); }
+                    }}
+                    onItemChanged={(fields) => {
+                        // Poster or file changed in the drawer: show it there and in the grid.
+                        setEditing((prev) => (prev ? { ...prev, ...fields } : prev));
+                        refresh();
                     }}
                 />
             )}
@@ -984,6 +1087,7 @@ export default function ClientWorkspace() {
                 }}
                 initialFiles={stagedPhotos}
                 clientId={id}
+                defaults={uploadDefaults}
                 onUploadComplete={() => {
                     setShowPhotoModal(false);
                     refresh();
@@ -998,10 +1102,29 @@ export default function ClientWorkspace() {
                 }}
                 initialFiles={stagedVideos}
                 clientId={id}
+                defaults={uploadDefaults}
                 onUploadComplete={() => {
                     setShowVideoModal(false);
                     refresh();
                 }}
+            />
+
+            <AddFilmLinkDialog
+                open={showLinkDialog}
+                onClose={() => setShowLinkDialog(false)}
+                clientId={id}
+                taxonomy={taxonomy}
+                defaults={uploadDefaults}
+                onAdded={() => refresh()}
+            />
+
+            {/* "Review & publish": what goes live now, what follows, what will not show. */}
+            <PublishChecklistDialog
+                open={showChecklist}
+                clientId={id}
+                publishing={publishing}
+                onClose={() => setShowChecklist(false)}
+                onPublish={async () => { await setWeddingStatus('Published'); setShowChecklist(false); }}
             />
         </div>
     );

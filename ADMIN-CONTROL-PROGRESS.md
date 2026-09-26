@@ -278,3 +278,83 @@ Verified:
 
 Found, not fixed: the edit drawer requests `GET /api/admin/media/:mediaId`, a route that does
 not exist (404 each time; it falls back to the item's populated media).
+
+### Phase 4 — Add Wedding finished, story pages, films by link
+**Model.** `Client`: `slug` (unique, sparse) + `slugHistory`, `location` {city, citySlug, state,
+country, venue}, `cover`, `featured`, `story` {intro, enabled}, `createRequestId` (idempotent
+create); `require` → `required` on the names (0 weddings lacked one, prod and dev).
+`PortfolioItem`: `order`, `pendingMedia`, `location.citySlug`, `external` {provider, url,
+videoId, title, posterUrl, durationSec}, `render.embedUrl`.
+
+**Backend.**
+- Create saves city / venue / state, makes a "bride-groom" slug (then -year, -2…; reserved words
+  refused) and returns the same wedding for a repeated `createRequestId`. Edit changes slug
+  (old one kept as a redirect; taken → 409, malformed or reserved → 400), location, story,
+  cover (must be its own item), featured.
+- `GET /api/admin/clients/:id/readiness` — the Review & publish checklist: what goes live now,
+  what follows when processed, blockers vs warnings. `POST …/order` — the drag order.
+- `POST /api/admin/portfolio/external` — YouTube / Vimeo by link (D8): parsed on the hostname
+  (look-alikes refused), oEmbed for title / poster / duration, youtube-nocookie and Vimeo `dnt`
+  embeds; ready at once; same video twice → 409.
+- Poster from one of the wedding's photos (`POST|DELETE …/:id/poster`, a ~1280px variant with
+  its own immutable key); replace file (`POST …/:id/replace`) — a still-processing file waits in
+  `pendingMedia` and the render sync swaps it in when ready.
+- New items append to the wedding's order and carry `citySlug`. `hasRender` accepts embeds.
+- Public `Routes/User/weddingRoute.js` (mounted above `clientEnquiryRoute`):
+  `GET /api/weddings[?city]`, `GET /api/weddings/:slug` (ceremony groups in tag-manager order,
+  items in admin order, "More moments" last; crew; related — same city first; old slug →
+  `redirectTo`), `GET /api/weddings/:slug/status` (for the proxy). Shared shapes in
+  `Services/cards.js`. Film and photo detail responses carry `wedding` {href} when the story is
+  public. Wedding cards fall back to the first shoot's month when the wedding has no date.
+- `scripts/backfillClientProfiles.js` (contract modes): slugs, city/venue/state from items,
+  cover, story on, today's feed order for never-ordered weddings; syncs the unique index.
+
+**Admin.** Wizard: city/venue saved, slug shown, create-request id, "Add by YouTube / Vimeo
+link", Review & publish checklist before Publish; "Reset & Start Fresh" now also forgets the
+wedding it was editing (it used to rename that draft on the next Continue). Modals: prefilled
+with the wedding's date, city, venue (and the ceremony being viewed); "Retry N failed", results
+accumulate across retries; the video modal's Film type and Ceremony are separate choices.
+Workspace: profile gains city/venue/state, story address, intro, story on/off; Publish through
+the checklist; Add film by link; View story page; Set as cover (+ Cover badge); **Arrange**
+(framer-motion Reorder per ceremony, in tag-manager order); the grid lists in story order; the
+ceremony filter no longer shows four hardcoded empty ceremonies. Drawer: "On the site" —
+every reason an item is not shown, poster from the wedding's photos or back to the film's own
+frame, replace file, YouTube / Vimeo preview.
+
+**Public.** `/weddings/story/[slug]` (server-rendered, cached with the `portfolio` tag; the
+owner chose **Editorial chapters**): full-bleed cover with the couple, place and dates on a hero
+scrim; intro and gold rule; the films (lead film plays in place, YouTube / Vimeo load only on
+press, others open in the lightbox); one chapter per ceremony, numbered because the ceremonies
+are a real sequence, opening photograph in the arch; crew; more weddings; enquiry panel.
+JSON-LD `ImageGallery` with `VideoObject`s (`<` escaped). `/weddings` index with city filter.
+Sitemap lists `/weddings` and every story. `story` reserved in `getLocationBySlug`. The film
+lightbox and hero play embeds; the film page plays embeds, links "See the full wedding" and
+shows "More from this wedding"; the photo page links the story too.
+**Status codes:** the (site) loading UI makes pages stream with 200 before they run, so
+`notFound()` / `permanentRedirect()` could not set a status (Next docs, loading.md). The proxy
+now asks `/status` first (30 s memo, 1.5 s timeout, falls through on error): missing → real
+404 with the not-found page, old slug → real 308.
+
+**Verified.**
+- `npm test`: 20/20 (video-link parsing and look-alike refusal, embeds, slugs, locations, crew,
+  card date fallback).
+- Dev: profile backfill dry-run → apply → verify → rollback → apply (11 slugs, cities, covers).
+  Found and fixed on the way: the story endpoint's filter spread overwrote the requested slug
+  (any story matched), and rollback could not read dotted fields.
+- Dev API acceptance, **33/33**: idempotent create, slug and location, append order, link film
+  (look-alike 400, duplicate 409, ready at once), readiness, order and cover (foreign items
+  400), poster set / reset, replace (and refused on a link film), draft → no story, publish →
+  groups Haldi, Mehendi, More moments in order, embed, cover, city listing, film → story link,
+  slug change with redirect, taken / malformed / reserved slugs, story off → 404 and no link.
+- Plan acceptance (dev, browser + API): **Aisha & Rahul**, Udaipur, The Leela — 6 photos
+  (Haldi ×2, Mehendi ×2, Wedding / Pheras ×2), an uploaded film and a YouTube link; cover and
+  Haldi reordered; the checklist said "processing: 1" (7 of 8 live now); published from the
+  dialog; the worker finished and the film went live by itself; `/weddings/story/aisha-rahul`
+  shows both films and three ceremony groups in the arranged order, server-rendered (the HTML
+  carries the names and chapter headings); old slug `aisha-rahul-2025` → 308; unknown → 404;
+  story off → 404; film page links to the story. Desktop and 390 px: no horizontal overflow,
+  no broken images except the already-known deleted company logo. `next build` passes.
+- "Aisha & Rahul" is left on dev (placeholder photos, a 4 s test film, a YouTube link) to look at.
+
+Not done from the plan, noted: the film page is still one client component (it was to be split
+into a server page for SEO); its new parts use design tokens but the page itself is the old style.

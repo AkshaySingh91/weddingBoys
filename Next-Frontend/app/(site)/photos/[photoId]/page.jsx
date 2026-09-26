@@ -16,6 +16,8 @@ function SpecificPhoto() {
     const [selectedPhoto, setSelectedPhoto] = useState(null);
     const [clientName, setClientName] = useState({ bride: "", groom: "" });
     const [remainingPhotos, setRemaningPhotos] = useState([]);
+    // The wedding's story page, when it is public.
+    const [wedding, setWedding] = useState(null);
     const [recommendation, setRecommendation] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [page, setPage] = useState(1);
@@ -71,6 +73,7 @@ function SpecificPhoto() {
                 setSelectedPhoto(data.selectedPhoto)
                 setRemaningPhotos(data.remainingPhotos)
                 setClientName(data.clientName)
+                setWedding(data.wedding || null)
             } catch (error) {
                 console.log(error)
                 fireMessage(error.message, 'error')
@@ -172,6 +175,11 @@ function SpecificPhoto() {
                                 {(selectedPhoto && selectedPhoto.photoLocation) ? selectedPhoto.photoLocation.city : ""}
                             </span>
                         </div>
+                        {wedding && (
+                            <Link href={wedding.href} className="t-body-sm mt-2 inline-block font-semibold text-accent-ink hover:text-ink sm:px-4 lg:px-0">
+                                See the full wedding
+                            </Link>
+                        )}
                     </div>
                 </div>
                 <div className="tags tracking-wider text-gray-600  flex flex-wrap gap-3 lg:text-desktopBodySmall sm:text-mobileBodySmall sm:px-2 lg:px-0 md:max-w-[30%] sm:w-full lg:w-2/5">

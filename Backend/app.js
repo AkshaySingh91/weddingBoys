@@ -42,6 +42,7 @@ import getTeamImage from "./Routes/User/TeamImageRoute.js"
 import HomePageRoute from "./Routes/User/homePageRoute.js"
 // it will give all videos  
 import videosRoute from './Routes/User/videoRoute.js'
+import weddingRoute from './Routes/User/weddingRoute.js'
 import photosRoute from './Routes/User/photoRoute.js'
 import btsRoleRoutes from './Routes/Admin/btsRoleRoutes.js';
 import blogsRoute from './Routes/Admin/blogsRoute.js'
@@ -71,6 +72,8 @@ import taxonomyRoute from './Routes/Admin/taxonomyRoute.js'
 app.use(HomePageRoute)
 app.use(photosRoute)
 app.use(videosRoute)
+// public wedding story pages — must stay above clientEnquiryRoute (admin auth)
+app.use(weddingRoute)
 app.use(studioDetailsRoute)
 app.use(submitEnquiryRoute)
 app.use(searchRoute)
