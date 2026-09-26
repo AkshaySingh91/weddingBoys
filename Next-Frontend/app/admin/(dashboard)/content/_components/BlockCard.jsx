@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import MediaField from './MediaField.jsx';
 import { BLOCK_CONFIG, fieldLabel, isTextarea, SECTION_OPTIONS, sectionLabel } from './config.js';
+import SectionSettings, { hasSectionSettings } from './SectionSettings.jsx';
 
 const newItem = () => ({
     _id: Math.random().toString(36).slice(2, 10),
@@ -42,7 +43,7 @@ function MediaControl({ name, mode, typeFilter }) {
     );
 }
 
-export default function BlockCard({ index, total, type, onMove, onRemove, dragHandleProps }) {
+export default function BlockCard({ index, total, type, onMove, onRemove, dragHandleProps, pageKey }) {
     const [open, setOpen] = useState(true);
     const { control, setValue, register } = useFormContext();
     const cfg = BLOCK_CONFIG[type];
@@ -103,9 +104,13 @@ export default function BlockCard({ index, total, type, onMove, onRemove, dragHa
                                     {SECTION_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                                 </select>
                             </label>
-                            <p className="mt-2 text-xs text-gray-400">
-                                This section renders live from site data. Use show/hide and drag to control whether and where it appears.
-                            </p>
+                            {hasSectionSettings(sectionComponent) ? (
+                                <SectionSettings base={base} component={sectionComponent} pageKey={pageKey} />
+                            ) : (
+                                <p className="mt-2 text-xs text-gray-400">
+                                    This section renders live from site data. Use show/hide and drag to control whether and where it appears.
+                                </p>
+                            )}
                         </div>
                     )}
 

@@ -44,6 +44,7 @@ import HomePageRoute from "./Routes/User/homePageRoute.js"
 import videosRoute from './Routes/User/videoRoute.js'
 import weddingRoute from './Routes/User/weddingRoute.js'
 import collectionRoute from './Routes/User/collectionRoute.js'
+import browseRoute from './Routes/User/browseRoute.js'
 import adminCollectionRoute from './Routes/Admin/collectionRoute.js'
 import photosRoute from './Routes/User/photoRoute.js'
 import btsRoleRoutes from './Routes/Admin/btsRoleRoutes.js';
@@ -77,6 +78,7 @@ app.use(videosRoute)
 // public wedding story pages — must stay above clientEnquiryRoute (admin auth)
 app.use(weddingRoute)
 app.use(collectionRoute)
+app.use(browseRoute)
 app.use(studioDetailsRoute)
 app.use(submitEnquiryRoute)
 app.use(searchRoute)

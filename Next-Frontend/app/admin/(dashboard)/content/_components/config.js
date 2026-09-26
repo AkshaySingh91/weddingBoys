@@ -22,6 +22,10 @@ export const SECTION_OPTIONS = [
     { value: 'whyChooseUs', label: 'Why Choose Us' },
     { value: 'packages', label: 'Our Packages' },
     { value: 'ourApproach', label: 'Our Approach' },
+    // The portfolio pages (each renders its own page; the settings choose rows / filters).
+    { value: 'filmRows', label: 'Film rows — /films page' },
+    { value: 'browseFilms', label: 'Browse films — /allfilms page' },
+    { value: 'photoGallery', label: 'Photo gallery — /photos page' },
 ];
 
 export const sectionLabel = (value) => SECTION_OPTIONS.find((o) => o.value === value)?.label || 'Section';

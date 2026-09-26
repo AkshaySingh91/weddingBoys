@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useForm, FormProvider, useFieldArray, useWatch } from 'react-hook-form';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { ArrowLeft, Plus, FloppyDisk, Eye } from '@phosphor-icons/react';
+import { ArrowLeft, Plus, FloppyDisk, Eye, ArrowCounterClockwise, Trash } from '@phosphor-icons/react';
 import { apiJson } from '@/lib/apiClient.js';
 import { fireMessage } from '@/Utils/fireMessage.js';
 import Loader from '@/Component/Loader.jsx';
@@ -41,7 +41,8 @@ export default function PageBuilder() {
     });
 
     if (isLoading || !page) return <Loader />;
-    return <BuilderForm key={pageKey} page={page} pageKey={pageKey} />;
+    // Remount after discard / restore so the form starts from the server's copy.
+    return <BuilderForm key={`${pageKey}-${page.draftSavedAt || 'live'}-${page.liveBlockCount}`} page={page} pageKey={pageKey} />;
 }
 
 function BuilderForm({ page, pageKey }) {
@@ -57,6 +58,8 @@ function BuilderForm({ page, pageKey }) {
     });
     const { control, getValues } = methods;
     const status = useWatch({ control, name: 'status' });
+    // The page as the server has it (the query cache updates after every save).
+    const { data: current = page } = useQuery({ queryKey: contentKey(pageKey), queryFn: () => page, enabled: false });
 
     const { fields, append, remove, move } = useFieldArray({
         control,
@@ -71,11 +74,23 @@ function BuilderForm({ page, pageKey }) {
         }),
         onSuccess: (data) => {
             qc.setQueryData(contentKey(pageKey), data.page);
-            fireMessage('Page saved successfully', 'success');
+            fireMessage(data.message || 'Saved', 'success');
         },
         onError: (err) => fireMessage(err.message, 'error'),
     });
 
+    // Discard the draft / add missing default sections (to the draft), then
+    // reload the editor from the server's copy.
+    const draftAction = useMutation({
+        mutationFn: (action) => apiJson(`/api/admin/content/${pageKey}/${action}`, { method: 'POST', body: '{}' }),
+        onSuccess: (data) => {
+            if (data.page) qc.setQueryData(contentKey(pageKey), data.page);
+            fireMessage(data.message || 'Done', 'success');
+        },
+        onError: (err) => fireMessage(err.message, 'error'),
+    });
+
+    // 'Draft' saves the working copy only — the live page is untouched until Publish.
     const persist = (nextStatus) => {
         const values = getValues();
         const payload = {
@@ -91,7 +106,8 @@ function BuilderForm({ page, pageKey }) {
         if (from === null || from === dropIndex) return;
         move(from, dropIndex);
         dragIndex.current = null;
-        persist();
+        // No auto-save: a drag used to call persist() with the page status,
+        // which published a half-finished arrangement. Save or Publish instead.
     };
 
     return (
@@ -110,8 +126,11 @@ function BuilderForm({ page, pageKey }) {
                             <div className="flex items-center gap-2.5">
                                 <h1 className="text-2xl font-sans font-bold tracking-tight capitalize text-[#2F2F2F]">{page.title || pageKey}</h1>
                                 <Badge variant={status === 'Draft' ? 'warning' : 'success'} dot>
-                                    {status}
+                                    {status === 'Draft' ? 'Hidden' : 'Live'}
                                 </Badge>
+                                {current.hasDraft && (
+                                    <Badge variant="warning">Unpublished changes</Badge>
+                                )}
                             </div>
                             <p className="mt-0.5 text-xs font-sans text-[#78716C]">
                                 /{pageKey} · {fields.length} content block{fields.length === 1 ? '' : 's'}
@@ -126,6 +145,26 @@ function BuilderForm({ page, pageKey }) {
                         >
                             <Eye size={16} weight="bold" /> Preview Live
                         </Link>
+                        <Button
+                            type="button"
+                            variant="ghost"
+                            disabled={draftAction.isPending}
+                            onClick={() => draftAction.mutate('restore-defaults')}
+                            icon={<ArrowCounterClockwise size={16} />}
+                        >
+                            Restore defaults
+                        </Button>
+                        {current.hasDraft && (
+                            <Button
+                                type="button"
+                                variant="ghost"
+                                disabled={draftAction.isPending}
+                                onClick={() => draftAction.mutate('discard')}
+                                icon={<Trash size={16} />}
+                            >
+                                Discard draft
+                            </Button>
+                        )}
                         <Button
                             type="button"
                             variant="outline"
@@ -156,6 +195,7 @@ function BuilderForm({ page, pageKey }) {
                             onDrop={() => handleDrop(i)}
                         >
                             <BlockCard
+                                pageKey={pageKey}
                                 index={i}
                                 total={fields.length}
                                 type={field.type}

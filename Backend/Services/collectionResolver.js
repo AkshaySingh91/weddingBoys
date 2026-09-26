@@ -154,7 +154,7 @@ async function* pageThrough(filter, sort, pageSize = 60) {
  * earlier row on the page already showed. Missing keys and Draft rows are
  * skipped. Returns [{ collection, items }].
  */
-export async function resolveMany(keys, { includeDrafts = false } = {}) {
+export async function resolveMany(keys, { includeDrafts = false, dedupeAll = false } = {}) {
     const docs = await Collection.find({ key: { $in: keys } }).lean();
     const byKey = new Map(docs.map((d) => [d.key, d]));
     const shown = new Set();
@@ -162,7 +162,8 @@ export async function resolveMany(keys, { includeDrafts = false } = {}) {
     for (const key of keys) {
         const c = byKey.get(key);
         if (!c || (!includeDrafts && c.status !== 'Published')) continue;
-        const { items, hasMore } = await resolveCollection(c, { exclude: shown });
+        // `dedupeAll`: the page asks every row to skip what earlier rows showed.
+        const { items, hasMore } = await resolveCollection(dedupeAll ? { ...c, dedupe: true } : c, { exclude: shown });
         items.forEach((i) => shown.add(String(i._id)));
         rows.push({ collection: c, items, hasMore });
     }

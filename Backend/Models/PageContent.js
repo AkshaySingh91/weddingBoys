@@ -61,7 +61,20 @@ const pageContentSchema = new mongoose.Schema({
     title: { type: String, trim: true },
     description: { type: String, trim: true },   // internal note / meta description
     status: { type: String, enum: ['Draft', 'Published'], default: 'Published' },
+    // What visitors see. Changed only by Publish.
     blocks: [blockSchema],
+    // The admin's working copy (plan phase 6). "Save draft" writes here and
+    // never touches `blocks`, so a half-finished edit cannot reach — or blank —
+    // the live page. Publish copies it over and clears it; Discard clears it.
+    draft: {
+        title: { type: String, trim: true },
+        description: { type: String, trim: true },
+        blocks: { type: [blockSchema], default: undefined },
+        savedAt: { type: Date },
+        savedBy: { type: String },
+    },
+    publishedAt: { type: Date },
+    publishedBy: { type: String },
     updatedBy: { type: String },
 }, { timestamps: true });
 

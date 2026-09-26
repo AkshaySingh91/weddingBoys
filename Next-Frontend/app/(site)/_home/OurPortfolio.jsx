@@ -38,6 +38,8 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 import Section from "@/Component/ui/Section.jsx";
 
+// Fallback only: the tabs come from the page composition (Admin › Content › Home,
+// each a photo row in Admin › Rows). These are used when the CMS is unreachable.
 const categories = ["All Work", "Wedding", "Pre-Wedding", "Garden", "Haldi"];
 const api_url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -99,10 +101,19 @@ function makeParticles() {
     }));
 }
 
-export default function OurPortfolio() {
-    const [activeCategory, setActiveCategory] = useState("All Work");
-    const [portfolio, setPortfolio] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+export default function OurPortfolio({ data } = {}) {
+    // Composed on the server: each tab is a resolved photo row, so switching tabs
+    // needs no request. Without it, the grid fetches per category as before.
+    const tabs = Array.isArray(data?.tabs) && data.tabs.length ? data.tabs : null;
+    const tabNames = tabs ? tabs.map((t) => t.title) : categories;
+    const firstTab = tabNames[0];
+    const [activeCategory, setActiveCategory] = useState(firstTab);
+    const [portfolio, setPortfolio] = useState(tabs ? tabs[0].items : []);
+    const [isLoading, setIsLoading] = useState(!tabs);
+    const chooseCategory = (c) => {
+        setActiveCategory(c);
+        if (tabs) setPortfolio(tabs.find((t) => t.title === c)?.items || []);
+    };
     const [hennaFlorals, setHennaFlorals] = useState(null);
     const [particles, setParticles] = useState(null);
     const reduceMotion = useReducedMotion();
@@ -116,6 +127,7 @@ export default function OurPortfolio() {
     }, [reduceMotion]);
 
     useEffect(() => {
+        if (tabs) return undefined; // composed on the server
         // Without this, switching category twice quickly lets the slower first
         // response land last and show the wrong set.
         const controller = new AbortController();
@@ -161,7 +173,7 @@ export default function OurPortfolio() {
 
         fetchPortfolio();
         return () => controller.abort();
-    }, [activeCategory]);
+    }, [activeCategory, tabs]);
 
     /** An always-on loop, or nothing at all. */
     const loop = (animate, transition) =>
@@ -286,7 +298,7 @@ export default function OurPortfolio() {
                             id="portfolio-heading"
                             className="t-display-2 mx-auto mt-4"
                         >
-                            Moments We&apos;ve Captured
+                            {data?.heading || 'Moments We\u2019ve Captured'}
                         </h2>
                         <p className="t-body-lead mt-4 mx-auto text-tertiary_on">
                             Browse our collection of wedding stories from across Mumbai and beyond, showcasing our artistic approach to wedding photography and cinematography.
@@ -299,7 +311,7 @@ export default function OurPortfolio() {
                         aria-label="Filter photographs by category"
                         className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8 lg:mb-10"
                     >
-                        {categories.map((category) => {
+                        {tabNames.map((category) => {
                             const on = activeCategory === category;
                             return (
                                 <motion.button
@@ -312,7 +324,7 @@ export default function OurPortfolio() {
                                         ? "bg-secondary_on/20 text-primary"
                                         : "bg-secondary_on/10 text-tertiary_on hover:bg-primary_on/20"
                                         }`}
-                                    onClick={() => setActiveCategory(category)}
+                                    onClick={() => chooseCategory(category)}
                                 >
                                     {category}
                                 </motion.button>
@@ -328,11 +340,11 @@ export default function OurPortfolio() {
                            rendered a blank grid and no way forward. */
                         <div className="text-center py-12">
                             <p className="text-tertiary_on">
-                                No photographs in {activeCategory === "All Work" ? "this gallery" : `“${activeCategory}”`} yet.
+                                No photographs in {activeCategory === firstTab ? "this gallery" : `“${activeCategory}”`} yet.
                             </p>
                             <button
                                 type="button"
-                                onClick={() => setActiveCategory("All Work")}
+                                onClick={() => chooseCategory(firstTab)}
                                 className="mt-3 min-h-[44px] px-4 text-sm font-semibold text-red-400 hover:text-red-500 transition-colors"
                             >
                                 Show all work

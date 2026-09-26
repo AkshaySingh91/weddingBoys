@@ -1,5 +1,6 @@
 import { SITE_URL } from '@/lib/siteConfig.js';
 import AllFilmsClient from './_components/AllFilmsClient.jsx';
+import { composedSection } from '@/lib/pageComposition.js';
 
 const title = 'Browse All Wedding Films | The Wedding Boys';
 const description =
@@ -12,6 +13,8 @@ export const metadata = {
     openGraph: { title, description, url: `${SITE_URL}/allfilms`, type: 'website' },
 };
 
-export default function AllFilmsPage() {
-    return <AllFilmsClient />;
+// Which filters /allfilms offers, and the page size, come from Admin › Content › All films.
+export default async function AllFilmsPage() {
+    const composed = await composedSection('allfilms', 'browseFilms');
+    return <AllFilmsClient composition={composed?.data || null} />;
 }

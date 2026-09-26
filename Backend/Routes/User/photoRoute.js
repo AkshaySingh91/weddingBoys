@@ -13,7 +13,7 @@ const Route = express.Router();
 
 async function getAllPhotos(req, res, next) {
     try {
-        const { page = 1, limit = 10, tag = '' } = req.query;
+        const { page = 1, limit = 10, tag = '', sort } = req.query;
 
         // PortfolioItem path. Also adds the tag filter the gallery never had —
         // /api/photos accepted no `tag` param at all, which is why
@@ -22,6 +22,7 @@ async function getAllPhotos(req, res, next) {
             const items = await portfolio.findFeed({
                 kind: 'Photo', tags: portfolio.parseTags(tag),
                 page: parseInt(page), limit: parseInt(limit),
+                sort, // optional row sort from the page composition (newestShoot…)
             });
             return res.status(200).json({ photos: items.map(portfolio.toLegacyPhotoRow) });
         }

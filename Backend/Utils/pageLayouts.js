@@ -1,12 +1,11 @@
-// Default block layouts for known pages. When an admin opens a page in the CMS,
-// any of these blocks whose `key` isn't already present is appended — so the
-// management system always reflects the real sections the site renders, without
-// ever clobbering blocks the admin has since added/edited/reordered.
-
-const section = (key, component, extra = {}) => ({
+// Default block layouts for known pages. They are added once, when a page is
+// first created in the CMS, and again only when the admin asks for "Restore
+// defaults" (contentController.js) — never on every open, so a default block the
+// admin deleted stays deleted.
+const section = (key, component, extra = {}, settings = {}) => ({
     key,
     type: 'section',
-    settings: { component },
+    settings: { component, ...settings },
     visible: true,
     ...extra,
 });
@@ -39,6 +38,11 @@ export const DEFAULT_LAYOUTS = {
             ],
         },
     ],
+    // The portfolio pages (plan phase 6): one composable section each, whose
+    // settings choose the rows / filters (Utils/sectionSettings.js).
+    films: [section('films-rows', 'filmRows', {}, { rows: [], dedupe: false })],
+    allfilms: [section('allfilms-browse', 'browseFilms', {}, { facetGroups: [], sort: 'newestShoot', pageSize: 12 })],
+    photos: [section('photos-gallery', 'photoGallery', {}, { facetGroups: [], sort: 'newestShoot', pageSize: 24 })],
 };
 
 // Non-destructively append any default blocks missing from the page (matched by

@@ -4,7 +4,7 @@ import { PageHeader } from '@/app/admin/components/ui/PageHeader.jsx';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/app/admin/components/ui/Tabs.jsx';
 import Herobanner from './_components/Herobanner.jsx';
 import HeroCarouselManager from './_components/HeroCarouselManager.jsx';
-import VideoThumbnail from './_components/VideoThumbnail.jsx';
+import Link from 'next/link';
 import Map from './_components/Map.jsx';
 import BtsTape from './_components/BtsTape.jsx';
 import Review from './_components/Review.jsx';
@@ -63,7 +63,20 @@ export default function HomePageSetting() {
 
         {/* Tab 2: Showcase Reels */}
         <TabsContent value="showcase" className="mt-0">
-          <VideoThumbnail />
+          {/* The home "Our films" tabs are rows now: which rows, in what order,
+              is set on the home page composition, and each row's films in
+              Admin › Rows. The old tag-list editor (VideoThumbnail) edited a
+              list the site no longer reads for this section. */}
+          <div className="rounded-2xl border border-[#E7E2DA] bg-white p-6 space-y-3">
+            <h2 className="font-serif text-xl text-[#1C1917]">Home “Our films” tabs</h2>
+            <p className="text-sm text-[#57534E] max-w-2xl">
+              Each tab is a row. Choose which rows appear and their order in the home page composition; choose what each row shows, pin films and set its order in Rows.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <Link href="/admin/content/home" className="rounded-lg bg-[#1C1917] px-3.5 py-2 text-xs font-semibold text-white">Open home page composition</Link>
+              <Link href="/admin/collections" className="rounded-lg border border-[#E7E2DA] px-3.5 py-2 text-xs font-semibold text-[#1C1917]">Open Rows</Link>
+            </div>
+          </div>
         </TabsContent>
 
         {/* Tab 3: Heritage Map */}

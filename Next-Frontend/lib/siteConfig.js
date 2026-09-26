@@ -32,6 +32,7 @@ export const RESERVED_CMS_PAGE_KEYS = new Set([
     'home',
     'about',
     'films',
+    'allfilms',
     'photos',
     'contact',
 ]);

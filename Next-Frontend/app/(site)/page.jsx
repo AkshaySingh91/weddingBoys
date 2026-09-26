@@ -18,7 +18,9 @@ export const revalidate = 60; // ISR — CMS edits appear within a minute
 // Fetch the CMS 'home' layout on the server (fails soft → fallback render).
 async function fetchHome() {
     try {
-        const res = await fetch(`${api_url}/api/content/home`, { next: { revalidate: 60, tags: ['page:home'] } });
+        // resolve=1: each section arrives with the rows it shows (Admin › Rows),
+        // so the home page needs one request. `portfolio` refreshes it when a row changes.
+        const res = await fetch(`${api_url}/api/content/home?resolve=1`, { next: { revalidate: 60, tags: ['page:home', 'portfolio'] } });
         if (!res.ok) return null;
         const data = await res.json();
         return data.page || null;

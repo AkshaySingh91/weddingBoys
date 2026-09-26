@@ -9,11 +9,19 @@ import { Skeleton } from '@/Component/ui/Skeleton.jsx';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL;
 
-export default function VideoThumbnail() {
+/**
+ * `data` (from the page composition, Admin › Content › Home): { heading,
+ * defaultTab, tabs: [{ key, title, items }] } — each tab is a row from
+ * Admin › Rows, already resolved on the server, so tabs switch instantly with no
+ * request. Without it (CMS unreachable) the component reads the old tag list.
+ */
+export default function VideoThumbnail({ data } = {}) {
+    const tabs = Array.isArray(data?.tabs) ? data.tabs : null;
+    const firstTab = tabs ? (tabs.find((t) => t.key === data.defaultTab) || tabs[0]) : null;
     const [isLoading, setIsLoading] = useState(false);
-    const [clients, setClients] = useState([])
-    const [homepageTags, setHomepageTags] = useState([])
-    const [selectedTag, setSelectedTag] = useState("");
+    const [clients, setClients] = useState(firstTab ? firstTab.items : [])
+    const [homepageTags, setHomepageTags] = useState(tabs ? tabs.map((t) => t.title) : [])
+    const [selectedTag, setSelectedTag] = useState(firstTab ? firstTab.title : "");
 
     const fetchVideos = async (t) => {
         try {
@@ -53,13 +61,15 @@ export default function VideoThumbnail() {
         }, []);
 
     useEffect(() => {
+        if (tabs) return; // composed on the server: nothing to fetch
         // eslint-disable-next-line react-hooks/set-state-in-effect
         fetchHomeTags();    //it is tag that are selected
-    }, [fetchHomeTags])
+    }, [fetchHomeTags, tabs])
 
     const handleChangeTag = (t) => {
         setSelectedTag(t);
-        fetchVideos(t)
+        if (tabs) setClients(tabs.find((x) => x.title === t)?.items || []);
+        else fetchVideos(t)
     }
     return (
         <Section width="wide" rhythm="tight" className="overflow-x-clip">
@@ -70,7 +80,7 @@ export default function VideoThumbnail() {
             */}
             <div className="flex items-end justify-between gap-4">
                 <div>
-                    <h2 className="t-display-2">Our films</h2>
+                    <h2 className="t-display-2">{data?.heading || 'Our films'}</h2>
                     <div className="rule-ornament mt-2.5 w-36" aria-hidden="true" />
                 </div>
                 <Link

@@ -24,8 +24,10 @@ async function fetchHeroSlides() {
     }
 }
 
-export default async function Herobanner() {
-    const slides = await fetchHeroSlides();
+// `data.slides` comes from the page composition (the hero row chosen in the CMS);
+// without it the banner reads /api/hero-videos itself.
+export default async function Herobanner({ data } = {}) {
+    const slides = Array.isArray(data?.slides) ? data.slides : await fetchHeroSlides();
     if (!slides.length) return null;
     return <HeroCarousel slides={slides} />;
 }

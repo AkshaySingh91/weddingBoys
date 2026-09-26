@@ -415,3 +415,64 @@ items as today where today's list fits the limit, and only today's matches where
   A duplicate-key warning from the new sidebar entry fixed. `next build` passes.
 
 Pages still read their tag lists; phase 6 composes them from these rows.
+
+### Phase 6 — page composition: the customisation surface
+**Drafts that cannot break the live page.** `PageContent.draft` {blocks, title, description,
+savedAt/By} + `publishedAt/By`. Save Draft writes only the draft (it used to set the live page
+to Draft — hiding the whole home page); Publish copies it live and clears it; Discard; Restore
+defaults (adds missing default sections to the draft — defaults are no longer re-appended on
+every open, so a deleted default block stays deleted). A drag in the editor no longer
+auto-saves (it used to publish on every drop). The public payload never carries the draft.
+
+**Section settings** (`Backend/Utils/sectionSettings.js`, zod): heroVideos {collectionKey},
+ourFilms {heading, tabs, defaultTab}, portfolio {heading, tabs}, filmRows {rows, dedupe},
+browseFilms {facetGroups, sort, pageSize}, photoGallery {facetGroups, sort, pageSize}. Every
+row named must exist and be the right kind (a photo row in a film section → 400).
+
+**Resolved pages.** `GET /api/content/:page?resolve=1` returns each section with its data
+(`Services/pageComposer.js`, the same resolver as Admin › Rows), in the shapes the components
+already render. `POST /api/admin/content/:page/preview` resolves unsaved settings (draft rows
+included). New public `GET /api/browse` — OR within a category, AND across categories, with
+per-option counts given the other selections. `/api/videos` / `/api/photos` tag filters follow
+the same rule now (each added /allfilms filter used to WIDEN the results); `/api/photos` and
+`findFeed` take an optional row sort.
+
+**Public.** Home: one request (`?resolve=1`, tagged `page:home` + `portfolio`); the hero,
+"Our films" tabs (switch with no request) and "Our portfolio" tabs (the hardcoded categories
+are now only the offline fallback) come from the composition; `PageSections` passes
+`settings` + `data`; every component keeps its self-fetch fallback. /films, /allfilms, /photos:
+server pages resolve their section (`lib/pageComposition.js`) and pass it in — /films rows are in
+the server HTML. With the owner's permission the three client components (their uncommitted
+redesign) changed **data loading only**: FilmsClient starts from the composed rows;
+AllFilmsClient takes its filter groups and page size (and sends the sort); PhotosClient takes
+its chips (when groups are chosen), page size and sort. Those three files are left uncommitted
+in the owner's working tree, as agreed.
+
+**Admin.** Content editor: Live / Hidden badge, "Unpublished changes", Save Draft (safe),
+Discard draft, Restore defaults; per-section settings (`SectionSettings.jsx`): row pickers in
+order with Edit / New row links and live counts, default tab, dedupe, filter groups in click
+order, sort, page size, "Preview what this shows". New section options for the three pages.
+Home › Showcase now points to the composition and Rows; Films Page settings forwards to
+`/admin/content/films`. `allfilms` reserved from the `/[slug]` CMS route.
+
+**Migration** `scripts/migratePagesToComposition.js`: home settings from today's lists; films
+rows from today's /films list; allfilms and photos created / given their section; a hidden home
+page would have its blocks moved to the draft and today's fallback layout published.
+
+**Verified.**
+- Dev: dry-run → apply → verify ("every page composed, and shows today's rows in today's
+  order": home tabs Classic, North India, Garden, Mangalsutra; /films the same four rows).
+- Dev API acceptance, **21/21**: resolved home tabs; no draft in the public payload; draft
+  never touches live; reopen shows the draft; discard; publish changes the live order; dedupe
+  across /films rows (11 → 7 films, none twice); unknown row / wrong kind / malformed
+  setting → 400; a removed default stays removed; restore adds it to the draft only; /allfilms
+  offers every category; `?tag=North India,Classic` narrows (4 → 1), `North India,South India`
+  widens. Pages restored afterwards.
+- SSR: /films HTML contains the row titles and couples; `/`, `/films`, `/allfilms`, `/photos`
+  200. Browser: no console errors on home, /allfilms, /photos; home tab switch makes no
+  request. /films logs duplicate-key warnings from its own markup when one film is in two rows
+  (as before); the new "Never show a film twice" setting removes that. `next build` passes.
+
+Found: the dev hero row was emptied from the admin at 11:06:35 (before this phase's work);
+left as is pending the owner. Owner's uncommitted `findFeedWithTotal` / paginated
+`/api/videos` does not pass `sort` yet — a two-line change for the /allfilms sort setting.

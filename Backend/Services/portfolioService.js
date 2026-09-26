@@ -12,7 +12,7 @@
 import PortfolioItem from '../Models/PortfolioItem.js';
 import Client from '../Models/ClientSchema.js';
 import { PUBLIC_GATE } from './portfolioVisibility.js';
-import { resolveTagParam } from './taxonomy.js';
+import { resolveTagParam, loadTaxonomy } from './taxonomy.js';
 
 /** `PORTFOLIO_READS=v2` switches the public routes onto this service. */
 export const portfolioReadsEnabled = () => process.env.PORTFOLIO_READS === 'v2';
@@ -49,21 +49,42 @@ const parseTags = (tag) => String(tag || '').split(',').map((t) => t.trim()).fil
 
 /**
  * Tag filters match by tag id (Services/taxonomy.js): a label, slug or old name
- * all find the same films, so a renamed or merged tag keeps its rows. A value
- * that names no tag matches nothing, as the exact string match did.
+ * all find the same films, so a renamed or merged tag keeps its rows.
+ *
+ * Several values: OR within a category, AND across categories (plan phase 6).
+ * `Beach,Classic` (both themes) is Beach OR Classic; `Pre-Wedding,Beach` is
+ * Pre-Wedding AND Beach. It used to be OR for everything, so each filter
+ * added on /allfilms WIDENED the results. A value that names no tag matches
+ * nothing, as the exact string match did.
  */
 async function tagFilter(values) {
     if (!values?.length) return {};
-    const ids = await resolveTagParam(values);
-    return ids.length ? { tagIds: { $in: ids } } : null;
+    const tax = await loadTaxonomy();
+    const clauses = new Map(); // the categories a value spans → its tag ids
+    for (const v of values) {
+        const ids = await resolveTagParam([v]);
+        if (!ids.length) return null;
+        const groups = [...new Set(ids.map((id) => String(tax.tagById.get(String(id))?.group)))].sort().join('|');
+        if (!clauses.has(groups)) clauses.set(groups, new Map());
+        ids.forEach((id) => clauses.get(groups).set(String(id), id));
+    }
+    const parts = [...clauses.values()].map((ids) => ({ tagIds: { $in: [...ids.values()] } }));
+    return parts.length === 1 ? parts[0] : { $and: parts };
 }
 
-export async function findFeed({ kind, tags = [], page = 1, limit = 10 }) {
+/** A named row sort (Services/collectionResolver.js), else the legacy feed order. */
+const feedSort = async (sort) => {
+    if (!sort) return FEED_SORT;
+    const { SORTS } = await import('./collectionResolver.js');
+    return SORTS[sort] || FEED_SORT;
+};
+
+export async function findFeed({ kind, tags = [], page = 1, limit = 10, sort }) {
     const byTag = await tagFilter(tags);
     if (!byTag) return [];
     const filter = { kind, ...PUBLIC_GATE, ...byTag };
     return PortfolioItem.find(filter)
-        .sort(FEED_SORT)
+        .sort(await feedSort(sort))
         .skip((Math.max(1, page) - 1) * limit)
         .limit(limit)
         .populate('client', 'clientName')

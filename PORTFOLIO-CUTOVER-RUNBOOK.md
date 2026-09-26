@@ -57,6 +57,9 @@ Choose one:
    node scripts/migrateRowsToCollections.js --dry-run       # the rows it will create
    node scripts/migrateRowsToCollections.js --apply
    node scripts/migrateRowsToCollections.js --verify        # hero identical, rows = today's
+   node scripts/migratePagesToComposition.js --dry-run
+   node scripts/migratePagesToComposition.js --apply
+   node scripts/migratePagesToComposition.js --verify       # pages show today's rows, in order
    node scripts/cutoverReport.js                           # must say "no blockers"
    ```
 4. Run two backends on the copy and compare them (both read-only, no worker needed):
@@ -85,11 +88,14 @@ Choose one:
 5. `node scripts/migrateRowsToCollections.js --apply`, then `--verify` (Phase 5): today's hero
    and rows become collections (Admin › Rows). The v2 hero reads `home-hero`, pinned in today's
    exact order; the legacy path never reads it.
-6. `node scripts/cutoverReport.js` against production: **no blockers**.
-7. Set `PORTFOLIO_READS=v2` on the backend and restart it.
-8. Smoke test: `/`, `/films`, `/allfilms`, `/photos`, five film pages and five photo pages.
+6. `node scripts/migratePagesToComposition.js --apply`, then `--verify` (Phase 6): home, /films,
+   /allfilms and /photos become compositions of those rows (Admin › Content), showing today's
+   rows in today's order.
+7. `node scripts/cutoverReport.js` against production: **no blockers**.
+8. Set `PORTFOLIO_READS=v2` on the backend and restart it.
+9. Smoke test: `/`, `/films`, `/allfilms`, `/photos`, five film pages and five photo pages.
    On a film page, check the gallery and "recommended" thumbnails load.
-9. Once the Next frontend is live, check the sitemap (from `Next-Frontend/`):
+10. Once the Next frontend is live, check the sitemap (from `Next-Frontend/`):
    `node scripts/checkSitemapUrls.mjs --site=https://theweddingboys.in --api=<api origin>`.
    It checks each film and photo through the API, because those pages always answer 200.
 
@@ -155,4 +161,5 @@ Found along the way (not caused by the switch):
 | `scripts/migrateTagsToTaxonomy.js` | with `--apply` / `--rollback` | builds the tag system from the old categories, ceremonies and item strings (`tag-migration-map.json`) |
 | `scripts/backfillClientProfiles.js` | with `--apply` / `--rollback` | story-page slugs, city, cover, item order for existing weddings |
 | `scripts/migrateRowsToCollections.js` | with `--apply` / `--rollback` | hero + home / films / portfolio rows as collections |
+| `scripts/migratePagesToComposition.js` | with `--apply` / `--rollback` | pages composed from rows: home tabs, /films rows, /allfilms and /photos filters |
 | `scripts/lib/runLog.js` | `scriptruns`, `scriptrunchanges` | shared `--dry-run / --apply / --verify / --rollback` contract |
