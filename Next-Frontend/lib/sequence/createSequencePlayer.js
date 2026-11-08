@@ -48,7 +48,11 @@ export function createSequencePlayer({ canvas, container, sequence }) {
 
   const sources = new Map(); // index -> loaded HTMLImageElement (compressed, cheap)
   const bitmaps = new Map(); // index -> ImageBitmap (decoded, budgeted)
+  // Small decoded copies of the coarse pass (every 16th frame). A fast fling shows
+  // the nearest one, softly, until the full frame is decoded. ~0.5 MB each.
+  const keyframes = new Map();
   const decoding = new Set();
+  const decodingKeys = new Set();
   const failed = new Set();
   let destroyed = false;
   let near = false; // within a few screens: keep decoded frames
@@ -105,8 +109,16 @@ export function createSequencePlayer({ canvas, container, sequence }) {
     }
   }
 
+  /*
+    Paint ONLY decoded bitmaps — never the raw <img>. Drawing an HTMLImageElement
+    makes the browser decode it synchronously and keep that full-size decode
+    cached; a fast fling up and down did that dozens of times a second and
+    crashed the tab ("Aw, Snap!", reproduced 2026-11-09). Bitmaps are budgeted
+    and closed, so memory stays flat however the page is scrolled.
+  */
   function paint(index) {
-    const image = bitmaps.get(index) || sources.get(index);
+    const full = bitmaps.get(index);
+    const image = full || keyframes.get(index);
     if (!image || !context) return false;
     const imageWidth = image.width || image.naturalWidth;
     const imageHeight = image.height || image.naturalHeight;
@@ -118,38 +130,65 @@ export function createSequencePlayer({ canvas, container, sequence }) {
       (canvas.width - width) * clamp(sequence.focalX ?? 0.5, 0, 1),
       (canvas.height - height) * clamp(sequence.focalY ?? 0.5, 0, 1), width, height);
     lastPainted = index;
+    lastPaintedSharp = Boolean(full);
     return true;
   }
 
-  // Closest frame we can paint without waiting: a decoded bitmap if one is near,
-  // otherwise any downloaded frame (coarse pass guarantees one is never far).
-  function nearestPaintable(desired) {
-    if (bitmaps.has(desired)) return desired;
+  const closest = (map, desired) => {
     let best = -1;
     let bestDistance = Infinity;
-    for (const index of bitmaps.keys()) {
+    for (const index of map.keys()) {
       const distance = Math.abs(index - desired);
       if (distance < bestDistance) { best = index; bestDistance = distance; }
     }
-    // Prefer an exact or much closer downloaded frame over a far-off bitmap.
-    if (sources.has(desired) && bestDistance > stride) return desired;
-    if (best < 0 || bestDistance > 4 * stride) {
-      for (let d = 0; d <= lastIndex; d += stride) {
-        if (sources.has(desired - d)) return desired - d;
-        if (sources.has(desired + d)) return desired + d;
-        if (d >= bestDistance) break;
-      }
-    }
-    return best;
+    return [best, bestDistance];
+  };
+
+  // Closest frame we can paint without waiting: a full bitmap if one is close,
+  // otherwise the nearest keyframe if that is closer (soft for a moment, but in
+  // the right place), otherwise whatever full bitmap is nearest.
+  function nearestPaintable(desired) {
+    if (bitmaps.has(desired)) return desired;
+    const [full, fullDistance] = closest(bitmaps, desired);
+    if (full >= 0 && fullDistance <= 2 * stride) return full;
+    const [key, keyDistance] = closest(keyframes, desired);
+    if (key >= 0 && keyDistance < fullDistance) return key;
+    return full;
   }
 
+  let lastPaintedSharp = false;
   function requestPaint() {
     if (raf || destroyed) return;
     raf = requestAnimationFrame(() => {
       raf = 0;
       const index = nearestPaintable(snap(target));
-      if (index >= 0 && index !== lastPainted) paint(index);
+      // Repaint the same index when its sharp version has just arrived.
+      if (index >= 0 && (index !== lastPainted || (!lastPaintedSharp && bitmaps.has(index)))) paint(index);
     });
+  }
+
+  function decodeKeyframe(index) {
+    if (!canBitmap || destroyed || index % (16 * stride) !== 0 || keyframes.has(index) || decodingKeys.has(index)) return;
+    const source = sources.get(index);
+    if (!source) return;
+    decodingKeys.add(index);
+    const width = Math.min(480, source.naturalWidth || 480);
+    createImageBitmap(source, { resizeWidth: width, resizeQuality: 'low' }).then((bitmap) => {
+      if (destroyed) { bitmap.close?.(); return; }
+      keyframes.set(index, bitmap);
+      if (lastPainted < 0) requestPaint();
+    }).catch(() => {}).finally(() => decodingKeys.delete(index));
+  }
+
+  // Nearest downloaded frame to the playhead, so a fling into frames that have not
+  // arrived yet still decodes something close first.
+  function nearestSource(desired) {
+    if (sources.has(desired)) return desired;
+    for (let d = stride; d <= lastIndex; d += stride) {
+      if (sources.has(desired - d)) return desired - d;
+      if (sources.has(desired + d)) return desired + d;
+    }
+    return -1;
   }
 
   function decodeAround() {
@@ -158,6 +197,8 @@ export function createSequencePlayer({ canvas, container, sequence }) {
     const ahead = Math.ceil(decodeWindow * 0.7);
     const behind = decodeWindow - ahead;
     const wanted = [];
+    const fallback = nearestSource(current);
+    if (fallback >= 0 && fallback !== current) wanted.push(fallback);
     for (let n = 0; n <= ahead; n += 1) wanted.push(snap(current + direction * n * stride));
     for (let n = 1; n <= behind; n += 1) wanted.push(snap(current - direction * n * stride));
     const keep = new Set(wanted);
@@ -209,7 +250,7 @@ export function createSequencePlayer({ canvas, container, sequence }) {
         inflight -= 1;
         if (destroyed) return;
         sources.set(index, image);
-        if (lastPainted < 0 || Math.abs(index - snap(target)) < Math.abs(lastPainted - snap(target))) requestPaint();
+        decodeKeyframe(index);
         decodeAround();
         download();
       };
@@ -268,7 +309,9 @@ export function createSequencePlayer({ canvas, container, sequence }) {
       resizeObserver.disconnect();
       cancelAnimationFrame(raf);
       for (const bitmap of bitmaps.values()) bitmap.close?.();
+      for (const bitmap of keyframes.values()) bitmap.close?.();
       bitmaps.clear();
+      keyframes.clear();
       sources.clear();
     },
   };

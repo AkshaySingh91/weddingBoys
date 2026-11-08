@@ -34,11 +34,21 @@ async function withBrowser({ latency = 1, connection, innerWidth = 1200 } = {}, 
     globalThis.ResizeObserver = class { observe() {} disconnect() {} };
     globalThis.requestAnimationFrame = (callback) => setTimeout(callback, 0);
     globalThis.cancelAnimationFrame = clearTimeout;
-    const canvas = { width: 0, height: 0, getContext: () => ({ drawImage(image) { paints.push(image.url); } }) };
+    const rawPaints = [];
+    const canvas = {
+      width: 0, height: 0,
+      getContext: () => ({
+        drawImage(image) {
+          paints.push(image.url);
+          // A raw <img> (our fake Image) on the canvas forces a full synchronous decode.
+          if (image instanceof globalThis.Image) rawPaints.push(image.url);
+        },
+      }),
+    };
     const container = { getBoundingClientRect: () => ({ width: 640, height: 360 }) };
     const enter = () => { for (const { callback } of observers) callback([{ isIntersecting: true }]); };
     const create = (options) => { const player = createSequencePlayer(options); players.push(player); return player; };
-    await run({ canvas, container, requests, paints, enter, create });
+    await run({ canvas, container, requests, paints, rawPaints, enter, create });
   } finally {
     for (const player of players) player.destroy();
     for (const [key, descriptor] of Object.entries(saved)) {
@@ -83,6 +93,25 @@ test('continuous scrolling keeps painting new frames while frames are still arri
     await sleep(50);
     assert.ok(new Set(paints).size > 4, `painted ${new Set(paints).size} unique frames during the scrub`);
     assert.equal(paints.at(-1), '/frame_0149.webp', 'lands on the exact last frame (playhead is prioritized)');
+    player.destroy();
+  });
+});
+
+test('fast flings up and down only ever paint decoded bitmaps, never a raw image', async () => {
+  // Regression: painting raw <img> frames during fast scrolling crashed the tab
+  // ("Aw, Snap!") because each draw kept a full-size decode in memory.
+  await withBrowser({ latency: 5 }, async ({ canvas, container, paints, rawPaints, enter, create }) => {
+    const player = create({ canvas, container, sequence: sequence() });
+    enter();
+    for (let round = 0; round < 6; round += 1) {
+      player.setProgress(round % 2 ? 0 : 1);
+      await sleep(3);
+      player.setProgress(0.5);
+      await sleep(3);
+    }
+    await sleep(80);
+    assert.ok(paints.length > 0, 'something was painted');
+    assert.deepEqual(rawPaints, [], `painted raw images: ${rawPaints.slice(0, 3).join(', ')}`);
     player.destroy();
   });
 });
