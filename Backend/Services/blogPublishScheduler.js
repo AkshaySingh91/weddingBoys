@@ -1,3 +1,4 @@
+import { revalidateBlogs } from './revalidate.js';
 import BlogPost from '../Models/blogPost.js';
 import BlogPostRevision from '../Models/BlogPostRevision.js';
 
@@ -43,22 +44,7 @@ export function startBlogPublishScheduler() {
                     }).save().catch(() => { });
                 }
 
-                // Trigger Next.js on-demand ISR revalidation
-                const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
-                fetch(`${frontendUrl}/api/revalidate`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        slug: post.slug,
-                        secret: process.env.REVALIDATION_SECRET || 'wb_editorial_secret_2026',
-                    }),
-                })
-                    .then((res) => {
-                        if (res.ok) console.log(`✓ [Scheduler] ISR revalidation triggered for: /blogs/${post.slug}`);
-                    })
-                    .catch((err) => {
-                        console.warn(`⚠ [Scheduler] Failed to trigger ISR revalidation for /blogs/${post.slug}:`, err.message);
-                    });
+                revalidateBlogs(post.slug);
             }
         } catch (err) {
             console.error('❌ [Scheduler] Error during scheduled blog publish tick:', err);

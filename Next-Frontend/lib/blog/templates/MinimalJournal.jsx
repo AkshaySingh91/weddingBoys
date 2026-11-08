@@ -28,7 +28,7 @@ export default function MinimalJournal({ post, contentJson, toc, related }) {
           {post.title}
         </h1>
         <div className="mt-5 flex items-center gap-4 text-sm text-studio-inkMuted">
-          <span className="font-medium text-studio-ink">{post.author?.name || 'The Wedding Boys'}</span>
+          <span className="font-medium text-studio-ink">{post.author?.name || 'The Wedding Vachan'}</span>
           <span className="flex items-center gap-1" suppressHydrationWarning>
             <CalendarDot size={14} />
             {publishedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}

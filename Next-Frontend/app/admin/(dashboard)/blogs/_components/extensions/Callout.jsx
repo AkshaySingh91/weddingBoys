@@ -9,11 +9,11 @@ import { useNodeActive } from './useNodeActive.js';
 // for vendor credits, photographer notes, and couple testimonials.
 const VARIANTS = {
     note: { label: 'Note', icon: Note, cls: 'rounded-r-xl border-l-4 border-amber-600 bg-amber-50/60 text-amber-950' },
-    vendor: { label: 'Vendor Credit', icon: Trophy, cls: 'rounded-r-xl border-l-4 border-[#8C532B] bg-stone-100/80 text-[#1C1917]' },
-    testimonial: { label: 'Testimonial', icon: Quotes, cls: 'rounded-r-xl border-l-4 border-stone-800 bg-stone-50 text-stone-900 italic' },
+    vendor: { label: 'Vendor Credit', icon: Trophy, cls: 'rounded-r-xl border-l-4 border-accent bg-ground-sunk/80 text-ink' },
+    testimonial: { label: 'Testimonial', icon: Quotes, cls: 'rounded-r-xl border-l-4 border-ink bg-ground text-ink italic' },
     // A full panel rather than a left bar — see lib/blog/blocks/CalloutBlock.jsx.
-    protip: { label: 'Pro Tip', icon: Lightbulb, cls: 'rounded-2xl border border-[#C29555]/50 bg-[#FDF7EE] text-[#1C1917]' },
-    warning: { label: 'Watch Out', icon: Warning, cls: 'rounded-2xl border border-red-300 bg-red-50/60 text-[#1C1917]' },
+    protip: { label: 'Pro Tip', icon: Lightbulb, cls: 'rounded-xl border border-gold/50 bg-ground text-ink' },
+    warning: { label: 'Watch Out', icon: Warning, cls: 'rounded-xl border border-accent bg-accent-wash/60 text-ink' },
 };
 
 function CalloutView({ node, updateAttributes, deleteNode, selected, editor, getPos }) {
@@ -26,19 +26,19 @@ function CalloutView({ node, updateAttributes, deleteNode, selected, editor, get
     const Icon = cfg.icon;
 
     return (
-        <NodeViewWrapper className={`my-5 p-4 transition-all font-sans ${cfg.cls} ${active ? 'ring-2 ring-[#8C532B]' : ''}`}>
+        <NodeViewWrapper className={`my-5 p-4 transition-all font-sans ${cfg.cls} ${active ? 'ring-2 ring-accent' : ''}`}>
             <div className="flex items-center gap-2 mb-2 select-none" contentEditable={false}>
-                <Icon size={16} className="text-[#8C532B] shrink-0" weight="bold" />
+                <Icon size={16} className="text-accent-ink shrink-0" weight="bold" />
                 {active ? (
                     <select
                         value={variant}
                         onChange={(e) => updateAttributes({ variant: e.target.value })}
-                        className="rounded-lg border border-[#E5DCD3] bg-white px-2 py-0.5 text-xs text-[#1C1917] font-medium focus:outline-none focus:border-[#8C532B]"
+                        className="rounded-lg border border-edge-subtle bg-white px-2 py-0.5 text-xs text-ink font-medium focus:outline-none focus:border-accent"
                     >
                         {Object.entries(VARIANTS).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
                     </select>
                 ) : (
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-stone-600">{cfg.label}</span>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-ink-secondary">{cfg.label}</span>
                 )}
                 {active && (
                     <button
@@ -51,7 +51,7 @@ function CalloutView({ node, updateAttributes, deleteNode, selected, editor, get
                     </button>
                 )}
             </div>
-            <NodeViewContent className="text-sm leading-relaxed text-[#1C1917]" />
+            <NodeViewContent className="text-sm leading-relaxed text-ink" />
         </NodeViewWrapper>
     );
 }

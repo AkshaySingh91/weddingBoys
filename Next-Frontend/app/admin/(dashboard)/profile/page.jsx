@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
+import { apiFetch } from '@/lib/apiClient.js';
 import {
   User, Camera, FloppyDisk, LockKey, Eye, EyeSlash, ShieldCheck, Check, X, CircleNotch, Phone, EnvelopeSimple
 } from '@phosphor-icons/react';
@@ -9,8 +10,6 @@ import { fireMessage } from '@/Utils/fireMessage.js';
 import Button from '@/app/admin/components/ui/Button.jsx';
 import Badge from '@/app/admin/components/ui/Badge.jsx';
 import { PageHeader } from '@/app/admin/components/ui/PageHeader.jsx';
-
-const api_url = process.env.NEXT_PUBLIC_API_URL;
 
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState('details'); // 'details' | 'security'
@@ -23,6 +22,9 @@ export default function ProfilePage() {
   // Profile data
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [savedEmail, setSavedEmail] = useState("");
+  const [emailPassword, setEmailPassword] = useState("");
+  const [mfaEnabled, setMfaEnabled] = useState(false);
   const [phone, setPhone] = useState("");
   const [avatar, setAvatar] = useState("");
   const [id, setId] = useState("");
@@ -46,7 +48,7 @@ export default function ProfilePage() {
   useEffect(() => {
     async function fetchAdminDetails() {
       try {
-        const res = await fetch(`${api_url}/api/admin/profile`, {
+        const res = await apiFetch(`/api/admin/profile`, {
           credentials: "include"
         });
         const data = await res.json();
@@ -56,6 +58,8 @@ export default function ProfilePage() {
         const adminDetail = data.adminDetail;
         setName(adminDetail.name || '');
         setEmail(adminDetail.email || '');
+        setSavedEmail(adminDetail.email || '');
+        setMfaEnabled(Boolean(adminDetail.mfaEnabled));
         setPhone(adminDetail.phone || '');
         setAvatar(adminDetail.avatar || '');
         setId(adminDetail._id || '');
@@ -115,13 +119,13 @@ export default function ProfilePage() {
 
     setSavingAvatar(true);
     try {
-      const res = await fetch(`${api_url}/api/admin/profile/verify`, {
+      const res = await apiFetch(`/api/admin/profile/verify`, {
         credentials: "include",
         method: "PUT",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           admin: { name, email, phone, id, avatarMetaData },
-          isAvatarUpdated: true
+          isAvatarUpdated: true, currentPassword: emailPassword
         })
       });
       const data = await res.json();
@@ -135,13 +139,13 @@ export default function ProfilePage() {
         throw new Error(uploadRes.message);
       }
 
-      const saveRes = await fetch(`${api_url}/api/admin/profile/save`, {
+      const saveRes = await apiFetch(`/api/admin/profile/save`, {
         credentials: "include",
         method: "PUT",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           admin: { name, email, phone, id, key },
-          isAvatarUpdated: true
+          isAvatarUpdated: true, currentPassword: emailPassword
         })
       });
       const saveData = await saveRes.json();
@@ -149,6 +153,7 @@ export default function ProfilePage() {
         throw new Error(saveData.message || 'Failed to save avatar');
       }
 
+      if (saveData.requiresLogin) { router.replace('/admin/login'); return; }
       setAvatar(newAvatarPreview);
       setIsNewAvatar(false);
       fireMessage('Profile avatar updated successfully', 'success');
@@ -163,13 +168,13 @@ export default function ProfilePage() {
     e?.preventDefault();
     setSavingDetails(true);
     try {
-      const res = await fetch(`${api_url}/api/admin/profile/verify`, {
+      const res = await apiFetch(`/api/admin/profile/verify`, {
         credentials: "include",
         method: "PUT",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           admin: { name, email, phone, id },
-          isAvatarUpdated: false
+          isAvatarUpdated: false, currentPassword: emailPassword
         })
       });
       const data = await res.json();
@@ -177,6 +182,9 @@ export default function ProfilePage() {
         throw new Error(data.message || 'Failed to update profile');
       }
       setIsEditing(false);
+      setSavedEmail(email);
+      setEmailPassword('');
+      if (data.requiresLogin) { router.replace('/admin/login'); return; }
       fireMessage('Profile details saved successfully', 'success');
     } catch (error) {
       fireMessage(error.message, 'error');
@@ -199,7 +207,7 @@ export default function ProfilePage() {
 
     setChangingPassword(true);
     try {
-      const res = await fetch(`${api_url}/api/admin/profile/change-password`, {
+      const res = await apiFetch(`/api/admin/profile/change-password`, {
         credentials: 'include',
         method: "POST",
         body: JSON.stringify({ currentPassword, newPassword, confirmPassword }),
@@ -212,7 +220,8 @@ export default function ProfilePage() {
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
-      fireMessage('Password changed successfully', 'success');
+      fireMessage('Password updated. Please sign in again.', 'success');
+      router.replace('/admin/login');
     } catch (error) {
       fireMessage(error.message, 'error');
     } finally {
@@ -222,8 +231,8 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center p-20 text-sm font-sans text-[#78716C]">
-        <CircleNotch size={24} weight="bold" className="animate-spin text-[#C5A880] mr-2.5" />
+      <div className="flex items-center justify-center p-20 text-sm font-sans text-ink-muted">
+        <CircleNotch size={24} weight="bold" className="animate-spin text-gold-strong mr-2.5" />
         Loading account details…
       </div>
     );
@@ -242,9 +251,9 @@ export default function ProfilePage() {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Left Card: Avatar & Summary */}
-        <div className="rounded-2xl border border-[#E7E2DA] bg-white p-6 shadow-sm flex flex-col items-center text-center">
+        <div className="rounded-xl border border-edge-subtle bg-white p-6 shadow-sm flex flex-col items-center text-center">
           <div className="relative group mb-4">
-            <div className="relative h-32 w-32 overflow-hidden rounded-full border-2 border-[#E7E2DA] bg-[#F7F4EF] shadow-sm">
+            <div className="relative h-32 w-32 overflow-hidden rounded-full border-2 border-edge-subtle bg-ground shadow-sm">
               {isNewAvatar ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={newAvatarPreview} alt="Preview" className="h-full w-full object-cover" />
@@ -252,7 +261,7 @@ export default function ProfilePage() {
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={avatar} alt={name} className="h-full w-full object-cover" />
               ) : (
-                <div className="flex h-full w-full items-center justify-center bg-[#1C1917] text-3xl font-serif text-[#C5A880]">
+                <div className="flex h-full w-full items-center justify-center bg-ink text-3xl font-sans text-gold-strong">
                   {name ? name[0].toUpperCase() : 'A'}
                 </div>
               )}
@@ -260,7 +269,7 @@ export default function ProfilePage() {
 
             <label
               htmlFor="avatarFile"
-              className="absolute bottom-1 right-1 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-[#1C1917] text-white shadow-md transition hover:bg-[#C5A880]"
+              className="absolute bottom-1 right-1 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-ink text-white shadow-md transition hover:bg-gold"
               title="Change Profile Photo"
             >
               <Camera size={16} weight="bold" />
@@ -299,41 +308,41 @@ export default function ProfilePage() {
             </div>
           )}
 
-          <h2 className="text-lg font-serif font-semibold text-[#1C1917]">{name || 'Administrator'}</h2>
+          <h2 className="text-lg font-sans font-semibold text-ink">{name || 'Administrator'}</h2>
           <div className="mt-1.5 flex items-center gap-1.5">
             <Badge variant="gold">SuperAdmin</Badge>
             <Badge variant="success" dot>Active</Badge>
           </div>
 
-          <div className="mt-6 w-full space-y-3 border-t border-[#F5F2EC] pt-5 text-left text-xs font-sans text-[#78716C]">
+          <div className="mt-6 w-full space-y-3 border-t border-edge-subtle pt-5 text-left text-xs font-sans text-ink-muted">
             <div className="flex items-center gap-2.5">
-              <EnvelopeSimple size={16} weight="bold" className="text-[#A8A29E] shrink-0" />
-              <span className="truncate text-[#1C1917]">{email}</span>
+              <EnvelopeSimple size={16} weight="bold" className="text-ink-muted shrink-0" />
+              <span className="truncate text-ink">{email}</span>
             </div>
             {phone && (
               <div className="flex items-center gap-2.5">
-                <Phone size={16} weight="bold" className="text-[#A8A29E] shrink-0" />
-                <span className="text-[#1C1917]">{phone}</span>
+                <Phone size={16} weight="bold" className="text-ink-muted shrink-0" />
+                <span className="text-ink">{phone}</span>
               </div>
             )}
             <div className="flex items-center gap-2.5">
               <ShieldCheck size={16} weight="bold" className="text-emerald-600 shrink-0" />
-              <span className="text-emerald-700 font-medium">Hardware 2FA Protected</span>
+              <span className="text-emerald-700 font-medium">{mfaEnabled ? 'Two-factor authentication enabled' : 'Two-factor authentication not enabled'}</span>
             </div>
           </div>
         </div>
 
         {/* Right Card: Tabs & Details Form */}
-        <div className="lg:col-span-2 rounded-2xl border border-[#E7E2DA] bg-white shadow-sm overflow-hidden">
+        <div className="lg:col-span-2 rounded-xl border border-edge-subtle bg-white shadow-sm overflow-hidden">
           {/* Navigation Tabs */}
-          <div className="flex border-b border-[#E7E2DA] bg-[#FDFCFB] px-6">
+          <div className="flex border-b border-edge-subtle bg-ground px-6">
             <button
               type="button"
               onClick={() => setActiveTab('details')}
               className={`flex items-center gap-2 border-b-2 py-4 text-xs font-medium uppercase tracking-wider transition-colors ${
                 activeTab === 'details'
-                  ? 'border-[#C5A880] text-[#1C1917]'
-                  : 'border-transparent text-[#78716C] hover:text-[#1C1917]'
+                  ? 'border-gold text-ink'
+                  : 'border-transparent text-ink-muted hover:text-ink'
               }`}
             >
               <User size={16} weight={activeTab === 'details' ? 'bold' : 'regular'} />
@@ -344,8 +353,8 @@ export default function ProfilePage() {
               onClick={() => setActiveTab('security')}
               className={`ml-6 flex items-center gap-2 border-b-2 py-4 text-xs font-medium uppercase tracking-wider transition-colors ${
                 activeTab === 'security'
-                  ? 'border-[#C5A880] text-[#1C1917]'
-                  : 'border-transparent text-[#78716C] hover:text-[#1C1917]'
+                  ? 'border-gold text-ink'
+                  : 'border-transparent text-ink-muted hover:text-ink'
               }`}
             >
               <LockKey size={16} weight={activeTab === 'security' ? 'bold' : 'regular'} />
@@ -357,7 +366,7 @@ export default function ProfilePage() {
             {activeTab === 'details' && (
               <form onSubmit={handleSaveDetails} className="space-y-5">
                 <div>
-                  <label htmlFor="admin-name" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-[#78716C]">
+                  <label htmlFor="admin-name" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-ink-muted">
                     Full Name
                   </label>
                   <input
@@ -367,13 +376,13 @@ export default function ProfilePage() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Enter full name"
-                    className="w-full rounded-xl border border-[#E7E2DA] bg-white py-2.5 px-3.5 text-sm font-sans text-[#1C1917] outline-none transition focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880] disabled:bg-[#FAF8F5] disabled:text-[#78716C]"
+                    className="w-full rounded-xl border border-edge-subtle bg-white py-2.5 px-3.5 text-sm font-sans text-ink outline-none transition focus:border-gold focus:ring-1 focus:ring-gold disabled:bg-ground disabled:text-ink-muted"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   <div>
-                    <label htmlFor="admin-email" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-[#78716C]">
+                    <label htmlFor="admin-email" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-ink-muted">
                       Email Address
                     </label>
                     <input
@@ -383,11 +392,11 @@ export default function ProfilePage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter email address"
-                      className="w-full rounded-xl border border-[#E7E2DA] bg-white py-2.5 px-3.5 text-sm font-sans text-[#1C1917] outline-none transition focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880] disabled:bg-[#FAF8F5] disabled:text-[#78716C]"
+                      className="w-full rounded-xl border border-edge-subtle bg-white py-2.5 px-3.5 text-sm font-sans text-ink outline-none transition focus:border-gold focus:ring-1 focus:ring-gold disabled:bg-ground disabled:text-ink-muted"
                     />
                   </div>
                   <div>
-                    <label htmlFor="admin-phone" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-[#78716C]">
+                    <label htmlFor="admin-phone" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-ink-muted">
                       Phone Number
                     </label>
                     <input
@@ -397,12 +406,22 @@ export default function ProfilePage() {
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="+91 98765 43210"
-                      className="w-full rounded-xl border border-[#E7E2DA] bg-white py-2.5 px-3.5 text-sm font-sans text-[#1C1917] outline-none transition focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880] disabled:bg-[#FAF8F5] disabled:text-[#78716C]"
+                      className="w-full rounded-xl border border-edge-subtle bg-white py-2.5 px-3.5 text-sm font-sans text-ink outline-none transition focus:border-gold focus:ring-1 focus:ring-gold disabled:bg-ground disabled:text-ink-muted"
                     />
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 pt-4 border-t border-[#F5F2EC]">
+                {isEditing && email.trim().toLowerCase() !== savedEmail && (
+                  <div>
+                    <label htmlFor="email-password" className="mb-1.5 block text-sm">Current password to change email</label>
+                    <input id="email-password" type="password" autoComplete="current-password" required
+                      value={emailPassword} onChange={(e) => setEmailPassword(e.target.value)}
+                      className="w-full rounded-xl border border-edge-subtle px-3 py-2 text-sm" />
+                    <p className="mt-2 text-xs text-ink-secondary">Changing your email signs out your other sessions.</p>
+                  </div>
+                )}
+
+                <div className="flex items-center gap-3 pt-4 border-t border-edge-subtle">
                   {!isEditing ? (
                     <Button
                       type="button"
@@ -438,7 +457,7 @@ export default function ProfilePage() {
             {activeTab === 'security' && (
               <form onSubmit={handleChangePassword} className="space-y-5">
                 <div>
-                  <label htmlFor="current-pw" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-[#78716C]">
+                  <label htmlFor="current-pw" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-ink-muted">
                     Current Password
                   </label>
                   <div className="relative">
@@ -448,12 +467,12 @@ export default function ProfilePage() {
                       value={currentPassword}
                       onChange={(e) => setCurrentPassword(e.target.value)}
                       placeholder="••••••••••••"
-                      className="w-full rounded-xl border border-[#E7E2DA] bg-white py-2.5 pl-3.5 pr-10 text-sm font-sans text-[#1C1917] outline-none transition focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880]"
+                      className="w-full rounded-xl border border-edge-subtle bg-white py-2.5 pl-3.5 pr-10 text-sm font-sans text-ink outline-none transition focus:border-gold focus:ring-1 focus:ring-gold"
                     />
                     <button
                       type="button"
                       onClick={() => setShowCurrentPassword((v) => !v)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A8A29E] transition hover:text-[#1C1917]"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-muted transition hover:text-ink"
                     >
                       {showCurrentPassword ? <EyeSlash size={18} /> : <Eye size={18} />}
                     </button>
@@ -462,7 +481,7 @@ export default function ProfilePage() {
 
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   <div>
-                    <label htmlFor="new-pw" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-[#78716C]">
+                    <label htmlFor="new-pw" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-ink-muted">
                       New Password
                     </label>
                     <div className="relative">
@@ -472,12 +491,12 @@ export default function ProfilePage() {
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
                         placeholder="Minimum 8 characters"
-                        className="w-full rounded-xl border border-[#E7E2DA] bg-white py-2.5 pl-3.5 pr-10 text-sm font-sans text-[#1C1917] outline-none transition focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880]"
+                        className="w-full rounded-xl border border-edge-subtle bg-white py-2.5 pl-3.5 pr-10 text-sm font-sans text-ink outline-none transition focus:border-gold focus:ring-1 focus:ring-gold"
                       />
                       <button
                         type="button"
                         onClick={() => setShowNewPassword((v) => !v)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A8A29E] transition hover:text-[#1C1917]"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-muted transition hover:text-ink"
                       >
                         {showNewPassword ? <EyeSlash size={18} /> : <Eye size={18} />}
                       </button>
@@ -485,7 +504,7 @@ export default function ProfilePage() {
                   </div>
 
                   <div>
-                    <label htmlFor="confirm-pw" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-[#78716C]">
+                    <label htmlFor="confirm-pw" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-ink-muted">
                       Confirm New Password
                     </label>
                     <div className="relative">
@@ -495,12 +514,12 @@ export default function ProfilePage() {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         placeholder="Re-enter new password"
-                        className="w-full rounded-xl border border-[#E7E2DA] bg-white py-2.5 pl-3.5 pr-10 text-sm font-sans text-[#1C1917] outline-none transition focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880]"
+                        className="w-full rounded-xl border border-edge-subtle bg-white py-2.5 pl-3.5 pr-10 text-sm font-sans text-ink outline-none transition focus:border-gold focus:ring-1 focus:ring-gold"
                       />
                       <button
                         type="button"
                         onClick={() => setShowConfirmPassword((v) => !v)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A8A29E] transition hover:text-[#1C1917]"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-muted transition hover:text-ink"
                       >
                         {showConfirmPassword ? <EyeSlash size={18} /> : <Eye size={18} />}
                       </button>
@@ -508,7 +527,7 @@ export default function ProfilePage() {
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-[#F5F2EC]">
+                <div className="pt-4 border-t border-edge-subtle">
                   <Button
                     type="submit"
                     variant="gold"

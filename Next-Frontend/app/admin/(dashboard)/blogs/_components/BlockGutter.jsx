@@ -70,7 +70,7 @@ export default function BlockGutter({ editor, active: activeBlock }) {
                 type="button"
                 aria-label="Insert a block below"
                 onClick={act(() => editor.chain().focus().insertParagraphAfter(active.pos).run())}
-                className="flex h-6 w-6 items-center justify-center rounded-md text-stone-400 transition-colors hover:bg-stone-200/80 hover:text-stone-700"
+                className="flex h-6 w-6 items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-ground-sunk/80 hover:text-ink-secondary"
             >
                 <Plus size={13} />
             </button>
@@ -112,19 +112,19 @@ export default function BlockGutter({ editor, active: activeBlock }) {
                         // eslint-disable-next-line react-hooks/immutability
                         editor.view.dragging = null;
                     }}
-                    className="flex h-6 w-5 cursor-grab items-center justify-center rounded-md text-stone-400 transition-colors hover:bg-stone-200/80 hover:text-stone-700 active:cursor-grabbing"
+                    className="flex h-6 w-5 cursor-grab items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-ground-sunk/80 hover:text-ink-secondary active:cursor-grabbing"
                 >
                     <DotsSixVertical size={14} weight="bold" />
                 </button>
 
                 {pinned && (
-                    <div className="absolute left-0 top-7 z-[60] w-48 overflow-hidden rounded-xl border border-[#E5DCD3] bg-white py-1 shadow-xl">
+                    <div className="absolute left-0 top-7 z-[60] w-48 overflow-hidden rounded-xl border border-edge-subtle bg-white py-1 shadow-xl">
                         {turnInto ? (
                             <>
                                 <button
                                     type="button"
                                     onClick={(e) => { e.preventDefault(); setTurnInto(false); }}
-                                    className="mb-1 flex w-full items-center gap-1.5 border-b border-[#E5DCD3] px-3 pb-1.5 text-left text-[10px] font-semibold uppercase tracking-wide text-stone-400"
+                                    className="mb-1 flex w-full items-center gap-1.5 border-b border-edge-subtle px-3 pb-1.5 text-left text-[10px] font-semibold uppercase tracking-wide text-ink-muted"
                                 >
                                     ← Turn into
                                 </button>
@@ -155,7 +155,7 @@ export default function BlockGutter({ editor, active: activeBlock }) {
                                     onClick={act(() => editor.chain().focus().moveBlockAt(active.pos, 1).run())} />
                                 <Item icon={Copy} label="Duplicate"
                                     onClick={act(() => editor.chain().focus().duplicateBlockAt(active.pos).run())} />
-                                <div className="my-1 h-px bg-[#E5DCD3]" />
+                                <div className="my-1 h-px bg-ground-sunk" />
                                 <Item icon={Trash} label="Delete" danger
                                     onClick={act(() => editor.chain().focus().deleteBlockAt(active.pos).run())} />
                             </>
@@ -173,7 +173,7 @@ function Item({ icon: Icon, label, onClick, danger }) {
             type="button"
             onClick={onClick}
             className={`flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs transition-colors ${
-                danger ? 'text-rose-700 hover:bg-rose-50' : 'text-stone-700 hover:bg-stone-50'
+                danger ? 'text-rose-700 hover:bg-rose-50' : 'text-ink-secondary hover:bg-ground'
             }`}
         >
             <Icon size={13} /> {label}

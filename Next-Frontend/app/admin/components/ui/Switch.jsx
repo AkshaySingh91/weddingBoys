@@ -26,7 +26,7 @@ export const Switch = forwardRef(function Switch(
             <label
               htmlFor={switchId}
               className={cn(
-                'block text-xs font-semibold text-[#1C1917] cursor-pointer select-none',
+                'block text-xs font-semibold text-ink cursor-pointer select-none',
                 disabled && 'opacity-50 cursor-not-allowed'
               )}
             >
@@ -34,7 +34,7 @@ export const Switch = forwardRef(function Switch(
             </label>
           )}
           {description && (
-            <p className="text-[11px] text-stone-500 leading-relaxed max-w-sm">
+            <p className="text-[11px] text-ink-muted leading-relaxed max-w-sm">
               {description}
             </p>
           )}
@@ -50,8 +50,8 @@ export const Switch = forwardRef(function Switch(
         disabled={disabled}
         onClick={() => onChange?.(!checked)}
         className={cn(
-          'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#A3603A]/20',
-          checked ? 'bg-[#A3603A]' : 'bg-stone-300',
+          'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2',
+          checked ? 'bg-accent' : 'bg-ink-muted/40',
           disabled && 'opacity-50 cursor-not-allowed'
         )}
         {...props}

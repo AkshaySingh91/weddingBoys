@@ -3,10 +3,12 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from 'next/image';
+import { createSequencePlayer } from "@/lib/sequence/createSequencePlayer.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function DirectorSection() {
+export default function DirectorSection({ sequence }) {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -15,75 +17,32 @@ export default function DirectorSection() {
   const textPhase2Ref = useRef(null);
   const textPhase3Ref = useRef(null);
 
-  const frameCount = 146;
-  const imagesRef = useRef([]);
-
-  // Replace with the actual path where you store the 150 extracted frames of the new video
-  const currentFrame = (index) =>
-    `/director-frames/Timeline_1_${String(index + 1).padStart(
-      3,
-      "0"
-    )}.webp`;
-
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d", { alpha: false });
-    const playhead = { frame: 0 };
-
-    imagesRef.current = [];
-
-    // Preload Images
-    for (let i = 0; i < frameCount; i++) {
-      const img = new Image();
-      img.src = currentFrame(i);
-      imagesRef.current.push(img);
-
-      if (i === 0) {
-        img.onload = () => renderFrame(0);
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) {
+      canvasRef.current.style.display = 'none';
+      containerRef.current.style.height = 'auto';
+      containerRef.current.style.minHeight = '100vh';
+      for (const element of [textPhase1Ref.current, textPhase2Ref.current, textPhase3Ref.current]) {
+        element.style.position = 'relative';
+        element.style.width = '100%';
+        element.style.minHeight = '50vh';
       }
+      return undefined;
     }
 
-    const renderFrame = (index) => {
-      if (!imagesRef.current[index] || !ctx) return;
-      const img = imagesRef.current[index];
-      if (!img.complete) return;
+    const frameCount = sequence.frameCount;
+    const playhead = { frame: 0 };
+    const player = createSequencePlayer({
+      canvas: canvasRef.current, container: containerRef.current, sequence,
+    });
 
-      const canvasRatio = canvas.width / canvas.height;
-      const imgRatio = img.width / img.height;
-
-      let drawWidth = canvas.width;
-      let drawHeight = canvas.height;
-      let offsetX = 0;
-      let offsetY = 0;
-
-      if (canvasRatio > imgRatio) {
-        drawHeight = canvas.width / imgRatio;
-        offsetY = (canvas.height - drawHeight) / 2;
-      } else {
-        drawWidth = canvas.height * imgRatio;
-        offsetX = (canvas.width - drawWidth) / 2;
-      }
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
-    };
-
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      renderFrame(Math.round(playhead.frame));
-    };
-
-    window.addEventListener("resize", handleResize);
-    handleResize();
-
-    // ── THE MASTER TIMELINE ──
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
         end: "+=400%", // 400% gives a nice, long, luxurious scroll feel
-        scrub: 1,
+        scrub: 0.5, // see HeroSection: Lenis already smooths the wheel
         pin: true,
         anticipatePin: 1,
       },
@@ -94,7 +53,7 @@ export default function DirectorSection() {
       frame: frameCount - 1,
       ease: "none",
       duration: 1,
-      onUpdate: () => renderFrame(Math.round(playhead.frame)),
+      onUpdate: () => player.setProgress(playhead.frame / (frameCount - 1)),
     }, 0);
 
     // ── TYPOGRAPHY CHOREOGRAPHY ──
@@ -138,10 +97,11 @@ export default function DirectorSection() {
     }, 0.75); // Fades in at 75% and stays until the end
 
     return () => {
-      window.removeEventListener("resize", handleResize);
-      ScrollTrigger.getAll().forEach((t) => t.kill());
+      tl.scrollTrigger?.kill();
+      tl.kill();
+      player.destroy();
     };
-  }, []);
+  }, [sequence]);
 
   return (
     <section
@@ -149,8 +109,10 @@ export default function DirectorSection() {
       // bg-[#0A0705] perfectly matches the vignette from the Hero section for a seamless blend
       className="relative w-full h-screen bg-[#0A0705] overflow-hidden"
     >
+      <Image src={sequence.posterUrl} alt="" fill sizes="100vw" unoptimized loading="lazy" className="object-cover pointer-events-none" style={{ objectPosition: `${(sequence.focalX ?? 0.5) * 100}% ${(sequence.focalY ?? 0.5) * 100}%` }} />
       <canvas
         ref={canvasRef}
+        aria-hidden="true"
         className="absolute inset-0 w-full h-full z-0 block pointer-events-none"
       />
 
@@ -162,9 +124,9 @@ export default function DirectorSection() {
         ref={textPhase1Ref}
         className="absolute inset-0 z-20 flex flex-col items-center justify-center px-5 sm:px-8 pointer-events-none"
       >
-        <h2 className="font-['Cormorant_Garamond'] text-[clamp(32px,5vw,64px)] text-white font-light text-center leading-[1.2] drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">
+        <h2 className="font-display text-[clamp(32px,5vw,64px)] text-white font-light text-center leading-[1.2] drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">
           We don&apos;t just wait for the <br/>
-          <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728]">
+          <span className="italic text-gold">
             perfect moment.
           </span>
         </h2>
@@ -176,9 +138,9 @@ export default function DirectorSection() {
         ref={textPhase2Ref}
         className="absolute inset-y-0 right-0 z-20 flex flex-col justify-center w-full md:w-1/2 px-8 md:pr-16 pointer-events-none"
       >
-        <p className="font-['Cormorant_Garamond'] text-[clamp(24px,3vw,42px)] text-white text-right leading-[1.3] drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">
+        <p className="font-display text-[clamp(24px,3vw,42px)] text-white text-right leading-[1.3] drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">
           We step into the chaos, <br/>
-          orchestrating <span className="text-[#FCF6BA]">light</span> and <span className="text-[#FCF6BA]">legacy</span>...
+          orchestrating <span className="text-gold">light</span> and <span className="text-gold">legacy</span>...
         </p>
       </div>
 
@@ -187,15 +149,15 @@ export default function DirectorSection() {
         ref={textPhase3Ref}
         className="absolute inset-x-0 bottom-[15vh] z-20 flex flex-col items-center px-5 pointer-events-none"
       >
-        <h3 className="font-['Cormorant_Garamond'] text-[clamp(28px,4vw,56px)] text-white font-light text-center leading-[1.2] drop-shadow-[0_8px_16px_rgba(0,0,0,0.9)]">
+        <h3 className="font-display text-[clamp(28px,4vw,56px)] text-white font-light text-center leading-[1.2] drop-shadow-[0_8px_16px_rgba(0,0,0,0.9)]">
           ...to capture the frame <br/>
-          <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728]">
+          <span className="italic text-gold">
             you&apos;ll keep forever.
           </span>
         </h3>
 
         {/* Optional decorative line beneath the final statement */}
-        <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mt-6 opacity-60" />
+        <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent mt-6 opacity-60" />
       </div>
     </section>
   );

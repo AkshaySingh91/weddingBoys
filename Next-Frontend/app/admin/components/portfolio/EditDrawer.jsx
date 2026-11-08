@@ -19,9 +19,9 @@ import MediaControls from './MediaControls.jsx';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL;
 
-const inputClass = 'w-full rounded-xl border border-stone-200 bg-white px-3.5 py-2.5 text-sm text-stone-900 placeholder:text-stone-400 outline-none transition-all focus:border-[#D9342A] focus:ring-2 focus:ring-[#D9342A]/15';
-const labelClass = 'mb-1.5 block text-xs font-semibold text-stone-700';
-const sectionHeaderClass = 'text-xs font-semibold uppercase tracking-wider text-stone-500';
+const inputClass = 'w-full rounded-xl border border-edge-subtle bg-white px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-muted outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/15';
+const labelClass = 'mb-1.5 block text-xs font-semibold text-ink-secondary';
+const sectionHeaderClass = 'text-xs font-semibold uppercase tracking-wider text-ink-muted';
 
 /** `<input type="date">` needs yyyy-mm-dd; the API returns an ISO timestamp. */
 const toDateInput = (d) => {
@@ -140,21 +140,21 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
             <div
                 aria-label="Close editor"
                 onClick={onClose}
-                className="fixed inset-0 bg-stone-950/40 backdrop-blur-[2px] transition-opacity animate-in fade-in duration-200 cursor-pointer"
+                className="fixed inset-0 bg-ink/40 backdrop-blur-[2px] transition-opacity animate-in fade-in duration-200 cursor-pointer"
             />
 
             {/* Slide-in Right Workstation Drawer */}
-            <aside className="relative flex h-full w-full max-w-2xl sm:max-w-3xl flex-col bg-[#FAF8F5] border-l border-stone-200 shadow-2xl transition-transform animate-in slide-in-from-right duration-300 ease-out z-10 font-sans">
+            <aside className="relative flex h-full w-full max-w-2xl sm:max-w-3xl flex-col bg-ground border-l border-edge-subtle shadow-2xl transition-transform animate-in slide-in-from-right duration-300 ease-out z-10 font-sans">
                 {/* Header */}
-                <header className="flex shrink-0 flex-col border-b border-stone-200 bg-white px-6 py-4 space-y-4 shadow-xs">
+                <header className="flex shrink-0 flex-col border-b border-edge-subtle bg-white px-6 py-4 space-y-4 shadow-xs">
                     <div className="flex items-center justify-between gap-4">
                         <div className="min-w-0 flex items-center gap-3">
-                            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-stone-900 text-white shrink-0 shadow-sm">
+                            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-ink text-white shrink-0 shadow-sm">
                                 {isVideo ? <FilmSlate size={18} weight="fill" /> : <ImageSquare size={18} weight="fill" />}
                             </span>
                             <div className="min-w-0">
                                 <div className="flex items-center gap-2">
-                                    <h3 className="truncate text-base font-semibold text-stone-900">
+                                    <h3 className="truncate text-base font-semibold text-ink">
                                         {nameOf(item)}
                                     </h3>
                                     <Badge size="sm" variant={form.status === 'Published' ? 'success' : 'neutral'} dot>
@@ -166,12 +166,12 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                                         </Badge>
                                     )}
                                 </div>
-                                <p className="text-xs text-stone-500 mt-0.5">
-                                    <span className="font-medium text-stone-700">{item.kind} Asset</span>
+                                <p className="text-xs text-ink-muted mt-0.5">
+                                    <span className="font-medium text-ink-secondary">{item.kind} Asset</span>
                                     {item.eventGroup && (
                                         <>
                                             <span className="mx-1.5 text-stone-300">·</span>
-                                            <span className="text-[#D9342A] font-medium">{item.eventGroup}</span>
+                                            <span className="text-accent-ink font-medium">{item.eventGroup}</span>
                                         </>
                                     )}
                                 </p>
@@ -184,7 +184,7 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                                 size="iconSm"
                                 onClick={onClose}
                                 aria-label="Close drawer"
-                                className="hover:bg-stone-100 text-stone-500 hover:text-stone-800 rounded-xl"
+                                className="hover:bg-ground-sunk text-ink-muted hover:text-ink rounded-xl"
                             >
                                 <X size={18} />
                             </Button>
@@ -192,15 +192,15 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                     </div>
 
                     {/* Navigation Tabs */}
-                    <div className="flex items-center gap-2 border-t border-stone-100 pt-3">
+                    <div className="flex items-center gap-2 border-t border-edge-subtle pt-3">
                         <button
                             type="button"
                             onClick={() => setActiveTab('details')}
                             className={cn(
                                 'flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-xl transition-all cursor-pointer',
                                 activeTab === 'details'
-                                    ? 'bg-[#D9342A] text-white shadow-xs'
-                                    : 'bg-stone-100 text-stone-600 hover:text-stone-900 hover:bg-stone-200/70'
+                                    ? 'bg-accent text-white shadow-xs'
+                                    : 'bg-ground-sunk text-ink-secondary hover:text-ink hover:bg-ground-sunk/70'
                             )}
                         >
                             Details & Metadata
@@ -211,15 +211,15 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                             className={cn(
                                 'flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-xl transition-all cursor-pointer',
                                 activeTab === 'derivatives'
-                                    ? 'bg-[#D9342A] text-white shadow-xs'
-                                    : 'bg-stone-100 text-stone-600 hover:text-stone-900 hover:bg-stone-200/70'
+                                    ? 'bg-accent text-white shadow-xs'
+                                    : 'bg-ground-sunk text-ink-secondary hover:text-ink hover:bg-ground-sunk/70'
                             )}
                         >
                             Pipeline & Derivatives
                             {derivatives.length > 0 && (
                                 <span className={cn(
                                     'px-1.5 py-0.5 rounded-full text-[10px] font-bold',
-                                    activeTab === 'derivatives' ? 'bg-white/20 text-white' : 'bg-stone-200 text-stone-700'
+                                    activeTab === 'derivatives' ? 'bg-white/20 text-white' : 'bg-ground-sunk text-ink-secondary'
                                 )}>
                                     {derivatives.length}
                                 </span>
@@ -234,7 +234,7 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                         <>
                             {/* Cinematic Media Stage */}
                             <div className="space-y-2">
-                                <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-stone-950 shadow-md flex items-center justify-center group">
+                                <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-ink shadow-md flex items-center justify-center group">
                                     {isVideo ? (
                                         item.render?.embedUrl ? (
                                             // A YouTube / Vimeo film: preview it in the host's player.
@@ -263,8 +263,8 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                                                 className="object-contain"
                                             />
                                         ) : (
-                                            <span className="flex flex-col items-center justify-center text-stone-500 gap-2">
-                                                <FilmSlate size={36} className="text-stone-600" />
+                                            <span className="flex flex-col items-center justify-center text-ink-muted gap-2">
+                                                <FilmSlate size={36} className="text-ink-secondary" />
                                                 <span className="text-xs">No video stream linked</span>
                                             </span>
                                         )
@@ -278,8 +278,8 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                                             className="object-contain"
                                         />
                                     ) : (
-                                        <span className="flex flex-col items-center justify-center text-stone-500 gap-2">
-                                            <ImageSquare size={36} className="text-stone-600" />
+                                        <span className="flex flex-col items-center justify-center text-ink-muted gap-2">
+                                            <ImageSquare size={36} className="text-ink-secondary" />
                                             <span className="text-xs">No image asset linked</span>
                                         </span>
                                     )}
@@ -290,7 +290,7 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                                             type="button"
                                             onClick={copyDirectUrl}
                                             title="Copy direct CDN asset URL"
-                                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-900/80 backdrop-blur-sm text-white text-xs font-medium hover:bg-stone-800 transition cursor-pointer shadow-sm border border-white/10"
+                                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-ink/80 backdrop-blur-sm text-white text-xs font-medium hover:bg-ink transition cursor-pointer shadow-sm border border-white/10"
                                         >
                                             {copiedUrl ? <Check size={13} weight="bold" className="text-emerald-400" /> : <Copy size={13} />}
                                             <span>{copiedUrl ? 'Copied' : 'Copy CDN URL'}</span>
@@ -300,7 +300,7 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                                             target="_blank"
                                             rel="noreferrer"
                                             title="View Public Page"
-                                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-900/80 backdrop-blur-sm text-white text-xs font-medium hover:bg-stone-800 transition cursor-pointer shadow-sm border border-white/10"
+                                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-ink/80 backdrop-blur-sm text-white text-xs font-medium hover:bg-ink transition cursor-pointer shadow-sm border border-white/10"
                                         >
                                             <ArrowSquareOut size={13} />
                                             <span>Public Page</span>
@@ -308,13 +308,13 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                                     </div>
                                 </div>
 
-                                <div className="flex items-center justify-between text-xs text-stone-500 px-1">
+                                <div className="flex items-center justify-between text-xs text-ink-muted px-1">
                                     <span>
                                         {isVideo
                                             ? 'Interactive playback with adaptive streaming.'
                                             : 'Full-resolution master photograph preserved in Cloudflare R2.'}
                                     </span>
-                                    <span className="font-medium text-stone-600">
+                                    <span className="font-medium text-ink-secondary">
                                         {mediaDoc?.width && mediaDoc?.height
                                             ? `${mediaDoc.width} × ${mediaDoc.height}`
                                             : (isVideo ? '1080p Stream' : 'High Resolution')}
@@ -324,7 +324,7 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
 
                             {/* Hero Feature Reel Controls (For Videos) */}
                             {isVideo && (
-                                <div className="rounded-2xl border border-amber-200 bg-amber-50/40 p-5 space-y-4 shadow-xs">
+                                <div className="rounded-xl border border-amber-200 bg-amber-50/40 p-5 space-y-4 shadow-xs">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-3">
                                             <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-100 text-amber-800">
@@ -345,7 +345,7 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                                                 onChange={(e) => set('isHero', e.target.checked)}
                                                 className="sr-only peer"
                                             />
-                                            <div className="w-11 h-6 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#D9342A]"></div>
+                                            <div className="w-11 h-6 bg-ground-sunk peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-edge-strong after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-accent"></div>
                                         </label>
                                     </div>
 
@@ -356,7 +356,7 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                                                 type="number"
                                                 min="0"
                                                 max="100"
-                                                className="w-24 rounded-xl border border-amber-300 bg-white px-3 py-1.5 text-xs text-amber-950 font-semibold focus:outline-none focus:ring-2 focus:ring-[#D9342A]/20 text-center"
+                                                className="w-24 rounded-xl border border-amber-300 bg-white px-3 py-1.5 text-xs text-amber-950 font-semibold focus:outline-none focus:ring-2 focus:ring-accent/20 text-center"
                                                 value={form.heroPriority}
                                                 onChange={(e) => set('heroPriority', e.target.value)}
                                             />
@@ -366,7 +366,7 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                             )}
 
                             {/* Title & Caption */}
-                            <div className="rounded-2xl border border-stone-200 bg-white p-5 space-y-4 shadow-xs">
+                            <div className="rounded-xl border border-edge-subtle bg-white p-5 space-y-4 shadow-xs">
                                 <div>
                                     <label className={labelClass}>Asset Title / Headline</label>
                                     <input
@@ -393,10 +393,10 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                             <MediaControls item={item} onChanged={onItemChanged} />
 
                             {/* Tags: the tag system (Ceremony, Film type, categories) */}
-                            <div className="rounded-2xl border border-stone-200 bg-white p-5 space-y-4 shadow-xs">
+                            <div className="rounded-xl border border-edge-subtle bg-white p-5 space-y-4 shadow-xs">
                                 <div className="flex items-center justify-between">
                                     <span className={sectionHeaderClass}>Tags</span>
-                                    <span className="text-xs text-stone-400">{form.tagIds.length} selected</span>
+                                    <span className="text-xs text-ink-muted">{form.tagIds.length} selected</span>
                                 </div>
                                 <TagPicker
                                     taxonomy={taxonomy}
@@ -407,7 +407,7 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                             </div>
 
                             {/* Shoot Date & Publishing Status */}
-                            <div className="rounded-2xl border border-stone-200 bg-white p-5 space-y-4 shadow-xs">
+                            <div className="rounded-xl border border-edge-subtle bg-white p-5 space-y-4 shadow-xs">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
                                         <label className={labelClass}>Shoot Date</label>
@@ -434,7 +434,7 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                             </div>
 
                             {/* Location & Venue Details */}
-                            <div className="rounded-2xl border border-stone-200 bg-white p-5 space-y-4 shadow-xs">
+                            <div className="rounded-xl border border-edge-subtle bg-white p-5 space-y-4 shadow-xs">
                                 <span className={sectionHeaderClass}>Location & Venue Details</span>
                                 <div className="grid grid-cols-2 gap-3">
                                     <div>
@@ -477,13 +477,13 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                             </div>
 
                             {/* Production Credits */}
-                            <div className="rounded-2xl border border-stone-200 bg-white p-5 space-y-4 shadow-xs">
+                            <div className="rounded-xl border border-edge-subtle bg-white p-5 space-y-4 shadow-xs">
                                 <div className="flex items-center justify-between">
                                     <span className={sectionHeaderClass}>Behind the Scenes Credits</span>
                                     <button
                                         type="button"
                                         onClick={() => set('credits', [...form.credits, { name: '', role: '' }])}
-                                        className="text-xs font-semibold text-[#D9342A] hover:underline cursor-pointer flex items-center gap-1"
+                                        className="text-xs font-semibold text-accent-ink hover:underline cursor-pointer flex items-center gap-1"
                                     >
                                         <Plus size={13} weight="bold" /> Add Credit
                                     </button>
@@ -519,13 +519,13 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                                                 size="iconSm"
                                                 onClick={() => set('credits', form.credits.filter((_, i) => i !== idx))}
                                                 aria-label="Remove credit"
-                                                className="text-stone-400 hover:text-rose-600 shrink-0"
+                                                className="text-ink-muted hover:text-rose-600 shrink-0"
                                             >
                                                 <X size={16} />
                                             </Button>
                                         </div>
                                     ))}
-                                    {!form.credits.length && <p className="text-xs text-stone-400">No production credits recorded.</p>}
+                                    {!form.credits.length && <p className="text-xs text-ink-muted">No production credits recorded.</p>}
                                 </div>
                             </div>
                         </>
@@ -538,7 +538,7 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                 </div>
 
                 {/* Footer Controls */}
-                <footer className="shrink-0 flex items-center justify-between gap-3 border-t border-stone-200 bg-white px-6 py-4">
+                <footer className="shrink-0 flex items-center justify-between gap-3 border-t border-edge-subtle bg-white px-6 py-4">
                     <Button
                         variant="danger"
                         size="sm"
@@ -563,7 +563,7 @@ export default function EditDrawer({ item, saving, onClose, onSave, onDelete, on
                             size="sm"
                             loading={saving}
                             onClick={submit}
-                            className="text-xs font-semibold px-6 py-2 bg-[#D9342A] hover:bg-[#C9302A] text-white shadow-sm active:scale-95 transition-all"
+                            className="text-xs font-semibold px-6 py-2 bg-accent hover:bg-accent-hover text-white shadow-sm active:scale-95 transition-all"
                         >
                             Save Changes
                         </Button>

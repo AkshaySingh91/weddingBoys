@@ -131,13 +131,13 @@ export default function OurStory() {
 
   return (
     <Section width="wide" rhythm="tight" aria-labelledby="our-story-heading">
-      <div className="bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] relative overflow-hidden w-full lg:rounded-3xl sm:rounded-lg">
+      <div className="bg-gradient-to-b from-ground-sunk to-ground relative overflow-hidden w-full lg:rounded-3xl sm:rounded-lg">
         {/* Floating Particles Background */}
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           {particles?.map((particle, i) => (
             <motion.div
               key={i}
-              className="absolute w-2 h-2 rounded-full bg-[#FF6969]/20"
+              className="absolute w-2 h-2 rounded-full bg-accent/20"
               initial={{
                 y: particle.initialY,
                 x: particle.initialX,
@@ -167,7 +167,7 @@ export default function OurStory() {
         <div className="absolute top-0 left-0 w-full" aria-hidden="true">
           <svg viewBox="0 0 1440 320" className="w-full">
             <path
-              fill="#FF6969"
+              fill="var(--accent)"
               fillOpacity="0.1"
               d="M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,112C672,117,768,171,864,192C960,213,1056,203,1152,186.7C1248,171,1344,149,1392,138.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
             ></path>
@@ -201,7 +201,7 @@ export default function OurStory() {
                         top: sparkle.top,
                       }}
                     >
-                      <FaStar className="w-full h-full text-[#FFD700]/40" />
+                      <FaStar className="w-full h-full text-gold/40" />
                     </motion.div>
                   ))}
                 </div>
@@ -229,7 +229,7 @@ export default function OurStory() {
                   <svg viewBox="0 0 500 50" className="w-full">
                     <path
                       fill="none"
-                      stroke="#FF6969"
+                      stroke="var(--accent)"
                       strokeWidth="2"
                       d="M0,25 Q250,0 500,25 T1000,25"
                     />
@@ -248,7 +248,7 @@ export default function OurStory() {
                     whileHover={reduceMotion ? undefined : { scale: 1.05 }}
                     className="text-center px-3"
                   >
-                    <p className="text-xl sm:text-2xl font-bold text-red-600">
+                    <p className="text-xl sm:text-2xl font-bold text-accent-ink">
                       {number}+
                     </p>
                     <p className="text-xs text-gray-600">{label}</p>
@@ -263,7 +263,7 @@ export default function OurStory() {
               {!isMobile && (
                 <motion.div
                   {...loop({ y: [0, -20, 0] }, { duration: 4 })}
-                  className="absolute -top-6 right-0 text-[#FF6969]/20"
+                  className="absolute -top-6 right-0 text-accent/20"
                   aria-hidden="true"
                 >
                   <FiCamera className="w-16 h-16 sm:w-24 sm:h-24" />
@@ -280,7 +280,7 @@ export default function OurStory() {
                   <svg viewBox="0 0 100 100" className="w-full h-full">
                     <path
                       d="M10,10 Q50,0 90,10 T90,90 Q50,100 10,90 Z"
-                      fill="#FF6969"
+                      fill="var(--accent)"
                       fillOpacity="0.1"
                     />
                   </svg>
@@ -288,7 +288,7 @@ export default function OurStory() {
               )}
 
               <motion.div {...rise} className="md:mt-6 lg:mt-0 sm:px-2 lg:px-0">
-                <p className="text-red-600 uppercase text-xs sm:text-sm font-bold mb-3 tracking-wider px-2 py-1 rounded-md bg-red-100 inline-block relative z-10">
+                <p className="text-accent-ink uppercase text-xs sm:text-sm font-bold mb-3 tracking-wider px-2 py-1 rounded-md bg-accent-wash inline-block relative z-10">
                   <motion.span
                     {...loop({ rotate: [0, 15, 0] }, { duration: 8 })}
                     className="mr-2 inline-block"
@@ -309,7 +309,7 @@ export default function OurStory() {
                     initial={reduceMotion ? false : { scaleX: 0 }}
                     whileInView={reduceMotion ? undefined : { scaleX: 1 }}
                     transition={{ duration: 0.5 }}
-                    className="w-32 sm:w-48 h-1 bg-[#FFD700] mt-2 rounded-full"
+                    className="w-32 sm:w-48 h-1 bg-gold mt-2 rounded-full"
                     style={{ originX: 0 }}
                     aria-hidden="true"
                   />
@@ -343,7 +343,7 @@ export default function OurStory() {
                           cx="25"
                           cy="25"
                           r="20"
-                          stroke="#FFD700"
+                          stroke="var(--gold)"
                           strokeWidth="2"
                           fill="none"
                         />
@@ -351,7 +351,7 @@ export default function OurStory() {
                           cx="25"
                           cy="25"
                           r="10"
-                          stroke="#FFD700"
+                          stroke="var(--gold)"
                           strokeWidth="2"
                           fill="none"
                         />
@@ -385,7 +385,7 @@ export default function OurStory() {
                         className="flex-shrink-0 mt-1"
                         aria-hidden="true"
                       >
-                        <FaCheckCircle className="text-red-500" />
+                        <FaCheckCircle className="text-accent-ink" />
                       </motion.span>
                       {value}
                     </motion.li>
@@ -396,14 +396,14 @@ export default function OurStory() {
                     Was 36px tall against the 44px floor. */}
                 <Link
                   href="/about-us"
-                  className="bg-red-500 text-white font-bold min-h-[44px] py-2 px-6 rounded-lg shadow-lg hover:bg-red-400 transition-colors duration-300 relative overflow-hidden inline-flex items-center z-10"
+                  className="bg-accent text-white font-bold min-h-[44px] py-2 px-6 rounded-lg shadow-lg hover:bg-accent-hover transition-colors duration-300 relative overflow-hidden inline-flex items-center z-10"
                 >
                   <motion.span
                     {...loop({ rotate: 360 }, { duration: 8, ease: "linear" })}
                     className="absolute -right-4 -top-4 opacity-30"
                     aria-hidden="true"
                   >
-                    <FaStar className="w-6 h-6 sm:w-8 sm:h-8 text-[#FFD700]" />
+                    <FaStar className="w-6 h-6 sm:w-8 sm:h-8 text-gold" />
                   </motion.span>
                   Who We Are
                 </Link>

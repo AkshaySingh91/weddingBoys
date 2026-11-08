@@ -106,7 +106,7 @@ export default function DharaaStory() {
                     {particles?.map((particle, i) => (
                         <motion.div
                             key={i}
-                            className="absolute w-2 h-2 rounded-full bg-[#FF6969]/20"
+                            className="absolute w-2 h-2 rounded-full bg-accent/20"
                             initial={{
                                 y: particle.initialY,
                                 x: particle.initialX,
@@ -136,7 +136,7 @@ export default function DharaaStory() {
                 <div className="absolute top-0 left-0 w-full">
                     <svg viewBox="0 0 1440 320" className="w-full" aria-hidden="true">
                         <path
-                            fill="#FF6969"
+                            fill="var(--accent)"
                             fillOpacity="0.1"
                             d="M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,112C672,117,768,171,864,192C960,213,1056,203,1152,186.7C1248,171,1344,149,1392,138.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
                         ></path>
@@ -204,7 +204,7 @@ export default function DharaaStory() {
 
                                 <div className="relative">
                                     <p className="text-sm sm:text-base text-left text-gray-700 mb-6 relative z-10 leading-relaxed">
-                                        Under the guidance of our trusted parent company, <b>Wedding Boys</b>, Dharaa Event Management is a new name in event planning. We&apos;re bringing the same passion and expertise that made them a success to all of your special moments. With a decade of experience from our parent company, we&apos;re ready to make your vision a beautiful reality.
+                                        Under the guidance of our trusted parent company, <b>Wedding Vachan</b>, Dharaa Event Management is a new name in event planning. We&apos;re bringing the same passion and expertise that made them a success to all of your special moments. With a decade of experience from our parent company, we&apos;re ready to make your vision a beautiful reality.
                                     </p>
                                 </div>
 

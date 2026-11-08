@@ -10,8 +10,8 @@ import { cn } from '@/lib/utils.js';
 import AssetBreakdown from '@/app/admin/components/AssetBreakdown.jsx';
 import TagPicker from '@/app/admin/components/taxonomy/TagPicker.jsx';
 
-const field = 'w-full rounded-lg border border-[#E5DCD3] bg-white px-3 py-2 text-xs text-stone-800 outline-none focus:border-[#8C532B] focus:ring-2 focus:ring-[#8C532B]/15';
-const label = 'mb-1 block text-[11px] font-medium uppercase tracking-wide text-stone-500';
+const field = 'w-full rounded-lg border border-edge-subtle bg-white px-3 py-2 text-xs text-ink outline-none focus:border-accent focus:ring-2 focus:ring-accent/15';
+const label = 'mb-1 block text-[11px] font-medium uppercase tracking-wide text-ink-muted';
 
 const isVideoFileUrl = (url) => typeof url === 'string' && /\.(mp4|mov|webm|mkv)(\?.*)?$/i.test(url);
 
@@ -60,15 +60,15 @@ export default function MediaDetailsPanel({
     return (
         <div className="fixed inset-0 z-50 flex justify-end">
             <button type="button" aria-label="Close" onClick={onClose}
-                className="absolute inset-0 bg-stone-900/40 backdrop-blur-[2px]" />
+                className="absolute inset-0 bg-ink/40 backdrop-blur-[2px]" />
 
-            <aside className="relative flex h-full w-full max-w-md flex-col border-l border-[#E5DCD3] bg-[#FCFAF7] shadow-2xl">
-                <header className="flex shrink-0 items-center justify-between border-b border-[#E5DCD3] px-4 py-3">
+            <aside className="relative flex h-full w-full max-w-md flex-col border-l border-edge-subtle bg-ground shadow-2xl">
+                <header className="flex shrink-0 items-center justify-between border-b border-edge-subtle px-4 py-3">
                     <div className="min-w-0">
-                        <p className="truncate text-sm font-medium text-stone-900">
+                        <p className="truncate text-sm font-medium text-ink">
                             {media.originalFileName || media.title}
                         </p>
-                        <p className="flex items-center gap-1.5 text-[11px] text-stone-500">
+                        <p className="flex items-center gap-1.5 text-[11px] text-ink-muted">
                             {isVideo ? <FilmSlate size={11} /> : <ImageSquare size={11} />}
                             {media.mediaType} · {formatBytes(media.fileSize)}
                         </p>
@@ -77,7 +77,7 @@ export default function MediaDetailsPanel({
                 </header>
 
                 <div className="min-h-0 flex-1 space-y-4 overflow-y-auto p-4">
-                    <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-stone-950">
+                    <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-ink">
                         {poster ? (
                             <Image src={poster} alt={media.originalFileName || 'preview'} fill unoptimized sizes="400px" className="object-cover" />
                         ) : isVideo && videoUrl ? (
@@ -88,7 +88,7 @@ export default function MediaDetailsPanel({
                                 className="h-full w-full object-contain"
                             />
                         ) : (
-                            <span className="flex h-full w-full items-center justify-center text-stone-400">
+                            <span className="flex h-full w-full items-center justify-center text-ink-muted">
                                 {isVideo ? <FilmSlate size={26} /> : <ImageSquare size={26} />}
                             </span>
                         )}
@@ -125,13 +125,13 @@ export default function MediaDetailsPanel({
                                 <input className={field} placeholder="City" value={value.location?.city || ''}
                                     onChange={(e) => setLoc({ city: e.target.value })} />
                                 {cityMatches.length > 0 && value.location?.city !== cityMatches[0]?.city && (
-                                    <ul className="absolute z-10 mt-1 w-full overflow-hidden rounded-lg border border-[#E5DCD3] bg-white shadow-lg">
+                                    <ul className="absolute z-10 mt-1 w-full overflow-hidden rounded-lg border border-edge-subtle bg-white shadow-lg">
                                         {cityMatches.map((l) => (
                                             <li key={`${l.state}-${l.city}`}>
                                                 <button type="button"
                                                     onClick={() => setLoc({ city: l.city, state: l.state, country: 'India' })}
-                                                    className="block w-full px-2.5 py-1.5 text-left text-[11px] text-stone-700 hover:bg-stone-50">
-                                                    {l.city} <span className="text-stone-400">· {l.state}</span>
+                                                    className="block w-full px-2.5 py-1.5 text-left text-[11px] text-ink-secondary hover:bg-ground">
+                                                    {l.city} <span className="text-ink-muted">· {l.state}</span>
                                                 </button>
                                             </li>
                                         ))}
@@ -148,9 +148,9 @@ export default function MediaDetailsPanel({
                     </div>
 
                     {isVideo && (
-                        <div className="rounded-xl border border-[#E5DCD3] bg-white p-3">
-                            <label className="flex cursor-pointer items-center gap-2 text-xs text-stone-700">
-                                <input type="checkbox" checked={value.isHero} className="h-3.5 w-3.5 accent-[#8C532B]"
+                        <div className="rounded-xl border border-edge-subtle bg-white p-3">
+                            <label className="flex cursor-pointer items-center gap-2 text-xs text-ink-secondary">
+                                <input type="checkbox" checked={value.isHero} className="h-3.5 w-3.5 accent-accent"
                                     onChange={(e) => set({ isHero: e.target.checked })} />
                                 <Star size={12} weight={value.isHero ? 'fill' : 'regular'} className="text-amber-500" />
                                 Show in the homepage hero carousel
@@ -172,11 +172,11 @@ export default function MediaDetailsPanel({
                                             onClick={() => toggleCredit(role, person)}
                                             className={cn(
                                                 'flex w-full items-center justify-between rounded-lg border px-2.5 py-1.5 text-left text-[11px] transition',
-                                                on ? 'border-[#8C532B] bg-[#FAF1E6] text-[#74583E]'
-                                                    : 'border-stone-200 bg-white text-stone-600 hover:border-stone-400',
+                                                on ? 'border-accent bg-ground-sunk text-accent-ink'
+                                                    : 'border-edge-subtle bg-white text-ink-secondary hover:border-edge-strong',
                                             )}>
                                             <span className="font-medium">{role}</span>
-                                            <span className="text-stone-500">{person}</span>
+                                            <span className="text-ink-muted">{person}</span>
                                         </button>
                                     );
                                 })}
@@ -196,7 +196,7 @@ export default function MediaDetailsPanel({
                     </div>
                 </div>
 
-                <footer className="flex shrink-0 justify-end gap-2 border-t border-[#E5DCD3] bg-white px-4 py-3">
+                <footer className="flex shrink-0 justify-end gap-2 border-t border-edge-subtle bg-white px-4 py-3">
                     <Button variant="gold" size="sm" onClick={onClose}>Done</Button>
                 </footer>
             </aside>

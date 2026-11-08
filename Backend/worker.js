@@ -11,7 +11,7 @@
  * encodes at once on a shared box makes both slower and starves the API.
  * Image ladders are cheap enough to overlap.
  */
-import dotenv from 'dotenv';
+import 'dotenv/config';
 import mongoose from 'mongoose';
 import DBconnection from './Config/DBconnection.js';
 import {
@@ -21,8 +21,6 @@ import { processJob } from './Services/mediaProcessor.js';
 import { ffmpegAvailable } from './Services/transcodeService.js';
 import { isR2Configured } from './Services/r2UploadService.js';
 import Media from './Models/Media.js';
-
-dotenv.config();
 
 const IDLE_DELAY_MS = Number(process.env.WORKER_IDLE_MS || 3000);
 const HEARTBEAT_MS = 30_000;
@@ -47,10 +45,12 @@ async function runOne(job) {
         await failJob(job._id, error);
         // Surface the failure on the asset so the admin UI can show it rather
         // than leaving it stuck in Processing with no explanation.
-        await Media.updateOne({ mediaId: job.mediaId }, {
-            $set: { 'processing.lastError': String(error.message).slice(0, 1000) },
-            $inc: { 'processing.attempts': 1 },
-        }).catch(() => { });
+        if (job.type !== 'sequence') {
+            await Media.updateOne({ mediaId: job.mediaId }, {
+                $set: { 'processing.lastError': String(error.message).slice(0, 1000) },
+                $inc: { 'processing.attempts': 1 },
+            }).catch(() => { });
+        }
     } finally {
         clearInterval(beat);
         active -= 1;
@@ -86,8 +86,7 @@ async function main() {
         process.exit(1);
     }
 
-    DBconnection();
-    await mongoose.connection.asPromise();
+    await DBconnection();
     log('started; polling for jobs');
 
     // Return work abandoned by a worker that died mid-job.

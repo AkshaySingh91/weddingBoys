@@ -178,9 +178,9 @@ export default function StudioContact() {
     <div className="space-y-6 pb-6 font-sans">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column: Brand Logo Card */}
-        <Card className="border-[#E5DCD3] bg-white shadow-sm">
+        <Card className="border-edge-subtle bg-white shadow-sm">
           <CardContent className="p-6 flex flex-col items-center text-center">
-            <div className="relative w-28 h-28 rounded-2xl overflow-hidden bg-stone-50 border border-[#E5DCD3] p-2 flex items-center justify-center shadow-sm">
+            <div className="relative w-28 h-28 rounded-xl overflow-hidden bg-ground border border-edge-subtle p-2 flex items-center justify-center shadow-sm">
               {isNewStudioLogo || studioLogo ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -189,15 +189,15 @@ export default function StudioContact() {
                   className="w-full h-full object-contain"
                 />
               ) : (
-                <div className="w-full h-full rounded-xl bg-gradient-to-br from-[#1C1917] to-stone-800 text-amber-200 flex flex-col items-center justify-center">
-                  <span className="font-serif text-2xl font-bold tracking-wider">WB</span>
-                  <span className="text-[9px] uppercase tracking-widest text-stone-400 font-sans mt-0.5">Studio</span>
+                <div className="w-full h-full rounded-xl bg-gradient-to-br from-ink to-ink text-amber-200 flex flex-col items-center justify-center">
+                  <span className="font-sans text-2xl font-bold tracking-wider">WB</span>
+                  <span className="text-[9px] uppercase tracking-widest text-ink-muted font-sans mt-0.5">Studio</span>
                 </div>
               )}
             </div>
 
-            <h3 className="mt-4 text-sm font-bold text-[#1C1917]">{studioName || 'Studio'}</h3>
-            <p className="text-xs text-stone-500 tabular-nums mt-0.5">{studioEmail || 'admin@weddingboys.in'}</p>
+            <h3 className="mt-4 text-sm font-bold text-ink">{studioName || 'Studio'}</h3>
+            <p className="text-xs text-ink-muted tabular-nums mt-0.5">{studioEmail || 'admin@weddingboys.in'}</p>
 
             <div className="mt-5 w-full">
               <input
@@ -246,12 +246,12 @@ export default function StudioContact() {
 
         {/* Right 2 Columns: Contact & Socials Information Form */}
         <div className="lg:col-span-2">
-          <Card className="border-[#E5DCD3] bg-white shadow-sm">
+          <Card className="border-edge-subtle bg-white shadow-sm">
             <CardContent className="p-6 space-y-5">
-              <div className="flex items-center justify-between border-b border-stone-100 pb-4">
+              <div className="flex items-center justify-between border-b border-edge-subtle pb-4">
                 <div>
-                  <h3 className="text-sm font-bold text-[#1C1917]">Studio Profile & Inquiries Contact</h3>
-                  <p className="text-xs text-stone-500">
+                  <h3 className="text-sm font-bold text-ink">Studio Profile & Inquiries Contact</h3>
+                  <p className="text-xs text-ink-muted">
                     Business contact info displayed in marketing footers and confirmation emails.
                   </p>
                 </div>
@@ -293,7 +293,7 @@ export default function StudioContact() {
               {/* Form Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                  <label className="block text-xs font-semibold text-ink-secondary mb-1">
                     Studio Brand Name
                   </label>
                   <input
@@ -301,12 +301,12 @@ export default function StudioContact() {
                     disabled={!isEditing}
                     value={studioName}
                     onChange={(e) => setStudioName(e.target.value)}
-                    className="w-full rounded-xl border border-stone-200 bg-stone-50 disabled:bg-stone-100/60 px-3.5 py-2 text-xs text-[#1C1917] outline-none focus:border-amber-700 focus:bg-white transition-all font-sans"
+                    className="w-full rounded-xl border border-edge-subtle bg-ground disabled:bg-ground-sunk/60 px-3.5 py-2 text-xs text-ink outline-none focus:border-amber-700 focus:bg-white transition-all font-sans"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                  <label className="block text-xs font-semibold text-ink-secondary mb-1">
                     Public Studio Email
                   </label>
                   <input
@@ -314,12 +314,12 @@ export default function StudioContact() {
                     disabled={!isEditing}
                     value={studioEmail}
                     onChange={(e) => setStudioEmail(e.target.value)}
-                    className="w-full rounded-xl border border-stone-200 bg-stone-50 disabled:bg-stone-100/60 px-3.5 py-2 text-xs text-[#1C1917] outline-none focus:border-amber-700 focus:bg-white transition-all font-sans"
+                    className="w-full rounded-xl border border-edge-subtle bg-ground disabled:bg-ground-sunk/60 px-3.5 py-2 text-xs text-ink outline-none focus:border-amber-700 focus:bg-white transition-all font-sans"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                  <label className="block text-xs font-semibold text-ink-secondary mb-1">
                     Primary Phone / WhatsApp
                   </label>
                   <input
@@ -327,12 +327,12 @@ export default function StudioContact() {
                     disabled={!isEditing}
                     value={studioContact[0] || ''}
                     onChange={(e) => setStudioContact([e.target.value, studioContact[1] || ''])}
-                    className="w-full rounded-xl border border-stone-200 bg-stone-50 disabled:bg-stone-100/60 px-3.5 py-2 text-xs text-[#1C1917] outline-none focus:border-amber-700 focus:bg-white transition-all font-sans tabular-nums"
+                    className="w-full rounded-xl border border-edge-subtle bg-ground disabled:bg-ground-sunk/60 px-3.5 py-2 text-xs text-ink outline-none focus:border-amber-700 focus:bg-white transition-all font-sans tabular-nums"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                  <label className="block text-xs font-semibold text-ink-secondary mb-1">
                     Secondary Office Phone
                   </label>
                   <input
@@ -340,12 +340,12 @@ export default function StudioContact() {
                     disabled={!isEditing}
                     value={studioContact[1] || ''}
                     onChange={(e) => setStudioContact([studioContact[0] || '', e.target.value])}
-                    className="w-full rounded-xl border border-stone-200 bg-stone-50 disabled:bg-stone-100/60 px-3.5 py-2 text-xs text-[#1C1917] outline-none focus:border-amber-700 focus:bg-white transition-all font-sans tabular-nums"
+                    className="w-full rounded-xl border border-edge-subtle bg-ground disabled:bg-ground-sunk/60 px-3.5 py-2 text-xs text-ink outline-none focus:border-amber-700 focus:bg-white transition-all font-sans tabular-nums"
                   />
                 </div>
 
                 <div className="sm:col-span-2">
-                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                  <label className="block text-xs font-semibold text-ink-secondary mb-1">
                     Studio Headquarters Address
                   </label>
                   <textarea
@@ -353,17 +353,17 @@ export default function StudioContact() {
                     disabled={!isEditing}
                     value={studioAddress}
                     onChange={(e) => setStudioAddress(e.target.value)}
-                    className="w-full rounded-xl border border-stone-200 bg-stone-50 disabled:bg-stone-100/60 px-3.5 py-2 text-xs text-[#1C1917] outline-none focus:border-amber-700 focus:bg-white transition-all font-sans resize-none"
+                    className="w-full rounded-xl border border-edge-subtle bg-ground disabled:bg-ground-sunk/60 px-3.5 py-2 text-xs text-ink outline-none focus:border-amber-700 focus:bg-white transition-all font-sans resize-none"
                   />
                 </div>
               </div>
 
               {/* Social Channels Sub-section */}
-              <div className="border-t border-stone-100 pt-4">
-                <h4 className="text-xs font-bold text-[#1C1917] mb-3">Social Handles & Channels</h4>
+              <div className="border-t border-edge-subtle pt-4">
+                <h4 className="text-xs font-bold text-ink mb-3">Social Handles & Channels</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex items-center gap-2">
-                    <InstagramLogo size={16} className="text-stone-400 shrink-0" />
+                    <InstagramLogo size={16} className="text-ink-muted shrink-0" />
                     <input
                       type="text"
                       disabled={!isEditing}
@@ -372,12 +372,12 @@ export default function StudioContact() {
                       onChange={(e) =>
                         setStudioSocials({ ...studioSocials, instagram: e.target.value })
                       }
-                      className="w-full rounded-xl border border-stone-200 bg-stone-50 disabled:bg-stone-100/60 px-3 py-1.5 text-xs text-[#1C1917] outline-none focus:border-amber-700 font-sans"
+                      className="w-full rounded-xl border border-edge-subtle bg-ground disabled:bg-ground-sunk/60 px-3 py-1.5 text-xs text-ink outline-none focus:border-amber-700 font-sans"
                     />
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <YoutubeLogo size={16} className="text-stone-400 shrink-0" />
+                    <YoutubeLogo size={16} className="text-ink-muted shrink-0" />
                     <input
                       type="text"
                       disabled={!isEditing}
@@ -386,12 +386,12 @@ export default function StudioContact() {
                       onChange={(e) =>
                         setStudioSocials({ ...studioSocials, youtube: e.target.value })
                       }
-                      className="w-full rounded-xl border border-stone-200 bg-stone-50 disabled:bg-stone-100/60 px-3 py-1.5 text-xs text-[#1C1917] outline-none focus:border-amber-700 font-sans"
+                      className="w-full rounded-xl border border-edge-subtle bg-ground disabled:bg-ground-sunk/60 px-3 py-1.5 text-xs text-ink outline-none focus:border-amber-700 font-sans"
                     />
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <FacebookLogo size={16} className="text-stone-400 shrink-0" />
+                    <FacebookLogo size={16} className="text-ink-muted shrink-0" />
                     <input
                       type="text"
                       disabled={!isEditing}
@@ -400,19 +400,19 @@ export default function StudioContact() {
                       onChange={(e) =>
                         setStudioSocials({ ...studioSocials, facebook: e.target.value })
                       }
-                      className="w-full rounded-xl border border-stone-200 bg-stone-50 disabled:bg-stone-100/60 px-3 py-1.5 text-xs text-[#1C1917] outline-none focus:border-amber-700 font-sans"
+                      className="w-full rounded-xl border border-edge-subtle bg-ground disabled:bg-ground-sunk/60 px-3 py-1.5 text-xs text-ink outline-none focus:border-amber-700 font-sans"
                     />
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <TwitterLogo size={16} className="text-stone-400 shrink-0" />
+                    <TwitterLogo size={16} className="text-ink-muted shrink-0" />
                     <input
                       type="text"
                       disabled={!isEditing}
                       placeholder="X (Twitter) URL"
                       value={studioSocials?.x || ''}
                       onChange={(e) => setStudioSocials({ ...studioSocials, x: e.target.value })}
-                      className="w-full rounded-xl border border-stone-200 bg-stone-50 disabled:bg-stone-100/60 px-3 py-1.5 text-xs text-[#1C1917] outline-none focus:border-amber-700 font-sans"
+                      className="w-full rounded-xl border border-edge-subtle bg-ground disabled:bg-ground-sunk/60 px-3 py-1.5 text-xs text-ink outline-none focus:border-amber-700 font-sans"
                     />
                   </div>
                 </div>

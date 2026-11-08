@@ -10,22 +10,26 @@
  * behind is locked. None of that existed before — the previous menu was a
  * div that appeared beside an already-visible desktop nav.
  */
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { FiChevronRight, FiInstagram, FiYoutube, FiFacebook } from 'react-icons/fi';
 import { PRIMARY_NAV, PRIMARY_CTA, BRAND_TAGLINE } from '@/lib/navigation.js';
 import { useStudioDetails } from '@/Context/StudioDetailsContext.jsx';
 import Button from '@/Component/ui/Button.jsx';
 import NavIcon from './NavIcon.jsx';
+import { SOCIAL_LINKS } from '@/lib/siteConfig.js';
 
+// Two Instagram accounts, so those two carry their city as visible text.
 const SOCIALS = [
-    { label: 'Instagram', href: 'https://instagram.com/theweddingboys', Icon: FiInstagram },
-    { label: 'YouTube', href: 'https://youtube.com/@theweddingboys', Icon: FiYoutube },
-    { label: 'Facebook', href: 'https://facebook.com/theweddingboys', Icon: FiFacebook },
+    { label: 'Instagram, Mumbai', place: 'Mumbai', href: SOCIAL_LINKS.instagramMumbai, Icon: FiInstagram },
+    { label: 'Instagram, Varanasi', place: 'Varanasi', href: SOCIAL_LINKS.instagramVaranasi, Icon: FiInstagram },
+    { label: 'YouTube', href: SOCIAL_LINKS.youtube, Icon: FiYoutube },
+    { label: 'Facebook', href: SOCIAL_LINKS.facebook, Icon: FiFacebook },
 ];
 
 export default function MobileMenu({ open, onClose }) {
     const { studioLogo } = useStudioDetails();
+    const [failedLogo, setFailedLogo] = useState(null);
     const panelRef = useRef(null);
     const restoreTo = useRef(null);
 
@@ -94,12 +98,13 @@ export default function MobileMenu({ open, onClose }) {
                         <span className="grid h-11 w-11 shrink-0 place-items-center rounded-pill
                                          bg-ground-raised ring-1 ring-gold/60">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={studioLogo || '/companyLogo.png'} alt=""
+                            <img src={studioLogo && studioLogo !== failedLogo ? studioLogo : '/companyLogo.png'}
+                                 onError={() => setFailedLogo(studioLogo)} alt=""
                                  className="h-full w-full rounded-pill object-contain p-1" />
                         </span>
                         <span className="flex min-w-0 flex-col leading-none">
                             <span className="font-display text-[16px] font-semibold tracking-[0.06em] text-accent-ink">
-                                The Wedding Boys
+                                The Wedding Vachan
                             </span>
                             <span className="mt-1 text-[8.5px] font-semibold uppercase tracking-[0.18em] text-ink-muted">
                                 {BRAND_TAGLINE}
@@ -178,19 +183,21 @@ export default function MobileMenu({ open, onClose }) {
                         {PRIMARY_CTA.label}
                     </Button>
 
-                    <div className="mt-5 flex items-center justify-center gap-2">
-                        {SOCIALS.map(({ label, href, Icon }) => (
+                    <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
+                        {SOCIALS.map(({ label, place, href, Icon }) => (
                             <a
                                 key={label}
                                 href={href}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label={`${label} — opens in a new tab`}
-                                className="grid h-11 w-11 place-items-center rounded-pill border border-gold/40
+                                className={`flex h-11 items-center justify-center gap-2 rounded-pill border border-gold/40
                                            text-ink-secondary transition-colors duration-micro ease-standard
-                                           hover:border-gold hover:bg-accent-wash hover:text-accent-ink"
+                                           hover:border-gold hover:bg-accent-wash hover:text-accent-ink
+                                           ${place ? 'px-4 text-[13px] font-medium' : 'w-11'}`}
                             >
                                 <Icon aria-hidden="true" className="h-[18px] w-[18px]" />
+                                {place && <span aria-hidden="true">{place}</span>}
                             </a>
                         ))}
                     </div>

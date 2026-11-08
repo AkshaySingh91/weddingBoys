@@ -148,7 +148,7 @@ export default function EmbedBlock({ node }) {
               </div>
 
               <div className="text-[11px] text-stone-400">
-                The Wedding Boys Studio Archive
+                The Wedding Vachan Studio Archive
               </div>
             </button>
           ) : (
@@ -313,12 +313,12 @@ export default function EmbedBlock({ node }) {
                   {coupleNames}
                 </h3>
                 <p className="text-xs text-white/75 mt-1">
-                  Cinematic Wedding Film by The Wedding Boys
+                  Cinematic Wedding Film by The Wedding Vachan
                 </p>
               </div>
 
               <div className="relative z-10 flex items-center justify-between text-[11px] text-white/60">
-                <span>The Wedding Boys Cinema</span>
+                <span>The Wedding Vachan Cinema</span>
                 <span className="group-hover:text-studio-gold transition-colors font-medium">Click to Play Film ›</span>
               </div>
             </button>

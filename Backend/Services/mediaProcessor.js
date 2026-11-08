@@ -11,6 +11,7 @@ import sharp from 'sharp';
 import Media from '../Models/Media.js';
 import PortfolioItem from '../Models/PortfolioItem.js';
 import { syncRenderForMedia } from './portfolioRender.js';
+import { generateSequence } from './sequenceProcessor.js';
 import {
     downloadToFile, uploadFile, putObject,
     generateBlurDataURL, VARIANT_WIDTHS_PUBLIC,
@@ -27,7 +28,7 @@ const POSTER_WIDTHS = [640, 1280];
  * Video job: poster (+ webp variants), 720p web rendition, and — when the asset
  * is destined for the hero — a short silent loop.
  */
-export async function processVideo(media, options = {}) {
+export async function processVideo(media, options = {}, jobId) {
     const dir = await makeTempDir();
     try {
         const baseKey = baseKeyOf(media.storageKey);
@@ -80,7 +81,7 @@ export async function processVideo(media, options = {}) {
         // is actually smaller than the master. Sources that arrive already
         // web-compressed are served directly instead.
         let webUrl = media.cdnUrl;
-        if (shouldMakeWebRendition(info)) {
+        if (!options.sequenceSource && shouldMakeWebRendition(info)) {
             const webPath = path.join(dir, 'web.mp4');
             await makeWebRendition(master, webPath, {
                 hasAudio: info.hasAudio && !options.stripAudio,
@@ -141,18 +142,10 @@ export async function processVideo(media, options = {}) {
             audioStripped: Boolean(options.stripAudio) || !info.hasAudio,
         };
         media.status = 'Ready';
-        media.processing = { ...(media.processing || {}), lastError: null };
+        media.processing = { ...(media.processing?.toObject?.() || media.processing || {}), filesReadyForJob: jobId, lastError: null };
         await media.save();
 
-        // Keep all PortfolioItem placements in sync with newly generated video derivatives & poster
-        try {
-            // Poster-safe: never replaces a hand-picked film poster with the
-            // auto-extracted frame (Services/portfolioRender.js).
-            await syncRenderForMedia(media);
-        } catch (syncErr) {
-            console.error('PortfolioItem sync error after video transcode:', syncErr);
-        }
-
+        await finishPlacements(media, jobId);
         return media;
     } finally {
         await fs.rm(dir, { recursive: true, force: true });
@@ -163,7 +156,7 @@ export async function processVideo(media, options = {}) {
  * Image job: build the derivative ladder for a master that was uploaded
  * directly to R2 by the browser (so it never passed through ingestImage).
  */
-export async function processImage(media) {
+export async function processImage(media, jobId) {
     const dir = await makeTempDir();
     try {
         const baseKey = baseKeyOf(media.storageKey);
@@ -197,29 +190,36 @@ export async function processImage(media) {
             .map((c) => c.toString(16).padStart(2, '0')).join('')}`;
         media.imageVariants = imageVariants;
         media.status = 'Ready';
-        media.processing = { ...(media.processing || {}), lastError: null };
+        media.processing = { ...(media.processing?.toObject?.() || media.processing || {}), filesReadyForJob: jobId, lastError: null };
         await media.save();
 
-        // Keep all PortfolioItem placements in sync with newly generated image derivatives
-        try {
-            // Poster-safe: never replaces a hand-picked film poster with the
-            // auto-extracted frame (Services/portfolioRender.js).
-            await syncRenderForMedia(media);
-        } catch (syncErr) {
-            console.error('PortfolioItem sync error after image derivatives:', syncErr);
-        }
-
+        await finishPlacements(media, jobId);
         return media;
     } finally {
         await fs.rm(dir, { recursive: true, force: true });
     }
 }
 
+export async function finishPlacements(media, jobId, sync = syncRenderForMedia) {
+    await sync(media); // Failure must propagate so the durable job retries this stage.
+    media.processing.placementsSyncedForJob = jobId;
+    media.processing.lastError = null;
+    await media.save();
+    return media;
+}
+
 export async function processJob(job) {
+    if (job.type === 'sequence') {
+        if (!job.options?.sequenceId) throw new Error('Sequence job has no sequenceId');
+        return generateSequence(job.options.sequenceId, job.options);
+    }
     const media = await Media.findOne({ mediaId: job.mediaId });
     if (!media) throw new Error(`Media ${job.mediaId} not found`);
 
-    if (job.type === 'transcode') return processVideo(media, job.options || {});
-    if (job.type === 'derivatives') return processImage(media);
+    const jobId = String(job._id);
+    if (job.type === 'reconcile' && media.status !== 'Ready') throw new Error('Media files are not ready for reconciliation');
+    if (job.type === 'reconcile' || media.processing?.filesReadyForJob === jobId) return finishPlacements(media, jobId);
+    if (job.type === 'transcode') return processVideo(media, job.options || {}, jobId);
+    if (job.type === 'derivatives') return processImage(media, jobId);
     throw new Error(`Unknown job type: ${job.type}`);
 }

@@ -1,3 +1,5 @@
+import { revalidateBlogs } from '../Services/revalidate.js';
+import { ROLES } from '../constants.js';
 // controllers/revisionController.js
 import BlogPost from '../Models/blogPost.js';
 import BlogPostRevision from '../Models/BlogPostRevision.js';
@@ -15,6 +17,7 @@ const resolveAdminId = async (req) => {
 // POST /api/admin/blogs/:id/revisions  — save a revision (autosave or manual)
 export const createRevision = async (req, res) => {
     try {
+        if (![ROLES.EDITOR, ROLES.SUPER_ADMIN].includes(req.user?.role)) return res.status(403).json({ error: 'Only Editors and SuperAdmins may change stories' });
         const { id } = req.params;
         const post = await BlogPost.findById(id).select('_id');
         if (!post) return res.status(404).json({ error: 'Blog post not found' });
@@ -84,6 +87,7 @@ export const getRevisionById = async (req, res) => {
 // POST /api/admin/blogs/:id/revisions/:revId/restore  — restore post to a revision snapshot
 export const restoreRevision = async (req, res) => {
     try {
+        if (![ROLES.EDITOR, ROLES.SUPER_ADMIN].includes(req.user?.role)) return res.status(403).json({ error: 'Only Editors and SuperAdmins may change stories' });
         const { id, revId } = req.params;
         const post = await BlogPost.findById(id);
         if (!post) return res.status(404).json({ error: 'Blog post not found' });
@@ -113,6 +117,7 @@ export const restoreRevision = async (req, res) => {
         if (revision.template) post.template = revision.template;
 
         await post.save();
+        revalidateBlogs(post.slug);
 
         const updated = await BlogPost.findById(id)
             .populate('author', 'name avatar')

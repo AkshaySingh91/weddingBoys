@@ -24,7 +24,7 @@ export default function EnquiryCtaBlock({ node, post }) {
   return (
     <section className="my-12 overflow-hidden rounded-2xl bg-gradient-to-br from-studio-ink via-studio-obsidian to-studio-ink p-8 text-center sm:p-12">
       <p className="mb-2 text-xs font-bold uppercase tracking-widest text-studio-gold">
-        The Wedding Boys
+        The Wedding Vachan
       </p>
       <h3 className="font-playfair text-2xl font-bold text-white sm:text-3xl">
         {text}

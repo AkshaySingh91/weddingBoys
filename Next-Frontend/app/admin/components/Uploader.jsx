@@ -79,15 +79,15 @@ export default function Uploader({
                 onDragLeave={() => setDragging(false)}
                 onDrop={(e) => { e.preventDefault(); setDragging(false); handleFiles(e.dataTransfer.files); }}
                 className={cn(
-                    'flex w-full flex-col items-center justify-center gap-1.5 rounded-2xl border-2 border-dashed px-4 py-8 text-center transition',
+                    'flex w-full flex-col items-center justify-center gap-1.5 rounded-xl border-2 border-dashed px-4 py-8 text-center transition',
                     dragging
-                        ? 'border-[#C5A880] bg-[#FAF1E6]'
-                        : 'border-[#E5DCD3] bg-white hover:border-stone-400 hover:bg-stone-50',
+                        ? 'border-gold bg-ground-sunk'
+                        : 'border-edge-subtle bg-white hover:border-edge-strong hover:bg-ground',
                 )}
             >
-                <UploadSimple size={22} className={dragging ? 'text-[#8C532B]' : 'text-stone-400'} />
-                <span className="text-xs font-medium text-stone-800">{label}</span>
-                <span className="text-[11px] text-stone-500">
+                <UploadSimple size={22} className={dragging ? 'text-accent-ink' : 'text-ink-muted'} />
+                <span className="text-xs font-medium text-ink">{label}</span>
+                <span className="text-[11px] text-ink-muted">
                     {hint || 'or click to browse — large films upload in the background and can be paused'}
                 </span>
             </button>
@@ -102,29 +102,29 @@ export default function Uploader({
             />
 
             {showVideoOptions && (
-                <div className="flex flex-wrap gap-4 rounded-xl border border-[#E5DCD3] bg-white px-3 py-2">
-                    <label className="flex cursor-pointer items-center gap-2 text-[11px] text-stone-700">
+                <div className="flex flex-wrap gap-4 rounded-xl border border-edge-subtle bg-white px-3 py-2">
+                    <label className="flex cursor-pointer items-center gap-2 text-[11px] text-ink-secondary">
                         <input type="checkbox" checked={makeLoop} onChange={(e) => setMakeLoop(e.target.checked)}
-                            className="h-3.5 w-3.5 accent-[#8C532B]" />
+                            className="h-3.5 w-3.5 accent-accent" />
                         Build a silent hero loop
                     </label>
-                    <label className="flex cursor-pointer items-center gap-2 text-[11px] text-stone-700">
+                    <label className="flex cursor-pointer items-center gap-2 text-[11px] text-ink-secondary">
                         <input type="checkbox" checked={stripAudio} onChange={(e) => setStripAudio(e.target.checked)}
-                            className="h-3.5 w-3.5 accent-[#8C532B]" />
+                            className="h-3.5 w-3.5 accent-accent" />
                         Strip the audio track
                     </label>
                 </div>
             )}
 
             {items.length > 0 && (
-                <div className="space-y-2 rounded-2xl border border-[#E5DCD3] bg-white p-3">
+                <div className="space-y-2 rounded-xl border border-edge-subtle bg-white p-3">
                     <div className="flex items-center justify-between gap-2">
-                        <p className="text-[11px] font-medium text-stone-700">
+                        <p className="text-[11px] font-medium text-ink-secondary">
                             {isUploading ? (
                                 <>
                                     Uploading — {overallProgress}%
                                     {overallSpeed > 0 && (
-                                        <span className="font-normal text-stone-500">
+                                        <span className="font-normal text-ink-muted">
                                             {' '}· {formatSpeed(overallSpeed)} · {formatEta(overallEta)} left
                                         </span>
                                     )}
@@ -135,7 +135,7 @@ export default function Uploader({
                         </p>
                         {finished.length > 0 && (
                             <button type="button" onClick={clearFinished}
-                                className="text-[11px] text-stone-500 hover:text-stone-800">
+                                className="text-[11px] text-ink-muted hover:text-ink">
                                 Clear finished
                             </button>
                         )}
@@ -145,31 +145,31 @@ export default function Uploader({
                         const Icon = iconFor(it.type);
                         const open = expanded === it.id;
                         return (
-                            <div key={it.id} className="rounded-xl border border-stone-200 bg-stone-50/50 p-2.5">
+                            <div key={it.id} className="rounded-xl border border-edge-subtle bg-ground/50 p-2.5">
                                 <div className="flex items-center gap-2.5">
-                                    <Icon size={16} className="shrink-0 text-stone-400" />
+                                    <Icon size={16} className="shrink-0 text-ink-muted" />
                                     <div className="min-w-0 flex-1">
                                         <div className="flex items-baseline justify-between gap-2">
-                                            <p className="truncate text-xs font-medium text-stone-800">{it.name}</p>
-                                            <span className="shrink-0 text-[10px] tabular-nums text-stone-500">
+                                            <p className="truncate text-xs font-medium text-ink">{it.name}</p>
+                                            <span className="shrink-0 text-[10px] tabular-nums text-ink-muted">
                                                 {formatBytes(it.size)}
                                             </span>
                                         </div>
 
-                                        <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-stone-200">
+                                        <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-ground-sunk">
                                             <div
                                                 className={cn(
                                                     'h-full rounded-full transition-[width] duration-300',
                                                     it.status === 'error' ? 'bg-rose-500'
                                                         : it.status === 'done' ? 'bg-emerald-500'
                                                             : it.status === 'paused' ? 'bg-stone-400'
-                                                                : 'bg-[#C5A880]',
+                                                                : 'bg-gold',
                                                 )}
                                                 style={{ width: `${it.status === 'done' ? 100 : it.progress || 0}%` }}
                                             />
                                         </div>
 
-                                        <p className="mt-1 flex items-center gap-1 text-[10px] text-stone-500">
+                                        <p className="mt-1 flex items-center gap-1 text-[10px] text-ink-muted">
                                             {it.status === 'completing' && <CircleNotch size={9} className="animate-spin" />}
                                             <span>{STATUS_LABEL[it.status] || it.status}</span>
                                             {isActive(it.status) && it.progress > 0 && <span>· {it.progress}%</span>}
@@ -209,11 +209,11 @@ export default function Uploader({
 
                                 {/* What the pipeline actually produced from this file. */}
                                 {it.status === 'done' && it.media && (
-                                    <div className="mt-2 border-t border-stone-200 pt-2">
+                                    <div className="mt-2 border-t border-edge-subtle pt-2">
                                         <button
                                             type="button"
                                             onClick={() => setExpanded(open ? null : it.id)}
-                                            className="text-[10px] font-medium text-[#8C532B] hover:underline"
+                                            className="text-[10px] font-medium text-accent-ink hover:underline"
                                         >
                                             {open ? 'Hide' : 'Show'} what was generated
                                         </button>

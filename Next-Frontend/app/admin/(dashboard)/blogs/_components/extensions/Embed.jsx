@@ -56,18 +56,18 @@ function EmbedView({ node, updateAttributes, deleteNode, selected }) {
     const isPortrait = aspectRatio === '9/16' || aspectRatio === '4/5';
 
     return (
-        <NodeViewWrapper className={`my-8 overflow-hidden rounded-2xl border border-[#E5DCD3] bg-white shadow-sm font-sans transition-all ${selected ? 'ring-2 ring-[#8C532B]' : ''}`}>
+        <NodeViewWrapper className={`my-8 overflow-hidden rounded-xl border border-edge-subtle bg-white shadow-sm font-sans transition-all ${selected ? 'ring-2 ring-accent' : ''}`}>
             {/* Header / Provider Badge */}
-            <div className="flex items-center justify-between border-b border-[#E5DCD3]/60 bg-[#F7F4EF]/70 px-4 py-2.5" contentEditable={false}>
+            <div className="flex items-center justify-between border-b border-edge-subtle bg-ground/70 px-4 py-2.5" contentEditable={false}>
                 <div className="flex items-center gap-2">
-                    <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-white shadow-sm text-[#8C532B]">
+                    <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-white shadow-sm text-accent-ink">
                         <Icon size={14} weight="bold" />
                     </div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#1C1917]">
+                    <span className="text-xs font-bold uppercase tracking-wider text-ink">
                         {providerName}
                     </span>
                     {author && (
-                        <span className="text-[11px] text-stone-500 truncate max-w-[180px]">
+                        <span className="text-[11px] text-ink-muted truncate max-w-[180px]">
                             · {author}
                         </span>
                     )}
@@ -79,7 +79,7 @@ function EmbedView({ node, updateAttributes, deleteNode, selected }) {
                             href={url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-stone-400 hover:text-stone-700 p-1 transition-colors"
+                            className="text-ink-muted hover:text-ink-secondary p-1 transition-colors"
                             title="Open original link"
                         >
                             <ArrowSquareOut size={14} />
@@ -99,9 +99,9 @@ function EmbedView({ node, updateAttributes, deleteNode, selected }) {
             </div>
 
             {/* Media Canvas Preview */}
-            <div className="p-3 bg-stone-50/40" contentEditable={false}>
+            <div className="p-3 bg-ground/40" contentEditable={false}>
                 <div
-                    className={`relative overflow-hidden rounded-xl border border-[#E5DCD3] bg-black mx-auto ${
+                    className={`relative overflow-hidden rounded-xl border border-edge-subtle bg-black mx-auto ${
                         isCompact ? 'h-24 w-full' : isPortrait ? 'aspect-[9/16] max-w-xs' : 'aspect-video w-full'
                     }`}
                 >
@@ -114,7 +114,7 @@ function EmbedView({ node, updateAttributes, deleteNode, selected }) {
                             allowFullScreen
                         />
                     ) : (
-                        <div className="absolute inset-0 flex items-center justify-center bg-stone-900 text-stone-400 text-xs">
+                        <div className="absolute inset-0 flex items-center justify-center bg-ink text-ink-muted text-xs">
                             No embed source
                         </div>
                     )}
@@ -122,9 +122,9 @@ function EmbedView({ node, updateAttributes, deleteNode, selected }) {
             </div>
 
             {/* Title & Caption */}
-            <div className="px-4 py-3 border-t border-[#E5DCD3]/50 bg-white space-y-2" contentEditable={false}>
+            <div className="px-4 py-3 border-t border-edge-subtle bg-white space-y-2" contentEditable={false}>
                 {title && (
-                    <h4 className="text-xs font-semibold text-[#1C1917] truncate">
+                    <h4 className="text-xs font-semibold text-ink truncate">
                         {title}
                     </h4>
                 )}
@@ -136,15 +136,15 @@ function EmbedView({ node, updateAttributes, deleteNode, selected }) {
                                 value={caption || ''}
                                 onChange={(e) => updateAttributes({ caption: e.target.value })}
                                 placeholder="Add editorial caption (optional)..."
-                                className="w-full rounded-lg border border-[#E5DCD3] bg-stone-50 px-2.5 py-1 text-xs text-[#1C1917] focus:outline-none focus:border-[#8C532B]"
+                                className="w-full rounded-lg border border-edge-subtle bg-ground px-2.5 py-1 text-xs text-ink focus:outline-none focus:border-accent"
                             />
                         </div>
                         <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-auto">
-                            <label className="text-[10px] font-semibold text-stone-500 uppercase">Ratio:</label>
+                            <label className="text-[10px] font-semibold text-ink-muted uppercase">Ratio:</label>
                             <select
                                 value={aspectRatio}
                                 onChange={(e) => updateAttributes({ aspectRatio: e.target.value })}
-                                className="rounded-lg border border-[#E5DCD3] bg-white px-2 py-1 text-xs text-[#1C1917] font-medium focus:outline-none focus:border-[#8C532B]"
+                                className="rounded-lg border border-edge-subtle bg-white px-2 py-1 text-xs text-ink font-medium focus:outline-none focus:border-accent"
                             >
                                 <option value="16/9">16:9 (Landscape)</option>
                                 <option value="9/16">9:16 (Vertical / Reel)</option>
@@ -156,7 +156,7 @@ function EmbedView({ node, updateAttributes, deleteNode, selected }) {
                     </div>
                 ) : (
                     caption && (
-                        <p className="text-center text-xs text-stone-500 italic">
+                        <p className="text-center text-xs text-ink-muted italic">
                             {caption}
                         </p>
                     )

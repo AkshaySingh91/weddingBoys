@@ -74,6 +74,9 @@ const adminSchema = new mongoose.Schema({
         default: 'Active',
         index: true,
     },
+    authVersion: { type: Number, default: 0 },
+    mfaChallengeHash: { type: String, default: null, select: false },
+    mfaChallengeExpiresAt: { type: Date, default: null },
     mfaEnabled: { type: Boolean, default: false },
     mfaSecret: { type: String, default: null, select: false },
     // Single-use backup codes for when the authenticator device is lost.

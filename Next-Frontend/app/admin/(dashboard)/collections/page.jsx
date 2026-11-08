@@ -56,13 +56,13 @@ export default function CollectionsPage() {
             {creating && (
                 <form onSubmit={create} className="flex flex-wrap items-end gap-3 rounded-xl border border-studio-border bg-white p-4">
                     <label className="space-y-1">
-                        <span className="block text-[11px] font-semibold text-stone-700">Title</span>
+                        <span className="block text-[11px] font-semibold text-ink-secondary">Title</span>
                         <input autoFocus value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g. Beach weddings"
-                            className="h-9 w-64 rounded-lg border border-stone-300 px-3 text-sm outline-none focus:border-[#D9342A]" />
+                            className="h-9 w-64 rounded-lg border border-edge-strong px-3 text-sm outline-none focus:border-accent" />
                     </label>
                     <label className="space-y-1">
-                        <span className="block text-[11px] font-semibold text-stone-700">Shows</span>
-                        <select value={kind} onChange={(e) => setKind(e.target.value)} className="h-9 rounded-lg border border-stone-300 px-2 text-sm">
+                        <span className="block text-[11px] font-semibold text-ink-secondary">Shows</span>
+                        <select value={kind} onChange={(e) => setKind(e.target.value)} className="h-9 rounded-lg border border-edge-strong px-2 text-sm">
                             <option value="Video">Films</option>
                             <option value="Photo">Photos</option>
                         </select>
@@ -71,27 +71,27 @@ export default function CollectionsPage() {
                 </form>
             )}
 
-            {!rows ? <p className="text-sm text-stone-500">Loading…</p> : (
+            {!rows ? <p className="text-sm text-ink-muted">Loading…</p> : (
                 <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                     {rows.map((c) => (
                         <li key={c._id}>
-                            <Link href={`/admin/collections/${c._id}`} className="block rounded-2xl border border-studio-border bg-white p-4 transition-shadow hover:shadow-md">
+                            <Link href={`/admin/collections/${c._id}`} className="block rounded-xl border border-studio-border bg-white p-4 transition-shadow hover:shadow-md">
                                 <div className="mb-3 grid grid-cols-4 gap-1">
                                     {[0, 1, 2, 3].map((n) => (
-                                        <div key={n} className="aspect-[4/3] overflow-hidden rounded bg-stone-100">
+                                        <div key={n} className="aspect-[4/3] overflow-hidden rounded-lg bg-ground-sunk">
                                             {/* eslint-disable-next-line @next/next/no-img-element -- admin thumbnail */}
                                             {c.thumbs[n] && <img src={c.thumbs[n]} alt="" className="h-full w-full object-cover" />}
                                         </div>
                                     ))}
                                 </div>
                                 <div className="flex flex-wrap items-center gap-2">
-                                    {c.kind === 'Video' ? <FilmSlate size={14} className="text-stone-500" /> : <ImageSquare size={14} className="text-stone-500" />}
-                                    <h3 className="text-sm font-semibold text-stone-900">{c.title}</h3>
+                                    {c.kind === 'Video' ? <FilmSlate size={14} className="text-ink-muted" /> : <ImageSquare size={14} className="text-ink-muted" />}
+                                    <h3 className="text-sm font-semibold text-ink">{c.title}</h3>
                                     {c.system && <Badge size="sm" variant="neutral"><Lock size={10} className="mr-0.5 inline" /> site</Badge>}
                                     {c.status === 'Draft' && <Badge size="sm" variant="warning">Draft</Badge>}
                                 </div>
-                                <p className="mt-1 font-mono text-[11px] text-stone-400">{c.key}</p>
-                                <p className="mt-2 text-xs text-stone-600">
+                                <p className="mt-1 font-mono text-[11px] text-ink-muted">{c.key}</p>
+                                <p className="mt-2 text-xs text-ink-secondary">
                                     Showing {c.shown} of {c.limit}
                                     {c.pinned?.length ? `, ${c.pinned.length} pinned` : ''}
                                     {c.rule?.enabled === false ? ', pins only' : ''}

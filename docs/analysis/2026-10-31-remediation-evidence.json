@@ -1,0 +1,30 @@
+{
+  "backendTests": {
+    "passed": 61,
+    "failed": 0
+  },
+  "frontendTests": {
+    "passed": 2,
+    "failed": 0
+  },
+  "productionBuild": "passed",
+  "repositoryLint": {
+    "errors": 13,
+    "warnings": 15
+  },
+  "frontendAudit": {
+    "moderate": 18,
+    "high": 0,
+    "critical": 0
+  },
+  "backendAudit": {
+    "info": 0,
+    "low": 0,
+    "moderate": 2,
+    "high": 0,
+    "critical": 0,
+    "total": 2
+  },
+  "deployed": false,
+  "committed": false
+}

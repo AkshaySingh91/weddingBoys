@@ -34,7 +34,7 @@ function AlignBtn({ icon: Icon, active, onClick, title }) {
             onClick={onClick}
             title={title}
             className={`rounded-lg p-1.5 transition-colors cursor-pointer ${
-                active ? 'bg-[#1C1917] text-white shadow-sm' : 'text-stone-600 hover:bg-stone-100'
+                active ? 'bg-ink text-white shadow-sm' : 'text-ink-secondary hover:bg-ground-sunk'
             }`}
         >
             <Icon size={14} />
@@ -138,14 +138,14 @@ function InlineMediaView({ node, updateAttributes, deleteNode, selected }) {
 
     return (
         <NodeViewWrapper
-            className={`inline-media relative clear-both my-5 font-sans ${ALIGN_CLASS[align] || ALIGN_CLASS.center} ${selected ? 'rounded-2xl ring-2 ring-[#8C532B]' : ''}`}
+            className={`inline-media relative clear-both my-5 font-sans ${ALIGN_CLASS[align] || ALIGN_CLASS.center} ${selected ? 'rounded-xl ring-2 ring-accent' : ''}`}
             data-align={align}
             data-frame={frame}
             data-focus={focus}
             data-badge-tone={badgeTone}
             data-radius={radius}
         >
-            <figure ref={figureRef} className="relative m-0 overflow-hidden rounded-2xl border border-[#E5DCD3] bg-stone-50">
+            <figure ref={figureRef} className="relative m-0 overflow-hidden rounded-xl border border-edge-subtle bg-ground">
                 {badge ? (
                     <span className="inline-media-badge" data-badge contentEditable={false}>
                         <BadgeMark tone={badgeTone} />
@@ -166,12 +166,12 @@ function InlineMediaView({ node, updateAttributes, deleteNode, selected }) {
                         ].filter(Boolean).join(' ')}
                     />
                 ) : (
-                    <div className="flex h-40 items-center justify-center text-xs text-stone-400 font-medium">No image loaded</div>
+                    <div className="flex h-40 items-center justify-center text-xs text-ink-muted font-medium">No image loaded</div>
                 )}
                 {(caption || subCaption) ? (
-                    <figcaption className="border-t border-[#E5DCD3] bg-white p-2 text-center text-xs italic text-stone-500">
+                    <figcaption className="border-t border-edge-subtle bg-white p-2 text-center text-xs italic text-ink-muted">
                         {caption}
-                        {subCaption ? <span className="mt-0.5 block text-[10px] not-italic text-stone-400">{subCaption}</span> : null}
+                        {subCaption ? <span className="mt-0.5 block text-[10px] not-italic text-ink-muted">{subCaption}</span> : null}
                     </figcaption>
                 ) : null}
             </figure>
@@ -190,7 +190,7 @@ function InlineMediaView({ node, updateAttributes, deleteNode, selected }) {
                     <AlignBtn icon={TextAlignCenter} active={align === 'center'} onClick={setAlign('center')} title="Center" />
                     <AlignBtn icon={TextAlignLeft} active={align === 'left'} onClick={setAlign('left')} title="Float left" />
                     <AlignBtn icon={TextAlignRight} active={align === 'right'} onClick={setAlign('right')} title="Float right" />
-                    <span className="mx-1 h-4 w-px bg-stone-200" />
+                    <span className="mx-1 h-4 w-px bg-ground-sunk" />
 
                     {/*
                       Shape, not pixels. Two images side by side only come out the
@@ -201,7 +201,7 @@ function InlineMediaView({ node, updateAttributes, deleteNode, selected }) {
                         value={frame}
                         onChange={(e) => updateAttributes({ frame: e.target.value })}
                         title="Crop this image to a shape"
-                        className="cursor-pointer rounded-lg border border-[#E5DCD3] bg-white px-1.5 py-1 text-[11px] text-stone-700 outline-none"
+                        className="cursor-pointer rounded-lg border border-edge-subtle bg-white px-1.5 py-1 text-[11px] text-ink-secondary outline-none"
                     >
                         {MEDIA_FRAMES.map((f) => (
                             <option key={f.id} value={f.id}>{f.label}</option>
@@ -215,7 +215,7 @@ function InlineMediaView({ node, updateAttributes, deleteNode, selected }) {
                         type="button"
                         onClick={() => updateAttributes({ focusX: 50, focusY: 50 })}
                         title="Drag the image to reposition it · click to recentre"
-                        className="rounded-lg border border-[#E5DCD3] px-1.5 py-1 font-mono text-[10px] tabular-nums text-stone-600 transition-colors hover:bg-stone-100"
+                        className="rounded-lg border border-edge-subtle px-1.5 py-1 font-mono text-[10px] tabular-nums text-ink-secondary transition-colors hover:bg-ground-sunk"
                     >
                         {position}
                     </button>
@@ -224,14 +224,14 @@ function InlineMediaView({ node, updateAttributes, deleteNode, selected }) {
                         value={radius}
                         onChange={(e) => updateAttributes({ radius: e.target.value })}
                         title="Corner radius"
-                        className="cursor-pointer rounded-lg border border-[#E5DCD3] bg-white px-1.5 py-1 text-[11px] text-stone-700 outline-none"
+                        className="cursor-pointer rounded-lg border border-edge-subtle bg-white px-1.5 py-1 text-[11px] text-ink-secondary outline-none"
                     >
                         {MEDIA_RADII.map((r) => (
                             <option key={r.id} value={r.id}>{r.label}</option>
                         ))}
                     </select>
 
-                    <span className="mx-1 h-4 w-px bg-stone-200" />
+                    <span className="mx-1 h-4 w-px bg-ground-sunk" />
 
                     {/*
                       Caption and sub-caption.
@@ -249,7 +249,7 @@ function InlineMediaView({ node, updateAttributes, deleteNode, selected }) {
                         placeholder="Caption…"
                         onChange={(e) => updateAttributes({ caption: e.target.value })}
                         title="A line under the image explaining it"
-                        className="w-32 rounded-lg border border-[#E5DCD3] px-1.5 py-1 text-[11px] outline-none"
+                        className="w-32 rounded-lg border border-edge-subtle px-1.5 py-1 text-[11px] outline-none"
                     />
                     <input
                         type="text"
@@ -257,10 +257,10 @@ function InlineMediaView({ node, updateAttributes, deleteNode, selected }) {
                         placeholder="Sub-caption…"
                         onChange={(e) => updateAttributes({ subCaption: e.target.value })}
                         title="A quieter second line — a credit, a location, a lens"
-                        className="w-28 rounded-lg border border-[#E5DCD3] px-1.5 py-1 text-[11px] outline-none"
+                        className="w-28 rounded-lg border border-edge-subtle px-1.5 py-1 text-[11px] outline-none"
                     />
 
-                    <span className="mx-1 h-4 w-px bg-stone-200" />
+                    <span className="mx-1 h-4 w-px bg-ground-sunk" />
 
                     {/* A caption explains the image; a badge sits on it and
                         labels it. The comparison layouts need both. */}
@@ -270,14 +270,14 @@ function InlineMediaView({ node, updateAttributes, deleteNode, selected }) {
                         placeholder="Badge…"
                         onChange={(e) => updateAttributes({ badge: e.target.value })}
                         title="A short label shown on top of the image"
-                        className="w-24 rounded-lg border border-[#E5DCD3] px-1.5 py-1 text-[11px] outline-none"
+                        className="w-24 rounded-lg border border-edge-subtle px-1.5 py-1 text-[11px] outline-none"
                     />
                     {badge ? (
                         <select
                             value={badgeTone}
                             onChange={(e) => updateAttributes({ badgeTone: e.target.value })}
                             title="Badge tone"
-                            className="cursor-pointer rounded-lg border border-[#E5DCD3] bg-white px-1.5 py-1 text-[11px] text-stone-700 outline-none"
+                            className="cursor-pointer rounded-lg border border-edge-subtle bg-white px-1.5 py-1 text-[11px] text-ink-secondary outline-none"
                         >
                             <option value="neutral">Neutral</option>
                             <option value="positive">Positive</option>
@@ -285,12 +285,12 @@ function InlineMediaView({ node, updateAttributes, deleteNode, selected }) {
                         </select>
                     ) : null}
 
-                    <span className="mx-1 h-4 w-px bg-stone-200" />
+                    <span className="mx-1 h-4 w-px bg-ground-sunk" />
                     <button
                         type="button"
                         onClick={() => updateAttributes({ priority: !priority })}
                         className={`rounded-lg p-1.5 transition-colors cursor-pointer ${
-                            priority ? 'bg-amber-600 text-white shadow-sm' : 'text-stone-600 hover:bg-stone-100'
+                            priority ? 'bg-amber-600 text-white shadow-sm' : 'text-ink-secondary hover:bg-ground-sunk'
                         }`}
                         title="Priority load (LCP)"
                     >

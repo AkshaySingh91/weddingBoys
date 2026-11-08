@@ -35,7 +35,7 @@ export default function WeddingStatusDialog({ target, liveCount, loading, onConf
                                     : 'Nothing from this wedding is live on the site right now.'}
                             </DialogDescription>
                         </DialogHeader>
-                        <p className="text-sm text-stone-600">{copy.body}</p>
+                        <p className="text-sm text-ink-secondary">{copy.body}</p>
                         <DialogFooter>
                             <Button variant="outline" size="sm" onClick={onClose}>Cancel</Button>
                             <Button variant="danger" size="sm" loading={loading} onClick={() => onConfirm(target)}>{copy.action}</Button>

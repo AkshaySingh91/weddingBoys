@@ -139,15 +139,15 @@ export default function ClientEnquiriesPage() {
 
         return (
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-stone-100 border border-stone-200 flex items-center justify-center text-stone-800 font-semibold text-xs shrink-0 tabular-nums">
+            <div className="w-8 h-8 rounded-lg bg-ground-sunk border border-edge-subtle flex items-center justify-center text-ink font-semibold text-xs shrink-0 tabular-nums">
               {brideInitial}&{groomInitial}
             </div>
             <div className="min-w-0 flex-1">
-              <span className="font-semibold text-[#2F2F2F] text-xs block truncate">
+              <span className="font-semibold text-ink text-xs block truncate">
                 {row.Bride || 'Bride'} & {row.Groom || 'Groom'}
               </span>
-              <span className="text-[11px] text-stone-500 font-sans flex items-center gap-1 mt-0.5 truncate">
-                <Compass size={12} className="text-stone-400 shrink-0" />
+              <span className="text-[11px] text-ink-muted font-sans flex items-center gap-1 mt-0.5 truncate">
+                <Compass size={12} className="text-ink-muted shrink-0" />
                 <span className="truncate">{row.Reach || 'Website Direct'}</span>
               </span>
             </div>
@@ -166,7 +166,7 @@ export default function ClientEnquiriesPage() {
 
         return (
           <div className="space-y-0.5">
-            <span className="font-medium text-[#2F2F2F] text-xs block truncate tabular-nums">
+            <span className="font-medium text-ink text-xs block truncate tabular-nums">
               {raw || 'Not provided'}
             </span>
             {digits && !isEmail && (
@@ -189,8 +189,8 @@ export default function ClientEnquiriesPage() {
       label: 'Wedding Dates',
       width: '22%',
       render: (row) => (
-        <div className="flex items-center gap-1.5 text-stone-700 whitespace-nowrap">
-          <CalendarBlank size={14} className="text-stone-400 shrink-0" />
+        <div className="flex items-center gap-1.5 text-ink-secondary whitespace-nowrap">
+          <CalendarBlank size={14} className="text-ink-muted shrink-0" />
           <span className="font-medium text-xs tabular-nums whitespace-nowrap">
             {formatDateRange(row.Date)}
           </span>
@@ -225,7 +225,7 @@ export default function ClientEnquiriesPage() {
             size="sm"
             onClick={() => handleOpenDetails(row)}
             icon={Eye}
-            className="text-stone-700 hover:text-[#2F2F2F] px-2.5 h-7 text-xs"
+            className="text-ink-secondary hover:text-ink px-2.5 h-7 text-xs"
           >
             Review
           </Button>
@@ -233,7 +233,7 @@ export default function ClientEnquiriesPage() {
           <Button
             variant="ghost"
             size="iconSm"
-            className="text-stone-400 hover:text-rose-600 hover:bg-rose-50 h-7 w-7"
+            className="text-ink-muted hover:text-rose-600 hover:bg-rose-50 h-7 w-7"
             onClick={() => setDeleteConfirmId(row._id)}
             title="Delete Inquiry"
           >
@@ -251,14 +251,14 @@ export default function ClientEnquiriesPage() {
         title="Client Inquiries & Booking Pipeline"
         subtitle="Operational CRM for couple inquiries, wedding dates, and outreach coordination."
         actions={
-          <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-xl border border-stone-200 shadow-inner">
+          <div className="flex items-center gap-1 bg-ground-sunk p-1 rounded-xl border border-edge-subtle shadow-inner">
             <button
               onClick={() => setStatusFilter('all')}
               className={cn(
                 'px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer whitespace-nowrap',
                 statusFilter === 'all'
-                  ? 'bg-white text-[#2F2F2F] shadow-sm'
-                  : 'text-stone-600 hover:text-[#2F2F2F]'
+                  ? 'bg-white text-ink shadow-sm'
+                  : 'text-ink-secondary hover:text-ink'
               )}
             >
               All Leads ({metrics.total})
@@ -269,10 +269,10 @@ export default function ClientEnquiriesPage() {
                 'px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5',
                 statusFilter === 'new'
                   ? 'bg-white text-amber-900 shadow-sm'
-                  : 'text-stone-600 hover:text-[#2F2F2F]'
+                  : 'text-ink-secondary hover:text-ink'
               )}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
               New ({metrics.newLeads})
             </button>
             <button
@@ -280,8 +280,8 @@ export default function ClientEnquiriesPage() {
               className={cn(
                 'px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer whitespace-nowrap',
                 statusFilter === 'reviewed'
-                  ? 'bg-white text-[#2F2F2F] shadow-sm'
-                  : 'text-stone-600 hover:text-[#2F2F2F]'
+                  ? 'bg-white text-ink shadow-sm'
+                  : 'text-ink-secondary hover:text-ink'
               )}
             >
               Reviewed ({metrics.reviewed})
@@ -292,23 +292,23 @@ export default function ClientEnquiriesPage() {
 
       {/* KPI Cards Row */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Card className="border-stone-200 bg-white shadow-sm">
+        <Card className="border-edge-subtle bg-white shadow-sm">
           <CardContent className="p-4 flex items-center justify-between">
             <div>
-              <p className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider">
+              <p className="text-[11px] font-semibold text-ink-muted uppercase tracking-wider">
                 Total Inquiries
               </p>
-              <h3 className="text-2xl font-bold text-[#2F2F2F] mt-0.5 tabular-nums">
+              <h3 className="text-2xl font-bold text-ink mt-0.5 tabular-nums">
                 {metrics.total}
               </h3>
             </div>
-            <div className="w-9 h-9 rounded-xl bg-stone-100 border border-stone-200 flex items-center justify-center text-stone-700">
+            <div className="w-9 h-9 rounded-xl bg-ground-sunk border border-edge-subtle flex items-center justify-center text-ink-secondary">
               <Heart size={18} />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-stone-200 bg-white shadow-sm">
+        <Card className="border-edge-subtle bg-white shadow-sm">
           <CardContent className="p-4 flex items-center justify-between">
             <div>
               <p className="text-[11px] font-semibold text-amber-800 uppercase tracking-wider">
@@ -324,17 +324,17 @@ export default function ClientEnquiriesPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-stone-200 bg-white shadow-sm">
+        <Card className="border-edge-subtle bg-white shadow-sm">
           <CardContent className="p-4 flex items-center justify-between">
             <div>
-              <p className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider">
+              <p className="text-[11px] font-semibold text-ink-muted uppercase tracking-wider">
                 Reviewed & In Dialogue
               </p>
-              <h3 className="text-2xl font-bold text-stone-900 mt-0.5 tabular-nums">
+              <h3 className="text-2xl font-bold text-ink mt-0.5 tabular-nums">
                 {metrics.reviewed}
               </h3>
             </div>
-            <div className="w-9 h-9 rounded-xl bg-stone-100 border border-stone-200 flex items-center justify-center text-stone-700">
+            <div className="w-9 h-9 rounded-xl bg-ground-sunk border border-edge-subtle flex items-center justify-center text-ink-secondary">
               <UserCheck size={18} />
             </div>
           </CardContent>
@@ -355,8 +355,8 @@ export default function ClientEnquiriesPage() {
           <div className="space-y-3 font-sans">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Heart size={16} className="text-[#8C532B]" />
-                <h4 className="text-xs font-bold text-[#2F2F2F]">
+                <Heart size={16} className="text-accent-ink" />
+                <h4 className="text-xs font-bold text-ink">
                   {row.Bride || 'Bride'} & {row.Groom || 'Groom'}
                 </h4>
               </div>
@@ -365,25 +365,25 @@ export default function ClientEnquiriesPage() {
               </Badge>
             </div>
 
-            <div className="text-xs text-stone-700 space-y-1">
+            <div className="text-xs text-ink-secondary space-y-1">
               <div className="flex items-center gap-2">
-                <PhoneCall size={13} className="text-stone-400" />
+                <PhoneCall size={13} className="text-ink-muted" />
                 <span className="tabular-nums">{row.Contact || 'Not provided'}</span>
               </div>
               <div className="flex items-center gap-2">
-                <CalendarBlank size={13} className="text-stone-400" />
+                <CalendarBlank size={13} className="text-ink-muted" />
                 <span className="tabular-nums whitespace-nowrap">{formatDateRange(row.Date)}</span>
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-2 pt-2 border-t border-stone-100">
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-edge-subtle">
               <Button variant="outline" size="sm" onClick={() => handleOpenDetails(row)} icon={Eye}>
                 View Details
               </Button>
               <Button
                 variant="ghost"
                 size="iconSm"
-                className="text-stone-400 hover:text-rose-600"
+                className="text-ink-muted hover:text-rose-600"
                 onClick={() => setDeleteConfirmId(row._id)}
               >
                 <Trash size={14} />
@@ -397,16 +397,16 @@ export default function ClientEnquiriesPage() {
       <Dialog open={!!selectedInquiry} onOpenChange={(open) => !open && setSelectedInquiry(null)}>
         <DialogContent className="sm:max-w-md font-sans">
           <DialogHeader>
-            <div className="flex items-center gap-1.5 text-[#8C532B] mb-1">
+            <div className="flex items-center gap-1.5 text-accent-ink mb-1">
               <Sparkle size={16} />
               <span className="text-[11px] font-bold uppercase tracking-wider">
                 Wedding Booking Request
               </span>
             </div>
-            <DialogTitle className="text-base font-bold text-[#2F2F2F] font-sans">
+            <DialogTitle className="text-base font-bold text-ink font-sans">
               {selectedInquiry?.Bride || 'Bride'} & {selectedInquiry?.Groom || 'Groom'}
             </DialogTitle>
-            <DialogDescription className="text-xs text-stone-500 font-sans">
+            <DialogDescription className="text-xs text-ink-muted font-sans">
               Direct booking inquiry from the studio marketing portal.
             </DialogDescription>
           </DialogHeader>
@@ -414,20 +414,20 @@ export default function ClientEnquiriesPage() {
           {selectedInquiry && (
             <div className="space-y-3 py-2 text-xs font-sans">
               {/* Couple Grid */}
-              <div className="grid grid-cols-2 gap-3 p-3 rounded-xl bg-stone-50 border border-stone-200">
+              <div className="grid grid-cols-2 gap-3 p-3 rounded-xl bg-ground border border-edge-subtle">
                 <div>
-                  <span className="text-stone-500 font-medium text-[11px] uppercase tracking-wider">
+                  <span className="text-ink-muted font-medium text-[11px] uppercase tracking-wider">
                     Bride
                   </span>
-                  <p className="text-xs font-bold text-[#2F2F2F] mt-0.5">
+                  <p className="text-xs font-bold text-ink mt-0.5">
                     {selectedInquiry.Bride || '—'}
                   </p>
                 </div>
                 <div>
-                  <span className="text-stone-500 font-medium text-[11px] uppercase tracking-wider">
+                  <span className="text-ink-muted font-medium text-[11px] uppercase tracking-wider">
                     Groom
                   </span>
-                  <p className="text-xs font-bold text-[#2F2F2F] mt-0.5">
+                  <p className="text-xs font-bold text-ink mt-0.5">
                     {selectedInquiry.Groom || '—'}
                   </p>
                 </div>
@@ -435,45 +435,45 @@ export default function ClientEnquiriesPage() {
 
               {/* Contact Info */}
               <div className="space-y-2">
-                <div className="flex justify-between items-center py-1.5 border-b border-stone-100">
-                  <span className="text-stone-600 font-medium flex items-center gap-1.5">
-                    <PhoneCall size={14} className="text-stone-400" />
+                <div className="flex justify-between items-center py-1.5 border-b border-edge-subtle">
+                  <span className="text-ink-secondary font-medium flex items-center gap-1.5">
+                    <PhoneCall size={14} className="text-ink-muted" />
                     Contact:
                   </span>
                   <a
                     href={`tel:${selectedInquiry.Contact}`}
-                    className="font-semibold text-[#2F2F2F] hover:text-red-500 tabular-nums"
+                    className="font-semibold text-ink hover:text-accent-ink tabular-nums"
                   >
                     {selectedInquiry.Contact || '—'}
                   </a>
                 </div>
 
-                <div className="flex justify-between items-center py-1.5 border-b border-stone-100">
-                  <span className="text-stone-600 font-medium flex items-center gap-1.5">
-                    <CalendarBlank size={14} className="text-stone-400" />
+                <div className="flex justify-between items-center py-1.5 border-b border-edge-subtle">
+                  <span className="text-ink-secondary font-medium flex items-center gap-1.5">
+                    <CalendarBlank size={14} className="text-ink-muted" />
                     Wedding Dates:
                   </span>
-                  <span className="font-semibold text-[#2F2F2F] tabular-nums whitespace-nowrap">
+                  <span className="font-semibold text-ink tabular-nums whitespace-nowrap">
                     {formatDateRange(selectedInquiry.Date)}
                   </span>
                 </div>
 
-                <div className="flex justify-between items-center py-1.5 border-b border-stone-100">
-                  <span className="text-stone-600 font-medium flex items-center gap-1.5">
-                    <Compass size={14} className="text-stone-400" />
+                <div className="flex justify-between items-center py-1.5 border-b border-edge-subtle">
+                  <span className="text-ink-secondary font-medium flex items-center gap-1.5">
+                    <Compass size={14} className="text-ink-muted" />
                     Referral Channel:
                   </span>
-                  <span className="font-medium text-stone-800">
+                  <span className="font-medium text-ink">
                     {selectedInquiry.Reach || 'Website Direct'}
                   </span>
                 </div>
 
-                <div className="flex justify-between items-center py-1.5 border-b border-stone-100">
-                  <span className="text-stone-600 font-medium flex items-center gap-1.5">
-                    <Clock size={14} className="text-stone-400" />
+                <div className="flex justify-between items-center py-1.5 border-b border-edge-subtle">
+                  <span className="text-ink-secondary font-medium flex items-center gap-1.5">
+                    <Clock size={14} className="text-ink-muted" />
                     Submitted:
                   </span>
-                  <span className="text-stone-600 tabular-nums">
+                  <span className="text-ink-secondary tabular-nums">
                     {selectedInquiry.SubmittedTime || 'Recent submission'}
                   </span>
                 </div>
@@ -504,10 +504,10 @@ export default function ClientEnquiriesPage() {
       <Dialog open={!!deleteConfirmId} onOpenChange={(open) => !open && setDeleteConfirmId(null)}>
         <DialogContent className="sm:max-w-sm font-sans">
           <DialogHeader>
-            <DialogTitle className="text-sm font-bold text-[#2F2F2F]">
+            <DialogTitle className="text-sm font-bold text-ink">
               Permanently Remove Inquiry
             </DialogTitle>
-            <DialogDescription className="text-xs text-stone-500">
+            <DialogDescription className="text-xs text-ink-muted">
               Are you sure you want to remove this client inquiry? This record will be permanently deleted from the CRM pipeline.
             </DialogDescription>
           </DialogHeader>

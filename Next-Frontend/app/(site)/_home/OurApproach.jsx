@@ -81,7 +81,7 @@ export default function OurApproach() {
             {/* overflow-x-clip, never overflow-hidden: `hidden` makes this a
                 scroll container and silently breaks `position: sticky` in every
                 descendant, which is the mechanism the deck runs on. */}
-            <div className="relative overflow-x-clip rounded-3xl bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6]">
+            <div className="relative overflow-x-clip rounded-3xl bg-gradient-to-b from-ground-sunk to-ground">
                 {reduceMotion
                     ? <PlainSteps />
                     : (

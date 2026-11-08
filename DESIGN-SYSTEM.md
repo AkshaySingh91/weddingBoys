@@ -1,4 +1,4 @@
-# The Wedding Boys — Design System
+# The Wedding Vachan — Design System
 
 **Status:** Stage 0 approved. Direction revised 2026-09-19 after the first
 attempt (a dark ground) was built and rejected — see §1. Stage 1 built on this.
@@ -489,3 +489,49 @@ does **not** attempt to hand-optimise its assets. R-09 is reassigned to the admi
 media-pipeline backlog, outside this redesign. It remains the single largest
 performance number on the site and should not be forgotten — but compressing 146
 frames by hand would be throwaway work that the pipeline will redo properly.
+
+## 13. Admin panel — same tokens, quieter voice (2026-11-09)
+
+The admin (`app/admin`, `Component/AdminSidebar.jsx`, `Component/Header.jsx`) is a
+working tool for studio staff. It uses **the same tokens as the public site** and
+spends the brand only where it carries meaning. Decided after the Impeccable
+critique of 2026-11-08 (16/40; `.impeccable/critique/`), which found 46 hand-picked
+hex colours in 1,337 places, three palettes, and a component kit that was optional.
+
+**Colour.** Ground `ground` / `ground-sunk`, surfaces `ground-raised`, text `ink` /
+`ink-secondary` / `ink-muted`, lines `edge-subtle` / `edge-strong`. Red (`accent`)
+marks the one primary action on a screen and things that need attention; it is
+not decoration. Gold is ornament only. Success / warning / error keep their
+status colours (emerald / amber / `state-error`) because they carry meaning.
+
+**Type.** Sans throughout, including headings. The blog editor is the exception:
+it previews published article typography.
+
+**Radius.** `rounded-lg` (8px) for buttons, inputs and small controls;
+`rounded-xl` (12px) for cards, panels, dialogs; `rounded-full` only for pills
+and avatars.
+
+**Elevation.** `shadow-panel` for cards, `shadow-overlay` for menus, dialogs and
+drawers. No coloured shadows, no decorative blur or glass.
+
+**Components — use the kit, `app/admin/components/ui`.**
+
+| Need | Use | Not |
+|---|---|---|
+| Any button | `<Button variant="primary \| secondary \| ghost \| danger">` (`dangerSolid` only inside a confirm dialog) | a hand-styled `<button>` |
+| Text field / select / textarea | `<Input>` / `<Select>` / `<Textarea>` (label, helper and `error` built in) | a raw `<input>` with its own classes |
+| List of records | `<DataTable>` (search, desktop table, mobile cards) | a hand-built table |
+| Page title | `<PageHeader>` | an ad-hoc `<h1>` |
+| Nothing to show | `<EmptyState>` | a bare "No results" |
+| Status chip | `<Badge>` (default `neutral`; `success` / `warning` / `danger` for state) | a coloured `<span>` |
+
+Older Button variant names (`dark`, `terracotta`, `gold`, `goldSoft`, `outline`,
+`luxury`) are aliases kept so existing screens work; new code uses the four names.
+
+**Focus.** Every interactive element shows `focus-visible:ring-2 ring-accent`.
+Never remove the outline without replacing it.
+
+**Guard.** `scripts/check-admin-tokens.mjs` runs in `prebuild` and fails on raw hex
+colours or serif fonts in the admin, and on any increase in Tailwind stone/gray
+classes (baseline 74, light-on-dark text awaiting per-screen decisions; lower the
+baseline as they are migrated).

@@ -18,7 +18,17 @@ export const workerId = () => `${os.hostname()}:${process.pid}`;
  * The dedupe matters: re-running the migration or retrying an upload must not
  * pile up duplicate transcodes of the same 200 MB file.
  */
-export async function enqueueJob({ mediaId, type, options = {} }) {
+export async function enqueueJob({ mediaId, type, options = {}, idempotencyKey }) {
+    if (idempotencyKey) {
+        try {
+            return await MediaJob.findOneAndUpdate({ idempotencyKey },
+                { $setOnInsert: { mediaId, type, options, idempotencyKey } },
+                { upsert: true, new: true, setDefaultsOnInsert: true });
+        } catch (error) {
+            if (error.code !== 11000) throw error;
+            return MediaJob.findOne({ idempotencyKey });
+        }
+    }
     const existing = await MediaJob.findOne({
         mediaId, type, status: { $in: ['queued', 'running'] },
     }).lean();
@@ -32,7 +42,7 @@ export async function enqueueJob({ mediaId, type, options = {} }) {
  * One findOneAndUpdate does both the selection and the lock, so two workers
  * racing for the same document cannot both win.
  */
-export async function claimNextJob(types = ['transcode', 'derivatives']) {
+export async function claimNextJob(types = ['transcode', 'derivatives', 'reconcile', 'sequence']) {
     const now = new Date();
     return MediaJob.findOneAndUpdate(
         {

@@ -14,8 +14,8 @@ import AssetBreakdown, { derivativesOf } from '@/app/admin/components/AssetBreak
 import { formatBytes, formatDuration, formatDimensions } from '@/Utils/format.js';
 import { cn } from '@/lib/utils.js';
 
-const fieldInput = 'w-full rounded-xl border border-stone-200 bg-white px-3.5 py-2 text-xs text-stone-900 placeholder:text-stone-400 outline-none transition-all focus:border-red-400 focus:ring-2 focus:ring-red-400/15';
-const labelCls = 'mb-1.5 flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-stone-600';
+const fieldInput = 'w-full rounded-xl border border-edge-subtle bg-white px-3.5 py-2 text-xs text-ink placeholder:text-ink-muted outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/15';
+const labelCls = 'mb-1.5 flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-ink-secondary';
 
 const urlOf = (m) => m?.cdnUrl || m?.publicUrl || m?.url || '';
 
@@ -94,13 +94,13 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
         <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
             <DialogContent
                 hideCloseButton
-                className="max-w-5xl xl:max-w-6xl w-[95vw] h-[88vh] max-h-[820px] min-h-[520px] p-0 overflow-hidden scrollbar-none rounded-2xl md:rounded-3xl border border-stone-200/90 bg-white shadow-2xl flex flex-col gap-0"
+                className="max-w-5xl xl:max-w-6xl w-[95vw] h-[88vh] max-h-[820px] min-h-[520px] p-0 overflow-hidden scrollbar-none rounded-xl md:rounded-xl border border-edge-subtle bg-white shadow-2xl flex flex-col gap-0"
             >
                 <div className="flex flex-col lg:flex-row h-full w-full min-h-0 min-w-0 overflow-hidden">
                     {/* Left Column: Cinematic Media Stage */}
-                    <div className="flex flex-col w-full lg:w-[54%] xl:w-[56%] h-[42vh] lg:h-full min-w-0 min-h-0 bg-stone-950 text-white border-b lg:border-b-0 lg:border-r border-stone-800/80 shrink-0">
+                    <div className="flex flex-col w-full lg:w-[54%] xl:w-[56%] h-[42vh] lg:h-full min-w-0 min-h-0 bg-ink text-white border-b lg:border-b-0 lg:border-r border-ink/80 shrink-0">
                         {/* Stage Canvas */}
-                        <div className="relative flex-1 min-h-0 w-full flex items-center justify-center p-4 sm:p-6 overflow-hidden bg-gradient-to-b from-stone-900/80 via-stone-950 to-stone-950">
+                        <div className="relative flex-1 min-h-0 w-full flex items-center justify-center p-4 sm:p-6 overflow-hidden bg-gradient-to-b from-ink/80 via-ink to-ink">
                             {/* Ambient subtle backdrop grid */}
                             <div className="absolute inset-0 bg-[radial-gradient(#262626_1px,transparent_1px)] [background-size:16px_16px] opacity-40 pointer-events-none" />
 
@@ -110,7 +110,7 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                                     <Badge size="sm" variant={STATUS_TONE[media.status] || 'neutral'} dot>
                                         {media.status}
                                     </Badge>
-                                    <span className="inline-flex items-center rounded-full bg-stone-900/90 border border-stone-700/80 px-2.5 py-0.5 text-[10px] font-medium text-stone-300 backdrop-blur-md">
+                                    <span className="inline-flex items-center rounded-full bg-ink/90 border border-ink/80 px-2.5 py-0.5 text-[10px] font-medium text-stone-300 backdrop-blur-md">
                                         {media.ownerType === 'System' ? 'Unassigned' : media.ownerType}
                                     </span>
                                     {media.featured && (
@@ -131,7 +131,7 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                                             href={url}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="inline-flex items-center justify-center h-7 w-7 rounded-lg bg-stone-900/90 hover:bg-stone-800 text-stone-300 hover:text-white transition-colors border border-stone-700/70 shadow-sm backdrop-blur-md"
+                                            className="inline-flex items-center justify-center h-7 w-7 rounded-lg bg-ink/90 hover:bg-ink text-stone-300 hover:text-white transition-colors border border-ink/70 shadow-sm backdrop-blur-md"
                                             title="Open full resolution raw asset in new tab"
                                         >
                                             <ArrowSquareOut size={13} />
@@ -179,7 +179,7 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                                         </span>
                                     </div>
                                 ) : (
-                                    <div className="flex flex-col items-center justify-center gap-2.5 text-stone-500">
+                                    <div className="flex flex-col items-center justify-center gap-2.5 text-ink-muted">
                                         {isVideo ? (
                                             <FilmSlate size={44} weight="thin" />
                                         ) : media.mediaType === 'Document' ? (
@@ -187,7 +187,7 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                                         ) : (
                                             <ImageSquare size={44} weight="thin" />
                                         )}
-                                        <span className="text-xs font-mono text-stone-400">
+                                        <span className="text-xs font-mono text-ink-muted">
                                             {media.mediaType || 'Asset Preview'}
                                         </span>
                                     </div>
@@ -196,11 +196,11 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                         </div>
 
                         {/* Technical Metadata & Quick Action Strip */}
-                        <div className="shrink-0 bg-stone-900/95 border-t border-stone-800/80 p-3.5 sm:p-4 space-y-3">
+                        <div className="shrink-0 bg-ink/95 border-t border-ink/80 p-3.5 sm:p-4 space-y-3">
                             {/* File Name Row */}
                             <div className="flex items-center justify-between gap-2.5 min-w-0">
                                 <div className="flex items-center gap-2 min-w-0 flex-1">
-                                    <span className="shrink-0 flex items-center justify-center h-6 w-6 rounded-md bg-stone-800 text-stone-400">
+                                    <span className="shrink-0 flex items-center justify-center h-6 w-6 rounded-lg bg-ink text-ink-muted">
                                         {isVideo ? <FilmSlate size={12} /> : <ImageSquare size={12} />}
                                     </span>
                                     <span
@@ -213,7 +213,7 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                                 <button
                                     type="button"
                                     onClick={copyName}
-                                    className="shrink-0 inline-flex items-center gap-1 rounded-md bg-stone-800/80 hover:bg-stone-700 px-2 py-1 text-[10px] font-medium text-stone-300 transition-colors"
+                                    className="shrink-0 inline-flex items-center gap-1 rounded-lg bg-ink/80 hover:bg-stone-700 px-2 py-1 text-[10px] font-medium text-stone-300 transition-colors"
                                     title="Copy original filename"
                                 >
                                     {copiedName ? (
@@ -232,26 +232,26 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
 
                             {/* 4-Card Quick Specs Grid */}
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                                <div className="rounded-lg bg-stone-950/70 border border-stone-800/70 px-2.5 py-1.5 min-w-0">
-                                    <p className="text-[9px] uppercase tracking-wider text-stone-500 font-semibold truncate">Dimensions</p>
+                                <div className="rounded-lg bg-ink/70 border border-ink/70 px-2.5 py-1.5 min-w-0">
+                                    <p className="text-[9px] uppercase tracking-wider text-ink-muted font-semibold truncate">Dimensions</p>
                                     <p className="text-xs font-mono text-stone-200 font-medium mt-0.5 truncate">
                                         {formatDimensions(media.width, media.height) || (media.duration ? formatDuration(media.duration) : '—')}
                                     </p>
                                 </div>
-                                <div className="rounded-lg bg-stone-950/70 border border-stone-800/70 px-2.5 py-1.5 min-w-0">
-                                    <p className="text-[9px] uppercase tracking-wider text-stone-500 font-semibold truncate">Size</p>
+                                <div className="rounded-lg bg-ink/70 border border-ink/70 px-2.5 py-1.5 min-w-0">
+                                    <p className="text-[9px] uppercase tracking-wider text-ink-muted font-semibold truncate">Size</p>
                                     <p className="text-xs font-mono text-stone-200 font-medium mt-0.5 truncate">
                                         {formatBytes(media.fileSize)}
                                     </p>
                                 </div>
-                                <div className="rounded-lg bg-stone-950/70 border border-stone-800/70 px-2.5 py-1.5 min-w-0">
-                                    <p className="text-[9px] uppercase tracking-wider text-stone-500 font-semibold truncate">Format</p>
+                                <div className="rounded-lg bg-ink/70 border border-ink/70 px-2.5 py-1.5 min-w-0">
+                                    <p className="text-[9px] uppercase tracking-wider text-ink-muted font-semibold truncate">Format</p>
                                     <p className="text-xs font-mono text-stone-200 font-medium mt-0.5 truncate">
                                         {media.mimeType ? media.mimeType.split('/')[1]?.toUpperCase() : (media.mediaType || '—')}
                                     </p>
                                 </div>
-                                <div className="rounded-lg bg-stone-950/70 border border-stone-800/70 px-2.5 py-1.5 min-w-0">
-                                    <p className="text-[9px] uppercase tracking-wider text-stone-500 font-semibold truncate">Uploaded</p>
+                                <div className="rounded-lg bg-ink/70 border border-ink/70 px-2.5 py-1.5 min-w-0">
+                                    <p className="text-[9px] uppercase tracking-wider text-ink-muted font-semibold truncate">Uploaded</p>
                                     <p className="text-xs font-mono text-stone-200 font-medium mt-0.5 truncate">
                                         {media.createdAt
                                             ? new Date(media.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
@@ -261,10 +261,10 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                             </div>
 
                             {/* CDN URL Bar */}
-                            <div className="flex items-center gap-2 rounded-xl bg-stone-950/90 border border-stone-800 px-3 py-2 text-xs min-w-0">
-                                <LinkSimple size={13} className="shrink-0 text-stone-500" />
+                            <div className="flex items-center gap-2 rounded-xl bg-ink/90 border border-ink px-3 py-2 text-xs min-w-0">
+                                <LinkSimple size={13} className="shrink-0 text-ink-muted" />
                                 <span
-                                    className="font-mono text-[11px] text-stone-400 truncate flex-1 min-w-0 select-all"
+                                    className="font-mono text-[11px] text-ink-muted truncate flex-1 min-w-0 select-all"
                                     title={url}
                                 >
                                     {url || 'No CDN URL generated'}
@@ -276,7 +276,7 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                                         'shrink-0 flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium transition-all shadow-sm',
                                         copiedUrl
                                             ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                                            : 'bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/40 active:scale-95'
+                                            : 'bg-accent/20 hover:bg-accent-hover text-red-300 border border-accent/40 active:scale-95'
                                     )}
                                 >
                                     {copiedUrl ? <Check size={12} /> : <Copy size={12} />}
@@ -289,17 +289,17 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                     {/* Right Column: Metadata Editor & Derivatives */}
                     <div className="flex flex-col w-full lg:w-[46%] xl:w-[44%] h-[58vh] lg:h-full min-w-0 min-h-0 bg-white overflow-hidden">
                         {/* Header with Tabs & Close */}
-                        <div className="shrink-0 px-5 sm:px-6 py-3.5 border-b border-stone-200 bg-stone-50/70 flex items-center justify-between gap-3">
+                        <div className="shrink-0 px-5 sm:px-6 py-3.5 border-b border-edge-subtle bg-ground/70 flex items-center justify-between gap-3">
                             {/* Segmented Tab Controls */}
-                            <div className="flex items-center gap-1 rounded-xl border border-stone-200 bg-white p-1 shadow-sm">
+                            <div className="flex items-center gap-1 rounded-xl border border-edge-subtle bg-white p-1 shadow-sm">
                                 <button
                                     type="button"
                                     onClick={() => setTab('details')}
                                     className={cn(
                                         'flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all',
                                         tab === 'details'
-                                            ? 'bg-red-500 text-white shadow-sm'
-                                            : 'text-stone-600 hover:text-stone-900 hover:bg-stone-50'
+                                            ? 'bg-accent text-white shadow-sm'
+                                            : 'text-ink-secondary hover:text-ink hover:bg-ground'
                                     )}
                                 >
                                     <FileText size={13} weight={tab === 'details' ? 'bold' : 'regular'} />
@@ -311,8 +311,8 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                                     className={cn(
                                         'flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all',
                                         tab === 'sizes'
-                                            ? 'bg-red-500 text-white shadow-sm'
-                                            : 'text-stone-600 hover:text-stone-900 hover:bg-stone-50'
+                                            ? 'bg-accent text-white shadow-sm'
+                                            : 'text-ink-secondary hover:text-ink hover:bg-ground'
                                     )}
                                 >
                                     <HardDrives size={13} weight={tab === 'sizes' ? 'bold' : 'regular'} />
@@ -321,7 +321,7 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                                         <span
                                             className={cn(
                                                 'ml-0.5 rounded-full px-1.5 py-0.2 text-[10px] font-mono',
-                                                tab === 'sizes' ? 'bg-white/25 text-white' : 'bg-stone-200/80 text-stone-700'
+                                                tab === 'sizes' ? 'bg-white/25 text-white' : 'bg-ground-sunk/80 text-ink-secondary'
                                             )}
                                         >
                                             {derivatives.length}
@@ -334,7 +334,7 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                             <button
                                 type="button"
                                 onClick={onClose}
-                                className="flex items-center justify-center h-8 w-8 rounded-xl text-stone-400 hover:text-stone-700 hover:bg-stone-200/60 transition-colors focus:outline-none focus:ring-2 focus:ring-red-400/20"
+                                className="flex items-center justify-center h-8 w-8 rounded-xl text-ink-muted hover:text-ink-secondary hover:bg-ground-sunk/60 transition-colors focus:outline-none focus:ring-2 focus:ring-accent/20"
                                 title="Close Inspector"
                             >
                                 <X size={16} />
@@ -363,7 +363,7 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                                     <div>
                                         <label className={labelCls}>
                                             <span>Title</span>
-                                            <span className="text-[10px] font-normal text-stone-400">Display name in admin & galleries</span>
+                                            <span className="text-[10px] font-normal text-ink-muted">Display name in admin & galleries</span>
                                         </label>
                                         <input
                                             className={fieldInput}
@@ -377,7 +377,7 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                                     <div>
                                         <label className={labelCls}>
                                             <span>Alt Text</span>
-                                            <span className="text-[10px] font-normal text-stone-400">Google SEO & Accessibility</span>
+                                            <span className="text-[10px] font-normal text-ink-muted">Google SEO & Accessibility</span>
                                         </label>
                                         <input
                                             className={fieldInput}
@@ -385,7 +385,7 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                                             onChange={(e) => set({ altText: e.target.value })}
                                             placeholder="e.g. Bride wearing yellow saree smiling during flower shower at Udaipur palace"
                                         />
-                                        <p className="mt-1 text-[10px] text-stone-500 leading-snug">
+                                        <p className="mt-1 text-[10px] text-ink-muted leading-snug">
                                             Critical for ranking high in Google Wedding Photography searches and screen readers.
                                         </p>
                                     </div>
@@ -394,7 +394,7 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                                     <div>
                                         <label className={labelCls}>
                                             <span>Caption / Story Note</span>
-                                            <span className="text-[10px] font-normal text-stone-400">Optional</span>
+                                            <span className="text-[10px] font-normal text-ink-muted">Optional</span>
                                         </label>
                                         <textarea
                                             rows={2}
@@ -409,20 +409,20 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                                     <div>
                                         <label className={labelCls}>
                                             <span>Tags & Keywords</span>
-                                            <span className="text-[10px] font-normal text-stone-400">Hit Enter or Comma to add</span>
+                                            <span className="text-[10px] font-normal text-ink-muted">Hit Enter or Comma to add</span>
                                         </label>
-                                        <div className="rounded-xl border border-stone-200 bg-white p-1.5 focus-within:border-red-400 focus-within:ring-2 focus-within:ring-red-400/15">
+                                        <div className="rounded-xl border border-edge-subtle bg-white p-1.5 focus-within:border-accent focus-within:ring-2 focus-within:ring-accent/15">
                                             <div className="flex flex-wrap items-center gap-1.5">
                                                 {(d.tags || []).map((t) => (
                                                     <span
                                                         key={t}
-                                                        className="inline-flex items-center gap-1 rounded-lg bg-stone-100 border border-stone-200 px-2 py-0.5 text-xs text-stone-800 font-medium group transition-all"
+                                                        className="inline-flex items-center gap-1 rounded-lg bg-ground-sunk border border-edge-subtle px-2 py-0.5 text-xs text-ink font-medium group transition-all"
                                                     >
                                                         <span>#{t}</span>
                                                         <button
                                                             type="button"
                                                             onClick={() => handleRemoveTag(t)}
-                                                            className="text-stone-400 hover:text-red-600 rounded p-0.5 transition-colors"
+                                                            className="text-ink-muted hover:text-accent-ink rounded-lg p-0.5 transition-colors"
                                                             title={`Remove ${t}`}
                                                         >
                                                             <X size={10} weight="bold" />
@@ -430,7 +430,7 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                                                     </span>
                                                 ))}
                                                 <input
-                                                    className="flex-1 min-w-[120px] bg-transparent px-1 py-0.5 text-xs text-stone-900 placeholder:text-stone-400 outline-none"
+                                                    className="flex-1 min-w-[120px] bg-transparent px-1 py-0.5 text-xs text-ink placeholder:text-ink-muted outline-none"
                                                     value={newTag}
                                                     onChange={(e) => setNewTag(e.target.value)}
                                                     onKeyDown={handleTagKeyDown}
@@ -451,7 +451,7 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                                                     'flex items-center gap-2.5 rounded-xl border px-3 py-2 cursor-pointer transition-all',
                                                     d.featured
                                                         ? 'border-amber-300 bg-amber-50/60 shadow-xs'
-                                                        : 'border-stone-200 bg-white hover:bg-stone-50/60'
+                                                        : 'border-edge-subtle bg-white hover:bg-ground/60'
                                                 )}
                                             >
                                                 <input
@@ -462,10 +462,10 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                                                 />
                                                 <div className="min-w-0 select-none flex-1">
                                                     <div className="flex items-center gap-1.5">
-                                                        <Star size={12} weight="fill" className={d.featured ? 'text-amber-500' : 'text-stone-400'} />
-                                                        <span className="text-xs font-semibold text-stone-800">Featured Asset</span>
+                                                        <Star size={12} weight="fill" className={d.featured ? 'text-amber-500' : 'text-ink-muted'} />
+                                                        <span className="text-xs font-semibold text-ink">Featured Asset</span>
                                                     </div>
-                                                    <p className="text-[10px] text-stone-500 truncate">
+                                                    <p className="text-[10px] text-ink-muted truncate">
                                                         Reels & portfolio highlights
                                                     </p>
                                                 </div>
@@ -477,7 +477,7 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                                                     'flex items-center gap-2.5 rounded-xl border px-3 py-2 cursor-pointer transition-all',
                                                     d.visibility === 'Private'
                                                         ? 'border-rose-300 bg-rose-50/40 shadow-xs'
-                                                        : 'border-stone-200 bg-white hover:bg-stone-50/60'
+                                                        : 'border-edge-subtle bg-white hover:bg-ground/60'
                                                 )}
                                             >
                                                 <input
@@ -488,10 +488,10 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                                                 />
                                                 <div className="min-w-0 select-none flex-1">
                                                     <div className="flex items-center gap-1.5">
-                                                        <LockKey size={12} weight="fill" className={d.visibility === 'Private' ? 'text-rose-600' : 'text-stone-400'} />
-                                                        <span className="text-xs font-semibold text-stone-800">Private Visibility</span>
+                                                        <LockKey size={12} weight="fill" className={d.visibility === 'Private' ? 'text-rose-600' : 'text-ink-muted'} />
+                                                        <span className="text-xs font-semibold text-ink">Private Visibility</span>
                                                     </div>
-                                                    <p className="text-[10px] text-stone-500 truncate">
+                                                    <p className="text-[10px] text-ink-muted truncate">
                                                         Direct link only, unlisted
                                                     </p>
                                                 </div>
@@ -505,7 +505,7 @@ export default function AssetSheet({ media, open, onClose, onSave, onDelete, sav
                         </div>
 
                         {/* Sticky Action Footer */}
-                        <div className="shrink-0 px-5 sm:px-6 py-3 border-t border-stone-200 bg-stone-50/80 backdrop-blur flex items-center justify-between gap-3">
+                        <div className="shrink-0 px-5 sm:px-6 py-3 border-t border-edge-subtle bg-ground/80 backdrop-blur flex items-center justify-between gap-3">
                             <Button
                                 variant="danger"
                                 size="sm"

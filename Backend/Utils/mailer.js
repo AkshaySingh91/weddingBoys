@@ -41,9 +41,9 @@ export async function sendMail({ to, subject, html, text }) {
 // ---------------------------------------------------------------- templates
 
 const BRAND = {
-    name: 'The Wedding Boys',
+    name: 'The Wedding Vachan',
     accent: '#e11d48',
-    site: process.env.SITE_URL || 'https://www.theweddingboys.in',
+    site: process.env.SITE_URL || 'https://www.theweddingvachan.com',
 };
 
 // Shared shell so every transactional email looks consistent in any client.
@@ -94,7 +94,7 @@ const shell = ({ heading, body, ctaLabel, ctaUrl, footnote }) => `<!doctype html
 
 export function passwordResetEmail({ name, resetUrl }) {
     return {
-        subject: 'Reset your password — The Wedding Boys',
+        subject: 'Reset your password — The Wedding Vachan',
         html: shell({
             heading: 'Reset your password',
             body: `<p style="margin:0 0 12px;">Hi${name ? ` ${name}` : ''},</p>
@@ -109,7 +109,7 @@ export function passwordResetEmail({ name, resetUrl }) {
 
 export function adminInviteEmail({ inviteUrl, role, invitedByName }) {
     return {
-        subject: "You've been invited to manage The Wedding Boys",
+        subject: "You've been invited to manage The Wedding Vachan",
         html: shell({
             heading: "You've been invited",
             body: `<p style="margin:0 0 12px;">${invitedByName ? `${invitedByName} has` : 'You have been'} invited you to join the <strong>${BRAND.name}</strong> admin dashboard as

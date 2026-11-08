@@ -150,19 +150,19 @@ export default function UsersPage() {
             {/* Filters Bar */}
             <div className="flex flex-wrap items-center gap-3">
                 <div className="relative min-w-[240px] flex-1">
-                    <MagnifyingGlass size={16} weight="bold" className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A8A29E]" />
+                    <MagnifyingGlass size={16} weight="bold" className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-muted" />
                     <input
                         type="text"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         placeholder="Search team member by name or email…"
-                        className="w-full rounded-xl border border-[#E7E2DA] bg-white py-2.5 pl-10 pr-3.5 text-sm font-sans text-[#1C1917] placeholder:text-[#A8A29E] outline-none transition focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880]"
+                        className="w-full rounded-xl border border-edge-subtle bg-white py-2.5 pl-10 pr-3.5 text-sm font-sans text-ink placeholder:text-ink-muted outline-none transition focus:border-gold focus:ring-1 focus:ring-gold"
                     />
                 </div>
                 <select
                     value={roleFilter}
                     onChange={(e) => setRoleFilter(e.target.value)}
-                    className="rounded-xl border border-[#E7E2DA] bg-white px-3.5 py-2.5 text-sm font-sans text-[#1C1917] outline-none transition focus:border-[#C5A880] cursor-pointer"
+                    className="rounded-xl border border-edge-subtle bg-white px-3.5 py-2.5 text-sm font-sans text-ink outline-none transition focus:border-gold cursor-pointer"
                 >
                     <option value="">All Roles</option>
                     {ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
@@ -170,7 +170,7 @@ export default function UsersPage() {
                 <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="rounded-xl border border-[#E7E2DA] bg-white px-3.5 py-2.5 text-sm font-sans text-[#1C1917] outline-none transition focus:border-[#C5A880] cursor-pointer"
+                    className="rounded-xl border border-edge-subtle bg-white px-3.5 py-2.5 text-sm font-sans text-ink outline-none transition focus:border-gold cursor-pointer"
                 >
                     <option value="">All Statuses</option>
                     <option value="Active">Active</option>
@@ -180,17 +180,17 @@ export default function UsersPage() {
             </div>
 
             {/* Table Card */}
-            <div className="overflow-hidden rounded-2xl border border-[#E7E2DA] bg-white shadow-sm">
+            <div className="overflow-hidden rounded-xl border border-edge-subtle bg-white shadow-sm">
                 {users === null ? (
-                    <div className="flex items-center justify-center gap-2.5 p-16 text-sm font-sans text-[#78716C]">
-                        <CircleNotch size={20} weight="bold" className="animate-spin text-[#C5A880]" /> Loading team…
+                    <div className="flex items-center justify-center gap-2.5 p-16 text-sm font-sans text-ink-muted">
+                        <CircleNotch size={20} weight="bold" className="animate-spin text-gold-strong" /> Loading team…
                     </div>
                 ) : visible.length === 0 ? (
-                    <div className="p-16 text-center text-sm font-sans text-[#78716C]">No team members found matching your search.</div>
+                    <div className="p-16 text-center text-sm font-sans text-ink-muted">No team members found matching your search.</div>
                 ) : (
                     <div className="overflow-x-auto">
                         <table className="w-full min-w-[760px] text-left text-sm font-sans">
-                            <thead className="border-b border-[#E7E2DA] bg-[#FDFCFB] text-xs uppercase tracking-wider text-[#78716C]">
+                            <thead className="border-b border-edge-subtle bg-ground text-xs uppercase tracking-wider text-ink-muted">
                                 <tr>
                                     <th className="px-5 py-3.5 font-medium">Team Member</th>
                                     <th className="px-5 py-3.5 font-medium">Role</th>
@@ -199,22 +199,22 @@ export default function UsersPage() {
                                     <th className="px-5 py-3.5 text-right font-medium">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-[#F5F2EC]">
+                            <tbody className="divide-y divide-edge-subtle">
                                 {visible.map((u) => (
-                                    <tr key={u.id} className="transition-colors hover:bg-[#FDFCFB]/80">
+                                    <tr key={u.id} className="transition-colors hover:bg-ground/80">
                                         <td className="px-5 py-4">
                                             <div className="flex items-center gap-3.5">
-                                                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#1C1917] to-[#44403C] text-xs font-semibold text-white shadow-sm">
+                                                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-ink to-ink text-xs font-semibold text-white shadow-sm">
                                                     {initials(u.name)}
                                                 </span>
                                                 <div className="min-w-0">
                                                     <div className="flex items-center gap-2">
-                                                        <span className="truncate font-medium text-[#1C1917]">{u.name}</span>
+                                                        <span className="truncate font-medium text-ink">{u.name}</span>
                                                         {currentUser?.id === u.id && (
-                                                            <span className="rounded-md bg-[#F7F4EF] px-1.5 py-0.5 text-[10px] font-medium text-[#78716C] border border-[#E7E2DA]">You</span>
+                                                            <span className="rounded-lg bg-ground px-1.5 py-0.5 text-[10px] font-medium text-ink-muted border border-edge-subtle">You</span>
                                                         )}
                                                     </div>
-                                                    <span className="block truncate text-xs text-[#78716C]">{u.email}</span>
+                                                    <span className="block truncate text-xs text-ink-muted">{u.email}</span>
                                                 </div>
                                             </div>
                                         </td>
@@ -228,17 +228,17 @@ export default function UsersPage() {
                                                 {u.status}
                                             </Badge>
                                         </td>
-                                        <td className="px-5 py-4 text-xs font-sans tabular-nums text-[#78716C]">{formatDate(u.lastLoginAt)}</td>
+                                        <td className="px-5 py-4 text-xs font-sans tabular-nums text-ink-muted">{formatDate(u.lastLoginAt)}</td>
                                         <td className="relative px-5 py-4 text-right">
                                             {isSuperAdmin && (
                                                 busyId === u.id ? (
-                                                    <CircleNotch size={18} weight="bold" className="ml-auto animate-spin text-[#C5A880]" />
+                                                    <CircleNotch size={18} weight="bold" className="ml-auto animate-spin text-gold-strong" />
                                                 ) : (
                                                     <>
                                                         <button
                                                             type="button"
                                                             onClick={() => setMenuFor(menuFor === u.id ? null : u.id)}
-                                                            className="rounded-lg p-2 text-[#78716C] transition hover:bg-[#F7F4EF] hover:text-[#1C1917]"
+                                                            className="rounded-lg p-2 text-ink-muted transition hover:bg-ground hover:text-ink"
                                                             aria-label="Actions"
                                                         >
                                                             <DotsThreeVertical size={18} weight="bold" />
@@ -252,25 +252,25 @@ export default function UsersPage() {
                                                                     className="fixed inset-0 z-20 cursor-default"
                                                                     onClick={() => setMenuFor(null)}
                                                                 />
-                                                                <div className="absolute right-5 top-12 z-30 w-56 overflow-hidden rounded-xl border border-[#E7E2DA] bg-white py-1.5 shadow-lg">
-                                                                    <p className="px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-[#A8A29E]">Change Role</p>
+                                                                <div className="absolute right-5 top-12 z-30 w-56 overflow-hidden rounded-xl border border-edge-subtle bg-white py-1.5 shadow-lg">
+                                                                    <p className="px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-ink-muted">Change Role</p>
                                                                     {ROLES.filter((r) => r !== u.role).map((r) => (
                                                                         <button
                                                                             key={r}
                                                                             type="button"
                                                                             onClick={() => changeRole(u, r)}
-                                                                            className="flex w-full items-center gap-2.5 px-3.5 py-2 text-left text-xs font-medium text-[#44403C] transition hover:bg-[#F7F4EF]"
+                                                                            className="flex w-full items-center gap-2.5 px-3.5 py-2 text-left text-xs font-medium text-ink-secondary transition hover:bg-ground"
                                                                         >
-                                                                            <ShieldCheck size={16} weight="duotone" className="text-[#C5A880]" /> {r}
+                                                                            <ShieldCheck size={16} weight="duotone" className="text-gold-strong" /> {r}
                                                                         </button>
                                                                     ))}
-                                                                    <div className="my-1.5 border-t border-[#F5F2EC]" />
+                                                                    <div className="my-1.5 border-t border-edge-subtle" />
                                                                     <button
                                                                         type="button"
                                                                         onClick={() => toggleStatus(u)}
-                                                                        className="flex w-full items-center gap-2.5 px-3.5 py-2 text-left text-xs font-medium text-[#44403C] transition hover:bg-[#F7F4EF]"
+                                                                        className="flex w-full items-center gap-2.5 px-3.5 py-2 text-left text-xs font-medium text-ink-secondary transition hover:bg-ground"
                                                                     >
-                                                                        <ShieldWarning size={16} weight="duotone" className="text-[#78716C]" />
+                                                                        <ShieldWarning size={16} weight="duotone" className="text-ink-muted" />
                                                                         {u.status === 'Suspended' ? 'Reactivate User' : 'Suspend User'}
                                                                     </button>
                                                                     <button
@@ -296,7 +296,7 @@ export default function UsersPage() {
             </div>
 
             {!isSuperAdmin && (
-                <p className="text-xs font-sans text-[#78716C]">
+                <p className="text-xs font-sans text-ink-muted">
                     Only SuperAdmins can invite new administrators, modify roles, or revoke authentication sessions.
                 </p>
             )}

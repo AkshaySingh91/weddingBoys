@@ -233,22 +233,22 @@ export const CONTAINER_VARIANTS = [
     {
         id: 'card',
         label: 'Card',
-        cls: 'rounded-2xl border border-studio-border bg-white p-6 shadow-sm',
+        cls: 'rounded-xl border border-studio-border bg-white p-6 shadow-sm',
     },
     {
         id: 'outlined',
         label: 'Outlined',
-        cls: 'rounded-2xl border border-studio-borderStrong p-6',
+        cls: 'rounded-xl border border-studio-borderStrong p-6',
     },
     {
         id: 'tinted',
         label: 'Tinted',
-        cls: 'rounded-2xl bg-studio-terracottaLight p-6',
+        cls: 'rounded-xl bg-studio-terracottaLight p-6',
     },
     {
         id: 'elevated',
         label: 'Elevated',
-        cls: 'rounded-2xl bg-white p-6 shadow-lg',
+        cls: 'rounded-xl bg-white p-6 shadow-lg',
     },
 ];
 
@@ -265,7 +265,7 @@ export const PADDINGS = [
 export const RADII = [
     { id: 'none', label: 'Square', cls: 'rounded-none' },
     { id: 'sm', label: 'Soft', cls: 'rounded-lg' },
-    { id: 'md', label: 'Rounded', cls: 'rounded-2xl' },
+    { id: 'md', label: 'Rounded', cls: 'rounded-xl' },
     { id: 'full', label: 'Pill', cls: 'rounded-[2rem]' },
 ];
 
@@ -333,7 +333,7 @@ export function containerClasses(attrs = {}) {
     if (attrs.variant && attrs.variant !== 'custom') return variantById(attrs.variant).cls;
     return [
         clsFrom(PADDINGS, attrs.padding, 'p-6'),
-        clsFrom(RADII, attrs.radius, 'rounded-2xl'),
+        clsFrom(RADII, attrs.radius, 'rounded-xl'),
         clsFrom(SHADOWS, attrs.shadow, 'shadow-none'),
         clsFrom(BACKGROUNDS, attrs.background, 'bg-transparent'),
         attrs.border && attrs.border !== 'none' ? 'border border-studio-border' : '',

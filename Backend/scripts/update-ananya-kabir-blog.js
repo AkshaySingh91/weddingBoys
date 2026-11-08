@@ -32,13 +32,13 @@ async function updatePost() {
       url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
       title: 'Ananya & Kabir | Official 4K Wedding Film Trailer',
       duration: '03:45',
-      thumbnail: 'https://media.theweddingboys.in/client/67e055820f15ebfba3ee504b/1D7ntEi1Cp3v/orig.jpg'
+      thumbnail: 'https://media.theweddingvachan.com/client/67e055820f15ebfba3ee504b/1D7ntEi1Cp3v/orig.jpg'
     },
     testimonial: 'The Wedding Boys gave us something that feels like a Sanjay Leela Bhansali motion picture, yet remains completely authentic to who we are as a couple. We have watched our trailer over a hundred times with tears of joy.',
     testimonialAuthor: 'Ananya & Kabir — The Bride & Groom',
     likeCount: 128,
     vendorCredits: [
-      { role: 'Cinematography & Film', name: 'The Wedding Boys', url: 'https://theweddingboys.in', instagram: '@theweddingboys' },
+      { role: 'Cinematography & Film', name: 'The Wedding Vachan', url: 'https://theweddingvachan.com', instagram: '@theweddingvachannn' },
       { role: 'Venue', name: 'The Leela Palace & Jag Mandir Island, Udaipur', url: 'https://theleela.com', instagram: '@theleelapalace' },
       { role: 'Bridal Couture', name: 'Sabyasachi Mukherjee', instagram: '@sabyasachiofficial' },
       { role: 'Groom Couture', name: 'Tarun Tahiliani', instagram: '@taruntahiliani' },
@@ -93,12 +93,12 @@ async function updatePost() {
             layout: 'grid-2',
             images: [
               {
-                url: 'https://media.theweddingboys.in/review/sMAWYBQgJEWB/orig.jpg',
+                url: 'https://media.theweddingvachan.com/review/sMAWYBQgJEWB/orig.jpg',
                 alt: 'Ananya in handcrafted bridal ivory couture',
                 caption: 'Ananya in handcrafted bridal ivory couture adorned with emerald heirlooms'
               },
               {
-                url: 'https://media.theweddingboys.in/review/Nou40WfY3Pvu/orig.jpg',
+                url: 'https://media.theweddingvachan.com/review/Nou40WfY3Pvu/orig.jpg',
                 alt: 'Sunlit marble corridor overlooking Lake Pichola',
                 caption: 'The sunlit marble corridor overlooking the calm waters of Lake Pichola'
               }
@@ -134,7 +134,7 @@ async function updatePost() {
             layout: 'grid-1',
             images: [
               {
-                url: 'https://media.theweddingboys.in/client/67e05bb60f15ebfba3ee509b/sGZNN2jIaQma/orig.jpg',
+                url: 'https://media.theweddingvachan.com/client/67e05bb60f15ebfba3ee509b/sGZNN2jIaQma/orig.jpg',
                 alt: 'The lantern-lit courtyard sangeet under starry skies',
                 caption: 'The lantern-lit courtyard sangeet under starry Rajasthani night skies'
               }
@@ -170,12 +170,12 @@ async function updatePost() {
             layout: 'grid-2',
             images: [
               {
-                url: 'https://media.theweddingboys.in/client/67e05bb60f15ebfba3ee509b/POyAD5Y51q_E/orig.jpg',
+                url: 'https://media.theweddingvachan.com/client/67e05bb60f15ebfba3ee509b/POyAD5Y51q_E/orig.jpg',
                 alt: 'The sacred saat phere around the holy agni',
                 caption: 'The sacred saat phere around the holy agni at twilight'
               },
               {
-                url: 'https://media.theweddingboys.in/client/67e055820f15ebfba3ee504b/1D7ntEi1Cp3v/orig.jpg',
+                url: 'https://media.theweddingvachan.com/client/67e055820f15ebfba3ee504b/1D7ntEi1Cp3v/orig.jpg',
                 alt: 'Joy as Ananya and Kabir step forward as husband and wife',
                 caption: 'Pure joy as Ananya and Kabir step forward into their new beginning'
               }

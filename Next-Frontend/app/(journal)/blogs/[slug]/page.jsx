@@ -1,6 +1,7 @@
+import { serializeJsonLd } from '@/lib/jsonLd.mjs';
 import Link from 'next/link';
 import Image from 'next/image';
-import { notFound, redirect } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { getPostBySlug, getRelatedPosts, getBlogComments, SITE_URL } from '@/lib/blogApi.js';
 import TableOfContents from '../_components/TableOfContents.jsx';
 import ShareLinks from '../_components/ShareLinks.jsx';
@@ -33,7 +34,7 @@ export async function generateMetadata({ params, searchParams }) {
   const { slug } = await params;
   const { previewToken } = (await searchParams) || {};
   const post = await getPostBySlug(slug, { previewToken });
-  if (!post || post.redirect) return { title: 'The Wedding Boys | Journal' };
+  if (!post || post.redirect) return { title: 'The Wedding Vachan | Journal' };
 
   const title = post.metaTitle || post.title;
   const description = post.metaDescription || post.excerpt;
@@ -48,10 +49,11 @@ export async function generateMetadata({ params, searchParams }) {
   const dynamicOgUrl = `${SITE_URL}/api/og/blog?${ogParams.toString()}`;
 
   return {
-    title: `${title} | The Wedding Boys Journal`,
+    title: `${title} | The Wedding Vachan Journal`,
     description,
     alternates: { canonical: url },
     keywords: post.keywords?.length ? post.keywords : undefined,
+    robots: previewToken ? { index: false, follow: false } : undefined,
     openGraph: {
       title,
       description,
@@ -59,7 +61,7 @@ export async function generateMetadata({ params, searchParams }) {
       type: 'article',
       publishedTime: post.publishedAt || undefined,
       modifiedTime: post.updatedAt || undefined,
-      authors: [post.author?.name || 'The Wedding Boys'],
+      authors: [post.author?.name || 'The Wedding Vachan'],
       images: [
         {
           url: dynamicOgUrl,
@@ -86,7 +88,7 @@ export default async function BlogPostPage({ params, searchParams }) {
 
   // 301 Permanent Redirect on renamed slugs
   if (post?.redirect) {
-    redirect(`/blogs/${post.redirect}`, 'replace');
+    permanentRedirect(`/blogs/${post.redirect}`);
   }
 
   if (!post) notFound();
@@ -108,10 +110,10 @@ export default async function BlogPostPage({ params, searchParams }) {
     image: coverOf(post) ? [coverOf(post)] : undefined,
     datePublished: post.publishedAt || post.createdAt,
     dateModified: post.updatedAt || post.publishedAt || post.createdAt,
-    author: { '@type': 'Person', name: post.author?.name || 'The Wedding Boys' },
+    author: { '@type': 'Person', name: post.author?.name || 'The Wedding Vachan' },
     publisher: {
       '@type': 'Organization',
-      name: 'The Wedding Boys',
+      name: 'The Wedding Vachan',
       logo: { '@type': 'ImageObject', url: `${SITE_URL}/companyLogo.png` },
     },
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
@@ -179,9 +181,9 @@ export default async function BlogPostPage({ params, searchParams }) {
         )}
 
         {/* JSON-LD Schemas */}
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
-        {faqLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbLd) }} />
+        {faqLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqLd) }} />}
 
         {/* Template-Driven Article Canvas */}
         <BlogRenderer
@@ -219,9 +221,9 @@ export default async function BlogPostPage({ params, searchParams }) {
       )}
 
       {/* JSON-LD Schemas */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
-      {faqLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbLd) }} />
+      {faqLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqLd) }} />}
 
       {/*
         max-w-6xl, not 5xl. The article now shares its row with a 300px rail, and

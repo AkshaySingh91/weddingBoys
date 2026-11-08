@@ -13,10 +13,10 @@
 /** Families registered in app/fonts.js and mapped in tailwind.config.js. */
 export const FONT_FAMILIES = [
     { label: 'Body — Inter', value: 'var(--font-inter)', preview: 'Inter' },
-    { label: 'Display — Playfair', value: 'var(--font-playfair)', preview: 'Playfair Display' },
-    { label: 'Editorial — DM Serif', value: 'var(--font-dmserif)', preview: 'DM Serif Display' },
-    { label: 'Reading — Lora', value: 'var(--font-lora)', preview: 'Lora' },
-    { label: 'Titling — Cinzel', value: 'var(--font-cinzel)', preview: 'Cinzel' },
+    { label: 'Display — Playfair', value: 'var(--font-sans)', preview: 'Playfair Display' },
+    { label: 'Editorial — DM Serif', value: 'var(--font-sans)', preview: 'DM Serif Display' },
+    { label: 'Reading — Lora', value: 'var(--font-sans)', preview: 'Lora' },
+    { label: 'Titling — Cinzel', value: 'var(--font-sans)', preview: 'Cinzel' },
     { label: 'Script — Great Vibes', value: 'var(--font-greatvibes)', preview: 'Great Vibes' },
 ];
 

@@ -29,13 +29,13 @@ function AtAGlanceView({ node, deleteNode, selected, editor }) {
     ].filter(s => s.value);
 
     return (
-        <NodeViewWrapper className={`my-6 rounded-2xl border border-[#E5DCD3] bg-[#F7F4EF]/60 transition-all ${selected ? 'ring-2 ring-[#8C532B]' : ''}`}>
-            <div className="flex items-center justify-between border-b border-[#E5DCD3]/60 px-5 py-2.5" contentEditable={false}>
-                <span className="text-[11px] font-bold uppercase tracking-widest text-[#78716C]">
+        <NodeViewWrapper className={`my-6 rounded-xl border border-edge-subtle bg-ground/60 transition-all ${selected ? 'ring-2 ring-accent' : ''}`}>
+            <div className="flex items-center justify-between border-b border-edge-subtle px-5 py-2.5" contentEditable={false}>
+                <span className="text-[11px] font-bold uppercase tracking-widest text-ink-muted">
                     At a Glance
                 </span>
                 <div className="flex items-center gap-2">
-                    <span className="text-[10px] text-[#78716C]">
+                    <span className="text-[10px] text-ink-muted">
                         Auto-populated from sidebar
                     </span>
                     {selected && (
@@ -49,18 +49,18 @@ function AtAGlanceView({ node, deleteNode, selected, editor }) {
                     )}
                 </div>
             </div>
-            <div className="grid grid-cols-2 gap-0 divide-x divide-[#E5DCD3]/40 sm:grid-cols-3 lg:grid-cols-5" contentEditable={false}>
+            <div className="grid grid-cols-2 gap-0 divide-x divide-edge-subtle sm:grid-cols-3 lg:grid-cols-5" contentEditable={false}>
                 {stats.length > 0 ? stats.map((stat) => {
                     const Icon = STAT_ICONS[stat.key] || Heart;
                     return (
                         <div key={stat.key} className="flex flex-col items-center gap-1 px-3 py-4 text-center">
-                            <Icon size={18} weight="duotone" className="text-[#8C532B]" />
-                            <span className="text-[10px] font-medium uppercase tracking-wider text-[#78716C]">{stat.label}</span>
-                            <span className="text-sm font-semibold capitalize text-[#1C1917]">{stat.value}</span>
+                            <Icon size={18} weight="duotone" className="text-accent-ink" />
+                            <span className="text-[10px] font-medium uppercase tracking-wider text-ink-muted">{stat.label}</span>
+                            <span className="text-sm font-semibold capitalize text-ink">{stat.value}</span>
                         </div>
                     );
                 }) : (
-                    <div className="col-span-full px-5 py-6 text-center text-sm text-[#78716C]">
+                    <div className="col-span-full px-5 py-6 text-center text-sm text-ink-muted">
                         Fill in venue, season, budget, style, or mood in the sidebar to populate this block.
                     </div>
                 )}

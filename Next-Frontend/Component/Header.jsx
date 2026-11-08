@@ -84,7 +84,7 @@ export default function Header({
     : 'WB';
 
   return (
-    <header className="sticky top-0 z-30 w-full bg-white/95 backdrop-blur-md border-b border-stone-200 px-4 sm:px-6 py-2.5 transition-all shadow-sm font-sans">
+    <header className="sticky top-0 z-30 w-full bg-white/95 backdrop-blur-md border-b border-edge-subtle px-4 sm:px-6 py-2.5 transition-all shadow-sm font-sans">
       <div className="flex items-center justify-between gap-4">
         {/* Left: Mobile / Desktop Sidebar Toggle & Breadcrumbs */}
         <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
@@ -92,7 +92,7 @@ export default function Header({
           {onToggleMobile && (
             <button
               onClick={onToggleMobile}
-              className="lg:hidden p-2 rounded-lg text-stone-700 hover:text-[#2F2F2F] hover:bg-stone-100 transition-colors border border-stone-200 cursor-pointer"
+              className="lg:hidden p-2 rounded-lg text-ink-secondary hover:text-ink hover:bg-ground-sunk transition-colors border border-edge-subtle cursor-pointer"
               aria-label="Open navigation"
             >
               <List size={18} />
@@ -104,7 +104,7 @@ export default function Header({
             <button
               id="admin-header-collapse-btn"
               onClick={onToggleCollapse}
-              className="hidden lg:flex p-2 rounded-lg text-stone-600 hover:text-[#2F2F2F] hover:bg-stone-100 transition-colors border border-stone-200 cursor-pointer"
+              className="hidden lg:flex p-2 rounded-lg text-ink-secondary hover:text-ink hover:bg-ground-sunk transition-colors border border-edge-subtle cursor-pointer"
               title={collapsed ? 'Expand sidebar' : 'Collapse sidebar to icon rail'}
               aria-label="Toggle sidebar"
             >
@@ -113,11 +113,11 @@ export default function Header({
           )}
 
           <div className="flex items-center gap-2 text-xs font-sans min-w-0">
-            <span className="hidden sm:inline font-semibold text-stone-500 uppercase tracking-wider text-[11px]">
-              Wedding Boys
+            <span className="hidden sm:inline font-semibold text-ink-muted uppercase tracking-wider text-[11px]">
+              Wedding Vachan
             </span>
-            <CaretRight size={12} className="hidden sm:inline text-stone-400 shrink-0" />
-            <span className="font-semibold text-[#2F2F2F] text-sm truncate tracking-tight">
+            <CaretRight size={12} className="hidden sm:inline text-ink-muted shrink-0" />
+            <span className="font-semibold text-ink text-sm truncate tracking-tight">
               {currentTitle}
             </span>
           </div>
@@ -130,38 +130,38 @@ export default function Header({
             href="/"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-stone-700 bg-stone-100 hover:bg-stone-200/80 border border-stone-200/80 transition-all cursor-pointer"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-ink-secondary bg-ground-sunk hover:bg-ground-sunk/80 border border-edge-subtle transition-all cursor-pointer"
           >
             <span>Live Site</span>
-            <ArrowSquareOut size={14} className="text-stone-500" />
+            <ArrowSquareOut size={14} className="text-ink-muted" />
           </Link>
 
           {/* Quick Enquiries Bell */}
           <Link
             href="/admin/total-Enquires"
-            className="relative p-2 rounded-lg text-stone-600 hover:text-[#2F2F2F] hover:bg-stone-100 transition-colors cursor-pointer"
+            className="relative p-2 rounded-lg text-ink-secondary hover:text-ink hover:bg-ground-sunk transition-colors cursor-pointer"
             title="View Client Enquiries"
           >
             <Bell size={18} />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-500" />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-accent" />
           </Link>
 
           {/* User Account Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button
-                className="flex items-center gap-2.5 p-1 sm:px-2.5 sm:py-1 rounded-xl hover:bg-stone-100 transition-all focus:outline-none cursor-pointer border border-transparent hover:border-stone-200"
+                className="flex items-center gap-2.5 p-1 sm:px-2.5 sm:py-1 rounded-xl hover:bg-ground-sunk transition-all focus:outline-none cursor-pointer border border-transparent hover:border-edge-subtle"
                 aria-label="User account menu"
               >
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-red-500 to-rose-500 text-white font-semibold flex items-center justify-center text-xs shadow-sm shadow-red-900/10">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-accent to-rose-500 text-white font-semibold flex items-center justify-center text-xs shadow-sm shadow-accent/10">
                   {initials}
                 </div>
 
                 <div className="hidden md:flex flex-col text-left leading-tight">
-                  <span className="text-xs font-semibold text-[#2F2F2F] truncate max-w-[120px]">
+                  <span className="text-xs font-semibold text-ink truncate max-w-[120px]">
                     {user?.name || 'Administrator'}
                   </span>
-                  <span className="text-[10px] text-stone-500 font-medium">
+                  <span className="text-[10px] text-ink-muted font-medium">
                     {role || 'SuperAdmin'}
                   </span>
                 </div>
@@ -170,11 +170,11 @@ export default function Header({
 
             <DropdownMenuContent align="end" className="w-56 p-1.5">
               <DropdownMenuLabel className="p-2">
-                <p className="text-xs font-semibold text-[#2F2F2F] truncate">
+                <p className="text-xs font-semibold text-ink truncate">
                   {user?.name || 'Administrator'}
                 </p>
-                <p className="text-[11px] text-stone-500 font-normal truncate mt-0.5">
-                  {user?.email || 'admin@theweddingboys.in'}
+                <p className="text-[11px] text-ink-muted font-normal truncate mt-0.5">
+                  {user?.email || 'admin@theweddingvachan.com'}
                 </p>
                 <div className="flex items-center gap-1.5 mt-2">
                   <Badge variant="gold" size="sm">
@@ -192,14 +192,14 @@ export default function Header({
 
               <DropdownMenuItem asChild>
                 <Link href="/admin/profile" className="w-full flex items-center gap-2 cursor-pointer">
-                  <User size={15} className="text-stone-500" />
+                  <User size={15} className="text-ink-muted" />
                   <span>My Profile</span>
                 </Link>
               </DropdownMenuItem>
 
               <DropdownMenuItem asChild>
                 <Link href="/admin/security" className="w-full flex items-center gap-2 cursor-pointer">
-                  <ShieldCheck size={15} className="text-stone-500" />
+                  <ShieldCheck size={15} className="text-ink-muted" />
                   <span>Security & 2FA</span>
                 </Link>
               </DropdownMenuItem>

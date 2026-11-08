@@ -100,11 +100,11 @@ export default function Herobanner() {
     <>
       {/* Video Modal Player */}
       {isVideoPlaying && videoUrl && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/80 backdrop-blur-md p-4 sm:p-6 animate-in fade-in">
-          <div className="relative w-full max-w-4xl overflow-hidden rounded-2xl border border-[#E5DCD3]/20 bg-black shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/80 backdrop-blur-md p-4 sm:p-6 animate-in fade-in">
+          <div className="relative w-full max-w-4xl overflow-hidden rounded-xl border border-edge-subtle bg-black shadow-2xl">
             <button
               onClick={() => setIsVideoPlaying(false)}
-              className="absolute right-4 top-4 z-10 p-2 rounded-full bg-stone-900/80 text-white hover:bg-stone-800 transition cursor-pointer"
+              className="absolute right-4 top-4 z-10 p-2 rounded-full bg-ink/80 text-white hover:bg-ink transition cursor-pointer"
               aria-label="Close video"
             >
               <X size={18} />
@@ -117,16 +117,16 @@ export default function Herobanner() {
       )}
 
       {/* Hero Video Carousel Container */}
-      <div className="relative overflow-hidden rounded-2xl border border-[#E5DCD3] bg-stone-900 shadow-md">
+      <div className="relative overflow-hidden rounded-xl border border-edge-subtle bg-ink shadow-md">
         {loading ? (
-          <div className="flex h-80 sm:h-96 items-center justify-center text-stone-400">
-            <CircleNotch size={24} className="animate-spin text-[#C29555]" />
+          <div className="flex h-80 sm:h-96 items-center justify-center text-ink-muted">
+            <CircleNotch size={24} className="animate-spin text-gold-strong" />
           </div>
         ) : !videos.length ? (
-          <div className="flex h-80 sm:h-96 flex-col items-center justify-center text-center p-6 text-stone-400">
-            <FilmSlate size={36} className="mb-2 text-stone-500" />
-            <p className="text-sm font-serif text-stone-300">No Hero Videos Configured</p>
-            <p className="text-xs text-stone-500 mt-1">
+          <div className="flex h-80 sm:h-96 flex-col items-center justify-center text-center p-6 text-ink-muted">
+            <FilmSlate size={36} className="mb-2 text-ink-muted" />
+            <p className="text-sm font-sans text-stone-300">No Hero Videos Configured</p>
+            <p className="text-xs text-ink-muted mt-1">
               Add films in the Hero Carousel Manager below to display video reels here.
             </p>
           </div>
@@ -152,7 +152,7 @@ export default function Herobanner() {
                   />
 
                   {/* Gradient Scrim */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950/85 via-stone-950/30 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-transparent" />
 
                   {/* Play Trigger */}
                   <button
@@ -161,28 +161,28 @@ export default function Herobanner() {
                       setIsVideoPlaying(true);
                       setVideoUrl(video.videoUrl);
                     }}
-                    className="absolute right-6 bottom-6 sm:right-8 sm:bottom-8 p-3 rounded-full bg-white/90 text-stone-900 shadow-xl backdrop-blur-sm transition-transform hover:scale-105 hover:bg-white cursor-pointer"
+                    className="absolute right-6 bottom-6 sm:right-8 sm:bottom-8 p-3 rounded-full bg-white/90 text-ink shadow-xl backdrop-blur-sm transition-transform hover:scale-105 hover:bg-white cursor-pointer"
                     aria-label="Play full reel"
                   >
-                    <Play size={22} weight="fill" className="text-[#A3603A] translate-x-0.5" />
+                    <Play size={22} weight="fill" className="text-accent-ink translate-x-0.5" />
                   </button>
 
                   {/* Wedding Title & Info */}
                   <div className="absolute left-6 bottom-6 sm:left-8 sm:bottom-8 text-white space-y-1 max-w-lg">
-                    <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-[#E5DCD3]">
+                    <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-ink-muted">
                       <span>{video?.videoShootDate || 'Wedding Film'}</span>
                       {video?.videoLocation?.city && (
                         <>
-                          <span className="text-[#C29555]">·</span>
+                          <span className="text-gold-strong">·</span>
                           <span className="flex items-center gap-1">
-                            <MapPin size={12} className="text-[#C29555]" />
+                            <MapPin size={12} className="text-gold-strong" />
                             {video.videoLocation.city}
                           </span>
                         </>
                       )}
                     </div>
 
-                    <h3 className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-white drop-shadow-sm">
+                    <h3 className="font-sans text-2xl sm:text-3xl font-semibold tracking-tight text-white drop-shadow-sm">
                       {video?.clientName?.Bride || 'Bride'} & {video?.clientName?.Groom || 'Groom'}
                     </h3>
 
@@ -190,7 +190,7 @@ export default function Herobanner() {
                       <Link
                         href={`/films/${video.videoId}`}
                         target="_blank"
-                        className="inline-flex items-center gap-1 pt-1 text-xs text-[#C29555] hover:text-[#FAF1E6] transition underline underline-offset-4"
+                        className="inline-flex items-center gap-1 pt-1 text-xs text-gold-strong hover:text-ground-sunk transition underline underline-offset-4"
                       >
                         <span>View Public Feature</span>
                         <span>↗</span>
@@ -229,7 +229,7 @@ export default function Herobanner() {
                       type="button"
                       onClick={() => setCurrentSlide(idx)}
                       className={`h-1.5 rounded-full transition-all ${
-                        currentSlide === idx ? 'w-5 bg-[#C29555]' : 'w-1.5 bg-white/40'
+                        currentSlide === idx ? 'w-5 bg-gold' : 'w-1.5 bg-white/40'
                       }`}
                       aria-label={`Go to slide ${idx + 1}`}
                     />

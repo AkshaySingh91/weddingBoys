@@ -9,9 +9,9 @@ const IS_PROD = process.env.NODE_ENV === 'production';
  *
  * We deliberately do NOT use `__Host-`: that prefix forbids the `Domain`
  * attribute, which would scope the cookie to the single host that set it (the
- * API). The Next.js edge proxy runs on admin.theweddingboys.in and must be able
+ * API). The Next.js edge proxy runs on admin.theweddingvachan.com and must be able
  * to READ this cookie to gate routes, so the cookie has to be domain-scoped to
- * `.theweddingboys.in`. `__Host-` is therefore incompatible with this
+ * `.theweddingvachan.com`. `__Host-` is therefore incompatible with this
  * architecture; `__Secure-` gives us the prefix protection that is compatible.
  *
  * The prefix is dropped outside production because local dev runs over http.
@@ -51,8 +51,8 @@ export const MFA_TEMP_TOKEN_TTL = '5m';
  *
  * The API sets the session cookie, but the Next.js edge proxy running on the
  * admin subdomain must be able to READ it to gate routes — so in production the
- * cookie is scoped to `.theweddingboys.in`, shared by the API and
- * admin.theweddingboys.in.
+ * cookie is scoped to `.theweddingvachan.com`, shared by the API and
+ * admin.theweddingvachan.com.
  *
  * Development deliberately sets NO domain, leaving the cookie host-only for
  * `localhost`. `Domain=localhost` is a single-label domain and clients disagree
@@ -73,7 +73,7 @@ export const cookieDomain = () => {
     if (process.env.COOKIE_DOMAIN !== undefined) {
         return process.env.COOKIE_DOMAIN || undefined;
     }
-    return IS_PROD ? '.theweddingboys.in' : undefined;
+    return IS_PROD ? '.theweddingvachan.com' : undefined;
 };
 
 // Shared cookie options so every set/clear call stays in sync.

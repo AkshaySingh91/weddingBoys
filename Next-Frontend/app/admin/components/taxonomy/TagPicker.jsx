@@ -50,16 +50,16 @@ export default function TagPicker({ taxonomy, kind, value = [], onChange, allowC
         if (!selected.has(id)) toggle(group, id);
     };
 
-    if (taxonomy.loading) return <p className="text-xs text-stone-400">Loading tags…</p>;
+    if (taxonomy.loading) return <p className="text-xs text-ink-muted">Loading tags…</p>;
     if (taxonomy.error) return <p className="text-xs text-rose-600">{taxonomy.error}</p>;
 
     return (
         <div className={cn('space-y-3', compact && 'space-y-2')}>
             {groups.map((g) => (
                 <div key={g._id}>
-                    <p className="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-stone-500">
+                    <p className="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-ink-muted">
                         {g.label}
-                        <span className="font-normal normal-case tracking-normal text-stone-400">
+                        <span className="font-normal normal-case tracking-normal text-ink-muted">
                             {g.cardinality === 'single' && !free ? 'pick one' : 'any'}
                         </span>
                     </p>
@@ -75,8 +75,8 @@ export default function TagPicker({ taxonomy, kind, value = [], onChange, allowC
                                     className={cn(
                                         'inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs transition-colors',
                                         on
-                                            ? 'border-[#D9342A] bg-[#D9342A] text-white'
-                                            : 'border-stone-200 bg-white text-stone-700 hover:border-stone-400',
+                                            ? 'border-accent bg-accent text-white'
+                                            : 'border-edge-subtle bg-white text-ink-secondary hover:border-edge-strong',
                                     )}
                                 >
                                     {on && <Check size={11} weight="bold" />}
@@ -95,13 +95,13 @@ export default function TagPicker({ taxonomy, kind, value = [], onChange, allowC
                                 }}
                                 onBlur={() => create(g)}
                                 placeholder={`New ${g.label.toLowerCase()}…`}
-                                className="h-7 w-36 rounded-full border border-stone-300 px-2.5 text-xs outline-none focus:border-[#D9342A]"
+                                className="h-7 w-36 rounded-full border border-edge-strong px-2.5 text-xs outline-none focus:border-accent"
                             />
                         ) : (
                             <button
                                 type="button"
                                 onClick={() => { setAdding(g._id); setDraft(''); }}
-                                className="inline-flex items-center gap-1 rounded-full border border-dashed border-stone-300 px-2.5 py-1 text-xs text-stone-500 hover:border-stone-500 hover:text-stone-700"
+                                className="inline-flex items-center gap-1 rounded-full border border-dashed border-edge-strong px-2.5 py-1 text-xs text-ink-muted hover:border-stone-500 hover:text-ink-secondary"
                             >
                                 <Plus size={11} /> add
                             </button>

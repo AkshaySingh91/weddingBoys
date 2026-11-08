@@ -1,11 +1,12 @@
+import { serializeJsonLd } from '@/lib/jsonLd.mjs';
 import './globals.css';
 import { fontVariables } from './fonts';
 import StudioDetailsContext from '@/Context/StudioDetailsContext.jsx';
 import { SITE_URL as siteUrl, SITE_NAME } from '@/lib/siteConfig.js';
 const title =
-  'Capturing Your Love Story: Cinematic Wedding Videography in India | The Wedding Boys';
+  'Capturing Your Love Story: Cinematic Wedding Videography in India | The Wedding Vachan';
 const description =
-  "Experience India's finest wedding cinematography. The Wedding Boys captures your special day with cinematic films, pre-wedding shoots, and premium videography services.";
+  "Experience India's finest wedding cinematography. The Wedding Vachan captures your special day with cinematic films, pre-wedding shoots, and premium videography services.";
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
@@ -108,11 +109,11 @@ export default function RootLayout({ children }) {
       <body className="antialiased" suppressHydrationWarning>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(organizationJsonLd) }}
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoProductionServiceJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(videoProductionServiceJsonLd) }}
         />
         {/* StudioDetailsContext wraps everything (site + admin) — the
             original App.jsx wrapped both route trees in this provider. */}

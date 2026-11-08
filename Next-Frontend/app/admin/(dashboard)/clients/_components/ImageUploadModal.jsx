@@ -91,10 +91,10 @@ const CEREMONY_THEMES = {
     accent: 'text-orange-700',
   },
   neutral: {
-    bg: 'bg-stone-100/70',
-    border: 'border-stone-300',
-    badge: 'bg-stone-200 text-stone-800 border-stone-300',
-    accent: 'text-stone-700',
+    bg: 'bg-ground-sunk/70',
+    border: 'border-edge-strong',
+    badge: 'bg-ground-sunk text-ink border-edge-strong',
+    accent: 'text-ink-secondary',
   },
 };
 
@@ -128,17 +128,17 @@ function StagedPhotoCard({
         }
       }}
       className={cn(
-        'group relative flex flex-col overflow-hidden rounded-2xl border bg-white transition-all select-none',
+        'group relative flex flex-col overflow-hidden rounded-xl border bg-white transition-all select-none',
         !isUploading && !uploadFinished && !isDimmed && 'cursor-pointer hover:border-amber-400 hover:shadow-md',
         isDimmed && 'cursor-not-allowed filter grayscale-[25%]',
         isSelected && !uploadFinished
           ? 'border-amber-600 ring-2 ring-amber-500/30 shadow-md'
-          : 'border-stone-200'
+          : 'border-edge-subtle'
       )}
       title={isDimmed ? 'Deselect active group photos to select this' : undefined}
     >
       {/* Thumbnail Viewport */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-stone-100">
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-ground-sunk">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={it.previewUrl}
@@ -160,12 +160,12 @@ function StagedPhotoCard({
               onToggleSelect(it.id);
             }}
             className={cn(
-              'absolute top-2 left-2 z-10 flex h-5 w-5 items-center justify-center rounded-md border transition-all shadow-sm',
+              'absolute top-2 left-2 z-10 flex h-5 w-5 items-center justify-center rounded-lg border transition-all shadow-sm',
               isSelected
                 ? 'bg-amber-600 border-amber-600 text-white'
                 : isDimmed
-                ? 'bg-stone-100 border-stone-300 text-transparent opacity-50 cursor-not-allowed'
-                : 'bg-white/85 border-stone-300 text-transparent hover:border-amber-500'
+                ? 'bg-ground-sunk border-edge-strong text-transparent opacity-50 cursor-not-allowed'
+                : 'bg-white/85 border-edge-strong text-transparent hover:border-amber-500'
             )}
           >
             <Check size={11} weight="bold" />
@@ -187,7 +187,7 @@ function StagedPhotoCard({
               e.stopPropagation();
               onRemove(it.id);
             }}
-            className="absolute top-2 right-2 z-10 flex h-5 w-5 items-center justify-center rounded-md bg-stone-900/60 text-white opacity-0 group-hover:opacity-100 hover:bg-rose-600 transition-all"
+            className="absolute top-2 right-2 z-10 flex h-5 w-5 items-center justify-center rounded-lg bg-ink/60 text-white opacity-0 group-hover:opacity-100 hover:bg-rose-600 transition-all"
           >
             <X size={11} />
           </button>
@@ -203,15 +203,15 @@ function StagedPhotoCard({
 
       {/* Metadata Summary on Card */}
       <div className="p-2.5 space-y-1 bg-white">
-        <p className="truncate font-sans text-[11px] font-semibold text-stone-900" title={it.name}>
+        <p className="truncate font-sans text-[11px] font-semibold text-ink" title={it.name}>
           {it.name}
         </p>
-        <div className="flex items-center justify-between text-[10px] text-stone-500">
+        <div className="flex items-center justify-between text-[10px] text-ink-muted">
           <span>{formatBytes(it.size)}</span>
           {it.shootDate ? (
-            <span className="truncate max-w-[80px] font-medium text-stone-600">{it.shootDate}</span>
+            <span className="truncate max-w-[80px] font-medium text-ink-secondary">{it.shootDate}</span>
           ) : (
-            <span className="text-stone-400">No date</span>
+            <span className="text-ink-muted">No date</span>
           )}
         </div>
       </div>
@@ -842,17 +842,17 @@ export default function ImageUploadModal({
     <Dialog open={open} onOpenChange={(v) => !v && !isUploading && safeClose()}>
       <DialogContent
         hideCloseButton
-        className="max-w-6xl w-[96vw] h-[90vh] max-h-[880px] p-0 overflow-hidden flex flex-col rounded-3xl border border-[#E8DDD1] bg-[#FFFCF8] shadow-2xl"
+        className="max-w-6xl w-[96vw] h-[90vh] max-h-[880px] p-0 overflow-hidden flex flex-col rounded-xl border border-edge-subtle bg-ground shadow-2xl"
       >
         {/* Header */}
-        <header className="flex items-center justify-between border-b border-[#E8DDD1] px-6 py-4 bg-white shrink-0">
+        <header className="flex items-center justify-between border-b border-edge-subtle px-6 py-4 bg-white shrink-0">
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-50 border border-amber-200 text-amber-800 shrink-0">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 border border-amber-200 text-amber-800 shrink-0">
               <ImageSquare size={22} weight="bold" />
             </span>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-base font-bold text-stone-900 font-sans tracking-tight">
+                <h3 className="text-base font-bold text-ink font-sans tracking-tight">
                   {uploadFinished ? 'Photo Ingest & Optimization Status' : 'Stage & Curate Photographs'}
                 </h3>
                 <Badge size="sm" variant="neutral">
@@ -864,7 +864,7 @@ export default function ImageUploadModal({
                   </Badge>
                 )}
               </div>
-              <p className="text-xs text-stone-500 font-sans">
+              <p className="text-xs text-ink-muted font-sans">
                 {uploadFinished
                   ? 'All master photographs securely uploaded to Cloudflare R2 bucket with automated web optimization.'
                   : 'Select photos to group into ceremonies with animated reordering, shoot dates, and BTS crew roles.'}
@@ -880,7 +880,7 @@ export default function ImageUploadModal({
                 size="sm"
                 icon={SlidersHorizontal}
                 onClick={() => setShowDrawer((v) => !v)}
-                className="border-stone-200 text-xs text-stone-700 hover:bg-stone-50"
+                className="border-edge-subtle text-xs text-ink-secondary hover:bg-ground"
               >
                 {showDrawer ? 'Hide Curation Panel' : 'Show Curation Panel'}
               </Button>
@@ -890,7 +890,7 @@ export default function ImageUploadModal({
               type="button"
               disabled={isUploading}
               onClick={safeClose}
-              className="flex items-center justify-center h-8 w-8 rounded-xl text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors disabled:opacity-50"
+              className="flex items-center justify-center h-8 w-8 rounded-xl text-ink-muted hover:text-ink-secondary hover:bg-ground-sunk transition-colors disabled:opacity-50"
             >
               <X size={16} />
               <span className="sr-only">Close</span>
@@ -903,7 +903,7 @@ export default function ImageUploadModal({
           {/* Staged Photos Grid Viewport */}
           <div className="flex-1 flex flex-col overflow-hidden">
             {/* Action Ribbon Above Grid */}
-            <div className="border-b border-[#E8DDD1] bg-[#FFFDF9] px-6 py-2.5 shrink-0 flex items-center justify-between text-xs">
+            <div className="border-b border-edge-subtle bg-ground px-6 py-2.5 shrink-0 flex items-center justify-between text-xs">
               <div className="flex items-center gap-3">
                 {activeSelectionGroup ? (
                   <>
@@ -915,7 +915,7 @@ export default function ImageUploadModal({
                       type="button"
                       disabled={isUploading}
                       onClick={() => setSelectedIds(new Set())}
-                      className="font-medium text-stone-600 hover:text-stone-950 underline cursor-pointer text-xs"
+                      className="font-medium text-ink-secondary hover:text-ink underline cursor-pointer text-xs"
                     >
                       Deselect All
                     </button>
@@ -926,7 +926,7 @@ export default function ImageUploadModal({
                       type="button"
                       disabled={isUploading || !items.length}
                       onClick={selectAll}
-                      className="font-semibold text-stone-700 hover:text-stone-950 underline cursor-pointer text-xs"
+                      className="font-semibold text-ink-secondary hover:text-ink underline cursor-pointer text-xs"
                     >
                       {selectedIds.size === items.length ? 'Deselect All' : `Select All (${items.length})`}
                     </button>
@@ -944,7 +944,7 @@ export default function ImageUploadModal({
                       </>
                     )}
                     <span className="text-stone-300">·</span>
-                    <span className="text-stone-500 font-medium text-xs">
+                    <span className="text-ink-muted font-medium text-xs">
                       {selectedIds.size} of {items.length} selected
                     </span>
                   </>
@@ -968,7 +968,7 @@ export default function ImageUploadModal({
                     disabled={isUploading}
                     icon={Plus}
                     onClick={() => fileInputRef.current?.click()}
-                    className="border-stone-200 text-stone-700 hover:bg-stone-50 text-xs"
+                    className="border-edge-subtle text-ink-secondary hover:bg-ground text-xs"
                   >
                     Add Photos
                   </Button>
@@ -980,12 +980,12 @@ export default function ImageUploadModal({
             <div className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-stone-200 space-y-6">
               {!items.length ? (
                 <div className="flex flex-col items-center justify-center h-full text-center py-16 space-y-3">
-                  <span className="flex h-16 w-16 items-center justify-center rounded-3xl bg-amber-50 text-amber-700">
+                  <span className="flex h-16 w-16 items-center justify-center rounded-xl bg-amber-50 text-amber-700">
                     <ImageSquare size={32} />
                   </span>
                   <div>
-                    <p className="text-sm font-semibold text-stone-800">No photographs staged</p>
-                    <p className="text-xs text-stone-500">Pick or drop image files to stage for this wedding</p>
+                    <p className="text-sm font-semibold text-ink">No photographs staged</p>
+                    <p className="text-xs text-ink-muted">Pick or drop image files to stage for this wedding</p>
                   </div>
                   <Button
                     type="button"
@@ -1015,7 +1015,7 @@ export default function ImageUploadModal({
                           exit={{ opacity: 0, scale: 0.95 }}
                           transition={{ type: 'spring', stiffness: 350, damping: 28 }}
                           className={cn(
-                            'rounded-3xl border-2 border-dashed p-4 sm:p-5 transition-all shadow-sm',
+                            'rounded-xl border-2 border-dashed p-4 sm:p-5 transition-all shadow-sm',
                             themeStyle.bg,
                             themeStyle.border
                           )}
@@ -1027,7 +1027,7 @@ export default function ImageUploadModal({
                                 <Sparkle size={14} className={themeStyle.accent} weight="fill" />
                               </span>
                               <div className="flex items-center gap-2">
-                                <h4 className="font-sans text-xs sm:text-sm font-bold text-stone-900 tracking-tight">
+                                <h4 className="font-sans text-xs sm:text-sm font-bold text-ink tracking-tight">
                                   {ceremonyName}
                                 </h4>
                                 <span className={cn('text-[11px] font-semibold px-2 py-0.5 rounded-full border shadow-xs', themeStyle.badge)}>
@@ -1037,20 +1037,20 @@ export default function ImageUploadModal({
 
                               {/* Shoot Date & Venue Pills */}
                               {sampleItem?.shootDate && (
-                                <span className="inline-flex items-center gap-1 text-[11px] text-stone-600 bg-white/85 px-2.5 py-0.5 rounded-lg border border-stone-200/80 shadow-xs">
-                                  <CalendarBlank size={12} className="text-stone-400" />
+                                <span className="inline-flex items-center gap-1 text-[11px] text-ink-secondary bg-white/85 px-2.5 py-0.5 rounded-lg border border-edge-subtle shadow-xs">
+                                  <CalendarBlank size={12} className="text-ink-muted" />
                                   {sampleItem.shootDate}
                                 </span>
                               )}
                               {sampleItem?.city && (
-                                <span className="inline-flex items-center gap-1 text-[11px] text-stone-600 bg-white/85 px-2.5 py-0.5 rounded-lg border border-stone-200/80 shadow-xs">
-                                  <MapPin size={12} className="text-stone-400" />
+                                <span className="inline-flex items-center gap-1 text-[11px] text-ink-secondary bg-white/85 px-2.5 py-0.5 rounded-lg border border-edge-subtle shadow-xs">
+                                  <MapPin size={12} className="text-ink-muted" />
                                   {sampleItem.city}{sampleItem.venue ? ` · ${sampleItem.venue}` : ''}
                                 </span>
                               )}
                               {sampleItem?.credits?.length > 0 && (
-                                <span className="inline-flex items-center gap-1 text-[11px] text-stone-600 bg-white/85 px-2.5 py-0.5 rounded-lg border border-stone-200/80 shadow-xs">
-                                  <Users size={12} className="text-stone-400" />
+                                <span className="inline-flex items-center gap-1 text-[11px] text-ink-secondary bg-white/85 px-2.5 py-0.5 rounded-lg border border-edge-subtle shadow-xs">
+                                  <Users size={12} className="text-ink-muted" />
                                   {sampleItem.credits.map((c) => c.name).join(', ')}
                                 </span>
                               )}
@@ -1062,7 +1062,7 @@ export default function ImageUploadModal({
                                 <button
                                   type="button"
                                   onClick={() => selectGroup(ceremonyName)}
-                                  className="font-semibold text-stone-700 hover:text-stone-950 underline cursor-pointer text-[11px]"
+                                  className="font-semibold text-ink-secondary hover:text-ink underline cursor-pointer text-[11px]"
                                 >
                                   {isGroupActive && selectedIds.size === groupItems.length ? 'Deselect Group' : 'Select Group'}
                                 </button>
@@ -1113,22 +1113,22 @@ export default function ImageUploadModal({
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ type: 'spring', stiffness: 350, damping: 28 }}
                       className={cn(
-                        'rounded-3xl border border-dashed border-stone-300/90 bg-stone-50/60 p-4 sm:p-5 transition-all',
-                        ceremonyGroups.size > 0 && 'border-stone-300'
+                        'rounded-xl border border-dashed border-edge-strong bg-ground/60 p-4 sm:p-5 transition-all',
+                        ceremonyGroups.size > 0 && 'border-edge-strong'
                       )}
                     >
                       {/* Header */}
-                      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 mb-3 border-b border-stone-200/80">
+                      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 mb-3 border-b border-edge-subtle">
                         <div>
                           <div className="flex items-center gap-2">
-                            <h4 className="font-sans text-xs sm:text-sm font-bold text-stone-800 tracking-tight">
+                            <h4 className="font-sans text-xs sm:text-sm font-bold text-ink tracking-tight">
                               {ceremonyGroups.size > 0 ? 'Unassigned Photos' : 'Staged Photographs'}
                             </h4>
-                            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-stone-200/80 text-stone-700">
+                            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-ground-sunk/80 text-ink-secondary">
                               {unthemedItems.length} photo{unthemedItems.length === 1 ? '' : 's'} ready to group
                             </span>
                           </div>
-                          <p className="text-[11px] text-stone-500 mt-0.5">
+                          <p className="text-[11px] text-ink-muted mt-0.5">
                             Select photos below, pick a ritual in the right panel, and click &quot;Group into...&quot;
                           </p>
                         </div>
@@ -1175,26 +1175,26 @@ export default function ImageUploadModal({
 
           {/* Right Panel: Transitions smoothly between Curation Drawer and Ingest Status */}
           {showDrawer && (
-            <aside className="w-80 border-l border-[#E8DDD1] bg-white flex flex-col shrink-0 overflow-y-auto p-5 space-y-5 scrollbar-thin">
+            <aside className="w-80 border-l border-edge-subtle bg-white flex flex-col shrink-0 overflow-y-auto p-5 space-y-5 scrollbar-thin">
               {uploadFinished ? (
                 /* Non-Technical Ingest Status Summary Panel */
                 <div className="space-y-5 animate-in fade-in duration-300">
-                  <div className="space-y-1.5 pb-4 border-b border-[#E8DDD1]">
+                  <div className="space-y-1.5 pb-4 border-b border-edge-subtle">
                     <div className="flex items-center gap-2">
                       <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700">
                         <CheckCircle size={18} weight="fill" />
                       </span>
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-stone-900">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-ink">
                         Ingest Completed
                       </h4>
                     </div>
-                    <p className="text-[11px] text-stone-600 leading-relaxed">
+                    <p className="text-[11px] text-ink-secondary leading-relaxed">
                       {doneCount} photographs safely ingested and linked to this wedding.
                     </p>
                   </div>
 
                   {/* Clean Reassurance Notice */}
-                  <div className="rounded-2xl border border-emerald-200 bg-emerald-50/70 p-3.5 space-y-2 text-xs">
+                  <div className="rounded-xl border border-emerald-200 bg-emerald-50/70 p-3.5 space-y-2 text-xs">
                     <p className="font-semibold text-emerald-950 flex items-center gap-1.5">
                       <HardDrives size={15} className="text-emerald-700" />
                       Cloud Master Stored
@@ -1205,7 +1205,7 @@ export default function ImageUploadModal({
                   </div>
 
                   {/* Worker Optimization Info (Reassuring, non-technical) */}
-                  <div className="rounded-2xl border border-amber-200 bg-amber-50/60 p-3.5 space-y-2 text-xs">
+                  <div className="rounded-xl border border-amber-200 bg-amber-50/60 p-3.5 space-y-2 text-xs">
                     <p className="font-semibold text-amber-950 flex items-center gap-1.5">
                       <Sparkle size={15} className="text-amber-700" />
                       Web Optimization
@@ -1241,22 +1241,22 @@ export default function ImageUploadModal({
                 <div className="space-y-5 animate-in fade-in duration-200">
                   <div>
                     <div className="flex items-center justify-between">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-stone-900 flex items-center gap-1.5">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-ink flex items-center gap-1.5">
                         <FolderSimpleStar size={14} className="text-amber-600" />
                         Ceremony Grouping
                       </h4>
-                      <span className="text-[10px] text-stone-500 bg-stone-100 border border-stone-200 px-1.5 py-0.5 rounded-md font-medium">
+                      <span className="text-[10px] text-ink-muted bg-ground-sunk border border-edge-subtle px-1.5 py-0.5 rounded-lg font-medium">
                         {selectedIds.size} Selected
                       </span>
                     </div>
-                    <p className="text-[11px] text-stone-500 mt-1">
+                    <p className="text-[11px] text-ink-muted mt-1">
                       Choose ceremony and details, then click below to animate selected photos into a cluster.
                     </p>
                   </div>
 
                   {/* 1. Dynamic Ceremony Taxonomy Selector */}
                   <div className="space-y-2">
-                    <label className="text-[11px] font-bold text-stone-800 uppercase tracking-wide block">
+                    <label className="text-[11px] font-bold text-ink uppercase tracking-wide block">
                       Ceremony Ritual
                     </label>
                     <div className="grid grid-cols-2 gap-1.5">
@@ -1269,7 +1269,7 @@ export default function ImageUploadModal({
                             'rounded-xl px-2.5 py-1.5 text-[11px] font-medium transition-all border text-left truncate cursor-pointer',
                             curationTheme === c.name
                               ? 'bg-amber-600 text-white border-amber-600 shadow-sm'
-                              : 'bg-white text-stone-700 border-stone-200 hover:border-amber-300'
+                              : 'bg-white text-ink-secondary border-edge-subtle hover:border-amber-300'
                           )}
                         >
                           {c.name}
@@ -1281,23 +1281,23 @@ export default function ImageUploadModal({
                   {/* 2. Shoot Date & Location */}
                   <div className="space-y-2.5 pt-1">
                     <div>
-                      <label className="text-[11px] font-bold text-stone-800 uppercase tracking-wide block mb-1">
+                      <label className="text-[11px] font-bold text-ink uppercase tracking-wide block mb-1">
                         Ritual Date
                       </label>
                       <div className="relative">
-                        <CalendarBlank size={14} className="absolute left-2.5 top-2.5 text-stone-400" />
+                        <CalendarBlank size={14} className="absolute left-2.5 top-2.5 text-ink-muted" />
                         <input
                           type="date"
                           value={curationDate}
                           onChange={(e) => setCurationDate(e.target.value)}
-                          className="w-full pl-8 pr-2.5 py-1.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-amber-600 bg-stone-50/50"
+                          className="w-full pl-8 pr-2.5 py-1.5 text-xs rounded-xl border border-edge-subtle focus:outline-none focus:border-amber-600 bg-ground/50"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <label className="text-[11px] font-bold text-stone-800 uppercase tracking-wide block mb-1">
+                        <label className="text-[11px] font-bold text-ink uppercase tracking-wide block mb-1">
                           City
                         </label>
                         <input
@@ -1305,11 +1305,11 @@ export default function ImageUploadModal({
                           placeholder="e.g. Udaipur"
                           value={curationCity}
                           onChange={(e) => setCurationCity(e.target.value)}
-                          className="w-full px-2.5 py-1.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-amber-600 bg-stone-50/50"
+                          className="w-full px-2.5 py-1.5 text-xs rounded-xl border border-edge-subtle focus:outline-none focus:border-amber-600 bg-ground/50"
                         />
                       </div>
                       <div>
-                        <label className="text-[11px] font-bold text-stone-800 uppercase tracking-wide block mb-1">
+                        <label className="text-[11px] font-bold text-ink uppercase tracking-wide block mb-1">
                           Venue
                         </label>
                         <input
@@ -1317,15 +1317,15 @@ export default function ImageUploadModal({
                           placeholder="e.g. Taj Lake Palace"
                           value={curationVenue}
                           onChange={(e) => setCurationVenue(e.target.value)}
-                          className="w-full px-2.5 py-1.5 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-amber-600 bg-stone-50/50"
+                          className="w-full px-2.5 py-1.5 text-xs rounded-xl border border-edge-subtle focus:outline-none focus:border-amber-600 bg-ground/50"
                         />
                       </div>
                     </div>
                   </div>
 
                   {/* 3. Rich BTS Crew Assignment */}
-                  <div className="space-y-2 pt-1 border-t border-stone-100">
-                    <label className="text-[11px] font-bold text-stone-800 uppercase tracking-wide block">
+                  <div className="space-y-2 pt-1 border-t border-edge-subtle">
+                    <label className="text-[11px] font-bold text-ink uppercase tracking-wide block">
                       BTS Crew Roles
                     </label>
 
@@ -1333,7 +1333,7 @@ export default function ImageUploadModal({
                       <select
                         value={creditRoleInput}
                         onChange={(e) => setCreditRoleInput(e.target.value)}
-                        className="text-xs rounded-xl border border-stone-200 px-2 py-1.5 bg-stone-50/50 focus:outline-none focus:border-amber-600"
+                        className="text-xs rounded-xl border border-edge-subtle px-2 py-1.5 bg-ground/50 focus:outline-none focus:border-amber-600"
                       >
                         {btsRolePresets.map((r) => (
                           <option key={r} value={r}>
@@ -1347,7 +1347,7 @@ export default function ImageUploadModal({
                         value={creditNameInput}
                         onChange={(e) => setCreditNameInput(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addCredit())}
-                        className="flex-1 text-xs rounded-xl border border-stone-200 px-2.5 py-1.5 focus:outline-none focus:border-amber-600"
+                        className="flex-1 text-xs rounded-xl border border-edge-subtle px-2.5 py-1.5 focus:outline-none focus:border-amber-600"
                       >
                       </input>
                       <Button
@@ -1355,7 +1355,7 @@ export default function ImageUploadModal({
                         size="sm"
                         variant="outline"
                         onClick={addCredit}
-                        className="text-xs border-stone-200 px-2"
+                        className="text-xs border-edge-subtle px-2"
                       >
                         Add
                       </Button>
@@ -1372,7 +1372,7 @@ export default function ImageUploadModal({
                             <button
                               type="button"
                               onClick={() => removeCredit(idx)}
-                              className="text-stone-400 hover:text-stone-800 ml-0.5"
+                              className="text-ink-muted hover:text-ink ml-0.5"
                             >
                               <X size={10} />
                             </button>
@@ -1383,8 +1383,8 @@ export default function ImageUploadModal({
                   </div>
 
                   {/* 4. Tags */}
-                  <div className="space-y-2 pt-1 border-t border-stone-100">
-                    <label className="text-[11px] font-bold text-stone-800 uppercase tracking-wide block">
+                  <div className="space-y-2 pt-1 border-t border-edge-subtle">
+                    <label className="text-[11px] font-bold text-ink uppercase tracking-wide block">
                       Curated Tags
                     </label>
                     <div className="flex flex-wrap gap-1">
@@ -1397,7 +1397,7 @@ export default function ImageUploadModal({
                             'rounded-lg px-2 py-0.5 text-[10px] font-medium transition-all border cursor-pointer',
                             curationTags.includes(tag)
                               ? 'bg-amber-100 border-amber-300 text-amber-900 font-semibold'
-                              : 'bg-white border-stone-200 text-stone-600 hover:border-stone-300'
+                              : 'bg-white border-edge-subtle text-ink-secondary hover:border-edge-strong'
                           )}
                         >
                           {tag}
@@ -1412,14 +1412,14 @@ export default function ImageUploadModal({
                         value={customTagInput}
                         onChange={(e) => setCustomTagInput(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addCustomTag())}
-                        className="flex-1 text-xs rounded-xl border border-stone-200 px-2.5 py-1 focus:outline-none focus:border-amber-600"
+                        className="flex-1 text-xs rounded-xl border border-edge-subtle px-2.5 py-1 focus:outline-none focus:border-amber-600"
                       />
                       <Button
                         type="button"
                         size="sm"
                         variant="outline"
                         onClick={addCustomTag}
-                        className="text-xs border-stone-200 px-2"
+                        className="text-xs border-edge-subtle px-2"
                       >
                         Add
                       </Button>
@@ -1427,7 +1427,7 @@ export default function ImageUploadModal({
                   </div>
 
                   {/* Animated Grouping Action Button */}
-                  <div className="pt-3 border-t border-stone-200">
+                  <div className="pt-3 border-t border-edge-subtle">
                     <Button
                       type="button"
                       variant="gold"
@@ -1437,8 +1437,8 @@ export default function ImageUploadModal({
                       className={cn(
                         'w-full font-semibold shadow-sm py-2 transition-all',
                         selectedIds.size
-                          ? 'bg-stone-900 hover:bg-stone-800 text-white cursor-pointer'
-                          : 'bg-stone-100 text-stone-400 cursor-not-allowed border border-stone-200'
+                          ? 'bg-ink hover:bg-ink text-white cursor-pointer'
+                          : 'bg-ground-sunk text-ink-muted cursor-not-allowed border border-edge-subtle'
                       )}
                     >
                       {selectedIds.size > 0
@@ -1453,12 +1453,12 @@ export default function ImageUploadModal({
         </div>
 
         {/* Footer Actions */}
-        <footer className="flex items-center justify-between border-t border-[#E8DDD1] bg-white px-6 py-4 shrink-0">
+        <footer className="flex items-center justify-between border-t border-edge-subtle bg-white px-6 py-4 shrink-0">
           <div className="flex items-center gap-3">
             {isUploading && (
               <div className="flex items-center gap-2">
                 <CircleNotch size={18} className="animate-spin text-amber-600" />
-                <span className="text-xs font-semibold text-stone-800">
+                <span className="text-xs font-semibold text-ink">
                   Parallel R2 Ingest ({activeUploadsCount} concurrent streams · {overallProgress}% total)
                 </span>
               </div>
@@ -1469,7 +1469,7 @@ export default function ImageUploadModal({
               </span>
             )}
             {!isUploading && !uploadFinished && (
-              <span className="text-xs text-stone-500">
+              <span className="text-xs text-ink-muted">
                 {selectedIds.size} of {items.length} photos selected
               </span>
             )}
@@ -1494,7 +1494,7 @@ export default function ImageUploadModal({
                   size="sm"
                   disabled={isUploading}
                   onClick={safeClose}
-                  className="border-stone-200 text-stone-700 hover:bg-stone-50"
+                  className="border-edge-subtle text-ink-secondary hover:bg-ground"
                 >
                   Cancel
                 </Button>

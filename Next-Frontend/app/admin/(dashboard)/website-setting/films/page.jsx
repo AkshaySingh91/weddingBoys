@@ -15,8 +15,8 @@ export default function FilmsPageSettingsRedirect() {
     router.replace('/admin/content/films');
   }, [router]);
   return (
-    <div className="py-24 flex flex-col items-center justify-center gap-3 text-stone-500 font-sans">
-      <CircleNotch size={26} className="animate-spin text-[#A3603A]" />
+    <div className="py-24 flex flex-col items-center justify-center gap-3 text-ink-muted font-sans">
+      <CircleNotch size={26} className="animate-spin text-accent-ink" />
       <p className="text-xs font-medium">Opening the films page composition…</p>
     </div>
   );

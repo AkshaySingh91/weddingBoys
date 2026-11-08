@@ -108,8 +108,8 @@ function ToolbarButton({ onClick, active, disabled, title, children }) {
             disabled={disabled}
             title={title}
             className={`flex items-center justify-center h-8 w-8 rounded-lg text-xs transition-all cursor-pointer ${active
-                    ? 'bg-[#1C1917] text-white shadow-sm font-semibold'
-                    : 'text-stone-700 hover:bg-stone-200/80 hover:text-[#1C1917]'
+                    ? 'bg-ink text-white shadow-sm font-semibold'
+                    : 'text-ink-secondary hover:bg-ground-sunk/80 hover:text-ink'
                 } disabled:opacity-30 disabled:pointer-events-none`}
         >
             {children}
@@ -166,7 +166,7 @@ export default function Editor({
                 openOnClick: false,
                 autolink: true,
                 HTMLAttributes: {
-                    class: 'text-[#8C532B] underline decoration-[#8C532B]/50 hover:decoration-[#8C532B] font-medium transition-colors',
+                    class: 'text-accent-ink underline decoration-accent/50 hover:decoration-accent font-medium transition-colors',
                     rel: 'noopener noreferrer',
                     target: '_blank',
                 },
@@ -217,7 +217,7 @@ export default function Editor({
         content: initialContent || '<p></p>',
         editorProps: {
             attributes: {
-                class: 'prose prose-stone max-w-none min-h-[460px] px-6 py-6 font-sans text-stone-800 focus:outline-none leading-relaxed text-sm lg:text-base',
+                class: 'prose prose-stone max-w-none min-h-[460px] px-6 py-6 font-sans text-ink focus:outline-none leading-relaxed text-sm lg:text-base',
             },
             handleKeyDown: (view, event) => {
                 if (event.key === '/' && !slashOpen) {
@@ -352,7 +352,7 @@ export default function Editor({
             url: `/portfolio/${client.slug || client._id}`,
             embedUrl: client.hlsUrl || client.videoUrl || '',
             title: title,
-            author: client.venue || 'The Wedding Boys Studio',
+            author: client.venue || 'The Wedding Vachan Studio',
             thumbnail: client.poster || client.videoPoster?.url || client.thumbnail?.url || '',
             clientRef: client._id,
             aspectRatio: '16/9',
@@ -573,7 +573,7 @@ export default function Editor({
     };
 
     if (!editor) {
-        return <div className="min-h-[460px] animate-pulse rounded-2xl bg-stone-100 border border-[#E5DCD3]" />;
+        return <div className="min-h-[460px] animate-pulse rounded-xl bg-ground-sunk border border-edge-subtle" />;
     }
 
     return (
@@ -593,7 +593,7 @@ export default function Editor({
               border and shadow give the chrome enough weight to read as a tool
               rather than a strip of links.
             */}
-            <div className="editor-toolbar sticky top-0 z-[70] mb-3 flex flex-nowrap items-center gap-1 overflow-x-auto rounded-2xl border border-studio-border bg-studio-card/95 px-2.5 py-2 shadow-[0_1px_2px_rgba(28,25,23,0.04),0_8px_24px_-12px_rgba(28,25,23,0.18)] backdrop-blur-md">
+            <div className="editor-toolbar sticky top-0 z-[70] mb-3 flex flex-nowrap items-center gap-1 overflow-x-auto rounded-xl border border-studio-border bg-studio-card/95 px-2.5 py-2 shadow-[0_1px_2px_rgba(28,25,23,0.04),0_8px_24px_-12px_rgba(28,25,23,0.18)] backdrop-blur-md">
                 {/* History */}
                 <div className="flex items-center gap-0.5">
                     <ToolbarButton onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().undo()} title="Undo (Cmd+Z)">
@@ -741,7 +741,7 @@ export default function Editor({
                     >
                         <Plus size={13} weight="bold" />
                         <span>Insert</span>
-                        <kbd className="ml-0.5 hidden rounded border border-white/30 px-1 text-[9px] font-medium text-white/80 sm:inline">/</kbd>
+                        <kbd className="ml-0.5 hidden rounded-lg border border-white/30 px-1 text-[9px] font-medium text-white/80 sm:inline">/</kbd>
                     </button>
                 </div>
             </div>
@@ -773,17 +773,17 @@ export default function Editor({
                             if (selection instanceof NodeSelection) return false;
                             return selection.from !== selection.to;
                         }}
-                        className="flex items-center gap-1 rounded-2xl border border-stone-800 bg-[#1C1917]/95 px-2 py-1.5 text-white shadow-2xl backdrop-blur-md z-50 animate-in fade-in zoom-in-95 duration-100"
+                        className="flex items-center gap-1 rounded-xl border border-ink bg-ink/95 px-2 py-1.5 text-white shadow-2xl backdrop-blur-md z-50 animate-in fade-in zoom-in-95 duration-100"
                     >
                         {!bubbleLinkOpen ? (
                             <>
                                 {/* Heading level pills */}
-                                <div className="flex items-center gap-0.5 pr-1 border-r border-stone-700">
+                                <div className="flex items-center gap-0.5 pr-1 border-r border-ink">
                                     <button
                                         type="button"
                                         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-                                        className={`px-2 py-0.5 rounded text-xs font-bold transition-colors cursor-pointer ${
-                                            editor.isActive('heading', { level: 2 }) ? 'bg-[#8C532B] text-white' : 'text-stone-300 hover:bg-stone-800'
+                                        className={`px-2 py-0.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
+                                            editor.isActive('heading', { level: 2 }) ? 'bg-accent text-white' : 'text-stone-300 hover:bg-ink'
                                         }`}
                                         title="Heading 2"
                                     >
@@ -792,8 +792,8 @@ export default function Editor({
                                     <button
                                         type="button"
                                         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-                                        className={`px-2 py-0.5 rounded text-xs font-bold transition-colors cursor-pointer ${
-                                            editor.isActive('heading', { level: 3 }) ? 'bg-[#8C532B] text-white' : 'text-stone-300 hover:bg-stone-800'
+                                        className={`px-2 py-0.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
+                                            editor.isActive('heading', { level: 3 }) ? 'bg-accent text-white' : 'text-stone-300 hover:bg-ink'
                                         }`}
                                         title="Heading 3"
                                     >
@@ -802,8 +802,8 @@ export default function Editor({
                                     <button
                                         type="button"
                                         onClick={() => editor.chain().focus().setParagraph().run()}
-                                        className={`px-1.5 py-0.5 rounded text-xs font-bold transition-colors cursor-pointer ${
-                                            editor.isActive('paragraph') && !editor.isActive('heading') ? 'bg-[#8C532B] text-white' : 'text-stone-300 hover:bg-stone-800'
+                                        className={`px-1.5 py-0.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
+                                            editor.isActive('paragraph') && !editor.isActive('heading') ? 'bg-accent text-white' : 'text-stone-300 hover:bg-ink'
                                         }`}
                                         title="Paragraph Text"
                                     >
@@ -812,12 +812,12 @@ export default function Editor({
                                 </div>
 
                                 {/* Core inline format styles */}
-                                <div className="flex items-center gap-0.5 px-1 border-r border-stone-700">
+                                <div className="flex items-center gap-0.5 px-1 border-r border-ink">
                                     <button
                                         type="button"
                                         onClick={() => editor.chain().focus().toggleBold().run()}
-                                        className={`p-1.5 rounded text-xs transition-colors cursor-pointer ${
-                                            editor.isActive('bold') ? 'bg-[#8C532B] text-white' : 'text-stone-300 hover:bg-stone-800'
+                                        className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+                                            editor.isActive('bold') ? 'bg-accent text-white' : 'text-stone-300 hover:bg-ink'
                                         }`}
                                         title="Bold (Cmd+B)"
                                     >
@@ -826,8 +826,8 @@ export default function Editor({
                                     <button
                                         type="button"
                                         onClick={() => editor.chain().focus().toggleItalic().run()}
-                                        className={`p-1.5 rounded text-xs transition-colors cursor-pointer ${
-                                            editor.isActive('italic') ? 'bg-[#8C532B] text-white' : 'text-stone-300 hover:bg-stone-800'
+                                        className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+                                            editor.isActive('italic') ? 'bg-accent text-white' : 'text-stone-300 hover:bg-ink'
                                         }`}
                                         title="Italic (Cmd+I)"
                                     >
@@ -836,8 +836,8 @@ export default function Editor({
                                     <button
                                         type="button"
                                         onClick={() => editor.chain().focus().toggleUnderline().run()}
-                                        className={`p-1.5 rounded text-xs transition-colors cursor-pointer ${
-                                            editor.isActive('underline') ? 'bg-[#8C532B] text-white' : 'text-stone-300 hover:bg-stone-800'
+                                        className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+                                            editor.isActive('underline') ? 'bg-accent text-white' : 'text-stone-300 hover:bg-ink'
                                         }`}
                                         title="Underline (Cmd+U)"
                                     >
@@ -846,8 +846,8 @@ export default function Editor({
                                     <button
                                         type="button"
                                         onClick={() => editor.chain().focus().toggleStrike().run()}
-                                        className={`p-1.5 rounded text-xs transition-colors cursor-pointer ${
-                                            editor.isActive('strike') ? 'bg-[#8C532B] text-white' : 'text-stone-300 hover:bg-stone-800'
+                                        className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+                                            editor.isActive('strike') ? 'bg-accent text-white' : 'text-stone-300 hover:bg-ink'
                                         }`}
                                         title="Strikethrough"
                                     >
@@ -856,12 +856,12 @@ export default function Editor({
                                 </div>
 
                                 {/* Lists & Quotes */}
-                                <div className="flex items-center gap-0.5 px-1 border-r border-stone-700">
+                                <div className="flex items-center gap-0.5 px-1 border-r border-ink">
                                     <button
                                         type="button"
                                         onClick={() => editor.chain().focus().toggleBulletList().run()}
-                                        className={`p-1.5 rounded text-xs transition-colors cursor-pointer ${
-                                            editor.isActive('bulletList') ? 'bg-[#8C532B] text-white' : 'text-stone-300 hover:bg-stone-800'
+                                        className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+                                            editor.isActive('bulletList') ? 'bg-accent text-white' : 'text-stone-300 hover:bg-ink'
                                         }`}
                                         title="Bullet List"
                                     >
@@ -870,8 +870,8 @@ export default function Editor({
                                     <button
                                         type="button"
                                         onClick={() => editor.chain().focus().toggleOrderedList().run()}
-                                        className={`p-1.5 rounded text-xs transition-colors cursor-pointer ${
-                                            editor.isActive('orderedList') ? 'bg-[#8C532B] text-white' : 'text-stone-300 hover:bg-stone-800'
+                                        className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+                                            editor.isActive('orderedList') ? 'bg-accent text-white' : 'text-stone-300 hover:bg-ink'
                                         }`}
                                         title="Numbered List"
                                     >
@@ -880,8 +880,8 @@ export default function Editor({
                                     <button
                                         type="button"
                                         onClick={() => editor.chain().focus().toggleBlockquote().run()}
-                                        className={`p-1.5 rounded text-xs transition-colors cursor-pointer ${
-                                            editor.isActive('blockquote') ? 'bg-[#8C532B] text-white' : 'text-stone-300 hover:bg-stone-800'
+                                        className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+                                            editor.isActive('blockquote') ? 'bg-accent text-white' : 'text-stone-300 hover:bg-ink'
                                         }`}
                                         title="Quote"
                                     >
@@ -898,8 +898,8 @@ export default function Editor({
                                             setBubbleLinkUrl(prev);
                                             setBubbleLinkOpen(true);
                                         }}
-                                        className={`p-1.5 rounded text-xs transition-colors cursor-pointer ${
-                                            editor.isActive('link') ? 'bg-[#8C532B] text-white' : 'text-stone-300 hover:bg-stone-800'
+                                        className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+                                            editor.isActive('link') ? 'bg-accent text-white' : 'text-stone-300 hover:bg-ink'
                                         }`}
                                         title="Link (Cmd+K)"
                                     >
@@ -908,8 +908,8 @@ export default function Editor({
                                     <button
                                         type="button"
                                         onClick={() => editor.chain().focus().setTextAlign('left').run()}
-                                        className={`p-1.5 rounded text-xs transition-colors cursor-pointer ${
-                                            editor.isActive({ textAlign: 'left' }) ? 'bg-[#8C532B] text-white' : 'text-stone-300 hover:bg-stone-800'
+                                        className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+                                            editor.isActive({ textAlign: 'left' }) ? 'bg-accent text-white' : 'text-stone-300 hover:bg-ink'
                                         }`}
                                         title="Align Left"
                                     >
@@ -918,8 +918,8 @@ export default function Editor({
                                     <button
                                         type="button"
                                         onClick={() => editor.chain().focus().setTextAlign('center').run()}
-                                        className={`p-1.5 rounded text-xs transition-colors cursor-pointer ${
-                                            editor.isActive({ textAlign: 'center' }) ? 'bg-[#8C532B] text-white' : 'text-stone-300 hover:bg-stone-800'
+                                        className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+                                            editor.isActive({ textAlign: 'center' }) ? 'bg-accent text-white' : 'text-stone-300 hover:bg-ink'
                                         }`}
                                         title="Align Center"
                                     >
@@ -947,7 +947,7 @@ export default function Editor({
                                         }
                                     }}
                                     placeholder="Paste link (https://...)"
-                                    className="w-52 bg-stone-900 text-white text-xs px-2.5 py-1 rounded-lg border border-stone-700 focus:outline-none focus:border-[#8C532B]"
+                                    className="w-52 bg-ink text-white text-xs px-2.5 py-1 rounded-lg border border-ink focus:outline-none focus:border-accent"
                                     autoFocus
                                 />
                                 <button
@@ -960,7 +960,7 @@ export default function Editor({
                                         }
                                         setBubbleLinkOpen(false);
                                     }}
-                                    className="p-1 rounded-lg bg-[#8C532B] text-white hover:bg-[#724322] text-xs font-semibold cursor-pointer"
+                                    className="p-1 rounded-lg bg-accent text-white hover:bg-accent-hover text-xs font-semibold cursor-pointer"
                                     title="Apply link"
                                 >
                                     <Check size={13} weight="bold" />
@@ -972,7 +972,7 @@ export default function Editor({
                                             editor.chain().focus().unsetLink().run();
                                             setBubbleLinkOpen(false);
                                         }}
-                                        className="p-1 rounded-lg bg-stone-800 text-rose-400 hover:bg-rose-950/60 text-xs cursor-pointer"
+                                        className="p-1 rounded-lg bg-ink text-rose-400 hover:bg-rose-950/60 text-xs cursor-pointer"
                                         title="Remove link"
                                     >
                                         <Trash size={13} />
@@ -981,7 +981,7 @@ export default function Editor({
                                 <button
                                     type="button"
                                     onClick={() => setBubbleLinkOpen(false)}
-                                    className="p-1 rounded-lg bg-stone-800 text-stone-400 hover:text-white text-xs cursor-pointer"
+                                    className="p-1 rounded-lg bg-ink text-ink-muted hover:text-white text-xs cursor-pointer"
                                     title="Cancel"
                                 >
                                     <X size={13} />
@@ -1000,7 +1000,7 @@ export default function Editor({
                 {/* Floating Slash Command Palette Modal/Popover */}
                 {slashOpen && (
                     <div
-                        className="fixed z-[90] w-80 rounded-2xl border border-[#E5DCD3] bg-white p-2 shadow-2xl animate-in fade-in zoom-in-95 duration-150"
+                        className="fixed z-[90] w-80 rounded-xl border border-edge-subtle bg-white p-2 shadow-2xl animate-in fade-in zoom-in-95 duration-150"
                         style={slashAt
                             ? {
                                 // Kept inside the window: near the right edge or
@@ -1011,8 +1011,8 @@ export default function Editor({
                             }
                             : { left: 24, top: 64 }}
                     >
-                        <div className="flex items-center gap-2 px-2.5 py-2 border-b border-[#E5DCD3]/60 mb-1.5">
-                            <MagnifyingGlass size={15} className="text-[#78716C]" />
+                        <div className="flex items-center gap-2 px-2.5 py-2 border-b border-edge-subtle mb-1.5">
+                            <MagnifyingGlass size={15} className="text-ink-muted" />
                             <input
                                 type="text"
                                 value={slashQuery}
@@ -1036,20 +1036,20 @@ export default function Editor({
                                     }
                                 }}
                                 placeholder="Type to filter blocks..."
-                                className="w-full text-xs text-[#1C1917] placeholder:text-stone-400 focus:outline-none bg-transparent font-medium"
+                                className="w-full text-xs text-ink placeholder:text-ink-muted focus:outline-none bg-transparent font-medium"
                                 autoFocus
                             />
                             <button
                                 type="button"
                                 onClick={() => setSlashOpen(false)}
-                                className="text-[10px] text-stone-400 hover:text-stone-600 px-1 py-0.5 rounded bg-stone-100"
+                                className="text-[10px] text-ink-muted hover:text-ink-secondary px-1 py-0.5 rounded-lg bg-ground-sunk"
                             >
                                 Esc
                             </button>
                         </div>
                         <div className="max-h-64 overflow-y-auto space-y-0.5 pr-1">
                             {filteredSlashCommands.length === 0 ? (
-                                <div className="py-4 text-center text-xs text-stone-400">
+                                <div className="py-4 text-center text-xs text-ink-muted">
                                     No blocks matching {slashQuery}
                                 </div>
                             ) : (
@@ -1064,7 +1064,7 @@ export default function Editor({
                                     }, {}),
                                 ).map(([group, cmds]) => (
                                     <div key={group}>
-                                        <p className="px-2.5 pb-1 pt-2 text-[10px] font-semibold uppercase tracking-wide text-stone-400">
+                                        <p className="px-2.5 pb-1 pt-2 text-[10px] font-semibold uppercase tracking-wide text-ink-muted">
                                             {group}
                                         </p>
                                         {cmds.map((cmd) => {
@@ -1077,15 +1077,15 @@ export default function Editor({
                                                     type="button"
                                                     onClick={() => executeSlashCommand(cmd)}
                                                     onMouseEnter={() => setSlashIndex(idx)}
-                                                    className={`w-full flex items-center gap-3 rounded-xl px-2.5 py-2 text-left text-xs transition-colors cursor-pointer ${isSelected ? 'bg-[#8C532B]/10 text-[#8C532B]' : 'hover:bg-stone-50 text-[#1C1917]'
+                                                    className={`w-full flex items-center gap-3 rounded-xl px-2.5 py-2 text-left text-xs transition-colors cursor-pointer ${isSelected ? 'bg-accent/10 text-accent-ink' : 'hover:bg-ground text-ink'
                                                         }`}
                                                 >
-                                                    <div className={`p-1.5 rounded-lg shrink-0 ${isSelected ? 'bg-white shadow-sm text-[#8C532B]' : 'bg-stone-100 text-stone-600'}`}>
+                                                    <div className={`p-1.5 rounded-lg shrink-0 ${isSelected ? 'bg-white shadow-sm text-accent-ink' : 'bg-ground-sunk text-ink-secondary'}`}>
                                                         <Icon size={16} />
                                                     </div>
                                                     <div className="min-w-0 flex-1">
                                                         <div className="font-semibold truncate">{cmd.title}</div>
-                                                        <div className="text-[10px] text-stone-500 truncate">{cmd.desc}</div>
+                                                        <div className="text-[10px] text-ink-muted truncate">{cmd.desc}</div>
                                                     </div>
                                                 </button>
                                             );
@@ -1099,25 +1099,25 @@ export default function Editor({
             </div>
 
             {/* Editorial Footer Bar (Word Count & Metrics) */}
-            <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[#E5DCD3] bg-stone-50/70 px-5 py-2.5 text-xs text-stone-500 font-sans">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-t border-edge-subtle bg-ground/70 px-5 py-2.5 text-xs text-ink-muted font-sans">
                 <div className="flex items-center gap-4">
                     <span className="flex items-center gap-1.5">
-                        <Article size={14} className="text-stone-400" />
-                        <span className="font-semibold text-stone-700 tabular-nums">{stats.words}</span> words
+                        <Article size={14} className="text-ink-muted" />
+                        <span className="font-semibold text-ink-secondary tabular-nums">{stats.words}</span> words
                     </span>
-                    <span className="text-stone-400">·</span>
+                    <span className="text-ink-muted">·</span>
                     <span>
-                        <span className="font-semibold text-stone-700 tabular-nums">{stats.characters}</span> characters
+                        <span className="font-semibold text-ink-secondary tabular-nums">{stats.characters}</span> characters
                     </span>
-                    <span className="text-stone-400">·</span>
+                    <span className="text-ink-muted">·</span>
                     <span className="flex items-center gap-1 tabular-nums">
-                        <Clock size={13} className="text-stone-400" />
+                        <Clock size={13} className="text-ink-muted" />
                         {stats.readingTime} min read
                     </span>
                 </div>
-                <div className="flex items-center gap-3 text-[11px] text-stone-400 font-medium">
+                <div className="flex items-center gap-3 text-[11px] text-ink-muted font-medium">
                     <span>
-                        Type <kbd className="px-1.5 py-0.5 rounded bg-stone-200 text-stone-700 text-[10px] font-mono">/</kbd> for block commands
+                        Type <kbd className="px-1.5 py-0.5 rounded-lg bg-ground-sunk text-ink-secondary text-[10px] font-mono">/</kbd> for block commands
                     </span>
                 </div>
             </div>
@@ -1136,8 +1136,8 @@ export default function Editor({
             <Dialog open={linkModalOpen} onOpenChange={setLinkModalOpen}>
                 <DialogContent className="sm:max-w-md font-sans">
                     <DialogHeader>
-                        <DialogTitle className="text-sm font-bold text-[#1C1917]">Insert Hyperlink</DialogTitle>
-                        <DialogDescription className="text-xs text-stone-500">
+                        <DialogTitle className="text-sm font-bold text-ink">Insert Hyperlink</DialogTitle>
+                        <DialogDescription className="text-xs text-ink-muted">
                             Enter the destination URL for the highlighted text.
                         </DialogDescription>
                     </DialogHeader>
@@ -1147,7 +1147,7 @@ export default function Editor({
                             value={linkUrl}
                             onChange={(e) => setLinkUrl(e.target.value)}
                             placeholder="https://example.com"
-                            className="w-full px-3 py-2 rounded-xl border border-[#E5DCD3] bg-stone-50 text-xs text-[#1C1917] placeholder:text-stone-400 focus:outline-none focus:border-[#8C532B] focus:ring-1 focus:ring-[#8C532B]/30"
+                            className="w-full px-3 py-2 rounded-xl border border-edge-subtle bg-ground text-xs text-ink placeholder:text-ink-muted focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30"
                             autoFocus
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter') {

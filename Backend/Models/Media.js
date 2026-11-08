@@ -156,6 +156,8 @@ const mediaSchema = new mongoose.Schema({
         attempts: { type: Number, default: 0 },
         lastError: { type: String },
         startedAt: { type: Date },
+        filesReadyForJob: { type: String },
+        placementsSyncedForJob: { type: String },
     },
 
     // Original S3 key for assets migrated off the legacy bucket — lets the

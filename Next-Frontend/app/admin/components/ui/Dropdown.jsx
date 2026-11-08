@@ -17,7 +17,7 @@ export function DropdownMenuContent({ className, sideOffset = 4, ...props }) {
       <DropdownMenuPrimitive.Content
         sideOffset={sideOffset}
         className={cn(
-          'z-50 min-w-[8rem] overflow-hidden rounded-xl border border-amber-900/10 bg-white/95 p-1 text-stone-700 shadow-xl backdrop-blur-md animate-in fade-in-80',
+          'z-50 min-w-[8rem] overflow-hidden rounded-xl border border-edge-subtle bg-ground-raised p-1 text-ink-secondary shadow-overlay animate-in fade-in-80',
           className
         )}
         {...props}
@@ -30,7 +30,7 @@ export function DropdownMenuItem({ className, inset, ...props }) {
   return (
     <DropdownMenuPrimitive.Item
       className={cn(
-        'relative flex cursor-pointer select-none items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium outline-none transition-colors hover:bg-[#FAF1E6] hover:text-[#74583E] focus:bg-[#FAF1E6] focus:text-[#74583E] data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+        'relative flex cursor-pointer select-none items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium outline-none transition-colors hover:bg-ground-sunk hover:text-accent-ink focus:bg-ground-sunk focus:text-accent-ink data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
         inset && 'pl-8',
         className
       )}
@@ -43,7 +43,7 @@ export function DropdownMenuLabel({ className, inset, ...props }) {
   return (
     <DropdownMenuPrimitive.Label
       className={cn(
-        'px-3 py-1.5 text-[11px] font-semibold tracking-wider uppercase text-stone-400 font-sans',
+        'px-3 py-1.5 text-[11px] font-semibold tracking-wider uppercase text-ink-muted font-sans',
         inset && 'pl-8',
         className
       )}

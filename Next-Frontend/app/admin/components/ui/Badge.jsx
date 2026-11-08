@@ -3,14 +3,16 @@
 import { cn } from '@/lib/utils.js';
 
 const variantStyles = {
-  gold: 'bg-orange-50 text-orange-600 border border-orange-200/50 shadow-sm',
-  terracotta: 'bg-red-50 text-red-600 border border-red-200/50',
+  // Brand: gold is ornament, accent is "needs attention". Status colours below
+  // carry meaning (success / warning / danger) and stay distinct from the brand.
+  gold: 'bg-gold-soft text-ink border border-gold/40',
+  terracotta: 'bg-accent-wash text-accent-ink border border-accent/25',
   success: 'bg-emerald-50 text-emerald-700 border border-emerald-200/80',
   warning: 'bg-amber-50 text-amber-700 border border-amber-200/80',
   danger: 'bg-rose-50 text-rose-700 border border-rose-200/80',
-  neutral: 'bg-stone-100 text-stone-700 border border-stone-200/80',
-  outline: 'bg-white/70 text-stone-700 border border-stone-200 backdrop-blur-sm',
-  luxury: 'bg-gradient-to-r from-red-500 to-rose-500 text-white shadow-sm shadow-red-900/10 border-none',
+  neutral: 'bg-ground-sunk text-ink-secondary border border-edge-subtle',
+  outline: 'bg-ground-raised text-ink-secondary border border-edge-subtle',
+  luxury: 'bg-accent text-ink-onAccent border border-accent',
 };
 
 const sizeStyles = {
@@ -22,7 +24,7 @@ const sizeStyles = {
 export function Badge({
   children,
   className,
-  variant = 'terracotta',
+  variant = 'neutral',
   size = 'md',
   dot = false,
   dotColor,
@@ -32,7 +34,7 @@ export function Badge({
     <span
       className={cn(
         'inline-flex items-center gap-1.5 font-sans font-medium rounded-full transition-colors select-none whitespace-nowrap',
-        variantStyles[variant] || variantStyles.terracotta,
+        variantStyles[variant] || variantStyles.neutral,
         sizeStyles[size] || sizeStyles.md,
         className
       )}

@@ -1,16 +1,23 @@
+import 'dotenv/config';
 import express from 'express'
-import dotenv from 'dotenv'
 import DBconnection from './Config/DBconnection.js';
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
-dotenv.config();
+import { startEnquiryNotifications } from './Services/enquiryNotifications.js';
+import mongoose from 'mongoose';
+import Enquiry from './Models/EnquirySchema.js';
+import Media from './Models/Media.js';
+import MediaJob from './Models/MediaJob.js';
+import { protectAdmin } from './Middleware/adminPolicy.js';
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
+// The API is reverse-proxied by local Nginx. Never trust arbitrary forwarded IPs.
+app.set('trust proxy', process.env.TRUST_PROXY || 'loopback');
 // middlewares
 const corsOptions = {
     origin: process.env.NODE_ENV === 'production'
-        ? ['https://theweddingboys.in', 'https://www.theweddingboys.in']
-        : ['http://localhost:5173', 'http://localhost:3000', 'http://admin.localhost:3000'],
+        ? ['https://theweddingvachan.com', 'https://www.theweddingvachan.com', 'https://admin.theweddingvachan.com']
+        : ['http://localhost:3000', 'http://localhost:3001', 'http://admin.localhost:3000', 'http://admin.localhost:3001'],
     credentials: true,
 };
 
@@ -19,6 +26,11 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser(process.env.COOKIE_SECRET_KEY))
+app.get('/api/health', (_req, res) => {
+    const ready = mongoose.connection.readyState === 1;
+    return res.status(ready ? 200 : 503).json({ status: ready ? 'ready' : 'unavailable' });
+});
+app.use('/api/admin', protectAdmin);
 
 // Routes
 // it include add & updating client details
@@ -62,6 +74,7 @@ import publicContentRoute from './Routes/User/contentRoute.js'
 import adminContentRoute from './Routes/Admin/contentRoute.js'
 import pricingConfigRoute from './Routes/User/pricingConfigRoute.js'
 import adminOpsRoute from './Routes/Admin/adminOpsRoute.js'
+import sequenceRoute from './Routes/sequenceRoute.js'
 import { startBlogPublishScheduler } from './Services/blogPublishScheduler.js';
 // browser→R2 direct upload control plane (create/sign/parts/complete/abort)
 import uploadRoute from './Routes/Admin/uploadRoute.js'
@@ -88,6 +101,7 @@ app.use(publicCommentRoute)
 app.use(publicBlogAnalyticsRoute)
 app.use(publicContentRoute)
 app.use(pricingConfigRoute)
+app.use(sequenceRoute)
 // ceremonies master taxonomy — public list + verifyToken-guarded admin CRUD
 app.use(ceremonyRoute)
 // tag system admin — verifyToken scoped to /api/admin/taxonomy inside the router
@@ -122,11 +136,24 @@ app.use(adminContentRoute)
 // pricing CRUD, globals, analytics — verifyToken applied inside the router
 app.use(adminOpsRoute)
 
-const server = () => {
-    DBconnection()
-    startBlogPublishScheduler()
+
+const server = async () => {
+    for (const key of ['MONGO_URI', 'JWT_SECRET_KEY', 'COOKIE_SECRET_KEY']) {
+        if (!process.env[key]) throw new Error(`${key} is required`);
+    }
+    await DBconnection();
+    await Promise.all([
+        Enquiry.init(), MediaJob.init(),
+        Media.collection.createIndex({ mediaId: 1 }, { unique: true }),
+    ]);
+    startBlogPublishScheduler();
+    startEnquiryNotifications();
     app.listen(PORT, () => {
         console.log('Listning...')
     })
 }
-server();
+server().catch(async (error) => {
+    console.error('API startup failed:', error.message);
+    await mongoose.disconnect();
+    process.exitCode = 1;
+});

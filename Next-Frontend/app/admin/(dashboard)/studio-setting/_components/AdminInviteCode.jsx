@@ -79,16 +79,16 @@ export default function AdminInviteCode() {
 
   return (
     <div className="font-sans max-w-xl">
-      <Card className="border-[#E5DCD3] bg-white shadow-sm">
+      <Card className="border-edge-subtle bg-white shadow-sm">
         <CardContent className="p-6 space-y-5">
-          <div className="flex items-center justify-between border-b border-stone-100 pb-3">
+          <div className="flex items-center justify-between border-b border-edge-subtle pb-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-stone-100 border border-stone-200 flex items-center justify-center text-stone-700">
+              <div className="w-8 h-8 rounded-lg bg-ground-sunk border border-edge-subtle flex items-center justify-center text-ink-secondary">
                 <Key size={16} />
               </div>
               <div>
-                <h3 className="text-xs font-bold text-[#1C1917]">Team Admin Invite Code</h3>
-                <p className="text-[11px] text-stone-500">
+                <h3 className="text-xs font-bold text-ink">Team Admin Invite Code</h3>
+                <p className="text-[11px] text-ink-muted">
                   Required when new studio administrators register on the system.
                 </p>
               </div>
@@ -105,8 +105,8 @@ export default function AdminInviteCode() {
           </div>
 
           {/* Code display box */}
-          <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-stone-50 border border-stone-200">
-            <div className="font-mono text-sm tracking-wider font-semibold text-[#1C1917] tabular-nums">
+          <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-ground border border-edge-subtle">
+            <div className="font-mono text-sm tracking-wider font-semibold text-ink tabular-nums">
               {isCodeVisible ? inviteCode?.code || '—' : '••••••••••••'}
             </div>
 
@@ -135,14 +135,14 @@ export default function AdminInviteCode() {
           {/* Details metadata */}
           <div className="grid grid-cols-2 gap-3 text-xs">
             <div>
-              <span className="text-stone-400 font-medium text-[11px]">Expires At</span>
-              <p className="font-semibold text-stone-800 tabular-nums mt-0.5">
+              <span className="text-ink-muted font-medium text-[11px]">Expires At</span>
+              <p className="font-semibold text-ink tabular-nums mt-0.5">
                 {inviteCode?.date || 'Never / Standard'}
               </p>
             </div>
             <div>
-              <span className="text-stone-400 font-medium text-[11px]">Issued By</span>
-              <p className="font-semibold text-stone-800 truncate mt-0.5">
+              <span className="text-ink-muted font-medium text-[11px]">Issued By</span>
+              <p className="font-semibold text-ink truncate mt-0.5">
                 {inviteCode?.createdBy || 'System Administrator'}
               </p>
             </div>
@@ -162,26 +162,26 @@ export default function AdminInviteCode() {
           </div>
 
           {/* Explanatory FAQ accordian */}
-          <div className="border-t border-stone-100 pt-3">
+          <div className="border-t border-edge-subtle pt-3">
             <button
               onClick={() => setFaqOpen((prev) => !prev)}
-              className="flex items-center justify-between w-full text-xs font-semibold text-stone-700 hover:text-[#1C1917] transition-colors cursor-pointer"
+              className="flex items-center justify-between w-full text-xs font-semibold text-ink-secondary hover:text-ink transition-colors cursor-pointer"
             >
               <span className="flex items-center gap-1.5">
-                <Question size={14} className="text-stone-400" />
+                <Question size={14} className="text-ink-muted" />
                 How do Admin Invite Codes work?
               </span>
               <CaretDown
                 size={14}
-                className={`text-stone-400 transition-transform duration-150 ${
+                className={`text-ink-muted transition-transform duration-150 ${
                   faqOpen ? 'rotate-180' : ''
                 }`}
               />
             </button>
 
             {faqOpen && (
-              <p className="mt-2 text-xs text-stone-500 leading-relaxed bg-stone-50 p-3 rounded-xl border border-stone-200">
-                This single-purpose invite code grants trusted crew members permission to register an admin account for The Wedding Boys. Regenerating invalidates previous codes immediately.
+              <p className="mt-2 text-xs text-ink-muted leading-relaxed bg-ground p-3 rounded-xl border border-edge-subtle">
+                This single-purpose invite code grants trusted crew members permission to register an admin account for The Wedding Vachan. Regenerating invalidates previous codes immediately.
               </p>
             )}
           </div>

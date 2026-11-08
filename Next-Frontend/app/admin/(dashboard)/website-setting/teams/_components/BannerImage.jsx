@@ -111,13 +111,13 @@ export default function BannerImage({ bannerImage, fetchTeamImage }) {
     const activeHeroes = (bannerImage || []).filter((i) => i.isHero);
 
     return (
-        <div className="rounded-2xl border border-[#E7E2DA] bg-white p-6 shadow-sm space-y-5">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-[#F5F2EC] pb-4">
+        <div className="rounded-xl border border-edge-subtle bg-white p-6 shadow-sm space-y-5">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-edge-subtle pb-4">
                 <div className="flex items-center gap-2.5">
-                    <Images size={20} weight="duotone" className="text-[#C5A880]" />
+                    <Images size={20} weight="duotone" className="text-gold-strong" />
                     <div>
-                        <h2 className="text-lg font-serif font-semibold text-[#1C1917]">Team Masthead Mosaic</h2>
-                        <p className="text-xs font-sans text-[#78716C]">
+                        <h2 className="text-lg font-sans font-semibold text-ink">Team Masthead Mosaic</h2>
+                        <p className="text-xs font-sans text-ink-muted">
                             Hero images that form the wide header collage on the public team page.
                         </p>
                     </div>
@@ -164,14 +164,14 @@ export default function BannerImage({ bannerImage, fetchTeamImage }) {
                 <div className="mb-4 space-y-1.5">
                     {items.map((it) => (
                         <div key={it.id} className="flex items-center gap-3 text-xs">
-                            <span className="w-48 truncate text-stone-600">{it.name}</span>
-                            <div className="h-1 flex-1 overflow-hidden rounded-full bg-stone-100">
+                            <span className="w-48 truncate text-ink-secondary">{it.name}</span>
+                            <div className="h-1 flex-1 overflow-hidden rounded-full bg-ground-sunk">
                                 <div
-                                    className={`h-full rounded-full transition-all ${it.status === 'error' ? 'bg-red-400' : it.status === 'done' ? 'bg-green-500' : 'bg-[#C5A880]'}`}
+                                    className={`h-full rounded-full transition-all ${it.status === 'error' ? 'bg-red-400' : it.status === 'done' ? 'bg-green-500' : 'bg-gold'}`}
                                     style={{ width: `${it.progress || 0}%` }}
                                 />
                             </div>
-                            <span className={`w-28 shrink-0 ${it.status === 'error' ? 'text-red-600' : 'text-stone-400'}`}>
+                            <span className={`w-28 shrink-0 ${it.status === 'error' ? 'text-accent-ink' : 'text-ink-muted'}`}>
                                 {it.status === 'error' ? it.error : `${it.status} ${it.progress || 0}%`}
                             </span>
                         </div>
@@ -180,9 +180,9 @@ export default function BannerImage({ bannerImage, fetchTeamImage }) {
             )}
 
             {isEditing && (
-                <div className="space-y-4 rounded-xl border border-dashed border-[#C5A880] bg-[#FAF8F5] p-4">
+                <div className="space-y-4 rounded-xl border border-dashed border-gold bg-ground p-4">
                     <div className="flex items-center justify-between">
-                        <span className="text-xs font-medium font-sans text-[#1C1917]">Stage New Masthead Photos</span>
+                        <span className="text-xs font-medium font-sans text-ink">Stage New Masthead Photos</span>
                         <div className="flex items-center gap-2">
                             <input
                                 id="bannerImage"
@@ -194,7 +194,7 @@ export default function BannerImage({ bannerImage, fetchTeamImage }) {
                             />
                             <label
                                 htmlFor="bannerImage"
-                                className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-[#E7E2DA] bg-white px-3 py-1.5 text-xs font-medium font-sans text-[#1C1917] shadow-sm transition hover:bg-[#F7F4EF]"
+                                className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-edge-subtle bg-white px-3 py-1.5 text-xs font-medium font-sans text-ink shadow-sm transition hover:bg-ground"
                             >
                                 <Plus size={14} weight="bold" /> Choose Images
                             </label>
@@ -217,12 +217,12 @@ export default function BannerImage({ bannerImage, fetchTeamImage }) {
                     {imagePreview.length > 0 && (
                         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                             {imagePreview.map((img) => (
-                                <div key={img.name} className="relative aspect-video overflow-hidden rounded-xl border border-[#E7E2DA] bg-white shadow-sm">
+                                <div key={img.name} className="relative aspect-video overflow-hidden rounded-xl border border-edge-subtle bg-white shadow-sm">
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img className="h-full w-full object-cover" alt="Staged" src={img.url} />
                                     <button
                                         type="button"
-                                        className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-white text-[#78716C] shadow-md hover:text-rose-600"
+                                        className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-white text-ink-muted shadow-md hover:text-rose-600"
                                         onClick={() => {
                                             setImagePreview((prev) => prev.filter((file) => file.name !== img.name));
                                             setFiles((prev) => prev.filter((file) => file.name !== img.name));
@@ -240,13 +240,13 @@ export default function BannerImage({ bannerImage, fetchTeamImage }) {
 
             {/* Current Masthead Collage Display */}
             {activeHeroes.length === 0 ? (
-                <div className="rounded-xl border border-dashed border-[#D6D0C5] p-10 text-center text-xs font-sans text-[#78716C]">
+                <div className="rounded-xl border border-dashed border-edge-strong p-10 text-center text-xs font-sans text-ink-muted">
                     No masthead photos currently active. Click &quot;Edit Masthead&quot; to stage pictures.
                 </div>
             ) : (
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
                     {activeHeroes.map((image) => (
-                        <div key={image._id} className="group relative aspect-video overflow-hidden rounded-xl border border-[#E7E2DA] bg-[#FAF8F5] shadow-sm">
+                        <div key={image._id} className="group relative aspect-video overflow-hidden rounded-xl border border-edge-subtle bg-ground shadow-sm">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                                 className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
@@ -256,7 +256,7 @@ export default function BannerImage({ bannerImage, fetchTeamImage }) {
                             {isEditing && (
                                 <button
                                     type="button"
-                                    className="absolute right-2.5 top-2.5 flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#78716C] shadow-md hover:text-rose-600 transition"
+                                    className="absolute right-2.5 top-2.5 flex h-7 w-7 items-center justify-center rounded-full bg-white text-ink-muted shadow-md hover:text-rose-600 transition"
                                     onClick={() => deleteBannerImage(image._id)}
                                 >
                                     <Trash size={14} weight="bold" />

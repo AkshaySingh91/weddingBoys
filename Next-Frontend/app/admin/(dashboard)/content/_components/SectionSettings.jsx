@@ -41,8 +41,8 @@ const FIELDS = {
 };
 
 const SORTS = [['newestShoot', 'Newest shoot first'], ['newestPublished', 'Newest published first'], ['featured', 'Featured first (spotlight)']];
-const input = 'h-9 w-full rounded-lg border border-stone-300 bg-white px-3 text-sm outline-none focus:border-[#D9342A]';
-const labelCls = 'mb-1 block text-[11px] font-semibold uppercase tracking-wide text-stone-500';
+const input = 'h-9 w-full rounded-lg border border-edge-strong bg-white px-3 text-sm outline-none focus:border-accent';
+const labelCls = 'mb-1 block text-[11px] font-semibold uppercase tracking-wide text-ink-muted';
 
 export const hasSectionSettings = (component) => Boolean(FIELDS[component]);
 
@@ -79,7 +79,7 @@ export default function SectionSettings({ base, component, pageKey }) {
     };
 
     return (
-        <div className="mt-3 space-y-4 rounded-xl border border-stone-200 bg-stone-50/60 p-4">
+        <div className="mt-3 space-y-4 rounded-xl border border-edge-subtle bg-ground/60 p-4">
             {fields.map((f) => {
                 const value = settings[f.name];
                 if (f.type === 'text') {
@@ -100,7 +100,7 @@ export default function SectionSettings({ base, component, pageKey }) {
                 }
                 if (f.type === 'check') {
                     return (
-                        <label key={f.name} className="flex items-center gap-2 text-xs text-stone-700">
+                        <label key={f.name} className="flex items-center gap-2 text-xs text-ink-secondary">
                             <input type="checkbox" checked={Boolean(value)} onChange={(e) => set(f.name, e.target.checked)} /> {f.label}
                         </label>
                     );
@@ -149,25 +149,25 @@ export default function SectionSettings({ base, component, pageKey }) {
                                 {list.map((k, i) => {
                                     const r = byKey.get(k);
                                     return (
-                                        <li key={k} className="flex items-center gap-2 rounded-lg border border-stone-200 bg-white px-2.5 py-1.5 text-xs">
-                                            <span className="w-5 text-center text-stone-400">{i + 1}</span>
+                                        <li key={k} className="flex items-center gap-2 rounded-lg border border-edge-subtle bg-white px-2.5 py-1.5 text-xs">
+                                            <span className="w-5 text-center text-ink-muted">{i + 1}</span>
                                             <span className="flex-1 truncate">{r ? r.title : <span className="text-rose-600">{k} (missing)</span>}
-                                                {r && <span className="ml-1 text-stone-400">· {r.shown}/{r.limit}{r.status === 'Draft' ? ' · draft row' : ''}</span>}
+                                                {r && <span className="ml-1 text-ink-muted">· {r.shown}/{r.limit}{r.status === 'Draft' ? ' · draft row' : ''}</span>}
                                             </span>
-                                            {r && <Link href={`/admin/collections/${r._id}`} target="_blank" className="text-[#D9342A] hover:underline" title="Edit this row"><ArrowSquareOut size={13} /></Link>}
+                                            {r && <Link href={`/admin/collections/${r._id}`} target="_blank" className="text-accent-ink hover:underline" title="Edit this row"><ArrowSquareOut size={13} /></Link>}
                                             <button type="button" disabled={i === 0} onClick={() => move(i, -1)} className="p-0.5 disabled:opacity-30" aria-label="Up"><ArrowUp size={13} /></button>
                                             <button type="button" disabled={i === list.length - 1} onClick={() => move(i, 1)} className="p-0.5 disabled:opacity-30" aria-label="Down"><ArrowDown size={13} /></button>
-                                            <button type="button" onClick={() => set(f.name, list.filter((x) => x !== k))} className="p-0.5 text-stone-500 hover:text-rose-600" aria-label="Remove"><X size={13} /></button>
+                                            <button type="button" onClick={() => set(f.name, list.filter((x) => x !== k))} className="p-0.5 text-ink-muted hover:text-rose-600" aria-label="Remove"><X size={13} /></button>
                                         </li>
                                     );
                                 })}
                             </ul>
                             <div className="mt-2 flex flex-wrap items-center gap-2">
-                                <select className="h-8 rounded-lg border border-stone-300 bg-white px-2 text-xs" value="" onChange={(e) => e.target.value && set(f.name, [...list, e.target.value])}>
+                                <select className="h-8 rounded-lg border border-edge-strong bg-white px-2 text-xs" value="" onChange={(e) => e.target.value && set(f.name, [...list, e.target.value])}>
                                     <option value="">Add a row…</option>
                                     {options.map((r) => <option key={r.key} value={r.key}>{r.title} ({r.key})</option>)}
                                 </select>
-                                <Link href="/admin/collections" target="_blank" className="inline-flex items-center gap-1 text-xs text-[#D9342A] hover:underline"><Plus size={12} /> New row</Link>
+                                <Link href="/admin/collections" target="_blank" className="inline-flex items-center gap-1 text-xs text-accent-ink hover:underline"><Plus size={12} /> New row</Link>
                             </div>
                         </div>
                     );
@@ -184,22 +184,22 @@ export default function SectionSettings({ base, component, pageKey }) {
                                     return (
                                         <button key={g.key} type="button"
                                             onClick={() => set(f.name, at >= 0 ? list.filter((x) => x !== g.key) : [...list, g.key])}
-                                            className={`rounded-full border px-2.5 py-1 text-xs ${at >= 0 ? 'border-[#D9342A] bg-[#D9342A] text-white' : 'border-stone-300 bg-white text-stone-700'}`}>
+                                            className={`rounded-full border px-2.5 py-1 text-xs ${at >= 0 ? 'border-accent bg-accent text-white' : 'border-edge-strong bg-white text-ink-secondary'}`}>
                                             {at >= 0 ? `${at + 1}. ` : ''}{g.label}
                                         </button>
                                     );
                                 })}
                             </div>
-                            <p className="mt-1 text-[11px] text-stone-500">Click in the order they should appear.</p>
+                            <p className="mt-1 text-[11px] text-ink-muted">Click in the order they should appear.</p>
                         </div>
                     );
                 }
                 return null;
             })}
 
-            <div className="border-t border-stone-200 pt-3">
+            <div className="border-t border-edge-subtle pt-3">
                 <button type="button" onClick={runPreview} disabled={previewing}
-                    className="rounded-lg border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium text-stone-700 hover:bg-stone-50 disabled:opacity-50">
+                    className="rounded-lg border border-edge-strong bg-white px-3 py-1.5 text-xs font-medium text-ink-secondary hover:bg-ground disabled:opacity-50">
                     {previewing ? 'Resolving…' : 'Preview what this shows'}
                 </button>
                 {preview && <PreviewSummary data={preview} />}
@@ -216,23 +216,23 @@ function PreviewSummary({ data }) {
         <div className="mt-3 space-y-3">
             {lists?.map((r) => (
                 <div key={r.key}>
-                    <p className="text-xs font-semibold text-stone-800">{r.title} <span className="font-normal text-stone-500">· {r.items.length}</span></p>
+                    <p className="text-xs font-semibold text-ink">{r.title} <span className="font-normal text-ink-muted">· {r.items.length}</span></p>
                     <div className="mt-1 flex gap-1 overflow-x-auto">
                         {r.items.slice(0, 10).map((i, n) => {
                             const src = i.thumbnailUrl || i.posterUrl || i.url;
                             return (
-                                <span key={n} className="h-10 w-16 shrink-0 overflow-hidden rounded bg-stone-200">
+                                <span key={n} className="h-10 w-16 shrink-0 overflow-hidden rounded-lg bg-ground-sunk">
                                     {/* eslint-disable-next-line @next/next/no-img-element -- admin thumbnail */}
                                     {src && <img src={src} alt="" className="h-full w-full object-cover" />}
                                 </span>
                             );
                         })}
-                        {!r.items.length && <span className="text-xs text-stone-500">Empty</span>}
+                        {!r.items.length && <span className="text-xs text-ink-muted">Empty</span>}
                     </div>
                 </div>
             ))}
             {data.facets && (
-                <p className="text-xs text-stone-700">Filters: {data.facets.map((f) => `${f.label} (${f.tags.length})`).join(', ') || 'none'} · {data.pageSize} per page</p>
+                <p className="text-xs text-ink-secondary">Filters: {data.facets.map((f) => `${f.label} (${f.tags.length})`).join(', ') || 'none'} · {data.pageSize} per page</p>
             )}
         </div>
     );

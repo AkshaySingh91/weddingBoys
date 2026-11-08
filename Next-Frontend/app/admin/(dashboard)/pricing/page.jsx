@@ -16,9 +16,9 @@ import { BUILT_IN_PACKAGES } from '@/lib/builtInPackages.js';
 const api_url = process.env.NEXT_PUBLIC_API_URL;
 const rupees = (n) => `₹${Number(n || 0).toLocaleString('en-IN')}`;
 const lines = (text) => String(text || '').split('\n').map((l) => l.trim()).filter(Boolean);
-const input = 'h-9 w-full rounded-lg border border-stone-300 bg-white px-3 text-sm outline-none focus:border-[#D9342A]';
-const area = 'w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm outline-none focus:border-[#D9342A]';
-const labelCls = 'mb-1 block text-[11px] font-semibold uppercase tracking-wide text-stone-500';
+const input = 'h-9 w-full rounded-lg border border-edge-strong bg-white px-3 text-sm outline-none focus:border-accent';
+const area = 'w-full rounded-lg border border-edge-strong bg-white px-3 py-2 text-sm outline-none focus:border-accent';
+const labelCls = 'mb-1 block text-[11px] font-semibold uppercase tracking-wide text-ink-muted';
 
 async function call(path, options = {}) {
     const res = await fetch(`${api_url}${path}`, {
@@ -182,10 +182,10 @@ export default function PricingPage() {
                 <Button variant="terracotta" size="sm" icon={Plus} onClick={() => setEditing({ id: null, form: { ...EMPTY } })}>New package</Button>
             </PageHeader>
 
-            {!list ? <p className="text-sm text-stone-500">Loading…</p> : list.length === 0 ? (
-                <div className="rounded-2xl border border-[#E7E2DA] bg-white p-6 space-y-3">
-                    <h2 className="font-serif text-xl text-[#1C1917]">No packages yet</h2>
-                    <p className="text-sm text-[#57534E] max-w-2xl">
+            {!list ? <p className="text-sm text-ink-muted">Loading…</p> : list.length === 0 ? (
+                <div className="rounded-xl border border-edge-subtle bg-white p-6 space-y-3">
+                    <h2 className="font-sans text-xl text-ink">No packages yet</h2>
+                    <p className="text-sm text-ink-secondary max-w-2xl">
                         The site shows its four built-in packages until the first one is added here. Copy them in to edit them, or start from scratch. From the first package on, the site shows only what is here.
                     </p>
                     <div className="flex flex-wrap gap-2">
@@ -203,27 +203,27 @@ export default function PricingPage() {
                         {list.map((p, i) => {
                             const save = p.discountedPrice && p.discountedPrice < p.originalPrice;
                             return (
-                                <li key={p._id} className={`flex flex-wrap items-center gap-4 rounded-2xl border border-studio-border bg-white p-4 ${p.isActive ? '' : 'opacity-60'}`}>
+                                <li key={p._id} className={`flex flex-wrap items-center gap-4 rounded-xl border border-studio-border bg-white p-4 ${p.isActive ? '' : 'opacity-60'}`}>
                                     <div className="flex flex-col">
-                                        <button type="button" disabled={i === 0} onClick={() => move(i, -1)} className="rounded p-1 text-stone-500 hover:bg-stone-100 disabled:opacity-30" aria-label="Move up"><ArrowUp size={14} /></button>
-                                        <button type="button" disabled={i === list.length - 1} onClick={() => move(i, 1)} className="rounded p-1 text-stone-500 hover:bg-stone-100 disabled:opacity-30" aria-label="Move down"><ArrowDown size={14} /></button>
+                                        <button type="button" disabled={i === 0} onClick={() => move(i, -1)} className="rounded-lg p-1 text-ink-muted hover:bg-ground-sunk disabled:opacity-30" aria-label="Move up"><ArrowUp size={14} /></button>
+                                        <button type="button" disabled={i === list.length - 1} onClick={() => move(i, 1)} className="rounded-lg p-1 text-ink-muted hover:bg-ground-sunk disabled:opacity-30" aria-label="Move down"><ArrowDown size={14} /></button>
                                     </div>
                                     <div className="min-w-[220px] flex-1">
-                                        <p className="flex flex-wrap items-center gap-2 font-semibold text-stone-900">
+                                        <p className="flex flex-wrap items-center gap-2 font-semibold text-ink">
                                             {p.name}
                                             {p.isFeatured && <Badge variant="terracotta">Popular</Badge>}
                                             {!p.isActive && <Badge variant="neutral">Hidden</Badge>}
                                         </p>
-                                        {p.tagline && <p className="mt-0.5 text-xs text-stone-500">{p.tagline}</p>}
-                                        <p className="mt-1 text-xs text-stone-600">
+                                        {p.tagline && <p className="mt-0.5 text-xs text-ink-muted">{p.tagline}</p>}
+                                        <p className="mt-1 text-xs text-ink-secondary">
                                             {(p.team || []).length} crew, {(p.includes || []).filter((x) => x.included !== false).length} deliverables
                                         </p>
                                     </div>
                                     <p className="text-right">
-                                        <span className="block text-lg font-semibold text-[#B92B22]">{rupees(save ? p.discountedPrice : p.originalPrice)}</span>
-                                        {save && <span className="text-xs text-stone-400 line-through">{rupees(p.originalPrice)}</span>}
+                                        <span className="block text-lg font-semibold text-accent-ink">{rupees(save ? p.discountedPrice : p.originalPrice)}</span>
+                                        {save && <span className="text-xs text-ink-muted line-through">{rupees(p.originalPrice)}</span>}
                                     </p>
-                                    <label className="flex items-center gap-2 text-xs text-stone-600">
+                                    <label className="flex items-center gap-2 text-xs text-ink-secondary">
                                         <Switch checked={p.isActive} onChange={(v) => patch(p, { isActive: v })} aria-label="Show on the site" />
                                         On site
                                     </label>
@@ -264,10 +264,10 @@ export default function PricingPage() {
                                 <textarea rows={5} className={area} value={editing.form.included} onChange={(e) => set('included', e.target.value)} /></label>
                             <label className="sm:col-span-2"><span className={labelCls}>Not included (one per line, shown crossed out)</span>
                                 <textarea rows={3} className={area} value={editing.form.excluded} onChange={(e) => set('excluded', e.target.value)} /></label>
-                            <label className="flex items-center gap-2 text-sm text-stone-700">
+                            <label className="flex items-center gap-2 text-sm text-ink-secondary">
                                 <Switch checked={editing.form.isFeatured} onChange={(v) => set('isFeatured', v)} /> Mark as popular
                             </label>
-                            <label className="flex items-center gap-2 text-sm text-stone-700">
+                            <label className="flex items-center gap-2 text-sm text-ink-secondary">
                                 <Switch checked={editing.form.isActive} onChange={(v) => set('isActive', v)} /> Show on the site
                             </label>
                         </div>

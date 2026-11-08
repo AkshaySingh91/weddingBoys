@@ -29,7 +29,7 @@ export async function trackBlogEvent(req, res) {
             return res.status(400).json({ success: false, message: 'Invalid event type' });
         }
 
-        const post = await BlogPost.findOne({ slug }).select('_id isPublished');
+        const post = await BlogPost.findOne({ slug, status: 'Published' }).select('_id');
         if (!post) {
             return res.status(404).json({ success: false, message: 'Post not found' });
         }
@@ -73,7 +73,8 @@ export async function getBlogAnalytics(req, res) {
             currentComments,
             prevComments,
             topStoriesAgg,
-            velocityAgg
+            velocityAgg,
+            categoryStats
         ] = await Promise.all([
             // 1. All posts inventory
             BlogPost.find().select('_id title slug category status viewCount commentCount publishedAt readingTime').lean(),
@@ -156,6 +157,10 @@ export async function getBlogAnalytics(req, res) {
                     }
                 },
                 { $sort: { '_id.year': 1, '_id.month': 1 } }
+            ]),
+            BlogDailyStat.aggregate([
+                { $match: { date: { $gte: startDate } } },
+                { $group: { _id: '$blogPost', periodViews: { $sum: '$views' } } },
             ])
         ]);
 
@@ -177,9 +182,9 @@ export async function getBlogAnalytics(req, res) {
             totalCtaClicks += day.ctaClicks || 0;
         }
 
-        // Lifetime views fallback if range has 0 daily records yet
+        // Keep lifetime totals separate from the selected-period measurements.
         const lifetimeViews = allPosts.reduce((acc, p) => acc + (p.viewCount || 0), 0);
-        const displayViews = Math.max(totalViews, lifetimeViews);
+        const displayViews = totalViews;
 
         // Previous period metrics
         const prevStats = prevPeriodDailyStats[0] || {};
@@ -261,7 +266,7 @@ export async function getBlogAnalytics(req, res) {
             postsMap.set(p._id.toString(), p);
         }
 
-        let topStories = topStoriesAgg.map((item) => {
+        const topStories = topStoriesAgg.map((item) => {
             const p = postsMap.get(item._id?.toString()) || {};
             const views = item.periodViews || 0;
             const readCompletes = item.periodReadCompletes || 0;
@@ -279,32 +284,13 @@ export async function getBlogAnalytics(req, res) {
             };
         });
 
-        // Fallback: If no daily stats recorded yet, populate top stories from allPosts by viewCount/commentCount
-        if (topStories.length === 0) {
-            topStories = allPosts
-                .sort((a, b) => (b.viewCount || 0) - (a.viewCount || 0))
-                .slice(0, 10)
-                .map((p) => ({
-                    id: p._id,
-                    title: p.title,
-                    slug: p.slug,
-                    category: p.category || 'General',
-                    readingTime: p.readingTime || 3,
-                    views: p.viewCount || 0,
-                    readCompletes: Math.round((p.viewCount || 0) * 0.45),
-                    completionRate: p.viewCount > 0 ? 45 : 0,
-                    comments: p.commentCount || 0,
-                    ctaClicks: 0
-                }));
-        }
-
         // ---- F. Category Share Distribution ----
         const categoryMap = {};
         for (const p of allPosts) {
             const cat = p.category || 'Other';
             if (!categoryMap[cat]) categoryMap[cat] = { category: cat, postsCount: 0, views: 0 };
             categoryMap[cat].postsCount += 1;
-            categoryMap[cat].views += (p.viewCount || 0);
+            categoryMap[cat].views += categoryStats.find((stat) => stat._id?.toString() === p._id.toString())?.periodViews || 0;
         }
 
         const categoryShare = Object.values(categoryMap)
@@ -322,6 +308,8 @@ export async function getBlogAnalytics(req, res) {
                 publishedArticles,
                 draftArticles,
                 totalViews: displayViews,
+                lifetimeViews,
+                totalUniqueViews,
                 viewsTrendPercent,
                 avgReadCompletionRate: currentReadRate,
                 readRateTrendPercent,
@@ -335,7 +323,8 @@ export async function getBlogAnalytics(req, res) {
                 velocity
             },
             topStories,
-            categoryShare
+            categoryShare,
+            measurement: { periodStart: startDate, hasDailyRecords: currentPeriodDailyStats.length > 0, topStoryComments: 'lifetime' }
         });
     } catch (error) {
         console.error('[getBlogAnalytics] Error:', error);

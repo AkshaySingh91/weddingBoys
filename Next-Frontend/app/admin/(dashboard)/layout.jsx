@@ -39,7 +39,7 @@ export default function AdminDashboardLayout({ children }) {
   return (
     <QueryProvider>
       <AdminAuthProvider>
-        <div className="min-h-screen bg-[#FFF7EE] font-sans antialiased text-[#2F2F2F] selection:bg-[#FF5353]/20 selection:text-[#5E2B17]">
+        <div className="min-h-screen bg-ground font-sans antialiased text-ink selection:bg-accent/20 selection:text-ink">
           {/* Collapsible / Responsive Luxury Sidebar */}
           <AdminSidebar
             collapsed={collapsed}
@@ -66,11 +66,11 @@ export default function AdminDashboardLayout({ children }) {
             </main>
 
             {/* Subtle Studio Admin Footer */}
-            <footer className="py-4 px-6 border-t border-stone-200 text-center text-xs text-stone-500 flex flex-col sm:flex-row items-center justify-between gap-2 max-w-7xl mx-auto w-full">
-              <p className="font-medium text-stone-700">
-                The Wedding Boys Workspace • Studio Platform
+            <footer className="py-4 px-6 border-t border-edge-subtle text-center text-xs text-ink-muted flex flex-col sm:flex-row items-center justify-between gap-2 max-w-7xl mx-auto w-full">
+              <p className="font-medium text-ink-secondary">
+                The Wedding Vachan Workspace • Studio Platform
               </p>
-              <p className="text-[11px] text-stone-500 font-mono">Enterprise Studio v2.0</p>
+              <p className="text-[11px] text-ink-muted font-mono">Enterprise Studio v2.0</p>
             </footer>
           </div>
         </div>

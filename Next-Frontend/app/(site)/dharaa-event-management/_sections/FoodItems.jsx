@@ -41,13 +41,13 @@ function FoodItems() {
     ]
 
     return (
-        <section className="lg:py-10 sm:py-5 px-4 sm:px-6 lg:px-8  bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] relative overflow-hidden lg:rounded-3xl sm:rounded-lg">
+        <section className="lg:py-10 sm:py-5 px-4 sm:px-6 lg:px-8  bg-gradient-to-b from-ground-sunk to-ground relative overflow-hidden lg:rounded-3xl sm:rounded-lg">
 
             {/* henna top border */}
             <div className="absolute top-0 left-0 w-full">
                 <svg viewBox="0 0 1440 320" className="w-full">
                     <path
-                        fill="#FF6969"
+                        fill="var(--accent)"
                         fillOpacity="0.1"
                         d="M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,112C672,117,768,171,864,192C960,213,1056,203,1152,186.7C1248,171,1344,149,1392,138.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
                     ></path>
@@ -56,8 +56,8 @@ function FoodItems() {
             {/* Henna-inspired bottom Border */}
             <div className="absolute bottom-0 left-0 w-full opacity-10 transform rotate-180">
                 <svg viewBox="0 0 1440 120" className="w-full">
-                    <path fill="#FF6969" d="M0,120 C200,80 400,40 720,40 C1040,40 1240,80 1440,120 L1440,0 L0,0 Z"
-                        stroke="#FFD700" strokeWidth="2" strokeDasharray="4 4" />
+                    <path fill="var(--accent)" d="M0,120 C200,80 400,40 720,40 C1040,40 1240,80 1440,120 L1440,0 L0,0 Z"
+                        stroke="var(--gold)" strokeWidth="2" strokeDasharray="4 4" />
                 </svg>
             </div>
             {/* Floating Florals */}
@@ -65,8 +65,8 @@ function FoodItems() {
                 <svg
                     viewBox="0 0 24 24"
                 >
-                    <path fill="#FFD700" d="M12 2C8 2 4 6 4 12s4 10 8 10 8-4 8-10S16 2 12 2zm0 18c-3 0-6-3-6-6s3-6 6-6 6 3 6 6-3 6-6 6z" />
-                    <path fill="#FF6969" d="M12 6c-2 0-4 2-4 4s2 4 4 4 4-2 4-4-2-4-4-4z" />
+                    <path fill="var(--gold)" d="M12 2C8 2 4 6 4 12s4 10 8 10 8-4 8-10S16 2 12 2zm0 18c-3 0-6-3-6-6s3-6 6-6 6 3 6 6-3 6-6 6z" />
+                    <path fill="var(--accent)" d="M12 6c-2 0-4 2-4 4s2 4 4 4 4-2 4-4-2-4-4-4z" />
                 </svg>
             </div>
             {/* Heading */}
@@ -116,7 +116,7 @@ function FoodItems() {
                                 </h3>
                                 <p className="text-sm text-gray-500 mt-1">
                                     Included in:{" "}
-                                    <span className="font-semibold text-orange-600">
+                                    <span className="font-semibold text-accent-ink">
                                         {dish.package}
                                     </span>
                                 </p>
@@ -130,7 +130,7 @@ function FoodItems() {
             <p className="text-center mt-8 text-gray-700 text-sm sm:text-base">
                 🍴 These are just a <span className="font-semibold">few</span> of our
                 specialties — we have{" "}
-                <span className="text-orange-600 font-bold">many more</span> to make
+                <span className="text-accent-ink font-bold">many more</span> to make
                 your event unforgettable!
             </p>
         </section>

@@ -39,32 +39,37 @@ async function safeJson(path) {
 
 // Blog posts — the primary organic-search surface.
 async function blogEntries() {
-    const data = await safeJson('/api/blogs?page=1&limit=1000');
-    const posts = data?.posts || [];
-    return posts
-        .filter((p) => p.slug)
-        .map((p) => ({
-            url: `${SITE_URL}/blogs/${p.slug}`,
-            lastModified: new Date(p.updatedAt || p.publishedAt || Date.now()),
-            changeFrequency: 'monthly',
-            priority: 0.8,
-        }));
+    const posts = [];
+    for (let page = 1; page <= 1000; page++) {
+        const data = await safeJson(`/api/blogs?page=${page}&limit=50`);
+        posts.push(...(data?.posts || []));
+        if (!data?.hasMore) break;
+    }
+    return posts.filter((p) => p.slug).map((p) => ({
+        url: `${SITE_URL}/blogs/${p.slug}`,
+        lastModified: new Date(p.updatedAt || p.publishedAt || Date.now()),
+        changeFrequency: 'monthly', priority: 0.8,
+    }));
+}
+
+async function portfolioEntries(kind) {
+    const entries = [];
+    for (let page = 1; page <= 500; page++) {
+        const data = await safeJson(`/api/${kind}?page=${page}&limit=100`);
+        if (!data) break;
+        const rows = kind === 'videos' ? data.client || [] : data.photos || [];
+        entries.push(...rows.map((row) => kind === 'videos' ? row?.videos?._id : row?._id).filter(Boolean).map((id) => ({
+            url: `${SITE_URL}/${kind === 'videos' ? 'films' : 'photos'}/${id}`,
+            changeFrequency: 'monthly', priority: kind === 'videos' ? 0.7 : 0.6,
+        })));
+        if (data.hasMore === false || (!data.hasMore && rows.length < 100)) break;
+    }
+    return entries;
 }
 
 // Film detail pages. `/api/videos` returns client records whose `videos`
 // subdocument holds the id used by /films/[videoId].
-async function filmEntries() {
-    const data = await safeJson('/api/videos?page=1&limit=1000');
-    const rows = data?.client || [];
-    return rows
-        .map((row) => row?.videos?._id)
-        .filter(Boolean)
-        .map((id) => ({
-            url: `${SITE_URL}/films/${id}`,
-            changeFrequency: 'monthly',
-            priority: 0.7,
-        }));
-}
+async function filmEntries() { return portfolioEntries('videos'); }
 
 // Wedding story pages — the fullest page about any one couple.
 async function weddingStoryEntries() {
@@ -80,18 +85,7 @@ async function weddingStoryEntries() {
 }
 
 // Photo detail pages.
-async function photoEntries() {
-    const data = await safeJson('/api/photos?page=1&limit=1000');
-    const rows = data?.photos || data?.client || [];
-    return rows
-        .map((row) => row?.photos?._id || row?._id)
-        .filter(Boolean)
-        .map((id) => ({
-            url: `${SITE_URL}/photos/${id}`,
-            changeFrequency: 'monthly',
-            priority: 0.6,
-        }));
-}
+async function photoEntries() { return portfolioEntries('photos'); }
 
 // CMS-built pages (/[slug]) that an admin published and that have no hand-built
 // route. Reserved keys (which only feed existing routes) and anything already

@@ -47,6 +47,27 @@ const nextConfig = {
       { source: '/admin/portfolio', destination: '/admin/clients', permanent: true },
     ];
   },
+  // Scroll-sequence frames in /public are served by Next with `max-age=0`, so every
+  // frame is revalidated on each visit. They are only ever replaced by publishing a
+  // new release under a new path (R2), so a week of caching is safe.
+  async headers() {
+    const frames = [{ key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=86400' }];
+    return [
+      { source: '/varanasi-frames-2/:path*', headers: frames },
+      { source: '/varanasi-frames/:path*', headers: frames },
+      { source: '/director-frames/:path*', headers: frames },
+    ];
+  },
+  async rewrites() {
+    return {
+      fallback: [
+        {
+          source: '/api/:path*',
+          destination: 'http://localhost:8080/api/:path*',
+        },
+      ],
+    };
+  },
 };
 
 export default nextConfig;

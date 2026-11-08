@@ -1,3 +1,4 @@
+import { serializeJsonLd } from '@/lib/jsonLd.mjs';
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
@@ -27,9 +28,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
     const { city } = await params;
     const loc = getLocationBySlug(city);
-    if (!loc) return { title: 'Destination Weddings | The Wedding Boys' };
+    if (!loc) return { title: 'Destination Weddings | The Wedding Vachan' };
 
-    const title = `${loc.title} | The Wedding Boys`;
+    const title = `${loc.title} | The Wedding Vachan`;
     const description = loc.metaDescription;
     const url = `${SITE_URL}/weddings/${loc.slug}`;
 
@@ -100,7 +101,7 @@ export default async function DestinationCityPage({ params }) {
     const businessLd = {
         '@context': 'https://schema.org',
         '@type': 'ProfessionalService',
-        name: `The Wedding Boys - ${loc.name} Wedding Cinematography`,
+        name: `The Wedding Vachan - ${loc.name} Wedding Cinematography`,
         image: `${SITE_URL}/companyLogo.png`,
         url,
         telephone: '+91-9876543210',
@@ -142,15 +143,15 @@ export default async function DestinationCityPage({ params }) {
 
     return (
         <main className="min-h-screen bg-studio-canvas text-studio-ink">
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(destinationLd) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(businessLd) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
-            {faqLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />}
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(destinationLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(businessLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbLd) }} />
+            {faqLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqLd) }} />}
 
             {/* 1. Destination Editorial Hero */}
             <header className="relative border-b border-studio-border bg-stone-900 px-4 py-20 text-white sm:px-6 lg:px-8 overflow-hidden">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(194,149,85,0.22),transparent_60%)]" />
-                <div className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-[#8C532B]/20 blur-3xl" />
+                <div className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-accent/20 blur-3xl" />
 
                 <div className="relative mx-auto max-w-5xl">
                     {/* Breadcrumbs */}
@@ -159,26 +160,26 @@ export default async function DestinationCityPage({ params }) {
                         <span className="mx-2">/</span>
                         <span className="text-stone-300">Destination Hubs</span>
                         <span className="mx-2">/</span>
-                        <span className="text-[#C29555] font-semibold">{loc.name}</span>
+                        <span className="text-gold font-semibold">{loc.name}</span>
                     </nav>
 
-                    <div className="inline-flex items-center gap-2 rounded-full border border-[#C29555]/40 bg-[#C29555]/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-widest text-[#E5DCD3]">
-                        <MapPin size={13} className="text-[#C29555]" />
+                    <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-widest text-[#E5DCD3]">
+                        <MapPin size={13} className="text-gold" />
                         <span>{loc.name}, {loc.state}</span>
                     </div>
 
-                    <h1 className="mt-5 font-serif text-4xl font-bold tracking-tight text-[#FDFBF7] sm:text-5xl lg:text-6xl leading-[1.12]">
+                    <h1 className="mt-5 font-display text-4xl font-bold tracking-tight text-[#FDFBF7] sm:text-5xl lg:text-6xl leading-[1.12]">
                         {loc.title}
                     </h1>
 
-                    <p className="mt-4 text-base font-serif italic text-stone-300 sm:text-lg max-w-3xl">
+                    <p className="mt-4 text-base font-display italic text-stone-300 sm:text-lg max-w-3xl">
                         &ldquo;{loc.heroSubtitle}&rdquo;
                     </p>
 
                     {/* Highlights Strip */}
                     <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3 border-t border-white/10 pt-6 text-xs">
                         <div className="flex items-center gap-3">
-                            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-[#C29555]">
+                            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-gold">
                                 <CalendarBlank size={18} />
                             </div>
                             <div>
@@ -188,7 +189,7 @@ export default async function DestinationCityPage({ params }) {
                         </div>
 
                         <div className="flex items-center gap-3">
-                            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-[#C29555]">
+                            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-gold">
                                 <Camera size={18} />
                             </div>
                             <div>
@@ -198,7 +199,7 @@ export default async function DestinationCityPage({ params }) {
                         </div>
 
                         <div className="flex items-center gap-3">
-                            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-[#C29555]">
+                            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-gold">
                                 <VideoCamera size={18} />
                             </div>
                             <div>
@@ -211,7 +212,7 @@ export default async function DestinationCityPage({ params }) {
                     <div className="mt-8 flex flex-wrap items-center gap-4">
                         <Link
                             href="/contact"
-                            className="inline-flex items-center gap-2 rounded-xl bg-[#8C532B] px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-md hover:bg-[#724222] transition-colors"
+                            className="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-md hover:bg-[#724222] transition-colors"
                         >
                             <Sparkle size={14} weight="bold" />
                             Inquire for {loc.name} Dates
@@ -230,11 +231,11 @@ export default async function DestinationCityPage({ params }) {
             <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8 space-y-16">
                 {/* 2. Destination Cinematography Guide */}
                 <section>
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#8C532B]">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-accent-ink">
                         <Sparkle size={14} weight="bold" />
                         <span>Visual Landscape</span>
                     </div>
-                    <h2 className="mt-1 font-serif text-2xl font-bold text-studio-ink sm:text-3xl">
+                    <h2 className="mt-1 font-display text-2xl font-bold text-studio-ink sm:text-3xl">
                         Filming in {loc.name}: The Studio Perspective
                     </h2>
                     <p className="mt-3 text-sm leading-relaxed text-studio-inkSecondary max-w-3xl">
@@ -261,11 +262,11 @@ export default async function DestinationCityPage({ params }) {
                 {/* 3. Iconic Venues & Palaces in this City */}
                 {loc.venues?.length > 0 && (
                     <section>
-                        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#8C532B]">
+                        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-accent-ink">
                             <Building size={14} weight="bold" />
                             <span>Signature Locations</span>
                         </div>
-                        <h2 className="mt-1 font-serif text-2xl font-bold text-studio-ink sm:text-3xl">
+                        <h2 className="mt-1 font-display text-2xl font-bold text-studio-ink sm:text-3xl">
                             Iconic Wedding Palaces &amp; Venues in {loc.name}
                         </h2>
                         <p className="mt-2 text-sm text-studio-inkSecondary">
@@ -279,7 +280,7 @@ export default async function DestinationCityPage({ params }) {
                                     className="rounded-2xl border border-studio-border bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
                                 >
                                     <div className="flex items-center justify-between">
-                                        <h3 className="font-serif text-base font-bold text-studio-ink">
+                                        <h3 className="font-display text-base font-bold text-studio-ink">
                                             {venue.name}
                                         </h3>
                                         <span className="rounded-full bg-studio-canvas px-2.5 py-0.5 text-[10px] font-semibold text-studio-inkMuted uppercase tracking-wider">
@@ -300,11 +301,11 @@ export default async function DestinationCityPage({ params }) {
                     <section>
                         <div className="flex items-center justify-between">
                             <div>
-                                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#8C532B]">
+                                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-accent-ink">
                                     <VideoCamera size={14} weight="bold" />
                                     <span>Real Celebrations</span>
                                 </div>
-                                <h2 className="mt-1 font-serif text-2xl font-bold text-studio-ink sm:text-3xl">
+                                <h2 className="mt-1 font-display text-2xl font-bold text-studio-ink sm:text-3xl">
                                     Wedding Stories from {loc.name}
                                 </h2>
                             </div>
@@ -336,7 +337,7 @@ export default async function DestinationCityPage({ params }) {
                                                 />
                                             ) : (
                                                 <div className="flex h-full w-full items-center justify-center text-xs text-stone-400">
-                                                    The Wedding Boys
+                                                    The Wedding Vachan
                                                 </div>
                                             )}
                                         </Link>
@@ -350,7 +351,7 @@ export default async function DestinationCityPage({ params }) {
                                                     </>
                                                 )}
                                             </div>
-                                            <h3 className="font-serif text-base font-bold text-studio-ink line-clamp-2 group-hover:text-studio-terracotta transition-colors">
+                                            <h3 className="font-display text-base font-bold text-studio-ink line-clamp-2 group-hover:text-studio-terracotta transition-colors">
                                                 <Link href={`/blogs/${post.slug}`}>{post.title}</Link>
                                             </h3>
                                             <p className="mt-2 text-xs text-studio-inkSecondary line-clamp-2 leading-relaxed flex-1">
@@ -371,11 +372,11 @@ export default async function DestinationCityPage({ params }) {
                 {/* 5. Destination Wedding FAQs */}
                 {loc.faqs?.length > 0 && (
                     <section className="rounded-3xl border border-studio-border bg-white p-8 shadow-sm">
-                        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#8C532B]">
+                        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-accent-ink">
                             <Question size={15} weight="bold" />
                             <span>Planning Advisory</span>
                         </div>
-                        <h2 className="mt-1 font-serif text-2xl font-bold text-studio-ink">
+                        <h2 className="mt-1 font-display text-2xl font-bold text-studio-ink">
                             Frequently Asked Questions: Destination Weddings in {loc.name}
                         </h2>
 
@@ -395,13 +396,13 @@ export default async function DestinationCityPage({ params }) {
                 )}
 
                 {/* 6. Studio Luxury CTA Banner */}
-                <section className="rounded-3xl border border-[#C29555]/30 bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900 p-8 text-center text-white shadow-xl sm:p-12 relative overflow-hidden">
+                <section className="rounded-3xl border border-gold/30 bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900 p-8 text-center text-white shadow-xl sm:p-12 relative overflow-hidden">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(194,149,85,0.18),transparent_70%)]" />
                     <div className="relative mx-auto max-w-2xl">
-                        <span className="text-[11px] font-bold uppercase tracking-widest text-[#C29555]">
+                        <span className="text-[11px] font-bold uppercase tracking-widest text-gold">
                             Bespoke Wedding Cinematography
                         </span>
-                        <h2 className="mt-2 font-serif text-3xl font-bold text-[#FDFBF7] sm:text-4xl">
+                        <h2 className="mt-2 font-display text-3xl font-bold text-[#FDFBF7] sm:text-4xl">
                             Planning a Destination Wedding in {loc.name}?
                         </h2>
                         <p className="mt-3 text-xs leading-relaxed text-stone-300 sm:text-sm">
@@ -410,7 +411,7 @@ export default async function DestinationCityPage({ params }) {
                         <div className="mt-6 flex flex-wrap justify-center gap-3">
                             <Link
                                 href="/contact"
-                                className="rounded-xl bg-[#8C532B] px-6 py-3 text-xs font-bold uppercase tracking-wider text-white shadow-md hover:bg-[#724222] transition-colors"
+                                className="rounded-xl bg-accent px-6 py-3 text-xs font-bold uppercase tracking-wider text-white shadow-md hover:bg-[#724222] transition-colors"
                             >
                                 Check Crew Availability
                             </Link>

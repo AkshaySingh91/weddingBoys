@@ -61,7 +61,7 @@ export default function FloatingToolbar({ anchorRef, open, offset = 10, children
             data-floating-toolbar
             // Hidden until placed, so it never flashes at the top-left corner.
             style={{ position: 'fixed', top: 0, left: 0, transform: 'translateY(-100%)', zIndex: 80, visibility: 'hidden' }}
-            className="flex items-center gap-1 rounded-xl border border-[#E5DCD3] bg-white/95 p-1 shadow-lg backdrop-blur-sm"
+            className="flex items-center gap-1 rounded-xl border border-edge-subtle bg-white/95 p-1 shadow-lg backdrop-blur-sm"
             /*
               Keep the editor's selection when a button is used — but NOT for a
               field. preventDefault on mousedown also blocks focus, so a blanket

@@ -78,7 +78,7 @@ export default function MapView() {
   };
 
   const heartIcon = new L.DivIcon({
-    html: `<div class="p-1.5 rounded-full bg-[#A3603A] text-white shadow-lg border-2 border-white flex items-center justify-center">
+    html: `<div class="p-1.5 rounded-full bg-accent text-white shadow-lg border-2 border-white flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
               <path d="M178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40Z"></path>
             </svg>
@@ -91,13 +91,13 @@ export default function MapView() {
   return (
     <div className="space-y-6 font-sans">
       {/* Section Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#E5DCD3] pb-4">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-edge-subtle pb-4">
         <div>
-          <h2 className="flex items-center gap-2 text-xl font-serif text-[#1C1917]">
-            <MapPin size={20} weight="fill" className="text-[#A3603A]" />
+          <h2 className="flex items-center gap-2 text-xl font-sans text-ink">
+            <MapPin size={20} weight="fill" className="text-accent-ink" />
             Heritage Destination Map
           </h2>
-          <p className="mt-0.5 text-xs text-stone-500">
+          <p className="mt-0.5 text-xs text-ink-muted">
             Interactive map coordinates of destination weddings across Udaipur, Jaipur, Varanasi, Goa, and beyond.
           </p>
         </div>
@@ -113,10 +113,10 @@ export default function MapView() {
       </div>
 
       {/* Map Container View */}
-      <div className="relative h-[550px] w-full overflow-hidden rounded-2xl border border-[#E5DCD3] bg-stone-100 shadow-sm">
+      <div className="relative h-[550px] w-full overflow-hidden rounded-xl border border-edge-subtle bg-ground-sunk shadow-sm">
         {loading ? (
-          <div className="flex h-full w-full items-center justify-center text-stone-400">
-            <CircleNotch size={24} className="animate-spin text-[#A3603A]" />
+          <div className="flex h-full w-full items-center justify-center text-ink-muted">
+            <CircleNotch size={24} className="animate-spin text-accent-ink" />
           </div>
         ) : (
           <>
@@ -142,16 +142,16 @@ export default function MapView() {
                         <Link href={`/films/${c.video?._id}`} className="block overflow-hidden rounded-lg">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
-                            className="w-44 h-28 object-cover rounded-lg border border-stone-200"
+                            className="w-44 h-28 object-cover rounded-lg border border-edge-subtle"
                             src={c.url}
                             alt="Map destination"
                           />
                         </Link>
                         <div className="mt-2 text-center">
-                          <p className="text-xs font-semibold uppercase text-stone-900">
+                          <p className="text-xs font-semibold uppercase text-ink">
                             {c.clientName?.Bride} & {c.clientName?.Groom}
                           </p>
-                          <p className="text-[11px] text-[#A3603A] font-medium mt-0.5">
+                          <p className="text-[11px] text-accent-ink font-medium mt-0.5">
                             {c.photo?.photoLocation?.city || c.video?.videoLocation?.city || 'India'}
                           </p>
                         </div>
@@ -164,33 +164,33 @@ export default function MapView() {
 
             {/* Slide-out Destination Drawer */}
             {isMapSidebarOpen && (
-              <div className="absolute top-3 right-3 bottom-3 z-[1000] w-80 max-w-[calc(100%-24px)] rounded-2xl border border-[#E5DCD3] bg-white/95 backdrop-blur-md shadow-2xl flex flex-col overflow-hidden">
-                <div className="p-3.5 border-b border-[#E5DCD3] flex items-center justify-between">
+              <div className="absolute top-3 right-3 bottom-3 z-[1000] w-80 max-w-[calc(100%-24px)] rounded-xl border border-edge-subtle bg-white/95 backdrop-blur-md shadow-2xl flex flex-col overflow-hidden">
+                <div className="p-3.5 border-b border-edge-subtle flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Heart size={16} weight="fill" className="text-[#A3603A]" />
-                    <span className="text-xs font-semibold uppercase tracking-wider text-[#1C1917]">
+                    <Heart size={16} weight="fill" className="text-accent-ink" />
+                    <span className="text-xs font-semibold uppercase tracking-wider text-ink">
                       Pinned Shoots ({clients.length})
                     </span>
                   </div>
                 </div>
 
-                <div className="flex-1 overflow-y-auto divide-y divide-[#E5DCD3]/60 p-2 scrollbar-thin">
+                <div className="flex-1 overflow-y-auto divide-y divide-edge-subtle p-2 scrollbar-thin">
                   {clients.length === 0 ? (
-                    <p className="p-6 text-center text-xs text-stone-400">No destination shoots pinned.</p>
+                    <p className="p-6 text-center text-xs text-ink-muted">No destination shoots pinned.</p>
                   ) : (
                     clients.map((c) => (
                       <div key={c.clientId} className="p-2 flex items-center justify-between gap-3 group">
                         <div className="flex items-center gap-2.5 min-w-0">
-                          <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg border border-[#E5DCD3] bg-stone-100">
+                          <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg border border-edge-subtle bg-ground-sunk">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img src={c.url} alt="Client" className="h-full w-full object-cover" />
                           </div>
                           <div className="min-w-0">
-                            <p className="text-xs font-semibold text-[#1C1917] truncate">
+                            <p className="text-xs font-semibold text-ink truncate">
                               {c.clientName?.Bride} & {c.clientName?.Groom}
                             </p>
-                            <p className="text-[10px] text-stone-500 truncate flex items-center gap-1">
-                              <MapPin size={10} className="text-[#A3603A]" />
+                            <p className="text-[10px] text-ink-muted truncate flex items-center gap-1">
+                              <MapPin size={10} className="text-accent-ink" />
                               {c.photo?.photoLocation?.city || c.video?.videoLocation?.city || 'Destination'}
                             </p>
                           </div>
@@ -199,7 +199,7 @@ export default function MapView() {
                         <button
                           type="button"
                           onClick={() => setDeleteConfirmId(c.clientId)}
-                          className="opacity-0 group-hover:opacity-100 p-1.5 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 transition shrink-0"
+                          className="opacity-0 group-hover:opacity-100 p-1.5 rounded-lg text-ink-muted hover:text-rose-600 hover:bg-rose-50 transition shrink-0"
                           title="Remove map pin"
                         >
                           <Trash size={14} />

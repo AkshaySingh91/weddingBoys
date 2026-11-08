@@ -6,9 +6,9 @@ import FoodItems from "./_sections/FoodItems"
 import dharaaLogo from '@/Asset/Dharaa/Logo.png'
 import catering from '@/Asset/Dharaa/Food/catering.jpg'
 
-const title = 'Dharaa Event Management — Wedding Catering & Events | The Wedding Boys'
+const title = 'Dharaa Event Management — Wedding Catering & Events | The Wedding Vachan'
 const description =
-    'Premium catering and event management for weddings and celebrations, from Dharaa — the events arm of The Wedding Boys. Customised packages for every occasion.'
+    'Premium catering and event management for weddings and celebrations, from Dharaa — the events arm of The Wedding Vachan. Customised packages for every occasion.'
 
 export const metadata = {
     title,
@@ -26,7 +26,7 @@ export default function DharaaLandingPage() {
                     <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
                         Premium Catering For{" "}
                         <br className="hidden lg:inline" />
-                        <span className="text-orange-600">Every Occasion</span>
+                        <span className="text-accent-ink">Every Occasion</span>
                     </h1>
                     <p className="mt-4 text-gray-600 max-w-lg mx-auto lg:mx-0 text-sm sm:text-base">
                         Dharaa Event Management brings you fresh, customized catering
@@ -35,11 +35,11 @@ export default function DharaaLandingPage() {
                     </p>
 
                     <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 mt-8">
-                        <button className="bg-orange-600 text-white px-6 sm:px-8 py-3 rounded-xl shadow-lg hover:bg-orange-700 transition-all font-semibold sm:font-bold text-base sm:text-lg">
+                        <button className="bg-accent text-white px-6 sm:px-8 py-3 rounded-xl shadow-lg hover:bg-accent-hover transition-all font-semibold sm:font-bold text-base sm:text-lg">
                             Explore Packages
                         </button>
                         <a
-                            className="border border-orange-600 text-orange-600 px-6 sm:px-8 py-3 rounded-xl hover:bg-orange-50 transition-all font-semibold sm:font-bold text-base sm:text-lg text-center"
+                            className="border border-accent text-accent-ink px-6 sm:px-8 py-3 rounded-xl hover:bg-accent-wash transition-all font-semibold sm:font-bold text-base sm:text-lg text-center"
                             href="https://wa.me/9284690935"
                             target="_blank"
                             rel="noopener noreferrer"

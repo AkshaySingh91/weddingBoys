@@ -34,12 +34,12 @@ export default function CoupleTestimonialCard({
         {/* Testimonial Content */}
         <div className="relative z-10 max-w-2xl sm:max-w-3xl space-y-4">
           {/* Coral Quotation Mark Icon */}
-          <div className="text-[#FF5353] opacity-90">
+          <div className="text-accent-ink opacity-90">
             <Quotes size={36} weight="fill" />
           </div>
 
           {/* Emotional Quote in Playfair Display */}
-          <blockquote className="font-playfair font-serif text-lg sm:text-xl md:text-[22px] italic text-[#5E2B17] leading-relaxed">
+          <blockquote className="font-display font-display text-lg sm:text-xl md:text-[22px] italic text-[#5E2B17] leading-relaxed">
             {formattedQuote}
           </blockquote>
 

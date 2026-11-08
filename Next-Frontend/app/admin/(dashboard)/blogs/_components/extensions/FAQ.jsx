@@ -28,21 +28,21 @@ function FAQView({ node, updateAttributes, deleteNode, selected }) {
     };
 
     return (
-        <NodeViewWrapper className={`my-8 rounded-2xl border border-[#E5DCD3] bg-white p-6 transition-all ${selected ? 'ring-2 ring-[#8C532B]' : ''}`}>
-            <div className="flex items-center justify-between pb-4 border-b border-[#E5DCD3]/60 mb-4" contentEditable={false}>
+        <NodeViewWrapper className={`my-8 rounded-xl border border-edge-subtle bg-white p-6 transition-all ${selected ? 'ring-2 ring-accent' : ''}`}>
+            <div className="flex items-center justify-between pb-4 border-b border-edge-subtle mb-4" contentEditable={false}>
                 <div className="flex items-center gap-2">
-                    <Question size={18} weight="duotone" className="text-[#8C532B]" />
-                    <span className="text-xs font-bold uppercase tracking-widest text-[#78716C]">
+                    <Question size={18} weight="duotone" className="text-accent-ink" />
+                    <span className="text-xs font-bold uppercase tracking-widest text-ink-muted">
                         FAQ Section
                     </span>
-                    <span className="text-xs text-[#78716C]/70">({items.length} questions)</span>
+                    <span className="text-xs text-ink-muted/70">({items.length} questions)</span>
                 </div>
                 {selected && (
                     <div className="flex items-center gap-2">
                         <button
                             type="button"
                             onClick={handleAdd}
-                            className="inline-flex items-center gap-1 rounded-lg border border-[#8C532B]/30 bg-[#8C532B]/5 px-2.5 py-1 text-xs font-medium text-[#8C532B] hover:bg-[#8C532B]/10 transition-colors cursor-pointer"
+                            className="inline-flex items-center gap-1 rounded-lg border border-accent/30 bg-accent/5 px-2.5 py-1 text-xs font-medium text-accent-ink hover:bg-accent-hover transition-colors cursor-pointer"
                         >
                             <Plus size={12} weight="bold" />
                             Add Q&A
@@ -61,7 +61,7 @@ function FAQView({ node, updateAttributes, deleteNode, selected }) {
 
             <div className="space-y-3" contentEditable={false}>
                 {items.length === 0 ? (
-                    <div className="py-6 text-center text-sm text-[#78716C]">
+                    <div className="py-6 text-center text-sm text-ink-muted">
                         No FAQ items. Select this block and click &quot;Add Q&A&quot; to add common questions.
                     </div>
                 ) : (
@@ -70,9 +70,9 @@ function FAQView({ node, updateAttributes, deleteNode, selected }) {
                         return (
                             <div
                                 key={idx}
-                                className="rounded-xl border border-[#E5DCD3] bg-[#F7F4EF]/30 overflow-hidden"
+                                className="rounded-xl border border-edge-subtle bg-ground/30 overflow-hidden"
                             >
-                                <div className="flex items-center justify-between px-4 py-2.5 bg-white border-b border-[#E5DCD3]/40">
+                                <div className="flex items-center justify-between px-4 py-2.5 bg-white border-b border-edge-subtle">
                                     <button
                                         type="button"
                                         onClick={() => setOpenIdx(isOpen ? -1 : idx)}
@@ -81,9 +81,9 @@ function FAQView({ node, updateAttributes, deleteNode, selected }) {
                                         <CaretDown
                                             size={14}
                                             weight="bold"
-                                            className={`text-[#78716C] transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                                            className={`text-ink-muted transition-transform ${isOpen ? 'rotate-180' : ''}`}
                                         />
-                                        <span className="text-xs font-semibold text-[#1C1917]">
+                                        <span className="text-xs font-semibold text-ink">
                                             {item.question || `Question ${idx + 1}`}
                                         </span>
                                     </button>
@@ -91,7 +91,7 @@ function FAQView({ node, updateAttributes, deleteNode, selected }) {
                                         <button
                                             type="button"
                                             onClick={() => handleRemove(idx)}
-                                            className="p-1 text-rose-500 hover:bg-rose-50 rounded-md transition-colors cursor-pointer"
+                                            className="p-1 text-rose-500 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
                                             title="Delete question"
                                         >
                                             <Trash size={13} />
@@ -99,9 +99,9 @@ function FAQView({ node, updateAttributes, deleteNode, selected }) {
                                     )}
                                 </div>
                                 {isOpen && (
-                                    <div className="p-4 space-y-3 bg-[#F7F4EF]/20">
+                                    <div className="p-4 space-y-3 bg-ground/20">
                                         <div>
-                                            <label className="block text-[11px] font-medium uppercase tracking-wider text-[#78716C] mb-1">
+                                            <label className="block text-[11px] font-medium uppercase tracking-wider text-ink-muted mb-1">
                                                 Question
                                             </label>
                                             <input
@@ -109,11 +109,11 @@ function FAQView({ node, updateAttributes, deleteNode, selected }) {
                                                 value={item.question || ''}
                                                 onChange={(e) => handleChange(idx, 'question', e.target.value)}
                                                 placeholder="e.g. What is the best season for a Udaipur wedding?"
-                                                className="w-full rounded-lg border border-[#E5DCD3] bg-white px-3 py-1.5 text-xs text-[#1C1917] font-medium focus:outline-none focus:border-[#8C532B]"
+                                                className="w-full rounded-lg border border-edge-subtle bg-white px-3 py-1.5 text-xs text-ink font-medium focus:outline-none focus:border-accent"
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-[11px] font-medium uppercase tracking-wider text-[#78716C] mb-1">
+                                            <label className="block text-[11px] font-medium uppercase tracking-wider text-ink-muted mb-1">
                                                 Answer
                                             </label>
                                             <textarea
@@ -121,7 +121,7 @@ function FAQView({ node, updateAttributes, deleteNode, selected }) {
                                                 value={item.answer || ''}
                                                 onChange={(e) => handleChange(idx, 'answer', e.target.value)}
                                                 placeholder="Provide detailed answer..."
-                                                className="w-full rounded-lg border border-[#E5DCD3] bg-white px-3 py-1.5 text-xs text-[#1C1917] focus:outline-none focus:border-[#8C532B] resize-y"
+                                                className="w-full rounded-lg border border-edge-subtle bg-white px-3 py-1.5 text-xs text-ink focus:outline-none focus:border-accent resize-y"
                                             />
                                         </div>
                                     </div>

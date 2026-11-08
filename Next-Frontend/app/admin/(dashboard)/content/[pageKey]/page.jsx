@@ -114,17 +114,17 @@ function BuilderForm({ page, pageKey }) {
         <FormProvider {...methods}>
             <div className="space-y-6 max-w-5xl">
                 {/* Header */}
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-[#E7E2DA] pb-5">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-edge-subtle pb-5">
                     <div className="flex items-center gap-3.5">
                         <Link
                             href="/admin/content"
-                            className="rounded-xl border border-stone-200 bg-white p-2.5 text-stone-500 shadow-sm transition hover:bg-stone-50 hover:text-[#2F2F2F]"
+                            className="rounded-xl border border-edge-subtle bg-white p-2.5 text-ink-muted shadow-sm transition hover:bg-ground hover:text-ink"
                         >
                             <ArrowLeft size={18} weight="bold" />
                         </Link>
                         <div>
                             <div className="flex items-center gap-2.5">
-                                <h1 className="text-2xl font-sans font-bold tracking-tight capitalize text-[#2F2F2F]">{page.title || pageKey}</h1>
+                                <h1 className="text-2xl font-sans font-bold tracking-tight capitalize text-ink">{page.title || pageKey}</h1>
                                 <Badge variant={status === 'Draft' ? 'warning' : 'success'} dot>
                                     {status === 'Draft' ? 'Hidden' : 'Live'}
                                 </Badge>
@@ -132,7 +132,7 @@ function BuilderForm({ page, pageKey }) {
                                     <Badge variant="warning">Unpublished changes</Badge>
                                 )}
                             </div>
-                            <p className="mt-0.5 text-xs font-sans text-[#78716C]">
+                            <p className="mt-0.5 text-xs font-sans text-ink-muted">
                                 /{pageKey} · {fields.length} content block{fields.length === 1 ? '' : 's'}
                             </p>
                         </div>
@@ -141,7 +141,7 @@ function BuilderForm({ page, pageKey }) {
                         <Link
                             href={`/${pageKey === 'home' ? '' : pageKey}`}
                             target="_blank"
-                            className="inline-flex items-center gap-1.5 rounded-xl border border-[#E7E2DA] bg-white px-3.5 py-2 text-xs font-medium font-sans text-[#44403C] shadow-sm transition hover:bg-[#F7F4EF]"
+                            className="inline-flex items-center gap-1.5 rounded-xl border border-edge-subtle bg-white px-3.5 py-2 text-xs font-medium font-sans text-ink-secondary shadow-sm transition hover:bg-ground"
                         >
                             <Eye size={16} weight="bold" /> Preview Live
                         </Link>
@@ -210,7 +210,7 @@ function BuilderForm({ page, pageKey }) {
                         </div>
                     ))}
                     {fields.length === 0 && (
-                        <div className="rounded-2xl border border-dashed border-[#D6D0C5] bg-white p-12 text-center text-sm font-sans text-[#78716C]">
+                        <div className="rounded-xl border border-dashed border-edge-strong bg-white p-12 text-center text-sm font-sans text-ink-muted">
                             No blocks added yet. Use the selector below to build your page layout.
                         </div>
                     )}
@@ -227,10 +227,10 @@ function AddBlock({ onAdd }) {
     const openRef = useRef(null);
     return (
         <details ref={openRef} className="group relative mt-5">
-            <summary className="flex w-full cursor-pointer list-none items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-stone-300 bg-white py-3.5 text-sm font-medium font-sans text-stone-500 shadow-sm transition hover:border-red-300 hover:text-red-600">
+            <summary className="flex w-full cursor-pointer list-none items-center justify-center gap-2 rounded-xl border-2 border-dashed border-edge-strong bg-white py-3.5 text-sm font-medium font-sans text-ink-muted shadow-sm transition hover:border-accent hover:text-accent-ink">
                 <Plus size={16} weight="bold" /> Add Content Block
             </summary>
-            <div className="absolute inset-x-0 z-20 mt-2 grid grid-cols-2 gap-2.5 rounded-2xl border border-[#E7E2DA] bg-white p-4 shadow-xl sm:grid-cols-3">
+            <div className="absolute inset-x-0 z-20 mt-2 grid grid-cols-2 gap-2.5 rounded-xl border border-edge-subtle bg-white p-4 shadow-xl sm:grid-cols-3">
                 {BLOCK_TYPES.map((type) => {
                     const cfg = BLOCK_CONFIG[type];
                     const Icon = cfg.icon;
@@ -239,9 +239,9 @@ function AddBlock({ onAdd }) {
                             key={type}
                             type="button"
                             onClick={() => { onAdd(type); if (openRef.current) openRef.current.open = false; }}
-                            className="flex items-center gap-2.5 rounded-xl border border-[#E7E2DA] p-3 text-left text-xs font-medium font-sans text-[#44403C] transition hover:border-[#C5A880] hover:bg-[#FAF8F5]"
+                            className="flex items-center gap-2.5 rounded-xl border border-edge-subtle p-3 text-left text-xs font-medium font-sans text-ink-secondary transition hover:border-gold hover:bg-ground"
                         >
-                            <Icon size={16} className="text-[#C5A880] shrink-0" /> {cfg.label}
+                            <Icon size={16} className="text-gold-strong shrink-0" /> {cfg.label}
                         </button>
                     );
                 })}

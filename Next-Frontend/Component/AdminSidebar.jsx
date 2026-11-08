@@ -178,6 +178,12 @@ export default function AdminSidebar({
           icon: FilmSlate,
         },
         {
+          id: 'website-varanasi',
+          label: 'Varanasi Motion',
+          path: '/admin/varanasi-sequences',
+          icon: FilmSlate,
+        },
+        {
           id: 'website-rows',
           label: 'Rows',
           path: '/admin/collections',
@@ -258,7 +264,7 @@ export default function AdminSidebar({
       {/* Mobile Menu Backdrop */}
       {mobileOpen && (
         <div
-          className="lg:hidden fixed inset-0 z-40 bg-stone-900/40 backdrop-blur-sm transition-opacity"
+          className="lg:hidden fixed inset-0 z-40 bg-ink/40 backdrop-blur-sm transition-opacity"
           onClick={() => setMobileOpen && setMobileOpen(false)}
         />
       )}
@@ -267,7 +273,7 @@ export default function AdminSidebar({
       <aside
         className={cn(
           'fixed inset-y-0 left-0 z-40 transition-all duration-300 ease-in-out font-sans',
-          'bg-white border-r border-stone-200 shadow-sm flex flex-col',
+          'bg-white border-r border-edge-subtle shadow-sm flex flex-col',
           'lg:translate-x-0',
           collapsed ? 'lg:w-[72px]' : 'lg:w-64',
           mobileOpen ? 'w-64 translate-x-0 shadow-2xl' : '-translate-x-full'
@@ -276,12 +282,12 @@ export default function AdminSidebar({
         {/* Studio Branding & Header */}
         <div
           className={cn(
-            'p-4 border-b border-stone-100 flex items-center transition-all duration-200',
+            'p-4 border-b border-edge-subtle flex items-center transition-all duration-200',
             collapsed ? 'justify-center' : 'justify-between'
           )}
         >
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-10 h-10 rounded-xl overflow-hidden shadow-sm border border-stone-200 bg-white p-1 shrink-0 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl overflow-hidden shadow-sm border border-edge-subtle bg-white p-1 shrink-0 flex items-center justify-center">
               {studioLogo ? (
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img
@@ -290,16 +296,16 @@ export default function AdminSidebar({
                   alt="Studio Logo"
                 />
               ) : (
-                <span className="font-sans font-bold text-xs text-red-500">WB</span>
+                <span className="font-sans font-bold text-xs text-accent-ink">WB</span>
               )}
             </div>
 
             {!collapsed && (
               <div className="min-w-0 leading-tight">
-                <h2 className="text-sm font-semibold text-[#2F2F2F] truncate tracking-tight">
-                  {studioName || 'The Wedding Boys'}
+                <h2 className="text-sm font-semibold text-ink truncate tracking-tight">
+                  {studioName || 'The Wedding Vachan'}
                 </h2>
-                <p className="text-[11px] font-medium text-red-500 tracking-wide uppercase mt-0.5">
+                <p className="text-[11px] font-medium text-accent-ink tracking-wide uppercase mt-0.5">
                   Studio CRM
                 </p>
               </div>
@@ -311,7 +317,7 @@ export default function AdminSidebar({
             <button
               id="admin-sidebar-collapse-btn"
               onClick={onToggleCollapse}
-              className="hidden lg:flex p-1.5 rounded-lg text-stone-500 hover:text-[#2F2F2F] hover:bg-stone-100 transition-colors cursor-pointer"
+              className="hidden lg:flex p-1.5 rounded-lg text-ink-muted hover:text-ink hover:bg-ground-sunk transition-colors cursor-pointer"
               title="Collapse sidebar to icon rail"
               aria-label="Collapse sidebar"
             >
@@ -322,11 +328,11 @@ export default function AdminSidebar({
 
         {/* Collapsed Mode Rail Expander (Icon Only Header) */}
         {collapsed && onToggleCollapse && (
-          <div className="hidden lg:flex justify-center p-2.5 border-b border-stone-100">
+          <div className="hidden lg:flex justify-center p-2.5 border-b border-edge-subtle">
             <button
               id="admin-sidebar-expand-btn"
               onClick={onToggleCollapse}
-              className="p-1.5 rounded-lg text-stone-600 hover:text-[#2F2F2F] hover:bg-stone-100 transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg text-ink-secondary hover:text-ink hover:bg-ground-sunk transition-colors cursor-pointer"
               title="Expand sidebar"
               aria-label="Expand sidebar"
             >
@@ -340,7 +346,7 @@ export default function AdminSidebar({
           {navigationSections.map((section) => (
             <div key={section.group} className="space-y-1">
               {!collapsed && (
-                <p className="px-3 text-[10px] font-semibold uppercase tracking-wider text-stone-500 font-sans">
+                <p className="px-3 text-[10px] font-semibold uppercase tracking-wider text-ink-muted font-sans">
                   {section.group}
                 </p>
               )}
@@ -363,8 +369,8 @@ export default function AdminSidebar({
                                 className={cn(
                                   'w-full flex items-center justify-center p-2.5 rounded-xl transition-all cursor-pointer',
                                   hasActiveSub
-                                    ? 'bg-red-50 text-red-600 shadow-sm'
-                                    : 'text-stone-600 hover:bg-stone-50 hover:text-[#2F2F2F]'
+                                    ? 'bg-accent-wash text-accent-ink shadow-sm'
+                                    : 'text-ink-secondary hover:bg-ground hover:text-ink'
                                 )}
                             >
                               <Icon size={18} weight={hasActiveSub ? 'bold' : 'regular'} />
@@ -380,7 +386,7 @@ export default function AdminSidebar({
                                   href={sub.path}
                                     className={cn(
                                       'w-full flex items-center gap-2 cursor-pointer text-xs font-medium',
-                                      isActiveRoute(sub.path) ? 'text-red-600 font-semibold' : ''
+                                      isActiveRoute(sub.path) ? 'text-accent-ink font-semibold' : ''
                                     )}
                                 >
                                   <sub.icon size={15} />
@@ -401,29 +407,29 @@ export default function AdminSidebar({
                           className={cn(
                             'w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all cursor-pointer',
                             hasActiveSub
-                              ? 'text-red-600 font-semibold bg-red-50'
-                              : 'text-stone-600 hover:bg-stone-50 hover:text-[#2F2F2F]'
+                              ? 'text-accent-ink font-semibold bg-accent-wash'
+                              : 'text-ink-secondary hover:bg-ground hover:text-ink'
                           )}
                         >
                           <div className="flex items-center gap-2.5">
                             <Icon
                               size={18}
                               weight={hasActiveSub ? 'bold' : 'regular'}
-                              className={hasActiveSub ? 'text-red-500' : 'text-stone-600'}
+                              className={hasActiveSub ? 'text-accent-ink' : 'text-ink-secondary'}
                             />
                             <span>{item.label}</span>
                           </div>
                           <CaretDown
                             size={14}
                             className={cn(
-                              'text-stone-500 transition-transform duration-200',
+                              'text-ink-muted transition-transform duration-200',
                               isExpanded && 'rotate-180'
                             )}
                           />
                         </button>
 
                         {isExpanded && (
-                          <div className="pl-6 pr-1 space-y-0.5 border-l border-stone-200 ml-5 my-1">
+                          <div className="pl-6 pr-1 space-y-0.5 border-l border-edge-subtle ml-5 my-1">
                             {item.submenu?.map((sub) => {
                               const subActive = isActiveRoute(sub.path);
                               const SubIcon = sub.icon;
@@ -434,14 +440,14 @@ export default function AdminSidebar({
                                   className={cn(
                                     'flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs transition-all',
                                     subActive
-                                      ? 'bg-red-50 text-red-600 font-medium shadow-sm'
-                                      : 'text-stone-500 hover:text-[#2F2F2F] hover:bg-stone-50'
+                                      ? 'bg-accent-wash text-accent-ink font-medium shadow-sm'
+                                      : 'text-ink-muted hover:text-ink hover:bg-ground'
                                   )}
                                 >
                                   <SubIcon
                                     size={14}
                                     weight={subActive ? 'bold' : 'regular'}
-                                    className={subActive ? 'text-red-500' : 'text-stone-500'}
+                                    className={subActive ? 'text-accent-ink' : 'text-ink-muted'}
                                   />
                                   <span className="truncate">{sub.label}</span>
                                 </Link>
@@ -462,13 +468,13 @@ export default function AdminSidebar({
                           className={cn(
                             'w-full flex items-center justify-center p-2.5 rounded-xl transition-all relative',
                             active
-                              ? 'bg-red-50 text-red-600'
-                              : 'text-stone-600 hover:bg-stone-50 hover:text-[#2F2F2F]'
+                              ? 'bg-accent-wash text-accent-ink'
+                              : 'text-ink-secondary hover:bg-ground hover:text-ink'
                           )}
                         >
                           <Icon size={18} weight={active ? 'bold' : 'regular'} />
                           {item.badge && (
-                            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-500 ring-2 ring-white" />
+                            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-accent ring-2 ring-white" />
                           )}
                           <span className="sr-only">{item.label}</span>
                         </Link>
@@ -483,8 +489,8 @@ export default function AdminSidebar({
                       className={cn(
                         'flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all group',
                         active
-                          ? 'bg-red-50 text-red-600 font-semibold'
-                          : 'text-stone-600 hover:bg-stone-50 hover:text-[#2F2F2F]'
+                          ? 'bg-accent-wash text-accent-ink font-semibold'
+                          : 'text-ink-secondary hover:bg-ground hover:text-ink'
                       )}
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
@@ -493,7 +499,7 @@ export default function AdminSidebar({
                           weight={active ? 'bold' : 'regular'}
                           className={cn(
                             'transition-colors shrink-0',
-                            active ? 'text-red-600' : 'text-stone-500 group-hover:text-[#2F2F2F]'
+                            active ? 'text-accent-ink' : 'text-ink-muted group-hover:text-ink'
                           )}
                         />
                         <span className="truncate">{item.label}</span>
@@ -503,7 +509,7 @@ export default function AdminSidebar({
                         <Badge
                           variant={item.badgeVariant || 'neutral'}
                           size="sm"
-                          className={active ? 'bg-red-100 text-red-700 border-red-200' : ''}
+                          className={active ? 'bg-accent-tint text-accent-ink border-accent/25' : ''}
                         >
                           {item.badge}
                         </Badge>
@@ -517,16 +523,16 @@ export default function AdminSidebar({
         </nav>
 
         {/* Footer info & live preview */}
-        <div className="p-3 border-t border-stone-100 space-y-2">
+        <div className="p-3 border-t border-edge-subtle space-y-2">
           {!collapsed ? (
             <Link
               href="/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-2 rounded-xl bg-white border border-stone-200 text-stone-600 hover:text-[#2F2F2F] hover:border-stone-300 transition-all text-xs font-medium group"
+              className="flex items-center justify-between p-2 rounded-xl bg-white border border-edge-subtle text-ink-secondary hover:text-ink hover:border-edge-strong transition-all text-xs font-medium group"
             >
               <span className="truncate">Live Website</span>
-              <ArrowSquareOut size={14} className="text-stone-400 group-hover:text-[#2F2F2F]" />
+              <ArrowSquareOut size={14} className="text-ink-muted group-hover:text-ink" />
             </Link>
           ) : (
             <QuickTooltip content="Open Live Website" side="right">
@@ -534,7 +540,7 @@ export default function AdminSidebar({
                 href="/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center p-2 rounded-xl text-stone-600 hover:text-[#2F2F2F] hover:bg-stone-50 transition-all"
+                className="w-full flex items-center justify-center p-2 rounded-xl text-ink-secondary hover:text-ink hover:bg-ground transition-all"
               >
                 <ArrowSquareOut size={18} />
               </Link>

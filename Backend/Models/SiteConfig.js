@@ -12,7 +12,7 @@ const siteConfigSchema = new mongoose.Schema({
     key: { type: String, default: 'global', unique: true, index: true },
 
     studio: {
-        name: { type: String, default: 'The Wedding Boys' },
+        name: { type: String, default: 'The Wedding Vachan' },
         tagline: { type: String },
         logo: { type: mongoose.Schema.Types.ObjectId, ref: 'Media' },
         email: { type: String },

@@ -194,8 +194,8 @@ export async function replyToComment(req, res) {
         }
 
         const adminUser = req.admin || {};
-        const studioName = adminUser.name ? `${adminUser.name} (The Wedding Boys)` : 'The Wedding Boys Studio';
-        const studioEmail = adminUser.email || 'editorial@theweddingboys.in';
+        const studioName = adminUser.name ? `${adminUser.name} (The Wedding Vachan)` : 'The Wedding Vachan Studio';
+        const studioEmail = adminUser.email || 'editorial@theweddingvachan.com';
 
         const reply = new Comment({
             blogPost: parent.blogPost._id,
@@ -204,7 +204,7 @@ export async function replyToComment(req, res) {
             author: {
                 name: studioName,
                 email: studioEmail,
-                website: 'https://theweddingboys.in'
+                website: 'https://theweddingvachan.com'
             },
             body: sanitizeText(body),
             status: 'approved', // Studio reply is immediately approved

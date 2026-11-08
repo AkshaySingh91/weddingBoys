@@ -46,7 +46,7 @@ export default function PhotoEssay({ post, contentJson, toc, related }) {
           {post.title}
         </h1>
         <div className="mt-4 flex items-center justify-center gap-3 text-sm text-studio-inkMuted">
-          <span>{post.author?.name || 'The Wedding Boys'}</span>
+          <span>{post.author?.name || 'The Wedding Vachan'}</span>
           <span>·</span>
           <span className="flex items-center gap-1">
             <Clock size={13} />

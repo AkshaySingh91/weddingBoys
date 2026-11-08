@@ -29,6 +29,7 @@ export const fingerprintOf = (file) => `${file.name}:${file.size}:${file.lastMod
 /* ---------------------------------------------------------------- utilities */
 
 const sleep = (ms, signal) => new Promise((resolve, reject) => {
+    if (signal?.aborted) { reject(new DOMException('Aborted', 'AbortError')); return; }
     const t = setTimeout(resolve, ms);
     signal?.addEventListener('abort', () => { clearTimeout(t); reject(new DOMException('Aborted', 'AbortError')); }, { once: true });
 });
@@ -219,7 +220,7 @@ export function createUpload({
     async function run() {
         await ensureSession();
 
-        if (session.mode === 'single') {
+        if (!session.completionPending && session.mode === 'single') {
             onStatus?.('uploading');
             let url = session.singlePartUrl;
             if (!url) {
@@ -241,7 +242,7 @@ export function createUpload({
                 cacheControl: session.cacheControl,
                 onProgress: (loaded) => { uploadedByPart.set(1, loaded); emitProgress(); },
             });
-        } else {
+        } else if (!session.completionPending) {
             onStatus?.('uploading');
             const done = new Set(uploadedByPart.keys());
             const todo = [];
@@ -285,9 +286,19 @@ export function createUpload({
         }
 
         onStatus?.('completing');
-        const { media } = await apiJson(`/api/admin/uploads/${session.sessionId}/complete`, {
-            method: 'POST', body: { meta },
-        });
+        let media;
+        for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+            try {
+                ({ media } = await apiJson(`/api/admin/uploads/${session.sessionId}/complete`, {
+                    method: 'POST', body: { meta },
+                }));
+                break;
+            } catch (error) {
+                const retryable = !error.status || error.status === 409 || error.status >= 500;
+                if (!retryable || attempt === MAX_ATTEMPTS - 1) throw error;
+                await sleep(backoffMs(attempt), controller.signal);
+            }
+        }
         forgetSession(file);
         onStatus?.('done');
         return media;

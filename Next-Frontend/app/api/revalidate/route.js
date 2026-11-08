@@ -18,8 +18,8 @@ function revalidateTags(body) {
     if (!expected || body.secret !== expected) {
         return NextResponse.json({ message: 'Invalid revalidation secret' }, { status: 401 });
     }
-    const tags = (body.tags || []).filter((t) => typeof t === 'string' && TAG.test(t)).slice(0, 20);
-    const paths = (body.paths || []).filter((p) => typeof p === 'string' && p.startsWith('/') && p.length < 200).slice(0, 20);
+    const tags = (Array.isArray(body.tags) ? body.tags : []).filter((t) => typeof t === 'string' && TAG.test(t)).slice(0, 20);
+    const paths = (Array.isArray(body.paths) ? body.paths : []).filter((p) => typeof p === 'string' && p.startsWith('/') && p.length < 200).slice(0, 20);
     tags.forEach((t) => revalidateTag(t, { expire: 0 }));
     paths.forEach((p) => revalidatePath(p));
     return NextResponse.json({ revalidated: true, tags, paths, now: Date.now() });
@@ -37,9 +37,9 @@ export async function POST(request) {
         const { searchParams } = new URL(request.url);
 
         const secret = body.secret || searchParams.get('secret');
-        const expectedSecret = process.env.REVALIDATION_SECRET || 'wb_editorial_secret_2026';
+        const expectedSecret = process.env.REVALIDATION_SECRET;
 
-        if (secret !== expectedSecret) {
+        if (!expectedSecret || secret !== expectedSecret) {
             return NextResponse.json({ message: 'Invalid revalidation secret' }, { status: 401 });
         }
 

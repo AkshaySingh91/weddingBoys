@@ -42,7 +42,7 @@ function Card({ title, action, children, className = '' }) {
         <section className={`rounded-2xl border border-studio-border bg-white p-5 ${className}`}>
             {title && (
                 <div className="mb-4 flex items-baseline justify-between gap-3">
-                    <h2 className="font-playfair text-[17px] font-bold text-studio-ink">{title}</h2>
+                    <h2 className="font-display text-[17px] font-bold text-studio-ink">{title}</h2>
                     {action}
                 </div>
             )}
@@ -171,7 +171,7 @@ function CtaCard() {
             <p className="relative mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-studio-terracotta">
                 Personal consultation
             </p>
-            <h2 className="relative mb-2 font-playfair text-xl font-bold leading-snug text-studio-ink">
+            <h2 className="relative mb-2 font-display text-xl font-bold leading-snug text-studio-ink">
                 Planning a {year} destination wedding?
             </h2>
             <p className="relative mb-4 text-[13px] leading-relaxed text-studio-inkSecondary">
@@ -313,7 +313,7 @@ function ShareCard({ url, title }) {
 /* ── 5. Author ──────────────────────────────────────────────────────────── */
 
 function AuthorCard({ author }) {
-    const name = author?.name || 'The Wedding Boys';
+    const name = author?.name || 'The Wedding Vachan';
     const avatar = avatarOf(author);
     /*
       `role` on the Admin model is an RBAC enum (SuperAdmin / Editor), not a job
@@ -331,7 +331,7 @@ function AuthorCard({ author }) {
                     {avatar ? (
                         <Image src={avatar} alt={name} fill unoptimized sizes="48px" className="object-cover" />
                     ) : (
-                        <span className="flex h-full w-full items-center justify-center font-playfair text-lg font-bold text-studio-gold">
+                        <span className="flex h-full w-full items-center justify-center font-display text-lg font-bold text-studio-gold">
                             {name[0]}
                         </span>
                     )}
@@ -367,8 +367,8 @@ function QuoteCard({ post }) {
 
     return (
         <section className="rounded-2xl bg-studio-blush p-5">
-            <span aria-hidden="true" className="block font-playfair text-4xl leading-none text-studio-coral/30">“</span>
-            <blockquote className="-mt-2 font-lora text-[13.5px] italic leading-relaxed text-studio-inkSecondary">
+            <span aria-hidden="true" className="block font-display text-4xl leading-none text-studio-coral/30">“</span>
+            <blockquote className="-mt-2 font-display text-[13.5px] italic leading-relaxed text-studio-inkSecondary">
                 {quote}
             </blockquote>
             {who && (

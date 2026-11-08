@@ -13,7 +13,8 @@ const api_url = process.env.NEXT_PUBLIC_API_URL;
 function LoginForm() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const nextPath = searchParams.get('next');
+    const requestedNext = searchParams.get('next') || '/dashboard';
+    const nextPath = requestedNext.startsWith('/') && !requestedNext.startsWith('//') && !requestedNext.includes('\\') ? requestedNext : '/dashboard';
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -151,11 +152,11 @@ function LoginForm() {
         return (
             <div className="space-y-6">
                 <header>
-                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F7F4EF] text-[#C5A880]">
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-ground text-gold-strong">
                         <Key size={24} weight="duotone" />
                     </div>
-                    <h1 className="font-serif text-2xl font-semibold text-[#1C1917]">Backup Recovery Code</h1>
-                    <p className="mt-1 text-xs font-sans text-[#78716C]">
+                    <h1 className="font-sans text-2xl font-semibold text-ink">Backup Recovery Code</h1>
+                    <p className="mt-1 text-xs font-sans text-ink-muted">
                         Enter one of your saved single-use emergency recovery codes.
                     </p>
                 </header>
@@ -169,7 +170,7 @@ function LoginForm() {
 
                 <form onSubmit={handleVerifyRecovery} noValidate className="space-y-5">
                     <div>
-                        <label htmlFor="recoveryCode" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-[#78716C]">
+                        <label htmlFor="recoveryCode" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-ink-muted">
                             Recovery Code
                         </label>
                         <input
@@ -180,7 +181,7 @@ function LoginForm() {
                             value={recoveryCode}
                             onChange={(e) => setRecoveryCode(e.target.value.toUpperCase())}
                             placeholder="A8K2-9P3L"
-                            className="w-full rounded-xl border border-[#E7E2DA] bg-white py-3 text-center font-mono text-xl tracking-[0.25em] text-[#1C1917] outline-none transition focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880]"
+                            className="w-full rounded-xl border border-edge-subtle bg-white py-3 text-center font-mono text-xl tracking-[0.25em] text-ink outline-none transition focus:border-gold focus:ring-1 focus:ring-gold"
                         />
                     </div>
 
@@ -198,7 +199,7 @@ function LoginForm() {
                 <button
                     type="button"
                     onClick={() => { setUseRecovery(false); setRecoveryCode(''); setError(''); }}
-                    className="inline-flex items-center gap-1.5 text-xs font-medium font-sans text-[#78716C] hover:text-[#1C1917] transition"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium font-sans text-ink-muted hover:text-ink transition"
                 >
                     <ArrowLeft size={14} weight="bold" /> Use authenticator app instead
                 </button>
@@ -211,11 +212,11 @@ function LoginForm() {
         return (
             <div className="space-y-6">
                 <header>
-                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F7F4EF] text-emerald-700">
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-ground text-emerald-700">
                         <ShieldCheck size={24} weight="duotone" />
                     </div>
-                    <h1 className="font-serif text-2xl font-semibold text-[#1C1917]">Two-Factor Verification</h1>
-                    <p className="mt-1 text-xs font-sans text-[#78716C]">
+                    <h1 className="font-sans text-2xl font-semibold text-ink">Two-Factor Verification</h1>
+                    <p className="mt-1 text-xs font-sans text-ink-muted">
                         Enter the 6-digit verification code from your authenticator app.
                     </p>
                 </header>
@@ -229,7 +230,7 @@ function LoginForm() {
 
                 <form onSubmit={handleVerifyMfa} noValidate className="space-y-5">
                     <div>
-                        <label htmlFor="code" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-[#78716C]">
+                        <label htmlFor="code" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-ink-muted">
                             Authentication Code
                         </label>
                         <input
@@ -242,7 +243,7 @@ function LoginForm() {
                             value={code}
                             onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
                             placeholder="000000"
-                            className="w-full rounded-xl border border-[#E7E2DA] bg-white py-3 text-center font-mono text-2xl tracking-[0.4em] text-[#1C1917] outline-none transition focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880]"
+                            className="w-full rounded-xl border border-edge-subtle bg-white py-3 text-center font-mono text-2xl tracking-[0.4em] text-ink outline-none transition focus:border-gold focus:ring-1 focus:ring-gold"
                         />
                     </div>
 
@@ -261,7 +262,7 @@ function LoginForm() {
                     <button
                         type="button"
                         onClick={() => { setUseRecovery(true); setCode(''); setError(''); }}
-                        className="inline-flex items-center gap-1.5 text-xs font-medium font-sans text-[#C5A880] hover:underline"
+                        className="inline-flex items-center gap-1.5 text-xs font-medium font-sans text-gold-strong hover:underline"
                     >
                         <Key size={14} weight="bold" /> Lost access? Use emergency backup code
                     </button>
@@ -269,7 +270,7 @@ function LoginForm() {
                         <button
                             type="button"
                             onClick={() => { setTempToken(null); setCode(''); setError(''); }}
-                            className="inline-flex items-center gap-1 text-xs font-sans text-[#78716C] hover:text-[#1C1917]"
+                            className="inline-flex items-center gap-1 text-xs font-sans text-ink-muted hover:text-ink"
                         >
                             <ArrowLeft size={13} weight="bold" /> Back to email sign in
                         </button>
@@ -283,9 +284,9 @@ function LoginForm() {
     return (
         <div className="space-y-6">
             <header>
-                <h1 className="font-serif text-3xl font-semibold text-[#1C1917]">Welcome Back</h1>
-                <p className="mt-1 text-xs font-sans text-[#78716C]">
-                    Sign in to your Wedding Boys studio administrator account.
+                <h1 className="font-sans text-3xl font-semibold text-ink">Sign in</h1>
+                <p className="mt-1 text-xs font-sans text-ink-muted">
+                    Use your studio email and password.
                 </p>
             </header>
 
@@ -298,18 +299,18 @@ function LoginForm() {
 
             <form onSubmit={handleSubmit} noValidate className="space-y-4">
                 <div>
-                    <label htmlFor="email" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-[#78716C]">Email Address</label>
+                    <label htmlFor="email" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-ink-muted">Email Address</label>
                     <div className="relative">
-                        <EnvelopeSimple size={16} weight="bold" className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A8A29E]" />
+                        <EnvelopeSimple size={16} weight="bold" className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-muted" />
                         <input
                             id="email"
                             type="email"
                             autoComplete="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="admin@theweddingboys.in"
-                            className={`w-full rounded-xl border bg-white py-2.5 pl-10 pr-3.5 text-sm font-sans text-[#1C1917] placeholder:text-[#A8A29E] outline-none transition focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880] ${
-                                fieldErrors.email ? 'border-rose-400' : 'border-[#E7E2DA]'
+                            placeholder="admin@theweddingvachan.com"
+                            className={`w-full rounded-xl border bg-white py-2.5 pl-10 pr-3.5 text-sm font-sans text-ink placeholder:text-ink-muted outline-none transition focus:border-gold focus:ring-1 focus:ring-gold ${
+                                fieldErrors.email ? 'border-rose-400' : 'border-edge-subtle'
                             }`}
                         />
                     </div>
@@ -318,13 +319,13 @@ function LoginForm() {
 
                 <div>
                     <div className="mb-1.5 flex items-center justify-between">
-                        <label htmlFor="password" className="block text-xs font-medium uppercase tracking-wider text-[#78716C]">Password</label>
-                        <Link href="/admin/forgot-password" className="text-xs font-sans text-[#C5A880] hover:underline">
+                        <label htmlFor="password" className="block text-xs font-medium uppercase tracking-wider text-ink-muted">Password</label>
+                        <Link href="/admin/forgot-password" className="text-xs font-sans text-gold-strong hover:underline">
                             Forgot password?
                         </Link>
                     </div>
                     <div className="relative">
-                        <LockKey size={16} weight="bold" className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A8A29E]" />
+                        <LockKey size={16} weight="bold" className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-muted" />
                         <input
                             id="password"
                             type={showPassword ? 'text' : 'password'}
@@ -332,15 +333,15 @@ function LoginForm() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="••••••••••••"
-                            className={`w-full rounded-xl border bg-white py-2.5 pl-10 pr-10 text-sm font-sans text-[#1C1917] placeholder:text-[#A8A29E] outline-none transition focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880] ${
-                                fieldErrors.password ? 'border-rose-400' : 'border-[#E7E2DA]'
+                            className={`w-full rounded-xl border bg-white py-2.5 pl-10 pr-10 text-sm font-sans text-ink placeholder:text-ink-muted outline-none transition focus:border-gold focus:ring-1 focus:ring-gold ${
+                                fieldErrors.password ? 'border-rose-400' : 'border-edge-subtle'
                             }`}
                         />
                         <button
                             type="button"
                             onClick={() => setShowPassword((s) => !s)}
                             aria-label={showPassword ? 'Hide password' : 'Show password'}
-                            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#A8A29E] hover:text-[#1C1917] transition"
+                            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-ink-muted hover:text-ink transition"
                         >
                             {showPassword ? <EyeSlash size={16} weight="bold" /> : <Eye size={16} weight="bold" />}
                         </button>
@@ -348,12 +349,12 @@ function LoginForm() {
                     {fieldErrors.password && <p className="mt-1 text-[11px] text-rose-600">{fieldErrors.password}</p>}
                 </div>
 
-                <label className="flex cursor-pointer items-center gap-2 pt-1 text-xs font-sans text-[#78716C]">
+                <label className="flex cursor-pointer items-center gap-2 pt-1 text-xs font-sans text-ink-muted">
                     <input
                         type="checkbox"
                         checked={rememberMe}
                         onChange={(e) => setRememberMe(e.target.checked)}
-                        className="h-4 w-4 rounded border-[#E7E2DA] accent-[#C5A880]"
+                        className="h-4 w-4 rounded-lg border-edge-subtle accent-gold"
                     />
                     <span>Remember this device for 30 days</span>
                 </label>
@@ -365,12 +366,12 @@ function LoginForm() {
                     disabled={submitting}
                     className="w-full justify-center mt-2"
                 >
-                    Sign In to Dashboard
+                    Sign in
                 </Button>
             </form>
 
-            <p className="border-t border-[#F5F2EC] pt-4 text-center text-[11px] font-sans text-[#A8A29E]">
-                Access restricted to authenticated studio staff. Protected with multi-factor encryption.
+            <p className="border-t border-edge-subtle pt-4 text-center text-[11px] font-sans text-ink-muted">
+                For studio staff only. New team members join by invite.
             </p>
         </div>
     );
@@ -378,7 +379,7 @@ function LoginForm() {
 
 export default function LoginPage() {
     return (
-        <Suspense fallback={<div className="h-64 animate-pulse rounded-2xl bg-[#F7F4EF]" />}>
+        <Suspense fallback={<div className="h-64 animate-pulse rounded-xl bg-ground" />}>
             <LoginForm />
         </Suspense>
     );

@@ -22,7 +22,7 @@ const coverOf = (post) =>
 export default function EditorialGuide({ post, contentJson, toc, related }) {
   const cover = coverOf(post);
   const publishedDate = post.publishedAt ? new Date(post.publishedAt) : new Date(post.createdAt);
-  const authorName = post.author?.name || 'The Wedding Boys';
+  const authorName = post.author?.name || 'The Wedding Vachan';
   const authorAvatar = avatarOf(post.author);
   const commentCount = post.commentsData?.total || 0;
   // The cover's corner legends, both optional. See the figure below.

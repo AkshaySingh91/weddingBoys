@@ -40,7 +40,7 @@ function Popover({ label, value, width = 'w-52', children, title }) {
                 title={title}
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={() => setOpen((v) => !v)}
-                className="flex h-8 items-center gap-1 rounded-lg px-2 text-xs text-stone-700 transition-colors hover:bg-stone-200/80 hover:text-[#1C1917]"
+                className="flex h-8 items-center gap-1 rounded-lg px-2 text-xs text-ink-secondary transition-colors hover:bg-ground-sunk/80 hover:text-ink"
             >
                 <span className="max-w-[7.5rem] truncate">{value || label}</span>
                 <CaretDown size={10} className="shrink-0 opacity-60" />
@@ -49,7 +49,7 @@ function Popover({ label, value, width = 'w-52', children, title }) {
                 text opens that menu, and it was floating over these options and
                 swallowing the clicks. */}
             {open && (
-                <div className={`absolute left-0 top-full z-[60] mt-1 ${width} overflow-hidden rounded-xl border border-[#E5DCD3] bg-white py-1 shadow-lg`}>
+                <div className={`absolute left-0 top-full z-[60] mt-1 ${width} overflow-hidden rounded-xl border border-edge-subtle bg-white py-1 shadow-lg`}>
                     {typeof children === 'function' ? children(() => setOpen(false)) : children}
                 </div>
             )}
@@ -63,10 +63,10 @@ function Option({ active, onClick, children, style }) {
             type="button"
             onMouseDown={(e) => e.preventDefault()}
             onClick={onClick}
-            className="flex w-full items-center justify-between gap-2 px-3 py-1.5 text-left text-xs text-stone-700 hover:bg-stone-50"
+            className="flex w-full items-center justify-between gap-2 px-3 py-1.5 text-left text-xs text-ink-secondary hover:bg-ground"
         >
             <span style={style} className="truncate">{children}</span>
-            {active && <Check size={11} className="shrink-0 text-[#A3603A]" />}
+            {active && <Check size={11} className="shrink-0 text-accent-ink" />}
         </button>
     );
 }
@@ -75,8 +75,8 @@ function Option({ active, onClick, children, style }) {
 function Advanced({ placeholder, current, onApply, onClear, close }) {
     const [raw, setRaw] = useState(current || '');
     return (
-        <div className="mt-1 border-t border-[#E5DCD3] px-3 pb-2 pt-2">
-            <p className="mb-1 flex items-center gap-1 text-[10px] font-medium uppercase tracking-wide text-stone-400">
+        <div className="mt-1 border-t border-edge-subtle px-3 pb-2 pt-2">
+            <p className="mb-1 flex items-center gap-1 text-[10px] font-medium uppercase tracking-wide text-ink-muted">
                 <Sliders size={9} /> Custom value
             </p>
             <div className="flex gap-1">
@@ -96,13 +96,13 @@ function Advanced({ placeholder, current, onApply, onClear, close }) {
                         if (e.key === 'Escape') { e.preventDefault(); setRaw(current || ''); close(); }
                     }}
                     placeholder={placeholder}
-                    className="h-7 w-full rounded-md border border-[#E5DCD3] px-2 text-[11px] outline-none focus:border-[#A3603A]"
+                    className="h-7 w-full rounded-lg border border-edge-subtle px-2 text-[11px] outline-none focus:border-accent"
                 />
                 <button
                     type="button"
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={() => { onClear(); close(); }}
-                    className="shrink-0 rounded-md px-1.5 text-[10px] text-stone-500 hover:bg-stone-100"
+                    className="shrink-0 rounded-lg px-1.5 text-[10px] text-ink-muted hover:bg-ground-sunk"
                 >
                     Clear
                 </button>
@@ -159,7 +159,7 @@ export default function TypographyControls({ editor }) {
                         {FONT_SIZES.map((o) => (
                             <Option key={o.value} active={size === o.value}
                                 onClick={() => { editor.chain().focus().setFontSize(o.value).run(); close(); }}>
-                                {o.label} <span className="text-stone-400">{o.value}</span>
+                                {o.label} <span className="text-ink-muted">{o.value}</span>
                             </Option>
                         ))}
                         <Advanced
@@ -183,7 +183,7 @@ export default function TypographyControls({ editor }) {
                         {LINE_HEIGHTS.map((o) => (
                             <Option key={o.value} active={height === o.value}
                                 onClick={() => { editor.chain().focus().setLineHeight(o.value).run(); close(); }}>
-                                {o.label} <span className="text-stone-400">{o.value}</span>
+                                {o.label} <span className="text-ink-muted">{o.value}</span>
                             </Option>
                         ))}
                         {/*
@@ -218,7 +218,7 @@ export default function TypographyControls({ editor }) {
                         {LETTER_SPACINGS.map((o) => (
                             <Option key={o.value} active={spacing === o.value}
                                 onClick={() => { editor.chain().focus().setLetterSpacing(o.value).run(); close(); }}>
-                                {o.label} <span className="text-stone-400">{o.value}</span>
+                                {o.label} <span className="text-ink-muted">{o.value}</span>
                             </Option>
                         ))}
                         <Advanced
@@ -236,29 +236,29 @@ export default function TypographyControls({ editor }) {
                 value={labelFor(TEXT_COLORS, colour, 'Colour')}>
                 {(close) => (
                     <>
-                        <p className="px-3 pb-1 pt-1.5 text-[10px] font-medium uppercase tracking-wide text-stone-400">Text</p>
+                        <p className="px-3 pb-1 pt-1.5 text-[10px] font-medium uppercase tracking-wide text-ink-muted">Text</p>
                         <div className="flex flex-wrap gap-1 px-3 pb-2">
                             {TEXT_COLORS.map((c) => (
                                 <button key={c.value} type="button" title={c.label}
                                     onMouseDown={(e) => e.preventDefault()}
                                     onClick={() => { editor.chain().focus().setColor(c.value).run(); close(); }}
                                     style={{ backgroundColor: c.value }}
-                                    className={`h-5 w-5 rounded-md border transition-transform hover:scale-110 ${colour === c.value ? 'border-stone-900 ring-1 ring-stone-900' : 'border-black/10'}`}
+                                    className={`h-5 w-5 rounded-lg border transition-transform hover:scale-110 ${colour === c.value ? 'border-ink ring-1 ring-ink' : 'border-black/10'}`}
                                 />
                             ))}
                         </div>
-                        <p className="px-3 pb-1 text-[10px] font-medium uppercase tracking-wide text-stone-400">Highlight</p>
+                        <p className="px-3 pb-1 text-[10px] font-medium uppercase tracking-wide text-ink-muted">Highlight</p>
                         <div className="flex flex-wrap gap-1 px-3 pb-2">
                             {HIGHLIGHT_COLORS.map((c) => (
                                 <button key={c.value} type="button" title={c.label}
                                     onMouseDown={(e) => e.preventDefault()}
                                     onClick={() => { editor.chain().focus().toggleHighlight({ color: c.value }).run(); close(); }}
                                     style={{ backgroundColor: c.value }}
-                                    className="h-5 w-5 rounded-md border border-black/10 transition-transform hover:scale-110"
+                                    className="h-5 w-5 rounded-lg border border-black/10 transition-transform hover:scale-110"
                                 />
                             ))}
                         </div>
-                        <div className="border-t border-[#E5DCD3]">
+                        <div className="border-t border-edge-subtle">
                             <Option onClick={() => { editor.chain().focus().unsetColor().unsetHighlight().run(); close(); }}>
                                 Clear colour &amp; highlight
                             </Option>

@@ -243,7 +243,7 @@ export default function CommentsSection({
             {/* Section Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8 border-b border-studio-border">
                 <div className="flex items-center gap-3">
-                    <h3 className="font-playfair text-2xl sm:text-3xl font-bold text-studio-ink">
+                    <h3 className="font-display text-2xl sm:text-3xl font-bold text-studio-ink">
                         Conversations
                     </h3>
                     <span className="rounded-full bg-studio-canvas px-3 py-1 text-xs font-semibold text-studio-terracotta border border-studio-border">
@@ -270,7 +270,7 @@ export default function CommentsSection({
 
             {/* Main Submit Comment Form */}
             <form onSubmit={handleSubmitComment} className="mt-8 rounded-2xl border border-studio-border bg-studio-canvas/50 p-6 sm:p-8">
-                <h4 className="font-playfair text-lg font-semibold text-studio-ink mb-1">
+                <h4 className="font-display text-lg font-semibold text-studio-ink mb-1">
                     Leave a Thought
                 </h4>
                 <p className="text-xs text-studio-inkMuted mb-6">
@@ -293,7 +293,7 @@ export default function CommentsSection({
                         className={`mb-6 rounded-xl p-4 text-xs font-medium ${
                             feedback.type === 'success'
                                 ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
-                                : 'bg-rose-50 border border-rose-200 text-rose-800'
+                                : 'bg-accent-wash border border-accent/30 text-accent'
                         }`}
                     >
                         {feedback.text}
@@ -365,7 +365,7 @@ export default function CommentsSection({
                 {comments.length === 0 ? (
                     <div className="rounded-2xl border border-dashed border-studio-border p-12 text-center">
                         <MessageSquare className="mx-auto h-8 w-8 text-studio-inkMuted/60 mb-3" />
-                        <p className="font-playfair text-lg text-studio-ink font-semibold">No reflections yet</p>
+                        <p className="font-display text-lg text-studio-ink font-semibold">No reflections yet</p>
                         <p className="text-xs text-studio-inkMuted mt-1">
                             Be the first to share your reflections on this wedding journey.
                         </p>
@@ -374,11 +374,11 @@ export default function CommentsSection({
                     comments.map((comment) => (
                         <div key={comment._id} id={`comment-${comment._id}`} className="group/item">
                             {/* Top-Level Comment Card */}
-                            <div className={`rounded-2xl border ${comment.isPinned ? 'border-amber-300/80 bg-amber-50/20' : 'border-studio-border bg-white'} p-6 transition-all`}>
+                            <div className={`rounded-2xl border ${comment.isPinned ? 'border-gold/60 bg-amber-50/20' : 'border-studio-border bg-white'} p-6 transition-all`}>
                                 {/* Pinned Banner */}
                                 {comment.isPinned && (
-                                    <div className="mb-3 flex items-center gap-1.5 text-xs font-semibold text-amber-700">
-                                        <Pin className="h-3.5 w-3.5 fill-amber-700" />
+                                    <div className="mb-3 flex items-center gap-1.5 text-xs font-semibold text-gold-strong">
+                                        <Pin className="h-3.5 w-3.5 fill-gold-strong" />
                                         <span>Pinned Reflection</span>
                                     </div>
                                 )}
@@ -401,7 +401,7 @@ export default function CommentsSection({
                                                 {comment.isStudioReply && (
                                                     <span className="inline-flex items-center gap-1 rounded-full bg-studio-ink px-2.5 py-0.5 text-[10px] font-medium tracking-wide text-studio-gold">
                                                         <ShieldCheck className="h-3 w-3" />
-                                                        The Wedding Boys Team
+                                                        The Wedding Vachan Team
                                                     </span>
                                                 )}
                                             </div>
@@ -415,7 +415,7 @@ export default function CommentsSection({
                                     <button
                                         onClick={() => handleReport(comment._id)}
                                         title="Report comment"
-                                        className="text-studio-inkMuted/40 hover:text-rose-600 transition-colors p-1"
+                                        className="text-studio-inkMuted/40 hover:text-accent transition-colors p-1"
                                     >
                                         <Flag className="h-3.5 w-3.5" />
                                     </button>
@@ -433,13 +433,13 @@ export default function CommentsSection({
                                         onClick={() => handleLike(comment._id)}
                                         className={`flex items-center gap-1.5 font-medium transition-colors ${
                                             likedIds.has(comment._id)
-                                                ? 'text-rose-600'
-                                                : 'hover:text-rose-600'
+                                                ? 'text-accent'
+                                                : 'hover:text-accent'
                                         }`}
                                     >
                                         <Heart
                                             className={`h-4 w-4 ${
-                                                likedIds.has(comment._id) ? 'fill-rose-600 text-rose-600' : ''
+                                                likedIds.has(comment._id) ? 'fill-accent text-accent' : ''
                                             }`}
                                         />
                                         <span>{comment.likes || 0}</span>
@@ -521,7 +521,7 @@ export default function CommentsSection({
                                                             {reply.isStudioReply && (
                                                                 <span className="inline-flex items-center gap-1 rounded-full bg-studio-ink px-2 py-0.5 text-[9px] font-medium tracking-wide text-studio-gold">
                                                                     <ShieldCheck className="h-2.5 w-2.5" />
-                                                                    The Wedding Boys Team
+                                                                    The Wedding Vachan Team
                                                                 </span>
                                                             )}
                                                         </div>
@@ -534,7 +534,7 @@ export default function CommentsSection({
                                                 <button
                                                     onClick={() => handleReport(reply._id)}
                                                     title="Report reply"
-                                                    className="text-studio-inkMuted/40 hover:text-rose-600 transition-colors p-1"
+                                                    className="text-studio-inkMuted/40 hover:text-accent transition-colors p-1"
                                                 >
                                                     <Flag className="h-3 w-3" />
                                                 </button>
@@ -548,12 +548,12 @@ export default function CommentsSection({
                                                 <button
                                                     onClick={() => handleLike(reply._id)}
                                                     className={`flex items-center gap-1 font-medium transition-colors ${
-                                                        likedIds.has(reply._id) ? 'text-rose-600' : 'hover:text-rose-600'
+                                                        likedIds.has(reply._id) ? 'text-accent' : 'hover:text-accent'
                                                     }`}
                                                 >
                                                     <Heart
                                                         className={`h-3.5 w-3.5 ${
-                                                            likedIds.has(reply._id) ? 'fill-rose-600 text-rose-600' : ''
+                                                            likedIds.has(reply._id) ? 'fill-accent text-accent' : ''
                                                         }`}
                                                     />
                                                     <span>{reply.likes || 0}</span>

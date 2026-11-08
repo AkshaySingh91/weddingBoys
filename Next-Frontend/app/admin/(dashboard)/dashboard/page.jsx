@@ -19,6 +19,7 @@ import {
   Sparkle,
   SlidersHorizontal,
   CircleNotch,
+  WhatsappLogo,
 } from '@phosphor-icons/react';
 import { useAuth } from '@/Context/AdminAuthContext.jsx';
 import { useStudioDetails } from '@/Context/StudioDetailsContext.jsx';
@@ -99,8 +100,8 @@ export default function DashboardPage() {
   if (authLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3 font-sans">
-        <CircleNotch size={28} className="animate-spin text-stone-600" />
-        <p className="text-xs font-medium text-stone-600 tracking-wide">Loading Studio Workspace...</p>
+        <CircleNotch size={28} className="animate-spin text-ink-secondary" />
+        <p className="text-xs font-medium text-ink-secondary tracking-wide">Loading…</p>
       </div>
     );
   }
@@ -119,43 +120,41 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6 pb-12 font-sans">
       {/* 1. Sleek Studio Command Bar */}
-      <div className="bg-gradient-to-br from-white to-red-50 rounded-2xl border border-red-100 p-5 sm:p-6 shadow-sm shadow-red-900/5 relative overflow-hidden">
+      <div className="rounded-xl border border-edge-subtle bg-ground-raised p-5 shadow-panel sm:p-6">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div className="space-y-1">
-            
-            <div className="flex items-center gap-2">
-              <Badge variant="luxury" size="sm" dot dotColor="bg-white">
-                Studio Cockpit
-              </Badge>
-              <span className="text-xs text-stone-500 font-sans tabular-nums">{todayStr}</span>
-            </div>
+            <p className="text-xs text-ink-muted font-sans tabular-nums">{todayStr}</p>
 
-            <h1 className="text-2xl sm:text-3xl font-sans font-bold tracking-tight text-[#2F2F2F]">
-              Welcome back, {user?.name || 'Administrator'}
+            <h1 className="text-2xl sm:text-3xl font-sans font-bold tracking-tight text-ink">
+              Welcome back{user?.name ? `, ${user.name.split(' ')[0]}` : ''}
             </h1>
 
-            <p className="text-xs sm:text-sm text-stone-600 font-sans max-w-2xl leading-relaxed">
-              Real-time overview of {studioName || 'The Wedding Boys'} production pipeline, couple inquiries, editorial releases, and Cloudflare media assets.
+            <p className="text-sm text-ink-secondary font-sans max-w-2xl leading-relaxed">
+              {stats.loading
+                ? 'Checking for new enquiries…'
+                : stats.unreadCount > 0
+                  ? `${stats.unreadCount} new ${stats.unreadCount === 1 ? 'enquiry is' : 'enquiries are'} waiting for a reply.`
+                  : 'No new enquiries. You’re all caught up.'}
             </p>
           </div>
 
           {/* Action buttons */}
           <div className="flex flex-wrap items-center gap-2 shrink-0">
-            <Link href="/admin/blogs">
-              <Button variant="luxury" size="sm" icon={Plus}>
-                New Blog Post
+            <Link href="/admin/blogs/create">
+              <Button variant="primary" size="sm" icon={Plus}>
+                New story
               </Button>
             </Link>
 
             <Link href="/admin/media">
-              <Button variant="outline" size="sm" icon={Images}>
-                Media Library
+              <Button variant="secondary" size="sm" icon={Images}>
+                Media library
               </Button>
             </Link>
 
             <Link href="/" target="_blank" rel="noopener noreferrer">
-              <Button variant="secondary" size="sm" iconRight={ArrowSquareOut}>
-                Live Website
+              <Button variant="ghost" size="sm" iconRight={ArrowSquareOut}>
+                View website
               </Button>
             </Link>
           </div>
@@ -165,18 +164,18 @@ export default function DashboardPage() {
       {/* 2. Key Performance Indicators (KPIs) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Enquiries KPI */}
-        <Card className="border-[#E5DCD3] bg-white shadow-sm hover:border-stone-400 transition-all">
+        <Card className="border-edge-subtle bg-white shadow-sm hover:border-edge-strong transition-all">
           <CardContent className="p-4 sm:p-5">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider">
+              <span className="text-[11px] font-semibold text-ink-muted uppercase tracking-wider">
                 Client Enquiries
               </span>
-              <div className="w-8 h-8 rounded-lg bg-red-50 border border-red-100 flex items-center justify-center text-red-500">
+              <div className="w-8 h-8 rounded-lg bg-accent-wash border border-accent/25 flex items-center justify-center text-accent-ink">
                 <PhoneCall size={16} />
               </div>
             </div>
             <div className="mt-2.5 flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-[#2F2F2F] tabular-nums">
+              <span className="text-2xl font-bold text-ink tabular-nums">
                 {stats.loading ? '—' : stats.enquiries.length}
               </span>
               {stats.unreadCount > 0 && (
@@ -185,108 +184,101 @@ export default function DashboardPage() {
                 </Badge>
               )}
             </div>
-            <div className="mt-2.5 flex items-center justify-between text-xs text-stone-500 pt-2 border-t border-stone-100">
+            <div className="mt-2.5 flex items-center justify-between text-xs text-ink-muted pt-2 border-t border-edge-subtle">
               <Link
                 href="/admin/total-Enquires"
-                className="text-red-600 hover:text-[#2F2F2F] font-semibold inline-flex items-center gap-1 group"
+                className="text-accent-ink hover:text-ink font-semibold inline-flex items-center gap-1 group"
               >
-                Open Pipeline
+                All enquiries
                 <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
               </Link>
-              <span className="tabular-nums">Couples</span>
             </div>
           </CardContent>
         </Card>
 
         {/* Media Assets KPI */}
-        <Card className="border-[#E5DCD3] bg-white shadow-sm hover:border-stone-400 transition-all">
+        <Card className="border-edge-subtle bg-white shadow-sm hover:border-edge-strong transition-all">
           <CardContent className="p-4 sm:p-5">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider">
-                Cloud Media Assets
+              <span className="text-[11px] font-semibold text-ink-muted uppercase tracking-wider">
+                Media library
               </span>
-              <div className="w-8 h-8 rounded-lg bg-red-50 border border-red-100 flex items-center justify-center text-red-500">
+              <div className="w-8 h-8 rounded-lg bg-accent-wash border border-accent/25 flex items-center justify-center text-accent-ink">
                 <Images size={16} />
               </div>
             </div>
             <div className="mt-2.5 flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-[#2F2F2F] tabular-nums">
+              <span className="text-2xl font-bold text-ink tabular-nums">
                 {stats.loading ? '—' : stats.mediaCount}
               </span>
-              <Badge variant="gold" size="sm">
-                Cloudflare R2
-              </Badge>
+              <span className="text-xs text-ink-muted">files</span>
             </div>
-            <div className="mt-2.5 flex items-center justify-between text-xs text-stone-500 pt-2 border-t border-stone-100">
+            <div className="mt-2.5 flex items-center justify-between text-xs text-ink-muted pt-2 border-t border-edge-subtle">
               <Link
                 href="/admin/media"
-                className="text-red-600 hover:text-[#2F2F2F] font-semibold inline-flex items-center gap-1 group"
+                className="text-accent-ink hover:text-ink font-semibold inline-flex items-center gap-1 group"
               >
-                Asset Storage
+                Open library
                 <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
               </Link>
-              <span>CDN Optimized</span>
             </div>
           </CardContent>
         </Card>
 
         {/* Published Articles KPI */}
-        <Card className="border-[#E5DCD3] bg-white shadow-sm hover:border-stone-400 transition-all">
+        <Card className="border-edge-subtle bg-white shadow-sm hover:border-edge-strong transition-all">
           <CardContent className="p-4 sm:p-5">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider">
-                Editorial Blogs
+              <span className="text-[11px] font-semibold text-ink-muted uppercase tracking-wider">
+                Published stories
               </span>
-              <div className="w-8 h-8 rounded-lg bg-red-50 border border-red-100 flex items-center justify-center text-red-500">
+              <div className="w-8 h-8 rounded-lg bg-accent-wash border border-accent/25 flex items-center justify-center text-accent-ink">
                 <BookOpenText size={16} />
               </div>
             </div>
             <div className="mt-2.5 flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-[#2F2F2F] tabular-nums">
+              <span className="text-2xl font-bold text-ink tabular-nums">
                 {stats.loading ? '—' : stats.blogsCount}
               </span>
-              <Badge variant="terracotta" size="sm">
-                SEO Live
-              </Badge>
+              <span className="text-xs text-ink-muted">on the journal</span>
             </div>
-            <div className="mt-2.5 flex items-center justify-between text-xs text-stone-500 pt-2 border-t border-stone-100">
+            <div className="mt-2.5 flex items-center justify-between text-xs text-ink-muted pt-2 border-t border-edge-subtle">
               <Link
                 href="/admin/blogs"
-                className="text-[#A3603A] hover:text-[#1C1917] font-semibold inline-flex items-center gap-1 group"
+                className="text-accent-ink hover:text-ink font-semibold inline-flex items-center gap-1 group"
               >
-                Manage Posts
+                All stories
                 <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
               </Link>
-              <span>Articles</span>
             </div>
           </CardContent>
         </Card>
 
         {/* Security & Access KPI */}
-        <Card className="border-stone-200 bg-white shadow-sm hover:border-stone-400 transition-all">
+        <Card className="border-edge-subtle bg-white shadow-sm hover:border-edge-strong transition-all">
           <CardContent className="p-4 sm:p-5">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider">
-                Security Posture
+              <span className="text-[11px] font-semibold text-ink-muted uppercase tracking-wider">
+                Two-step sign-in
               </span>
               <div className="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700">
                 <ShieldCheck size={16} />
               </div>
             </div>
             <div className="mt-2.5 flex items-baseline gap-2">
-              <span className="text-xl font-bold text-[#2F2F2F]">
-                {user?.mfaEnabled ? 'Secured' : 'Attention'}
+              <span className="text-xl font-bold text-ink">
+                {user?.mfaEnabled ? 'On' : 'Off'}
               </span>
               <Badge variant={user?.mfaEnabled ? 'success' : 'warning'} size="sm">
-                {user?.mfaEnabled ? '2FA Enabled' : 'Enable 2FA'}
+                {user?.mfaEnabled ? 'Protected' : 'Turn it on'}
               </Badge>
             </div>
-            <div className="mt-2.5 flex items-center justify-between text-xs text-stone-500 pt-2 border-t border-stone-100">
+            <div className="mt-2.5 flex items-center justify-between text-xs text-ink-muted pt-2 border-t border-edge-subtle">
               <Link
                 href="/admin/security"
-                className="text-red-600 hover:text-[#2F2F2F] font-semibold inline-flex items-center gap-1 group"
+                className="text-accent-ink hover:text-ink font-semibold inline-flex items-center gap-1 group"
               >
-                Security Center
+                Security
                 <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
               </Link>
               <span className="tabular-nums">{role || 'SuperAdmin'}</span>
@@ -299,14 +291,14 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left 2 Cols: Recent Couple Inquiries */}
         <div className="lg:col-span-2 space-y-4">
-          <Card className="border-[#E5DCD3] bg-white shadow-sm">
-            <CardHeader className="flex flex-row items-center justify-between pb-3 border-b border-stone-100">
+          <Card className="border-edge-subtle bg-white shadow-sm">
+            <CardHeader className="flex flex-row items-center justify-between pb-3 border-b border-edge-subtle">
               <div>
-                <CardTitle className="text-sm font-bold text-[#2F2F2F] font-sans">
-                  Recent Client Enquiries
+                <CardTitle className="text-sm font-bold text-ink font-sans">
+                  Recent enquiries
                 </CardTitle>
-                <CardDescription className="text-xs text-stone-500 font-sans">
-                  Latest couple submissions received from the wedding marketing portal
+                <CardDescription className="text-xs text-ink-muted font-sans">
+                  Newest first. Reply on WhatsApp straight from here.
                 </CardDescription>
               </div>
               <Link href="/admin/total-Enquires">
@@ -318,53 +310,65 @@ export default function DashboardPage() {
 
             <CardContent className="p-0">
               {stats.loading ? (
-                <div className="p-8 text-center text-xs text-stone-500">Loading inquiries...</div>
+                <div className="p-8 text-center text-xs text-ink-muted">Loading inquiries...</div>
               ) : recentEnquiries.length === 0 ? (
-                <div className="p-10 text-center text-xs text-stone-500">
+                <div className="p-10 text-center text-xs text-ink-muted">
                   No inquiries recorded yet.
                 </div>
               ) : (
-                <div className="divide-y divide-stone-100">
+                <div className="divide-y divide-edge-subtle">
                   {recentEnquiries.map((inq) => (
                     <div
                       key={inq._id}
-                      className="p-3.5 sm:px-5 hover:bg-stone-50 transition-colors flex items-center justify-between gap-4"
+                      className="p-3.5 sm:px-5 hover:bg-ground transition-colors flex items-center justify-between gap-4"
                     >
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2">
-                          <h4 className="text-xs font-bold text-[#2F2F2F] truncate font-sans">
+                          <h4 className="text-xs font-bold text-ink truncate font-sans">
                             {inq.Bride || 'Bride'} & {inq.Groom || 'Groom'}
                           </h4>
                           {!inq.isViewed && (
-                            <Badge variant="gold" size="sm">
+                            <Badge variant="terracotta" size="sm">
                               New
                             </Badge>
                           )}
                         </div>
 
-                        <div className="flex flex-wrap items-center gap-3 text-xs text-stone-600 mt-1 font-sans">
+                        <div className="flex flex-wrap items-center gap-3 text-xs text-ink-secondary mt-1 font-sans">
                           {inq.Contact && (
-                            <span className="flex items-center gap-1 font-medium text-stone-800 tabular-nums">
-                              <PhoneCall size={13} className="text-stone-400" />
+                            <span className="flex items-center gap-1 font-medium text-ink tabular-nums">
+                              <PhoneCall size={13} className="text-ink-muted" />
                               {inq.Contact}
                             </span>
                           )}
                           {inq.Date?.start && (
-                            <span className="flex items-center gap-1 text-stone-600 tabular-nums whitespace-nowrap">
-                              <CalendarBlank size={13} className="text-stone-400" />
+                            <span className="flex items-center gap-1 text-ink-secondary tabular-nums whitespace-nowrap">
+                              <CalendarBlank size={13} className="text-ink-muted" />
                               {inq.Date.start}
                             </span>
                           )}
                           {inq.Reach && (
-                            <span className="flex items-center gap-1 text-stone-500 text-[11px]">
-                              <Compass size={13} className="text-stone-400" />
+                            <span className="flex items-center gap-1 text-ink-muted text-[11px]">
+                              <Compass size={13} className="text-ink-muted" />
                               {inq.Reach}
                             </span>
                           )}
                         </div>
                       </div>
 
-                      <div className="shrink-0">
+                      <div className="flex shrink-0 items-center gap-1.5">
+                        {inq.Contact && !String(inq.Contact).includes('@') && (
+                          <a
+                            href={`https://wa.me/${String(inq.Contact).replace(/[^0-9]/g, '')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`WhatsApp ${inq.Bride || ''} and ${inq.Groom || ''}`}
+                            className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-edge-strong bg-ground-raised px-2.5 text-xs font-medium text-ink transition-colors hover:bg-ground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                          >
+                            <WhatsappLogo size={15} aria-hidden="true" />
+                            <span className="hidden sm:inline">WhatsApp</span>
+                          </a>
+                        )}
                         <Link href="/admin/total-Enquires">
                           <Button variant="ghost" size="sm" iconRight={CaretRight}>
                             Review
@@ -381,87 +385,87 @@ export default function DashboardPage() {
 
         {/* Right 1 Col: Quick Studio Shortcuts */}
         <div className="space-y-4">
-          <Card className="border-[#E5DCD3] bg-white shadow-sm">
-            <CardHeader className="pb-3 border-b border-stone-100">
-              <CardTitle className="text-sm font-bold text-[#2F2F2F] font-sans">
-                Studio Shortcuts
+          <Card className="border-edge-subtle bg-white shadow-sm">
+            <CardHeader className="pb-3 border-b border-edge-subtle">
+              <CardTitle className="text-sm font-bold text-ink font-sans">
+                Shortcuts
               </CardTitle>
-              <CardDescription className="text-xs text-stone-500 font-sans">
-                Fast navigation to primary management modules
+              <CardDescription className="text-xs text-ink-muted font-sans">
+                The pages you edit most
               </CardDescription>
             </CardHeader>
 
             <CardContent className="p-3 space-y-2">
               <Link
                 href="/admin/website-setting/home"
-                className="flex items-center justify-between p-2.5 rounded-xl bg-stone-50/80 hover:bg-red-50/50 border border-stone-200/70 hover:border-red-100 transition-all group cursor-pointer"
+                className="flex items-center justify-between p-2.5 rounded-xl bg-ground/80 hover:bg-accent-wash/50 border border-edge-subtle hover:border-accent/25 transition-all group cursor-pointer"
               >
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-white border border-stone-200 flex items-center justify-center text-red-500 shadow-sm">
+                  <div className="w-8 h-8 rounded-lg bg-white border border-edge-subtle flex items-center justify-center text-accent-ink shadow-sm">
                     <Sparkle size={16} />
                   </div>
                   <div>
-                    <h5 className="text-xs font-semibold text-[#2F2F2F] group-hover:text-red-600 transition-colors">
-                      Home Page Experience
+                    <h5 className="text-xs font-semibold text-ink group-hover:text-accent-ink transition-colors">
+                      Home page
                     </h5>
-                    <p className="text-[11px] text-stone-500">Hero banners, reviews & maps</p>
+                    <p className="text-[11px] text-ink-muted">Hero banners, reviews & maps</p>
                   </div>
                 </div>
-                <CaretRight size={14} className="text-stone-400 group-hover:translate-x-0.5 transition-transform" />
+                <CaretRight size={14} className="text-ink-muted group-hover:translate-x-0.5 transition-transform" />
               </Link>
 
               <Link
                 href="/admin/content/films"
-                className="flex items-center justify-between p-2.5 rounded-xl bg-stone-50/80 hover:bg-red-50/50 border border-stone-200/70 hover:border-red-100 transition-all group cursor-pointer"
+                className="flex items-center justify-between p-2.5 rounded-xl bg-ground/80 hover:bg-accent-wash/50 border border-edge-subtle hover:border-accent/25 transition-all group cursor-pointer"
               >
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-white border border-stone-200 flex items-center justify-center text-red-500 shadow-sm">
+                  <div className="w-8 h-8 rounded-lg bg-white border border-edge-subtle flex items-center justify-center text-accent-ink shadow-sm">
                     <FilmSlate size={16} />
                   </div>
                   <div>
-                    <h5 className="text-xs font-semibold text-[#2F2F2F] group-hover:text-red-600 transition-colors">
+                    <h5 className="text-xs font-semibold text-ink group-hover:text-accent-ink transition-colors">
                       Cinematic Films
                     </h5>
-                    <p className="text-[11px] text-stone-500">Trailers, teasers & stories</p>
+                    <p className="text-[11px] text-ink-muted">Trailers, teasers & stories</p>
                   </div>
                 </div>
-                <CaretRight size={14} className="text-stone-400 group-hover:translate-x-0.5 transition-transform" />
+                <CaretRight size={14} className="text-ink-muted group-hover:translate-x-0.5 transition-transform" />
               </Link>
 
               <Link
                 href="/admin/content"
-                className="flex items-center justify-between p-2.5 rounded-xl bg-stone-50/80 hover:bg-red-50/50 border border-stone-200/70 hover:border-red-100 transition-all group cursor-pointer"
+                className="flex items-center justify-between p-2.5 rounded-xl bg-ground/80 hover:bg-accent-wash/50 border border-edge-subtle hover:border-accent/25 transition-all group cursor-pointer"
               >
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-white border border-stone-200 flex items-center justify-center text-red-500 shadow-sm">
+                  <div className="w-8 h-8 rounded-lg bg-white border border-edge-subtle flex items-center justify-center text-accent-ink shadow-sm">
                     <BookOpenText size={16} />
                   </div>
                   <div>
-                    <h5 className="text-xs font-semibold text-[#2F2F2F] group-hover:text-red-600 transition-colors">
+                    <h5 className="text-xs font-semibold text-ink group-hover:text-accent-ink transition-colors">
                       Page Content CMS
                     </h5>
-                    <p className="text-[11px] text-stone-500">Varanasi, Dharaa, About Us</p>
+                    <p className="text-[11px] text-ink-muted">Varanasi, Dharaa, About Us</p>
                   </div>
                 </div>
-                <CaretRight size={14} className="text-stone-400 group-hover:translate-x-0.5 transition-transform" />
+                <CaretRight size={14} className="text-ink-muted group-hover:translate-x-0.5 transition-transform" />
               </Link>
 
               <Link
-                href="/admin/studio-setting"
-                className="flex items-center justify-between p-2.5 rounded-xl bg-stone-50/80 hover:bg-red-50/50 border border-stone-200/70 hover:border-red-100 transition-all group cursor-pointer"
+                href="/admin/settings?tab=studio"
+                className="flex items-center justify-between p-2.5 rounded-xl bg-ground/80 hover:bg-accent-wash/50 border border-edge-subtle hover:border-accent/25 transition-all group cursor-pointer"
               >
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-white border border-stone-200 flex items-center justify-center text-red-500 shadow-sm">
+                  <div className="w-8 h-8 rounded-lg bg-white border border-edge-subtle flex items-center justify-center text-accent-ink shadow-sm">
                     <SlidersHorizontal size={16} />
                   </div>
                   <div>
-                    <h5 className="text-xs font-semibold text-[#2F2F2F] group-hover:text-red-600 transition-colors">
-                      Studio Info & Contact
+                    <h5 className="text-xs font-semibold text-ink group-hover:text-accent-ink transition-colors">
+                      Studio details
                     </h5>
-                    <p className="text-[11px] text-stone-500">Phone, address, social channels</p>
+                    <p className="text-[11px] text-ink-muted">Phone, address, social channels</p>
                   </div>
                 </div>
-                <CaretRight size={14} className="text-stone-400 group-hover:translate-x-0.5 transition-transform" />
+                <CaretRight size={14} className="text-ink-muted group-hover:translate-x-0.5 transition-transform" />
               </Link>
             </CardContent>
           </Card>

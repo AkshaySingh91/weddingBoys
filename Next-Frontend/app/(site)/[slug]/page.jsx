@@ -29,9 +29,9 @@ async function fetchPage(slug) {
 export async function generateMetadata({ params }) {
     const { slug } = await params;
     const page = await fetchPage(slug);
-    if (!page) return { title: 'Page not found | The Wedding Boys' };
+    if (!page) return { title: 'Page not found | The Wedding Vachan' };
     return {
-        title: `${page.title || slug} | The Wedding Boys`,
+        title: `${page.title || slug} | The Wedding Vachan`,
         description: page.description || undefined,
         alternates: { canonical: `${SITE_URL}/${slug}` },
         openGraph: {
@@ -49,8 +49,8 @@ export default async function CmsPage({ params }) {
     if (!page) notFound();
 
     return (
-        <main className="min-h-screen">
+        <section className="min-h-screen">
             <BlockRenderer blocks={page.blocks || []} />
-        </main>
+        </section>
     );
 }

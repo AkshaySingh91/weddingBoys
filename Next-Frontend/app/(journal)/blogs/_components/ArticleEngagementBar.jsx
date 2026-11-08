@@ -17,7 +17,7 @@ import { toggleBlogLike } from '@/lib/blogApi.js';
 export default function ArticleEngagementBar({
   postSlug = '',
   initialLoves = 0,
-  authorName = 'The Wedding Boys',
+  authorName = 'The Wedding Vachan',
   authorRole = 'Lead Cinematographer',
   authorAvatar = '',
   shareUrl = '',
@@ -80,8 +80,8 @@ export default function ArticleEngagementBar({
           onClick={handleLoveClick}
           className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer shadow-sm ${
             hasLoved
-              ? 'bg-[#FF5353] text-white shadow-sm scale-102'
-              : 'bg-[#FCEEE6] text-[#FF5353] hover:bg-[#FF5353] hover:text-white border border-[#E5BDA7]/60'
+              ? 'bg-accent text-white shadow-sm scale-102'
+              : 'bg-[#FCEEE6] text-accent-ink hover:bg-accent-hover hover:text-white border border-[#E5BDA7]/60'
           }`}
           aria-label="Love this feature story"
         >
@@ -149,7 +149,7 @@ export default function ArticleEngagementBar({
           <button
             type="button"
             onClick={handleCopy}
-            className="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FAF5EE] border border-[#E5DCD3] text-[#74583E] hover:border-[#FF5353]/50 text-xs font-medium transition-all cursor-pointer"
+            className="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FAF5EE] border border-[#E5DCD3] text-[#74583E] hover:border-accent/50 text-xs font-medium transition-all cursor-pointer"
             aria-label="Copy article link"
           >
             {copied ? (
@@ -170,7 +170,7 @@ export default function ArticleEngagementBar({
       {/* 3. Right: Author Card with Follow Button (prompt-2.png) */}
       <div className="flex items-center justify-between md:justify-end gap-3 pt-3 md:pt-0 border-t md:border-t-0 border-[#E5DCD3]">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-full bg-[#FCEEE6] border border-[#E5BDA7]/50 flex items-center justify-center text-[#5E2B17] font-serif font-bold text-xs shrink-0 overflow-hidden shadow-sm">
+          <div className="w-9 h-9 rounded-full bg-[#FCEEE6] border border-[#E5BDA7]/50 flex items-center justify-center text-[#5E2B17] font-display font-bold text-xs shrink-0 overflow-hidden shadow-sm">
             <span>A</span>
           </div>
           <div className="min-w-0">
@@ -189,7 +189,7 @@ export default function ArticleEngagementBar({
           className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer shrink-0 shadow-sm ${
             isFollowing
               ? 'bg-[#5E2B17] text-white'
-              : 'bg-white border border-[#E5DCD3] text-[#5E2B17] hover:border-[#FF5353] hover:text-[#FF5353]'
+              : 'bg-white border border-[#E5DCD3] text-[#5E2B17] hover:border-accent hover:text-accent-ink'
           }`}
         >
           {isFollowing ? 'Following' : 'Follow'}

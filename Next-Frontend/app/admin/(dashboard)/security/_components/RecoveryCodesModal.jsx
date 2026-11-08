@@ -15,7 +15,7 @@ export default function RecoveryCodesModal({ codes, onClose, regenerated = false
     if (!codes?.length) return null;
 
     const asText = [
-        'The Wedding Boys — Admin two-factor backup codes',
+        'The Wedding Vachan — Admin two-factor backup codes',
         `Generated: ${new Date().toLocaleString()}`,
         '',
         'Each code can be used ONCE to sign in if you lose your authenticator device.',
@@ -47,16 +47,16 @@ export default function RecoveryCodesModal({ codes, onClose, regenerated = false
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4">
-            <div className="w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl">
+            <div className="w-full max-w-lg overflow-hidden rounded-xl bg-white shadow-2xl">
                 <div className="flex items-center gap-3 border-b px-6 py-4">
                     <span className="flex h-10 w-10 items-center justify-center rounded-full bg-green-50 text-green-600">
                         <ShieldCheck size={20} />
                     </span>
                     <div>
-                        <h2 className="font-semibold text-gray-900">
+                        <h2 className="font-semibold text-ink">
                             {regenerated ? 'Your new backup codes' : 'Save your backup codes'}
                         </h2>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-ink-muted">
                             {regenerated
                                 ? 'Your previous codes have been invalidated.'
                                 : 'Two-factor authentication is now enabled.'}
@@ -73,10 +73,10 @@ export default function RecoveryCodesModal({ codes, onClose, regenerated = false
                         </span>
                     </div>
 
-                    <ul className="grid grid-cols-2 gap-2 rounded-lg border bg-gray-50 p-4">
+                    <ul className="grid grid-cols-2 gap-2 rounded-lg border bg-ground p-4">
                         {codes.map((code, i) => (
-                            <li key={code} className="flex items-center gap-2 font-mono text-sm text-gray-800">
-                                <span className="w-5 text-right text-xs text-gray-400">{i + 1}.</span>
+                            <li key={code} className="flex items-center gap-2 font-mono text-sm text-ink">
+                                <span className="w-5 text-right text-xs text-ink-muted">{i + 1}.</span>
                                 {code}
                             </li>
                         ))}
@@ -86,7 +86,7 @@ export default function RecoveryCodesModal({ codes, onClose, regenerated = false
                         <button
                             type="button"
                             onClick={copyAll}
-                            className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-gray-300 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                            className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-edge-strong py-2.5 text-sm font-medium text-ink-secondary hover:bg-ground"
                         >
                             {copied ? <Check size={15} /> : <Copy size={15} />}
                             {copied ? 'Copied' : 'Copy all'}
@@ -94,18 +94,18 @@ export default function RecoveryCodesModal({ codes, onClose, regenerated = false
                         <button
                             type="button"
                             onClick={download}
-                            className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-gray-300 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                            className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-edge-strong py-2.5 text-sm font-medium text-ink-secondary hover:bg-ground"
                         >
                             <Download size={15} /> Download .txt
                         </button>
                     </div>
 
-                    <label className="mt-5 flex cursor-pointer items-start gap-2 text-sm text-gray-600">
+                    <label className="mt-5 flex cursor-pointer items-start gap-2 text-sm text-ink-secondary">
                         <input
                             type="checkbox"
                             checked={acknowledged}
                             onChange={(e) => setAcknowledged(e.target.checked)}
-                            className="mt-0.5 h-4 w-4 rounded border-gray-300 text-rose-600 focus:ring-rose-500"
+                            className="mt-0.5 h-4 w-4 rounded-lg border-edge-strong text-rose-600 focus:ring-rose-500"
                         />
                         I&apos;ve saved these codes somewhere safe.
                     </label>
@@ -114,7 +114,7 @@ export default function RecoveryCodesModal({ codes, onClose, regenerated = false
                         type="button"
                         onClick={onClose}
                         disabled={!acknowledged}
-                        className="mt-4 w-full rounded-lg bg-gray-900 py-2.5 text-sm font-medium text-white hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="mt-4 w-full rounded-lg bg-ink py-2.5 text-sm font-medium text-white hover:bg-ink disabled:cursor-not-allowed disabled:opacity-50"
                     >
                         Done
                     </button>

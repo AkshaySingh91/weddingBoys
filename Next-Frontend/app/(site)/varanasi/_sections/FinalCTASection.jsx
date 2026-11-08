@@ -90,7 +90,7 @@ function useGrainBackground() {
           whileInView={{ height: 60 }}
           viewport={{ once: true }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className="w-[1px] bg-gradient-to-b from-transparent via-[#eb4b55]/60 to-transparent mb-8"
+          className="w-[1px] bg-gradient-to-b from-transparent via-accent/60 to-transparent mb-8"
         />
 
         <AnimatePresence mode="wait">
@@ -104,19 +104,19 @@ function useGrainBackground() {
               className="w-full flex flex-col items-center text-center"
             >
               {/* Premium 20% Off Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/50 backdrop-blur-sm border border-[#eb4b55]/20 mb-8 shadow-sm">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/50 backdrop-blur-sm border border-accent/20 mb-8 shadow-sm">
                   <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#eb4b55] opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#eb4b55]"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
                   </span>
-                  <span className="text-[#eb4b55] text-xs font-bold tracking-widest uppercase">
+                  <span className="text-gold text-xs font-bold tracking-widest uppercase">
                     Launch Offer: 20% Off Varanasi Bookings
                   </span>
               </div>
 
-              <h2 className="font-['Cormorant_Garamond'] text-[clamp(40px,5vw,70px)] text-[#1C1410] leading-[1.05] font-light mb-4">
+              <h2 className="font-display text-[clamp(40px,5vw,70px)] text-[#1C1410] leading-[1.05] font-light mb-4">
                 Begin your <br />
-                <span className="italic text-[#eb4b55]">
+                <span className="italic text-gold">
                   Varanasi story
                 </span>
               </h2>
@@ -138,7 +138,7 @@ function useGrainBackground() {
                       onChange={handleInputChange}
                       onFocus={() => setFocusedInput('name')}
                       onBlur={() => setFocusedInput(null)}
-                      className={`${inputClasses} ${focusedInput === 'name' ? 'border-[#eb4b55] border-b-2' : 'border-[#1C1410]/20'}`}
+                      className={`${inputClasses} ${focusedInput === 'name' ? 'border-accent border-b-2' : 'border-[#1C1410]/20'}`}
                     />
                   </div>
                   <div className="relative">
@@ -151,7 +151,7 @@ function useGrainBackground() {
                       onChange={handleInputChange}
                       onFocus={() => setFocusedInput('email')}
                       onBlur={() => setFocusedInput(null)}
-                      className={`${inputClasses} ${focusedInput === 'email' ? 'border-[#eb4b55] border-b-2' : 'border-[#1C1410]/20'}`}
+                      className={`${inputClasses} ${focusedInput === 'email' ? 'border-accent border-b-2' : 'border-[#1C1410]/20'}`}
                     />
                   </div>
                 </div>
@@ -165,7 +165,7 @@ function useGrainBackground() {
                     onChange={handleInputChange}
                     onFocus={() => setFocusedInput('date')}
                     onBlur={() => setFocusedInput(null)}
-                    className={`${inputClasses} ${focusedInput === 'date' ? 'border-[#eb4b55] border-b-2' : 'border-[#1C1410]/20'}`}
+                    className={`${inputClasses} ${focusedInput === 'date' ? 'border-accent border-b-2' : 'border-[#1C1410]/20'}`}
                   />
                 </div>
 
@@ -178,7 +178,7 @@ function useGrainBackground() {
                     onChange={handleInputChange}
                     onFocus={() => setFocusedInput('story')}
                     onBlur={() => setFocusedInput(null)}
-                    className={`${inputClasses} resize-none ${focusedInput === 'story' ? 'border-[#eb4b55] border-b-2' : 'border-[#1C1410]/20'}`}
+                    className={`${inputClasses} resize-none ${focusedInput === 'story' ? 'border-accent border-b-2' : 'border-[#1C1410]/20'}`}
                   />
                 </div>
 
@@ -188,7 +188,7 @@ function useGrainBackground() {
                     type="submit"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.98 }}
-                    className="relative group overflow-hidden px-12 py-4 bg-[#eb4b55] rounded-full shadow-[0_10px_30px_-10px_rgba(235,75,85,0.4)] transition-all duration-300 hover:bg-[#d43c46]"
+                    className="relative group overflow-hidden px-12 py-4 bg-accent rounded-full shadow-[0_10px_30px_-10px_rgba(235,75,85,0.4)] transition-all duration-300 hover:bg-[#d43c46]"
                   >
                     <span className="relative text-[12px] tracking-[0.25em] text-white uppercase font-semibold">
                       Claim 20% Off & Send Story
@@ -212,9 +212,9 @@ function useGrainBackground() {
                   boxShadow: ["0px 0px 20px rgba(235,75,85,0.3)", "0px 0px 60px rgba(235,75,85,0.7)", "0px 0px 20px rgba(235,75,85,0.3)"]
                 }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                className="w-4 h-4 rounded-full bg-[#eb4b55] mb-12"
+                className="w-4 h-4 rounded-full bg-accent mb-12"
               />
-              <h3 className="font-['Cormorant_Garamond'] text-5xl md:text-6xl text-[#1C1410] font-light mb-6">
+              <h3 className="font-display text-5xl md:text-6xl text-[#1C1410] font-light mb-6">
                 The Ganga has heard you.
               </h3>
               <p className="text-[#8C7B6E] text-lg font-light max-w-sm">

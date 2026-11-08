@@ -11,8 +11,8 @@ import { fireMessage } from '@/Utils/fireMessage.js';
 import { cn } from '@/lib/utils.js';
 import useTaxonomy from '@/Hooks/useTaxonomy.jsx';
 
-const field = 'h-8 rounded-lg border border-stone-300 bg-white px-2.5 text-xs outline-none focus:border-[#D9342A]';
-const iconBtn = 'flex h-7 w-7 items-center justify-center rounded-md text-stone-500 hover:bg-stone-100 hover:text-stone-900 disabled:opacity-30 disabled:hover:bg-transparent';
+const field = 'h-8 rounded-lg border border-edge-strong bg-white px-2.5 text-xs outline-none focus:border-accent';
+const iconBtn = 'flex h-7 w-7 items-center justify-center rounded-lg text-ink-muted hover:bg-ground-sunk hover:text-ink disabled:opacity-30 disabled:hover:bg-transparent';
 
 // Full class names, so Tailwind generates them (a built `bg-${c}-400` would not be).
 const DOT = {
@@ -67,7 +67,7 @@ export default function TagsSettingsTab() {
         }
     };
 
-    if (tax.loading) return <p className="text-sm text-stone-500">Loading tags…</p>;
+    if (tax.loading) return <p className="text-sm text-ink-muted">Loading tags…</p>;
     if (tax.error) return <p className="text-sm text-rose-600">{tax.error}</p>;
 
     const visibleGroups = tax.groups;
@@ -81,13 +81,13 @@ export default function TagsSettingsTab() {
 
     return (
         <div className="space-y-6">
-            <div className="flex flex-wrap items-start justify-between gap-3 border-b border-[#E8DDD1] pb-4">
+            <div className="flex flex-wrap items-start justify-between gap-3 border-b border-edge-subtle pb-4">
                 <div>
-                    <h2 className="flex items-center gap-2 font-serif text-lg font-bold tracking-tight text-stone-900">
-                        <TagIcon size={20} className="text-[#A3603A]" weight="duotone" />
+                    <h2 className="flex items-center gap-2 font-sans text-lg font-bold tracking-tight text-ink">
+                        <TagIcon size={20} className="text-accent-ink" weight="duotone" />
                         Portfolio Tags
                     </h2>
-                    <p className="mt-0.5 max-w-2xl text-xs text-stone-500">
+                    <p className="mt-0.5 max-w-2xl text-xs text-ink-muted">
                         Every tag a film or photo can carry, in groups. Ceremony and Film type allow one per item; the other
                         groups any number. Rows on the site (home films, the films page) pick tags from here.
                     </p>
@@ -135,21 +135,21 @@ function NewGroupForm({ busy, onCreate, onCancel }) {
     return (
         <form
             onSubmit={(e) => { e.preventDefault(); if (label.trim()) onCreate({ label: label.trim(), cardinality, appliesTo }); }}
-            className="flex flex-wrap items-end gap-3 rounded-xl border border-[#A3603A]/30 bg-[#FFF7EE]/50 p-4"
+            className="flex flex-wrap items-end gap-3 rounded-xl border border-accent/30 bg-ground/50 p-4"
         >
             <label className="space-y-1">
-                <span className="block text-[11px] font-semibold text-stone-700">Group name</span>
+                <span className="block text-[11px] font-semibold text-ink-secondary">Group name</span>
                 <input autoFocus className={cn(field, 'w-56')} value={label} onChange={(e) => setLabel(e.target.value)} placeholder="e.g. Style, Venue type" />
             </label>
             <label className="space-y-1">
-                <span className="block text-[11px] font-semibold text-stone-700">Per item</span>
+                <span className="block text-[11px] font-semibold text-ink-secondary">Per item</span>
                 <select className={field} value={cardinality} onChange={(e) => setCardinality(e.target.value)}>
                     <option value="multi">Any number</option>
                     <option value="single">One only</option>
                 </select>
             </label>
             <div className="space-y-1">
-                <span className="block text-[11px] font-semibold text-stone-700">For</span>
+                <span className="block text-[11px] font-semibold text-ink-secondary">For</span>
                 <div className="flex gap-3 pb-1.5 text-xs">
                     {['Video', 'Photo'].map((k) => (
                         <label key={k} className="flex items-center gap-1.5">
@@ -180,8 +180,8 @@ function GroupCard({ group, tax, busy, act, canUp, canDown, onUp, onDown }) {
     };
 
     return (
-        <section className={cn('rounded-2xl border bg-white', group.hidden ? 'border-dashed border-stone-300' : 'border-stone-200')}>
-            <header className="flex flex-wrap items-center gap-2 border-b border-stone-100 px-4 py-3">
+        <section className={cn('rounded-xl border bg-white', group.hidden ? 'border-dashed border-edge-strong' : 'border-edge-subtle')}>
+            <header className="flex flex-wrap items-center gap-2 border-b border-edge-subtle px-4 py-3">
                 {renaming ? (
                     <form className="flex items-center gap-1.5" onSubmit={async (e) => {
                         e.preventDefault();
@@ -193,7 +193,7 @@ function GroupCard({ group, tax, busy, act, canUp, canDown, onUp, onDown }) {
                         <button type="button" className={iconBtn} aria-label="Cancel" onClick={() => { setRenaming(false); setGroupLabel(group.label); }}><X size={14} /></button>
                     </form>
                 ) : (
-                    <h3 className="text-sm font-semibold text-stone-900">{group.label}</h3>
+                    <h3 className="text-sm font-semibold text-ink">{group.label}</h3>
                 )}
                 <Badge size="sm" variant={group.cardinality === 'single' ? 'warning' : 'neutral'}>
                     {group.cardinality === 'single' ? 'One per item' : 'Any number'}
@@ -215,20 +215,20 @@ function GroupCard({ group, tax, busy, act, canUp, canDown, onUp, onDown }) {
                             onClick={() => act(() => tax.deleteGroup(group._id), `Group "${group.label}" deleted`)}><Trash size={14} /></button>
                     )}
                 </div>
-                {group.description && <p className="w-full text-[11px] text-stone-500">{group.description}</p>}
+                {group.description && <p className="w-full text-[11px] text-ink-muted">{group.description}</p>}
             </header>
 
-            <ul className="divide-y divide-stone-100">
+            <ul className="divide-y divide-edge-subtle">
                 {tags.map((t, idx) => (
                     <TagRow key={t._id} tag={t} group={group} tax={tax} busy={busy} act={act}
                         canUp={idx > 0} canDown={idx < tags.length - 1}
                         onUp={() => moveTagOrder(idx, -1)} onDown={() => moveTagOrder(idx, 1)} />
                 ))}
-                {!tags.length && <li className="px-4 py-3 text-xs text-stone-400">No tags yet.</li>}
+                {!tags.length && <li className="px-4 py-3 text-xs text-ink-muted">No tags yet.</li>}
             </ul>
 
             {!group.hidden && (
-                <form className="flex gap-2 border-t border-stone-100 px-4 py-3" onSubmit={async (e) => {
+                <form className="flex gap-2 border-t border-edge-subtle px-4 py-3" onSubmit={async (e) => {
                     e.preventDefault();
                     if (!newTag.trim()) return;
                     const r = await act(() => tax.createTag(group._id, newTag.trim()).then(async (res) => { if (res.ok) await tax.reload(); return res; }), `Added "${newTag.trim()}"`);
@@ -258,10 +258,10 @@ function TagRow({ tag, group, tax, busy, act, canUp, canDown, onUp, onDown }) {
         <li className="px-4 py-2.5">
             <div className="flex flex-wrap items-center gap-2">
                 {tag.color && <span className={cn('h-2 w-2 rounded-full', DOT[tag.color] || DOT.neutral)} />}
-                <span className={cn('text-sm', tag.hidden ? 'text-stone-400 line-through' : 'text-stone-900')}>{tag.label}</span>
-                <span className="text-[11px] text-stone-400">{usageText(tag.usage)}</span>
+                <span className={cn('text-sm', tag.hidden ? 'text-ink-muted line-through' : 'text-ink')}>{tag.label}</span>
+                <span className="text-[11px] text-ink-muted">{usageText(tag.usage)}</span>
                 {(tag.pageRows || []).map((row) => <Badge key={row} size="sm" variant="terracotta">Row: {row}</Badge>)}
-                {tag.aliases?.length > 0 && <span className="text-[10px] text-stone-400" title={tag.aliases.join(', ')}>also: {tag.aliases.slice(0, 2).join(', ')}{tag.aliases.length > 2 ? '…' : ''}</span>}
+                {tag.aliases?.length > 0 && <span className="text-[10px] text-ink-muted" title={tag.aliases.join(', ')}>also: {tag.aliases.slice(0, 2).join(', ')}{tag.aliases.length > 2 ? '…' : ''}</span>}
                 <div className="ml-auto flex items-center">
                     <button type="button" className={iconBtn} aria-label="Rename" onClick={() => setMode(mode === 'rename' ? null : 'rename')}><PencilSimple size={13} /></button>
                     <button type="button" className={iconBtn} aria-label="Merge into another tag" disabled={!siblings.length} onClick={() => setMode(mode === 'merge' ? null : 'merge')}><ArrowsMerge size={13} /></button>
@@ -290,14 +290,14 @@ function TagRow({ tag, group, tax, busy, act, canUp, canDown, onUp, onDown }) {
                     <input autoFocus className={cn(field, 'w-56')} value={label} onChange={(e) => setLabel(e.target.value)} />
                     <Button type="submit" variant="primary" size="sm" disabled={busy || !label.trim() || label.trim() === tag.label}>Rename</Button>
                     <Button type="button" variant="ghost" size="sm" onClick={close}>Cancel</Button>
-                    <span className="w-full text-[11px] text-stone-500">Every film and photo keeps it, rows follow the new name, and links with the old name still work.</span>
+                    <span className="w-full text-[11px] text-ink-muted">Every film and photo keeps it, rows follow the new name, and links with the old name still work.</span>
                 </form>
             )}
 
             {mode === 'merge' && (
-                <div className="mt-2 space-y-2 rounded-lg bg-stone-50 p-3">
+                <div className="mt-2 space-y-2 rounded-lg bg-ground p-3">
                     <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-xs text-stone-600">Merge <strong>{tag.label}</strong> into</span>
+                        <span className="text-xs text-ink-secondary">Merge <strong>{tag.label}</strong> into</span>
                         <select className={field} value={into} onChange={async (e) => {
                             setInto(e.target.value);
                             setPreview(null);
@@ -312,7 +312,7 @@ function TagRow({ tag, group, tax, busy, act, canUp, canDown, onUp, onDown }) {
                         <Button type="button" variant="ghost" size="sm" onClick={close}>Cancel</Button>
                     </div>
                     {preview && (
-                        <div className="flex flex-wrap items-center gap-2 text-xs text-stone-700">
+                        <div className="flex flex-wrap items-center gap-2 text-xs text-ink-secondary">
                             <span>
                                 {preview.items} item(s) move to the new tag{preview.alreadyHadTarget ? ` (${preview.alreadyHadTarget} already had it)` : ''}
                                 {preview.pageRows?.length ? `; rows on ${preview.pageRows.join(', ')} follow` : ''}. &ldquo;{tag.label}&rdquo; keeps working as an old name.
@@ -327,8 +327,8 @@ function TagRow({ tag, group, tax, busy, act, canUp, canDown, onUp, onDown }) {
             )}
 
             {mode === 'move' && (
-                <div className="mt-2 flex flex-wrap items-center gap-2 rounded-lg bg-stone-50 p-3">
-                    <span className="text-xs text-stone-600">Move <strong>{tag.label}</strong> to</span>
+                <div className="mt-2 flex flex-wrap items-center gap-2 rounded-lg bg-ground p-3">
+                    <span className="text-xs text-ink-secondary">Move <strong>{tag.label}</strong> to</span>
                     <select className={field} value={moveTo} onChange={(e) => setMoveTo(e.target.value)}>
                         <option value="">Choose a group…</option>
                         {otherGroups.map((g) => <option key={g._id} value={g._id}>{g.label}</option>)}
@@ -346,25 +346,25 @@ function TagRow({ tag, group, tax, busy, act, canUp, canDown, onUp, onDown }) {
 
 function RecentChanges({ ops, busy, onUndo }) {
     return (
-        <aside className="h-fit rounded-2xl border border-stone-200 bg-white xl:sticky xl:top-4">
-            <h3 className="border-b border-stone-100 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-stone-500">Recent changes</h3>
-            <ul className="divide-y divide-stone-100">
+        <aside className="h-fit rounded-xl border border-edge-subtle bg-white xl:sticky xl:top-4">
+            <h3 className="border-b border-edge-subtle px-4 py-3 text-xs font-semibold uppercase tracking-wide text-ink-muted">Recent changes</h3>
+            <ul className="divide-y divide-edge-subtle">
                 {ops.map((op) => (
                     <li key={op._id} className="space-y-1 px-4 py-2.5">
-                        <p className={cn('text-xs', op.undoneAt ? 'text-stone-400 line-through' : 'text-stone-800')}>{op.summary}</p>
-                        <div className="flex items-center gap-2 text-[10px] text-stone-400">
+                        <p className={cn('text-xs', op.undoneAt ? 'text-ink-muted line-through' : 'text-ink')}>{op.summary}</p>
+                        <div className="flex items-center gap-2 text-[10px] text-ink-muted">
                             <span>{new Date(op.createdAt).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</span>
                             {op.by && <span>· {op.by.split('@')[0]}</span>}
                             {!op.undoneAt && (
                                 <button type="button" disabled={busy} onClick={() => onUndo(op)}
-                                    className="ml-auto flex items-center gap-1 rounded px-1.5 py-0.5 text-[11px] font-medium text-[#A3603A] hover:bg-[#FFF7EE] disabled:opacity-40">
+                                    className="ml-auto flex items-center gap-1 rounded-lg px-1.5 py-0.5 text-[11px] font-medium text-accent-ink hover:bg-ground disabled:opacity-40">
                                     <ArrowCounterClockwise size={11} /> Undo
                                 </button>
                             )}
                         </div>
                     </li>
                 ))}
-                {!ops.length && <li className="px-4 py-3 text-xs text-stone-400">No changes yet.</li>}
+                {!ops.length && <li className="px-4 py-3 text-xs text-ink-muted">No changes yet.</li>}
             </ul>
         </aside>
     );

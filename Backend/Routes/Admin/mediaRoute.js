@@ -1,6 +1,8 @@
 import express from 'express'
 const Route = express.Router();
 import authenticateAdmin from "../../Middleware/authenticateAdmin.js"
+import Media from '../../Models/Media.js';
+import { enqueueJob } from '../../Services/mediaJobQueue.js';
 import uploadToMemory from "../../Middleware/uploadToMemory.js"
 import {
     presignMediaUpload,
@@ -46,6 +48,17 @@ Route.get("/api/admin/media/stats", mediaStats)
 Route.post("/api/admin/media/batch-delete", batchDeleteMedia)
 Route.post("/api/admin/media/batch-update", batchUpdateMedia)
 Route.get("/api/admin/media", listMedia)
+Route.post('/api/admin/media/:id/reconcile', async (req, res) => {
+    try {
+        const media = await Media.findById(req.params.id);
+        if (!media) return res.status(404).json({ message: 'Media not found' });
+        if (media.status !== 'Ready') return res.status(409).json({ message: 'Media files must be ready first' });
+        const job = await enqueueJob({ mediaId: media.mediaId, type: 'reconcile' });
+        return res.status(202).json({ jobId: job._id });
+    } catch (error) {
+        return res.status(error.name === 'CastError' ? 400 : 500).json({ message: 'Could not schedule reconciliation' });
+    }
+});
 Route.patch("/api/admin/media/:id", updateMedia)
 Route.delete("/api/admin/media/:id", deleteMedia)
 

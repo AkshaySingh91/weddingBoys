@@ -107,7 +107,7 @@ function ItemCard({ item, selected, onToggle, onOpen, onDelete, isCover, onSetCo
         >
             <button
                 type="button" onClick={() => onOpen(item)}
-                className="relative block aspect-[4/3] w-full overflow-hidden bg-stone-100"
+                className="relative block aspect-[4/3] w-full overflow-hidden bg-ground-sunk"
             >
                 {poster && !imgError ? (
                     <Image
@@ -127,12 +127,12 @@ function ItemCard({ item, selected, onToggle, onOpen, onDelete, isCover, onSetCo
                             playsInline
                             className="h-full w-full object-cover pointer-events-none"
                         />
-                        <span className="absolute bottom-1.5 left-1.5 flex items-center gap-1 rounded bg-black/70 px-1 py-0.5 text-[9px] font-medium text-white">
+                        <span className="absolute bottom-1.5 left-1.5 flex items-center gap-1 rounded-lg bg-black/70 px-1 py-0.5 text-[9px] font-medium text-white">
                             <FilmSlate size={10} /> Video
                         </span>
                     </div>
                 ) : (
-                    <span className="flex h-full w-full items-center justify-center text-stone-400 bg-stone-100">
+                    <span className="flex h-full w-full items-center justify-center text-ink-muted bg-ground-sunk">
                         {isVideo ? <FilmSlate size={26} /> : <ImageSquare size={26} />}
                     </span>
                 )}
@@ -141,21 +141,21 @@ function ItemCard({ item, selected, onToggle, onOpen, onDelete, isCover, onSetCo
 
                 <span className="absolute right-2 top-2 flex gap-1">
                     {isCover && (
-                        <span className="rounded-md bg-white/95 px-1.5 py-0.5 text-[10px] font-semibold text-studio-ink shadow-sm">Cover</span>
+                        <span className="rounded-lg bg-white/95 px-1.5 py-0.5 text-[10px] font-semibold text-studio-ink shadow-sm">Cover</span>
                     )}
                     {item.isHero && (
-                        <span className="flex items-center gap-0.5 rounded-md bg-studio-gold/95 px-1.5 py-0.5 text-[10px] font-semibold text-white shadow-sm">
+                        <span className="flex items-center gap-0.5 rounded-lg bg-studio-gold/95 px-1.5 py-0.5 text-[10px] font-semibold text-white shadow-sm">
                             <Star size={9} weight="fill" /> {item.heroPriority}
                         </span>
                     )}
                     {chip && (
-                        <span title={chip.title} className={cn('rounded-md px-1.5 py-0.5 text-[10px] font-semibold text-white', chip.cls)}>
+                        <span title={chip.title} className={cn('rounded-lg px-1.5 py-0.5 text-[10px] font-semibold text-white', chip.cls)}>
                             {chip.label}
                         </span>
                     )}
                 </span>
 
-                <span className="absolute bottom-2 left-2 flex items-center gap-1 rounded-md bg-black/55 px-1.5 py-0.5 text-[10px] text-white opacity-0 backdrop-blur-sm transition-opacity duration-200 group-hover:opacity-100">
+                <span className="absolute bottom-2 left-2 flex items-center gap-1 rounded-lg bg-black/55 px-1.5 py-0.5 text-[10px] text-white opacity-0 backdrop-blur-sm transition-opacity duration-200 group-hover:opacity-100">
                     {isVideo ? <FilmSlate size={9} /> : <ImageSquare size={9} />}
                     Priority {item.generalPriority ?? 0}
                 </span>
@@ -165,7 +165,7 @@ function ItemCard({ item, selected, onToggle, onOpen, onDelete, isCover, onSetCo
                 type="button" onClick={() => onToggle(item._id)}
                 aria-pressed={selected} aria-label={selected ? 'Deselect' : 'Select'}
                 className={cn(
-                    'absolute left-2 top-2 z-10 flex h-6 w-6 items-center justify-center rounded-md border transition-all',
+                    'absolute left-2 top-2 z-10 flex h-6 w-6 items-center justify-center rounded-lg border transition-all',
                     selected
                         ? 'border-studio-terracotta bg-studio-terracotta text-white'
                         : 'border-white/70 bg-black/25 text-transparent backdrop-blur-sm opacity-0 group-hover:opacity-100 hover:text-white/80',
@@ -178,7 +178,7 @@ function ItemCard({ item, selected, onToggle, onOpen, onDelete, isCover, onSetCo
                 <button
                     type="button"
                     onClick={(e) => { e.stopPropagation(); onSetCover(item); }}
-                    className="absolute bottom-2 right-10 z-10 rounded-md bg-stone-900/70 px-1.5 py-1 text-[10px] font-medium text-white opacity-0 shadow-sm transition-all group-hover:opacity-100 hover:bg-stone-900"
+                    className="absolute bottom-2 right-10 z-10 rounded-lg bg-ink/70 px-1.5 py-1 text-[10px] font-medium text-white opacity-0 shadow-sm transition-all group-hover:opacity-100 hover:bg-ink"
                 >
                     Set as cover
                 </button>
@@ -191,7 +191,7 @@ function ItemCard({ item, selected, onToggle, onOpen, onDelete, isCover, onSetCo
                         onDelete(item);
                     }}
                     aria-label="Delete item"
-                    className="absolute bottom-2 right-2 z-10 flex h-6 w-6 items-center justify-center rounded-md bg-stone-900/70 text-white opacity-0 transition-all group-hover:opacity-100 hover:bg-rose-600 shadow-sm"
+                    className="absolute bottom-2 right-2 z-10 flex h-6 w-6 items-center justify-center rounded-lg bg-ink/70 text-white opacity-0 transition-all group-hover:opacity-100 hover:bg-rose-600 shadow-sm"
                 >
                     <Trash size={12} />
                 </button>
@@ -568,20 +568,20 @@ export default function ClientWorkspace() {
                                 <button type="button" aria-label="Close menu" className="fixed inset-0 z-10 cursor-default" onClick={() => setMenuOpen(false)} />
                                 <div className="absolute right-0 z-20 mt-1 w-52 overflow-hidden rounded-xl border border-studio-border bg-white py-1 shadow-lg">
                                     <button type="button" onClick={openProfile}
-                                        className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-studio-ink hover:bg-stone-50">
+                                        className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-studio-ink hover:bg-ground">
                                         <PencilSimple size={13} /> Edit couple &amp; map pin
                                     </button>
                                     <button type="button" onClick={() => { setShowUpload(true); setMenuOpen(false); }}
-                                        className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-studio-ink hover:bg-stone-50">
+                                        className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-studio-ink hover:bg-ground">
                                         <UploadSimple size={13} /> Upload films or photos
                                     </button>
                                     <button type="button" onClick={() => { setShowLinkDialog(true); setMenuOpen(false); }}
-                                        className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-studio-ink hover:bg-stone-50">
+                                        className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-studio-ink hover:bg-ground">
                                         <FilmSlate size={13} /> Add film by YouTube / Vimeo link
                                     </button>
                                     {storyHref && (
                                         <a href={storyHref} target="_blank" rel="noreferrer"
-                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-studio-ink hover:bg-stone-50">
+                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-studio-ink hover:bg-ground">
                                             <ArrowSquareOut size={13} /> View story page
                                         </a>
                                     )}
@@ -594,13 +594,13 @@ export default function ClientWorkspace() {
                                     )}
                                     {client?.status === 'Published' && (
                                         <button type="button" onClick={() => { setMenuOpen(false); setStatusTarget('Draft'); }}
-                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-studio-ink hover:bg-stone-50 cursor-pointer">
+                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-studio-ink hover:bg-ground cursor-pointer">
                                             <EyeSlash size={13} /> Unpublish wedding…
                                         </button>
                                     )}
                                     {client && client.status !== 'Archived' && (
                                         <button type="button" onClick={() => { setMenuOpen(false); setStatusTarget('Archived'); }}
-                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-studio-ink hover:bg-stone-50 cursor-pointer">
+                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs text-studio-ink hover:bg-ground cursor-pointer">
                                             <HardDrives size={13} /> Archive wedding…
                                         </button>
                                     )}
@@ -618,7 +618,7 @@ export default function ClientWorkspace() {
 
             {/* ------------------------------------------------------ profile */}
             <Collapse open={showProfile}>
-                <section className="max-w-xl space-y-3 rounded-2xl border border-studio-border bg-white p-4">
+                <section className="max-w-xl space-y-3 rounded-xl border border-studio-border bg-white p-4">
                     <div className="grid grid-cols-2 gap-3">
                         <div>
                             <span className={labelCls}>Bride</span>
@@ -723,13 +723,13 @@ export default function ClientWorkspace() {
 
             {/* ------------------------------------------------------- upload */}
             <Collapse open={showUpload}>
-                <section className="rounded-2xl border border-studio-border bg-studio-card p-4 space-y-3">
-                    <div className="flex items-center justify-between border-b border-stone-200/60 pb-2.5">
+                <section className="rounded-xl border border-studio-border bg-studio-card p-4 space-y-3">
+                    <div className="flex items-center justify-between border-b border-edge-subtle pb-2.5">
                         <div>
-                            <h3 className="text-xs font-bold text-stone-900 uppercase tracking-wider">
+                            <h3 className="text-xs font-bold text-ink uppercase tracking-wider">
                                 Add Media to this Wedding
                             </h3>
-                            <p className="text-[11px] text-stone-500">
+                            <p className="text-[11px] text-ink-muted">
                                 Select or drop photos and films separately for specialized pre-flight staging.
                             </p>
                         </div>
@@ -748,13 +748,13 @@ export default function ClientWorkspace() {
                                     setShowPhotoModal(true);
                                 }
                             }}
-                            className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-amber-300/80 bg-white p-5 text-center transition hover:border-amber-400 hover:bg-amber-50/40"
+                            className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-amber-300/80 bg-white p-5 text-center transition hover:border-amber-400 hover:bg-amber-50/40"
                         >
                             <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-900 mb-2">
                                 <ImageSquare size={22} weight="bold" />
                             </span>
-                            <h4 className="text-xs font-bold text-stone-900">Photographs &amp; Stills</h4>
-                            <p className="text-[11px] text-stone-500 mt-0.5">JPG, PNG, WebP, HEIC · Multi-res pipeline</p>
+                            <h4 className="text-xs font-bold text-ink">Photographs &amp; Stills</h4>
+                            <p className="text-[11px] text-ink-muted mt-0.5">JPG, PNG, WebP, HEIC · Multi-res pipeline</p>
                             <input
                                 ref={photoInputRef}
                                 type="file"
@@ -792,13 +792,13 @@ export default function ClientWorkspace() {
                                     setShowVideoModal(true);
                                 }
                             }}
-                            className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-stone-300 bg-white p-5 text-center transition hover:border-stone-400 hover:bg-stone-50"
+                            className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-edge-strong bg-white p-5 text-center transition hover:border-edge-strong hover:bg-ground"
                         >
-                            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-stone-900 text-amber-300 mb-2">
+                            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-ink text-amber-300 mb-2">
                                 <FilmSlate size={22} weight="bold" />
                             </span>
-                            <h4 className="text-xs font-bold text-stone-900">Films &amp; Cinema</h4>
-                            <p className="text-[11px] text-stone-500 mt-0.5">MP4, MOV, WebM · Transcode &amp; Hero options</p>
+                            <h4 className="text-xs font-bold text-ink">Films &amp; Cinema</h4>
+                            <p className="text-[11px] text-ink-muted mt-0.5">MP4, MOV, WebM · Transcode &amp; Hero options</p>
                             <input
                                 ref={videoInputRef}
                                 type="file"
@@ -819,7 +819,7 @@ export default function ClientWorkspace() {
                                 size="sm"
                                 icon={Plus}
                                 onClick={() => videoInputRef.current?.click()}
-                                className="mt-3 border-stone-300 text-stone-900 hover:bg-stone-50 text-xs font-semibold"
+                                className="mt-3 border-edge-strong text-ink hover:bg-ground text-xs font-semibold"
                             >
                                 Stage Films
                             </Button>
@@ -845,12 +845,12 @@ export default function ClientWorkspace() {
 
             {/* ------------------------------------------------------ toolbar */}
             {btsCrewList.length > 0 && (
-                <div className="flex flex-wrap items-center gap-1.5 rounded-2xl border border-stone-200/80 bg-[#FFFDF9] px-3.5 py-2 text-xs">
-                    <span className="flex items-center gap-1 font-bold text-stone-700 text-[11px] uppercase tracking-wider mr-1">
+                <div className="flex flex-wrap items-center gap-1.5 rounded-xl border border-edge-subtle bg-ground px-3.5 py-2 text-xs">
+                    <span className="flex items-center gap-1 font-bold text-ink-secondary text-[11px] uppercase tracking-wider mr-1">
                         <Users size={14} className="text-amber-600" /> Crew:
                     </span>
                     {btsCrewList.map((c, idx) => (
-                        <span key={idx} className="inline-flex items-center gap-1 rounded-md bg-white border border-stone-200 px-2 py-0.5 text-[10px] text-stone-800 shadow-2xs">
+                        <span key={idx} className="inline-flex items-center gap-1 rounded-lg bg-white border border-edge-subtle px-2 py-0.5 text-[10px] text-ink shadow-2xs">
                             <span className="font-semibold text-amber-900">{c.role}:</span> {c.name}
                         </span>
                     ))}
@@ -868,8 +868,8 @@ export default function ClientWorkspace() {
                     <div className="flex rounded-lg border border-studio-border bg-white p-0.5">
                         {KIND_TABS.map((t) => (
                             <button key={t.key} type="button" onClick={() => { setKind(t.key); setSelected(new Set()); }}
-                                className={cn('flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs transition-colors cursor-pointer',
-                                    kind === t.key ? 'bg-studio-obsidian text-white' : 'text-studio-inkSecondary hover:bg-stone-100')}>
+                                className={cn('flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs transition-colors cursor-pointer',
+                                    kind === t.key ? 'bg-studio-obsidian text-white' : 'text-studio-inkSecondary hover:bg-ground-sunk')}>
                                 {t.icon && <t.icon size={12} />}{t.label}
                             </button>
                         ))}
@@ -888,14 +888,14 @@ export default function ClientWorkspace() {
                                     className={cn(
                                         'rounded-lg px-2.5 py-1 text-[11px] font-semibold transition-all border cursor-pointer flex items-center gap-1.5',
                                         eventGroupFilter === eg
-                                            ? 'bg-stone-900 text-white border-stone-900 shadow-xs'
-                                            : 'border-studio-border bg-white text-studio-inkSecondary hover:border-stone-400'
+                                            ? 'bg-ink text-white border-ink shadow-xs'
+                                            : 'border-studio-border bg-white text-studio-inkSecondary hover:border-edge-strong'
                                     )}
                                 >
                                     <span>{eg || 'All Events'}</span>
                                     <span className={cn(
                                         'text-[10px] px-1.5 py-0.2 rounded-full font-mono font-bold',
-                                        eventGroupFilter === eg ? 'bg-white/20 text-white' : 'bg-stone-100 text-stone-600'
+                                        eventGroupFilter === eg ? 'bg-white/20 text-white' : 'bg-ground-sunk text-ink-secondary'
                                     )}>
                                         {count}
                                     </span>
@@ -984,11 +984,11 @@ export default function ClientWorkspace() {
 
             {/* --------------------------------------------------------- grid */}
             {loading && items.length === 0 ? (
-                <div className="flex items-center justify-center py-24 text-stone-400">
+                <div className="flex items-center justify-center py-24 text-ink-muted">
                     <CircleNotch size={22} className="animate-spin" />
                 </div>
             ) : items.length === 0 ? (
-                <div className="rounded-2xl border border-dashed border-studio-borderStrong/60 py-16 text-center">
+                <div className="rounded-xl border border-dashed border-studio-borderStrong/60 py-16 text-center">
                     <p className="text-sm text-studio-inkSecondary">Nothing here yet.</p>
                     <p className="mt-1 text-xs text-studio-inkMuted">
                         Add films or photographs — they arrive as drafts you can review before publishing.

@@ -13,17 +13,17 @@ import { BUILT_IN_PACKAGES as packages } from '@/lib/builtInPackages.js';
 
 const features = [
     {
-        icon: <FaInfoCircle className="text-red-600 text-3xl" />,
+        icon: <FaInfoCircle className="text-accent-ink text-3xl" />,
         title: "Booking Information",
         description: "50% advance payment required to secure your date, with the balance due one week before the event."
     },
     {
-        icon: <FaCreditCard className="text-red-600 text-3xl" />,
+        icon: <FaCreditCard className="text-accent-ink text-3xl" />,
         title: "Payment Options",
         description: "We accept bank transfers, credit cards, and UPI payments for your convenience."
     },
     {
-        icon: <FaGlobe className="text-red-600 text-3xl" />,
+        icon: <FaGlobe className="text-accent-ink text-3xl" />,
         title: "Travel Coverage",
         description: "We cover all locations in Mumbai at no extra cost. Additional charges apply for destination weddings."
     }
@@ -205,14 +205,14 @@ const PackagesSection = ({ data }) => {
 
     return (<>
         <Section width="wide" rhythm="tight" id="pricing" aria-labelledby="pricing-heading">
-        <div className="py-10 px-5 sm:px-7 lg:py-12 bg-gradient-to-b from-[#fedecf] to-[#faefe7]/50 relative overflow-hidden bg-opacity-50 lg:rounded-3xl sm:rounded-lg border-[#fed6c3] border-[1px]">
+        <div className="py-10 px-5 sm:px-7 lg:py-12 bg-gradient-to-b from-ground-sunk to-ground/50 relative overflow-hidden bg-opacity-50 lg:rounded-3xl sm:rounded-lg border-edge-subtle border-[1px]">
             {/* Decorative Elements */}
             <div className="absolute inset-0 pointer-events-none">
                 {/* Floating Hearts */}
                 {hearts?.map((heart, i) => (
                     <motion.div
                         key={i}
-                        className="absolute text-[#FF6969]/10"
+                        className="absolute text-accent/10"
                         initial={{ y: 0, x: heart.initialX, rotate: heart.initialRotate }}
                         animate={{
                             y: [0, 100],
@@ -241,7 +241,7 @@ const PackagesSection = ({ data }) => {
                     <svg viewBox="0 0 100 100">
                         <path
                             fill="none"
-                            stroke="#FFD700"
+                            stroke="var(--gold)"
                             strokeWidth="2"
                             d="M50,5a45,45 0 1,0 0,90a45,45 0 1,0 0,-90"
                             pathLength="1"
@@ -255,7 +255,7 @@ const PackagesSection = ({ data }) => {
                 <div className="absolute top-0 left-0 w-full -translate-y-1/3">
                     <svg viewBox="0 0 1440 320" className="w-full">
                         <path
-                            fill="#FF6969"
+                            fill="var(--accent)"
                             fillOpacity="0.05"
                             d="M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,112C672,117,768,171,864,192C960,213,1056,203,1152,186.7C1248,171,1344,149,1392,138.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
                         ></path>
@@ -267,7 +267,7 @@ const PackagesSection = ({ data }) => {
                 <div
                     className="text-center mb-16"
                 >
-                    <div className="bg-[#FF6969]/10 text-[#FF6969] px-6 py-2 rounded-full inline-block mb-4">
+                    <div className="bg-accent/10 text-accent-ink px-6 py-2 rounded-full inline-block mb-4">
                         <FiStar className="inline mr-2" />
                         Most Chosen Packages
                     </div>
@@ -309,11 +309,11 @@ const PackagesSection = ({ data }) => {
         <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="my-10 bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] rounded-2xl p-8  border border-gray-100"
+            className="my-10 bg-gradient-to-b from-ground-sunk to-ground rounded-2xl p-8  border border-gray-100"
         >
             <div className="text-center max-w-3xl mx-auto">
                 <div className="mb-6">
-                    <FiHeart className="text-[#FF6969] w-12 h-12 mx-auto mb-4" />
+                    <FiHeart className="text-accent-ink w-12 h-12 mx-auto mb-4" />
                     <h3 className="font-display text-[24px] lg:text-[32px] font-semibold text-gray-900 mb-2">
                         Need Personal Assistance?
                     </h3>
@@ -331,7 +331,7 @@ const PackagesSection = ({ data }) => {
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.05 }}
                         className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-pill
-                                   bg-[#FF4D4D] px-8 py-3 text-[15px] font-semibold text-white"
+                                   bg-accent px-8 py-3 text-[15px] font-semibold text-white"
                     >
                         <FiCalendar aria-hidden="true" className="h-5 w-5" />
                         Free Consultation
@@ -341,8 +341,8 @@ const PackagesSection = ({ data }) => {
                         href={`tel:${studioContact?.[1] || ''}`}
                         whileHover={{ scale: 1.05 }}
                         className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-pill
-                                   border-2 border-[#FF6969] bg-white px-8 py-3 text-[15px] font-semibold
-                                   text-[#FF6969]"
+                                   border-2 border-accent bg-white px-8 py-3 text-[15px] font-semibold
+                                   text-accent-ink"
                     >
                         <FiPhone aria-hidden="true" className="h-5 w-5" />
                         Instant Call Back
@@ -384,13 +384,13 @@ const ComparativeCTA = ({ studioContact }) => {
             /* Was `-mx-4` on a bare motion.div: it sat off the page axis that
                every other band shares, and the negative margin pushed it wider
                than its own container. Band padding matches the others. */
-            className="relative px-5 py-10 sm:px-7 lg:py-12 lg:rounded-3xl sm:rounded-lg text-center bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] overflow-hidden"
+            className="relative px-5 py-10 sm:px-7 lg:py-12 lg:rounded-3xl sm:rounded-lg text-center bg-gradient-to-b from-ground-sunk to-ground overflow-hidden"
         >
             {/* Decorative Elements */}
             <div className="absolute top-0 left-0 w-full -translate-y-1/3">
                 <svg viewBox="0 0 1440 320" className="w-full">
                     <path
-                        fill="#FF6969"
+                        fill="var(--accent)"
                         fillOpacity="0.1"
                         d="M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,112C672,117,768,171,864,192C960,213,1056,203,1152,186.7C1248,171,1344,149,1392,138.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
                     ></path>
@@ -404,8 +404,8 @@ const ComparativeCTA = ({ studioContact }) => {
                     transition={{ duration: 8, repeat: Infinity }}
                     viewBox="0 0 24 24"
                 >
-                    <path fill="#FFD700" d="M12 2C8 2 4 6 4 12s4 10 8 10 8-4 8-10S16 2 12 2zm0 18c-3 0-6-3-6-6s3-6 6-6 6 3 6 6-3 6-6 6z" />
-                    <path fill="#FF6969" d="M12 6c-2 0-4 2-4 4s2 4 4 4 4-2 4-4-2-4-4-4z" />
+                    <path fill="var(--gold)" d="M12 2C8 2 4 6 4 12s4 10 8 10 8-4 8-10S16 2 12 2zm0 18c-3 0-6-3-6-6s3-6 6-6 6 3 6 6-3 6-6 6z" />
+                    <path fill="var(--accent)" d="M12 6c-2 0-4 2-4 4s2 4 4 4 4-2 4-4-2-4-4-4z" />
                 </motion.svg>
             </div>
 
@@ -418,7 +418,7 @@ const ComparativeCTA = ({ studioContact }) => {
                 <svg viewBox="0 0 100 100">
                     <path
                         fill="none"
-                        stroke="#FFD700"
+                        stroke="var(--gold)"
                         strokeWidth="2"
                         d="M50,5a45,45 0 1,0 0,90a45,45 0 1,0 0,-90"
                         pathLength="1"
@@ -434,7 +434,7 @@ const ComparativeCTA = ({ studioContact }) => {
                 <motion.div
                     initial={{ scaleX: 0 }}
                     whileInView={{ scaleX: 1 }}
-                    className="w-24 h-1 bg-[#FF6969] mx-auto mt-2 rounded-full"
+                    className="w-24 h-1 bg-accent mx-auto mt-2 rounded-full"
                     style={{ originX: 0.5 }}
                 />
             </h2>
@@ -457,7 +457,7 @@ const ComparativeCTA = ({ studioContact }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.05 }}
-                    className="inline-flex mx-auto min-h-[48px] justify-center items-center bg-[#FF4D4D] text-white font-semibold py-3 px-6 rounded-pill shadow-lg hover:bg-red-400 transition-all relative overflow-hidden"
+                    className="inline-flex mx-auto min-h-[48px] justify-center items-center bg-accent text-white font-semibold py-3 px-6 rounded-pill shadow-lg hover:bg-accent-hover transition-all relative overflow-hidden"
                 >
                     {/* Button Sparkle */}
                     <motion.div
@@ -465,7 +465,7 @@ const ComparativeCTA = ({ studioContact }) => {
                         transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                         className="absolute -right-4 -top-4 opacity-30"
                     >
-                        <FiStar className="w-8 h-8 text-[#FFD700]" />
+                        <FiStar className="w-8 h-8 text-gold" />
                     </motion.div>
 
                     <FiVideo aria-hidden="true" className="mr-2" />
@@ -481,9 +481,9 @@ const ComparativeCTA = ({ studioContact }) => {
                         whileHover={{ y: -5 }}
                     >
                         {/* Feature Card Accent */}
-                        <div className="absolute top-0 right-0 w-16 h-16 bg-[#FF6969]/10 rounded-bl-full transform translate-x-1/3 -translate-y-1/3 rotate-45" />
+                        <div className="absolute top-0 right-0 w-16 h-16 bg-accent/10 rounded-bl-full transform translate-x-1/3 -translate-y-1/3 rotate-45" />
 
-                        <div className="flex items-center justify-center lg:mb-4 mx-auto bg-red-100 p-4 rounded-full w-fit group-hover:bg-[#FFD700]/20 transition-colors">
+                        <div className="flex items-center justify-center lg:mb-4 mx-auto bg-accent-wash p-4 rounded-full w-fit group-hover:bg-gold/20 transition-colors">
                             {feature.icon}
                         </div>
                         <h3 className="t-heading-3 mx-auto text-gray-900">
@@ -494,7 +494,7 @@ const ComparativeCTA = ({ studioContact }) => {
                         </p>
 
                         {/* Hover Element */}
-                        <div className="absolute inset-0 border-2 border-[#FF6969]/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg m-1" />
+                        <div className="absolute inset-0 border-2 border-accent/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg m-1" />
                     </motion.div>
                 ))}
             </div>
@@ -504,7 +504,7 @@ const ComparativeCTA = ({ studioContact }) => {
                 {particles?.map((particle, i) => (
                     <motion.div
                         key={i}
-                        className="absolute w-2 h-2 rounded-full bg-[#FF6969]/20"
+                        className="absolute w-2 h-2 rounded-full bg-accent/20"
                         initial={{ y: 0, x: particle.initialX }}
                         animate={{
                             y: [0, 100, 0],

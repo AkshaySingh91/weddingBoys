@@ -249,12 +249,12 @@ export default function AdminCommentsPage() {
   return (
     <div className="space-y-6 pb-16 font-sans">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E5DCD3] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-edge-subtle pb-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1C1917]">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-ink">
             Reader Comments &amp; Moderation
           </h1>
-          <p className="text-xs text-stone-500 mt-0.5">
+          <p className="text-xs text-ink-muted mt-0.5">
             Review reader reflections, filter spam, and reply directly with verified studio authority.
           </p>
         </div>
@@ -279,10 +279,10 @@ export default function AdminCommentsPage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <div
           onClick={() => setActiveTab('pending')}
-          className={`cursor-pointer rounded-2xl border p-4 transition-all shadow-sm ${
+          className={`cursor-pointer rounded-xl border p-4 transition-all shadow-sm ${
             activeTab === 'pending'
               ? 'border-amber-400 bg-amber-50/40 ring-2 ring-amber-400/20'
-              : 'border-[#E5DCD3] bg-white hover:border-amber-300'
+              : 'border-edge-subtle bg-white hover:border-amber-300'
           }`}
         >
           <div className="flex items-center justify-between">
@@ -291,18 +291,18 @@ export default function AdminCommentsPage() {
               <Clock size={16} />
             </div>
           </div>
-          <div className="mt-2 text-2xl font-bold tracking-tight text-[#1C1917] tabular-nums">
+          <div className="mt-2 text-2xl font-bold tracking-tight text-ink tabular-nums">
             {counts.pending}
           </div>
-          <p className="text-[11px] text-stone-400 mt-0.5">Awaiting publication</p>
+          <p className="text-[11px] text-ink-muted mt-0.5">Awaiting publication</p>
         </div>
 
         <div
           onClick={() => setActiveTab('approved')}
-          className={`cursor-pointer rounded-2xl border p-4 transition-all shadow-sm ${
+          className={`cursor-pointer rounded-xl border p-4 transition-all shadow-sm ${
             activeTab === 'approved'
               ? 'border-emerald-500 bg-emerald-50/40 ring-2 ring-emerald-500/20'
-              : 'border-[#E5DCD3] bg-white hover:border-emerald-400'
+              : 'border-edge-subtle bg-white hover:border-emerald-400'
           }`}
         >
           <div className="flex items-center justify-between">
@@ -311,18 +311,18 @@ export default function AdminCommentsPage() {
               <CheckCircle size={16} />
             </div>
           </div>
-          <div className="mt-2 text-2xl font-bold tracking-tight text-[#1C1917] tabular-nums">
+          <div className="mt-2 text-2xl font-bold tracking-tight text-ink tabular-nums">
             {counts.approved}
           </div>
-          <p className="text-[11px] text-stone-400 mt-0.5">Visible to readers</p>
+          <p className="text-[11px] text-ink-muted mt-0.5">Visible to readers</p>
         </div>
 
         <div
           onClick={() => setActiveTab('spam')}
-          className={`cursor-pointer rounded-2xl border p-4 transition-all shadow-sm ${
+          className={`cursor-pointer rounded-xl border p-4 transition-all shadow-sm ${
             activeTab === 'spam'
               ? 'border-rose-400 bg-rose-50/40 ring-2 ring-rose-400/20'
-              : 'border-[#E5DCD3] bg-white hover:border-rose-300'
+              : 'border-edge-subtle bg-white hover:border-rose-300'
           }`}
         >
           <div className="flex items-center justify-between">
@@ -331,35 +331,35 @@ export default function AdminCommentsPage() {
               <ShieldWarning size={16} />
             </div>
           </div>
-          <div className="mt-2 text-2xl font-bold tracking-tight text-[#1C1917] tabular-nums">
+          <div className="mt-2 text-2xl font-bold tracking-tight text-ink tabular-nums">
             {counts.spam}
           </div>
-          <p className="text-[11px] text-stone-400 mt-0.5">Filtered out</p>
+          <p className="text-[11px] text-ink-muted mt-0.5">Filtered out</p>
         </div>
 
         <div
           onClick={() => setActiveTab('all')}
-          className={`cursor-pointer rounded-2xl border p-4 transition-all shadow-sm ${
+          className={`cursor-pointer rounded-xl border p-4 transition-all shadow-sm ${
             activeTab === 'all'
-              ? 'border-[#1C1917] bg-stone-50 ring-2 ring-stone-900/10'
-              : 'border-[#E5DCD3] bg-white hover:border-stone-400'
+              ? 'border-ink bg-ground ring-2 ring-ink/10'
+              : 'border-edge-subtle bg-white hover:border-edge-strong'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-stone-600">Total Discussions</span>
-            <div className="h-7 w-7 rounded-xl bg-stone-100 flex items-center justify-center text-stone-800 border border-stone-200">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-ink-secondary">Total Discussions</span>
+            <div className="h-7 w-7 rounded-xl bg-ground-sunk flex items-center justify-center text-ink border border-edge-subtle">
               <ChatCircleDots size={16} />
             </div>
           </div>
-          <div className="mt-2 text-2xl font-bold tracking-tight text-[#1C1917] tabular-nums">
+          <div className="mt-2 text-2xl font-bold tracking-tight text-ink tabular-nums">
             {counts.all}
           </div>
-          <p className="text-[11px] text-stone-400 mt-0.5">All received responses</p>
+          <p className="text-[11px] text-ink-muted mt-0.5">All received responses</p>
         </div>
       </div>
 
       {/* Filter Tabs & Search Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-[#E5DCD3] pb-3">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-edge-subtle pb-3">
         {/* Status Filter Tabs */}
         <div className="flex items-center gap-1 overflow-x-auto">
           {[
@@ -374,8 +374,8 @@ export default function AdminCommentsPage() {
               onClick={() => setActiveTab(tab.key)}
               className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
                 activeTab === tab.key
-                  ? 'bg-[#1C1917] text-[#F7F4EF]'
-                  : 'text-stone-600 hover:bg-stone-100 hover:text-stone-900'
+                  ? 'bg-ink text-ink-onDeep'
+                  : 'text-ink-secondary hover:bg-ground-sunk hover:text-ink'
               }`}
             >
               <span>{tab.label}</span>
@@ -383,7 +383,7 @@ export default function AdminCommentsPage() {
                 className={`rounded-full px-1.5 py-0.2 text-[10px] ${
                   activeTab === tab.key
                     ? 'bg-stone-700 text-stone-200'
-                    : 'bg-stone-200 text-stone-600'
+                    : 'bg-ground-sunk text-ink-secondary'
                 }`}
               >
                 {tab.count}
@@ -394,26 +394,26 @@ export default function AdminCommentsPage() {
 
         {/* Search Box */}
         <div className="relative w-full md:w-64">
-          <MagnifyingGlass size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
+          <MagnifyingGlass size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && fetchComments(activeTab, searchQuery)}
             placeholder="Search commenter or text..."
-            className="w-full rounded-xl border border-[#E5DCD3] bg-white pl-8 pr-3 py-1.5 text-xs text-stone-800 placeholder-stone-400 focus:border-[#8C532B] focus:outline-none"
+            className="w-full rounded-xl border border-edge-subtle bg-white pl-8 pr-3 py-1.5 text-xs text-ink placeholder-stone-400 focus:border-accent focus:outline-none"
           />
         </div>
       </div>
 
       {/* Bulk Action Toolbar */}
       {selectedIds.size > 0 && (
-        <div className="flex items-center justify-between rounded-xl bg-stone-900 p-3 text-xs text-white shadow-lg animate-in fade-in duration-200">
+        <div className="flex items-center justify-between rounded-xl bg-ink p-3 text-xs text-white shadow-lg animate-in fade-in duration-200">
           <div className="flex items-center gap-3">
             <span className="font-semibold text-amber-300">{selectedIds.size} comments selected</span>
             <button
               onClick={() => setSelectedIds(new Set())}
-              className="text-stone-400 hover:text-white underline"
+              className="text-ink-muted hover:text-white underline"
             >
               Deselect
             </button>
@@ -454,26 +454,26 @@ export default function AdminCommentsPage() {
       {/* Comments List */}
       {loading ? (
         <div className="flex flex-col items-center justify-center min-h-[30vh] gap-3">
-          <CircleNotch size={24} className="animate-spin text-stone-600" />
-          <p className="text-xs text-stone-500 font-medium">Loading moderation queue...</p>
+          <CircleNotch size={24} className="animate-spin text-ink-secondary" />
+          <p className="text-xs text-ink-muted font-medium">Loading moderation queue...</p>
         </div>
       ) : comments.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-[#E5DCD3] bg-white p-12 text-center">
-          <ChatCircleDots size={32} className="mx-auto text-stone-400 mb-2" />
-          <h3 className="text-base font-semibold text-[#1C1917]">No comments in this filter</h3>
-          <p className="text-xs text-stone-500 mt-1 max-w-sm mx-auto">
+        <div className="rounded-xl border border-dashed border-edge-subtle bg-white p-12 text-center">
+          <ChatCircleDots size={32} className="mx-auto text-ink-muted mb-2" />
+          <h3 className="text-base font-semibold text-ink">No comments in this filter</h3>
+          <p className="text-xs text-ink-muted mt-1 max-w-sm mx-auto">
             All caught up! No reader submissions currently match the &ldquo;{activeTab}&rdquo; filter.
           </p>
         </div>
       ) : (
         <div className="space-y-4">
           {/* Select All Checkbox */}
-          <div className="flex items-center gap-2 px-2 text-xs font-medium text-stone-500">
+          <div className="flex items-center gap-2 px-2 text-xs font-medium text-ink-muted">
             <input
               type="checkbox"
               checked={selectedIds.size === comments.length && comments.length > 0}
               onChange={toggleSelectAll}
-              className="h-4 w-4 rounded border-[#E5DCD3] text-[#8C532B] focus:ring-[#8C532B]"
+              className="h-4 w-4 rounded-lg border-edge-subtle text-accent-ink focus:ring-accent"
             />
             <span>Select All ({comments.length})</span>
           </div>
@@ -481,10 +481,10 @@ export default function AdminCommentsPage() {
           {comments.map((comment) => (
             <div
               key={comment._id}
-              className={`rounded-2xl border p-5 transition-all shadow-sm ${
+              className={`rounded-xl border p-5 transition-all shadow-sm ${
                 selectedIds.has(comment._id)
-                  ? 'border-[#8C532B] bg-amber-50/20'
-                  : 'border-[#E5DCD3] bg-white hover:border-stone-300'
+                  ? 'border-accent bg-amber-50/20'
+                  : 'border-edge-subtle bg-white hover:border-edge-strong'
               }`}
             >
               <div className="flex items-start justify-between gap-4">
@@ -494,22 +494,22 @@ export default function AdminCommentsPage() {
                     type="checkbox"
                     checked={selectedIds.has(comment._id)}
                     onChange={() => toggleSelect(comment._id)}
-                    className="mt-1 h-4 w-4 rounded border-[#E5DCD3] text-[#8C532B] focus:ring-[#8C532B]"
+                    className="mt-1 h-4 w-4 rounded-lg border-edge-subtle text-accent-ink focus:ring-accent"
                   />
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-bold text-sm text-[#1C1917]">
+                      <span className="font-bold text-sm text-ink">
                         {comment.author?.name}
                       </span>
-                      <span className="rounded-md bg-stone-100 px-2 py-0.5 text-[11px] font-mono text-stone-600 border border-stone-200">
+                      <span className="rounded-lg bg-ground-sunk px-2 py-0.5 text-[11px] font-mono text-ink-secondary border border-edge-subtle">
                         {comment.author?.email}
                       </span>
 
                       {/* Verified studio badge */}
                       {comment.isStudioReply && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-[#1C1917] px-2 py-0.5 text-[10px] font-semibold text-[#C29555]">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-ink px-2 py-0.5 text-[10px] font-semibold text-gold-strong">
                           <ShieldCheck size={12} />
-                          The Wedding Boys Team
+                          The Wedding Vachan Team
                         </span>
                       )}
 
@@ -530,7 +530,7 @@ export default function AdminCommentsPage() {
                             ? 'bg-amber-100 text-amber-800'
                             : comment.status === 'spam'
                             ? 'bg-rose-100 text-rose-800'
-                            : 'bg-stone-100 text-stone-600'
+                            : 'bg-ground-sunk text-ink-secondary'
                         }`}
                       >
                         {comment.status}
@@ -538,18 +538,18 @@ export default function AdminCommentsPage() {
                     </div>
 
                     {/* Associated Story Link */}
-                    <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-stone-500">
+                    <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-ink-muted">
                       <span>On story:</span>
                       {comment.blogPost ? (
                         <Link
                           href={`/blogs/${comment.blogPost.slug}`}
                           target="_blank"
-                          className="font-medium text-[#8C532B] hover:underline"
+                          className="font-medium text-accent-ink hover:underline"
                         >
                           &ldquo;{comment.blogPost.title}&rdquo;
                         </Link>
                       ) : (
-                        <span className="italic text-stone-400">Post unavailable</span>
+                        <span className="italic text-ink-muted">Post unavailable</span>
                       )}
                       <span>·</span>
                       <span>{formatDateTime(comment.createdAt)}</span>
@@ -617,7 +617,7 @@ export default function AdminCommentsPage() {
 
                   <button
                     onClick={() => setDeleteTargetId(comment._id)}
-                    className="p-1.5 text-stone-400 hover:text-rose-600 transition-colors rounded-lg hover:bg-stone-100"
+                    className="p-1.5 text-ink-muted hover:text-rose-600 transition-colors rounded-lg hover:bg-ground-sunk"
                     title="Delete"
                   >
                     <Trash size={16} />
@@ -627,14 +627,14 @@ export default function AdminCommentsPage() {
 
               {/* Context if this comment is a reply */}
               {comment.parent && (
-                <div className="mt-3 ml-7 rounded-xl border border-stone-200 bg-stone-50 p-2.5 text-xs text-stone-600">
-                  <span className="font-semibold text-stone-700">In response to {comment.parent.author?.name || 'Reader'}:</span>
+                <div className="mt-3 ml-7 rounded-xl border border-edge-subtle bg-ground p-2.5 text-xs text-ink-secondary">
+                  <span className="font-semibold text-ink-secondary">In response to {comment.parent.author?.name || 'Reader'}:</span>
                   <p className="mt-0.5 line-clamp-1 italic">&ldquo;{comment.parent.body}&rdquo;</p>
                 </div>
               )}
 
               {/* Comment Body */}
-              <div className="mt-3 ml-7 text-xs sm:text-sm text-stone-800 leading-relaxed whitespace-pre-wrap">
+              <div className="mt-3 ml-7 text-xs sm:text-sm text-ink leading-relaxed whitespace-pre-wrap">
                 {comment.body}
               </div>
             </div>
@@ -648,7 +648,7 @@ export default function AdminCommentsPage() {
           <DialogContent className="max-w-lg">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
-                <ShieldCheck size={20} className="text-[#C29555]" />
+                <ShieldCheck size={20} className="text-gold-strong" />
                 <span>Verified Studio Reply</span>
               </DialogTitle>
               <DialogDescription>
@@ -656,14 +656,14 @@ export default function AdminCommentsPage() {
               </DialogDescription>
             </DialogHeader>
 
-            <div className="rounded-xl border border-[#E5DCD3] bg-stone-50 p-3 text-xs text-stone-600 my-2">
-              <span className="font-semibold text-stone-800">Reader said:</span>
-              <p className="mt-1 line-clamp-2 italic text-stone-700">&ldquo;{replyTarget.body}&rdquo;</p>
+            <div className="rounded-xl border border-edge-subtle bg-ground p-3 text-xs text-ink-secondary my-2">
+              <span className="font-semibold text-ink">Reader said:</span>
+              <p className="mt-1 line-clamp-2 italic text-ink-secondary">&ldquo;{replyTarget.body}&rdquo;</p>
             </div>
 
             <form onSubmit={handleSendStudioReply}>
               <div className="space-y-2">
-                <label className="text-xs font-semibold text-stone-700 uppercase tracking-wider">
+                <label className="text-xs font-semibold text-ink-secondary uppercase tracking-wider">
                   Studio Response
                 </label>
                 <textarea
@@ -672,10 +672,10 @@ export default function AdminCommentsPage() {
                   value={replyContent}
                   onChange={(e) => setReplyContent(e.target.value)}
                   placeholder="Thank you for your thoughts! Here is what we found during this shoot..."
-                  className="w-full rounded-xl border border-[#E5DCD3] bg-white p-3 text-xs text-stone-900 focus:border-[#8C532B] focus:outline-none"
+                  className="w-full rounded-xl border border-edge-subtle bg-white p-3 text-xs text-ink focus:border-accent focus:outline-none"
                 />
-                <p className="text-[11px] text-stone-400">
-                  This reply will display the verified gold &ldquo;The Wedding Boys Team&rdquo; badge and email {replyTarget.author?.email} with a direct link.
+                <p className="text-[11px] text-ink-muted">
+                  This reply will display the verified gold &ldquo;The Wedding Vachan Team&rdquo; badge and email {replyTarget.author?.email} with a direct link.
                 </p>
               </div>
 

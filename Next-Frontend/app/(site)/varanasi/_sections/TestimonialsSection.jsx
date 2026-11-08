@@ -91,7 +91,7 @@ export default function TestimonialsSection() {
       />
 
       {/* Giant Parallax Quote Mark Background */}
-      <div className="absolute top-[15%] md:top-[20%] left-1/2 -translate-x-1/2 text-[180px] md:text-[300px] font-['Cormorant_Garamond'] text-[#D4AF37] opacity-[0.06] leading-none select-none pointer-events-none z-0">
+      <div className="absolute top-[15%] md:top-[20%] left-1/2 -translate-x-1/2 text-[180px] md:text-[300px] font-display text-gold opacity-[0.06] leading-none select-none pointer-events-none z-0">
         “
       </div>
 
@@ -109,7 +109,7 @@ export default function TestimonialsSection() {
               key={index}
               className="testimonial-card absolute inset-0 w-full flex flex-col items-center justify-center text-center px-6 md:px-12 will-change-transform"
             >
-              <h3 className="font-['Cormorant_Garamond'] text-[clamp(26px,4vw,44px)] text-[#1C1410] font-light leading-[1.3] italic mb-8 drop-shadow-sm max-w-3xl mx-auto">
+              <h3 className="font-display text-[clamp(26px,4vw,44px)] text-[#1C1410] font-light leading-[1.3] italic mb-8 drop-shadow-sm max-w-3xl mx-auto">
                 &quot;{testimonial.quote}&quot;
               </h3>
 
@@ -117,7 +117,7 @@ export default function TestimonialsSection() {
                 <span className="text-xs md:text-sm font-semibold tracking-[0.2em] text-[#1C1410] uppercase">
                   {testimonial.name}
                 </span>
-                <span className="text-[9px] md:text-[10px] tracking-[0.25em] text-[#C9973A] uppercase font-medium">
+                <span className="text-[9px] md:text-[10px] tracking-[0.25em] text-gold uppercase font-medium">
                   — {testimonial.location}
                 </span>
               </div>
@@ -127,7 +127,7 @@ export default function TestimonialsSection() {
 
         {/* Global Progress Line (Fills up as you scroll) */}
         <div className="absolute bottom-24 md:bottom-32 w-48 md:w-64 h-[1px] bg-[#1C1410]/10 overflow-hidden">
-          <div className="progress-line w-full h-full bg-gradient-to-r from-[#D4AF37] to-[#8C7B6E] origin-left scale-x-0" />
+          <div className="progress-line w-full h-full bg-gradient-to-r from-gold to-[#8C7B6E] origin-left scale-x-0" />
         </div>
 
       </div>

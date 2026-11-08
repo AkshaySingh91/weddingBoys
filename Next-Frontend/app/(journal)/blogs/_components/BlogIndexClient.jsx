@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import {
   MagnifyingGlass,
@@ -19,11 +20,17 @@ function coverOf(post) {
   return post.coverImage?.cdnUrl || post.coverImage?.publicUrl || post.coverImage?.url || null;
 }
 
-export default function BlogIndexClient({ initialPosts = [], categories = [] }) {
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [query, setQuery] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 6; // Strictly maximum 6 cards per page in Archive to prevent orphaned grid slots
+export default function BlogIndexClient({ initialPosts = [], categories = [], counts = {}, total = 0,
+  activeCategory = 'All', initialQuery = '', currentPage = 1 }) {
+  const router = useRouter();
+  const [query, setQuery] = useState(initialQuery);
+  const navigate = ({ category = activeCategory, search = query, page = 1 } = {}) => {
+    const params = new URLSearchParams();
+    if (category !== 'All') params.set('category', category);
+    if (search.trim()) params.set('q', search.trim().slice(0, 120));
+    if (page > 1) params.set('page', String(page));
+    router.push(`/blogs${params.size ? `?${params}` : ''}`);
+  };
 
   // Standard category display list matching prompt-1.png
   const displayCategories = useMemo(() => {
@@ -36,32 +43,8 @@ export default function BlogIndexClient({ initialPosts = [], categories = [] }) 
     return result;
   }, [categories]);
 
-  // Category counts
-  const counts = useMemo(() => {
-    const map = { All: initialPosts.length };
-    for (const post of initialPosts) {
-      if (post.category) {
-        map[post.category] = (map[post.category] || 0) + 1;
-      }
-    }
-    return map;
-  }, [initialPosts]);
-
-  // Filtered stories
-  const filteredPosts = useMemo(() => {
-    return initialPosts.filter((post) => {
-      const matchCategory =
-        activeCategory === 'All' || post.category === activeCategory;
-      const matchQuery =
-        !query ||
-        post.title?.toLowerCase().includes(query.toLowerCase()) ||
-        post.excerpt?.toLowerCase().includes(query.toLowerCase()) ||
-        post.category?.toLowerCase().includes(query.toLowerCase()) ||
-        post.venue?.toLowerCase().includes(query.toLowerCase()) ||
-        post.tags?.some((t) => t.toLowerCase().includes(query.toLowerCase()));
-      return matchCategory && matchQuery;
-    });
-  }, [initialPosts, activeCategory, query]);
+  // Filtering and pagination run against the complete published archive on the server.
+  const filteredPosts = initialPosts;
 
   // 1. Featured Hero Post (Lake Pichola Udaipur Royal Wedding or first post)
   const heroPost = useMemo(() => {
@@ -98,12 +81,8 @@ export default function BlogIndexClient({ initialPosts = [], categories = [] }) 
     return filteredPosts.filter((p) => !usedIds.has(p._id || p.slug));
   }, [filteredPosts, heroPost, secondaryPosts]);
 
-  // Pagination for archive grid (Strictly 6 cards per page)
-  const totalPages = Math.max(1, Math.ceil(remainingPosts.length / pageSize));
-  const paginatedArchive = useMemo(() => {
-    const start = (currentPage - 1) * pageSize;
-    return remainingPosts.slice(start, start + pageSize);
-  }, [remainingPosts, currentPage, pageSize]);
+  const totalPages = Math.max(1, Math.ceil(total / 9));
+  const paginatedArchive = remainingPosts;
 
   return (
     <div className="space-y-4 sm:space-y-5 font-sans">
@@ -133,13 +112,13 @@ export default function BlogIndexClient({ initialPosts = [], categories = [] }) 
 
         {/* Right Italic Calligraphy Script ("Stories That Feel Like You") */}
         <div className="pointer-events-none absolute right-5 sm:right-9 top-3 sm:top-4 z-10 text-right select-none hidden sm:block">
-          <p className="font-[family-name:var(--font-greatvibes)] text-2xl md:text-[27px] text-[#9E6243] leading-none tracking-wide">
+          <p className="font-[family-name:var(--font-display italic)] text-2xl md:text-[27px] text-[#9E6243] leading-none tracking-wide">
             Stories
           </p>
-          <p className="font-[family-name:var(--font-greatvibes)] text-2xl md:text-[27px] text-[#9E6243] leading-tight tracking-wide -mt-0.5">
+          <p className="font-[family-name:var(--font-display italic)] text-2xl md:text-[27px] text-[#9E6243] leading-tight tracking-wide -mt-0.5">
             That Feel
           </p>
-          <p className="font-[family-name:var(--font-greatvibes)] text-2xl md:text-[27px] text-[#9E6243] leading-tight tracking-wide -mt-0.5">
+          <p className="font-[family-name:var(--font-display italic)] text-2xl md:text-[27px] text-[#9E6243] leading-tight tracking-wide -mt-0.5">
             Like You
           </p>
           <div className="w-13 h-[1.5px] bg-[#9E6243]/70 ml-auto mt-0.5 rounded-full" />
@@ -149,12 +128,12 @@ export default function BlogIndexClient({ initialPosts = [], categories = [] }) 
         <div className="relative z-10 max-w-xl mx-auto space-y-3">
           {/* Issue Badge */}
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FCEEE6] border border-[#E5BDA7]/60 text-[#74583E] text-[10px] font-mono font-bold tracking-[0.22em] uppercase shadow-sm">
-            <Sparkle size={11} weight="fill" className="text-[#FF5353]" />
-            <span>THE WEDDING BOYS BLOGS</span>
+            <Sparkle size={11} weight="fill" className="text-accent-ink" />
+            <span>THE WEDDING VACHAN BLOGS</span>
           </div>
 
           {/* Editorial Display Headline in Playfair Display */}
-          <h1 className="font-playfair font-serif text-2xl sm:text-3xl md:text-[36px] font-bold tracking-tight text-[#5E2B17] leading-[1.18]">
+          <h1 className="font-display font-display text-2xl sm:text-3xl md:text-[36px] font-bold tracking-tight text-[#5E2B17] leading-[1.18]">
             Cinema, Heritage &amp; Real Love Stories
           </h1>
 
@@ -178,15 +157,15 @@ export default function BlogIndexClient({ initialPosts = [], categories = [] }) 
                   <button
                     key={cat}
                     type="button"
+                    aria-pressed={isActive}
                     onClick={() => {
-                      setActiveCategory(cat);
-                      setCurrentPage(1);
+                      navigate({ category: cat, search: initialQuery });
                     }}
                     className={cn(
                       'px-3.5 py-1.5 rounded-full text-xs transition-all cursor-pointer whitespace-nowrap',
                       isActive
-                        ? 'bg-[#FF5353] text-white font-semibold shadow-sm'
-                        : 'bg-white border border-[#E5DCD3] text-[#74583E] hover:border-[#FF5353]/40 font-medium'
+                        ? 'bg-accent text-white font-semibold shadow-sm'
+                        : 'bg-white border border-[#E5DCD3] text-[#74583E] hover:border-accent/40 font-medium'
                     )}
                   >
                     <span>{cat}</span>
@@ -197,54 +176,52 @@ export default function BlogIndexClient({ initialPosts = [], categories = [] }) 
             </div>
 
             {/* Clean Pill Search Bar */}
-            <div className="relative w-full md:w-72 shrink-0">
+            <form role="search" onSubmit={(event) => { event.preventDefault(); navigate(); }} className="relative w-full md:w-72 shrink-0">
               <MagnifyingGlass
                 size={15}
                 className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#74583E]/70"
               />
               <input
-                type="text"
+                aria-label="Search all journal stories"
+                type="search"
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value);
-                  setCurrentPage(1);
                 }}
                 placeholder="Search stories, destinations, advice..."
-                className="w-full pl-9 pr-9 py-1.5 bg-white border border-[#E5DCD3] rounded-full text-xs text-[#2F2F2F] placeholder:text-[#78716C] focus:outline-none focus:border-[#FF5353] focus:ring-1 focus:ring-[#FF5353]/20 transition-all shadow-sm"
+                className="w-full pl-9 pr-9 py-1.5 bg-white border border-[#E5DCD3] rounded-full text-xs text-[#2F2F2F] placeholder:text-[#78716C] focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/20 transition-all shadow-sm"
               />
               {query && (
                 <button
                   type="button"
                   onClick={() => {
                     setQuery('');
-                    setCurrentPage(1);
+                    navigate({ search: '' });
                   }}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-semibold text-[#FF5353] hover:text-[#E04242] cursor-pointer"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-semibold text-accent-ink hover:text-[#E04242] cursor-pointer"
                 >
                   Clear
                 </button>
               )}
-            </div>
+            </form>
           </div>
         </section>
 
         {/* Zero Results State */}
         {filteredPosts.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-[#E5DCD3] bg-white p-12 text-center shadow-sm">
-            <div className="w-12 h-12 rounded-full bg-[#FCEEE6] flex items-center justify-center text-[#FF5353] mx-auto mb-3">
+            <div className="w-12 h-12 rounded-full bg-[#FCEEE6] flex items-center justify-center text-accent-ink mx-auto mb-3">
               <BookOpenText size={24} />
             </div>
-            <h3 className="font-serif text-lg font-bold text-[#5E2B17]">No editorial stories match your search</h3>
+            <h3 className="font-display text-lg font-bold text-[#5E2B17]">No editorial stories match your search</h3>
             <p className="text-xs text-[#74583E] mt-1 max-w-sm mx-auto leading-relaxed">
               Try choosing another topic category or clearing your search term to see all published journal features.
             </p>
             <button
               onClick={() => {
-                setActiveCategory('All');
-                setQuery('');
-                setCurrentPage(1);
+                navigate({ category: 'All', search: '' });
               }}
-              className="mt-4 inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#FF5353] text-white text-xs font-semibold hover:bg-[#E04242] transition-colors cursor-pointer shadow-sm"
+              className="mt-4 inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-accent text-white text-xs font-semibold hover:bg-[#E04242] transition-colors cursor-pointer shadow-sm"
             >
               <span>Reset All Filters</span>
             </button>
@@ -280,7 +257,7 @@ export default function BlogIndexClient({ initialPosts = [], categories = [] }) 
 
                       {/* Top-Left Featured Badge */}
                       <div className="absolute top-4 left-4">
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-[#FF5353] text-[10px] font-bold uppercase tracking-wider border border-[#E5DCD3] shadow-sm">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-accent-ink text-[10px] font-bold uppercase tracking-wider border border-[#E5DCD3] shadow-sm">
                           <Sparkle size={11} weight="fill" />
                           <span>Featured Story</span>
                         </span>
@@ -300,7 +277,7 @@ export default function BlogIndexClient({ initialPosts = [], categories = [] }) 
                     <div className="md:col-span-5 p-5 sm:p-6 md:p-7 flex flex-col justify-between bg-white h-full">
                       <div className="space-y-2.5">
                         {/* Category & Read Time */}
-                        <div className="flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-[#FF5353]">
+                        <div className="flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-accent-ink">
                           <span>{heroPost.category}</span>
                           <span className="text-[#E5DCD3]">·</span>
                           <span className="text-[#74583E] font-medium">
@@ -309,7 +286,7 @@ export default function BlogIndexClient({ initialPosts = [], categories = [] }) 
                         </div>
 
                         {/* Main Title in Playfair Display */}
-                        <h2 className="font-playfair font-serif text-lg sm:text-xl md:text-[23px] font-bold leading-snug text-[#5E2B17] group-hover:text-[#FF5353] transition-colors">
+                        <h2 className="font-display font-display text-lg sm:text-xl md:text-[23px] font-bold leading-snug text-[#5E2B17] group-hover:text-accent-ink transition-colors">
                           {heroPost.title}
                         </h2>
 
@@ -322,7 +299,7 @@ export default function BlogIndexClient({ initialPosts = [], categories = [] }) 
                       {/* Author Byline & Coral CTA Button */}
                       <div className="pt-4 border-t border-[#E5DCD3] flex items-center justify-between gap-3 mt-4">
                         <div className="flex items-center gap-2.5">
-                          <div className="w-8 h-8 rounded-full bg-[#FCEEE6] border border-[#E5BDA7]/50 flex items-center justify-center text-[#5E2B17] font-serif font-bold text-xs shrink-0 overflow-hidden">
+                          <div className="w-8 h-8 rounded-full bg-[#FCEEE6] border border-[#E5BDA7]/50 flex items-center justify-center text-[#5E2B17] font-display font-bold text-xs shrink-0 overflow-hidden">
                             {heroPost.author?.avatar ? (
                               <Image
                                 src={heroPost.author.avatar}
@@ -345,7 +322,7 @@ export default function BlogIndexClient({ initialPosts = [], categories = [] }) 
                           </div>
                         </div>
 
-                        <span className="inline-flex items-center justify-center gap-1 px-4 py-2 bg-[#FF5353] group-hover:bg-[#E04242] text-white text-xs font-semibold rounded-full tracking-wide transition-all shrink-0 shadow-sm">
+                        <span className="inline-flex items-center justify-center gap-1 px-4 py-2 bg-accent group-hover:bg-[#E04242] text-white text-xs font-semibold rounded-full tracking-wide transition-all shrink-0 shadow-sm">
                           <span>Read Feature</span>
                           <ArrowRight size={12} weight="bold" />
                         </span>
@@ -386,7 +363,7 @@ export default function BlogIndexClient({ initialPosts = [], categories = [] }) 
                     {/* Right 60% Content */}
                     <div className="w-[62%] sm:w-[60%] p-4 sm:p-5 flex flex-col justify-between">
                       <div className="space-y-1.5">
-                        <div className="flex items-center gap-1.5 text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#FF5353]">
+                        <div className="flex items-center gap-1.5 text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-accent-ink">
                           <span>{post.category}</span>
                           <span className="text-[#E5DCD3]">·</span>
                           <span className="text-[#74583E] font-medium">
@@ -394,7 +371,7 @@ export default function BlogIndexClient({ initialPosts = [], categories = [] }) 
                           </span>
                         </div>
 
-                        <h3 className="font-playfair font-serif text-sm sm:text-base font-bold text-[#5E2B17] group-hover:text-[#FF5353] transition-colors leading-snug line-clamp-2">
+                        <h3 className="font-display font-display text-sm sm:text-base font-bold text-[#5E2B17] group-hover:text-accent-ink transition-colors leading-snug line-clamp-2">
                           {post.title}
                         </h3>
 
@@ -404,7 +381,7 @@ export default function BlogIndexClient({ initialPosts = [], categories = [] }) 
                       </div>
 
                       <div className="pt-2">
-                        <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#FF5353] group-hover:translate-x-1 transition-transform">
+                        <span className="inline-flex items-center gap-1 text-xs font-semibold text-accent-ink group-hover:translate-x-1 transition-transform">
                           <span>Read Story</span>
                           <ArrowRight size={11} weight="bold" />
                         </span>
@@ -448,26 +425,26 @@ export default function BlogIndexClient({ initialPosts = [], categories = [] }) 
                   <span>Cinematic Credo</span>
                 </div>
 
-                <blockquote className="font-playfair font-serif text-base sm:text-lg md:text-[21px] italic leading-relaxed text-white">
+                <blockquote className="font-display font-display text-base sm:text-lg md:text-[21px] italic leading-relaxed text-white">
                   &ldquo;A wedding film shouldn&rsquo;t feel like a montage of choreographed poses; it must feel like an emotional heirloom that transports you back to the exact vibration of the room.&rdquo;
                 </blockquote>
 
                 <p className="text-xs text-[#FAD7A0] font-sans font-medium tracking-wide">
-                  — Akshay Singh, Creative Director, The Wedding Boys Studio
+                  — Akshay Singh, Creative Director, The Wedding Vachan Studio
                 </p>
               </div>
             </section>
 
             {/* 6. Archive Stories Grid (Strictly 6 Cards per Page, prompt-1.png) */}
-            {remainingPosts.length > 0 && (
+            {(remainingPosts.length > 0 || totalPages > 1) && (
               <section aria-label="More Stories from The Journal" className="space-y-5">
                 <div className="flex items-center justify-between pb-1 border-b border-[#E5DCD3]">
-                  <h3 className="font-playfair font-serif text-xl sm:text-2xl font-bold text-[#5E2B17]">
+                  <h3 className="font-display font-display text-xl sm:text-2xl font-bold text-[#5E2B17]">
                     More Stories from The Journal
                   </h3>
                   <Link
                     href="/blogs"
-                    className="text-xs font-medium text-[#74583E] hover:text-[#FF5353] transition-colors"
+                    className="text-xs font-medium text-[#74583E] hover:text-accent-ink transition-colors"
                   >
                     Explore all stories →
                   </Link>
@@ -510,7 +487,7 @@ export default function BlogIndexClient({ initialPosts = [], categories = [] }) 
                             {post.readingTime || 3} MIN READ
                           </div>
 
-                          <h4 className="font-playfair font-serif text-sm sm:text-[15px] font-bold text-[#5E2B17] group-hover:text-[#FF5353] transition-colors leading-snug line-clamp-2">
+                          <h4 className="font-display font-display text-sm sm:text-[15px] font-bold text-[#5E2B17] group-hover:text-accent-ink transition-colors leading-snug line-clamp-2">
                             {post.title}
                           </h4>
 
@@ -524,7 +501,7 @@ export default function BlogIndexClient({ initialPosts = [], categories = [] }) 
                           <span className="font-medium truncate max-w-[140px]">
                             {post.author?.name || 'Akshay Singh'}
                           </span>
-                          <div className="w-6.5 h-6.5 rounded-full bg-[#FCEEE6] group-hover:bg-[#FF5353] group-hover:text-white text-[#74583E] flex items-center justify-center transition-colors shrink-0 shadow-sm">
+                          <div className="w-6.5 h-6.5 rounded-full bg-[#FCEEE6] group-hover:bg-accent-hover group-hover:text-white text-[#74583E] flex items-center justify-center transition-colors shrink-0 shadow-sm">
                             <ArrowRight size={11} weight="bold" />
                           </div>
                         </div>
@@ -542,15 +519,17 @@ export default function BlogIndexClient({ initialPosts = [], categories = [] }) 
                         <button
                           key={page}
                           type="button"
+                          aria-label={`Page ${page}`}
+                          aria-current={isActive ? 'page' : undefined}
                           onClick={() => {
-                            setCurrentPage(page);
+                            navigate({ page, search: initialQuery });
                             window.scrollTo({ top: 600, behavior: 'smooth' });
                           }}
                           className={cn(
                             'w-8 h-8 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center justify-center',
                             isActive
-                              ? 'bg-[#FF5353] text-white shadow-sm'
-                              : 'bg-white border border-[#E5DCD3] text-[#74583E] hover:border-[#FF5353] hover:text-[#FF5353]'
+                              ? 'bg-accent text-white shadow-sm'
+                              : 'bg-white border border-[#E5DCD3] text-[#74583E] hover:border-accent hover:text-accent-ink'
                           )}
                         >
                           {page}
@@ -561,10 +540,10 @@ export default function BlogIndexClient({ initialPosts = [], categories = [] }) 
                       <button
                         type="button"
                         onClick={() => {
-                          setCurrentPage((p) => Math.min(totalPages, p + 1));
+                          navigate({ page: Math.min(totalPages, currentPage + 1), search: initialQuery });
                           window.scrollTo({ top: 600, behavior: 'smooth' });
                         }}
-                        className="px-3.5 py-1.5 rounded-full bg-white border border-[#E5DCD3] text-[#74583E] hover:border-[#FF5353] hover:text-[#FF5353] text-xs font-semibold transition-all cursor-pointer inline-flex items-center gap-1 shadow-sm"
+                        className="px-3.5 py-1.5 rounded-full bg-white border border-[#E5DCD3] text-[#74583E] hover:border-accent hover:text-accent-ink text-xs font-semibold transition-all cursor-pointer inline-flex items-center gap-1 shadow-sm"
                       >
                         <span>Next</span>
                         <ArrowRight size={11} weight="bold" />

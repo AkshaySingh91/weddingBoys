@@ -17,13 +17,13 @@ import Section from '@/Component/ui/Section.jsx';
  * A value that starts with a number counts up to it; anything else shows as written.
  */
 const DEFAULT_ITEMS = [
-    { title: '1000+', subtitle: 'Weddings Captured', body: 'Magical moments preserved' },
-    { title: '25+', subtitle: 'Awards Won', body: 'Industry recognition' },
-    { title: '1500+', subtitle: 'Happy Clients', body: 'Satisfied families' },
-    { title: '5+', subtitle: 'Years Experience', body: 'In the industry' },
+    { title: 'Wedding films', subtitle: 'Stories in motion', body: 'Cinematic memories of your celebration' },
+    { title: 'Photography', subtitle: 'Moments preserved', body: 'Details, portraits, and candid emotion' },
+    { title: 'Your people', subtitle: 'At the heart of the story', body: 'Family and friends, together' },
+    { title: 'Your traditions', subtitle: 'Thoughtfully captured', body: 'The ceremonies that matter to you' },
 ];
-const DEFAULT_TITLE = 'Crafting Timeless Memories Since 2020';
-const DEFAULT_LEAD = 'Trusted by generations, our lens has witnessed countless stories of love, tradition, and celebration.';
+const DEFAULT_TITLE = 'Wedding stories, thoughtfully captured';
+const DEFAULT_LEAD = 'Photography and films shaped around your people, your traditions, and your celebration.';
 
 const ICON_CLASS = 'lg:text-3xl sm:text-2xl';
 const iconFor = (label = '') => {
@@ -51,7 +51,7 @@ export default function StatsBand({ title, subtitle, items }) {
 
     return (
         <Section width="wide" rhythm="tight" aria-labelledby="legacy-heading">
-        <div className="lg:rounded-3xl sm:rounded-lg bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] relative overflow-hidden">
+        <div className="lg:rounded-3xl sm:rounded-lg bg-gradient-to-b from-ground-sunk to-ground relative overflow-hidden">
             {/* Was `-mx-4` on a bare <section> whose inner container was
                 max-w-6xl: it measured 1455px against a 1425px viewport and its
                 content started at x=152 while every other band starts at 40. */}
@@ -63,8 +63,8 @@ export default function StatsBand({ title, subtitle, items }) {
                     viewport={{ once: true, margin: "0px 0px -100px 0px" }}
                     className="text-center lg:mb-12 sm:mb-8"
                 >
-                    <p className="inline-block bg-[#FF4D4D] text-[#FFF0E6] px-5 py-1.5 rounded-pill text-[13px] font-semibold mb-5 shadow-lg">
-                        <span className="drop-shadow-md">Our Legacy in Numbers</span>
+                    <p className="inline-block bg-accent text-ink-onAccent px-5 py-1.5 rounded-pill text-[13px] font-semibold mb-5 shadow-lg">
+                        <span className="drop-shadow-md">Studio Highlights</span>
                     </p>
                     <h2 id="legacy-heading" className="t-display-2 mx-auto mb-4 text-secondary_on">
                         {heading}
@@ -95,7 +95,7 @@ export default function StatsBand({ title, subtitle, items }) {
 
                 {/* Decorative Elements */}
                 <div className="absolute top-0 left-0 w-40 h-40 bg-[#f6c2b9c9] rounded-full -translate-x-1/2 -translate-y-1/2" />
-                <div className="absolute bottom-0 right-0 w-48 h-48 bg-[#FF4D4D]/10 rounded-full translate-x-1/2 translate-y-1/2" />
+                <div className="absolute bottom-0 right-0 w-48 h-48 bg-accent/10 rounded-full translate-x-1/2 translate-y-1/2" />
             </div>
         </div>
         </Section>
@@ -123,10 +123,10 @@ function StatItem({ stat }) {
             className="bg-[#FDFAF6] text-primary rounded-2xl lg:p-8 sm:p-4 text-center shadow-lg hover:shadow-xl transition-all group relative overflow-hidden"
         >
             {/* Golden Flare */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#FFD700] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-gradient-to-br from-gold to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
             <div className="relative z-10">
-                <div className="inline-block bg-[#FF4D4D] text-white lg:p-4 sm:p-3 lg:rounded-2xl sm:rounded-md mb-3 lg:mb-6 transform group-hover:-rotate-12 transition-transform">
+                <div className="inline-block bg-accent text-white lg:p-4 sm:p-3 lg:rounded-2xl sm:rounded-md mb-3 lg:mb-6 transform group-hover:-rotate-12 transition-transform">
                     {icon}
                 </div>
                 {/* Was an <h3> holding the number, with the label in a <p>
@@ -138,7 +138,7 @@ function StatItem({ stat }) {
                         {figure && startCounter
                             ? <CountUp end={figure.number} duration={2.5} separator="," prefix={figure.prefix} suffix={figure.suffix} />
                             : <span>{figure ? `${figure.prefix}${figure.number.toLocaleString('en-IN')}${figure.suffix}` : stat.title}</span>}
-                        <span aria-hidden="true" className="text-[#FFD700] ml-2">★</span>
+                        <span aria-hidden="true" className="text-gold ml-2">★</span>
                     </dd>
                     <dt className="t-heading-3 mx-auto mb-1 text-secondary_on">
                         {stat.subtitle}
@@ -152,7 +152,7 @@ function StatItem({ stat }) {
             </div>
 
             {/* Animated Border */}
-            <div className="absolute inset-0 border-2 border-[#FFD700] opacity-0 group-hover:opacity-30 transition-opacity rounded-2xl" />
+            <div className="absolute inset-0 border-2 border-gold opacity-0 group-hover:opacity-30 transition-opacity rounded-2xl" />
         </motion.div>
     );
 }

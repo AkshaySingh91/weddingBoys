@@ -29,7 +29,7 @@ export const COLOR_OPTIONS = [
   { id: 'rose', label: 'Rose', dot: 'bg-rose-500', pill: 'bg-rose-50 text-rose-800 border-rose-200' },
   { id: 'gold', label: 'Gold', dot: 'bg-yellow-500', pill: 'bg-yellow-50 text-yellow-900 border-yellow-200' },
   { id: 'sky', label: 'Sky', dot: 'bg-sky-500', pill: 'bg-sky-50 text-sky-800 border-sky-200' },
-  { id: 'neutral', label: 'Stone', dot: 'bg-stone-500', pill: 'bg-stone-100 text-stone-800 border-stone-200' },
+  { id: 'neutral', label: 'Stone', dot: 'bg-stone-500', pill: 'bg-ground-sunk text-ink border-edge-subtle' },
   { id: 'pink', label: 'Pink', dot: 'bg-pink-500', pill: 'bg-pink-50 text-pink-800 border-pink-200' },
   { id: 'cyan', label: 'Cyan', dot: 'bg-cyan-500', pill: 'bg-cyan-50 text-cyan-800 border-cyan-200' },
   { id: 'orange', label: 'Orange', dot: 'bg-orange-500', pill: 'bg-orange-50 text-orange-800 border-orange-200' },
@@ -216,13 +216,13 @@ export default function CeremoniesSettingsTab() {
   return (
     <div className="space-y-6">
       {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8DDD1]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-edge-subtle">
         <div>
-          <h2 className="text-lg font-bold text-stone-900 tracking-tight flex items-center gap-2 font-serif">
-            <CalendarHeart size={20} className="text-[#A3603A]" weight="duotone" />
+          <h2 className="text-lg font-bold text-ink tracking-tight flex items-center gap-2 font-sans">
+            <CalendarHeart size={20} className="text-accent-ink" weight="duotone" />
             Wedding Ceremonies & Events
           </h2>
-          <p className="text-xs text-stone-500 mt-0.5">
+          <p className="text-xs text-ink-muted mt-0.5">
             Configure the ceremony taxonomy used when onboarding weddings and categorizing media.
           </p>
         </div>
@@ -244,16 +244,16 @@ export default function CeremoniesSettingsTab() {
       {isFormOpen && (
         <form
           onSubmit={handleSubmitForm}
-          className="rounded-xl border border-[#A3603A]/30 bg-[#FFF7EE]/40 p-4 space-y-3.5 transition-all animate-in fade-in duration-200"
+          className="rounded-xl border border-accent/30 bg-ground/40 p-4 space-y-3.5 transition-all animate-in fade-in duration-200"
         >
           <div className="flex items-center justify-between">
-            <h4 className="text-xs font-bold text-stone-900 tracking-wide uppercase font-sans">
+            <h4 className="text-xs font-bold text-ink tracking-wide uppercase font-sans">
               {editingId ? 'Edit Ceremony Details' : 'New Ceremony Ritual'}
             </h4>
             <button
               type="button"
               onClick={handleCancelForm}
-              className="text-stone-400 hover:text-stone-700 h-6 w-6 flex items-center justify-center rounded"
+              className="text-ink-muted hover:text-ink-secondary h-6 w-6 flex items-center justify-center rounded-lg"
             >
               <X size={14} />
             </button>
@@ -261,7 +261,7 @@ export default function CeremoniesSettingsTab() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="text-[11px] font-semibold text-stone-700">
+              <label className="text-[11px] font-semibold text-ink-secondary">
                 Ceremony Name <span className="text-rose-500">*</span>
               </label>
               <Input
@@ -274,7 +274,7 @@ export default function CeremoniesSettingsTab() {
             </div>
 
             <div className="space-y-1">
-              <label className="text-[11px] font-semibold text-stone-700">
+              <label className="text-[11px] font-semibold text-ink-secondary">
                 Description / Celebration Note
               </label>
               <Input
@@ -288,7 +288,7 @@ export default function CeremoniesSettingsTab() {
 
           {/* Color theme selection */}
           <div className="space-y-1">
-            <label className="text-[11px] font-semibold text-stone-700">
+            <label className="text-[11px] font-semibold text-ink-secondary">
               Badge Tone
             </label>
             <div className="flex flex-wrap gap-1.5 items-center">
@@ -300,10 +300,10 @@ export default function CeremoniesSettingsTab() {
                     type="button"
                     onClick={() => setFormData((p) => ({ ...p, color: col.id }))}
                     className={cn(
-                      'flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-medium border transition-all',
+                      'flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-medium border transition-all',
                       isSelected
-                        ? 'bg-white border-[#A3603A] ring-1 ring-[#A3603A] text-stone-900 font-semibold shadow-sm'
-                        : 'bg-white/80 border-stone-200 text-stone-600 hover:border-stone-300'
+                        ? 'bg-white border-accent ring-1 ring-accent text-ink font-semibold shadow-sm'
+                        : 'bg-white/80 border-edge-subtle text-ink-secondary hover:border-edge-strong'
                     )}
                   >
                     <span className={cn('h-2 w-2 rounded-full', col.dot)} />
@@ -315,13 +315,13 @@ export default function CeremoniesSettingsTab() {
           </div>
 
           {/* Status & Action buttons */}
-          <div className="flex items-center justify-between pt-2 border-t border-[#E8DDD1]/80">
+          <div className="flex items-center justify-between pt-2 border-t border-edge-subtle">
             <div className="flex items-center gap-2">
               <Switch
                 checked={formData.isActive}
                 onChange={(v) => setFormData((p) => ({ ...p, isActive: v }))}
               />
-              <span className="text-[11px] font-medium text-stone-700">
+              <span className="text-[11px] font-medium text-ink-secondary">
                 {formData.isActive ? 'Active & Selectable' : 'Hidden from intake'}
               </span>
             </div>
@@ -353,17 +353,17 @@ export default function CeremoniesSettingsTab() {
       )}
 
       {/* Compact Ceremonies Table / List */}
-      <div className="rounded-xl border border-[#E8DDD1] bg-white overflow-hidden shadow-sm">
+      <div className="rounded-xl border border-edge-subtle bg-white overflow-hidden shadow-sm">
         {loading ? (
-          <div className="py-12 flex flex-col items-center justify-center gap-2 text-stone-500">
-            <CircleNotch size={22} className="animate-spin text-[#A3603A]" />
+          <div className="py-12 flex flex-col items-center justify-center gap-2 text-ink-muted">
+            <CircleNotch size={22} className="animate-spin text-accent-ink" />
             <p className="text-xs">Loading ceremonies…</p>
           </div>
         ) : ceremonies.length === 0 ? (
           <div className="py-12 text-center px-4 space-y-2">
             <CalendarHeart size={28} className="text-stone-300 mx-auto" />
-            <p className="text-xs font-semibold text-stone-800">No ceremonies configured</p>
-            <p className="text-[11px] text-stone-500 max-w-xs mx-auto">
+            <p className="text-xs font-semibold text-ink">No ceremonies configured</p>
+            <p className="text-[11px] text-ink-muted max-w-xs mx-auto">
               Add ceremonies like Haldi, Mehendi, Sangeet to start organizing wedding content.
             </p>
             <Button
@@ -377,7 +377,7 @@ export default function CeremoniesSettingsTab() {
             </Button>
           </div>
         ) : (
-          <div className="divide-y divide-stone-100">
+          <div className="divide-y divide-edge-subtle">
             {ceremonies.map((ceremony, idx) => {
               const colorCfg = getColorConfig(ceremony.color);
               const isFirst = idx === 0;
@@ -387,7 +387,7 @@ export default function CeremoniesSettingsTab() {
               return (
                 <div
                   key={ceremony._id}
-                  className="flex items-center justify-between px-3.5 py-2.5 hover:bg-[#FFFCF8] transition-colors group text-xs"
+                  className="flex items-center justify-between px-3.5 py-2.5 hover:bg-ground transition-colors group text-xs"
                 >
                   {/* Left: Reorder & Name */}
                   <div className="flex items-center gap-2.5 min-w-0 flex-1">
@@ -398,7 +398,7 @@ export default function CeremoniesSettingsTab() {
                         disabled={isFirst}
                         onClick={() => handleMove(idx, 'up')}
                         title="Move Up"
-                        className="h-3.5 w-3.5 flex items-center justify-center text-stone-400 hover:text-stone-800 disabled:opacity-20"
+                        className="h-3.5 w-3.5 flex items-center justify-center text-ink-muted hover:text-ink disabled:opacity-20"
                       >
                         <ArrowUp size={10} weight="bold" />
                       </button>
@@ -407,31 +407,31 @@ export default function CeremoniesSettingsTab() {
                         disabled={isLast}
                         onClick={() => handleMove(idx, 'down')}
                         title="Move Down"
-                        className="h-3.5 w-3.5 flex items-center justify-center text-stone-400 hover:text-stone-800 disabled:opacity-20"
+                        className="h-3.5 w-3.5 flex items-center justify-center text-ink-muted hover:text-ink disabled:opacity-20"
                       >
                         <ArrowDown size={10} weight="bold" />
                       </button>
                     </div>
 
                     {/* Order rank */}
-                    <span className="text-[11px] font-mono text-stone-400 w-4 shrink-0">
+                    <span className="text-[11px] font-mono text-ink-muted w-4 shrink-0">
                       #{idx + 1}
                     </span>
 
                     {/* Ceremony Color & Name */}
                     <div className="flex items-center gap-2 min-w-0">
                       <span className={cn('h-2.5 w-2.5 rounded-full shrink-0', colorCfg.dot)} />
-                      <span className="font-semibold text-stone-900 truncate">
+                      <span className="font-semibold text-ink truncate">
                         {ceremony.name}
                       </span>
-                      <span className="text-[10px] font-mono text-stone-400 bg-stone-100 px-1 py-0.5 rounded shrink-0">
+                      <span className="text-[10px] font-mono text-ink-muted bg-ground-sunk px-1 py-0.5 rounded-lg shrink-0">
                         {ceremony.slug}
                       </span>
                     </div>
 
                     {/* Description snippet */}
                     {ceremony.description && (
-                      <span className="text-[11px] text-stone-500 truncate hidden md:inline ml-2 max-w-xs">
+                      <span className="text-[11px] text-ink-muted truncate hidden md:inline ml-2 max-w-xs">
                         — {ceremony.description}
                       </span>
                     )}
@@ -441,7 +441,7 @@ export default function CeremoniesSettingsTab() {
                   <div className="flex items-center gap-3 shrink-0 ml-2">
                     {/* Active toggle */}
                     <div className="flex items-center gap-1.5">
-                      <span className="text-[10px] text-stone-400 hidden sm:inline">
+                      <span className="text-[10px] text-ink-muted hidden sm:inline">
                         {ceremony.isActive ? 'Active' : 'Hidden'}
                       </span>
                       <Switch
@@ -452,7 +452,7 @@ export default function CeremoniesSettingsTab() {
 
                     {/* Action buttons */}
                     {isDeleting ? (
-                      <div className="flex items-center gap-1 bg-rose-50 border border-rose-200 px-1.5 py-0.5 rounded text-[10px]">
+                      <div className="flex items-center gap-1 bg-rose-50 border border-rose-200 px-1.5 py-0.5 rounded-lg text-[10px]">
                         <span className="text-rose-700 font-medium">Delete?</span>
                         <button
                           type="button"
@@ -465,7 +465,7 @@ export default function CeremoniesSettingsTab() {
                         <button
                           type="button"
                           onClick={() => setDeletingId(null)}
-                          className="text-stone-500 hover:text-stone-700"
+                          className="text-ink-muted hover:text-ink-secondary"
                         >
                           No
                         </button>
@@ -476,7 +476,7 @@ export default function CeremoniesSettingsTab() {
                           type="button"
                           onClick={() => handleOpenEdit(ceremony)}
                           title="Edit ceremony"
-                          className="h-7 w-7 flex items-center justify-center rounded text-stone-400 hover:text-stone-800 hover:bg-stone-100 transition-colors"
+                          className="h-7 w-7 flex items-center justify-center rounded-lg text-ink-muted hover:text-ink hover:bg-ground-sunk transition-colors"
                         >
                           <PencilSimple size={13} />
                         </button>
@@ -484,7 +484,7 @@ export default function CeremoniesSettingsTab() {
                           type="button"
                           onClick={() => setDeletingId(ceremony._id)}
                           title="Delete ceremony"
-                          className="h-7 w-7 flex items-center justify-center rounded text-stone-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                          className="h-7 w-7 flex items-center justify-center rounded-lg text-ink-muted hover:text-rose-600 hover:bg-rose-50 transition-colors"
                         >
                           <Trash size={13} />
                         </button>

@@ -58,7 +58,7 @@ export default function DeleteClientModal({
     <Dialog open={open} onOpenChange={(v) => !v && !loading && onClose()}>
       <DialogContent
         hideCloseButton
-        className="max-w-md w-[92vw] p-0 overflow-hidden scrollbar-none rounded-2xl border border-[#E8DDD1] bg-[#FFFCF8] shadow-2xl"
+        className="max-w-md w-[92vw] p-0 overflow-hidden scrollbar-none rounded-xl border border-edge-subtle bg-ground shadow-2xl"
       >
         <div className="p-5 sm:p-6 space-y-4">
           {/* Header */}
@@ -73,10 +73,10 @@ export default function DeleteClientModal({
                 <WarningCircle size={22} weight="fill" />
               </span>
               <div>
-                <h3 className="text-sm sm:text-base font-bold text-stone-900 font-sans tracking-tight">
+                <h3 className="text-sm sm:text-base font-bold text-ink font-sans tracking-tight">
                   {isDraft ? 'Discard Wedding Draft?' : `Delete ${clientName}?`}
                 </h3>
-                <p className="text-xs text-stone-500 font-sans">
+                <p className="text-xs text-ink-muted font-sans">
                   {isDraft ? 'Cancel client creation and discard intake' : 'Client archive removal & unpublish'}
                 </p>
               </div>
@@ -86,7 +86,7 @@ export default function DeleteClientModal({
               type="button"
               disabled={loading}
               onClick={onClose}
-              className="flex items-center justify-center h-8 w-8 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors disabled:opacity-50"
+              className="flex items-center justify-center h-8 w-8 rounded-lg text-ink-muted hover:text-ink-secondary hover:bg-ground-sunk transition-colors disabled:opacity-50"
             >
               <X size={16} />
               <span className="sr-only">Close</span>
@@ -94,26 +94,26 @@ export default function DeleteClientModal({
           </div>
 
           {/* Client Overview Card */}
-          <div className="rounded-xl border border-[#E8DDD1]/80 bg-white p-3.5 space-y-2">
+          <div className="rounded-xl border border-edge-subtle bg-white p-3.5 space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-stone-900 font-serif tracking-wide">
+              <span className="text-xs font-semibold text-ink font-sans tracking-wide">
                 {clientName}
               </span>
-              <span className="text-[10px] font-medium text-stone-500 uppercase tracking-wider">
+              <span className="text-[10px] font-medium text-ink-muted uppercase tracking-wider">
                 {isDraft ? 'Draft Intake' : 'Client Archive'}
               </span>
             </div>
 
             {!isDraft && (
-              <div className="flex items-center gap-3 pt-1 text-[11px] text-stone-600">
+              <div className="flex items-center gap-3 pt-1 text-[11px] text-ink-secondary">
                 <span className="flex items-center gap-1">
-                  <FilmSlate size={12} className="text-stone-400" />
-                  <span className="font-semibold text-stone-800">{videoCount}</span> films
+                  <FilmSlate size={12} className="text-ink-muted" />
+                  <span className="font-semibold text-ink">{videoCount}</span> films
                 </span>
                 <span className="text-stone-300">·</span>
                 <span className="flex items-center gap-1">
-                  <ImageSquare size={12} className="text-stone-400" />
-                  <span className="font-semibold text-stone-800">{photoCount}</span> photos
+                  <ImageSquare size={12} className="text-ink-muted" />
+                  <span className="font-semibold text-ink">{photoCount}</span> photos
                 </span>
               </div>
             )}
@@ -136,20 +136,20 @@ export default function DeleteClientModal({
 
           {/* Cloudflare R2 Media Purge Option */}
           {!isDraft && (
-            <div className="rounded-xl border border-stone-200 bg-stone-50/80 p-3 space-y-2">
+            <div className="rounded-xl border border-edge-subtle bg-ground/80 p-3 space-y-2">
               <label className="flex items-start gap-2.5 cursor-pointer select-none">
                 <input
                   type="checkbox"
                   checked={purgeMedia}
                   onChange={(e) => setPurgeMedia(e.target.checked)}
                   disabled={loading}
-                  className="mt-0.5 h-4 w-4 rounded border-stone-300 text-rose-600 focus:ring-rose-500 cursor-pointer"
+                  className="mt-0.5 h-4 w-4 rounded-lg border-edge-strong text-rose-600 focus:ring-rose-500 cursor-pointer"
                 />
                 <div className="text-xs">
-                  <span className="font-semibold text-stone-900">
+                  <span className="font-semibold text-ink">
                     Permanently purge all media files from Cloudflare R2
                   </span>
-                  <p className="text-[11px] text-stone-500 mt-0.5 leading-snug">
+                  <p className="text-[11px] text-ink-muted mt-0.5 leading-snug">
                     By default, raw footage is preserved in the library backlog. Check this to completely wipe master files, web variants, and posters from cloud storage.
                   </p>
                 </div>
@@ -191,7 +191,7 @@ export default function DeleteClientModal({
                 autoFocus
                 aria-label={`Type ${clientName} to confirm`}
                 placeholder={clientName}
-                className="w-full rounded-lg border border-rose-200 bg-white px-3 py-2 text-xs text-stone-900 outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-500/15 placeholder:text-stone-300"
+                className="w-full rounded-lg border border-rose-200 bg-white px-3 py-2 text-xs text-ink outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-500/15 placeholder:text-stone-300"
               />
             </div>
           )}
@@ -204,7 +204,7 @@ export default function DeleteClientModal({
               size="sm"
               disabled={loading}
               onClick={onClose}
-              className="border-[#E8DDD1] text-stone-700 hover:bg-stone-50"
+              className="border-edge-subtle text-ink-secondary hover:bg-ground"
             >
               Keep {isDraft ? 'Draft' : 'Wedding'}
             </Button>

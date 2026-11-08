@@ -41,8 +41,8 @@ const CEREMONY_PRESETS = [
     'Candid & Portraits',
 ];
 
-const field = 'w-full rounded-xl border border-stone-200 bg-white px-3.5 py-2.5 text-xs text-stone-900 outline-none transition-colors focus:border-stone-900 focus:ring-2 focus:ring-stone-900/10 placeholder:text-stone-400';
-const labelCls = 'mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-stone-600';
+const field = 'w-full rounded-xl border border-edge-subtle bg-white px-3.5 py-2.5 text-xs text-ink outline-none transition-colors focus:border-ink focus:ring-2 focus:ring-ink/10 placeholder:text-ink-muted';
+const labelCls = 'mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-ink-secondary';
 
 const DRAFT_KEY = 'wb_new_wedding_intake_draft';
 
@@ -563,20 +563,20 @@ export default function AddClientWizard() {
 
             {/* Studio Profile Strip (Renders when clientId exists) */}
             {clientId && (
-                <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-stone-200/90 bg-white p-4 shadow-xs">
+                <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-edge-subtle bg-white p-4 shadow-xs">
                     <div className="flex items-center gap-3 min-w-0">
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-stone-900 font-serif text-sm font-bold text-amber-300 shadow-xs">
+                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-ink font-sans text-sm font-bold text-amber-300 shadow-xs">
                             {(bride[0] || 'B').toUpperCase()}&amp;{(groom[0] || 'G').toUpperCase()}
                         </span>
                         <div>
                             <div className="flex items-center gap-2">
-                                <h3 className="text-sm font-bold text-stone-900 truncate">
+                                <h3 className="text-sm font-bold text-ink truncate">
                                     {bride} &amp; {groom}
                                 </h3>
                                 <Badge size="sm" variant="neutral">Active Ingest Studio</Badge>
                                 {city && <Badge size="sm" variant="terracotta">{city}</Badge>}
                             </div>
-                            <p className="text-xs text-stone-500">
+                            <p className="text-xs text-ink-muted">
                                 {portfolioItems.length} items staged · {formatBytes(totalStorageBytes)} R2 storage used
                             </p>
                         </div>
@@ -585,7 +585,7 @@ export default function AddClientWizard() {
                     <div className="flex items-center gap-2.5">
                         <Link
                             href={`/admin/clients/${clientId}`}
-                            className="flex items-center gap-1.5 rounded-xl border border-stone-200 bg-white px-3 py-1.5 text-xs font-semibold text-stone-700 hover:bg-stone-50 transition-colors"
+                            className="flex items-center gap-1.5 rounded-xl border border-edge-subtle bg-white px-3 py-1.5 text-xs font-semibold text-ink-secondary hover:bg-ground transition-colors"
                         >
                             <span>Open Client Workspace</span>
                             <ArrowSquareOut size={13} />
@@ -606,7 +606,7 @@ export default function AddClientWizard() {
 
             {/* Draft Resume Alert */}
             {!clientId && hasStoredDraft && (bride || groom) && (
-                <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-amber-300 bg-amber-50/90 p-4 shadow-sm">
+                <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-amber-300 bg-amber-50/90 p-4 shadow-sm">
                     <div className="flex items-center gap-3">
                         <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-200 text-amber-900">
                             <Sparkle size={18} weight="fill" />
@@ -663,21 +663,21 @@ export default function AddClientWizard() {
                                 className={cn(
                                     'flex items-center gap-2 rounded-xl px-3.5 py-1.5 text-xs font-semibold transition-all',
                                     active
-                                        ? 'bg-stone-900 text-white shadow-xs'
+                                        ? 'bg-ink text-white shadow-xs'
                                         : done
-                                            ? 'bg-stone-100 text-stone-700 hover:bg-stone-200 cursor-pointer'
-                                            : 'bg-stone-50 text-stone-400 cursor-not-allowed',
+                                            ? 'bg-ground-sunk text-ink-secondary hover:bg-ground-sunk cursor-pointer'
+                                            : 'bg-ground text-ink-muted cursor-not-allowed',
                                 )}
                             >
                                 <span className={cn(
                                     'flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-bold',
-                                    active ? 'bg-amber-400 text-stone-900' : done ? 'bg-emerald-600 text-white' : 'bg-stone-200 text-stone-500',
+                                    active ? 'bg-amber-400 text-ink' : done ? 'bg-emerald-600 text-white' : 'bg-ground-sunk text-ink-muted',
                                 )}>
                                     {done ? <Check size={10} weight="bold" /> : i + 1}
                                 </span>
                                 {s.label}
                             </button>
-                            {i < STEPS.length - 1 && <span className="h-px w-6 bg-stone-200" />}
+                            {i < STEPS.length - 1 && <span className="h-px w-6 bg-ground-sunk" />}
                         </li>
                     );
                 })}
@@ -685,16 +685,16 @@ export default function AddClientWizard() {
 
             {/* ========================================================== PHASE 0: Couple & Location Profile */}
             {step === 0 && (
-                <section className="max-w-2xl mx-auto space-y-5 rounded-3xl border border-[#E8DDD1] bg-[#FFFCF8] p-6 sm:p-8 shadow-sm">
-                    <div className="flex items-center gap-3 border-b border-[#E8DDD1] pb-5">
-                        <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-amber-100 text-amber-900 shadow-2xs">
+                <section className="max-w-2xl mx-auto space-y-5 rounded-xl border border-edge-subtle bg-ground p-6 sm:p-8 shadow-sm">
+                    <div className="flex items-center gap-3 border-b border-edge-subtle pb-5">
+                        <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-100 text-amber-900 shadow-2xs">
                             <Heart size={22} weight="fill" />
                         </span>
                         <div>
-                            <h2 className="font-serif text-lg font-bold text-stone-900">
+                            <h2 className="font-sans text-lg font-bold text-ink">
                                 Initialize Couple Profile
                             </h2>
-                            <p className="text-xs text-stone-500">
+                            <p className="text-xs text-ink-muted">
                                 Enter the couple&apos;s names, wedding dates, and destination details.
                             </p>
                         </div>
@@ -723,9 +723,9 @@ export default function AddClientWizard() {
                     </div>
 
                     {/* Celebration Dates & Span */}
-                    <div className="rounded-2xl border border-stone-200 bg-white p-4 space-y-3">
+                    <div className="rounded-xl border border-edge-subtle bg-white p-4 space-y-3">
                         <div className="flex items-center justify-between">
-                            <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-stone-700">
+                            <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-ink-secondary">
                                 <CalendarBlank size={16} className="text-amber-600" />
                                 Celebration Dates &amp; Span
                             </span>
@@ -773,14 +773,14 @@ export default function AddClientWizard() {
 
                         {/* Quick preset duration buttons */}
                         {startDate && (
-                            <div className="flex flex-wrap items-center gap-1.5 pt-1 text-[11px] text-stone-500">
+                            <div className="flex flex-wrap items-center gap-1.5 pt-1 text-[11px] text-ink-muted">
                                 <span className="font-medium">Quick duration:</span>
                                 <button
                                     type="button"
                                     onClick={() => setEndDate(startDate)}
                                     className={cn(
-                                        'rounded-md px-2 py-0.5 font-medium transition cursor-pointer',
-                                        endDate === startDate ? 'bg-amber-100 text-amber-900 font-bold' : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+                                        'rounded-lg px-2 py-0.5 font-medium transition cursor-pointer',
+                                        endDate === startDate ? 'bg-amber-100 text-amber-900 font-bold' : 'bg-ground-sunk hover:bg-ground-sunk text-ink-secondary'
                                     )}
                                 >
                                     1 Day
@@ -795,8 +795,8 @@ export default function AddClientWizard() {
                                             type="button"
                                             onClick={() => setEndDate(targetStr)}
                                             className={cn(
-                                                'rounded-md px-2 py-0.5 font-medium transition cursor-pointer',
-                                                endDate === targetStr ? 'bg-amber-100 text-amber-900 font-bold' : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+                                                'rounded-lg px-2 py-0.5 font-medium transition cursor-pointer',
+                                                endDate === targetStr ? 'bg-amber-100 text-amber-900 font-bold' : 'bg-ground-sunk hover:bg-ground-sunk text-ink-secondary'
                                             )}
                                         >
                                             {days} Days
@@ -806,7 +806,7 @@ export default function AddClientWizard() {
                             </div>
                         )}
 
-                        <p className="text-[11px] text-stone-500 bg-amber-50/60 rounded-xl p-2.5 border border-amber-200/50">
+                        <p className="text-[11px] text-ink-muted bg-amber-50/60 rounded-xl p-2.5 border border-amber-200/50">
                             <span className="font-semibold text-amber-900">Ritual Scheduling:</span> Specific ritual dates (Haldi, Mehendi, Sangeet, Pheras, Reception) can be fine-tuned per ceremony cluster during media ingest in Step 2.
                         </p>
                     </div>
@@ -834,26 +834,26 @@ export default function AddClientWizard() {
                         </div>
                     </div>
                     {slug && (
-                        <p className="text-[11px] text-stone-500">
-                            Story page: <span className="font-mono text-stone-800">/weddings/story/{slug}</span>
+                        <p className="text-[11px] text-ink-muted">
+                            Story page: <span className="font-mono text-ink">/weddings/story/{slug}</span>
                             {' '}— live once the wedding is published; change it later in the wedding&apos;s workspace.
                         </p>
                     )}
 
                     {/* Destination Map Pinning */}
-                    <div className="rounded-2xl border border-stone-200 bg-white p-4 space-y-3">
-                        <label className="flex cursor-pointer items-center gap-2.5 text-xs font-semibold text-stone-800">
+                    <div className="rounded-xl border border-edge-subtle bg-white p-4 space-y-3">
+                        <label className="flex cursor-pointer items-center gap-2.5 text-xs font-semibold text-ink">
                             <input
                                 type="checkbox"
                                 checked={isInMap}
-                                className="h-4 w-4 rounded accent-stone-900 cursor-pointer"
+                                className="h-4 w-4 rounded-lg accent-stone-900 cursor-pointer"
                                 onChange={(e) => setIsInMap(e.target.checked)}
                             />
                             <MapPin size={16} className="text-amber-700" />
                             Pin this wedding on the global destination map
                         </label>
                         {isInMap && (
-                            <div className="mt-3 grid grid-cols-2 gap-3 pt-2 border-t border-stone-100">
+                            <div className="mt-3 grid grid-cols-2 gap-3 pt-2 border-t border-edge-subtle">
                                 <div>
                                     <span className={labelCls}>Latitude</span>
                                     <input
@@ -880,13 +880,13 @@ export default function AddClientWizard() {
                         )}
                     </div>
 
-                    <div className="flex items-center justify-between pt-4 border-t border-[#E8DDD1]">
+                    <div className="flex items-center justify-between pt-4 border-t border-edge-subtle">
                         <Button
                             type="button"
                             variant="ghost"
                             icon={ArrowLeft}
                             onClick={() => router.push('/admin/clients')}
-                            className="text-stone-600 hover:text-stone-900"
+                            className="text-ink-secondary hover:text-ink"
                         >
                             Cancel
                         </Button>
@@ -897,7 +897,7 @@ export default function AddClientWizard() {
                             disabled={!bride.trim() || !groom.trim()}
                             iconRight={ArrowRight}
                             onClick={createClient}
-                            className="px-6 py-2.5 bg-stone-900 hover:bg-stone-800 text-white font-semibold"
+                            className="px-6 py-2.5 bg-ink hover:bg-ink text-white font-semibold"
                         >
                             {clientId ? 'Save & Continue' : 'Create & Start Ingest Studio'}
                         </Button>
@@ -920,7 +920,7 @@ export default function AddClientWizard() {
                                 onPhotoFilesChosen(e.dataTransfer.files);
                             }}
                             className={cn(
-                                'flex flex-col justify-between rounded-3xl border-2 p-6 transition-all bg-[#FFFDF9]',
+                                'flex flex-col justify-between rounded-xl border-2 p-6 transition-all bg-ground',
                                 photoDragOver
                                     ? 'border-amber-500 bg-amber-50/70 scale-[1.01]'
                                     : 'border-amber-200/90 hover:border-amber-300'
@@ -928,27 +928,27 @@ export default function AddClientWizard() {
                         >
                             <div className="space-y-3">
                                 <div className="flex items-center justify-between">
-                                    <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-amber-100 text-amber-900">
+                                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-100 text-amber-900">
                                         <ImageSquare size={24} weight="bold" />
                                     </span>
                                     <Badge size="sm" variant="terracotta">Stills Only</Badge>
                                 </div>
                                 <div>
-                                    <h3 className="font-sans text-sm sm:text-base font-bold text-stone-900">
+                                    <h3 className="font-sans text-sm sm:text-base font-bold text-ink">
                                         Photographs &amp; Stills
                                     </h3>
-                                    <p className="text-xs text-stone-500">
+                                    <p className="text-xs text-ink-muted">
                                         Portraits, rituals, candids, decor (JPG, PNG, WebP, HEIC).
                                     </p>
                                 </div>
                             </div>
 
-                            <div className="my-5 flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-amber-300/80 bg-white/70 px-4 py-8 text-center">
+                            <div className="my-5 flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-amber-300/80 bg-white/70 px-4 py-8 text-center">
                                 <UploadSimple size={28} className="text-amber-700 mb-2" />
-                                <p className="text-xs font-semibold text-stone-800">
+                                <p className="text-xs font-semibold text-ink">
                                     Drop wedding photos here
                                 </p>
-                                <p className="text-[11px] text-stone-500 mt-0.5">
+                                <p className="text-[11px] text-ink-muted mt-0.5">
                                     Opens single-step curation drawer with Haldi, Mehendi, Sangeet &amp; BTS crew roles
                                 </p>
                                 <input
@@ -971,7 +971,7 @@ export default function AddClientWizard() {
                                 </Button>
                             </div>
 
-                            <div className="flex items-center justify-between text-[11px] text-stone-500 border-t border-amber-100 pt-3">
+                            <div className="flex items-center justify-between text-[11px] text-ink-muted border-t border-amber-100 pt-3">
                                 <span>Multi-resolution R2 concurrent pipeline</span>
                                 <span className="font-semibold text-amber-900">{photoItems.length} uploaded</span>
                             </div>
@@ -987,35 +987,35 @@ export default function AddClientWizard() {
                                 onVideoFilesChosen(e.dataTransfer.files);
                             }}
                             className={cn(
-                                'flex flex-col justify-between rounded-3xl border-2 p-6 transition-all bg-[#FFFCF8]',
+                                'flex flex-col justify-between rounded-xl border-2 p-6 transition-all bg-ground',
                                 videoDragOver
-                                    ? 'border-stone-800 bg-stone-100 scale-[1.01]'
-                                    : 'border-stone-200/90 hover:border-stone-400'
+                                    ? 'border-ink bg-ground-sunk scale-[1.01]'
+                                    : 'border-edge-subtle hover:border-edge-strong'
                             )}
                         >
                             <div className="space-y-3">
                                 <div className="flex items-center justify-between">
-                                    <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-stone-900 text-amber-300 shadow-xs">
+                                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-ink text-amber-300 shadow-xs">
                                         <FilmSlate size={24} weight="bold" />
                                     </span>
                                     <Badge size="sm" variant="neutral">Cinema Only</Badge>
                                 </div>
                                 <div>
-                                    <h3 className="font-sans text-sm sm:text-base font-bold text-stone-900">
+                                    <h3 className="font-sans text-sm sm:text-base font-bold text-ink">
                                         Films &amp; Cinema
                                     </h3>
-                                    <p className="text-xs text-stone-500">
+                                    <p className="text-xs text-ink-muted">
                                         Teasers, highlights, 4K reels, master films (MP4, MOV, WebM).
                                     </p>
                                 </div>
                             </div>
 
-                            <div className="my-5 flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-stone-300 bg-white/70 px-4 py-8 text-center">
-                                <UploadSimple size={28} className="text-stone-700 mb-2" />
-                                <p className="text-xs font-semibold text-stone-800">
+                            <div className="my-5 flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-edge-strong bg-white/70 px-4 py-8 text-center">
+                                <UploadSimple size={28} className="text-ink-secondary mb-2" />
+                                <p className="text-xs font-semibold text-ink">
                                     Drop wedding films here
                                 </p>
-                                <p className="text-[11px] text-stone-500 mt-0.5">
+                                <p className="text-[11px] text-ink-muted mt-0.5">
                                     Includes interactive playable previews, 8s loop generation &amp; hero star
                                 </p>
                                 <input
@@ -1032,7 +1032,7 @@ export default function AddClientWizard() {
                                     size="sm"
                                     icon={Plus}
                                     onClick={() => videoInputRef.current?.click()}
-                                    className="mt-3 border-stone-300 text-stone-900 hover:bg-stone-50 text-xs font-semibold"
+                                    className="mt-3 border-edge-strong text-ink hover:bg-ground text-xs font-semibold"
                                 >
                                     Stage Films
                                 </Button>
@@ -1047,9 +1047,9 @@ export default function AddClientWizard() {
                                 </Button>
                             </div>
 
-                            <div className="flex items-center justify-between text-[11px] text-stone-500 border-t border-stone-100 pt-3">
+                            <div className="flex items-center justify-between text-[11px] text-ink-muted border-t border-edge-subtle pt-3">
                                 <span>Background FFmpeg worker transcode</span>
-                                <span className="font-semibold text-stone-900">{filmItems.length} uploaded</span>
+                                <span className="font-semibold text-ink">{filmItems.length} uploaded</span>
                             </div>
                         </div>
                     </div>
@@ -1057,27 +1057,27 @@ export default function AddClientWizard() {
                     {/* Live Ceremony Clusters Breakdown */}
                     {portfolioItems.length > 0 ? (
                         <div className="space-y-6">
-                            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-stone-200 pb-3">
+                            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-edge-subtle pb-3">
                                 <div>
-                                    <h3 className="text-base font-bold text-stone-900 flex items-center gap-2">
+                                    <h3 className="text-base font-bold text-ink flex items-center gap-2">
                                         <FolderSimple size={20} className="text-amber-600" />
                                         <span>Ceremony Clusters ({Object.keys(ceremonyClusters).length} events)</span>
                                     </h3>
-                                    <p className="text-xs text-stone-500">
+                                    <p className="text-xs text-ink-muted">
                                         All staged captures are clustered by wedding ceremony. Click any item to fine-tune metadata.
                                     </p>
                                 </div>
                                 <div className="flex flex-wrap items-center gap-2">
                                     {/* Category Filter Switcher */}
-                                    <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-xl border border-stone-200">
+                                    <div className="flex items-center gap-1 bg-ground-sunk p-1 rounded-xl border border-edge-subtle">
                                         <button
                                             type="button"
                                             onClick={() => setMediaCategoryFilter('')}
                                             className={cn(
                                                 'px-3 py-1 text-xs font-semibold rounded-lg transition cursor-pointer',
                                                 mediaCategoryFilter === ''
-                                                    ? 'bg-white text-stone-900 shadow-xs'
-                                                    : 'text-stone-600 hover:text-stone-900'
+                                                    ? 'bg-white text-ink shadow-xs'
+                                                    : 'text-ink-secondary hover:text-ink'
                                             )}
                                         >
                                             All ({portfolioItems.length})
@@ -1089,7 +1089,7 @@ export default function AddClientWizard() {
                                                 'px-3 py-1 text-xs font-semibold rounded-lg transition flex items-center gap-1.5 cursor-pointer',
                                                 mediaCategoryFilter === 'Photo'
                                                     ? 'bg-amber-600 text-white shadow-xs'
-                                                    : 'text-stone-600 hover:text-stone-900'
+                                                    : 'text-ink-secondary hover:text-ink'
                                             )}
                                         >
                                             <ImageSquare size={13} />
@@ -1101,8 +1101,8 @@ export default function AddClientWizard() {
                                             className={cn(
                                                 'px-3 py-1 text-xs font-semibold rounded-lg transition flex items-center gap-1.5 cursor-pointer',
                                                 mediaCategoryFilter === 'Video'
-                                                    ? 'bg-stone-900 text-white shadow-xs'
-                                                    : 'text-stone-600 hover:text-stone-900'
+                                                    ? 'bg-ink text-white shadow-xs'
+                                                    : 'text-ink-secondary hover:text-ink'
                                             )}
                                         >
                                             <FilmSlate size={13} />
@@ -1118,14 +1118,14 @@ export default function AddClientWizard() {
                                 {Object.entries(ceremonyClusters).map(([clusterName, clusterItems]) => (
                                     <div
                                         key={clusterName}
-                                        className="rounded-3xl border border-stone-200 bg-white p-5 space-y-3.5 shadow-xs"
+                                        className="rounded-xl border border-edge-subtle bg-white p-5 space-y-3.5 shadow-xs"
                                     >
-                                        <div className="flex items-center justify-between border-b border-stone-100 pb-2.5">
+                                        <div className="flex items-center justify-between border-b border-edge-subtle pb-2.5">
                                             <div className="flex items-center gap-2">
                                                 <Badge size="sm" variant="gold" className="font-semibold">
                                                     {clusterName}
                                                 </Badge>
-                                                <span className="text-xs text-stone-500 font-medium">
+                                                <span className="text-xs text-ink-muted font-medium">
                                                     {clusterItems.length} capture{clusterItems.length === 1 ? '' : 's'}
                                                 </span>
                                             </div>
@@ -1144,9 +1144,9 @@ export default function AddClientWizard() {
                                                         key={item._id}
                                                         type="button"
                                                         onClick={() => setEditing(item.mediaId || item.media?._id || item._id)}
-                                                        className="group relative overflow-hidden rounded-2xl border border-stone-200 bg-stone-50 text-left transition-all hover:border-stone-400 hover:shadow-xs cursor-pointer select-none"
+                                                        className="group relative overflow-hidden rounded-xl border border-edge-subtle bg-ground text-left transition-all hover:border-edge-strong hover:shadow-xs cursor-pointer select-none"
                                                     >
-                                                        <div className="relative aspect-[4/3] w-full overflow-hidden bg-stone-100">
+                                                        <div className="relative aspect-[4/3] w-full overflow-hidden bg-ground-sunk">
                                                             {poster ? (
                                                                 // eslint-disable-next-line @next/next/no-img-element
                                                                 <img
@@ -1163,17 +1163,17 @@ export default function AddClientWizard() {
                                                                         playsInline
                                                                         className="h-full w-full object-cover pointer-events-none"
                                                                     />
-                                                                    <span className="absolute bottom-1.5 left-1.5 flex items-center gap-1 rounded bg-black/70 px-1 py-0.5 text-[9px] font-medium text-white">
+                                                                    <span className="absolute bottom-1.5 left-1.5 flex items-center gap-1 rounded-lg bg-black/70 px-1 py-0.5 text-[9px] font-medium text-white">
                                                                         <FilmSlate size={10} /> Video
                                                                     </span>
                                                                 </div>
                                                             ) : (
-                                                                <div className="flex h-full w-full items-center justify-center text-stone-400">
+                                                                <div className="flex h-full w-full items-center justify-center text-ink-muted">
                                                                     {isVideo ? <FilmSlate size={24} /> : <ImageSquare size={24} />}
                                                                 </div>
                                                             )}
                                                             {item.isHero && (
-                                                                <span className="absolute top-1.5 right-1.5 flex items-center gap-0.5 rounded-md bg-amber-500 px-1.5 py-0.5 text-[9px] font-semibold text-white shadow-xs">
+                                                                <span className="absolute top-1.5 right-1.5 flex items-center gap-0.5 rounded-lg bg-amber-500 px-1.5 py-0.5 text-[9px] font-semibold text-white shadow-xs">
                                                                     <Star size={8} weight="fill" /> hero
                                                                 </span>
                                                             )}
@@ -1182,10 +1182,10 @@ export default function AddClientWizard() {
                                                             </span>
                                                         </div>
                                                         <div className="p-2 space-y-0.5">
-                                                            <p className="truncate text-[11px] font-medium text-stone-900" title={item.title}>
+                                                            <p className="truncate text-[11px] font-medium text-ink" title={item.title}>
                                                                 {item.title || item.media?.originalFileName || item._id}
                                                             </p>
-                                                            <div className="flex items-center justify-between text-[10px] text-stone-500">
+                                                            <div className="flex items-center justify-between text-[10px] text-ink-muted">
                                                                 <span>{formatBytes(item.media?.fileSize || 0)}</span>
                                                                 {(item.tags || []).length > 0 && (
                                                                     <span className="text-amber-800 font-medium">#{item.tags[0]}</span>
@@ -1201,16 +1201,16 @@ export default function AddClientWizard() {
                             </div>
                         </div>
                     ) : (
-                        <div className="rounded-3xl border border-dashed border-stone-300 bg-stone-50/50 py-16 text-center space-y-2">
-                            <p className="text-sm font-semibold text-stone-800">No media staged yet</p>
-                            <p className="text-xs text-stone-500 max-w-sm mx-auto">
+                        <div className="rounded-xl border border-dashed border-edge-strong bg-ground/50 py-16 text-center space-y-2">
+                            <p className="text-sm font-semibold text-ink">No media staged yet</p>
+                            <p className="text-xs text-ink-muted max-w-sm mx-auto">
                                 Drop photos or films above into their designated zones to begin building the wedding archive.
                             </p>
                         </div>
                     )}
 
                     {/* Bottom Action Ribbon */}
-                    <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-stone-200">
+                    <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-edge-subtle">
                         <Button
                             type="button"
                             variant="ghost"
@@ -1225,7 +1225,7 @@ export default function AddClientWizard() {
                                 type="button"
                                 variant="outline"
                                 onClick={handleSaveAsDraftAndExit}
-                                className="rounded-xl border border-stone-300 bg-white px-4 py-2 text-xs font-semibold text-stone-700 hover:bg-stone-50 transition-colors"
+                                className="rounded-xl border border-edge-strong bg-white px-4 py-2 text-xs font-semibold text-ink-secondary hover:bg-ground transition-colors"
                             >
                                 Save as Draft &amp; View Workspace
                             </Button>
@@ -1237,7 +1237,7 @@ export default function AddClientWizard() {
                                 disabled={portfolioItems.length === 0}
                                 iconRight={ArrowRight}
                                 onClick={async () => { if (await flushDetailSaves()) setShowChecklist(true); }}
-                                className="bg-stone-900 hover:bg-stone-800 text-white font-semibold px-6 py-2.5 shadow-xs"
+                                className="bg-ink hover:bg-ink text-white font-semibold px-6 py-2.5 shadow-xs"
                             >
                                 Publish Wedding Showcase ({portfolioItems.length})
                             </Button>

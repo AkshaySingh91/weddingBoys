@@ -28,15 +28,15 @@ export const Textarea = forwardRef(function Textarea(
         {label && (
           <label
             htmlFor={textareaId}
-            className="block text-[11px] font-semibold tracking-wider uppercase text-stone-600 font-sans"
+            className="block text-[11px] font-semibold tracking-wider uppercase text-ink-secondary font-sans"
           >
             {label}
-            {required && <span className="text-red-500 ml-1">*</span>}
+            {required && <span className="text-accent-ink ml-1">*</span>}
           </label>
         )}
 
         {maxLength && (
-          <span className="text-[10px] text-stone-400 font-mono">
+          <span className="text-[10px] text-ink-muted font-mono">
             {currentLength}/{maxLength}
           </span>
         )}
@@ -51,19 +51,19 @@ export const Textarea = forwardRef(function Textarea(
         disabled={disabled}
         required={required}
         className={cn(
-          'w-full rounded-xl border bg-white p-3 text-xs text-[#2F2F2F] placeholder:text-stone-400 font-sans transition-all duration-150 leading-relaxed resize-y',
-          'border-stone-200 hover:border-stone-400 focus:outline-none focus:border-red-400 focus:ring-2 focus:ring-red-400/20',
-          'disabled:bg-stone-50 disabled:text-stone-400 disabled:cursor-not-allowed',
-          error && 'border-rose-400 focus:border-rose-500 focus:ring-rose-500/15',
+          'w-full rounded-xl border bg-white p-3 text-xs text-ink placeholder:text-ink-muted font-sans transition-all duration-150 leading-relaxed resize-y',
+          'border-edge-subtle hover:border-edge-strong focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20',
+          'disabled:bg-ground disabled:text-ink-muted disabled:cursor-not-allowed',
+          error && 'border-state-error focus:border-state-error focus:ring-accent/20',
           className
         )}
         {...props}
       />
 
       {error ? (
-        <p className="text-[11px] font-medium text-rose-600 font-sans">{error}</p>
+        <p className="text-[11px] font-medium text-state-error font-sans">{error}</p>
       ) : helperText ? (
-        <p className="text-[11px] text-stone-500 font-sans">{helperText}</p>
+        <p className="text-[11px] text-ink-muted font-sans">{helperText}</p>
       ) : null}
     </div>
   );

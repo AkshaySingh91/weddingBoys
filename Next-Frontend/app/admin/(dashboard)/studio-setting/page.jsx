@@ -1,23 +1,23 @@
 'use client';
 
-import StudioContact from './_components/StudioContact';
-import AdminInviteCode from './_components/AdminInviteCode';
-import { PageHeader } from '@/app/admin/components/ui/PageHeader.jsx';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { CircleNotch } from '@phosphor-icons/react';
 
-export default function Page() {
+/**
+ * Studio details live in one place: Settings › Studio details. This page used
+ * to render the same two editors a second time; it now forwards there, like the
+ * other retired website-setting routes. Its `_components` are still used by
+ * the Settings page.
+ */
+export default function StudioSettingRedirect() {
+  const router = useRouter();
+  useEffect(() => {
+    router.replace('/admin/settings?tab=studio');
+  }, [router]);
   return (
-    <div className="space-y-6 pb-12 font-sans">
-      <PageHeader
-        title="Studio Contact & Business Profile"
-        subtitle="Manage official studio details, corporate contact channels, social handles, and admin invitation codes."
-        breadcrumbs={[
-          { label: 'Admin', href: '/admin/dashboard' },
-          { label: 'Studio Settings' },
-        ]}
-      />
-
-      <StudioContact />
-      <AdminInviteCode />
+    <div className="py-24 flex items-center justify-center text-ink-muted">
+      <CircleNotch size={24} className="animate-spin" aria-label="Opening studio details" />
     </div>
   );
 }

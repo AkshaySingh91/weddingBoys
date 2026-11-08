@@ -226,13 +226,13 @@ export default function Review() {
   return (
     <div className="space-y-6 font-sans">
       {/* Header bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#E5DCD3] pb-4">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-edge-subtle pb-4">
         <div>
-          <h2 className="flex items-center gap-2 text-xl font-serif text-[#1C1917]">
-            <Heart size={20} weight="fill" className="text-[#A3603A]" />
+          <h2 className="flex items-center gap-2 text-xl font-sans text-ink">
+            <Heart size={20} weight="fill" className="text-accent-ink" />
             Couple Testimonials
           </h2>
-          <p className="mt-0.5 text-xs text-stone-500">
+          <p className="mt-0.5 text-xs text-ink-muted">
             Featured quotes, portraits, and love notes from couples appearing on the homepage.
           </p>
         </div>
@@ -260,11 +260,11 @@ export default function Review() {
           <div className="space-y-4 py-2">
             {/* Portrait Photo Upload */}
             <div className="space-y-2">
-              <label className="text-[11px] font-semibold uppercase tracking-wider text-stone-600">
+              <label className="text-[11px] font-semibold uppercase tracking-wider text-ink-secondary">
                 Couple Photo
               </label>
               <div className="flex items-center gap-4">
-                <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-[#E5DCD3] bg-stone-100 flex items-center justify-center">
+                <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-edge-subtle bg-ground-sunk flex items-center justify-center">
                   {filePreview ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
@@ -273,7 +273,7 @@ export default function Review() {
                       className="h-full w-full object-cover"
                     />
                   ) : (
-                    <UploadSimple size={24} className="text-stone-400" />
+                    <UploadSimple size={24} className="text-ink-muted" />
                   )}
                 </div>
 
@@ -287,7 +287,7 @@ export default function Review() {
                   />
                   <label
                     htmlFor="new-review-photo"
-                    className="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl border border-[#E5DCD3] bg-white px-3 py-1.5 text-xs font-medium text-stone-700 shadow-sm transition hover:border-[#A3603A] hover:bg-stone-50"
+                    className="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl border border-edge-subtle bg-white px-3 py-1.5 text-xs font-medium text-ink-secondary shadow-sm transition hover:border-accent hover:bg-ground"
                   >
                     <UploadSimple size={14} />
                     <span>Upload Photo</span>
@@ -318,7 +318,7 @@ export default function Review() {
               onChange={(e) =>
                 setNewReview({ ...newReview, reviewText: e.target.value })
               }
-              placeholder="e.g. The Wedding Boys captured the soul of our wedding day in Udaipur with sheer poetry..."
+              placeholder="e.g. The Wedding Vachan captured the soul of our wedding day in Udaipur with sheer poetry..."
               maxLength={500}
             />
 
@@ -397,14 +397,14 @@ export default function Review() {
 
       {/* Main Content Area */}
       {loading ? (
-        <div className="flex items-center justify-center py-16 text-stone-400">
-          <CircleNotch size={24} className="animate-spin text-[#A3603A]" />
+        <div className="flex items-center justify-center py-16 text-ink-muted">
+          <CircleNotch size={24} className="animate-spin text-accent-ink" />
         </div>
       ) : reviews.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-[#E5DCD3] bg-white p-12 text-center">
-          <Quotes size={32} className="mx-auto text-stone-400 mb-2" />
-          <h3 className="font-serif text-base text-[#1C1917]">No Reviews Yet</h3>
-          <p className="text-xs text-stone-500 mt-1 max-w-sm mx-auto">
+        <div className="rounded-xl border border-dashed border-edge-subtle bg-white p-12 text-center">
+          <Quotes size={32} className="mx-auto text-ink-muted mb-2" />
+          <h3 className="font-sans text-base text-ink">No Reviews Yet</h3>
+          <p className="text-xs text-ink-muted mt-1 max-w-sm mx-auto">
             Add testimonials from past couples to establish social proof on the public homepage.
           </p>
           <Button
@@ -420,27 +420,27 @@ export default function Review() {
       ) : (
         <div className="space-y-6">
           {/* Live Carousel Preview Card */}
-          <div className="relative overflow-hidden rounded-2xl border border-[#E5DCD3] bg-[#FCFAF7] p-6 sm:p-8">
+          <div className="relative overflow-hidden rounded-xl border border-edge-subtle bg-ground p-6 sm:p-8">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-[11px] font-semibold uppercase tracking-widest text-[#A3603A]">
+              <span className="text-[11px] font-semibold uppercase tracking-widest text-accent-ink">
                 Live Homepage Preview
               </span>
               <div className="flex items-center gap-1.5">
                 <button
                   type="button"
                   onClick={handlePrev}
-                  className="p-1.5 rounded-lg border border-[#E5DCD3] bg-white text-stone-700 hover:bg-stone-50 transition shadow-sm"
+                  className="p-1.5 rounded-lg border border-edge-subtle bg-white text-ink-secondary hover:bg-ground transition shadow-sm"
                   aria-label="Previous review"
                 >
                   <CaretLeft size={14} />
                 </button>
-                <span className="text-xs font-semibold tabular-nums text-stone-500 px-1">
+                <span className="text-xs font-semibold tabular-nums text-ink-muted px-1">
                   {currentSlide + 1} / {totalReviews}
                 </span>
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="p-1.5 rounded-lg border border-[#E5DCD3] bg-white text-stone-700 hover:bg-stone-50 transition shadow-sm"
+                  className="p-1.5 rounded-lg border border-edge-subtle bg-white text-ink-secondary hover:bg-ground transition shadow-sm"
                   aria-label="Next review"
                 >
                   <CaretRight size={14} />
@@ -458,7 +458,7 @@ export default function Review() {
                 {reviews.map((rev) => (
                   <div key={rev.photo?.key || rev._id} className="w-full shrink-0">
                     <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
-                      <div className="relative h-44 w-44 md:h-52 md:w-52 shrink-0 overflow-hidden rounded-2xl border border-[#E5DCD3] bg-white shadow-sm">
+                      <div className="relative h-44 w-44 md:h-52 md:w-52 shrink-0 overflow-hidden rounded-xl border border-edge-subtle bg-white shadow-sm">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={rev.url}
@@ -468,15 +468,15 @@ export default function Review() {
                       </div>
 
                       <div className="flex-1 text-center md:text-left space-y-3">
-                        <Quotes size={24} className="text-[#A3603A] opacity-60 hidden md:block" />
-                        <p className="font-serif italic text-stone-800 text-sm sm:text-base leading-relaxed max-w-xl">
+                        <Quotes size={24} className="text-accent-ink opacity-60 hidden md:block" />
+                        <p className="font-sans italic text-ink text-sm sm:text-base leading-relaxed max-w-xl">
                           &ldquo;{rev.reviewText}&rdquo;
                         </p>
                         <div>
-                          <p className="font-serif font-semibold text-[#1C1917] text-base">
+                          <p className="font-sans font-semibold text-ink text-base">
                             {rev.person?.name}
                           </p>
-                          <p className="text-xs text-[#A3603A] uppercase tracking-wider font-medium">
+                          <p className="text-xs text-accent-ink uppercase tracking-wider font-medium">
                             {rev.person?.gender || 'Client'}
                           </p>
                         </div>
@@ -489,19 +489,19 @@ export default function Review() {
           </div>
 
           {/* Roster Table of all Reviews */}
-          <div className="rounded-2xl border border-[#E5DCD3] bg-white p-5 space-y-3">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-stone-500">
+          <div className="rounded-xl border border-edge-subtle bg-white p-5 space-y-3">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-ink-muted">
               All Testimonials ({reviews.length})
             </h3>
 
-            <div className="divide-y divide-[#E5DCD3]/60">
+            <div className="divide-y divide-edge-subtle">
               {reviews.map((rev, idx) => (
                 <div
                   key={rev.photo?.key || idx}
                   className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-3"
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-[#E5DCD3] bg-stone-100">
+                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-edge-subtle bg-ground-sunk">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={rev.url}
@@ -510,13 +510,13 @@ export default function Review() {
                       />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-xs font-semibold text-[#1C1917] truncate">
+                      <p className="text-xs font-semibold text-ink truncate">
                         {rev.person?.name}
-                        <span className="ml-2 text-[10px] text-stone-400 font-normal">
+                        <span className="ml-2 text-[10px] text-ink-muted font-normal">
                           ({rev.person?.gender})
                         </span>
                       </p>
-                      <p className="text-xs text-stone-500 line-clamp-1 max-w-md font-serif italic">
+                      <p className="text-xs text-ink-muted line-clamp-1 max-w-md font-sans italic">
                         &ldquo;{rev.reviewText}&rdquo;
                       </p>
                     </div>

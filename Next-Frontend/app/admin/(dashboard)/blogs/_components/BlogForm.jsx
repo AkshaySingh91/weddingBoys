@@ -552,13 +552,6 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
             sessionStorage.removeItem(draftStorageKey);
             setIsDirty(false);
 
-            if (status === 'Published' || form.status === 'Published') {
-                fetch('/api/revalidate', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ slug: form.slug, secret: 'wb_editorial_secret_2026' }),
-                }).catch(() => {});
-            }
 
             let msg = 'Story saved successfully';
             if (status === 'Published') msg = 'Story published successfully';
@@ -637,14 +630,14 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
         readingTime: Math.max(1, Math.ceil((form.content?.replace(/<[^>]*>/g, ' ').split(/\s+/).filter(Boolean).length || 0) / 200)),
         publishedAt: form.scheduledFor || new Date().toISOString(),
         createdAt: new Date().toISOString(),
-        author: { name: 'The Wedding Boys Editorial', avatar: null },
+        author: { name: 'The Wedding Vachan Editorial', avatar: null },
     };
 
     return (
         <div className="space-y-6 pb-16 font-sans">
             {/* Local Draft Recovery Banner */}
             {hasLocalDraft && (
-                <div className="flex items-center justify-between gap-3 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-amber-900 shadow-sm">
+                <div className="flex items-center justify-between gap-3 rounded-xl border border-amber-300 bg-amber-50 p-4 text-amber-900 shadow-sm">
                     <div className="flex items-center gap-2.5">
                         <Sparkle size={18} className="text-amber-600 shrink-0" weight="fill" />
                         <span className="text-xs font-medium">
@@ -663,21 +656,21 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
             )}
 
             {/* Top Navigation & Action Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E5DCD3] pb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-edge-subtle pb-4">
                 <div className="flex items-center gap-3">
                     <Button
                         variant="ghost"
                         size="sm"
                         icon={ArrowLeft}
                         onClick={() => router.push('/admin/blogs')}
-                        className="text-stone-600"
+                        className="text-ink-secondary"
                     >
                         Back
                     </Button>
-                    <div className="h-4 w-px bg-[#E5DCD3]" />
+                    <div className="h-4 w-px bg-ground-sunk" />
                     <div>
                         <div className="flex items-center gap-2">
-                            <h1 className="text-lg sm:text-xl font-bold text-[#1C1917]">
+                            <h1 className="text-lg sm:text-xl font-bold text-ink">
                                 {mode === 'create' ? 'Compose New Story' : 'Edit Editorial Article'}
                             </h1>
                             <Badge
@@ -701,8 +694,8 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                 )}
                             </Badge>
                             {autosaveStatus === 'saving' && (
-                                <span className="inline-flex items-center gap-1 text-[11px] text-stone-400 font-medium">
-                                    <ArrowsClockwise size={12} className="animate-spin text-[#8C532B]" />
+                                <span className="inline-flex items-center gap-1 text-[11px] text-ink-muted font-medium">
+                                    <ArrowsClockwise size={12} className="animate-spin text-accent-ink" />
                                     Autosaving...
                                 </span>
                             )}
@@ -718,7 +711,7 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                 </span>
                             )}
                         </div>
-                        <p className="text-[11px] text-stone-500 mt-0.5">
+                        <p className="text-[11px] text-ink-muted mt-0.5">
                             Craft wedding cinematography journals, vendor showcases, and couple stories.
                         </p>
                     </div>
@@ -731,7 +724,7 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                             size="sm"
                             icon={ArrowsClockwise}
                             onClick={handleOpenRevisions}
-                            className="text-stone-600"
+                            className="text-ink-secondary"
                         >
                             Revisions
                         </Button>
@@ -744,7 +737,7 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                             loading={sharingPreview}
                             onClick={handleCopyPreviewLink}
                             title="Generate 24-hour signed preview link for clients/reviewers"
-                            className="text-stone-600"
+                            className="text-ink-secondary"
                         >
                             Share Preview
                         </Button>
@@ -754,7 +747,7 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                         size="sm"
                         icon={Sparkle}
                         onClick={() => setAiCopilotOpen(true)}
-                        className="border-[#8C532B]/30 text-[#8C532B] hover:bg-[#8C532B]/10 font-semibold"
+                        className="border-accent/30 text-accent-ink hover:bg-accent-hover font-semibold"
                     >
                         AI Co-Pilot
                     </Button>
@@ -928,10 +921,10 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                     "min-w-0 w-full transition-[max-width,margin] duration-300 ease-out",
                     zenMode ? "max-w-6xl mx-auto" : "flex-1 max-w-4xl"
                 )}>
-                    <div className="rounded-3xl border border-[#E5DCD3]/90 bg-white shadow-[0_4px_35px_rgba(0,0,0,0.03)] overflow-hidden transition-all duration-200">
+                    <div className="rounded-xl border border-edge-subtle bg-white shadow-[0_4px_35px_rgba(0,0,0,0.03)] overflow-hidden transition-all duration-200">
                         {/* 1. Cover Photo Banner (Notion-style Hero Canvas) */}
                         {form.coverUrl ? (
-                            <div className="group relative aspect-[21/9] sm:aspect-[24/9] w-full overflow-hidden bg-stone-100 border-b border-[#E5DCD3]/80">
+                            <div className="group relative aspect-[21/9] sm:aspect-[24/9] w-full overflow-hidden bg-ground-sunk border-b border-edge-subtle">
                                 <Image
                                     src={form.coverUrl}
                                     alt="Story Cover"
@@ -943,7 +936,7 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
 
                                 {/* Floating Cover Action Controls on Hover */}
-                                <div className="absolute bottom-3 right-4 flex items-center gap-2 opacity-95 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-200 backdrop-blur-md bg-[#1C1917]/75 p-1.5 rounded-xl border border-white/20">
+                                <div className="absolute bottom-3 right-4 flex items-center gap-2 opacity-95 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-200 backdrop-blur-md bg-ink/75 p-1.5 rounded-xl border border-white/20">
                                     <button
                                         type="button"
                                         onClick={() => setCoverPicker(true)}
@@ -968,9 +961,9 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                 <button
                                     type="button"
                                     onClick={() => setCoverPicker(true)}
-                                    className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-stone-500 hover:text-[#8C532B] hover:bg-[#8C532B]/5 border border-dashed border-stone-300 hover:border-[#8C532B]/50 transition-all cursor-pointer"
+                                    className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-ink-muted hover:text-accent-ink hover:bg-accent-hover border border-dashed border-edge-strong hover:border-accent/50 transition-all cursor-pointer"
                                 >
-                                    <ImageSquare size={16} className="text-stone-400 group-hover:text-[#8C532B]" />
+                                    <ImageSquare size={16} className="text-ink-muted group-hover:text-accent-ink" />
                                     <span>+ Add Story Cover Banner</span>
                                 </button>
                             </div>
@@ -979,26 +972,26 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                         {/* 2. Document Paper Content Sheet */}
                         <div className="px-6 sm:px-14 py-8 sm:py-12 space-y-6">
                             {/* Metadata Badges Strip */}
-                            <div className="flex items-center gap-2 flex-wrap text-xs text-stone-400">
-                                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 font-semibold text-[11px] border border-stone-200/70">
-                                    <Tag size={12} className="text-[#8C532B]" />
+                            <div className="flex items-center gap-2 flex-wrap text-xs text-ink-muted">
+                                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-ground-sunk text-ink-secondary font-semibold text-[11px] border border-edge-subtle">
+                                    <Tag size={12} className="text-accent-ink" />
                                     {form.category}
                                 </span>
 
                                 {form.mood && (
-                                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 font-medium text-[11px] border border-stone-200/70">
+                                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-ground-sunk text-ink-secondary font-medium text-[11px] border border-edge-subtle">
                                         <span>{WEDDING_MOODS.find((m) => m.value === form.mood)?.emoji || '✨'}</span>
                                         <span className="capitalize">{form.mood}</span>
                                     </span>
                                 )}
 
-                                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-stone-50 text-stone-500 font-mono text-[11px]">
-                                    <Sparkle size={12} className="text-stone-400" />
+                                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-ground text-ink-muted font-mono text-[11px]">
+                                    <Sparkle size={12} className="text-ink-muted" />
                                     {TEMPLATES.find((t) => t.id === form.template)?.name || 'Editorial'}
                                 </span>
 
                                 {wordCount > 0 && (
-                                    <span className="inline-flex items-center gap-1 px-2.5 py-1 text-stone-400 text-[11px] font-mono">
+                                    <span className="inline-flex items-center gap-1 px-2.5 py-1 text-ink-muted text-[11px] font-mono">
                                         <Clock size={12} />
                                         {readingTime} min read · {wordCount} words
                                     </span>
@@ -1016,7 +1009,7 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                         e.target.style.height = `${e.target.scrollHeight}px`;
                                     }}
                                     placeholder="Story Headline..."
-                                    className="w-full resize-none overflow-hidden font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#1C1917] placeholder:text-stone-300 border-none outline-none focus:outline-none focus:ring-0 bg-transparent p-0 leading-tight"
+                                    className="w-full resize-none overflow-hidden font-sans text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-ink placeholder:text-stone-300 border-none outline-none focus:outline-none focus:ring-0 bg-transparent p-0 leading-tight"
                                 />
                             </div>
 
@@ -1031,12 +1024,12 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                         e.target.style.height = `${e.target.scrollHeight}px`;
                                     }}
                                     placeholder="Add an emotional subtitle or story teaser that hooks the reader..."
-                                    className="w-full resize-none overflow-hidden font-serif italic text-base sm:text-lg text-stone-500 placeholder:text-stone-300 border-none outline-none focus:outline-none focus:ring-0 bg-transparent p-0 leading-relaxed"
+                                    className="w-full resize-none overflow-hidden font-sans italic text-base sm:text-lg text-ink-muted placeholder:text-stone-300 border-none outline-none focus:outline-none focus:ring-0 bg-transparent p-0 leading-relaxed"
                                 />
                             </div>
 
                             {/* Subtle Editorial Divider */}
-                            <div className="h-px bg-stone-100 my-2" />
+                            <div className="h-px bg-ground-sunk my-2" />
 
                             {/* Tiptap Continuous Document Editor */}
                             <div className="-mx-2 sm:-mx-6">
@@ -1059,20 +1052,20 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
 
                 {/* Right: Unified 4-Tab Luxury Inspector */}
                 {!zenMode && (
-                    <aside className="w-full lg:w-[380px] xl:w-[410px] shrink-0 sticky top-20 self-start max-h-[calc(100vh-6rem)] overflow-y-auto rounded-3xl border border-[#E5DCD3] bg-white p-4 shadow-sm space-y-4 font-sans animate-in fade-in slide-in-from-right-6 duration-300 ease-out">
+                    <aside className="w-full lg:w-[380px] xl:w-[410px] shrink-0 sticky top-20 self-start max-h-[calc(100vh-6rem)] overflow-y-auto rounded-xl border border-edge-subtle bg-white p-4 shadow-sm space-y-4 font-sans animate-in fade-in slide-in-from-right-6 duration-300 ease-out">
                         {/* 4-Tab Navigation Header */}
-                        <div className="grid grid-cols-4 gap-1 p-1 bg-stone-100/90 rounded-2xl border border-stone-200/80">
+                        <div className="grid grid-cols-4 gap-1 p-1 bg-ground-sunk/90 rounded-xl border border-edge-subtle">
                             <button
                                 type="button"
                                 onClick={() => setInspectorTab('story')}
                                 className={cn(
                                     'flex flex-col items-center justify-center py-2 px-1 rounded-xl text-xs font-semibold transition-all cursor-pointer gap-0.5',
                                     inspectorTab === 'story'
-                                        ? 'bg-white text-[#1C1917] shadow-sm'
-                                        : 'text-stone-500 hover:text-[#1C1917] hover:bg-white/50'
+                                        ? 'bg-white text-ink shadow-sm'
+                                        : 'text-ink-muted hover:text-ink hover:bg-white/50'
                                 )}
                             >
-                                <Globe size={15} className={inspectorTab === 'story' ? 'text-[#8C532B]' : ''} />
+                                <Globe size={15} className={inspectorTab === 'story' ? 'text-accent-ink' : ''} />
                                 <span className="text-[10px]">Story</span>
                             </button>
                             <button
@@ -1081,11 +1074,11 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                 className={cn(
                                     'flex flex-col items-center justify-center py-2 px-1 rounded-xl text-xs font-semibold transition-all cursor-pointer gap-0.5',
                                     inspectorTab === 'seo'
-                                        ? 'bg-white text-[#1C1917] shadow-sm'
-                                        : 'text-stone-500 hover:text-[#1C1917] hover:bg-white/50'
+                                        ? 'bg-white text-ink shadow-sm'
+                                        : 'text-ink-muted hover:text-ink hover:bg-white/50'
                                 )}
                             >
-                                <Sparkle size={15} className={inspectorTab === 'seo' ? 'text-[#8C532B]' : ''} />
+                                <Sparkle size={15} className={inspectorTab === 'seo' ? 'text-accent-ink' : ''} />
                                 <span className="text-[10px]">SEO</span>
                             </button>
                             <button
@@ -1094,11 +1087,11 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                 className={cn(
                                     'flex flex-col items-center justify-center py-2 px-1 rounded-xl text-xs font-semibold transition-all cursor-pointer gap-0.5',
                                     inspectorTab === 'details'
-                                        ? 'bg-white text-[#1C1917] shadow-sm'
-                                        : 'text-stone-500 hover:text-[#1C1917] hover:bg-white/50'
+                                        ? 'bg-white text-ink shadow-sm'
+                                        : 'text-ink-muted hover:text-ink hover:bg-white/50'
                                 )}
                             >
-                                <Heart size={15} className={inspectorTab === 'details' ? 'text-[#8C532B]' : ''} />
+                                <Heart size={15} className={inspectorTab === 'details' ? 'text-accent-ink' : ''} />
                                 <span className="text-[10px]">Details</span>
                             </button>
                             <button
@@ -1107,11 +1100,11 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                 className={cn(
                                     'flex flex-col items-center justify-center py-2 px-1 rounded-xl text-xs font-semibold transition-all cursor-pointer gap-0.5',
                                     inspectorTab === 'manage'
-                                        ? 'bg-white text-[#1C1917] shadow-sm'
-                                        : 'text-stone-500 hover:text-[#1C1917] hover:bg-white/50'
+                                        ? 'bg-white text-ink shadow-sm'
+                                        : 'text-ink-muted hover:text-ink hover:bg-white/50'
                                 )}
                             >
-                                <SlidersHorizontal size={15} className={inspectorTab === 'manage' ? 'text-[#8C532B]' : ''} />
+                                <SlidersHorizontal size={15} className={inspectorTab === 'manage' ? 'text-accent-ink' : ''} />
                                 <span className="text-[10px]">Manage</span>
                             </button>
                         </div>
@@ -1120,9 +1113,9 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                         {inspectorTab === 'story' && (
                             <div className="space-y-4">
                                 {/* Workflow Status & Publishing */}
-                                <div className="rounded-2xl border border-[#E5DCD3] bg-stone-50/50 p-3.5 space-y-3">
+                                <div className="rounded-xl border border-edge-subtle bg-ground/50 p-3.5 space-y-3">
                                     <div className="flex items-center justify-between">
-                                        <label className="text-[11px] font-bold uppercase tracking-wider text-stone-600 block">Workflow Status</label>
+                                        <label className="text-[11px] font-bold uppercase tracking-wider text-ink-secondary block">Workflow Status</label>
                                         <Badge variant={form.status === 'Published' ? 'success' : form.status === 'Draft' ? 'warning' : 'neutral'} size="sm">
                                             {form.status}
                                         </Badge>
@@ -1130,7 +1123,7 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                     <select
                                         value={form.status}
                                         onChange={(e) => set({ status: e.target.value })}
-                                        className="w-full rounded-xl border border-[#E5DCD3] bg-white p-2 text-xs text-[#1C1917] font-medium focus:border-[#8C532B] focus:ring-1 focus:ring-[#8C532B]/30 focus:outline-none"
+                                        className="w-full rounded-xl border border-edge-subtle bg-white p-2 text-xs text-ink font-medium focus:border-accent focus:ring-1 focus:ring-accent/30 focus:outline-none"
                                     >
                                         <option value="Draft">Draft (Private)</option>
                                         <option value="InReview">In Review (Editorial Check)</option>
@@ -1141,21 +1134,21 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
 
                                     {form.status === 'Scheduled' && (
                                         <div>
-                                            <label className="mb-1 block text-[11px] font-semibold text-stone-600 flex items-center gap-1">
-                                                <CalendarBlank size={13} className="text-[#8C532B]" />
+                                            <label className="mb-1 block text-[11px] font-semibold text-ink-secondary flex items-center gap-1">
+                                                <CalendarBlank size={13} className="text-accent-ink" />
                                                 Scheduled Date &amp; Time
                                             </label>
                                             <input
                                                 type="datetime-local"
                                                 value={form.scheduledFor}
                                                 onChange={(e) => set({ scheduledFor: e.target.value })}
-                                                className="w-full rounded-xl border border-[#E5DCD3] bg-white p-2 text-xs text-[#1C1917] focus:border-[#8C532B] focus:outline-none"
+                                                className="w-full rounded-xl border border-edge-subtle bg-white p-2 text-xs text-ink focus:border-accent focus:outline-none"
                                             />
                                         </div>
                                     )}
 
                                     <div>
-                                        <label className="mb-1 block text-[11px] font-semibold text-stone-600">URL Slug</label>
+                                        <label className="mb-1 block text-[11px] font-semibold text-ink-secondary">URL Slug</label>
                                         <input
                                             type="text"
                                             value={form.slug}
@@ -1164,22 +1157,22 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                                 set({ slug: localSlugify(e.target.value) });
                                             }}
                                             placeholder="auto-generated-from-title"
-                                            className="w-full rounded-xl border border-[#E5DCD3] bg-white p-2 text-xs text-[#1C1917] font-mono focus:border-[#8C532B] focus:outline-none"
+                                            className="w-full rounded-xl border border-edge-subtle bg-white p-2 text-xs text-ink font-mono focus:border-accent focus:outline-none"
                                         />
-                                        <p className="mt-1 text-[10px] text-stone-400 font-mono truncate">
+                                        <p className="mt-1 text-[10px] text-ink-muted font-mono truncate">
                                             /blogs/{form.slug || 'untitled-story'}
                                         </p>
                                     </div>
                                 </div>
 
                                 {/* Story Template Selector */}
-                                <div className="rounded-2xl border border-[#E5DCD3] bg-stone-50/50 p-3.5 space-y-2.5">
+                                <div className="rounded-xl border border-edge-subtle bg-ground/50 p-3.5 space-y-2.5">
                                     <div className="flex items-center justify-between">
-                                        <h3 className="text-xs font-bold uppercase tracking-wider text-[#1C1917] flex items-center gap-1.5">
-                                            <Sparkle size={15} className="text-[#8C532B]" />
+                                        <h3 className="text-xs font-bold uppercase tracking-wider text-ink flex items-center gap-1.5">
+                                            <Sparkle size={15} className="text-accent-ink" />
                                             Story Template
                                         </h3>
-                                        <span className="text-[10px] text-stone-400 font-mono">
+                                        <span className="text-[10px] text-ink-muted font-mono">
                                             {TEMPLATES.find((t) => t.id === form.template)?.badge || ''}
                                         </span>
                                     </div>
@@ -1195,19 +1188,19 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                                     className={cn(
                                                         'rounded-xl border p-2.5 text-left transition-all cursor-pointer flex flex-col gap-1',
                                                         isSelected
-                                                            ? 'border-[#8C532B] bg-white ring-1 ring-[#8C532B]/30 shadow-sm'
-                                                            : 'border-[#E5DCD3] bg-white/60 hover:bg-white text-stone-700'
+                                                            ? 'border-accent bg-white ring-1 ring-accent/30 shadow-sm'
+                                                            : 'border-edge-subtle bg-white/60 hover:bg-white text-ink-secondary'
                                                     )}
                                                 >
                                                     <div className="flex items-center justify-between">
-                                                        <span className={cn('text-xs font-bold', isSelected ? 'text-[#8C532B]' : 'text-[#1C1917]')}>
+                                                        <span className={cn('text-xs font-bold', isSelected ? 'text-accent-ink' : 'text-ink')}>
                                                             {tmpl.name}
                                                         </span>
                                                         {isSelected && (
-                                                            <Check size={14} weight="bold" className="text-[#8C532B]" />
+                                                            <Check size={14} weight="bold" className="text-accent-ink" />
                                                         )}
                                                     </div>
-                                                    <p className="text-[10px] text-stone-500 leading-tight">
+                                                    <p className="text-[10px] text-ink-muted leading-tight">
                                                         {tmpl.desc}
                                                     </p>
                                                 </button>
@@ -1217,25 +1210,25 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                 </div>
 
                                 {/* Taxonomy & Topic Tags */}
-                                <div className="rounded-2xl border border-[#E5DCD3] bg-stone-50/50 p-3.5 space-y-2.5">
-                                    <h3 className="text-xs font-bold uppercase tracking-wider text-[#1C1917] flex items-center gap-1.5">
-                                        <Tag size={15} className="text-[#8C532B]" />
+                                <div className="rounded-xl border border-edge-subtle bg-ground/50 p-3.5 space-y-2.5">
+                                    <h3 className="text-xs font-bold uppercase tracking-wider text-ink flex items-center gap-1.5">
+                                        <Tag size={15} className="text-accent-ink" />
                                         Taxonomy &amp; Tags
                                     </h3>
 
                                     <div>
-                                        <label className="mb-1 block text-[11px] font-semibold text-stone-600">Category</label>
+                                        <label className="mb-1 block text-[11px] font-semibold text-ink-secondary">Category</label>
                                         <select
                                             value={form.category}
                                             onChange={(e) => set({ category: e.target.value })}
-                                            className="w-full rounded-xl border border-[#E5DCD3] bg-white p-2 text-xs text-[#1C1917] font-medium focus:border-[#8C532B] focus:outline-none"
+                                            className="w-full rounded-xl border border-edge-subtle bg-white p-2 text-xs text-ink font-medium focus:border-accent focus:outline-none"
                                         >
                                             {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
                                         </select>
                                     </div>
 
                                     <div>
-                                        <label className="mb-1 block text-[11px] font-semibold text-stone-600">Topic Tags</label>
+                                        <label className="mb-1 block text-[11px] font-semibold text-ink-secondary">Topic Tags</label>
                                         <div className="flex gap-1.5">
                                             <input
                                                 type="text"
@@ -1248,7 +1241,7 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                                     }
                                                 }}
                                                 placeholder="Add tag and press Enter"
-                                                className="flex-1 rounded-xl border border-[#E5DCD3] bg-white p-2 text-xs text-[#1C1917] focus:border-[#8C532B] focus:outline-none"
+                                                className="flex-1 rounded-xl border border-edge-subtle bg-white p-2 text-xs text-ink focus:border-accent focus:outline-none"
                                             />
                                             <Button
                                                 variant="outline"
@@ -1261,18 +1254,18 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
 
                                         <div className="mt-2 flex flex-wrap gap-1.5">
                                             {form.tags.length === 0 ? (
-                                                <p className="text-[11px] text-stone-400 italic">No tags added yet</p>
+                                                <p className="text-[11px] text-ink-muted italic">No tags added yet</p>
                                             ) : (
                                                 form.tags.map((t) => (
                                                     <span
                                                         key={t}
-                                                        className="inline-flex items-center gap-1 rounded-lg bg-white px-2 py-0.5 text-xs text-stone-700 border border-stone-200 shadow-sm"
+                                                        className="inline-flex items-center gap-1 rounded-lg bg-white px-2 py-0.5 text-xs text-ink-secondary border border-edge-subtle shadow-sm"
                                                     >
                                                         <span>#{t}</span>
                                                         <button
                                                             type="button"
                                                             onClick={() => set({ tags: form.tags.filter((x) => x !== t) })}
-                                                            className="text-stone-400 hover:text-rose-600 cursor-pointer"
+                                                            className="text-ink-muted hover:text-rose-600 cursor-pointer"
                                                         >
                                                             <X size={12} />
                                                         </button>
@@ -1284,9 +1277,9 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                 </div>
 
                                 {/* Reader Comments Toggle */}
-                                <div className="rounded-2xl border border-[#E5DCD3] bg-stone-50/50 p-3 flex items-center justify-between">
-                                    <label htmlFor="inspector-allow-comments" className="text-xs font-semibold text-stone-700 flex items-center gap-1.5 cursor-pointer">
-                                        <ChatCircle size={15} className="text-[#8C532B]" />
+                                <div className="rounded-xl border border-edge-subtle bg-ground/50 p-3 flex items-center justify-between">
+                                    <label htmlFor="inspector-allow-comments" className="text-xs font-semibold text-ink-secondary flex items-center gap-1.5 cursor-pointer">
+                                        <ChatCircle size={15} className="text-accent-ink" />
                                         Allow Reader Comments
                                     </label>
                                     <input
@@ -1294,7 +1287,7 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                         type="checkbox"
                                         checked={form.allowComments}
                                         onChange={(e) => set({ allowComments: e.target.checked })}
-                                        className="rounded border-stone-300 text-[#8C532B] focus:ring-[#8C532B] h-4 w-4 cursor-pointer"
+                                        className="rounded-lg border-edge-strong text-accent-ink focus:ring-accent h-4 w-4 cursor-pointer"
                                     />
                                 </div>
                             </div>
@@ -1310,25 +1303,25 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                 />
 
                                 {/* Focus Keyword */}
-                                <div className="rounded-2xl border border-[#E5DCD3] bg-stone-50/50 p-3.5 space-y-2">
-                                    <label className="text-[11px] font-bold uppercase tracking-wider text-stone-600 block">Focus Keyword (SEO Target)</label>
+                                <div className="rounded-xl border border-edge-subtle bg-ground/50 p-3.5 space-y-2">
+                                    <label className="text-[11px] font-bold uppercase tracking-wider text-ink-secondary block">Focus Keyword (SEO Target)</label>
                                     <input
                                         type="text"
                                         value={form.focusKeyword}
                                         onChange={(e) => set({ focusKeyword: e.target.value })}
                                         placeholder="e.g. Udaipur Destination Wedding Videographer"
-                                        className="w-full rounded-xl border border-[#E5DCD3] bg-white p-2 text-xs text-[#1C1917] focus:border-[#8C532B] focus:ring-1 focus:ring-[#8C532B]/30 focus:outline-none"
+                                        className="w-full rounded-xl border border-edge-subtle bg-white p-2 text-xs text-ink focus:border-accent focus:ring-1 focus:ring-accent/30 focus:outline-none"
                                     />
                                 </div>
 
                                 {/* Search Engine Snippet Metadata */}
-                                <div className="rounded-2xl border border-[#E5DCD3] bg-stone-50/50 p-3.5 space-y-3">
+                                <div className="rounded-xl border border-edge-subtle bg-ground/50 p-3.5 space-y-3">
                                     <div className="flex items-center justify-between">
-                                        <label className="text-[11px] font-bold uppercase tracking-wider text-stone-600 block">Search Engine Snippet</label>
+                                        <label className="text-[11px] font-bold uppercase tracking-wider text-ink-secondary block">Search Engine Snippet</label>
                                         <button
                                             type="button"
                                             onClick={() => setAiCopilotOpen(true)}
-                                            className="inline-flex items-center gap-1 rounded-lg bg-[#8C532B]/10 hover:bg-[#8C532B]/20 px-2 py-0.5 text-[10px] font-semibold text-[#8C532B] transition-colors cursor-pointer"
+                                            className="inline-flex items-center gap-1 rounded-lg bg-accent/10 hover:bg-accent-hover px-2 py-0.5 text-[10px] font-semibold text-accent-ink transition-colors cursor-pointer"
                                         >
                                             <Sparkle size={12} weight="fill" />
                                             AI Assist
@@ -1337,7 +1330,7 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
 
                                     <div>
                                         <div className="flex items-center justify-between mb-1">
-                                            <span className="text-[11px] font-semibold text-stone-600">Custom Meta Title</span>
+                                            <span className="text-[11px] font-semibold text-ink-secondary">Custom Meta Title</span>
                                             <span className={cn('text-[10px] font-mono font-medium', counterColor(metaTitleLen, 30, 60))}>
                                                 {metaTitleLen} / 60
                                             </span>
@@ -1347,13 +1340,13 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                             value={form.metaTitle}
                                             onChange={(e) => set({ metaTitle: e.target.value })}
                                             placeholder={form.title || 'Defaults to story title'}
-                                            className="w-full rounded-xl border border-[#E5DCD3] bg-white p-2 text-xs text-[#1C1917] focus:border-[#8C532B] focus:outline-none"
+                                            className="w-full rounded-xl border border-edge-subtle bg-white p-2 text-xs text-ink focus:border-accent focus:outline-none"
                                         />
                                     </div>
 
                                     <div>
                                         <div className="flex items-center justify-between mb-1">
-                                            <span className="text-[11px] font-semibold text-stone-600">Meta Description / Snippet</span>
+                                            <span className="text-[11px] font-semibold text-ink-secondary">Meta Description / Snippet</span>
                                             <span className={cn('text-[10px] font-mono font-medium', counterColor(metaDescLen, 140, 160))}>
                                                 {metaDescLen} / 160
                                             </span>
@@ -1363,23 +1356,23 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                             value={form.metaDescription}
                                             onChange={(e) => set({ metaDescription: e.target.value })}
                                             placeholder="Brief 1-2 sentence teaser for Google search results..."
-                                            className="w-full rounded-xl border border-[#E5DCD3] bg-white p-2 text-xs text-[#1C1917] focus:border-[#8C532B] focus:outline-none resize-none"
+                                            className="w-full rounded-xl border border-edge-subtle bg-white p-2 text-xs text-ink focus:border-accent focus:outline-none resize-none"
                                         />
                                     </div>
 
                                     <div>
-                                        <span className="text-[11px] font-semibold text-stone-600 block mb-1">Canonical URL (Optional)</span>
+                                        <span className="text-[11px] font-semibold text-ink-secondary block mb-1">Canonical URL (Optional)</span>
                                         <input
                                             type="url"
                                             value={form.canonicalUrl}
                                             onChange={(e) => set({ canonicalUrl: e.target.value })}
-                                            placeholder="https://theweddingboys.com/blogs/..."
-                                            className="w-full rounded-xl border border-[#E5DCD3] bg-white p-2 text-xs text-[#1C1917] focus:border-[#8C532B] focus:outline-none"
+                                            placeholder="https://theweddingvachan.com/blogs/..."
+                                            className="w-full rounded-xl border border-edge-subtle bg-white p-2 text-xs text-ink focus:border-accent focus:outline-none"
                                         />
                                     </div>
 
                                     <div>
-                                        <label className="mb-1 block text-[11px] font-semibold text-stone-600">Secondary Keywords</label>
+                                        <label className="mb-1 block text-[11px] font-semibold text-ink-secondary">Secondary Keywords</label>
                                         <div className="flex gap-1.5">
                                             <input
                                                 type="text"
@@ -1392,7 +1385,7 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                                     }
                                                 }}
                                                 placeholder="Add keyword and press Enter"
-                                                className="flex-1 rounded-xl border border-[#E5DCD3] bg-white p-2 text-xs text-[#1C1917] focus:border-[#8C532B] focus:outline-none"
+                                                className="flex-1 rounded-xl border border-edge-subtle bg-white p-2 text-xs text-ink focus:border-accent focus:outline-none"
                                             />
                                             <Button
                                                 variant="outline"
@@ -1406,13 +1399,13 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                             {form.keywords.map((k) => (
                                                 <span
                                                     key={k}
-                                                    className="inline-flex items-center gap-1 rounded-lg bg-white px-2 py-0.5 text-xs text-stone-700 border border-stone-200 shadow-sm"
+                                                    className="inline-flex items-center gap-1 rounded-lg bg-white px-2 py-0.5 text-xs text-ink-secondary border border-edge-subtle shadow-sm"
                                                 >
                                                     <span>{k}</span>
                                                     <button
                                                         type="button"
                                                         onClick={() => set({ keywords: form.keywords.filter((x) => x !== k) })}
-                                                        className="text-stone-400 hover:text-rose-600 cursor-pointer"
+                                                        className="text-ink-muted hover:text-rose-600 cursor-pointer"
                                                     >
                                                         <X size={12} />
                                                     </button>
@@ -1428,12 +1421,12 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                         {inspectorTab === 'details' && (
                             <div className="space-y-4">
                                 {/* Wedding Story Structured Details */}
-                                <div className="rounded-2xl border border-[#E5DCD3] bg-stone-50/50 p-3.5 space-y-3">
-                                    <label className="text-[11px] font-bold uppercase tracking-wider text-stone-600 block">Wedding Story Details</label>
+                                <div className="rounded-xl border border-edge-subtle bg-ground/50 p-3.5 space-y-3">
+                                    <label className="text-[11px] font-bold uppercase tracking-wider text-ink-secondary block">Wedding Story Details</label>
 
                                     {/* Mood */}
                                     <div>
-                                        <span className="text-[11px] font-semibold text-stone-600 block mb-1.5">Wedding Mood</span>
+                                        <span className="text-[11px] font-semibold text-ink-secondary block mb-1.5">Wedding Mood</span>
                                         <div className="grid grid-cols-2 gap-1.5">
                                             {WEDDING_MOODS.map((m) => {
                                                 const isSel = form.mood === m.value;
@@ -1445,8 +1438,8 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                                         className={cn(
                                                             'rounded-xl border px-2 py-1.5 text-left text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer',
                                                             isSel
-                                                                ? 'border-[#8C532B] bg-[#8C532B]/10 text-[#8C532B] font-bold shadow-sm'
-                                                                : 'border-[#E5DCD3] bg-white text-stone-600 hover:bg-stone-50'
+                                                                ? 'border-accent bg-accent/10 text-accent-ink font-bold shadow-sm'
+                                                                : 'border-edge-subtle bg-white text-ink-secondary hover:bg-ground'
                                                         )}
                                                     >
                                                         <span>{m.emoji}</span>
@@ -1460,22 +1453,22 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                     {/* Season & Budget */}
                                     <div className="grid grid-cols-2 gap-2 pt-1">
                                         <div>
-                                            <span className="text-[11px] font-semibold text-stone-600 block mb-1">Season</span>
+                                            <span className="text-[11px] font-semibold text-ink-secondary block mb-1">Season</span>
                                             <select
                                                 value={form.season}
                                                 onChange={(e) => set({ season: e.target.value })}
-                                                className="w-full rounded-xl border border-[#E5DCD3] bg-white p-2 text-xs text-[#1C1917] focus:border-[#8C532B] focus:outline-none"
+                                                className="w-full rounded-xl border border-edge-subtle bg-white p-2 text-xs text-ink focus:border-accent focus:outline-none"
                                             >
                                                 <option value="">Select Season</option>
                                                 {SEASONS.map((s) => <option key={s} value={s.toLowerCase()}>{s}</option>)}
                                             </select>
                                         </div>
                                         <div>
-                                            <span className="text-[11px] font-semibold text-stone-600 block mb-1">Budget</span>
+                                            <span className="text-[11px] font-semibold text-ink-secondary block mb-1">Budget</span>
                                             <select
                                                 value={form.budget}
                                                 onChange={(e) => set({ budget: e.target.value })}
-                                                className="w-full rounded-xl border border-[#E5DCD3] bg-white p-2 text-xs text-[#1C1917] focus:border-[#8C532B] focus:outline-none"
+                                                className="w-full rounded-xl border border-edge-subtle bg-white p-2 text-xs text-ink focus:border-accent focus:outline-none"
                                             >
                                                 <option value="">Select Budget</option>
                                                 {BUDGET_RANGES.map((b) => <option key={b} value={b}>{b}</option>)}
@@ -1486,7 +1479,7 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                     {/* Venue & Destination */}
                                     <div className="grid grid-cols-2 gap-2">
                                         <div>
-                                            <span className="text-[11px] font-semibold text-stone-600 block mb-1">Venue</span>
+                                            <span className="text-[11px] font-semibold text-ink-secondary block mb-1">Venue</span>
                                             <input
                                                 type="text"
                                                 value={form.weddingDetails?.venue || form.venue}
@@ -1498,11 +1491,11 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                                     });
                                                 }}
                                                 placeholder="e.g. The Leela Palace & Jag Mandir"
-                                                className="w-full rounded-xl border border-[#E5DCD3] bg-white p-2 text-xs text-[#1C1917] focus:border-[#8C532B] focus:outline-none"
+                                                className="w-full rounded-xl border border-edge-subtle bg-white p-2 text-xs text-ink focus:border-accent focus:outline-none"
                                             />
                                         </div>
                                         <div>
-                                            <span className="text-[11px] font-semibold text-stone-600 block mb-1">Destination / City</span>
+                                            <span className="text-[11px] font-semibold text-ink-secondary block mb-1">Destination / City</span>
                                             <input
                                                 type="text"
                                                 value={form.weddingDetails?.destination || ''}
@@ -1510,7 +1503,7 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                                     weddingDetails: { ...form.weddingDetails, destination: e.target.value }
                                                 })}
                                                 placeholder="e.g. Udaipur, Rajasthan"
-                                                className="w-full rounded-xl border border-[#E5DCD3] bg-white p-2 text-xs text-[#1C1917] focus:border-[#8C532B] focus:outline-none"
+                                                className="w-full rounded-xl border border-edge-subtle bg-white p-2 text-xs text-ink focus:border-accent focus:outline-none"
                                             />
                                         </div>
                                     </div>
@@ -1518,7 +1511,7 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                     {/* Cinema Crew & Subtitle */}
                                     <div className="grid grid-cols-2 gap-2">
                                         <div>
-                                            <span className="text-[11px] font-semibold text-stone-600 block mb-1">Cinema Crew</span>
+                                            <span className="text-[11px] font-semibold text-ink-secondary block mb-1">Cinema Crew</span>
                                             <input
                                                 type="text"
                                                 value={form.weddingDetails?.cinemaCrew || ''}
@@ -1526,11 +1519,11 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                                     weddingDetails: { ...form.weddingDetails, cinemaCrew: e.target.value }
                                                 })}
                                                 placeholder="e.g. 6-Camera Team + 4K Drone"
-                                                className="w-full rounded-xl border border-[#E5DCD3] bg-white p-2 text-xs text-[#1C1917] focus:border-[#8C532B] focus:outline-none"
+                                                className="w-full rounded-xl border border-edge-subtle bg-white p-2 text-xs text-ink focus:border-accent focus:outline-none"
                                             />
                                         </div>
                                         <div>
-                                            <span className="text-[11px] font-semibold text-stone-600 block mb-1">Subtitle / Festivities</span>
+                                            <span className="text-[11px] font-semibold text-ink-secondary block mb-1">Subtitle / Festivities</span>
                                             <input
                                                 type="text"
                                                 value={form.weddingDetails?.subtitle || ''}
@@ -1538,14 +1531,14 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                                     weddingDetails: { ...form.weddingDetails, subtitle: e.target.value }
                                                 })}
                                                 placeholder="e.g. 3 Days of Festivities"
-                                                className="w-full rounded-xl border border-[#E5DCD3] bg-white p-2 text-xs text-[#1C1917] focus:border-[#8C532B] focus:outline-none"
+                                                className="w-full rounded-xl border border-edge-subtle bg-white p-2 text-xs text-ink focus:border-accent focus:outline-none"
                                             />
                                         </div>
                                     </div>
 
                                     {/* Romantic Flourish Calligraphy */}
                                     <div>
-                                        <span className="text-[11px] font-semibold text-stone-600 block mb-1">Romantic Flourish (Cursive Headline)</span>
+                                        <span className="text-[11px] font-semibold text-ink-secondary block mb-1">Romantic Flourish (Cursive Headline)</span>
                                         <input
                                             type="text"
                                             value={form.weddingDetails?.flourishQuote || ''}
@@ -1553,16 +1546,16 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                                 weddingDetails: { ...form.weddingDetails, flourishQuote: e.target.value }
                                             })}
                                             placeholder="e.g. Some love stories look like history —"
-                                            className="w-full rounded-xl border border-[#E5DCD3] bg-white p-2 text-xs text-[#1C1917] focus:border-[#8C532B] focus:outline-none"
+                                            className="w-full rounded-xl border border-edge-subtle bg-white p-2 text-xs text-ink focus:border-accent focus:outline-none"
                                         />
                                     </div>
 
                                     {/* 4K Video Trailer Embed */}
-                                    <div className="rounded-xl border border-[#E5DCD3] bg-stone-50/70 p-2.5 space-y-2">
-                                        <span className="text-[11px] font-bold text-[#8C532B] block uppercase tracking-wider">4K Wedding Trailer Film</span>
+                                    <div className="rounded-xl border border-edge-subtle bg-ground/70 p-2.5 space-y-2">
+                                        <span className="text-[11px] font-bold text-accent-ink block uppercase tracking-wider">4K Wedding Trailer Film</span>
                                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                                             <div className="sm:col-span-2">
-                                                <span className="text-[10px] font-semibold text-stone-500 block mb-0.5">Video URL (YouTube / Vimeo / Cloudflare)</span>
+                                                <span className="text-[10px] font-semibold text-ink-muted block mb-0.5">Video URL (YouTube / Vimeo / Cloudflare)</span>
                                                 <input
                                                     type="text"
                                                     value={form.featuredVideo?.url || ''}
@@ -1570,11 +1563,11 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                                         featuredVideo: { ...form.featuredVideo, url: e.target.value }
                                                     })}
                                                     placeholder="https://www.youtube.com/watch?v=..."
-                                                    className="w-full rounded-lg border border-[#E5DCD3] bg-white p-1.5 text-xs text-[#1C1917] focus:border-[#8C532B] focus:outline-none"
+                                                    className="w-full rounded-lg border border-edge-subtle bg-white p-1.5 text-xs text-ink focus:border-accent focus:outline-none"
                                                 />
                                             </div>
                                             <div>
-                                                <span className="text-[10px] font-semibold text-stone-500 block mb-0.5">Duration</span>
+                                                <span className="text-[10px] font-semibold text-ink-muted block mb-0.5">Duration</span>
                                                 <input
                                                     type="text"
                                                     value={form.featuredVideo?.duration || ''}
@@ -1582,7 +1575,7 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                                         featuredVideo: { ...form.featuredVideo, duration: e.target.value }
                                                     })}
                                                     placeholder="e.g. 3:45 min"
-                                                    className="w-full rounded-lg border border-[#E5DCD3] bg-white p-1.5 text-xs text-[#1C1917] focus:border-[#8C532B] focus:outline-none"
+                                                    className="w-full rounded-lg border border-edge-subtle bg-white p-1.5 text-xs text-ink focus:border-accent focus:outline-none"
                                                 />
                                             </div>
                                         </div>
@@ -1591,39 +1584,39 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                     {/* Couple Testimonial & Byline */}
                                     <div className="space-y-2">
                                         <div>
-                                            <span className="text-[11px] font-semibold text-stone-600 block mb-1">Couple Testimonial Quote</span>
+                                            <span className="text-[11px] font-semibold text-ink-secondary block mb-1">Couple Testimonial Quote</span>
                                             <textarea
                                                 rows={2}
                                                 value={form.testimonial}
                                                 onChange={(e) => set({ testimonial: e.target.value })}
                                                 placeholder="What the couple said about their cinematic film experience..."
-                                                className="w-full rounded-xl border border-[#E5DCD3] bg-white p-2 text-xs text-[#1C1917] focus:border-[#8C532B] focus:outline-none resize-none"
+                                                className="w-full rounded-xl border border-edge-subtle bg-white p-2 text-xs text-ink focus:border-accent focus:outline-none resize-none"
                                             />
                                         </div>
                                         <div>
-                                            <span className="text-[11px] font-semibold text-stone-600 block mb-1">Testimonial Byline / Couple Names</span>
+                                            <span className="text-[11px] font-semibold text-ink-secondary block mb-1">Testimonial Byline / Couple Names</span>
                                             <input
                                                 type="text"
                                                 value={form.testimonialAuthor || ''}
                                                 onChange={(e) => set({ testimonialAuthor: e.target.value })}
                                                 placeholder="e.g. — Ananya & Kabir, Udaipur Bride & Groom"
-                                                className="w-full rounded-xl border border-[#E5DCD3] bg-white p-2 text-xs text-[#1C1917] focus:border-[#8C532B] focus:outline-none"
+                                                className="w-full rounded-xl border border-edge-subtle bg-white p-2 text-xs text-ink focus:border-accent focus:outline-none"
                                             />
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* Vendor Credits Section */}
-                                <div className="rounded-2xl border border-[#E5DCD3] bg-stone-50/50 p-3.5 space-y-2.5">
+                                <div className="rounded-xl border border-edge-subtle bg-ground/50 p-3.5 space-y-2.5">
                                     <div className="flex items-center justify-between">
-                                        <h3 className="text-xs font-bold uppercase tracking-wider text-[#1C1917] flex items-center gap-1.5">
-                                            <Trophy size={15} className="text-[#8C532B]" />
+                                        <h3 className="text-xs font-bold uppercase tracking-wider text-ink flex items-center gap-1.5">
+                                            <Trophy size={15} className="text-accent-ink" />
                                             Vendor Credits ({form.vendorCredits.length})
                                         </h3>
                                         <button
                                             type="button"
                                             onClick={addVendorCredit}
-                                            className="inline-flex items-center gap-1 rounded-lg border border-[#8C532B]/30 bg-[#8C532B]/5 px-2 py-0.5 text-xs font-medium text-[#8C532B] hover:bg-[#8C532B]/10 cursor-pointer"
+                                            className="inline-flex items-center gap-1 rounded-lg border border-accent/30 bg-accent/5 px-2 py-0.5 text-xs font-medium text-accent-ink hover:bg-accent-hover cursor-pointer"
                                         >
                                             <Plus size={12} weight="bold" />
                                             Add
@@ -1631,14 +1624,14 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                     </div>
 
                                     {form.vendorCredits.length === 0 ? (
-                                        <p className="text-xs text-stone-400 italic">No partners added yet.</p>
+                                        <p className="text-xs text-ink-muted italic">No partners added yet.</p>
                                     ) : (
                                         <div className="space-y-2.5">
                                             {form.vendorCredits.map((vc, idx) => (
-                                                <div key={idx} className="rounded-xl border border-[#E5DCD3] bg-white p-2.5 space-y-2">
+                                                <div key={idx} className="rounded-xl border border-edge-subtle bg-white p-2.5 space-y-2">
                                                     <div className="flex items-center justify-between">
-                                                        <span className="text-[10px] font-bold uppercase tracking-wider text-stone-500">Partner #{idx + 1}</span>
-                                                        <button type="button" onClick={() => removeVendorCredit(idx)} className="text-stone-400 hover:text-rose-600">
+                                                        <span className="text-[10px] font-bold uppercase tracking-wider text-ink-muted">Partner #{idx + 1}</span>
+                                                        <button type="button" onClick={() => removeVendorCredit(idx)} className="text-ink-muted hover:text-rose-600">
                                                             <Trash size={13} />
                                                         </button>
                                                     </div>
@@ -1648,14 +1641,14 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                                             value={vc.role}
                                                             onChange={(e) => updateVendorCredit(idx, 'role', e.target.value)}
                                                             placeholder="Role (e.g. Venue)"
-                                                            className="rounded-lg border border-[#E5DCD3] px-2 py-1 text-xs text-[#1C1917]"
+                                                            className="rounded-lg border border-edge-subtle px-2 py-1 text-xs text-ink"
                                                         />
                                                         <input
                                                             type="text"
                                                             value={vc.name}
                                                             onChange={(e) => updateVendorCredit(idx, 'name', e.target.value)}
                                                             placeholder="Name"
-                                                            className="rounded-lg border border-[#E5DCD3] px-2 py-1 text-xs text-[#1C1917] font-semibold"
+                                                            className="rounded-lg border border-edge-subtle px-2 py-1 text-xs text-ink font-semibold"
                                                         />
                                                     </div>
                                                     <div className="grid grid-cols-2 gap-1.5">
@@ -1664,14 +1657,14 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                                             value={vc.url}
                                                             onChange={(e) => updateVendorCredit(idx, 'url', e.target.value)}
                                                             placeholder="Website URL"
-                                                            className="rounded-lg border border-[#E5DCD3] px-2 py-1 text-xs text-[#1C1917]"
+                                                            className="rounded-lg border border-edge-subtle px-2 py-1 text-xs text-ink"
                                                         />
                                                         <input
                                                             type="text"
                                                             value={vc.instagram}
                                                             onChange={(e) => updateVendorCredit(idx, 'instagram', e.target.value)}
                                                             placeholder="@handle"
-                                                            className="rounded-lg border border-[#E5DCD3] px-2 py-1 text-xs text-[#1C1917]"
+                                                            className="rounded-lg border border-edge-subtle px-2 py-1 text-xs text-ink"
                                                         />
                                                     </div>
                                                 </div>
@@ -1681,30 +1674,30 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                 </div>
 
                                 {/* FAQ Builder */}
-                                <div className="rounded-2xl border border-[#E5DCD3] bg-stone-50/50 p-3.5 space-y-2.5">
+                                <div className="rounded-xl border border-edge-subtle bg-ground/50 p-3.5 space-y-2.5">
                                     <div className="flex items-center justify-between">
-                                        <h3 className="text-xs font-bold uppercase tracking-wider text-[#1C1917] flex items-center gap-1.5">
-                                            <Question size={15} className="text-[#8C532B]" />
+                                        <h3 className="text-xs font-bold uppercase tracking-wider text-ink flex items-center gap-1.5">
+                                            <Question size={15} className="text-accent-ink" />
                                             Story FAQs ({form.faq.length})
                                         </h3>
                                         <button
                                             type="button"
                                             onClick={addFaqItem}
-                                            className="inline-flex items-center gap-1 rounded-lg border border-[#8C532B]/30 bg-[#8C532B]/5 px-2 py-0.5 text-xs font-medium text-[#8C532B] hover:bg-[#8C532B]/10 cursor-pointer"
+                                            className="inline-flex items-center gap-1 rounded-lg border border-accent/30 bg-accent/5 px-2 py-0.5 text-xs font-medium text-accent-ink hover:bg-accent-hover cursor-pointer"
                                         >
                                             <Plus size={12} weight="bold" />
                                             Add
                                         </button>
                                     </div>
                                     {form.faq.length === 0 ? (
-                                        <p className="text-xs text-stone-400 italic">No FAQ items defined.</p>
+                                        <p className="text-xs text-ink-muted italic">No FAQ items defined.</p>
                                     ) : (
                                         <div className="space-y-2">
                                             {form.faq.map((item, idx) => (
-                                                <div key={idx} className="rounded-xl border border-[#E5DCD3] bg-white p-2.5 space-y-1.5">
+                                                <div key={idx} className="rounded-xl border border-edge-subtle bg-white p-2.5 space-y-1.5">
                                                     <div className="flex items-center justify-between">
-                                                        <span className="text-[10px] font-bold uppercase tracking-wider text-stone-500">Q#{idx + 1}</span>
-                                                        <button type="button" onClick={() => removeFaqItem(idx)} className="text-stone-400 hover:text-rose-600">
+                                                        <span className="text-[10px] font-bold uppercase tracking-wider text-ink-muted">Q#{idx + 1}</span>
+                                                        <button type="button" onClick={() => removeFaqItem(idx)} className="text-ink-muted hover:text-rose-600">
                                                             <Trash size={13} />
                                                         </button>
                                                     </div>
@@ -1713,14 +1706,14 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                                         value={item.question}
                                                         onChange={(e) => updateFaqItem(idx, 'question', e.target.value)}
                                                         placeholder="Question..."
-                                                        className="w-full rounded-lg border border-[#E5DCD3] px-2 py-1 text-xs font-semibold text-[#1C1917]"
+                                                        className="w-full rounded-lg border border-edge-subtle px-2 py-1 text-xs font-semibold text-ink"
                                                     />
                                                     <textarea
                                                         rows={2}
                                                         value={item.answer}
                                                         onChange={(e) => updateFaqItem(idx, 'answer', e.target.value)}
                                                         placeholder="Answer..."
-                                                        className="w-full rounded-lg border border-[#E5DCD3] px-2 py-1 text-xs text-[#1C1917] resize-none"
+                                                        className="w-full rounded-lg border border-edge-subtle px-2 py-1 text-xs text-ink resize-none"
                                                     />
                                                 </div>
                                             ))}
@@ -1729,30 +1722,30 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                 </div>
 
                                 {/* How-To Steps */}
-                                <div className="rounded-2xl border border-[#E5DCD3] bg-stone-50/50 p-3.5 space-y-2.5">
+                                <div className="rounded-xl border border-edge-subtle bg-ground/50 p-3.5 space-y-2.5">
                                     <div className="flex items-center justify-between">
-                                        <h3 className="text-xs font-bold uppercase tracking-wider text-[#1C1917] flex items-center gap-1.5">
-                                            <ListNumbers size={15} className="text-[#8C532B]" />
+                                        <h3 className="text-xs font-bold uppercase tracking-wider text-ink flex items-center gap-1.5">
+                                            <ListNumbers size={15} className="text-accent-ink" />
                                             How-To Steps ({(form.howToSteps || []).length})
                                         </h3>
                                         <button
                                             type="button"
                                             onClick={addHowToStep}
-                                            className="inline-flex items-center gap-1 rounded-lg border border-[#8C532B]/30 bg-[#8C532B]/5 px-2 py-0.5 text-xs font-medium text-[#8C532B] hover:bg-[#8C532B]/10 cursor-pointer"
+                                            className="inline-flex items-center gap-1 rounded-lg border border-accent/30 bg-accent/5 px-2 py-0.5 text-xs font-medium text-accent-ink hover:bg-accent-hover cursor-pointer"
                                         >
                                             <Plus size={12} weight="bold" />
                                             Add
                                         </button>
                                     </div>
                                     {(form.howToSteps || []).length === 0 ? (
-                                        <p className="text-xs text-stone-400 italic">No structured steps added.</p>
+                                        <p className="text-xs text-ink-muted italic">No structured steps added.</p>
                                     ) : (
                                         <div className="space-y-2">
                                             {(form.howToSteps || []).map((step, idx) => (
-                                                <div key={idx} className="rounded-xl border border-[#E5DCD3] bg-white p-2.5 space-y-1.5">
+                                                <div key={idx} className="rounded-xl border border-edge-subtle bg-white p-2.5 space-y-1.5">
                                                     <div className="flex items-center justify-between">
-                                                        <span className="text-[10px] font-bold uppercase tracking-wider text-stone-500">Step #{idx + 1}</span>
-                                                        <button type="button" onClick={() => removeHowToStep(idx)} className="text-stone-400 hover:text-rose-600">
+                                                        <span className="text-[10px] font-bold uppercase tracking-wider text-ink-muted">Step #{idx + 1}</span>
+                                                        <button type="button" onClick={() => removeHowToStep(idx)} className="text-ink-muted hover:text-rose-600">
                                                             <Trash size={13} />
                                                         </button>
                                                     </div>
@@ -1761,14 +1754,14 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                                         value={step.name}
                                                         onChange={(e) => updateHowToStep(idx, 'name', e.target.value)}
                                                         placeholder="Step title..."
-                                                        className="w-full rounded-lg border border-[#E5DCD3] px-2 py-1 text-xs font-semibold text-[#1C1917]"
+                                                        className="w-full rounded-lg border border-edge-subtle px-2 py-1 text-xs font-semibold text-ink"
                                                     />
                                                     <textarea
                                                         rows={2}
                                                         value={step.text}
                                                         onChange={(e) => updateHowToStep(idx, 'text', e.target.value)}
                                                         placeholder="Step instructions..."
-                                                        className="w-full rounded-lg border border-[#E5DCD3] px-2 py-1 text-xs text-[#1C1917] resize-none"
+                                                        className="w-full rounded-lg border border-edge-subtle px-2 py-1 text-xs text-ink resize-none"
                                                     />
                                                 </div>
                                             ))}
@@ -1782,12 +1775,12 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                         {inspectorTab === 'manage' && (
                             <div className="space-y-4">
                                 {/* AI Co-Pilot Card */}
-                                <div className="rounded-2xl border border-[#8C532B]/30 bg-gradient-to-br from-[#8C532B]/5 to-transparent p-4 space-y-2.5">
-                                    <div className="flex items-center gap-2 text-[#8C532B] font-bold text-xs">
+                                <div className="rounded-xl border border-accent/30 bg-gradient-to-br from-accent/5 to-transparent p-4 space-y-2.5">
+                                    <div className="flex items-center gap-2 text-accent-ink font-bold text-xs">
                                         <Sparkle size={16} weight="fill" />
                                         <span>AI Editorial Co-Pilot</span>
                                     </div>
-                                    <p className="text-xs text-stone-600">
+                                    <p className="text-xs text-ink-secondary">
                                         Generate SERP meta descriptions, emotional story teasers, keyword expansion, and venue FAQs in seconds.
                                     </p>
                                     <Button
@@ -1795,32 +1788,32 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                         size="sm"
                                         icon={Sparkle}
                                         onClick={() => setAiCopilotOpen(true)}
-                                        className="w-full border-[#8C532B]/40 text-[#8C532B] hover:bg-[#8C532B]/10 font-bold text-xs"
+                                        className="w-full border-accent/40 text-accent-ink hover:bg-accent-hover font-bold text-xs"
                                     >
                                         Launch AI Assistant
                                     </Button>
                                 </div>
 
                                 {/* Live Outline / TOC */}
-                                <div className="rounded-2xl border border-[#E5DCD3] bg-stone-50/50 p-3.5 space-y-2">
+                                <div className="rounded-xl border border-edge-subtle bg-ground/50 p-3.5 space-y-2">
                                     <div className="flex items-center justify-between">
-                                        <h3 className="text-xs font-bold uppercase tracking-wider text-[#1C1917] flex items-center gap-1.5">
-                                            <TreeStructure size={15} className="text-[#8C532B]" />
+                                        <h3 className="text-xs font-bold uppercase tracking-wider text-ink flex items-center gap-1.5">
+                                            <TreeStructure size={15} className="text-accent-ink" />
                                             Document Outline
                                         </h3>
-                                        <span className="text-[10px] text-stone-400 font-mono">{toc.length} sections</span>
+                                        <span className="text-[10px] text-ink-muted font-mono">{toc.length} sections</span>
                                     </div>
                                     {toc.length === 0 ? (
-                                        <p className="text-xs text-stone-400 italic">Add H2–H4 headings in editor to populate outline.</p>
+                                        <p className="text-xs text-ink-muted italic">Add H2–H4 headings in editor to populate outline.</p>
                                     ) : (
-                                        <ul className="space-y-1.5 text-xs text-stone-600 font-medium max-h-48 overflow-y-auto pr-1">
+                                        <ul className="space-y-1.5 text-xs text-ink-secondary font-medium max-h-48 overflow-y-auto pr-1">
                                             {toc.map((h, i) => (
                                                 <li
                                                     key={i}
-                                                    className="truncate hover:text-[#8C532B] transition-colors"
+                                                    className="truncate hover:text-accent-ink transition-colors"
                                                     style={{ paddingLeft: `${(h.level - 2) * 12}px` }}
                                                 >
-                                                    <span className="text-stone-400 mr-1.5">›</span>
+                                                    <span className="text-ink-muted mr-1.5">›</span>
                                                     {h.text || <span className="text-stone-300">Untitled section</span>}
                                                 </li>
                                             ))}
@@ -1829,12 +1822,12 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                 </div>
 
                                 {/* Revisions History */}
-                                <div className="rounded-2xl border border-[#E5DCD3] bg-stone-50/50 p-3.5 space-y-2">
-                                    <h3 className="text-xs font-bold uppercase tracking-wider text-[#1C1917] flex items-center gap-1.5">
-                                        <ArrowsClockwise size={15} className="text-[#8C532B]" />
+                                <div className="rounded-xl border border-edge-subtle bg-ground/50 p-3.5 space-y-2">
+                                    <h3 className="text-xs font-bold uppercase tracking-wider text-ink flex items-center gap-1.5">
+                                        <ArrowsClockwise size={15} className="text-accent-ink" />
                                         Snapshot History
                                     </h3>
-                                    <p className="text-xs text-stone-500">
+                                    <p className="text-xs text-ink-muted">
                                         Automatic dual-save captures revisions every 5s while editing.
                                     </p>
                                     {mode === 'edit' && (
@@ -1852,12 +1845,12 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
 
                                 {/* Share 24-Hour Preview Link */}
                                 {mode === 'edit' && postId && (
-                                    <div className="rounded-2xl border border-[#E5DCD3] bg-stone-50/50 p-3.5 space-y-2">
-                                        <h3 className="text-xs font-bold uppercase tracking-wider text-[#1C1917] flex items-center gap-1.5">
-                                            <LinkSimple size={15} className="text-[#8C532B]" />
+                                    <div className="rounded-xl border border-edge-subtle bg-ground/50 p-3.5 space-y-2">
+                                        <h3 className="text-xs font-bold uppercase tracking-wider text-ink flex items-center gap-1.5">
+                                            <LinkSimple size={15} className="text-accent-ink" />
                                             Client Preview Link
                                         </h3>
-                                        <p className="text-xs text-stone-500">
+                                        <p className="text-xs text-ink-muted">
                                             Generate cryptographic 24-hour preview token for external reviewers without admin login.
                                         </p>
                                         <Button
@@ -1890,21 +1883,21 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
             {/* Revision History Dialog (D5) */}
             <Dialog open={revisionsOpen} onOpenChange={setRevisionsOpen}>
                 <DialogContent className="sm:max-w-lg font-sans">
-                    <DialogHeader className="border-b border-[#E5DCD3] pb-3">
-                        <DialogTitle className="text-base font-bold text-[#1C1917] flex items-center gap-2">
-                            <ArrowsClockwise size={18} className="text-[#8C532B]" />
+                    <DialogHeader className="border-b border-edge-subtle pb-3">
+                        <DialogTitle className="text-base font-bold text-ink flex items-center gap-2">
+                            <ArrowsClockwise size={18} className="text-accent-ink" />
                             Revision History
                         </DialogTitle>
-                        <p className="text-xs text-stone-500">
+                        <p className="text-xs text-ink-muted">
                             View automated snapshots and manual saves. Restoring a version creates a safe backup of your current state.
                         </p>
                     </DialogHeader>
 
                     <div className="max-h-96 overflow-y-auto space-y-2 py-3 pr-1">
                         {loadingRevisions ? (
-                            <div className="py-8 text-center text-xs text-stone-400">Loading revisions...</div>
+                            <div className="py-8 text-center text-xs text-ink-muted">Loading revisions...</div>
                         ) : revisions.length === 0 ? (
-                            <div className="py-8 text-center text-xs text-stone-400">No revisions recorded yet.</div>
+                            <div className="py-8 text-center text-xs text-ink-muted">No revisions recorded yet.</div>
                         ) : (
                             revisions.map((rev) => {
                                 const date = new Date(rev.createdAt);
@@ -1914,7 +1907,7 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                 return (
                                     <div
                                         key={rev._id}
-                                        className="flex items-center justify-between gap-3 rounded-xl border border-[#E5DCD3] bg-white p-3 hover:bg-stone-50/60 transition-colors"
+                                        className="flex items-center justify-between gap-3 rounded-xl border border-edge-subtle bg-white p-3 hover:bg-ground/60 transition-colors"
                                     >
                                         <div className="min-w-0 flex-1">
                                             <div className="flex items-center gap-2">
@@ -1924,11 +1917,11 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                                 >
                                                     {rev.reason}
                                                 </Badge>
-                                                <span className="text-xs font-semibold text-[#1C1917] truncate">
+                                                <span className="text-xs font-semibold text-ink truncate">
                                                     {rev.title || 'Untitled'}
                                                 </span>
                                             </div>
-                                            <div className="mt-1 flex items-center gap-2 text-[11px] text-stone-400">
+                                            <div className="mt-1 flex items-center gap-2 text-[11px] text-ink-muted">
                                                 <span>
                                                     {date.toLocaleDateString('en-IN', {
                                                         month: 'short',
@@ -1971,11 +1964,11 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
 
             {/* Upgraded Live Story Preview Modal (D6) with Mobile ⇄ Desktop Viewport Switcher */}
             <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
-                <DialogContent className="max-w-6xl w-[95vw] min-h-[70vh] max-h-[92vh] overflow-y-auto font-sans p-4 sm:p-6 bg-stone-100/90">
+                <DialogContent className="max-w-6xl w-[95vw] min-h-[70vh] max-h-[92vh] overflow-y-auto font-sans p-4 sm:p-6 bg-ground-sunk/90">
                     {/* Viewport & Controls Header */}
-                    <div className="flex items-center justify-between border-b border-[#E5DCD3] pb-3 mb-4 bg-white -mx-4 -mt-4 px-6 pt-4 rounded-t-2xl shadow-sm">
+                    <div className="flex items-center justify-between border-b border-edge-subtle pb-3 mb-4 bg-white -mx-4 -mt-4 px-6 pt-4 rounded-t-xl shadow-sm">
                         <div className="flex items-center gap-3">
-                            <h3 className="text-sm font-bold text-[#1C1917]">
+                            <h3 className="text-sm font-bold text-ink">
                                 Production Layout Preview
                             </h3>
                             <Badge variant="neutral" size="sm" className="capitalize">
@@ -1984,15 +1977,15 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                         </div>
 
                         {/* Mobile ⇄ Desktop Switcher */}
-                        <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-xl border border-stone-200">
+                        <div className="flex items-center gap-1 bg-ground-sunk p-1 rounded-xl border border-edge-subtle">
                             <button
                                 type="button"
                                 onClick={() => setPreviewViewport('desktop')}
                                 className={cn(
                                     'flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer',
                                     previewViewport === 'desktop'
-                                        ? 'bg-white text-[#1C1917] shadow-sm font-semibold'
-                                        : 'text-stone-600 hover:text-[#1C1917]'
+                                        ? 'bg-white text-ink shadow-sm font-semibold'
+                                        : 'text-ink-secondary hover:text-ink'
                                 )}
                             >
                                 <Desktop size={14} />
@@ -2004,8 +1997,8 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                 className={cn(
                                     'flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer',
                                     previewViewport === 'mobile'
-                                        ? 'bg-white text-[#1C1917] shadow-sm font-semibold'
-                                        : 'text-stone-600 hover:text-[#1C1917]'
+                                        ? 'bg-white text-ink shadow-sm font-semibold'
+                                        : 'text-ink-secondary hover:text-ink'
                                 )}
                             >
                                 <DeviceMobile size={14} />
@@ -2022,10 +2015,10 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                     <div className="flex justify-center items-start py-4">
                         <div
                             className={cn(
-                                'transition-all duration-300 bg-white rounded-3xl shadow-xl overflow-hidden',
+                                'transition-all duration-300 bg-white rounded-xl shadow-xl overflow-hidden',
                                 previewViewport === 'mobile'
-                                    ? 'w-[390px] border-8 border-stone-800 rounded-[44px] p-4 shadow-2xl'
-                                    : 'w-full max-w-5xl p-6 sm:p-10 border border-[#E5DCD3]'
+                                    ? 'w-[390px] border-8 border-ink rounded-[44px] p-4 shadow-2xl'
+                                    : 'w-full max-w-5xl p-6 sm:p-10 border border-edge-subtle'
                             )}
                         >
                             {/* Render using the authentic BlogRenderer and selected template */}
@@ -2049,19 +2042,19 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
 
             {/* Publication Scheduling Modal */}
             <Dialog open={scheduleModalOpen} onOpenChange={setScheduleModalOpen}>
-                <DialogContent className="max-w-md bg-white rounded-3xl p-6 border border-[#E5DCD3] shadow-2xl font-sans">
+                <DialogContent className="max-w-md bg-white rounded-xl p-6 border border-edge-subtle shadow-2xl font-sans">
                     <DialogHeader>
-                        <DialogTitle className="text-base font-bold text-[#1C1917] flex items-center gap-2">
-                            <CalendarBlank size={20} className="text-[#8C532B]" />
+                        <DialogTitle className="text-base font-bold text-ink flex items-center gap-2">
+                            <CalendarBlank size={20} className="text-accent-ink" />
                             Schedule Publication
                         </DialogTitle>
                     </DialogHeader>
                     <div className="space-y-4 py-3 font-sans">
-                        <p className="text-xs text-stone-500 leading-relaxed">
+                        <p className="text-xs text-ink-muted leading-relaxed">
                             Specify the future date and time when this wedding story will automatically transition to <strong>Published</strong> status, trigger on-demand ISR revalidation, and be visible to search engines and visitors.
                         </p>
                         <div>
-                            <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1.5">
+                            <label className="block text-[11px] font-bold uppercase tracking-wider text-ink-secondary mb-1.5">
                                 Scheduled Publication Date &amp; Time
                             </label>
                             <input
@@ -2069,11 +2062,11 @@ export default function BlogForm({ mode = 'create', initial = null, postId = nul
                                 value={scheduledDateTime}
                                 onChange={(e) => setScheduledDateTime(e.target.value)}
                                 min={new Date().toISOString().slice(0, 16)}
-                                className="w-full rounded-xl border border-[#E5DCD3] bg-stone-50 p-2.5 text-xs text-[#1C1917] focus:border-[#8C532B] focus:ring-1 focus:ring-[#8C532B]/30 focus:outline-none"
+                                className="w-full rounded-xl border border-edge-subtle bg-ground p-2.5 text-xs text-ink focus:border-accent focus:ring-1 focus:ring-accent/30 focus:outline-none"
                             />
                         </div>
                     </div>
-                    <div className="flex items-center justify-end gap-2 pt-3 border-t border-[#E5DCD3]">
+                    <div className="flex items-center justify-end gap-2 pt-3 border-t border-edge-subtle">
                         <Button variant="outline" size="sm" onClick={() => setScheduleModalOpen(false)}>
                             Cancel
                         </Button>

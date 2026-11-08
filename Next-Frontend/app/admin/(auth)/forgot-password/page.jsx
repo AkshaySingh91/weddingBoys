@@ -53,12 +53,12 @@ export default function ForgotPasswordPage() {
   if (sent) {
     return (
       <div className="text-center font-sans space-y-4">
-        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FAF1E6] text-[#A3603A]">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-ground-sunk text-accent-ink">
           <CheckCircle size={32} weight="duotone" />
         </div>
-        <h1 className="text-2xl font-serif font-semibold text-[#1C1917]">Check your email</h1>
-        <p className="text-xs text-stone-500 max-w-sm mx-auto leading-relaxed">
-          If <span className="font-medium text-stone-800">{email}</span> is registered in the studio roster, we&apos;ve sent a password reset link. It expires in 1 hour.
+        <h1 className="text-2xl font-sans font-semibold text-ink">Check your email</h1>
+        <p className="text-xs text-ink-muted max-w-sm mx-auto leading-relaxed">
+          If <span className="font-medium text-ink">{email}</span> is registered in the studio roster, we&apos;ve sent a password reset link. It expires in 1 hour.
         </p>
 
         {devUrl && (
@@ -71,7 +71,7 @@ export default function ForgotPasswordPage() {
         <div className="pt-4">
           <Link
             href="/admin/login"
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-[#A3603A] hover:underline"
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-accent-ink hover:underline"
           >
             <ArrowLeft size={14} weight="bold" /> Back to sign in
           </Link>
@@ -83,8 +83,8 @@ export default function ForgotPasswordPage() {
   return (
     <div className="space-y-6 font-sans">
       <header>
-        <h1 className="font-serif text-3xl font-semibold text-[#1C1917]">Reset Password</h1>
-        <p className="mt-1 text-xs text-stone-500">
+        <h1 className="font-sans text-3xl font-semibold text-ink">Reset Password</h1>
+        <p className="mt-1 text-xs text-ink-muted">
           Enter your registered studio email address and we&apos;ll send recovery instructions.
         </p>
       </header>
@@ -98,19 +98,19 @@ export default function ForgotPasswordPage() {
 
       <form onSubmit={handleSubmit} noValidate className="space-y-4">
         <div>
-          <label htmlFor="email" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-stone-500">
+          <label htmlFor="email" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-ink-muted">
             Studio Email Address
           </label>
           <div className="relative">
-            <EnvelopeSimple size={16} weight="bold" className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400" />
+            <EnvelopeSimple size={16} weight="bold" className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-muted" />
             <input
               id="email"
               type="email"
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@theweddingboys.in"
-              className="w-full rounded-xl border border-[#E5DCD3] bg-white py-2.5 pl-10 pr-3.5 text-xs text-[#1C1917] placeholder:text-stone-400 outline-none transition focus:border-[#A3603A] focus:ring-1 focus:ring-[#A3603A]"
+              placeholder="you@theweddingvachan.com"
+              className="w-full rounded-xl border border-edge-subtle bg-white py-2.5 pl-10 pr-3.5 text-xs text-ink placeholder:text-ink-muted outline-none transition focus:border-accent focus:ring-1 focus:ring-accent"
             />
           </div>
         </div>
@@ -129,7 +129,7 @@ export default function ForgotPasswordPage() {
       <div className="pt-2 text-center">
         <Link
           href="/admin/login"
-          className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-500 hover:text-[#1C1917] transition"
+          className="inline-flex items-center gap-1.5 text-xs font-medium text-ink-muted hover:text-ink transition"
         >
           <ArrowLeft size={14} weight="bold" /> Back to sign in
         </Link>

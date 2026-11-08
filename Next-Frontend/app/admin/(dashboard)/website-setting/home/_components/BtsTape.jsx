@@ -175,13 +175,13 @@ export default function BtsTape() {
   return (
     <div className="space-y-6 font-sans">
       {/* Header bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#E5DCD3] pb-4">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-edge-subtle pb-4">
         <div>
-          <h2 className="flex items-center gap-2 text-xl font-serif text-[#1C1917]">
-            <Camera size={20} weight="fill" className="text-[#A3603A]" />
+          <h2 className="flex items-center gap-2 text-xl font-sans text-ink">
+            <Camera size={20} weight="fill" className="text-accent-ink" />
             Behind The Scenes Moving Tape
           </h2>
-          <p className="mt-0.5 text-xs text-stone-500">
+          <p className="mt-0.5 text-xs text-ink-muted">
             Candid crew and production moments rolling horizontally across the homepage banner.
           </p>
         </div>
@@ -221,13 +221,13 @@ export default function BtsTape() {
 
       {/* Editing / Upload Dropzone */}
       {isEditing && (
-        <div className="rounded-2xl border border-dashed border-[#A3603A]/60 bg-[#FAF1E6]/40 p-6 space-y-4">
+        <div className="rounded-xl border border-dashed border-accent/60 bg-ground-sunk/40 p-6 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#A3603A]">
+              <p className="text-xs font-semibold uppercase tracking-wider text-accent-ink">
                 Select New Production Photos
               </p>
-              <p className="text-xs text-stone-500 mt-0.5">
+              <p className="text-xs text-ink-muted mt-0.5">
                 PNG or JPEG frames. You can select multiple photos simultaneously.
               </p>
             </div>
@@ -243,7 +243,7 @@ export default function BtsTape() {
               />
               <label
                 htmlFor="bts-file-input"
-                className="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl border border-[#E5DCD3] bg-white px-3 py-1.5 text-xs font-medium text-stone-700 shadow-sm transition hover:border-[#A3603A] hover:bg-stone-50"
+                className="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl border border-edge-subtle bg-white px-3 py-1.5 text-xs font-medium text-ink-secondary shadow-sm transition hover:border-accent hover:bg-ground"
               >
                 <UploadSimple size={14} />
                 <span>Choose Files</span>
@@ -258,7 +258,7 @@ export default function BtsTape() {
                     setBtsImageFile([]);
                     setBtsMetaData([]);
                   }}
-                  className="text-stone-500 hover:text-stone-800"
+                  className="text-ink-muted hover:text-ink"
                 >
                   Clear Selection
                 </Button>
@@ -270,7 +270,7 @@ export default function BtsTape() {
           {btsImagePreview.length > 0 && (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 pt-2">
               {btsImagePreview.map((img) => (
-                <div key={img.name} className="relative group overflow-hidden rounded-xl border border-[#E5DCD3] bg-white aspect-[4/3]">
+                <div key={img.name} className="relative group overflow-hidden rounded-xl border border-edge-subtle bg-white aspect-[4/3]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={img.url}
@@ -284,7 +284,7 @@ export default function BtsTape() {
                       setBtsImageFile((prev) => prev.filter((f) => f.name !== img.name));
                       setBtsMetaData((prev) => prev.filter((f) => f.name !== img.name));
                     }}
-                    className="absolute top-1.5 right-1.5 p-1 rounded-full bg-stone-900/70 text-white hover:bg-rose-600 transition"
+                    className="absolute top-1.5 right-1.5 p-1 rounded-full bg-ink/70 text-white hover:bg-rose-600 transition"
                     title="Remove from batch"
                   >
                     <X size={12} />
@@ -318,14 +318,14 @@ export default function BtsTape() {
 
       {/* Live Gallery Strip */}
       {loading ? (
-        <div className="flex items-center justify-center py-16 text-stone-400">
-          <CircleNotch size={24} className="animate-spin text-[#A3603A]" />
+        <div className="flex items-center justify-center py-16 text-ink-muted">
+          <CircleNotch size={24} className="animate-spin text-accent-ink" />
         </div>
       ) : btsImageUrl.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-[#E5DCD3] bg-white p-12 text-center">
-          <Sparkle size={32} className="mx-auto text-stone-400 mb-2" />
-          <h3 className="font-serif text-base text-[#1C1917]">No BTS Photos Yet</h3>
-          <p className="text-xs text-stone-500 mt-1 max-w-sm mx-auto">
+        <div className="rounded-xl border border-dashed border-edge-subtle bg-white p-12 text-center">
+          <Sparkle size={32} className="mx-auto text-ink-muted mb-2" />
+          <h3 className="font-sans text-base text-ink">No BTS Photos Yet</h3>
+          <p className="text-xs text-ink-muted mt-1 max-w-sm mx-auto">
             Upload candid snapshots from wedding cinematography shoots to showcase your film crew in action.
           </p>
           <Button
@@ -339,12 +339,12 @@ export default function BtsTape() {
           </Button>
         </div>
       ) : (
-        <div className="rounded-2xl border border-[#E5DCD3] bg-white p-5 space-y-4">
+        <div className="rounded-xl border border-edge-subtle bg-white p-5 space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-stone-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-ink-muted">
               Active Film Tape Strip ({btsImageUrl.length} frames)
             </span>
-            <span className="text-[11px] text-stone-400">
+            <span className="text-[11px] text-ink-muted">
               Hover to delete individual frames
             </span>
           </div>
@@ -353,7 +353,7 @@ export default function BtsTape() {
             {btsImageUrl.map((bts) => (
               <div
                 key={bts.key}
-                className="group relative overflow-hidden rounded-2xl border border-[#E5DCD3] bg-stone-100 aspect-[4/3] shadow-sm transition hover:shadow-md"
+                className="group relative overflow-hidden rounded-xl border border-edge-subtle bg-ground-sunk aspect-[4/3] shadow-sm transition hover:shadow-md"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -362,7 +362,7 @@ export default function BtsTape() {
                   className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
                 />
 
-                <div className="absolute inset-0 bg-stone-900/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <div className="absolute inset-0 bg-ink/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <button
                     type="button"
                     onClick={() => setDeleteConfirmKey(bts.key)}

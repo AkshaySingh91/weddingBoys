@@ -131,13 +131,13 @@ export default function VideoThumbnail() {
   return (
     <div className="space-y-6 font-sans">
       {/* Section Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#E5DCD3] pb-4">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-edge-subtle pb-4">
         <div>
-          <h2 className="flex items-center gap-2 text-xl font-serif text-[#1C1917]">
-            <FilmSlate size={20} weight="fill" className="text-[#A3603A]" />
+          <h2 className="flex items-center gap-2 text-xl font-sans text-ink">
+            <FilmSlate size={20} weight="fill" className="text-accent-ink" />
             Showcase Reel Thumbnails
           </h2>
-          <p className="mt-0.5 text-xs text-stone-500">
+          <p className="mt-0.5 text-xs text-ink-muted">
             Curate the category filter pills and featured video reels showcased on the homepage.
           </p>
         </div>
@@ -167,12 +167,12 @@ export default function VideoThumbnail() {
 
       {/* Editing Taxonomy Pill Selector */}
       {isEditing && (
-        <div className="rounded-2xl border border-[#E5DCD3] bg-[#FCFAF7] p-5 space-y-4">
+        <div className="rounded-xl border border-edge-subtle bg-ground p-5 space-y-4">
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-[#A3603A]">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-accent-ink">
               Homepage Filter Taxonomy
             </h3>
-            <p className="text-xs text-stone-500 mt-0.5">
+            <p className="text-xs text-ink-muted mt-0.5">
               Click tags below to include or exclude them from the homepage film switcher.
             </p>
           </div>
@@ -180,7 +180,7 @@ export default function VideoThumbnail() {
           <div className="space-y-3">
             {tagsData.map((tagType) => (
               <div key={tagType.tagType} className="space-y-1.5">
-                <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider">
+                <span className="text-[11px] font-semibold text-ink-muted uppercase tracking-wider">
                   {tagType.tagType}
                 </span>
                 <div className="flex flex-wrap gap-2">
@@ -193,11 +193,11 @@ export default function VideoThumbnail() {
                         onClick={() => toggleTag(t)}
                         className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition cursor-pointer ${
                           isSelected
-                            ? 'bg-[#1C1917] text-white shadow-sm'
-                            : 'bg-white text-stone-700 border border-[#E5DCD3] hover:border-[#A3603A]'
+                            ? 'bg-ink text-white shadow-sm'
+                            : 'bg-white text-ink-secondary border border-edge-subtle hover:border-accent'
                         }`}
                       >
-                        {isSelected && <Check size={12} className="text-[#C29555]" />}
+                        {isSelected && <Check size={12} className="text-gold-strong" />}
                         <span>{t}</span>
                       </button>
                     );
@@ -219,8 +219,8 @@ export default function VideoThumbnail() {
               onClick={() => handleChangeTag(t)}
               className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
                 active
-                  ? 'bg-[#A3603A] text-white shadow-sm'
-                  : 'bg-white border border-[#E5DCD3] text-stone-700 hover:border-[#A3603A]'
+                  ? 'bg-accent text-white shadow-sm'
+                  : 'bg-white border border-edge-subtle text-ink-secondary hover:border-accent'
               }`}
             >
               {t}
@@ -231,14 +231,14 @@ export default function VideoThumbnail() {
 
       {/* Videos Horizontal / Grid Display */}
       {isLoading ? (
-        <div className="flex items-center justify-center py-16 text-stone-400">
-          <CircleNotch size={24} className="animate-spin text-[#A3603A]" />
+        <div className="flex items-center justify-center py-16 text-ink-muted">
+          <CircleNotch size={24} className="animate-spin text-accent-ink" />
         </div>
       ) : clients.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-[#E5DCD3] bg-white p-12 text-center">
-          <FilmSlate size={32} className="mx-auto text-stone-400 mb-2" />
-          <h3 className="font-serif text-base text-[#1C1917]">No Films with Tag &ldquo;{selectedTag}&rdquo;</h3>
-          <p className="text-xs text-stone-500 mt-1 max-w-sm mx-auto">
+        <div className="rounded-xl border border-dashed border-edge-subtle bg-white p-12 text-center">
+          <FilmSlate size={32} className="mx-auto text-ink-muted mb-2" />
+          <h3 className="font-sans text-base text-ink">No Films with Tag &ldquo;{selectedTag}&rdquo;</h3>
+          <p className="text-xs text-ink-muted mt-1 max-w-sm mx-auto">
             Assign this tag to wedding film shoots in the Wedding Archive to have them appear here.
           </p>
         </div>
@@ -247,19 +247,19 @@ export default function VideoThumbnail() {
           {clients.map((c) => (
             <div
               key={c.videos?._id || c._id}
-              className="group relative overflow-hidden rounded-2xl border border-[#E5DCD3] bg-white shadow-sm transition hover:shadow-md"
+              className="group relative overflow-hidden rounded-xl border border-edge-subtle bg-white shadow-sm transition hover:shadow-md"
             >
-              <div className="relative aspect-[16/10] overflow-hidden bg-stone-100">
+              <div className="relative aspect-[16/10] overflow-hidden bg-ground-sunk">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={c.thumbnailUrl}
                   alt={c.clientName?.Bride ? `${c.clientName.Bride} & ${c.clientName.Groom}` : 'Wedding'}
                   className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
 
                 <div className="absolute bottom-3 left-4 right-4 text-white">
-                  <div className="flex items-center gap-2 text-[11px] font-medium text-[#E5DCD3]">
+                  <div className="flex items-center gap-2 text-[11px] font-medium text-ink-muted">
                     {c.videos?.videoShootDate && (
                       <span className="flex items-center gap-1">
                         <CalendarBlank size={12} />
@@ -268,12 +268,12 @@ export default function VideoThumbnail() {
                     )}
                     {c.videos?.videoLocation?.city && (
                       <span className="flex items-center gap-1">
-                        <MapPin size={12} className="text-[#C29555]" />
+                        <MapPin size={12} className="text-gold-strong" />
                         {c.videos.videoLocation.city}
                       </span>
                     )}
                   </div>
-                  <h4 className="font-serif text-lg font-semibold tracking-tight text-white mt-0.5">
+                  <h4 className="font-sans text-lg font-semibold tracking-tight text-white mt-0.5">
                     {c.clientName?.Bride} & {c.clientName?.Groom}
                   </h4>
                 </div>

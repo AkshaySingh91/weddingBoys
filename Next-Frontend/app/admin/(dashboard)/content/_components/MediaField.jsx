@@ -13,7 +13,7 @@ function Thumb({ media }) {
         return <Image src={url} alt={media.altText || ''} fill sizes="120px" className="object-cover" />;
     }
     return (
-        <div className="flex h-full w-full items-center justify-center bg-gray-100 text-gray-400">
+        <div className="flex h-full w-full items-center justify-center bg-ground-sunk text-ink-muted">
             {media?.mediaType === 'Video' ? <Film size={20} /> : <FileText size={20} />}
         </div>
     );
@@ -56,7 +56,7 @@ export default function MediaField({ mode = 'single', value = [], onChange, owne
         <div>
             {mode === 'single' ? (
                 list[0] ? (
-                    <div className="relative h-28 w-44 overflow-hidden rounded-lg border border-gray-200">
+                    <div className="relative h-28 w-44 overflow-hidden rounded-lg border border-edge-subtle">
                         <Thumb media={list[0]} />
                         <button
                             type="button"
@@ -77,7 +77,7 @@ export default function MediaField({ mode = 'single', value = [], onChange, owne
                     <button
                         type="button"
                         onClick={() => setOpen(true)}
-                        className="flex h-28 w-44 flex-col items-center justify-center gap-1 rounded-lg border-2 border-dashed border-gray-300 text-gray-400 hover:border-rose-400"
+                        className="flex h-28 w-44 flex-col items-center justify-center gap-1 rounded-lg border-2 border-dashed border-edge-strong text-ink-muted hover:border-rose-400"
                     >
                         <ImagePlus size={20} />
                         <span className="text-xs">Choose media</span>
@@ -86,7 +86,7 @@ export default function MediaField({ mode = 'single', value = [], onChange, owne
             ) : (
                 <div className="flex flex-wrap gap-2">
                     {list.map((m, i) => (
-                        <div key={m._id || i} className="group relative h-24 w-24 overflow-hidden rounded-lg border border-gray-200">
+                        <div key={m._id || i} className="group relative h-24 w-24 overflow-hidden rounded-lg border border-edge-subtle">
                             <Thumb media={m} />
                             <button
                                 type="button"
@@ -105,7 +105,7 @@ export default function MediaField({ mode = 'single', value = [], onChange, owne
                     <button
                         type="button"
                         onClick={() => setOpen(true)}
-                        className="flex h-24 w-24 flex-col items-center justify-center gap-1 rounded-lg border-2 border-dashed border-gray-300 text-gray-400 hover:border-rose-400"
+                        className="flex h-24 w-24 flex-col items-center justify-center gap-1 rounded-lg border-2 border-dashed border-edge-strong text-ink-muted hover:border-rose-400"
                     >
                         <ImagePlus size={18} />
                         <span className="text-[11px]">Add</span>

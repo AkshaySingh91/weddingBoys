@@ -10,9 +10,9 @@ function EnquiryCTAView({ node, updateAttributes, deleteNode, selected }) {
     const href = node.attrs.href || '/contact';
 
     return (
-        <NodeViewWrapper className={`my-8 overflow-hidden rounded-2xl bg-gradient-to-br from-[#1C1917] via-[#292524] to-[#1C1917] p-6 sm:p-8 text-center text-white transition-all ${selected ? 'ring-2 ring-[#C29555]' : ''}`}>
+        <NodeViewWrapper className={`my-8 overflow-hidden rounded-xl bg-gradient-to-br from-ink via-ink to-ink p-6 sm:p-8 text-center text-white transition-all ${selected ? 'ring-2 ring-gold' : ''}`}>
             <div className="flex items-center justify-between pb-3 border-b border-white/10 mb-4" contentEditable={false}>
-                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[#C29555]">
+                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-gold-strong">
                     <Sparkle size={14} weight="fill" />
                     <span>Conversion CTA Block</span>
                 </div>
@@ -39,7 +39,7 @@ function EnquiryCTAView({ node, updateAttributes, deleteNode, selected }) {
                                 type="text"
                                 value={text}
                                 onChange={(e) => updateAttributes({ text: e.target.value })}
-                                className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-sm font-semibold text-white focus:outline-none focus:border-[#C29555]"
+                                className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-sm font-semibold text-white focus:outline-none focus:border-gold"
                             />
                         </div>
                         <div>
@@ -50,7 +50,7 @@ function EnquiryCTAView({ node, updateAttributes, deleteNode, selected }) {
                                 type="text"
                                 value={subtitle}
                                 onChange={(e) => updateAttributes({ subtitle: e.target.value })}
-                                className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-xs text-white/80 focus:outline-none focus:border-[#C29555]"
+                                className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-xs text-white/80 focus:outline-none focus:border-gold"
                             />
                         </div>
                         <div>
@@ -61,7 +61,7 @@ function EnquiryCTAView({ node, updateAttributes, deleteNode, selected }) {
                                 type="text"
                                 value={href}
                                 onChange={(e) => updateAttributes({ href: e.target.value })}
-                                className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-xs text-white/80 focus:outline-none focus:border-[#C29555]"
+                                className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-xs text-white/80 focus:outline-none focus:border-gold"
                             />
                         </div>
                     </div>
@@ -77,7 +77,7 @@ function EnquiryCTAView({ node, updateAttributes, deleteNode, selected }) {
                 )}
 
                 <div className="pt-2">
-                    <span className="inline-flex items-center gap-2 rounded-full bg-[#C29555] px-6 py-2.5 text-xs font-semibold text-white shadow-md">
+                    <span className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-2.5 text-xs font-semibold text-white shadow-md">
                         Get in Touch
                         <ArrowRight size={14} weight="bold" />
                     </span>

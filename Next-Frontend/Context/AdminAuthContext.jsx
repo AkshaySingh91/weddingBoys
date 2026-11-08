@@ -2,7 +2,11 @@
 
 import { useContext, useEffect, useState, createContext, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { apiFetch, api_url } from '@/lib/apiClient.js';
+import { apiFetch, api_url, installAuthRefresh } from '@/lib/apiClient.js';
+
+// At module load, not in an effect: page components' effects run before this
+// provider's, so it has to be in place before the first child fetch.
+installAuthRefresh();
 
 // Guards the admin route tree and exposes the signed-in user (incl. RBAC role)
 // to any descendant. Tokens are HttpOnly cookies — never readable from JS here.

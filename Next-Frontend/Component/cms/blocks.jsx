@@ -12,7 +12,7 @@ const first = (arr) => (Array.isArray(arr) && arr.length ? arr[0] : null);
 
 function SmartImage({ media, className, sizes = '100vw', priority = false }) {
     const url = mediaUrl(media);
-    if (!url) return <div className={`bg-gradient-to-br from-rose-50 to-indigo-50 ${className}`} />;
+    if (!url) return <div className={`bg-ground-sunk ${className}`} />;
     return (
         <Image
             src={url}
@@ -129,7 +129,7 @@ function ReviewsBlock({ block }) {
     const items = block.items || [];
     if (!items.length) return null;
     return (
-        <section className="bg-rose-50/40 py-14">
+        <section className="bg-accent-wash/40 py-14">
             <SectionHeading title={block.title} subtitle={block.subtitle} />
             <div className="mx-auto grid max-w-5xl gap-6 px-4 sm:grid-cols-2 lg:grid-cols-3">
                 {items.map((it, i) => {
@@ -169,7 +169,7 @@ function TeamBlock({ block }) {
                                 <SmartImage media={m} className="object-cover" sizes="(max-width:640px) 50vw, 240px" />
                             </div>
                             <p className="mt-3 font-medium text-gray-900">{it.title}</p>
-                            {it.subtitle && <p className="text-sm text-rose-500">{it.subtitle}</p>}
+                            {it.subtitle && <p className="text-sm text-accent-ink">{it.subtitle}</p>}
                             {it.body && <p className="mt-1 text-xs text-gray-500">{it.body}</p>}
                         </div>
                     );
@@ -212,12 +212,12 @@ function FeatureCardsBlock({ block }) {
 function CtaBlock({ block }) {
     return (
         <section className="px-4 py-12">
-            <div className="mx-auto max-w-4xl rounded-3xl bg-gradient-to-br from-rose-600 to-amber-500 p-10 text-center text-white">
+            <div className="mx-auto max-w-4xl rounded-3xl bg-ground-deep p-10 text-center text-white">
                 {block.title && <h2 className="t-display-2 mx-auto">{block.title}</h2>}
                 {block.subtitle && <p className="mt-2 text-white/90">{block.subtitle}</p>}
                 {block.body && <p className="mx-auto mt-3 max-w-xl text-sm text-white/80">{block.body}</p>}
                 {block.link && (
-                    <Link href={block.link} className="mt-6 inline-block rounded-full bg-white px-6 py-2.5 text-sm font-medium text-rose-600 hover:bg-rose-50">
+                    <Link href={block.link} className="mt-6 inline-block rounded-full bg-white px-6 py-2.5 text-sm font-medium text-accent-ink hover:bg-accent-wash">
                         Learn more
                     </Link>
                 )}

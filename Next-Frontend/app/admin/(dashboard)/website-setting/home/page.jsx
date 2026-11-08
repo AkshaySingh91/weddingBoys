@@ -46,21 +46,21 @@ function HomeSettings() {
 
       <Tabs defaultValue={initialTab} className="w-full space-y-6">
         <div className="overflow-x-auto pb-1 scrollbar-none">
-          <TabsList className="h-12 bg-white p-1 border border-[#E5DCD3] shadow-sm rounded-2xl w-full sm:w-auto justify-start">
+          <TabsList className="h-12 bg-white p-1 border border-edge-subtle shadow-sm rounded-xl w-full sm:w-auto justify-start">
             <TabsTrigger value="hero" className="gap-2 px-4 py-2 text-xs">
-              <Sparkle size={15} weight="fill" className="text-[#C29555]" />
+              <Sparkle size={15} weight="fill" className="text-gold-strong" />
               <span>Hero & Reels</span>
             </TabsTrigger>
             <TabsTrigger value="showcase" className="gap-2 px-4 py-2 text-xs">
-              <FilmSlate size={15} weight="fill" className="text-[#A3603A]" />
+              <FilmSlate size={15} weight="fill" className="text-accent-ink" />
               <span>Showcase Reels</span>
             </TabsTrigger>
             <TabsTrigger value="bts" className="gap-2 px-4 py-2 text-xs">
-              <Camera size={15} weight="fill" className="text-[#A3603A]" />
+              <Camera size={15} weight="fill" className="text-accent-ink" />
               <span>Behind the scenes</span>
             </TabsTrigger>
             <TabsTrigger value="reviews" className="gap-2 px-4 py-2 text-xs">
-              <Heart size={15} weight="fill" className="text-[#A3603A]" />
+              <Heart size={15} weight="fill" className="text-accent-ink" />
               <span>Couple Reviews</span>
             </TabsTrigger>
           </TabsList>
@@ -78,27 +78,27 @@ function HomeSettings() {
               is set on the home page composition, and each row's films in
               Admin › Rows. The old tag-list editor (VideoThumbnail) edited a
               list the site no longer reads for this section. */}
-          <div className="rounded-2xl border border-[#E7E2DA] bg-white p-6 space-y-3">
-            <h2 className="font-serif text-xl text-[#1C1917]">Home “Our films” tabs</h2>
-            <p className="text-sm text-[#57534E] max-w-2xl">
+          <div className="rounded-xl border border-edge-subtle bg-white p-6 space-y-3">
+            <h2 className="font-sans text-xl text-ink">Home “Our films” tabs</h2>
+            <p className="text-sm text-ink-secondary max-w-2xl">
               Each tab is a row. Choose which rows appear and their order in the home page composition; choose what each row shows, pin films and set its order in Rows.
             </p>
             <div className="flex flex-wrap gap-2">
-              <Link href="/admin/content/home" className="rounded-lg bg-[#1C1917] px-3.5 py-2 text-xs font-semibold text-white">Open home page composition</Link>
-              <Link href="/admin/collections" className="rounded-lg border border-[#E7E2DA] px-3.5 py-2 text-xs font-semibold text-[#1C1917]">Open Rows</Link>
+              <Link href="/admin/content/home" className="rounded-lg bg-ink px-3.5 py-2 text-xs font-semibold text-white">Open home page composition</Link>
+              <Link href="/admin/collections" className="rounded-lg border border-edge-subtle px-3.5 py-2 text-xs font-semibold text-ink">Open Rows</Link>
             </div>
           </div>
         </TabsContent>
 
         {/* Tab 3: Behind the scenes — edited in the home composition now */}
         <TabsContent value="bts" className="mt-0">
-          <div className="rounded-2xl border border-[#E7E2DA] bg-white p-6 space-y-3">
-            <h2 className="font-serif text-xl text-[#1C1917]">Behind the scenes</h2>
-            <p className="text-sm text-[#57534E] max-w-2xl">
+          <div className="rounded-xl border border-edge-subtle bg-white p-6 space-y-3">
+            <h2 className="font-sans text-xl text-ink">Behind the scenes</h2>
+            <p className="text-sm text-ink-secondary max-w-2xl">
               The home page’s behind-the-scenes photos are the “Behind the Scenes” gallery in the home page composition. Add, remove and order them there.
             </p>
             <div className="flex flex-wrap gap-2">
-              <Link href="/admin/content/home" className="rounded-lg bg-[#1C1917] px-3.5 py-2 text-xs font-semibold text-white">Open home page composition</Link>
+              <Link href="/admin/content/home" className="rounded-lg bg-ink px-3.5 py-2 text-xs font-semibold text-white">Open home page composition</Link>
             </div>
           </div>
         </TabsContent>

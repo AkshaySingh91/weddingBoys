@@ -116,14 +116,14 @@ function StagedVideoPreview({ file, isUploading, isDone, isSelected, onToggleSel
   return (
     <div
       className={cn(
-        'group rounded-2xl border bg-white p-4 transition-all flex flex-col sm:flex-row items-start sm:items-center gap-4',
+        'group rounded-xl border bg-white p-4 transition-all flex flex-col sm:flex-row items-start sm:items-center gap-4',
         isSelected && !isDone
-          ? 'border-stone-900 ring-2 ring-stone-900/15 shadow-sm'
-          : 'border-stone-200 hover:border-stone-300'
+          ? 'border-ink ring-2 ring-ink/15 shadow-sm'
+          : 'border-edge-subtle hover:border-edge-strong'
       )}
     >
       {/* HTML5 Video Thumbnail Viewport */}
-      <div className="relative aspect-video w-full sm:w-56 shrink-0 overflow-hidden rounded-xl bg-stone-950 flex items-center justify-center">
+      <div className="relative aspect-video w-full sm:w-56 shrink-0 overflow-hidden rounded-xl bg-ink flex items-center justify-center">
         {objectUrl && (
           <video
             ref={videoRef}
@@ -145,10 +145,10 @@ function StagedVideoPreview({ file, isUploading, isDone, isSelected, onToggleSel
               onToggleSelect(it.id);
             }}
             className={cn(
-              'absolute top-2 left-2 z-20 flex h-5 w-5 items-center justify-center rounded-md border transition-all shadow-sm',
+              'absolute top-2 left-2 z-20 flex h-5 w-5 items-center justify-center rounded-lg border transition-all shadow-sm',
               isSelected
-                ? 'bg-stone-900 border-stone-900 text-white'
-                : 'bg-white/85 border-stone-300 text-transparent hover:border-stone-700'
+                ? 'bg-ink border-ink text-white'
+                : 'bg-white/85 border-edge-strong text-transparent hover:border-ink'
             )}
           >
             <Check size={11} weight="bold" />
@@ -169,14 +169,14 @@ function StagedVideoPreview({ file, isUploading, isDone, isSelected, onToggleSel
             onClick={togglePlay}
             className="absolute inset-0 z-10 flex items-center justify-center bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity"
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-stone-900/80 text-white shadow-md">
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-ink/80 text-white shadow-md">
               {isPlaying ? <Pause size={18} weight="fill" /> : <Play size={18} weight="fill" className="ml-0.5" />}
             </span>
           </button>
         )}
 
         {/* Duration Chip */}
-        <div className="absolute bottom-2 right-2 z-10 rounded-md bg-black/70 px-1.5 py-0.5 font-mono text-[10px] text-white">
+        <div className="absolute bottom-2 right-2 z-10 rounded-lg bg-black/70 px-1.5 py-0.5 font-mono text-[10px] text-white">
           {formatDuration(duration)}
         </div>
 
@@ -192,17 +192,17 @@ function StagedVideoPreview({ file, isUploading, isDone, isSelected, onToggleSel
       <div className="flex-1 min-w-0 space-y-2.5 w-full">
         <div className="flex items-start justify-between gap-2">
           <div>
-            <h4 className="font-sans text-xs sm:text-sm font-bold text-stone-900 truncate" title={it.name}>
+            <h4 className="font-sans text-xs sm:text-sm font-bold text-ink truncate" title={it.name}>
               {it.name}
             </h4>
-            <p className="text-[11px] text-stone-500">{formatBytes(it.size)}</p>
+            <p className="text-[11px] text-ink-muted">{formatBytes(it.size)}</p>
           </div>
 
           {!isUploading && !isDone && (
             <button
               type="button"
               onClick={() => onRemove(it.id)}
-              className="text-stone-400 hover:text-rose-600 p-1 transition-colors"
+              className="text-ink-muted hover:text-rose-600 p-1 transition-colors"
             >
               <Trash size={15} />
             </button>
@@ -216,7 +216,7 @@ function StagedVideoPreview({ file, isUploading, isDone, isSelected, onToggleSel
             disabled={isUploading || isDone}
             value={it.filmType || ''}
             onChange={(e) => onUpdateOption(it.id, 'filmType', e.target.value)}
-            className="text-xs rounded-xl border border-stone-200 bg-stone-50/70 px-2.5 py-1 text-stone-800 focus:outline-none focus:border-stone-900"
+            className="text-xs rounded-xl border border-edge-subtle bg-ground/70 px-2.5 py-1 text-ink focus:outline-none focus:border-ink"
           >
             <option value="">Film type: none</option>
             {filmTypeOptions.map((c) => (
@@ -230,7 +230,7 @@ function StagedVideoPreview({ file, isUploading, isDone, isSelected, onToggleSel
             disabled={isUploading || isDone}
             value={it.eventGroup || ''}
             onChange={(e) => onUpdateOption(it.id, 'eventGroup', e.target.value)}
-            className="text-xs rounded-xl border border-stone-200 bg-stone-50/70 px-2.5 py-1 text-stone-800 focus:outline-none focus:border-stone-900"
+            className="text-xs rounded-xl border border-edge-subtle bg-ground/70 px-2.5 py-1 text-ink focus:outline-none focus:border-ink"
           >
             <option value="">Ceremony: General</option>
             {ceremonyOptions.map((c) => (
@@ -249,7 +249,7 @@ function StagedVideoPreview({ file, isUploading, isDone, isSelected, onToggleSel
               'flex items-center gap-1.5 rounded-xl border px-2.5 py-1 text-xs font-medium transition-all',
               it.isHero
                 ? 'bg-amber-50 border-amber-300 text-amber-900 font-semibold'
-                : 'bg-white border-stone-200 text-stone-600 hover:border-stone-300'
+                : 'bg-white border-edge-subtle text-ink-secondary hover:border-edge-strong'
             )}
           >
             <Star size={13} weight={it.isHero ? 'fill' : 'regular'} className={it.isHero ? 'text-amber-600' : ''} />
@@ -265,7 +265,7 @@ function StagedVideoPreview({ file, isUploading, isDone, isSelected, onToggleSel
               'flex items-center gap-1.5 rounded-xl border px-2.5 py-1 text-xs font-medium transition-all',
               it.makeLoop
                 ? 'bg-purple-50 border-purple-300 text-purple-900 font-semibold'
-                : 'bg-white border-stone-200 text-stone-600 hover:border-stone-300'
+                : 'bg-white border-edge-subtle text-ink-secondary hover:border-edge-strong'
             )}
           >
             <Repeat size={13} weight={it.makeLoop ? 'bold' : 'regular'} className={it.makeLoop ? 'text-purple-600' : ''} />
@@ -281,7 +281,7 @@ function StagedVideoPreview({ file, isUploading, isDone, isSelected, onToggleSel
               'flex items-center gap-1.5 rounded-xl border px-2.5 py-1 text-xs font-medium transition-all',
               it.stripAudio
                 ? 'bg-rose-50 border-rose-300 text-rose-900 font-semibold'
-                : 'bg-white border-stone-200 text-stone-600 hover:border-stone-300'
+                : 'bg-white border-edge-subtle text-ink-secondary hover:border-edge-strong'
             )}
           >
             <SpeakerSimpleSlash size={13} className={it.stripAudio ? 'text-rose-600' : ''} />
@@ -338,7 +338,7 @@ function VideoAssetInspector({ it }) {
 
   if (!it) {
     return (
-      <div className="flex flex-col items-center justify-center h-full text-stone-400 p-8 text-center text-xs">
+      <div className="flex flex-col items-center justify-center h-full text-ink-muted p-8 text-center text-xs">
         Select a film from the list to inspect its stored video and teaser loop assets.
       </div>
     );
@@ -347,13 +347,13 @@ function VideoAssetInspector({ it }) {
   return (
     <div className="flex-1 flex flex-col p-6 overflow-y-auto space-y-4">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-stone-200 pb-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-edge-subtle pb-3">
         <div>
-          <h4 className="font-sans text-sm font-bold text-stone-900 truncate max-w-md" title={it.name}>
+          <h4 className="font-sans text-sm font-bold text-ink truncate max-w-md" title={it.name}>
             {it.name}
           </h4>
-          <div className="flex items-center gap-2 text-xs text-stone-500 mt-0.5">
-            <span className="font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-md">
+          <div className="flex items-center gap-2 text-xs text-ink-muted mt-0.5">
+            <span className="font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-lg">
               {[it.filmType, it.eventGroup].filter(Boolean).join(' · ') || 'Wedding Film'}
             </span>
             <span>·</span>
@@ -364,15 +364,15 @@ function VideoAssetInspector({ it }) {
         </div>
 
         {/* View Switcher Tabs */}
-        <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-xl border border-stone-200">
+        <div className="flex items-center gap-1 bg-ground-sunk p-1 rounded-xl border border-edge-subtle">
           <button
             type="button"
             onClick={() => setActiveTab('master')}
             className={cn(
               'px-3 py-1 text-xs font-semibold rounded-lg transition-all cursor-pointer',
               activeTab === 'master'
-                ? 'bg-white text-stone-900 shadow-sm'
-                : 'text-stone-600 hover:text-stone-900'
+                ? 'bg-white text-ink shadow-sm'
+                : 'text-ink-secondary hover:text-ink'
             )}
           >
             Stored Master Video
@@ -384,7 +384,7 @@ function VideoAssetInspector({ it }) {
               'px-3 py-1 text-xs font-semibold rounded-lg transition-all flex items-center gap-1 cursor-pointer',
               activeTab === 'loop'
                 ? 'bg-purple-600 text-white shadow-sm'
-                : 'text-stone-600 hover:text-stone-900'
+                : 'text-ink-secondary hover:text-ink'
             )}
           >
             <Repeat size={12} weight="bold" />
@@ -396,7 +396,7 @@ function VideoAssetInspector({ it }) {
       {/* Player Viewport */}
       {activeTab === 'master' ? (
         <div className="space-y-2">
-          <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-black shadow-md flex items-center justify-center">
+          <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-black shadow-md flex items-center justify-center">
             {objectUrl && (
               <video
                 controls
@@ -406,21 +406,21 @@ function VideoAssetInspector({ it }) {
               />
             )}
           </div>
-          <div className="flex items-center justify-between text-xs text-stone-500 px-1">
+          <div className="flex items-center justify-between text-xs text-ink-muted px-1">
             <span>High-resolution original file safely preserved in Cloudflare R2.</span>
-            <span className="font-mono text-[11px] text-stone-600 font-medium">Master Quality</span>
+            <span className="font-mono text-[11px] text-ink-secondary font-medium">Master Quality</span>
           </div>
         </div>
       ) : (
         <div className="space-y-3">
           {it.makeLoop ? (
-            <div className="rounded-2xl border border-purple-200 bg-purple-50/50 p-4 space-y-3">
+            <div className="rounded-xl border border-purple-200 bg-purple-50/50 p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-purple-950 flex items-center gap-1.5">
                   <Repeat size={15} weight="bold" className="text-purple-600" />
                   8s Silent Teaser Loop Asset
                 </span>
-                <span className="text-[10px] font-semibold bg-purple-100 text-purple-900 px-2 py-0.5 rounded-md border border-purple-200">
+                <span className="text-[10px] font-semibold bg-purple-100 text-purple-900 px-2 py-0.5 rounded-lg border border-purple-200">
                   Transcoding / Playable
                 </span>
               </div>
@@ -442,10 +442,10 @@ function VideoAssetInspector({ it }) {
               </p>
             </div>
           ) : (
-            <div className="rounded-2xl border border-stone-200 bg-stone-50 p-8 text-center space-y-2">
-              <Repeat size={24} className="mx-auto text-stone-400" />
-              <p className="text-xs font-semibold text-stone-700">8s Loop was not requested for this film</p>
-              <p className="text-[11px] text-stone-500">
+            <div className="rounded-xl border border-edge-subtle bg-ground p-8 text-center space-y-2">
+              <Repeat size={24} className="mx-auto text-ink-muted" />
+              <p className="text-xs font-semibold text-ink-secondary">8s Loop was not requested for this film</p>
+              <p className="text-[11px] text-ink-muted">
                 To generate 8s silent teaser loops, enable &quot;Generate 8s Loop&quot; during staging before uploading.
               </p>
             </div>
@@ -454,29 +454,29 @@ function VideoAssetInspector({ it }) {
       )}
 
       {/* Streaming Renditions & Assets Status */}
-      <div className="rounded-2xl border border-stone-200 bg-stone-50/70 p-4 space-y-2.5">
-        <h5 className="text-xs font-bold text-stone-900 uppercase tracking-wide">
+      <div className="rounded-xl border border-edge-subtle bg-ground/70 p-4 space-y-2.5">
+        <h5 className="text-xs font-bold text-ink uppercase tracking-wide">
           Derived Streaming Assets & Renditions
         </h5>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-          <div className="rounded-xl border border-stone-200 bg-white p-2.5">
-            <span className="text-[10px] text-stone-400 block font-semibold">1080p FHD</span>
-            <span className="text-xs font-bold text-stone-800">Adaptive MP4</span>
+          <div className="rounded-xl border border-edge-subtle bg-white p-2.5">
+            <span className="text-[10px] text-ink-muted block font-semibold">1080p FHD</span>
+            <span className="text-xs font-bold text-ink">Adaptive MP4</span>
             <span className="text-[10px] text-purple-700 block mt-0.5 font-medium">Worker Queued</span>
           </div>
-          <div className="rounded-xl border border-stone-200 bg-white p-2.5">
-            <span className="text-[10px] text-stone-400 block font-semibold">720p HD</span>
-            <span className="text-xs font-bold text-stone-800">Adaptive MP4</span>
+          <div className="rounded-xl border border-edge-subtle bg-white p-2.5">
+            <span className="text-[10px] text-ink-muted block font-semibold">720p HD</span>
+            <span className="text-xs font-bold text-ink">Adaptive MP4</span>
             <span className="text-[10px] text-purple-700 block mt-0.5 font-medium">Worker Queued</span>
           </div>
-          <div className="rounded-xl border border-stone-200 bg-white p-2.5">
-            <span className="text-[10px] text-stone-400 block font-semibold">480p Mobile</span>
-            <span className="text-xs font-bold text-stone-800">Efficient MP4</span>
+          <div className="rounded-xl border border-edge-subtle bg-white p-2.5">
+            <span className="text-[10px] text-ink-muted block font-semibold">480p Mobile</span>
+            <span className="text-xs font-bold text-ink">Efficient MP4</span>
             <span className="text-[10px] text-purple-700 block mt-0.5 font-medium">Worker Queued</span>
           </div>
-          <div className="rounded-xl border border-stone-200 bg-white p-2.5">
-            <span className="text-[10px] text-stone-400 block font-semibold">Poster Frame</span>
-            <span className="text-xs font-bold text-stone-800">JPEG Thumbnail</span>
+          <div className="rounded-xl border border-edge-subtle bg-white p-2.5">
+            <span className="text-[10px] text-ink-muted block font-semibold">Poster Frame</span>
+            <span className="text-xs font-bold text-ink">JPEG Thumbnail</span>
             <span className="text-[10px] text-emerald-700 block mt-0.5 font-medium">Auto-Extracted</span>
           </div>
         </div>
@@ -766,17 +766,17 @@ export default function VideoUploadModal({
     <Dialog open={open} onOpenChange={(v) => !v && !isUploading && safeClose()}>
       <DialogContent
         hideCloseButton
-        className="max-w-4xl w-[95vw] h-[85vh] max-h-[820px] p-0 overflow-hidden flex flex-col rounded-3xl border border-[#E8DDD1] bg-[#FFFCF8] shadow-2xl"
+        className="max-w-4xl w-[95vw] h-[85vh] max-h-[820px] p-0 overflow-hidden flex flex-col rounded-xl border border-edge-subtle bg-ground shadow-2xl"
       >
         {/* Header */}
-        <header className="flex items-center justify-between border-b border-[#E8DDD1] px-6 py-4 bg-white shrink-0">
+        <header className="flex items-center justify-between border-b border-edge-subtle px-6 py-4 bg-white shrink-0">
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-stone-900 text-amber-400 shrink-0 shadow-sm">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-ink text-amber-400 shrink-0 shadow-sm">
               <FilmSlate size={22} weight="bold" />
             </span>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-sm sm:text-base font-bold text-stone-900 font-sans tracking-tight">
+                <h3 className="text-sm sm:text-base font-bold text-ink font-sans tracking-tight">
                   {uploadFinished ? 'Film Ingest & Transcode Status' : 'Stage Wedding Films & Cinema'}
                 </h3>
                 <Badge size="sm" variant="neutral">
@@ -788,7 +788,7 @@ export default function VideoUploadModal({
                   </Badge>
                 )}
               </div>
-              <p className="text-xs text-stone-500 font-sans">
+              <p className="text-xs text-ink-muted font-sans">
                 {uploadFinished
                   ? 'Master video files securely uploaded to Cloudflare R2 and queued for FFmpeg worker transcode.'
                   : 'Play previews, configure 8s silent loop, audio stripping, and hero presentation before upload.'}
@@ -800,7 +800,7 @@ export default function VideoUploadModal({
             type="button"
             disabled={isUploading}
             onClick={safeClose}
-            className="flex items-center justify-center h-8 w-8 rounded-xl text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors disabled:opacity-50"
+            className="flex items-center justify-center h-8 w-8 rounded-xl text-ink-muted hover:text-ink-secondary hover:bg-ground-sunk transition-colors disabled:opacity-50"
           >
             <X size={16} />
             <span className="sr-only">Close</span>
@@ -815,7 +815,7 @@ export default function VideoUploadModal({
               {/* Top Status Banner */}
               <div className="bg-emerald-50/80 border-b border-emerald-200 px-6 py-3.5 flex items-center justify-between gap-4 shrink-0">
                 <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-emerald-600 text-white shrink-0 shadow-sm">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-600 text-white shrink-0 shadow-sm">
                     <CheckCircle size={20} weight="fill" />
                   </span>
                   <div>
@@ -850,24 +850,24 @@ export default function VideoUploadModal({
               {/* 2-Pane View: Left Video Roster + Right Production Asset Inspector */}
               <div className="flex-1 flex overflow-hidden">
                 {/* Left Pane: Film Roster & Summary */}
-                <aside className="w-80 border-r border-[#E8DDD1] bg-[#FFFDF9] flex flex-col shrink-0 overflow-y-auto p-4 space-y-3 scrollbar-thin">
+                <aside className="w-80 border-r border-edge-subtle bg-ground flex flex-col shrink-0 overflow-y-auto p-4 space-y-3 scrollbar-thin">
                   {/* Metrics Card */}
-                  <div className="rounded-2xl border border-stone-200 bg-white p-3 space-y-1.5 shadow-sm">
-                    <div className="flex items-center justify-between text-xs font-bold text-stone-900">
+                  <div className="rounded-xl border border-edge-subtle bg-white p-3 space-y-1.5 shadow-sm">
+                    <div className="flex items-center justify-between text-xs font-bold text-ink">
                       <span>Uploaded Films</span>
                       <span className="text-emerald-700 font-semibold">{doneCount} of {items.length}</span>
                     </div>
-                    <div className="flex items-center justify-between text-[11px] text-stone-500">
+                    <div className="flex items-center justify-between text-[11px] text-ink-muted">
                       <span>Total Master Size:</span>
-                      <span className="font-mono font-semibold text-stone-700">{formatBytes(totalBytes)}</span>
+                      <span className="font-mono font-semibold text-ink-secondary">{formatBytes(totalBytes)}</span>
                     </div>
-                    <div className="flex items-center justify-between text-[11px] text-stone-500">
+                    <div className="flex items-center justify-between text-[11px] text-ink-muted">
                       <span>Est. Streaming Deriv:</span>
                       <span className="font-mono font-semibold text-purple-700">~{formatBytes(totalBytes * 1.8)}</span>
                     </div>
                   </div>
 
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-stone-400 px-1 pt-1">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-ink-muted px-1 pt-1">
                     Select film to inspect
                   </p>
 
@@ -880,31 +880,31 @@ export default function VideoUploadModal({
                           key={it.id}
                           onClick={() => setInspectedVideoId(it.id)}
                           className={cn(
-                            'p-3 rounded-2xl border transition-all cursor-pointer select-none text-left',
+                            'p-3 rounded-xl border transition-all cursor-pointer select-none text-left',
                             isInspected
                               ? 'border-amber-600 bg-amber-50/60 ring-2 ring-amber-500/20 shadow-sm'
-                              : 'border-stone-200 bg-white hover:border-stone-300'
+                              : 'border-edge-subtle bg-white hover:border-edge-strong'
                           )}
                         >
-                          <p className="font-sans text-xs font-bold text-stone-900 truncate" title={it.name}>
+                          <p className="font-sans text-xs font-bold text-ink truncate" title={it.name}>
                             {it.name}
                           </p>
-                          <div className="flex items-center gap-1.5 mt-1 text-[10px] text-stone-500">
-                            <span className="font-semibold text-stone-700">{[it.filmType, it.eventGroup].filter(Boolean).join(' · ')}</span>
+                          <div className="flex items-center gap-1.5 mt-1 text-[10px] text-ink-muted">
+                            <span className="font-semibold text-ink-secondary">{[it.filmType, it.eventGroup].filter(Boolean).join(' · ')}</span>
                             <span>·</span>
                             <span>{formatBytes(it.size)}</span>
                           </div>
                           <div className="flex items-center gap-1.5 mt-2">
-                            <span className="text-[10px] font-medium bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded-md">
+                            <span className="text-[10px] font-medium bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded-lg">
                               ✓ R2 Master
                             </span>
                             {it.makeLoop && (
-                              <span className="text-[10px] font-medium bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded-md flex items-center gap-0.5">
+                              <span className="text-[10px] font-medium bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded-lg flex items-center gap-0.5">
                                 <Repeat size={10} /> 8s Loop
                               </span>
                             )}
                             {it.stripAudio && (
-                              <span className="text-[10px] font-medium bg-rose-100 text-rose-800 px-1.5 py-0.5 rounded-md">
+                              <span className="text-[10px] font-medium bg-rose-100 text-rose-800 px-1.5 py-0.5 rounded-lg">
                                 Muted
                               </span>
                             )}
@@ -925,18 +925,18 @@ export default function VideoUploadModal({
             /* Normal Staging View */
             <>
               {/* Top Action Strip */}
-              <div className="border-b border-[#E8DDD1] bg-[#FFFDF9] px-6 py-2.5 shrink-0 flex items-center justify-between text-xs">
+              <div className="border-b border-edge-subtle bg-ground px-6 py-2.5 shrink-0 flex items-center justify-between text-xs">
                 <div className="flex items-center gap-3">
                   <button
                     type="button"
                     disabled={isUploading}
                     onClick={selectAll}
-                    className="font-semibold text-stone-700 hover:text-stone-950 underline cursor-pointer text-xs"
+                    className="font-semibold text-ink-secondary hover:text-ink underline cursor-pointer text-xs"
                   >
                     {selectedIds.size === items.length ? 'Deselect All' : `Select All (${items.length})`}
                   </button>
                   <span className="text-stone-300">·</span>
-                  <span className="text-stone-500 font-medium text-xs">
+                  <span className="text-ink-muted font-medium text-xs">
                     {selectedIds.size} of {items.length} selected
                   </span>
                 </div>
@@ -957,7 +957,7 @@ export default function VideoUploadModal({
                     disabled={isUploading}
                     icon={Plus}
                     onClick={() => fileInputRef.current?.click()}
-                    className="border-stone-200 text-stone-700 hover:bg-stone-50 text-xs"
+                    className="border-edge-subtle text-ink-secondary hover:bg-ground text-xs"
                   >
                     Add Films
                   </Button>
@@ -968,12 +968,12 @@ export default function VideoUploadModal({
               <div className="flex-1 overflow-y-auto p-6 space-y-3.5 scrollbar-thin scrollbar-thumb-stone-200">
                 {!items.length ? (
                   <div className="flex flex-col items-center justify-center h-full text-center py-16 space-y-3">
-                    <span className="flex h-16 w-16 items-center justify-center rounded-3xl bg-stone-100 text-stone-700">
+                    <span className="flex h-16 w-16 items-center justify-center rounded-xl bg-ground-sunk text-ink-secondary">
                       <FilmSlate size={32} />
                     </span>
                     <div>
-                      <p className="text-sm font-semibold text-stone-800">No wedding films staged</p>
-                      <p className="text-xs text-stone-500">Pick or drop cinematic video files to stage for this wedding</p>
+                      <p className="text-sm font-semibold text-ink">No wedding films staged</p>
+                      <p className="text-xs text-ink-muted">Pick or drop cinematic video files to stage for this wedding</p>
                     </div>
                     <Button
                       type="button"
@@ -981,7 +981,7 @@ export default function VideoUploadModal({
                       size="sm"
                       icon={Plus}
                       onClick={() => fileInputRef.current?.click()}
-                      className="bg-stone-900 text-white hover:bg-stone-800"
+                      className="bg-ink text-white hover:bg-ink"
                     >
                       Browse Video Files
                     </Button>
@@ -1011,12 +1011,12 @@ export default function VideoUploadModal({
         </div>
 
         {/* Footer Actions */}
-        <footer className="flex items-center justify-between border-t border-[#E8DDD1] bg-white px-6 py-4 shrink-0">
+        <footer className="flex items-center justify-between border-t border-edge-subtle bg-white px-6 py-4 shrink-0">
           <div className="flex items-center gap-3">
             {isUploading && (
               <div className="flex items-center gap-2">
                 <CircleNotch size={18} className="animate-spin text-amber-600" />
-                <span className="text-xs font-semibold text-stone-800">
+                <span className="text-xs font-semibold text-ink">
                   Uploading ({activeUploadsCount} concurrent streams · {overallProgress}% total)
                 </span>
               </div>
@@ -1027,7 +1027,7 @@ export default function VideoUploadModal({
               </span>
             )}
             {!isUploading && !uploadFinished && (
-              <span className="text-xs text-stone-500">
+              <span className="text-xs text-ink-muted">
                 {selectedIds.size} of {items.length} films ready for upload
               </span>
             )}
@@ -1052,7 +1052,7 @@ export default function VideoUploadModal({
                   size="sm"
                   disabled={isUploading}
                   onClick={safeClose}
-                  className="border-stone-200 text-stone-700 hover:bg-stone-50"
+                  className="border-edge-subtle text-ink-secondary hover:bg-ground"
                 >
                   Cancel
                 </Button>

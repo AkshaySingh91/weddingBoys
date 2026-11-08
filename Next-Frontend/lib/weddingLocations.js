@@ -14,7 +14,7 @@ export const FEATURED_DESTINATIONS = {
         heroSubtitle:
             'Where heritage marble reflects upon shimmering waters — bespoke wedding cinematography amidst timeless Rajputana majesty.',
         metaDescription:
-            'Bespoke destination wedding films and photography in Udaipur. Explore iconic lake palaces, seasonal cinematography advice, and real royal weddings by The Wedding Boys.',
+            'Bespoke destination wedding films and photography in Udaipur. Explore iconic lake palaces, seasonal cinematography advice, and real royal weddings by The Wedding Vachan.',
         coordinates: { latitude: '24.5854', longitude: '73.7125' },
         bestSeason: 'October to March (Crisp skies, golden lakeside sunsets)',
         filmingHighlights: [
@@ -58,10 +58,10 @@ export const FEATURED_DESTINATIONS = {
             {
                 question: 'Are drone permits required for wedding filming in Udaipur?',
                 answer:
-                    'Yes, Udaipur heritage zones around Lake Pichola require local administrative and venue clearance for aerial drone operations. The Wedding Boys handles all regulatory logistics in advance.',
+                    'Yes, Udaipur heritage zones around Lake Pichola require local administrative and venue clearance for aerial drone operations. The Wedding Vachan handles all regulatory logistics in advance.',
             },
             {
-                question: 'How far in advance should we book The Wedding Boys for an Udaipur wedding?',
+                question: 'How far in advance should we book The Wedding Vachan for an Udaipur wedding?',
                 answer:
                     'Due to high demand during peak Rajasthan wedding season (November to February), we recommend reserving your dates 6 to 12 months in advance.',
             },
@@ -77,7 +77,7 @@ export const FEATURED_DESTINATIONS = {
         heroSubtitle:
             'From majestic ramparts of Amber to opulent durbar halls — cinematic wedding narratives celebrating heritage and grandeur.',
         metaDescription:
-            'Capturing royal destination weddings in Jaipur. Explore heritage palace venues, cinematography guides, and wedding films filmed by The Wedding Boys.',
+            'Capturing royal destination weddings in Jaipur. Explore heritage palace venues, cinematography guides, and wedding films filmed by The Wedding Vachan.',
         coordinates: { latitude: '26.9124', longitude: '75.7873' },
         bestSeason: 'November to February (Cool winter breezes, clear regal sunlight)',
         filmingHighlights: [
@@ -119,7 +119,7 @@ export const FEATURED_DESTINATIONS = {
                     'Jaipur provides an unmatched blend of living royal heritage, seamless flight connectivity, and world-class luxury palace hotels that accommodate large destination guest contingents.',
             },
             {
-                question: 'How does The Wedding Boys capture the grand scale of Jaipur palace weddings?',
+                question: 'How does The Wedding Vachan capture the grand scale of Jaipur palace weddings?',
                 answer:
                     'We deploy multi-cam cinema rigs, gimbal tracking systems for high-energy royal baraats, and precision golden-hour portrait sessions framed against Jaipur sandstone architecture.',
             },
@@ -135,7 +135,7 @@ export const FEATURED_DESTINATIONS = {
         heroSubtitle:
             'Barefoot beachfront pheras, sunset sea breezes, and vibrant sundowners documented with fine-art cinematic nuance.',
         metaDescription:
-            'Fine art beach wedding cinematography in Goa. Sunset ceremonies, Portuguese heritage havelis, and luxury coastal wedding films by The Wedding Boys.',
+            'Fine art beach wedding cinematography in Goa. Sunset ceremonies, Portuguese heritage havelis, and luxury coastal wedding films by The Wedding Vachan.',
         coordinates: { latitude: '15.2993', longitude: '74.1240' },
         bestSeason: 'November to April (Balmy coastal evenings, vibrant sunset light)',
         filmingHighlights: [
@@ -188,7 +188,7 @@ export const FEATURED_DESTINATIONS = {
         heroSubtitle:
             'Towering sandstones of Mehrangarh and Art Deco majesty of Umaid Bhawan — epic love stories set against the Thar horizon.',
         metaDescription:
-            'Imperial destination wedding cinematography in Jodhpur. Umaid Bhawan Palace, Mehrangarh fort celebrations, and cinematic wedding films by The Wedding Boys.',
+            'Imperial destination wedding cinematography in Jodhpur. Umaid Bhawan Palace, Mehrangarh fort celebrations, and cinematic wedding films by The Wedding Vachan.',
         coordinates: { latitude: '26.2389', longitude: '73.0243' },
         bestSeason: 'October to March (Warm sunny days, dramatic desert evenings)',
         filmingHighlights: [
@@ -231,7 +231,7 @@ export const FEATURED_DESTINATIONS = {
         heroSubtitle:
             'Holy Ganga river dawn portraits, evening maha aarti blessings, and profound Vedic wedding rituals captured with reverent artistic vision.',
         metaDescription:
-            'Soulful wedding cinematography in Varanasi. Sacred Ganga ghats, heritage havelis, and Vedic wedding rituals filmed by The Wedding Boys.',
+            'Soulful wedding cinematography in Varanasi. Sacred Ganga ghats, heritage havelis, and Vedic wedding rituals filmed by The Wedding Vachan.',
         coordinates: { latitude: '25.3176', longitude: '82.9739' },
         bestSeason: 'October to March (Gentle morning river mists, evening temple warmth)',
         filmingHighlights: [
@@ -274,7 +274,7 @@ export const FEATURED_DESTINATIONS = {
         heroSubtitle:
             'Art Deco sea promenades, iconic ballroom galas, and sophisticated contemporary Indian celebrations filmed with cinematic panache.',
         metaDescription:
-            'Sophisticated luxury wedding photography and films in Mumbai. Heritage seafront landmarks, ballroom galas, and fine-art celebrations by The Wedding Boys.',
+            'Sophisticated luxury wedding photography and films in Mumbai. Heritage seafront landmarks, ballroom galas, and fine-art celebrations by The Wedding Vachan.',
         coordinates: { latitude: '18.9220', longitude: '72.8347' },
         bestSeason: 'November to February (Pleasant coastal winter)',
         filmingHighlights: [
@@ -317,7 +317,7 @@ export const FEATURED_DESTINATIONS = {
         heroSubtitle:
             'Serene houseboat cruises, coconut palm canopies, and traditional Kasavu temple nuptials captured with poetic tropical warmth.',
         metaDescription:
-            'Intimate backwater and coastal wedding films in Kerala. Kumarakom, Kochi, and Kovalam wedding cinematography by The Wedding Boys.',
+            'Intimate backwater and coastal wedding films in Kerala. Kumarakom, Kochi, and Kovalam wedding cinematography by The Wedding Vachan.',
         coordinates: { latitude: '9.9312', longitude: '76.2673' },
         bestSeason: 'September to March (Lush green landscapes, gentle tropical breezes)',
         filmingHighlights: [
@@ -377,7 +377,7 @@ export function getLocationBySlug(rawSlug = '') {
             title: `Wedding Cinematography in ${found.city}`,
             tagline: `Cinematic Wedding Films & Photography in ${found.city}, ${found.state}`,
             heroSubtitle: `Capturing authentic celebrations, heritage traditions, and modern romance across ${found.city}.`,
-            metaDescription: `Bespoke wedding cinematography and photography in ${found.city}, ${found.state} by The Wedding Boys. Timeless storytelling and high-definition wedding films.`,
+            metaDescription: `Bespoke wedding cinematography and photography in ${found.city}, ${found.state} by The Wedding Vachan. Timeless storytelling and high-definition wedding films.`,
             coordinates: { latitude: '20.5937', longitude: '78.9629' },
             bestSeason: 'October to March',
             filmingHighlights: [
@@ -394,7 +394,7 @@ export function getLocationBySlug(rawSlug = '') {
             ],
             faqs: [
                 {
-                    question: `Does The Wedding Boys travel to ${found.city} for destination weddings?`,
+                    question: `Does The Wedding Vachan travel to ${found.city} for destination weddings?`,
                     answer: `Yes, our cinematography and photography crew travels worldwide, including ${found.city}, ${found.state}, bringing full cinema-grade camera rigs, audio, and lighting gear.`,
                 },
             ],

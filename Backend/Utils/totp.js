@@ -11,7 +11,7 @@ import {
 const crypto = new NobleCryptoPlugin();
 const base32 = new ScureBase32Plugin();
 
-const ISSUER = 'The Wedding Boys';
+const ISSUER = 'The Wedding Vachan';
 
 // Accept codes from the adjacent 30s steps to absorb clock drift between the
 // server and the user's phone.

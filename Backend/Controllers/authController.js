@@ -4,12 +4,13 @@ import { z } from 'zod';
 import QRCode from 'qrcode';
 import Admin from '../Models/adminSchema.js';
 import Session from '../Models/Session.js';
+import { rejectLockedAccount, recordLoginFailure, matchesMfaChallenge, consumeMfaChallenge } from '../Services/loginSecurity.js';
 import {
-    COOKIE_NAME, MAX_FAILED_LOGINS, ACCOUNT_LOCK_MS, REFRESH_TOKEN_TTL_MS,
+    COOKIE_NAME, REFRESH_TOKEN_TTL_MS,
 } from '../constants.js';
 import {
     signAccessToken, issueSession, setAuthCookies, clearAuthCookies,
-    hashToken, generateRefreshToken, signMfaTempToken, verifyMfaTempToken,
+    hashToken, generateRefreshToken, signMfaTempToken, verifyMfaTempToken, signedCookie,
 } from '../Utils/authTokens.js';
 import { sendMail, passwordResetEmail } from '../Utils/mailer.js';
 import { generateTotpSecret, buildOtpAuthUrl, verifyTotp } from '../Utils/totp.js';
@@ -42,7 +43,7 @@ const zodFail = (res, error) => res.status(400).json({
     errors: error.issues.map((i) => ({ field: i.path.join('.'), message: i.message })),
 });
 
-const clientIp = (req) => req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.ip;
+const clientIp = (req) => req.ip;
 
 const publicUser = (admin) => ({
     id: admin._id,
@@ -71,22 +72,14 @@ export async function login(req, res) {
         const invalid = () => res.status(401).json({ message: 'Invalid email or password' });
         if (!admin) return invalid();
 
-        if (admin.accountLockedUntil && admin.accountLockedUntil > new Date()) {
-            const mins = Math.ceil((admin.accountLockedUntil - Date.now()) / 60000);
-            return res.status(423).json({ message: `Account locked. Try again in ${mins} minute(s).` });
-        }
+        if (rejectLockedAccount(admin, res)) return;
         if (admin.status === 'Suspended') {
             return res.status(403).json({ message: 'This account has been suspended.' });
         }
 
         const ok = await bcrypt.compare(password, admin.password);
         if (!ok) {
-            admin.failedLoginAttempts = (admin.failedLoginAttempts || 0) + 1;
-            if (admin.failedLoginAttempts >= MAX_FAILED_LOGINS) {
-                admin.accountLockedUntil = new Date(Date.now() + ACCOUNT_LOCK_MS);
-                admin.failedLoginAttempts = 0;
-            }
-            await admin.save();
+            await recordLoginFailure(admin._id);
             return invalid();
         }
 
@@ -97,10 +90,13 @@ export async function login(req, res) {
         // MFA gate: stop here and hand back a short-lived token that only
         // permits the TOTP step. No session cookies are issued yet.
         if (admin.mfaEnabled) {
+            const challengeId = crypto.randomBytes(32).toString('hex');
+            admin.mfaChallengeHash = hashToken(challengeId);
+            admin.mfaChallengeExpiresAt = new Date(Date.now() + 5 * 60 * 1000);
             await admin.save();
             return res.status(200).json({
                 requiresMfa: true,
-                tempToken: signMfaTempToken(admin),
+                tempToken: signMfaTempToken(admin, challengeId, rememberMe),
             });
         }
 
@@ -110,7 +106,7 @@ export async function login(req, res) {
         await admin.save();
 
         const accessToken = signAccessToken(admin);
-        const refreshToken = await issueSession(admin, req);
+        const refreshToken = await issueSession(admin, req, { rememberMe });
         setAuthCookies(res, { accessToken, refreshToken, rememberMe });
 
         return res.status(200).json({ message: 'Logged in', user: publicUser(admin) });
@@ -139,36 +135,30 @@ export async function mfaLoginVerify(req, res) {
             return res.status(401).json({ message: 'Verification window expired. Please sign in again.' });
         }
 
-        const admin = await Admin.findById(payload.sub).select('+mfaSecret');
+        const admin = await Admin.findById(payload.sub).select('+mfaSecret +mfaChallengeHash');
         if (!admin || !admin.mfaEnabled || !admin.mfaSecret) {
             return res.status(400).json({ message: 'Two-factor authentication is not enabled for this account' });
         }
         if (admin.status === 'Suspended') {
             return res.status(403).json({ message: 'This account has been suspended.' });
         }
+        if (rejectLockedAccount(admin, res)) return;
+        if (!matchesMfaChallenge(admin, payload)) return res.status(401).json({ message: 'Verification window expired. Please sign in again.' });
+
 
         if (!await verifyTotp(code, admin.mfaSecret)) {
-            admin.failedLoginAttempts = (admin.failedLoginAttempts || 0) + 1;
-            if (admin.failedLoginAttempts >= MAX_FAILED_LOGINS) {
-                admin.accountLockedUntil = new Date(Date.now() + ACCOUNT_LOCK_MS);
-                admin.failedLoginAttempts = 0;
-            }
-            await admin.save();
+            await recordLoginFailure(admin._id, payload.jti);
             return res.status(400).json({ message: 'Invalid verification code' });
         }
 
-        admin.failedLoginAttempts = 0;
-        admin.accountLockedUntil = null;
-        admin.lastLoginAt = new Date();
-        admin.lastLoginIp = clientIp(req);
-        if (admin.status === 'Invited') admin.status = 'Active';
-        await admin.save();
+        const signedIn = await consumeMfaChallenge(admin, payload, req);
+        if (!signedIn) return res.status(401).json({ message: 'Verification expired or already used. Please sign in again.' });
 
-        const accessToken = signAccessToken(admin);
-        const refreshToken = await issueSession(admin, req);
-        setAuthCookies(res, { accessToken, refreshToken, rememberMe: true });
+        const accessToken = signAccessToken(signedIn);
+        const refreshToken = await issueSession(signedIn, req, { rememberMe: payload.rememberMe !== false });
+        setAuthCookies(res, { accessToken, refreshToken, rememberMe: payload.rememberMe !== false });
 
-        return res.status(200).json({ message: 'Logged in', user: publicUser(admin) });
+        return res.status(200).json({ message: 'Logged in', user: publicUser(signedIn) });
     } catch (error) {
         console.error('mfaLoginVerify error:', error);
         return res.status(500).json({ message: 'Server error' });
@@ -194,45 +184,35 @@ export async function mfaRecoveryVerify(req, res) {
             return res.status(401).json({ message: 'Verification window expired. Please sign in again.' });
         }
 
-        const admin = await Admin.findById(payload.sub).select('+mfaRecoveryCodes');
+        const admin = await Admin.findById(payload.sub).select('+mfaRecoveryCodes +mfaChallengeHash');
         if (!admin || !admin.mfaEnabled) {
             return res.status(400).json({ message: 'Two-factor authentication is not enabled for this account' });
         }
         if (admin.status === 'Suspended') {
             return res.status(403).json({ message: 'This account has been suspended.' });
         }
+        if (rejectLockedAccount(admin, res)) return;
+        if (!matchesMfaChallenge(admin, payload)) return res.status(401).json({ message: 'Verification window expired. Please sign in again.' });
+
 
         const index = await findRecoveryCodeIndex(admin.mfaRecoveryCodes, recoveryCode);
         if (index === -1) {
-            admin.failedLoginAttempts = (admin.failedLoginAttempts || 0) + 1;
-            if (admin.failedLoginAttempts >= MAX_FAILED_LOGINS) {
-                admin.accountLockedUntil = new Date(Date.now() + ACCOUNT_LOCK_MS);
-                admin.failedLoginAttempts = 0;
-            }
-            await admin.save();
+            await recordLoginFailure(admin._id, payload.jti);
             return res.status(401).json({ message: 'Invalid or already-used backup code' });
         }
 
-        // Burn the code so it can never be replayed.
-        admin.mfaRecoveryCodes[index].usedAt = new Date();
-        admin.markModified('mfaRecoveryCodes');
+        const signedIn = await consumeMfaChallenge(admin, payload, req, index);
+        if (!signedIn) return res.status(401).json({ message: 'Verification expired or already used. Please sign in again.' });
 
-        admin.failedLoginAttempts = 0;
-        admin.accountLockedUntil = null;
-        admin.lastLoginAt = new Date();
-        admin.lastLoginIp = clientIp(req);
-        if (admin.status === 'Invited') admin.status = 'Active';
-        await admin.save();
+        const remaining = signedIn.mfaRecoveryCodes.filter((c) => !c.usedAt).length;
 
-        const remaining = admin.mfaRecoveryCodes.filter((c) => !c.usedAt).length;
-
-        const accessToken = signAccessToken(admin);
-        const refreshToken = await issueSession(admin, req);
-        setAuthCookies(res, { accessToken, refreshToken, rememberMe: true });
+        const accessToken = signAccessToken(signedIn);
+        const refreshToken = await issueSession(signedIn, req, { rememberMe: payload.rememberMe !== false });
+        setAuthCookies(res, { accessToken, refreshToken, rememberMe: payload.rememberMe !== false });
 
         return res.status(200).json({
             message: 'Logged in with a backup code',
-            user: publicUser(admin),
+            user: publicUser(signedIn),
             recoveryCodesRemaining: remaining,
         });
     } catch (error) {
@@ -371,7 +351,7 @@ export async function mfaRegenerateCodes(req, res) {
 // ---------------- POST /api/admin/auth/refresh ----------------
 export async function refresh(req, res) {
     try {
-        const raw = req.signedCookies?.[COOKIE_NAME.refresh_token]?.trim();
+        const raw = signedCookie(req, COOKIE_NAME.refresh_token);
         if (!raw) return res.status(401).json({ message: 'No refresh token' });
 
         const session = await Session.findOne({ refreshTokenHash: hashToken(raw), isValid: true });
@@ -381,7 +361,7 @@ export async function refresh(req, res) {
         }
 
         const admin = await Admin.findById(session.userId);
-        if (!admin || admin.status === 'Suspended') {
+        if (!admin || admin.status !== 'Active' || (admin.authVersion || 0) !== (session.authVersion || 0)) {
             session.isValid = false;
             await session.save();
             clearAuthCookies(res);
@@ -396,7 +376,7 @@ export async function refresh(req, res) {
         await session.save();
 
         const accessToken = signAccessToken(admin);
-        setAuthCookies(res, { accessToken, refreshToken: nextRefresh, rememberMe: true });
+        setAuthCookies(res, { accessToken, refreshToken: nextRefresh, rememberMe: session.rememberMe !== false });
 
         return res.status(200).json({ message: 'Refreshed', user: publicUser(admin) });
     } catch (error) {
@@ -408,7 +388,7 @@ export async function refresh(req, res) {
 // ---------------- POST /api/admin/auth/logout ----------------
 export async function logout(req, res) {
     try {
-        const raw = req.signedCookies?.[COOKIE_NAME.refresh_token]?.trim();
+        const raw = signedCookie(req, COOKIE_NAME.refresh_token);
         if (raw) {
             await Session.findOneAndUpdate({ refreshTokenHash: hashToken(raw) }, { isValid: false });
         }
@@ -454,7 +434,7 @@ export async function forgotPassword(req, res) {
         admin.passwordResetExpiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
         await admin.save();
 
-        const resetUrl = `${process.env.ADMIN_URL || 'https://admin.theweddingboys.in'}/reset-password/${rawToken}`;
+        const resetUrl = `${process.env.ADMIN_URL || 'https://admin.theweddingvachan.com'}/reset-password/${rawToken}`;
 
         const { subject, html, text } = passwordResetEmail({ name: admin.firstName || admin.name, resetUrl });
         // sendMail never throws — a mail outage must not change this response.
@@ -490,6 +470,9 @@ export async function resetPassword(req, res) {
         admin.password = await bcrypt.hash(password, await bcrypt.genSalt(10));
         admin.passwordResetTokenHash = null;
         admin.passwordResetExpiresAt = null;
+        admin.authVersion = (admin.authVersion || 0) + 1;
+        admin.mfaChallengeHash = null;
+        admin.mfaChallengeExpiresAt = null;
         admin.failedLoginAttempts = 0;
         admin.accountLockedUntil = null;
         if (admin.status === 'Invited') admin.status = 'Active';

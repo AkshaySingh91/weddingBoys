@@ -62,7 +62,7 @@ export default function ArrangePanel({ items, ceremonyOrder = [], clientId, onSa
             </div>
 
             {groups.map((g, gi) => (
-                <section key={g.label} className="rounded-2xl border border-studio-border bg-white">
+                <section key={g.label} className="rounded-xl border border-studio-border bg-white">
                     <h3 className="border-b border-studio-border px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-studio-inkMuted">
                         {g.label} <span className="font-normal normal-case tracking-normal">· {g.list.length}</span>
                     </h3>
@@ -75,16 +75,16 @@ export default function ArrangePanel({ items, ceremonyOrder = [], clientId, onSa
                             return (
                                 <Reorder.Item key={item._id} value={item}
                                     className="flex cursor-grab items-center gap-3 bg-white px-3 py-2 active:cursor-grabbing">
-                                    <DotsSixVertical size={16} className="shrink-0 text-stone-400" />
-                                    <span className="relative h-10 w-14 shrink-0 overflow-hidden rounded-md bg-stone-100">
+                                    <DotsSixVertical size={16} className="shrink-0 text-ink-muted" />
+                                    <span className="relative h-10 w-14 shrink-0 overflow-hidden rounded-lg bg-ground-sunk">
                                         {/* eslint-disable-next-line @next/next/no-img-element -- small admin thumbnail */}
                                         {thumb && <img src={thumb} alt="" draggable={false} className="h-full w-full object-cover" />}
                                     </span>
-                                    {item.kind === 'Video' ? <FilmSlate size={14} className="shrink-0 text-stone-500" /> : <ImageSquare size={14} className="shrink-0 text-stone-500" />}
+                                    {item.kind === 'Video' ? <FilmSlate size={14} className="shrink-0 text-ink-muted" /> : <ImageSquare size={14} className="shrink-0 text-ink-muted" />}
                                     <span className="min-w-0 flex-1 truncate text-xs text-studio-ink">
                                         {item.caption || item.external?.title || item.media?.originalFileName || item.title}
                                     </span>
-                                    {chip && <span title={chip.title} className={cn('rounded px-1.5 py-0.5 text-[10px] font-semibold text-white', chip.cls)}>{chip.label}</span>}
+                                    {chip && <span title={chip.title} className={cn('rounded-lg px-1.5 py-0.5 text-[10px] font-semibold text-white', chip.cls)}>{chip.label}</span>}
                                 </Reorder.Item>
                             );
                         })}

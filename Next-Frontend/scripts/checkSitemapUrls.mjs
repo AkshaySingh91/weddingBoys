@@ -4,9 +4,9 @@
  * Read-only (GET only). Run after the portfolio cut-over, and after any change
  * to how films and photos are looked up.
  *
- *   node scripts/checkSitemapUrls.mjs --site=https://theweddingboys.in --api=https://api.example
+ *   node scripts/checkSitemapUrls.mjs --site=https://theweddingvachan.com --api=https://api.example
  *   node scripts/checkSitemapUrls.mjs --site=http://localhost:3000 --api=http://localhost:8080 \
- *        --sitemap=https://theweddingboys.in/sitemap.xml
+ *        --sitemap=https://theweddingvachan.com/sitemap.xml
  *
  * --sitemap reads the URL list from somewhere else (e.g. production's) and
  * requests each path against --site, so the live list can be checked against a
@@ -34,7 +34,7 @@ if (!API) console.warn('no --api given: film and photo pages are checked by page
 const xml = await (await fetch(SITEMAP, { signal: AbortSignal.timeout(30000) })).text();
 const locs = [...xml.matchAll(/<loc>\s*([^<]+?)\s*<\/loc>/g)].map((m) => m[1].replace(/&amp;/g, '&'));
 if (!locs.length) {
-    // theweddingboys.in answered /sitemap.xml with its HTML home page when this
+    // theweddingvachan.com answered /sitemap.xml with its HTML home page when this
     // was written: the domain was still served by the previous frontend.
     const looksHtml = /<html/i.test(xml.slice(0, 500));
     console.error(`no <loc> entries in ${SITEMAP}${looksHtml ? ' (it returned an HTML page, not a sitemap: is this origin running the Next frontend?)' : ''}`);

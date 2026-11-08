@@ -88,7 +88,7 @@ export async function inviteUser(req, res) {
             expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
         });
 
-        const inviteUrl = `${process.env.ADMIN_URL || 'https://admin.theweddingboys.in'}/accept-invite/${rawToken}`;
+        const inviteUrl = `${process.env.ADMIN_URL || 'https://admin.theweddingvachan.com'}/accept-invite/${rawToken}`;
 
         const { subject, html, text } = adminInviteEmail({
             inviteUrl,
@@ -200,6 +200,7 @@ export async function updateUserStatus(req, res) {
         }
 
         target.status = parsed.data.status;
+        if (target.status === 'Suspended') target.authVersion = (target.authVersion || 0) + 1;
         await target.save();
 
         // Suspending someone must kick them off every device immediately.
@@ -220,6 +221,7 @@ export async function revokeUserSessions(req, res) {
         const target = await Admin.findById(req.params.id);
         if (!target) return res.status(404).json({ message: 'User not found' });
 
+        await Admin.updateOne({ _id: target._id }, { $inc: { authVersion: 1 } });
         const result = await Session.updateMany({ userId: target._id, isValid: true }, { isValid: false });
         return res.status(200).json({
             message: 'All sessions revoked',

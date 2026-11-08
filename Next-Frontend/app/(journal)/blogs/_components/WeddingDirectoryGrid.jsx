@@ -36,14 +36,14 @@ export default function WeddingDirectoryGrid({ vendorCredits = [] }) {
     <section aria-label="Curated Wedding Directory" className="my-10 sm:my-14 font-sans">
       {/* Directory Section Header (prompt-2.png) */}
       <div className="flex items-center justify-between pb-3.5 border-b border-[#E5DCD3] mb-5 sm:mb-6">
-        <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-[0.2em] text-[#FF5353] uppercase">
+        <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-[0.2em] text-accent-ink uppercase">
           <Sparkle size={13} weight="fill" />
           <span>The Curated Wedding Directory</span>
         </div>
 
         <Link
           href="/blogs"
-          className="text-xs font-medium text-[#74583E] hover:text-[#FF5353] transition-colors inline-flex items-center gap-1"
+          className="text-xs font-medium text-[#74583E] hover:text-accent-ink transition-colors inline-flex items-center gap-1"
         >
           <span>View All Vendors</span>
           <ArrowRight size={12} weight="bold" />
@@ -60,17 +60,17 @@ export default function WeddingDirectoryGrid({ vendorCredits = [] }) {
               href={vendor.url || '#'}
               target={vendor.url?.startsWith('http') ? '_blank' : '_self'}
               rel="noopener noreferrer"
-              className="group flex items-center justify-between p-3.5 sm:p-4 rounded-2xl border border-[#E5DCD3] bg-white shadow-sm hover:shadow-md hover:border-[#FF5353]/40 transition-all duration-300"
+              className="group flex items-center justify-between p-3.5 sm:p-4 rounded-2xl border border-[#E5DCD3] bg-white shadow-sm hover:shadow-md hover:border-accent/40 transition-all duration-300"
             >
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-10 h-10 rounded-xl bg-[#FCEEE6] border border-[#E5BDA7]/50 flex items-center justify-center text-[#FF5353] group-hover:bg-[#FF5353] group-hover:text-white transition-colors shrink-0 shadow-sm">
+                <div className="w-10 h-10 rounded-xl bg-[#FCEEE6] border border-[#E5BDA7]/50 flex items-center justify-center text-accent-ink group-hover:bg-accent-hover group-hover:text-white transition-colors shrink-0 shadow-sm">
                   <Icon size={18} weight="fill" />
                 </div>
                 <div className="min-w-0">
                   <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-[#74583E] block truncate">
                     {vendor.role}
                   </span>
-                  <span className="text-xs sm:text-[13px] font-bold text-[#5E2B17] group-hover:text-[#FF5353] transition-colors block truncate mt-0.5">
+                  <span className="text-xs sm:text-[13px] font-bold text-[#5E2B17] group-hover:text-accent-ink transition-colors block truncate mt-0.5">
                     {vendor.name}
                   </span>
                 </div>
@@ -81,12 +81,12 @@ export default function WeddingDirectoryGrid({ vendorCredits = [] }) {
                 {vendor.instagram && (
                   <span
                     title="Instagram Profile"
-                    className="p-1 rounded-full text-[#74583E] hover:text-[#FF5353] transition-colors"
+                    className="p-1 rounded-full text-[#74583E] hover:text-accent-ink transition-colors"
                   >
                     <InstagramLogo size={15} />
                   </span>
                 )}
-                <span className="text-[#74583E] group-hover:text-[#FF5353] group-hover:translate-x-1 transition-all">
+                <span className="text-[#74583E] group-hover:text-accent-ink group-hover:translate-x-1 transition-all">
                   <ArrowRight size={13} weight="bold" />
                 </span>
               </div>

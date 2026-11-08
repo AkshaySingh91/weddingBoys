@@ -26,10 +26,10 @@ export const Select = forwardRef(function Select(
       {label && (
         <label
           htmlFor={selectId}
-          className="block text-[11px] font-semibold tracking-wider uppercase text-stone-600 font-sans"
+          className="block text-[11px] font-semibold tracking-wider uppercase text-ink-secondary font-sans"
         >
           {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
+          {required && <span className="text-accent-ink ml-1">*</span>}
         </label>
       )}
 
@@ -40,10 +40,10 @@ export const Select = forwardRef(function Select(
           disabled={disabled}
           required={required}
           className={cn(
-            'w-full appearance-none rounded-xl border bg-white py-2.5 pl-3.5 pr-9 text-xs text-[#2F2F2F] font-sans transition-all duration-150 cursor-pointer',
-            'border-stone-200 hover:border-stone-400 focus:outline-none focus:border-red-400 focus:ring-2 focus:ring-red-400/20',
-            'disabled:bg-stone-100/80 disabled:text-stone-400 disabled:cursor-not-allowed',
-            error && 'border-rose-400 focus:border-rose-500 focus:ring-rose-500/15',
+            'w-full appearance-none rounded-xl border bg-white py-2.5 pl-3.5 pr-9 text-xs text-ink font-sans transition-all duration-150 cursor-pointer',
+            'border-edge-subtle hover:border-edge-strong focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20',
+            'disabled:bg-ground-sunk/80 disabled:text-ink-muted disabled:cursor-not-allowed',
+            error && 'border-state-error focus:border-state-error focus:ring-accent/20',
             className
           )}
           {...props}
@@ -57,15 +57,15 @@ export const Select = forwardRef(function Select(
             : children}
         </select>
 
-        <span className="absolute right-3 pointer-events-none text-stone-400">
+        <span className="absolute right-3 pointer-events-none text-ink-muted">
           <CaretDown size={14} weight="bold" />
         </span>
       </div>
 
       {error ? (
-        <p className="text-[11px] font-medium text-rose-600 font-sans">{error}</p>
+        <p className="text-[11px] font-medium text-state-error font-sans">{error}</p>
       ) : helperText ? (
-        <p className="text-[11px] text-stone-500 font-sans">{helperText}</p>
+        <p className="text-[11px] text-ink-muted font-sans">{helperText}</p>
       ) : null}
     </div>
   );

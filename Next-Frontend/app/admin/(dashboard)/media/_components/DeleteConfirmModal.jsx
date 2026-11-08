@@ -34,7 +34,7 @@ export default function DeleteConfirmModal({
     <Dialog open={open} onOpenChange={(v) => !v && !loading && onClose()}>
       <DialogContent
         hideCloseButton
-        className="max-w-md w-[92vw] p-0 overflow-hidden scrollbar-none rounded-2xl border border-stone-200/90 bg-white shadow-2xl"
+        className="max-w-md w-[92vw] p-0 overflow-hidden scrollbar-none rounded-xl border border-edge-subtle bg-white shadow-2xl"
       >
         <div className="p-5 sm:p-6 space-y-4">
           {/* Header with Danger Badge & Close */}
@@ -44,10 +44,10 @@ export default function DeleteConfirmModal({
                 <WarningCircle size={22} weight="fill" />
               </span>
               <div>
-                <h3 className="text-sm sm:text-base font-bold text-stone-900 font-sans tracking-tight">
+                <h3 className="text-sm sm:text-base font-bold text-ink font-sans tracking-tight">
                   {isBatch ? `Permanently Delete ${batchCount} Assets?` : 'Permanently Delete Asset?'}
                 </h3>
-                <p className="text-xs text-stone-500 font-sans">
+                <p className="text-xs text-ink-muted font-sans">
                   Irreversible action · Cloudflare R2 Storage Purge
                 </p>
               </div>
@@ -57,7 +57,7 @@ export default function DeleteConfirmModal({
               type="button"
               disabled={loading}
               onClick={onClose}
-              className="flex items-center justify-center h-8 w-8 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors disabled:opacity-50"
+              className="flex items-center justify-center h-8 w-8 rounded-lg text-ink-muted hover:text-ink-secondary hover:bg-ground-sunk transition-colors disabled:opacity-50"
             >
               <X size={16} />
               <span className="sr-only">Close</span>
@@ -66,8 +66,8 @@ export default function DeleteConfirmModal({
 
           {/* Single Asset Context Card */}
           {!isBatch && media && (
-            <div className="flex items-center gap-3 rounded-xl border border-stone-200/90 bg-stone-50/70 p-3">
-              <div className="relative h-14 w-14 rounded-lg overflow-hidden bg-stone-200 shrink-0 border border-stone-200">
+            <div className="flex items-center gap-3 rounded-xl border border-edge-subtle bg-ground/70 p-3">
+              <div className="relative h-14 w-14 rounded-lg overflow-hidden bg-ground-sunk shrink-0 border border-edge-subtle">
                 {media.mediaType === 'Image' && url ? (
                   <Image
                     src={url}
@@ -83,17 +83,17 @@ export default function DeleteConfirmModal({
                     className="h-full w-full object-cover"
                   />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center text-stone-400">
+                  <div className="flex h-full w-full items-center justify-center text-ink-muted">
                     {media.mediaType === 'Video' ? <FilmSlate size={20} /> : <ImageSquare size={20} />}
                   </div>
                 )}
               </div>
 
               <div className="min-w-0 flex-1 space-y-1">
-                <p className="font-mono text-xs font-semibold text-stone-900 truncate">
+                <p className="font-mono text-xs font-semibold text-ink truncate">
                   {media.originalFileName || media.title || 'Untitled Asset'}
                 </p>
-                <div className="flex flex-wrap items-center gap-2 text-[11px] text-stone-500">
+                <div className="flex flex-wrap items-center gap-2 text-[11px] text-ink-muted">
                   <span className="tabular-nums font-medium">{formatBytes(media.fileSize)}</span>
                   <span>·</span>
                   <span>{media.mediaType || 'Media'}</span>
@@ -139,7 +139,7 @@ export default function DeleteConfirmModal({
           )}
 
           {/* Consequence Disclosure */}
-          <div className="rounded-xl border border-rose-100 bg-rose-50/40 p-3 text-xs text-stone-600 leading-relaxed font-sans">
+          <div className="rounded-xl border border-rose-100 bg-rose-50/40 p-3 text-xs text-ink-secondary leading-relaxed font-sans">
             <p className="text-[11px] text-rose-950 font-medium">
               {!isBatch
                 ? 'This action immediately removes the raw master file and every generated responsive web derivative from Cloudflare R2. Any site page referencing this asset will show a missing media state.'
@@ -149,7 +149,7 @@ export default function DeleteConfirmModal({
         </div>
 
         {/* Action Controls */}
-        <div className="px-5 sm:px-6 py-3.5 border-t border-stone-200 bg-stone-50/80 flex items-center justify-end gap-2.5">
+        <div className="px-5 sm:px-6 py-3.5 border-t border-edge-subtle bg-ground/80 flex items-center justify-end gap-2.5">
           <Button
             variant="secondary"
             size="sm"

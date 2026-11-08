@@ -99,10 +99,10 @@ function duplicateWidths(rows) {
 
 function Stat({ label, value, hint }) {
     return (
-        <div className="rounded-2xl border border-stone-200/80 bg-white p-3 shadow-xs">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-stone-500">{label}</p>
-            <p className="mt-1 text-sm font-bold tabular-nums text-stone-900">{value}</p>
-            {hint && <p className="mt-0.5 text-[10px] text-stone-500 font-medium">{hint}</p>}
+        <div className="rounded-xl border border-edge-subtle bg-white p-3 shadow-xs">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-ink-muted">{label}</p>
+            <p className="mt-1 text-sm font-bold tabular-nums text-ink">{value}</p>
+            {hint && <p className="mt-0.5 text-[10px] text-ink-muted font-medium">{hint}</p>}
         </div>
     );
 }
@@ -124,18 +124,18 @@ function DerivativeCard({ item, isVideo, onPreview }) {
     const isLoop = item.label === 'loop';
 
     return (
-        <div className="rounded-2xl border border-stone-200 bg-white p-3 shadow-2xs hover:border-[#D9342A]/40 hover:shadow-xs transition-all space-y-2.5 flex flex-col">
+        <div className="rounded-xl border border-edge-subtle bg-white p-3 shadow-2xs hover:border-accent/40 hover:shadow-xs transition-all space-y-2.5 flex flex-col">
             {/* Header info */}
             <div className="flex items-center justify-between gap-1.5">
                 <div className="flex items-center gap-1.5 min-w-0">
-                    <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-stone-100 text-stone-700 shrink-0">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-ground-sunk text-ink-secondary shrink-0">
                         {isVideoFile ? <FilmSlate size={13} weight="bold" /> : <ImageSquare size={13} weight="bold" />}
                     </span>
-                    <span className="font-bold text-xs text-stone-900 truncate capitalize">
+                    <span className="font-bold text-xs text-ink truncate capitalize">
                         {item.label}
                     </span>
                     {item.isMaster && (
-                        <span className="rounded-md bg-stone-100 border border-stone-200 px-1.5 py-0.5 text-[9px] font-semibold text-stone-700">
+                        <span className="rounded-lg bg-ground-sunk border border-edge-subtle px-1.5 py-0.5 text-[9px] font-semibold text-ink-secondary">
                             master
                         </span>
                     )}
@@ -143,23 +143,23 @@ function DerivativeCard({ item, isVideo, onPreview }) {
 
                 <div className="flex items-center gap-1 shrink-0">
                     {item.hasAudio === false && (
-                        <span className="rounded bg-stone-100 p-1 text-stone-500" title="Silent Audio">
+                        <span className="rounded-lg bg-ground-sunk p-1 text-ink-muted" title="Silent Audio">
                             <SpeakerSimpleSlash size={11} />
                         </span>
                     )}
                     {item.hasAudio === true && (
-                        <span className="rounded bg-stone-100 p-1 text-stone-600" title="Audio Track Included">
+                        <span className="rounded-lg bg-ground-sunk p-1 text-ink-secondary" title="Audio Track Included">
                             <SpeakerHigh size={11} />
                         </span>
                     )}
-                    <span className="font-mono text-[10px] font-bold text-stone-800 bg-stone-100/90 px-1.5 py-0.5 rounded-md uppercase">
+                    <span className="font-mono text-[10px] font-bold text-ink bg-ground-sunk/90 px-1.5 py-0.5 rounded-lg uppercase">
                         {item.format}
                     </span>
                 </div>
             </div>
 
             {/* Asset Visual Stage / Player */}
-            <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-stone-950/90 border border-stone-800 flex items-center justify-center group">
+            <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-ink/90 border border-ink flex items-center justify-center group">
                 {item.url ? (
                     isVideoFile ? (
                         <video
@@ -179,7 +179,7 @@ function DerivativeCard({ item, isVideo, onPreview }) {
                         />
                     )
                 ) : (
-                    <div className="flex flex-col items-center justify-center text-stone-500 text-center p-2 text-xs">
+                    <div className="flex flex-col items-center justify-center text-ink-muted text-center p-2 text-xs">
                         <Lightning size={18} className="text-amber-500 animate-pulse mb-1" />
                         <span>Processing in worker...</span>
                     </div>
@@ -189,7 +189,7 @@ function DerivativeCard({ item, isVideo, onPreview }) {
                     <button
                         type="button"
                         onClick={() => onPreview(item)}
-                        className="absolute top-2 right-2 z-10 flex items-center gap-1 rounded-lg bg-stone-900/85 backdrop-blur-xs px-2 py-1 text-[10px] font-semibold text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-stone-800 cursor-pointer shadow-md"
+                        className="absolute top-2 right-2 z-10 flex items-center gap-1 rounded-lg bg-ink/85 backdrop-blur-xs px-2 py-1 text-[10px] font-semibold text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-ink cursor-pointer shadow-md"
                     >
                         <Eye size={11} weight="bold" /> Stage
                     </button>
@@ -197,13 +197,13 @@ function DerivativeCard({ item, isVideo, onPreview }) {
             </div>
 
             {/* Specs & Quick Actions */}
-            <div className="mt-auto pt-1 flex items-center justify-between gap-2 text-xs border-t border-stone-100">
+            <div className="mt-auto pt-1 flex items-center justify-between gap-2 text-xs border-t border-edge-subtle">
                 <div className="min-w-0">
-                    <p className="font-mono text-[11px] text-stone-700 font-semibold tabular-nums">
+                    <p className="font-mono text-[11px] text-ink-secondary font-semibold tabular-nums">
                         {formatDimensions(item.width, item.height) || 'Adaptive'}
                     </p>
-                    <div className="flex items-center gap-1.5 text-[10px] text-stone-500 mt-0.5">
-                        <span className="font-bold text-stone-800">{formatBytes(item.bytes)}</span>
+                    <div className="flex items-center gap-1.5 text-[10px] text-ink-muted mt-0.5">
+                        <span className="font-bold text-ink">{formatBytes(item.bytes)}</span>
                         {item.bitrateKbps && <span>· {item.bitrateKbps} kbps</span>}
                         {item.durationSec && <span>· {formatDuration(item.durationSec)}</span>}
                     </div>
@@ -216,7 +216,7 @@ function DerivativeCard({ item, isVideo, onPreview }) {
                                 type="button"
                                 onClick={handleCopy}
                                 title="Copy direct CDN URL"
-                                className="flex h-7 w-7 items-center justify-center rounded-lg border border-stone-200 bg-stone-50 text-stone-600 hover:border-stone-400 hover:text-stone-900 transition-all cursor-pointer"
+                                className="flex h-7 w-7 items-center justify-center rounded-lg border border-edge-subtle bg-ground text-ink-secondary hover:border-edge-strong hover:text-ink transition-all cursor-pointer"
                             >
                                 {copied ? <Check size={13} weight="bold" className="text-emerald-600" /> : <Copy size={13} />}
                             </button>
@@ -225,7 +225,7 @@ function DerivativeCard({ item, isVideo, onPreview }) {
                                 target="_blank"
                                 rel="noreferrer"
                                 title="Open in new window"
-                                className="flex h-7 w-7 items-center justify-center rounded-lg border border-stone-200 bg-stone-50 text-stone-600 hover:border-stone-400 hover:text-stone-900 transition-all cursor-pointer"
+                                className="flex h-7 w-7 items-center justify-center rounded-lg border border-edge-subtle bg-ground text-ink-secondary hover:border-edge-strong hover:text-ink transition-all cursor-pointer"
                             >
                                 <ArrowSquareOut size={13} />
                             </a>
@@ -272,7 +272,7 @@ export default function AssetBreakdown({ media, className = '', compact = false,
             )}
 
             {processing && (
-                <div className="flex items-center gap-2.5 rounded-2xl border border-amber-200 bg-amber-50/80 p-3.5 text-xs text-amber-900 shadow-2xs">
+                <div className="flex items-center gap-2.5 rounded-xl border border-amber-200 bg-amber-50/80 p-3.5 text-xs text-amber-900 shadow-2xs">
                     <Lightning size={16} weight="fill" className="shrink-0 text-amber-600 animate-bounce" />
                     <div>
                         <p className="font-bold">Worker transcode & ladder pipeline active</p>
@@ -284,9 +284,9 @@ export default function AssetBreakdown({ media, className = '', compact = false,
             )}
 
             {rows.length === 0 && !processing && (
-                <div className="rounded-2xl border border-dashed border-stone-200 bg-white p-8 text-center text-xs text-stone-500 space-y-1">
-                    <p className="font-semibold text-stone-700">No derivatives recorded</p>
-                    <p className="text-[11px] text-stone-400">
+                <div className="rounded-xl border border-dashed border-edge-subtle bg-white p-8 text-center text-xs text-ink-muted space-y-1">
+                    <p className="font-semibold text-ink-secondary">No derivatives recorded</p>
+                    <p className="text-[11px] text-ink-muted">
                         {media.mimeType?.includes('svg')
                             ? 'Vector asset — served directly from Cloudflare R2 without size ladder.'
                             : 'This asset is served as-is from the edge bucket.'}
@@ -298,18 +298,18 @@ export default function AssetBreakdown({ media, className = '', compact = false,
                 <div className="space-y-3">
                     {/* View Switcher Strip */}
                     <div className="flex items-center justify-between px-1">
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-stone-500">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-ink-muted">
                             Available Renditions & Formats ({rows.length})
                         </span>
-                        <div className="flex items-center gap-1 rounded-xl bg-stone-100 p-1 border border-stone-200/80">
+                        <div className="flex items-center gap-1 rounded-xl bg-ground-sunk p-1 border border-edge-subtle">
                             <button
                                 type="button"
                                 onClick={() => setViewMode('cards')}
                                 className={cn(
                                     'flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold rounded-lg transition-all cursor-pointer',
                                     viewMode === 'cards'
-                                        ? 'bg-white text-stone-900 shadow-2xs'
-                                        : 'text-stone-500 hover:text-stone-900'
+                                        ? 'bg-white text-ink shadow-2xs'
+                                        : 'text-ink-muted hover:text-ink'
                                 )}
                             >
                                 <SquaresFour size={13} weight="bold" />
@@ -321,8 +321,8 @@ export default function AssetBreakdown({ media, className = '', compact = false,
                                 className={cn(
                                     'flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold rounded-lg transition-all cursor-pointer',
                                     viewMode === 'table'
-                                        ? 'bg-white text-stone-900 shadow-2xs'
-                                        : 'text-stone-500 hover:text-stone-900'
+                                        ? 'bg-white text-ink shadow-2xs'
+                                        : 'text-ink-muted hover:text-ink'
                                 )}
                             >
                                 <Rows size={13} weight="bold" />
@@ -345,10 +345,10 @@ export default function AssetBreakdown({ media, className = '', compact = false,
                         </div>
                     ) : (
                         /* Table View */
-                        <div className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-2xs">
+                        <div className="overflow-hidden rounded-xl border border-edge-subtle bg-white shadow-2xs">
                             <table className="w-full text-xs">
                                 <thead>
-                                    <tr className="border-b border-stone-200 bg-stone-50 text-stone-600">
+                                    <tr className="border-b border-edge-subtle bg-ground text-ink-secondary">
                                         <th className="px-3 py-2 text-left font-semibold text-[11px] uppercase tracking-wider">
                                             {isVideo ? 'Rendition' : 'Size'}
                                         </th>
@@ -357,29 +357,29 @@ export default function AssetBreakdown({ media, className = '', compact = false,
                                         <th className="px-3 py-2 text-right font-semibold text-[11px] uppercase tracking-wider">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-stone-100">
+                                <tbody className="divide-y divide-edge-subtle">
                                     {rows.map((r) => (
-                                        <tr key={r.key} className="hover:bg-stone-50/60 transition-colors">
+                                        <tr key={r.key} className="hover:bg-ground/60 transition-colors">
                                             <td className="px-3 py-2.5">
                                                 <span className="flex items-center gap-2">
                                                     {r.group === 'Poster'
-                                                        ? <ImageSquare size={13} className="shrink-0 text-stone-400" />
+                                                        ? <ImageSquare size={13} className="shrink-0 text-ink-muted" />
                                                         : isVideo
-                                                            ? <FilmSlate size={13} className="shrink-0 text-stone-400" />
-                                                            : <ImageSquare size={13} className="shrink-0 text-stone-400" />}
-                                                    <span className="font-semibold text-stone-800 capitalize">{r.label}</span>
+                                                            ? <FilmSlate size={13} className="shrink-0 text-ink-muted" />
+                                                            : <ImageSquare size={13} className="shrink-0 text-ink-muted" />}
+                                                    <span className="font-semibold text-ink capitalize">{r.label}</span>
                                                     {r.isMaster && (
-                                                        <span className="rounded-md bg-stone-100 border border-stone-200 px-1.5 py-0.5 text-[9px] font-medium text-stone-600">master</span>
+                                                        <span className="rounded-lg bg-ground-sunk border border-edge-subtle px-1.5 py-0.5 text-[9px] font-medium text-ink-secondary">master</span>
                                                     )}
                                                     {r.format && (
-                                                        <span className="text-[10px] text-stone-500 font-mono uppercase bg-stone-100 px-1 py-0.5 rounded">{r.format}</span>
+                                                        <span className="text-[10px] text-ink-muted font-mono uppercase bg-ground-sunk px-1 py-0.5 rounded-lg">{r.format}</span>
                                                     )}
                                                 </span>
                                             </td>
-                                            <td className="px-3 py-2.5 tabular-nums text-stone-600 text-[11px]">
+                                            <td className="px-3 py-2.5 tabular-nums text-ink-secondary text-[11px]">
                                                 {formatDimensions(r.width, r.height) || '—'}
-                                                {r.bitrateKbps ? <span className="text-stone-400"> · {r.bitrateKbps} kbps</span> : null}
-                                                {r.durationSec ? <span className="text-stone-400"> · {formatDuration(r.durationSec)}</span> : null}
+                                                {r.bitrateKbps ? <span className="text-ink-muted"> · {r.bitrateKbps} kbps</span> : null}
+                                                {r.durationSec ? <span className="text-ink-muted"> · {formatDuration(r.durationSec)}</span> : null}
                                             </td>
                                             <td className="px-3 py-2.5 text-right">
                                                 <span className="flex items-center justify-end gap-2">
@@ -388,7 +388,7 @@ export default function AssetBreakdown({ media, className = '', compact = false,
                                                         className="h-1.5 rounded-full bg-amber-500/70"
                                                         style={{ width: `${Math.max(4, ((r.bytes || 0) / maxBytes) * 44)}px` }}
                                                     />
-                                                    <span className="tabular-nums font-semibold text-stone-800 text-[11px]">{formatBytes(r.bytes)}</span>
+                                                    <span className="tabular-nums font-semibold text-ink text-[11px]">{formatBytes(r.bytes)}</span>
                                                 </span>
                                             </td>
                                             <td className="px-3 py-2.5 text-right">
@@ -398,7 +398,7 @@ export default function AssetBreakdown({ media, className = '', compact = false,
                                                             href={r.url}
                                                             target="_blank"
                                                             rel="noreferrer"
-                                                            className="text-stone-500 hover:text-stone-900 p-1"
+                                                            className="text-ink-muted hover:text-ink p-1"
                                                             title="Open stream"
                                                         >
                                                             <ArrowSquareOut size={13} />
@@ -426,9 +426,9 @@ export default function AssetBreakdown({ media, className = '', compact = false,
             )}
 
             {!compact && (
-                <div className="flex items-center justify-between text-[11px] text-stone-500 pt-1">
+                <div className="flex items-center justify-between text-[11px] text-ink-muted pt-1">
                     <span className="flex items-center gap-1.5">
-                        <HardDrives size={12} className="text-stone-400" />
+                        <HardDrives size={12} className="text-ink-muted" />
                         <span>{formatBytes(totalBytes)} preserved in Cloudflare R2 bucket</span>
                     </span>
                     <span className="text-emerald-700 font-medium">✓ CDN Cached Immutable</span>

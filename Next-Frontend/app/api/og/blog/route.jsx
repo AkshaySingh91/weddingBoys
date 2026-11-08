@@ -65,7 +65,7 @@ export async function GET(request) {
                                     textTransform: 'uppercase',
                                 }}
                             >
-                                THE WEDDING BOYS
+                                THE WEDDING VACHAN
                             </span>
                             <span
                                 style={{
@@ -216,7 +216,7 @@ export async function GET(request) {
                                     textTransform: 'uppercase',
                                 }}
                             >
-                                THEWEDDINGBOYS.COM
+                                THEWEDDINGVACHAN.COM
                             </span>
                         </div>
                     </div>

@@ -115,6 +115,8 @@
   --ground-sunk-rgb:   244 235 221;
   --ground-deep-rgb:    42  27  18;
   --ink-primary-rgb:    42  27  18;
+  --ink-on-deep-rgb:   251 246 238;
+  --ink-on-accent-rgb: 255 255 255;
   --ink-secondary-rgb:  94  70  54;
   --ink-muted-rgb:     122  99  85;
   --accent-rgb:        217  52  42;

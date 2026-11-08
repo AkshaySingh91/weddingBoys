@@ -39,11 +39,11 @@ export default function EditBlogPage() {
     if (notFound) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[50vh] gap-3 font-sans text-center">
-                <div className="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center text-stone-500 border border-stone-200">
+                <div className="w-12 h-12 rounded-full bg-ground-sunk flex items-center justify-center text-ink-muted border border-edge-subtle">
                     <BookOpenText size={24} />
                 </div>
-                <h3 className="text-sm font-bold text-[#1C1917]">Article Not Found</h3>
-                <p className="text-xs text-stone-500 max-w-sm">
+                <h3 className="text-sm font-bold text-ink">Article Not Found</h3>
+                <p className="text-xs text-ink-muted max-w-sm">
                     The requested blog post could not be loaded or may have been deleted.
                 </p>
                 <Button variant="outline" size="sm" icon={ArrowLeft} onClick={() => router.push('/admin/blogs')}>
@@ -56,8 +56,8 @@ export default function EditBlogPage() {
     if (!post) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[50vh] gap-3 font-sans">
-                <CircleNotch size={28} className="animate-spin text-stone-600" />
-                <p className="text-xs text-stone-500 font-medium">Loading article details...</p>
+                <CircleNotch size={28} className="animate-spin text-ink-secondary" />
+                <p className="text-xs text-ink-muted font-medium">Loading article details...</p>
             </div>
         );
     }

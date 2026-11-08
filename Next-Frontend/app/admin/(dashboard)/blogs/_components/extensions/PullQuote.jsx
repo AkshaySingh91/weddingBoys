@@ -9,18 +9,18 @@ function PullQuoteView({ node, updateAttributes, deleteNode, selected }) {
     const attribution = node.attrs.attribution || '';
 
     return (
-        <NodeViewWrapper className={`my-8 px-6 sm:px-12 text-center transition-all ${selected ? 'ring-2 ring-[#8C532B] rounded-2xl' : ''}`}>
+        <NodeViewWrapper className={`my-8 px-6 sm:px-12 text-center transition-all ${selected ? 'ring-2 ring-accent rounded-xl' : ''}`}>
             <div className="relative" contentEditable={false}>
-                <span className="font-playfair text-6xl text-[#8C532B]/15 select-none" aria-hidden="true">&quot;</span>
+                <span className="font-playfair text-6xl text-accent-ink/15 select-none" aria-hidden="true">&quot;</span>
             </div>
-            <NodeViewContent className="-mt-6 font-playfair text-xl sm:text-2xl italic leading-relaxed text-[#1C1917]" />
+            <NodeViewContent className="-mt-6 font-playfair text-xl sm:text-2xl italic leading-relaxed text-ink" />
             {selected && (
                 <div className="mt-4 flex flex-col items-center gap-3" contentEditable={false}>
                     <div className="flex items-center gap-2">
                         <select
                             value={variant}
                             onChange={(e) => updateAttributes({ variant: e.target.value })}
-                            className="rounded-lg border border-[#E5DCD3] bg-white px-2 py-1 text-xs text-[#1C1917] font-medium focus:outline-none focus:border-[#8C532B]"
+                            className="rounded-lg border border-edge-subtle bg-white px-2 py-1 text-xs text-ink font-medium focus:outline-none focus:border-accent"
                         >
                             <option value="default">Default</option>
                             <option value="with-attribution">With Attribution</option>
@@ -40,7 +40,7 @@ function PullQuoteView({ node, updateAttributes, deleteNode, selected }) {
                             value={attribution}
                             onChange={(e) => updateAttributes({ attribution: e.target.value })}
                             placeholder="Attribution (e.g. couple name)"
-                            className="w-full max-w-xs rounded-lg border border-[#E5DCD3] bg-white px-3 py-1.5 text-center text-sm text-[#1C1917] focus:outline-none focus:border-[#8C532B]"
+                            className="w-full max-w-xs rounded-lg border border-edge-subtle bg-white px-3 py-1.5 text-center text-sm text-ink focus:outline-none focus:border-accent"
                         />
                     )}
                 </div>

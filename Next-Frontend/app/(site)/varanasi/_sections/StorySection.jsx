@@ -9,8 +9,8 @@ import storyImage from "@/Asset/Varanasi/varanasi-story-cinematic.png";
 // import grainTexture from "../assets/paper-grain.png"; // A subtle noise/grain texture
 
 const COLORS = {
-  saffron: "#E8600A",
-  gold: "#C9973A",
+  saffron: "var(--accent)",
+  gold: "var(--gold)",
   ivory: "#FAF6EE",
   dusk: "#0A0705",
   ashGray: "#8C7B6E",
@@ -58,7 +58,7 @@ export default function StorySection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1 }}
-            className="text-[#C9973A] text-[10px] tracking-[0.35em] uppercase mb-8 block"
+            className="text-gold text-[10px] tracking-[0.35em] uppercase mb-8 block"
           >
             The Announcement
           </motion.span>
@@ -68,7 +68,7 @@ export default function StorySection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1.2, delay: 0.2 }}
-            className="font-['Cormorant_Garamond'] text-[clamp(40px,5vw,72px)] text-[#FAF6EE] leading-[1.05] font-light mb-10"
+            className="font-display text-[clamp(40px,5vw,72px)] text-[#FAF6EE] leading-[1.05] font-light mb-10"
           >
             We have been waiting for this city
             {/* Animated Gold Underline */}
@@ -77,7 +77,7 @@ export default function StorySection() {
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1.5, delay: 1, ease: "easeInOut" }}
-              className="h-[1px] w-3/4 mt-4 bg-gradient-to-r from-[#C9973A] to-transparent origin-left"
+              className="h-[1px] w-3/4 mt-4 bg-gradient-to-r from-gold to-transparent origin-left"
             />
           </motion.h2>
 
@@ -92,7 +92,7 @@ export default function StorySection() {
               Varanasi is not just a location. It is the oldest living city on earth. Where the river carries prayers upstream and love is witnessed by something ancient.
             </p>
             <p>
-              The Wedding Boys has spent years crafting wedding films across India. Now, we arrive at the place where stories were always meant to be told.
+              The Wedding Vachan has spent years crafting wedding films across India. Now, we arrive at the place where stories were always meant to be told.
             </p>
           </motion.div>
         </motion.div>
@@ -124,12 +124,12 @@ export default function StorySection() {
               transition={{ duration: 1.2, delay: 0.6 }}
               className="absolute bottom-10 left-6 md:left-10 md:bottom-12 max-w-sm"
             >
-              <div className="border-l-[1.5px] border-[#E8600A] pl-6 py-2">
-                <p className="font-['Cormorant_Garamond'] text-[clamp(24px,3vw,36px)] text-[#FAF6EE] italic leading-tight mb-4 shadow-black drop-shadow-xl">
+              <div className="border-l-[1.5px] border-accent pl-6 py-2">
+                <p className="font-display text-[clamp(24px,3vw,36px)] text-[#FAF6EE] italic leading-tight mb-4 shadow-black drop-shadow-xl">
                   &quot;Every city has a light. Varanasi has fire.&quot;
                 </p>
                 <p className="text-[10px] tracking-[0.2em] text-[#E2BC6E] uppercase">
-                  — The Wedding Boys
+                  — The Wedding Vachan
                 </p>
               </div>
             </motion.div>
@@ -146,7 +146,7 @@ export default function StorySection() {
                 transition={{ duration: 0.8, delay: 0.8 + (index * 0.15) }}
                 className="flex flex-col gap-2"
               >
-                <span className="font-['Cormorant_Garamond'] text-4xl md:text-5xl text-[#E8600A] opacity-90 font-light">
+                <span className="font-display text-4xl md:text-5xl text-gold opacity-90 font-light">
                   {stat.value}
                 </span>
                 <span className="text-[10px] md:text-xs tracking-[0.15em] text-[#8C7B6E] uppercase whitespace-nowrap">

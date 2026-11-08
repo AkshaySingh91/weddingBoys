@@ -12,7 +12,7 @@ import {
     buildBaseKey, isR2Configured,
     PART_SIZE, SINGLE_PUT_MAX, partCountFor,
     signSinglePut, createMultipart, signParts, listParts,
-    completeMultipart, abortMultipart,
+    completeMultipart, abortMultipart, inspectObject,
     IMMUTABLE_CACHE_CONTROL,
 } from '../Services/r2UploadService.js';
 import { cdnUrlFor } from '../Utils/mediaUrl.js';
@@ -162,18 +162,29 @@ export async function signUploadParts(req, res) {
 export async function getUploadParts(req, res) {
     if (guard(res)) return;
     try {
-        const session = await loadOpenSession(req, res);
-        if (!session) return;
-
-        const parts = session.uploadId
-            ? await listParts({ key: session.key, uploadId: session.uploadId })
-            : [];
+        const session = await UploadSession.findById(req.params.sessionId);
+        if (!session) return res.status(404).json({ message: 'Upload session not found' });
+        if (session.status === 'Aborted') return res.status(409).json({ message: 'Session is Aborted' });
+        const completionPending = session.status !== 'Open';
+        let uploaded = false;
+        if (!session.uploadId && !completionPending) {
+            try {
+                const stored = await inspectObject(session.key);
+                uploaded = stored.fileSize === session.fileSize && stored.contentType === session.contentType;
+            } catch (error) {
+                if (error.$metadata?.httpStatusCode !== 404 && !['NotFound', 'NoSuchKey'].includes(error.name)) throw error;
+            }
+        }
+        const parts = session.uploadId && !completionPending
+            ? await listParts({ key: session.key, uploadId: session.uploadId }) : [];
         return res.status(200).json({
-            uploadId: session.uploadId,
-            key: session.key,
-            partSize: session.partSize,
-            partCount: session.partCount,
-            parts,
+            uploadId: session.uploadId, key: session.key,
+            partSize: session.partSize, partCount: session.partCount, parts,
+            completionPending: completionPending || uploaded,
+            ...(!session.uploadId && !uploaded && !completionPending ? {
+                singlePartUrl: await signSinglePut({ key: session.key, contentType: session.contentType }),
+                cacheControl: IMMUTABLE_CACHE_CONTROL,
+            } : {}),
         });
     } catch (error) {
         console.error('getUploadParts error:', error);
@@ -184,25 +195,48 @@ export async function getUploadParts(req, res) {
 // POST /api/admin/uploads/:sessionId/complete
 export async function completeUpload(req, res) {
     if (guard(res)) return;
+    let session;
+    const token = nanoid();
     try {
-        const session = await loadOpenSession(req, res);
-        if (!session) return;
-
-        const meta = { ...(session.meta || {}), ...(req.body?.meta || {}) };
+        const previous = await UploadSession.findById(req.params.sessionId);
+        if (!previous) return res.status(404).json({ message: 'Upload session not found' });
+        if (previous.status === 'Completed' && previous.completionVersion === 1) {
+            const media = await Media.findOne({ mediaId: previous.mediaId });
+            if (media) return res.status(200).json({ media });
+        }
+        if (previous.status === 'Aborted') return res.status(409).json({ message: 'Session is Aborted' });
+        session = await UploadSession.findOneAndUpdate({
+            _id: previous._id, status: { $ne: 'Aborted' },
+            $or: [{ completionLockedAt: null }, { completionLockedAt: { $lt: new Date(Date.now() - 120000) } }],
+        }, { $set: { status: 'Completing', completionToken: token, completionLockedAt: new Date(),
+            completionMeta: previous.completionMeta || { ...(previous.meta || {}), ...(req.body?.meta || {}) } } }, { new: true });
+        if (!session) return res.status(409).json({ message: 'Completion is in progress; retry shortly' });
+        const meta = session.completionMeta;
+        const completed = async (media) => {
+            const result = await UploadSession.updateOne({ _id: session._id, completionToken: token }, {
+                $set: { status: 'Completed', completionVersion: 1 }, $unset: { completionLockedAt: '', completionToken: '' },
+            });
+            if (!result.matchedCount) throw new Error('Completion lease expired; retry to recover');
+            return res.status(200).json({ media });
+        };
 
         let stored;
         if (session.uploadId) {
-            stored = await completeMultipart({
-                key: session.key,
-                uploadId: session.uploadId,
-                expectedPartCount: session.partCount,
-            });
+            try {
+                stored = await completeMultipart({ key: session.key, uploadId: session.uploadId, expectedPartCount: session.partCount });
+            } catch (error) {
+                // A prior request may have committed the R2 object before losing its DB write.
+                if (error.name !== 'NoSuchUpload' && error.Code !== 'NoSuchUpload' && error.code !== 'NoSuchUpload') throw error;
+                stored = await inspectObject(session.key);
+            }
         } else {
-            stored = { key: session.key, url: undefined, fileSize: session.fileSize };
+            stored = await inspectObject(session.key);
         }
-
-        session.status = 'Completed';
-        await session.save();
+        if (stored.fileSize !== session.fileSize || stored.contentType?.split(';')[0] !== session.contentType?.split(';')[0]) {
+            const error = new Error('Stored object size or content type does not match the upload');
+            error.code = 'OBJECT_MISMATCH';
+            throw error;
+        }
 
         const mediaType = resolveMediaType(session.contentType);
 
@@ -210,12 +244,12 @@ export async function completeUpload(req, res) {
         // creating a second Media document for the same logical thing.
         if (session.rendition !== 'orig') {
             const media = await attachRendition(session, stored, mediaType);
-            return res.status(200).json({ media });
+            return await completed(media);
         }
 
         const url = cdnUrlFor(session.key);
 
-        const media = await Media.create({
+        const media = await Media.findOneAndUpdate({ mediaId: session.mediaId }, { $setOnInsert: {
             mediaId: session.mediaId,
             fileName: session.key.split('/').pop(),
             originalFileName: session.fileName,
@@ -241,9 +275,10 @@ export async function completeUpload(req, res) {
             aspectRatio: meta.width && meta.height ? +(meta.width / meta.height).toFixed(4) : undefined,
             uploadedBy: session.createdBy,
             ...(mediaType === 'Video' ? { video: { sourceUrl: url, renditions: [{ role: 'source', url, storageKey: session.key, bytes: stored.fileSize, durationSec: meta.duration }] } } : {}),
-        });
+        } }, { upsert: true, new: true, setDefaultsOnInsert: true });
 
-        await enqueueJob({
+        if (mediaType !== 'Document') await enqueueJob({
+            idempotencyKey: `upload:${session._id}`,
             mediaId: media.mediaId,
             type: mediaType === 'Video' ? 'transcode' : 'derivatives',
             // Hero slides get the short silent loop; `stripAudio` lets the admin
@@ -252,11 +287,17 @@ export async function completeUpload(req, res) {
                 makeLoop: Boolean(meta.makeLoop ?? meta.isHeroVideo),
                 stripAudio: Boolean(meta.stripAudio),
                 loopStartSec: Number.isFinite(meta.loopStartSec) ? meta.loopStartSec : undefined,
+                sequenceSource: Boolean(meta.sequenceSource),
             } : {},
         });
 
-        return res.status(201).json({ media });
+        return await completed(media);
     } catch (error) {
+        if (session) await UploadSession.updateOne({ _id: session._id, completionToken: token }, {
+            ...(error.code === 'MISSING_PARTS' ? { $set: { status: 'Open' } } : {}),
+            $unset: { completionLockedAt: '', completionToken: '' },
+        }).catch(() => {});
+        if (error.code === 'OBJECT_MISMATCH') return res.status(400).json({ message: error.message });
         if (error.code === 'MISSING_PARTS') {
             return res.status(409).json({ message: 'Upload is incomplete', missing: error.missing });
         }
@@ -291,14 +332,13 @@ async function attachRendition(session, stored, mediaType) {
 export async function abortUpload(req, res) {
     if (guard(res)) return;
     try {
-        const session = await UploadSession.findById(req.params.sessionId);
-        if (!session) return res.status(404).json({ message: 'Upload session not found' });
-
-        if (session.uploadId && session.status === 'Open') {
-            await abortMultipart({ key: session.key, uploadId: session.uploadId }).catch(() => { });
+        // Claim the abort atomically; it must never race a completion lease.
+        const session = await UploadSession.findOneAndUpdate({ _id: req.params.sessionId, status: 'Open' },
+            { $set: { status: 'Aborted' } }, { new: true });
+        if (!session) return res.status(409).json({ message: 'Only open uploads can be aborted' });
+        if (session.uploadId) {
+            await abortMultipart({ key: session.key, uploadId: session.uploadId }).catch(() => {});
         }
-        session.status = 'Aborted';
-        await session.save();
         return res.status(200).json({ ok: true });
     } catch (error) {
         console.error('abortUpload error:', error);
@@ -312,12 +352,13 @@ export async function listResumableUploads(req, res) {
     try {
         const sessions = await UploadSession.find({
             createdBy: req.user?.email || req.admin?.email,
-            status: 'Open',
+            status: { $in: ['Open', 'Completing'] },
         }).sort({ updatedAt: -1 }).limit(25).lean();
 
         return res.status(200).json({
             sessions: sessions.map((s) => ({
                 sessionId: s._id,
+                status: s.status,
                 key: s.key,
                 fileName: s.fileName,
                 fileSize: s.fileSize,

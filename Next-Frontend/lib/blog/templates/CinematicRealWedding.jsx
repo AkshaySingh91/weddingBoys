@@ -73,7 +73,7 @@ export default function CinematicRealWedding({
         <ArticleEngagementBar
           postSlug={post?.slug}
           initialLoves={post?.likeCount || 0}
-          authorName={post?.author?.name || 'The Wedding Boys'}
+          authorName={post?.author?.name || 'The Wedding Vachan'}
           authorRole={post?.author?.role || 'Lead Cinematographer'}
           shareUrl={post?._shareUrl}
         />

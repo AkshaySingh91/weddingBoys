@@ -15,8 +15,8 @@ export default async function DBconnection() {
         announceEnvironment();
     }
     catch (e) {
-        console.dir(e.message);
-    } 
+        throw new Error('Database connection failed', { cause: e });
+    }
 }
 
 /**

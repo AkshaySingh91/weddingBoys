@@ -25,8 +25,8 @@ function VideoView({ node, deleteNode, selected }) {
     const kind = streamUid ? 'stream' : (provider || resolvedProvider);
 
     return (
-        <NodeViewWrapper className={`wedding-video my-5 transition-all ${selected ? 'rounded-2xl ring-2 ring-[#8C532B]' : ''}`}>
-            <div className="relative w-full overflow-hidden rounded-2xl bg-black shadow-md" style={{ aspectRatio: '16 / 9' }}>
+        <NodeViewWrapper className={`wedding-video my-5 transition-all ${selected ? 'rounded-xl ring-2 ring-accent' : ''}`}>
+            <div className="relative w-full overflow-hidden rounded-xl bg-black shadow-md" style={{ aspectRatio: '16 / 9' }}>
                 {kind === 's3' ? (
                     <video controls poster={poster || undefined} className="h-full w-full" src={embedSrc}>
                         <track kind="captions" />
@@ -41,11 +41,11 @@ function VideoView({ node, deleteNode, selected }) {
                     />
                 )}
             </div>
-            {caption ? <p className="mt-2 text-center text-xs text-stone-500 font-sans italic">{caption}</p> : null}
+            {caption ? <p className="mt-2 text-center text-xs text-ink-muted font-sans italic">{caption}</p> : null}
             {selected && (
-                <div contentEditable={false} className="mt-2 flex items-center gap-2 rounded-xl border border-[#E5DCD3] bg-white px-3 py-1.5 shadow-sm font-sans">
-                    <FilmSlate size={15} className="text-[#8C532B]" />
-                    <span className="text-xs text-stone-600 font-medium uppercase">{kind} video</span>
+                <div contentEditable={false} className="mt-2 flex items-center gap-2 rounded-xl border border-edge-subtle bg-white px-3 py-1.5 shadow-sm font-sans">
+                    <FilmSlate size={15} className="text-accent-ink" />
+                    <span className="text-xs text-ink-secondary font-medium uppercase">{kind} video</span>
                     <button
                         type="button"
                         onClick={() => deleteNode()}

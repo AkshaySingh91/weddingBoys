@@ -48,7 +48,7 @@ async function fetchWithTimeout(url, timeoutMs = 4000) {
     try {
         const res = await fetch(url, {
             signal: controller.signal,
-            headers: { 'User-Agent': 'WeddingBoysBot/1.0 (+https://theweddingboys.in)' },
+            headers: { 'User-Agent': 'WeddingBoysBot/1.0 (+https://theweddingvachan.com)' },
         });
         if (!res.ok) return null;
         return await res.json();
@@ -155,8 +155,8 @@ export const resolveEmbed = async (req, res) => {
                 embedId: streamUid,
                 url: trimmedUrl,
                 embedUrl: `https://iframe.videodelivery.net/${streamUid}`,
-                title: 'The Wedding Boys Cinematic Film',
-                author: 'The Wedding Boys',
+                title: 'The Wedding Vachan Cinematic Film',
+                author: 'The Wedding Vachan',
                 thumbnail: `https://videodelivery.net/${streamUid}/thumbnails/thumbnail.jpg?time=2s&height=720`,
                 aspectRatio: '16/9',
                 caption: '',

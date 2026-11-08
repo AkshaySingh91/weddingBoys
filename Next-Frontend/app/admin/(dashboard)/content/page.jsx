@@ -73,8 +73,8 @@ export default function ContentPagesList() {
 
       {/* Pages List */}
       {pages === null ? (
-        <div className="flex items-center justify-center gap-2 p-12 text-stone-400">
-          <CircleNotch size={20} className="animate-spin text-red-500" />
+        <div className="flex items-center justify-center gap-2 p-12 text-ink-muted">
+          <CircleNotch size={20} className="animate-spin text-accent-ink" />
           <span className="text-xs">Loading CMS pages…</span>
         </div>
       ) : (
@@ -83,15 +83,15 @@ export default function ContentPagesList() {
             <Link
               key={p.pageKey}
               href={`/admin/content/${p.pageKey}`}
-              className="flex items-center gap-3.5 rounded-2xl border border-stone-200 bg-white p-3.5 sm:p-4 shadow-sm hover:border-red-200 transition-all group cursor-pointer"
+              className="flex items-center gap-3.5 rounded-xl border border-edge-subtle bg-white p-3.5 sm:p-4 shadow-sm hover:border-accent/25 transition-all group cursor-pointer"
             >
-              <div className="w-10 h-10 rounded-xl bg-stone-50 border border-stone-200 flex items-center justify-center text-stone-600 shrink-0 group-hover:bg-red-50 group-hover:text-red-500 transition-colors">
+              <div className="w-10 h-10 rounded-xl bg-ground border border-edge-subtle flex items-center justify-center text-ink-secondary shrink-0 group-hover:bg-accent-wash group-hover:text-accent-ink transition-colors">
                 <Files size={18} />
               </div>
 
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <p className="font-sans font-semibold capitalize text-[#2F2F2F] text-sm">
+                  <p className="font-sans font-semibold capitalize text-ink text-sm">
                     {p.title || p.pageKey}
                   </p>
                   {p.status && p.status !== '—' && (
@@ -101,25 +101,25 @@ export default function ContentPagesList() {
                   )}
                 </div>
 
-                <p className="text-[11px] text-stone-500 font-sans mt-0.5 tabular-nums">
+                <p className="text-[11px] text-ink-muted font-sans mt-0.5 tabular-nums">
                   /{p.pageKey}
                   {typeof p.blockCount === 'number' && ` · ${p.blockCount} block${p.blockCount === 1 ? '' : 's'}`}
                 </p>
               </div>
 
-              <CaretRight size={16} className="text-stone-400 group-hover:translate-x-0.5 transition-transform" />
+              <CaretRight size={16} className="text-ink-muted group-hover:translate-x-0.5 transition-transform" />
             </Link>
           ))}
         </div>
       )}
 
       {/* Create New Page Form */}
-      <div className="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm space-y-3">
+      <div className="bg-white p-5 rounded-xl border border-edge-subtle shadow-sm space-y-3">
         <div>
-          <h4 className="text-xs font-semibold uppercase tracking-wider text-stone-600">
+          <h4 className="text-xs font-semibold uppercase tracking-wider text-ink-secondary">
             Create New Custom Page
           </h4>
-          <p className="text-xs text-stone-500 mt-0.5">
+          <p className="text-xs text-ink-muted mt-0.5">
             Add a unique URL slug for guidelines, destination showcases, or legal policies.
           </p>
         </div>
@@ -130,7 +130,7 @@ export default function ContentPagesList() {
             value={newKey}
             onChange={(e) => setNewKey(e.target.value)}
             placeholder="new-page-key (e.g. pre-wedding-guidelines)"
-            className="flex-1 rounded-xl border border-stone-200 bg-stone-50 px-3.5 py-2 text-xs text-[#2F2F2F] placeholder:text-stone-400 outline-none focus:border-red-400 focus:bg-white transition-all font-sans"
+            className="flex-1 rounded-xl border border-edge-subtle bg-ground px-3.5 py-2 text-xs text-ink placeholder:text-ink-muted outline-none focus:border-accent focus:bg-white transition-all font-sans"
           />
           <Button
             type="submit"

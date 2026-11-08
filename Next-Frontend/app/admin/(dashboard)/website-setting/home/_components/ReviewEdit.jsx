@@ -157,11 +157,11 @@ export default function ReviewEdit({ setIsEditing, setEditingReview, editingRevi
         <div className="space-y-4 py-2">
           {/* Portrait Photo Upload */}
           <div className="space-y-2">
-            <label className="text-[11px] font-semibold uppercase tracking-wider text-stone-600">
+            <label className="text-[11px] font-semibold uppercase tracking-wider text-ink-secondary">
               Couple Portrait
             </label>
             <div className="flex items-center gap-4">
-              <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-[#E5DCD3] bg-stone-100 flex items-center justify-center">
+              <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-edge-subtle bg-ground-sunk flex items-center justify-center">
                 {filePreview || fileUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -170,7 +170,7 @@ export default function ReviewEdit({ setIsEditing, setEditingReview, editingRevi
                     className="h-full w-full object-cover"
                   />
                 ) : (
-                  <UploadSimple size={24} className="text-stone-400" />
+                  <UploadSimple size={24} className="text-ink-muted" />
                 )}
               </div>
 
@@ -184,7 +184,7 @@ export default function ReviewEdit({ setIsEditing, setEditingReview, editingRevi
                 />
                 <label
                   htmlFor="edit-review-photo"
-                  className="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl border border-[#E5DCD3] bg-white px-3 py-1.5 text-xs font-medium text-stone-700 shadow-sm transition hover:border-[#A3603A] hover:bg-stone-50"
+                  className="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl border border-edge-subtle bg-white px-3 py-1.5 text-xs font-medium text-ink-secondary shadow-sm transition hover:border-accent hover:bg-ground"
                 >
                   <UploadSimple size={14} />
                   <span>Choose Photo</span>

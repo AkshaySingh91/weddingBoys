@@ -111,7 +111,7 @@ const TiltCard = React.memo(({ icon, title, description }) => {
         >
             <div className="space-y-4">
                 <div className="flex items-center gap-4">
-                    <div className="text-[#FF6969] text-2xl p-3 bg-[#FFF5F5] rounded-lg">
+                    <div className="text-accent-ink text-2xl p-3 bg-accent-wash rounded-lg">
                         {icon}
                     </div>
                     <h3 className="text-xl font-semibold text-gray-800">{title}</h3>
@@ -146,9 +146,9 @@ function makeHearts() {
 const FEATURES = [
         {
             icon: <FiZap className="w-6 h-6" />,
-            title: "Decade of Expertise",
+            title: "Thoughtful wedding storytelling",
             description: (<>
-                With <b>5+ years</b> mastering wedding photography, we handle every lighting condition, venue, and cultural tradition seamlessly.
+                We plan for your venue, lighting, and cultural traditions so we can focus on the moments that matter to you.
             </>)
         },
         {
@@ -201,13 +201,13 @@ const WhyChooseUs = () => {
 
     return (
         <Section width="wide" rhythm="tight" id="whyToChooseUs" aria-labelledby="why-choose-heading">
-        <div className="px-5 py-10 sm:px-7 lg:py-14 relative overflow-hidden bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] lg:rounded-3xl sm:rounded-lg border-[#fed6c3] border-[1px] shadow-lg">
+        <div className="px-5 py-10 sm:px-7 lg:py-14 relative overflow-hidden bg-gradient-to-b from-ground-sunk to-ground lg:rounded-3xl sm:rounded-lg border-edge-subtle border-[1px] shadow-lg">
             {/* Floating Hearts Decoration */}
             <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
                 {hearts?.map((heart, i) => (
                     <motion.div
                         key={i}
-                        className="absolute text-[#FF6969]/10"
+                        className="absolute text-accent/10"
                         initial={{
                             y: heart.initialY,
                             x: heart.initialX,
@@ -241,18 +241,18 @@ const WhyChooseUs = () => {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                 >
-                    <div className="bg-[#FF6969]/10 text-[#FF6969] px-6 py-2 rounded-full inline-block mb-4">
+                    <div className="bg-accent/10 text-accent-ink px-6 py-2 rounded-full inline-block mb-4">
                         <FiStar aria-hidden="true" className="inline mr-2 motion-safe:animate-pulse" />
                         Why We Stand Out
                     </div>
                     <h2 id="why-choose-heading" className="t-display-2 mx-auto mb-4 text-[#5E2B17]">
                         Why Choose{' '}
                         <br />
-                        <span className="text-accent-ink">The Wedding Boys?</span>
+                        <span className="text-accent-ink">The Wedding Vachan?</span>
                     </h2>
                     <motion.div
                         aria-hidden="true"
-                        className="mx-auto w-24 h-1 bg-[#FF6969] rounded-full"
+                        className="mx-auto w-24 h-1 bg-accent rounded-full"
                         initial={{ scaleX: 0 }}
                         whileInView={{ scaleX: 1 }}
                         transition={{ duration: 0.8 }}
@@ -279,7 +279,7 @@ const WhyChooseUs = () => {
 
                 {/* Quote Section */}
                 <div className="relative mt-16">
-                    <FiHeart aria-hidden="true" className="absolute -top-4 left-1/2 -translate-x-1/2 text-[#FF6969]/20 w-16 h-16" />
+                    <FiHeart aria-hidden="true" className="absolute -top-4 left-1/2 -translate-x-1/2 text-accent/20 w-16 h-16" />
                     <TypewriterQuotes quotes={QUOTES} />
                 </div>
             </div>

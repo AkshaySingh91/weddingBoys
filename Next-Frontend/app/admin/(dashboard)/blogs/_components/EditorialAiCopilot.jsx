@@ -38,7 +38,7 @@ export default function EditorialAiCopilot({ isOpen, onClose, form, onApply }) {
     const kw = keyword.charAt(0).toUpperCase() + keyword.slice(1);
 
     const titleA = `${storyTitle.slice(0, 38)} | ${kw}`.slice(0, 60);
-    const descA = `Experience this breathtaking ${mood} celebration filmed at ${venue}. Timeless wedding cinematography, candid emotion, and fine-art framing by The Wedding Boys.`.slice(0, 155);
+    const descA = `Experience this breathtaking ${mood} celebration filmed at ${venue}. Timeless wedding cinematography, candid emotion, and fine-art framing by The Wedding Vachan.`.slice(0, 155);
 
     const titleB = `${kw}: A ${mood.charAt(0).toUpperCase() + mood.slice(1)} Celebration at ${venue}`.slice(0, 58);
     const descB = `Discover intimate ceremony moments and golden-hour portraits from ${storyTitle}. Complete cinematography breakdown and wedding planning guide.`.slice(0, 158);
@@ -138,21 +138,21 @@ export default function EditorialAiCopilot({ isOpen, onClose, form, onApply }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-      <div className="relative w-full max-w-2xl overflow-hidden rounded-3xl border border-[#C29555]/30 bg-white shadow-2xl">
+      <div className="relative w-full max-w-2xl overflow-hidden rounded-xl border border-gold/30 bg-white shadow-2xl">
         {/* Top Gold Header Rule */}
-        <div className="h-1.5 w-full bg-gradient-to-r from-[#8C532B] via-[#C29555] to-[#8C532B]" />
+        <div className="h-1.5 w-full bg-gradient-to-r from-accent via-gold to-accent" />
 
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-stone-100 px-6 py-4">
+        <div className="flex items-center justify-between border-b border-edge-subtle px-6 py-4">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#8C532B]/10 text-[#8C532B]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent/10 text-accent-ink">
               <Sparkle size={18} weight="bold" />
             </div>
             <div>
-              <h2 className="font-serif text-base font-bold text-stone-900">
+              <h2 className="font-serif text-base font-bold text-ink">
                 Editorial AI Co-Pilot
               </h2>
-              <span className="text-[11px] font-medium text-stone-500">
+              <span className="text-[11px] font-medium text-ink-muted">
                 Intelligent metadata drafting &amp; SEO enhancement
               </span>
             </div>
@@ -161,21 +161,21 @@ export default function EditorialAiCopilot({ isOpen, onClose, form, onApply }) {
           <button
             type="button"
             onClick={onClose}
-            className="rounded-xl p-1.5 text-stone-400 hover:bg-stone-100 hover:text-stone-700 transition-colors cursor-pointer"
+            className="rounded-xl p-1.5 text-ink-muted hover:bg-ground-sunk hover:text-ink-secondary transition-colors cursor-pointer"
           >
             <X size={18} />
           </button>
         </div>
 
         {/* Tabs Bar */}
-        <div className="flex border-b border-stone-100 bg-stone-50/70 px-6 pt-2">
+        <div className="flex border-b border-edge-subtle bg-ground/70 px-6 pt-2">
           <button
             type="button"
             onClick={() => setActiveTab('meta')}
             className={`flex items-center gap-1.5 border-b-2 px-3 py-2 text-xs font-semibold transition-colors cursor-pointer ${
               activeTab === 'meta'
-                ? 'border-[#8C532B] text-[#8C532B]'
-                : 'border-transparent text-stone-500 hover:text-stone-800'
+                ? 'border-accent text-accent-ink'
+                : 'border-transparent text-ink-muted hover:text-ink'
             }`}
           >
             <TextT size={14} />
@@ -186,8 +186,8 @@ export default function EditorialAiCopilot({ isOpen, onClose, form, onApply }) {
             onClick={() => setActiveTab('excerpt')}
             className={`flex items-center gap-1.5 border-b-2 px-3 py-2 text-xs font-semibold transition-colors cursor-pointer ${
               activeTab === 'excerpt'
-                ? 'border-[#8C532B] text-[#8C532B]'
-                : 'border-transparent text-stone-500 hover:text-stone-800'
+                ? 'border-accent text-accent-ink'
+                : 'border-transparent text-ink-muted hover:text-ink'
             }`}
           >
             <FileText size={14} />
@@ -198,8 +198,8 @@ export default function EditorialAiCopilot({ isOpen, onClose, form, onApply }) {
             onClick={() => setActiveTab('keywords')}
             className={`flex items-center gap-1.5 border-b-2 px-3 py-2 text-xs font-semibold transition-colors cursor-pointer ${
               activeTab === 'keywords'
-                ? 'border-[#8C532B] text-[#8C532B]'
-                : 'border-transparent text-stone-500 hover:text-stone-800'
+                ? 'border-accent text-accent-ink'
+                : 'border-transparent text-ink-muted hover:text-ink'
             }`}
           >
             <MagnifyingGlass size={14} />
@@ -210,8 +210,8 @@ export default function EditorialAiCopilot({ isOpen, onClose, form, onApply }) {
             onClick={() => setActiveTab('faq')}
             className={`flex items-center gap-1.5 border-b-2 px-3 py-2 text-xs font-semibold transition-colors cursor-pointer ${
               activeTab === 'faq'
-                ? 'border-[#8C532B] text-[#8C532B]'
-                : 'border-transparent text-stone-500 hover:text-stone-800'
+                ? 'border-accent text-accent-ink'
+                : 'border-transparent text-ink-muted hover:text-ink'
             }`}
           >
             <Question size={14} />
@@ -224,18 +224,18 @@ export default function EditorialAiCopilot({ isOpen, onClose, form, onApply }) {
           {/* TAB 1: Title & Meta Description */}
           {activeTab === 'meta' && (
             <div className="space-y-4">
-              <p className="text-xs text-stone-500">
+              <p className="text-xs text-ink-muted">
                 Calibrated against Google SERP limits (Title ≤ 60 chars, Description ≤ 160 chars) with your focus keyword:
-                <strong className="text-stone-800 ml-1">&ldquo;{keyword}&rdquo;</strong>.
+                <strong className="text-ink ml-1">&ldquo;{keyword}&rdquo;</strong>.
               </p>
 
               {generatedMeta.map((item) => (
                 <div
                   key={item.id}
-                  className="rounded-2xl border border-stone-200 bg-stone-50/50 p-4 space-y-2 hover:border-[#8C532B]/40 transition-colors"
+                  className="rounded-xl border border-edge-subtle bg-ground/50 p-4 space-y-2 hover:border-accent/40 transition-colors"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="rounded-md bg-[#8C532B]/10 px-2 py-0.5 text-[10px] font-bold text-[#8C532B] uppercase tracking-wider">
+                    <span className="rounded-lg bg-accent/10 px-2 py-0.5 text-[10px] font-bold text-accent-ink uppercase tracking-wider">
                       {item.tag}
                     </span>
                     <button
@@ -249,7 +249,7 @@ export default function EditorialAiCopilot({ isOpen, onClose, form, onApply }) {
                       className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors cursor-pointer ${
                         appliedKey === item.id
                           ? 'bg-emerald-600 text-white'
-                          : 'bg-stone-900 text-white hover:bg-stone-800'
+                          : 'bg-ink text-white hover:bg-ink'
                       }`}
                     >
                       {appliedKey === item.id ? (
@@ -263,17 +263,17 @@ export default function EditorialAiCopilot({ isOpen, onClose, form, onApply }) {
                   </div>
 
                   <div>
-                    <label className="text-[10px] font-bold uppercase tracking-wider text-stone-400">
+                    <label className="text-[10px] font-bold uppercase tracking-wider text-ink-muted">
                       Title ({item.title.length}/60)
                     </label>
-                    <p className="text-xs font-semibold text-stone-900">{item.title}</p>
+                    <p className="text-xs font-semibold text-ink">{item.title}</p>
                   </div>
 
                   <div>
-                    <label className="text-[10px] font-bold uppercase tracking-wider text-stone-400">
+                    <label className="text-[10px] font-bold uppercase tracking-wider text-ink-muted">
                       Description ({item.description.length}/160)
                     </label>
-                    <p className="text-xs text-stone-600 leading-relaxed">{item.description}</p>
+                    <p className="text-xs text-ink-secondary leading-relaxed">{item.description}</p>
                   </div>
                 </div>
               ))}
@@ -283,23 +283,23 @@ export default function EditorialAiCopilot({ isOpen, onClose, form, onApply }) {
           {/* TAB 2: Story Excerpts */}
           {activeTab === 'excerpt' && (
             <div className="space-y-4">
-              <p className="text-xs text-stone-500">
+              <p className="text-xs text-ink-muted">
                 Poetic, luxury narrative teasers styled for your selected mood:
-                <strong className="text-stone-800 ml-1 capitalize">&ldquo;{mood}&rdquo;</strong>.
+                <strong className="text-ink ml-1 capitalize">&ldquo;{mood}&rdquo;</strong>.
               </p>
 
               {generatedExcerpts.map((item) => (
                 <div
                   key={item.id}
-                  className="rounded-2xl border border-stone-200 bg-stone-50/50 p-4 space-y-2.5 hover:border-[#8C532B]/40 transition-colors"
+                  className="rounded-xl border border-edge-subtle bg-ground/50 p-4 space-y-2.5 hover:border-accent/40 transition-colors"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-[#8C532B]">{item.style}</span>
+                    <span className="text-xs font-bold text-accent-ink">{item.style}</span>
                     <div className="flex items-center gap-1.5">
                       <button
                         type="button"
                         onClick={() => handleCopy(item.text, item.id)}
-                        className="inline-flex items-center gap-1 rounded-lg border border-stone-200 bg-white px-2 py-1 text-xs text-stone-600 hover:bg-stone-50 cursor-pointer"
+                        className="inline-flex items-center gap-1 rounded-lg border border-edge-subtle bg-white px-2 py-1 text-xs text-ink-secondary hover:bg-ground cursor-pointer"
                       >
                         {copiedKey === item.id ? <Check size={12} className="text-emerald-600" /> : <Copy size={12} />}
                         {copiedKey === item.id ? 'Copied' : 'Copy'}
@@ -310,7 +310,7 @@ export default function EditorialAiCopilot({ isOpen, onClose, form, onApply }) {
                         className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors cursor-pointer ${
                           appliedKey === item.id
                             ? 'bg-emerald-600 text-white'
-                            : 'bg-stone-900 text-white hover:bg-stone-800'
+                            : 'bg-ink text-white hover:bg-ink'
                         }`}
                       >
                         {appliedKey === item.id ? (
@@ -323,7 +323,7 @@ export default function EditorialAiCopilot({ isOpen, onClose, form, onApply }) {
                       </button>
                     </div>
                   </div>
-                  <p className="text-xs text-stone-700 leading-relaxed font-serif italic">
+                  <p className="text-xs text-ink-secondary leading-relaxed font-serif italic">
                     &ldquo;{item.text}&rdquo;
                   </p>
                 </div>
@@ -334,7 +334,7 @@ export default function EditorialAiCopilot({ isOpen, onClose, form, onApply }) {
           {/* TAB 3: Secondary Keywords */}
           {activeTab === 'keywords' && (
             <div className="space-y-4">
-              <p className="text-xs text-stone-500">
+              <p className="text-xs text-ink-muted">
                 High-volume search entities and long-tail destination queries:
               </p>
 
@@ -342,7 +342,7 @@ export default function EditorialAiCopilot({ isOpen, onClose, form, onApply }) {
                 {generatedKeywords.map((kw, i) => (
                   <div
                     key={i}
-                    className="flex items-center gap-1.5 rounded-xl border border-stone-200 bg-stone-50 px-3 py-1.5 text-xs text-stone-800"
+                    className="flex items-center gap-1.5 rounded-xl border border-edge-subtle bg-ground px-3 py-1.5 text-xs text-ink"
                   >
                     <span>{kw}</span>
                     <button
@@ -353,7 +353,7 @@ export default function EditorialAiCopilot({ isOpen, onClose, form, onApply }) {
                           handleApply({ keywords: [...existing, kw] }, `kw_${i}`);
                         }
                       }}
-                      className="ml-1 rounded p-0.5 text-stone-400 hover:text-[#8C532B] cursor-pointer"
+                      className="ml-1 rounded-lg p-0.5 text-ink-muted hover:text-accent-ink cursor-pointer"
                       title="Add to post keywords"
                     >
                       {appliedKey === `kw_${i}` ? <Check size={12} className="text-emerald-600" /> : '+'}
@@ -367,15 +367,15 @@ export default function EditorialAiCopilot({ isOpen, onClose, form, onApply }) {
           {/* TAB 4: FAQ Suggestions */}
           {activeTab === 'faq' && (
             <div className="space-y-4">
-              <p className="text-xs text-stone-500">
+              <p className="text-xs text-ink-muted">
                 Structured questions &amp; answers customized for {venue}:
               </p>
 
               <div className="space-y-3">
                 {generatedFaqs.map((faq, idx) => (
-                  <div key={idx} className="rounded-xl border border-stone-200 bg-stone-50/60 p-3 space-y-1.5">
+                  <div key={idx} className="rounded-xl border border-edge-subtle bg-ground/60 p-3 space-y-1.5">
                     <div className="flex items-center justify-between">
-                      <h4 className="text-xs font-bold text-stone-900">{faq.question}</h4>
+                      <h4 className="text-xs font-bold text-ink">{faq.question}</h4>
                       <button
                         type="button"
                         onClick={() => {
@@ -385,13 +385,13 @@ export default function EditorialAiCopilot({ isOpen, onClose, form, onApply }) {
                         className={`inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[11px] font-semibold transition-colors cursor-pointer ${
                           appliedKey === `faq_${idx}`
                             ? 'bg-emerald-600 text-white'
-                            : 'bg-[#8C532B] text-white hover:bg-[#724222]'
+                            : 'bg-accent text-white hover:bg-accent-hover'
                         }`}
                       >
                         {appliedKey === `faq_${idx}` ? <Check size={11} /> : '+ Add to Story'}
                       </button>
                     </div>
-                    <p className="text-xs text-stone-600 leading-relaxed">{faq.answer}</p>
+                    <p className="text-xs text-ink-secondary leading-relaxed">{faq.answer}</p>
                   </div>
                 ))}
               </div>
@@ -400,15 +400,15 @@ export default function EditorialAiCopilot({ isOpen, onClose, form, onApply }) {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between border-t border-stone-100 bg-stone-50 px-6 py-3 text-xs text-stone-400">
+        <div className="flex items-center justify-between border-t border-edge-subtle bg-ground px-6 py-3 text-xs text-ink-muted">
           <div className="flex items-center gap-1.5">
-            <LightbulbFilament size={14} className="text-[#C29555]" />
+            <LightbulbFilament size={14} className="text-gold-strong" />
             <span>AI suggestions are tailored to your story title, mood, and venue.</span>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="font-medium text-stone-600 hover:text-stone-900 transition-colors cursor-pointer"
+            className="font-medium text-ink-secondary hover:text-ink transition-colors cursor-pointer"
           >
             Close
           </button>

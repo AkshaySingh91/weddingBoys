@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { X, CheckCircle, WarningCircle, FilmSlate, ImageSquare } from '@phosphor-icons/react';
 import { Button } from '@/app/admin/components/ui/Button.jsx';
 
-const field = 'w-full rounded-lg border border-[#E5DCD3] bg-white px-3 py-2 text-xs text-stone-800 outline-none focus:border-[#8C532B] focus:ring-2 focus:ring-[#8C532B]/15';
-const label = 'mb-1 block text-[11px] font-medium uppercase tracking-wide text-stone-500';
+const field = 'w-full rounded-lg border border-edge-subtle bg-white px-3 py-2 text-xs text-ink outline-none focus:border-accent focus:ring-2 focus:ring-accent/15';
+const label = 'mb-1 block text-[11px] font-medium uppercase tracking-wide text-ink-muted';
 
 const clientLabel = (c) => [c.clientName?.Bride, c.clientName?.Groom].filter(Boolean).join(' & ') || 'Unnamed client';
 
@@ -60,12 +60,12 @@ export default function AssignModal({ media, clients, vocabulary, onClose, onAss
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <button type="button" aria-label="Close" onClick={onClose} className="absolute inset-0 bg-stone-900/50 backdrop-blur-[2px]" />
-            <div className="relative flex max-h-[88vh] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-[#E5DCD3] bg-[#FCFAF7] shadow-2xl">
-                <header className="flex shrink-0 items-center justify-between border-b border-[#E5DCD3] px-4 py-3">
+            <button type="button" aria-label="Close" onClick={onClose} className="absolute inset-0 bg-ink/50 backdrop-blur-[2px]" />
+            <div className="relative flex max-h-[88vh] w-full max-w-lg flex-col overflow-hidden rounded-xl border border-edge-subtle bg-ground shadow-2xl">
+                <header className="flex shrink-0 items-center justify-between border-b border-edge-subtle px-4 py-3">
                     <div>
-                        <h2 className="text-sm font-medium text-stone-900">Assign to a client</h2>
-                        <p className="text-[11px] text-stone-500">
+                        <h2 className="text-sm font-medium text-ink">Assign to a client</h2>
+                        <p className="text-[11px] text-ink-muted">
                             {media.length} asset{media.length === 1 ? '' : 's'} selected
                         </p>
                     </div>
@@ -75,12 +75,12 @@ export default function AssignModal({ media, clients, vocabulary, onClose, onAss
                 <div className="min-h-0 flex-1 space-y-4 overflow-y-auto p-4">
                     <div className="flex flex-wrap gap-1.5">
                         {media.slice(0, 12).map((m) => (
-                            <span key={m._id} className="flex items-center gap-1 rounded-md border border-stone-200 bg-white px-1.5 py-0.5 text-[10px] text-stone-600">
+                            <span key={m._id} className="flex items-center gap-1 rounded-lg border border-edge-subtle bg-white px-1.5 py-0.5 text-[10px] text-ink-secondary">
                                 {m.mediaType === 'Video' ? <FilmSlate size={10} /> : <ImageSquare size={10} />}
                                 <span className="max-w-[9rem] truncate">{m.title || m.originalName || m.mediaId}</span>
                             </span>
                         ))}
-                        {media.length > 12 && <span className="text-[10px] text-stone-500">+{media.length - 12} more</span>}
+                        {media.length > 12 && <span className="text-[10px] text-ink-muted">+{media.length - 12} more</span>}
                     </div>
 
                     {results ? (
@@ -123,7 +123,7 @@ export default function AssignModal({ media, clients, vocabulary, onClose, onAss
                                             key={t}
                                             type="button"
                                             onClick={() => setTags(tags.filter((x) => x !== t))}
-                                            className="flex items-center gap-1 rounded-md border border-[#E8D7C5] bg-[#FAF1E6] px-2 py-0.5 text-[11px] text-[#74583E] hover:border-rose-300 hover:bg-rose-50 hover:text-rose-700"
+                                            className="flex items-center gap-1 rounded-lg border border-edge-subtle bg-ground-sunk px-2 py-0.5 text-[11px] text-accent-ink hover:border-rose-300 hover:bg-rose-50 hover:text-rose-700"
                                         >
                                             {t} <X size={9} />
                                         </button>
@@ -142,7 +142,7 @@ export default function AssignModal({ media, clients, vocabulary, onClose, onAss
                                             key={t}
                                             type="button"
                                             onClick={() => addTag(t)}
-                                            className="rounded-md border border-stone-200 bg-white px-1.5 py-0.5 text-[10px] text-stone-600 hover:border-[#8C532B] hover:text-[#8C532B]"
+                                            className="rounded-lg border border-edge-subtle bg-white px-1.5 py-0.5 text-[10px] text-ink-secondary hover:border-accent hover:text-accent-ink"
                                         >
                                             + {t}
                                         </button>
@@ -165,7 +165,7 @@ export default function AssignModal({ media, clients, vocabulary, onClose, onAss
                                 </div>
                             </div>
 
-                            <p className="text-[10px] leading-relaxed text-stone-500">
+                            <p className="text-[10px] leading-relaxed text-ink-muted">
                                 An asset still being transcoded is saved as a Draft and publishes itself
                                 once the worker has produced its renditions.
                             </p>
@@ -173,7 +173,7 @@ export default function AssignModal({ media, clients, vocabulary, onClose, onAss
                     )}
                 </div>
 
-                <footer className="flex shrink-0 justify-end gap-2 border-t border-[#E5DCD3] bg-white px-4 py-3">
+                <footer className="flex shrink-0 justify-end gap-2 border-t border-edge-subtle bg-white px-4 py-3">
                     {results ? (
                         <Button variant="gold" size="sm" onClick={onDone}>Done</Button>
                     ) : (

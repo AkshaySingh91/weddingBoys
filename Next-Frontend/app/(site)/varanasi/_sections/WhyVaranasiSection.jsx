@@ -194,14 +194,14 @@ const EditorialBlock = ({ item, index }) => {
       >
         <span
           className="
-            font-['Cormorant_Garamond']
+            font-display
             text-[160px]
             md:text-[260px]
             lg:text-[400px]
             leading-none
             font-semibold
             tracking-[-0.06em]
-            text-[#C9973A]/[0.025]
+            text-gold/[0.025]
           "
         >
           {item.num}
@@ -241,7 +241,7 @@ const EditorialBlock = ({ item, index }) => {
 
         <h3
           className="
-            font-['Cormorant_Garamond']
+            font-display
             text-[clamp(44px,5vw,84px)]
             leading-[0.92]
             tracking-[-0.04em]
@@ -515,7 +515,7 @@ export default function WhyVaranasiSection() {
 
           <h2
             className="
-              font-['Cormorant_Garamond']
+              font-display
               text-[clamp(50px,6vw,100px)]
               leading-[0.9]
               tracking-[-0.05em]

@@ -180,14 +180,14 @@ export default function TeamImage({ teamImages, fetchTeamImage }) {
     const members = editableImage.filter((i) => !i.isHero);
 
     return (
-        <div className="rounded-2xl border border-[#E7E2DA] bg-white p-6 shadow-sm space-y-6">
+        <div className="rounded-xl border border-edge-subtle bg-white p-6 shadow-sm space-y-6">
             {/* Header */}
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-[#F5F2EC] pb-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-edge-subtle pb-4">
                 <div className="flex items-center gap-2.5">
-                    <UsersThree size={20} weight="duotone" className="text-[#C5A880]" />
+                    <UsersThree size={20} weight="duotone" className="text-gold-strong" />
                     <div>
-                        <h2 className="text-lg font-serif font-semibold text-[#1C1917]">Team Member Profiles</h2>
-                        <p className="text-xs font-sans text-[#78716C]">
+                        <h2 className="text-lg font-sans font-semibold text-ink">Team Member Profiles</h2>
+                        <p className="text-xs font-sans text-ink-muted">
                             Manage individual artist and crew cards featured on the studio team roster.
                         </p>
                     </div>
@@ -205,7 +205,7 @@ export default function TeamImage({ teamImages, fetchTeamImage }) {
                             />
                             <label
                                 htmlFor="teamImages"
-                                className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-[#E7E2DA] bg-white px-3.5 py-2 text-xs font-medium font-sans text-[#1C1917] shadow-sm transition hover:bg-[#F7F4EF]"
+                                className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-edge-subtle bg-white px-3.5 py-2 text-xs font-medium font-sans text-ink shadow-sm transition hover:bg-ground"
                             >
                                 <Plus size={14} weight="bold" /> Add Team Members
                             </label>
@@ -239,15 +239,15 @@ export default function TeamImage({ teamImages, fetchTeamImage }) {
 
             {/* Staging New Members Form */}
             {isAdding && imageMeta.length > 0 && (
-                <div className="rounded-xl border border-dashed border-[#C5A880] bg-[#FAF8F5] p-5 space-y-4">
-                    <span className="text-xs font-medium font-sans text-[#1C1917]">
+                <div className="rounded-xl border border-dashed border-gold bg-ground p-5 space-y-4">
+                    <span className="text-xs font-medium font-sans text-ink">
                         Fill Profile Details for Staged Members ({imageMeta.length})
                     </span>
 
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                         {imageMeta.map((img, index) => (
-                            <div key={img.fileMeta.name} className="relative rounded-xl border border-[#E7E2DA] bg-white p-3.5 shadow-sm space-y-3">
-                                <div className="aspect-square w-full overflow-hidden rounded-lg bg-[#F7F4EF]">
+                            <div key={img.fileMeta.name} className="relative rounded-xl border border-edge-subtle bg-white p-3.5 shadow-sm space-y-3">
+                                <div className="aspect-square w-full overflow-hidden rounded-lg bg-ground">
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img
                                         src={imagePreview.find((i) => i.name === img.fileMeta.name)?.url}
@@ -261,19 +261,19 @@ export default function TeamImage({ teamImages, fetchTeamImage }) {
                                         type="text"
                                         value={img.name}
                                         onChange={(e) => handleInputChange(index, 'name', e.target.value)}
-                                        className="w-full rounded-lg border border-[#E7E2DA] py-1.5 px-2.5 text-xs font-sans text-[#1C1917] outline-none focus:border-[#C5A880]"
+                                        className="w-full rounded-lg border border-edge-subtle py-1.5 px-2.5 text-xs font-sans text-ink outline-none focus:border-gold"
                                     />
                                     <input
                                         placeholder="Designation (e.g., Lead Cinematographer)"
                                         type="text"
                                         value={img.designation}
                                         onChange={(e) => handleInputChange(index, 'designation', e.target.value)}
-                                        className="w-full rounded-lg border border-[#E7E2DA] py-1.5 px-2.5 text-xs font-sans text-[#1C1917] outline-none focus:border-[#C5A880]"
+                                        className="w-full rounded-lg border border-edge-subtle py-1.5 px-2.5 text-xs font-sans text-ink outline-none focus:border-gold"
                                     />
                                 </div>
                                 <button
                                     type="button"
-                                    className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-white text-[#78716C] shadow-md hover:text-rose-600"
+                                    className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-white text-ink-muted shadow-md hover:text-rose-600"
                                     onClick={() => {
                                         setImagePreview((prev) => prev.filter((file) => file.name !== img.fileMeta.name));
                                         setFiles((prev) => prev.filter((file) => file.name !== img.fileMeta.name));
@@ -290,7 +290,7 @@ export default function TeamImage({ teamImages, fetchTeamImage }) {
 
             {/* Existing Member Grid */}
             {members.length === 0 ? (
-                <div className="rounded-xl border border-dashed border-[#D6D0C5] p-12 text-center text-xs font-sans text-[#78716C]">
+                <div className="rounded-xl border border-dashed border-edge-strong p-12 text-center text-xs font-sans text-ink-muted">
                     No team members listed yet. Click &quot;Add Team Members&quot; above to create profiles.
                 </div>
             ) : (
@@ -303,9 +303,9 @@ export default function TeamImage({ teamImages, fetchTeamImage }) {
                         return (
                             <div
                                 key={img._id}
-                                className="group relative flex flex-col overflow-hidden rounded-2xl border border-[#E7E2DA] bg-[#FAF8F5] shadow-sm transition hover:shadow-md"
+                                className="group relative flex flex-col overflow-hidden rounded-xl border border-edge-subtle bg-ground shadow-sm transition hover:shadow-md"
                             >
-                                <div className="relative aspect-4/5 w-full overflow-hidden bg-[#1C1917]">
+                                <div className="relative aspect-4/5 w-full overflow-hidden bg-ink">
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img
                                         src={img.url}
@@ -319,7 +319,7 @@ export default function TeamImage({ teamImages, fetchTeamImage }) {
                                                 <button
                                                     type="button"
                                                     onClick={() => editImage(img._id)}
-                                                    className="flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-[#44403C] shadow-md backdrop-blur-sm transition hover:bg-white hover:text-[#1C1917]"
+                                                    className="flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-ink-secondary shadow-md backdrop-blur-sm transition hover:bg-white hover:text-ink"
                                                     title="Edit profile"
                                                 >
                                                     <PencilSimple size={13} weight="bold" />
@@ -346,7 +346,7 @@ export default function TeamImage({ teamImages, fetchTeamImage }) {
                                                 <button
                                                     type="button"
                                                     onClick={() => cancelImageEdit(img._id)}
-                                                    className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#44403C] shadow-md transition hover:bg-[#F7F4EF]"
+                                                    className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-ink-secondary shadow-md transition hover:bg-ground"
                                                     title="Cancel"
                                                 >
                                                     <X size={13} weight="bold" />
@@ -359,10 +359,10 @@ export default function TeamImage({ teamImages, fetchTeamImage }) {
                                 <div className="p-4 bg-white flex-1 flex flex-col justify-between">
                                     {!cardEditing ? (
                                         <div>
-                                            <h3 className="font-serif text-base font-semibold text-[#1C1917] truncate">
+                                            <h3 className="font-sans text-base font-semibold text-ink truncate">
                                                 {memberName}
                                             </h3>
-                                            <p className="mt-0.5 text-xs font-sans text-[#78716C] truncate">
+                                            <p className="mt-0.5 text-xs font-sans text-ink-muted truncate">
                                                 {memberRole}
                                             </p>
                                         </div>
@@ -373,14 +373,14 @@ export default function TeamImage({ teamImages, fetchTeamImage }) {
                                                 value={img.about?.name || ''}
                                                 onChange={(e) => changeAbout(img._id, 'name', e.target.value)}
                                                 placeholder="Name"
-                                                className="w-full rounded-lg border border-[#C5A880] py-1 px-2 text-xs font-sans text-[#1C1917] outline-none"
+                                                className="w-full rounded-lg border border-gold py-1 px-2 text-xs font-sans text-ink outline-none"
                                             />
                                             <input
                                                 type="text"
                                                 value={img.about?.designation || ''}
                                                 onChange={(e) => changeAbout(img._id, 'designation', e.target.value)}
                                                 placeholder="Designation"
-                                                className="w-full rounded-lg border border-[#C5A880] py-1 px-2 text-xs font-sans text-[#1C1917] outline-none"
+                                                className="w-full rounded-lg border border-gold py-1 px-2 text-xs font-sans text-ink outline-none"
                                             />
                                         </div>
                                     )}

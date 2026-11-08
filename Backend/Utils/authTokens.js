@@ -9,6 +9,7 @@ import {
 
 // Opaque, high-entropy refresh token. Never stored raw — only its SHA-256.
 export const generateRefreshToken = () => crypto.randomBytes(48).toString('hex');
+export const signedCookie = (req, name) => typeof req.signedCookies?.[name] === 'string' ? req.signedCookies[name].trim() : '';
 export const hashToken = (token) => crypto.createHash('sha256').update(token).digest('hex');
 
 // Short-lived JWT carrying just enough identity for authorization decisions.
@@ -20,6 +21,8 @@ export function signAccessToken(admin) {
             email: admin.email,
             name: admin.name,
             role: admin.role,
+            purpose: 'access',
+            authVersion: admin.authVersion || 0,
             // Legacy claim: existing middleware//controllers check `role === 'admin'`.
             legacyRole: 'admin',
         },
@@ -29,9 +32,9 @@ export function signAccessToken(admin) {
 }
 
 export function verifyAccessToken(token) {
-    const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const payload = jwt.verify(token, process.env.JWT_SECRET_KEY, { algorithms: ['HS256'] });
     // A half-authenticated MFA token must never be accepted as a session.
-    if (payload.purpose === 'mfa') {
+    if ((payload.purpose && payload.purpose !== 'access') || !/^[a-f0-9]{24}$/i.test(payload.sub || '') || !['SuperAdmin', 'Editor', 'PortfolioManager'].includes(payload.role)) {
         throw new Error('MFA token cannot be used for authentication');
     }
     return payload;
@@ -42,30 +45,32 @@ export function verifyAccessToken(token) {
  * It proves "password step passed" and nothing else — it is NOT a session,
  * carries no role, and is rejected by verifyAccessToken.
  */
-export function signMfaTempToken(admin) {
+export function signMfaTempToken(admin, challengeId, rememberMe = true) {
     return jwt.sign(
-        { sub: String(admin._id), purpose: 'mfa' },
+        { sub: String(admin._id), purpose: 'mfa', jti: challengeId, authVersion: admin.authVersion || 0, rememberMe },
         process.env.JWT_SECRET_KEY,
         { expiresIn: MFA_TEMP_TOKEN_TTL },
     );
 }
 
 export function verifyMfaTempToken(token) {
-    const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    if (payload.purpose !== 'mfa') {
+    const payload = jwt.verify(token, process.env.JWT_SECRET_KEY, { algorithms: ['HS256'] });
+    if (payload.purpose !== 'mfa' || typeof payload.jti !== 'string') {
         throw new Error('Not a valid MFA token');
     }
     return payload;
 }
 
 // Create a Session row + return the raw refresh token to hand to the browser.
-export async function issueSession(admin, req) {
+export async function issueSession(admin, req, { rememberMe = true } = {}) {
     const refreshToken = generateRefreshToken();
     await Session.create({
         userId: admin._id,
+        authVersion: admin.authVersion || 0,
+        rememberMe,
         refreshTokenHash: hashToken(refreshToken),
         deviceFingerprint: req.headers['user-agent'] || 'unknown',
-        ipAddress: req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.ip,
+        ipAddress: req.ip,
         expiresAt: new Date(Date.now() + REFRESH_TOKEN_TTL_MS),
         isValid: true,
     });

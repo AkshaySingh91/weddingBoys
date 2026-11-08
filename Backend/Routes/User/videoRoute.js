@@ -1,3 +1,5 @@
+import { itemStatus } from '../../Services/portfolioStatus.js';
+import { pagination } from '../../Utils/pagination.js';
 import express from "express"
 import ClientSchema from '../../Models/ClientSchema.js'
 import { getObjectUrl } from '../../Controllers/awsController.js'
@@ -11,33 +13,46 @@ const mediaUrl = (key) => mediaUrlForKey(key, getObjectUrl);
 import { getAllTags } from "../../Controllers/TagsController.js"
 import { publicTaxonomy } from '../../Services/taxonomy.js';
 const Route = express.Router();
+Route.get('/api/videos/:id/status', itemStatus('Video'));
 
 // it will get all videos with inc order of priority for given tags
 Route.get("/api/videos", async (req, res) => {
     try {
-        let { tag = "", page = 1, limit = 10 } = req.query 
-        limit = parseInt(limit);
-        page = parseInt(page);
-        tag = tag.split(",").filter(t => t.trim() !== "");
+        const { page, limit } = pagination(req.query, 12);
+        const { sort } = req.query;
+        const tag = portfolio.parseTags(req.query.tag);
 
         // PortfolioItem path: a plain indexed find instead of $unwind over every
         // client document. Same response shape, so the frontend is unaffected.
         if (portfolio.portfolioReadsEnabled()) {
-            const items = await portfolio.findFeed({ kind: 'Video', tags: tag, page, limit });
-            return res.status(200).json({ client: items.map(portfolio.toLegacyVideoRow) });
+            const { items, total } = await portfolio.findFeedWithTotal({ kind: 'Video', tags: tag, page, limit, sort });
+            const totalPages = Math.ceil(total / limit) || 1;
+            return res.status(200).json({
+                client: items.map(portfolio.toLegacyVideoRow),
+                pagination: {
+                    total,
+                    totalPages,
+                    currentPage: page,
+                    limit,
+                    hasNextPage: page < totalPages,
+                    hasPrevPage: page > 1,
+                },
+                total,
+                totalPages,
+                page,
+                limit,
+                hasMore: page < totalPages,
+            });
         }
 
         const skipCount = (page - 1) * limit;
+        const matchStage = tag.length > 0
+            ? [{ $match: { "videos.tags": { $in: tag } } }]
+            : [];
+
         const pipeline = [
             { $unwind: "$videos" },
-            ...(tag.length > 0
-                ? [{
-                    $match: {
-                        "videos.tags": { $in: tag },
-                    }
-                }]
-                : []
-            ),
+            ...matchStage,
             { $sort: { "videos.isHeroVideo": -1, "videos.heroPriority": -1, "videos.generalPriority": -1 } },
             { $skip: skipCount },
             { $limit: limit },
@@ -50,7 +65,22 @@ Route.get("/api/videos", async (req, res) => {
             },
             { $unwind: "$videos" },
         ];
-        let client = await ClientSchema.aggregate(pipeline);
+
+        const countPipeline = [
+            { $unwind: "$videos" },
+            ...matchStage,
+            { $count: "total" },
+        ];
+
+        const [clientDocs, countResult] = await Promise.all([
+            ClientSchema.aggregate(pipeline),
+            ClientSchema.aggregate(countPipeline),
+        ]);
+
+        const total = countResult[0]?.total || 0;
+        const totalPages = Math.ceil(total / limit) || 1;
+        let client = clientDocs;
+
         if (client.length) {
             // format date
             client = client.map((v) => {
@@ -75,7 +105,22 @@ Route.get("/api/videos", async (req, res) => {
                 }
             }
         } 
-        res.status(200).json({ client });
+        res.status(200).json({
+            client,
+            pagination: {
+                total,
+                totalPages,
+                currentPage: page,
+                limit,
+                hasNextPage: page < totalPages,
+                hasPrevPage: page > 1,
+            },
+            total,
+            totalPages,
+            page,
+            limit,
+            hasMore: page < totalPages,
+        });
 
     } catch (error) {
         console.error("Error fetching videos:", error);
@@ -113,6 +158,8 @@ async function getSpecificVideoById(req, res) {
             clientName: item.client?.clientName,
             selectedVideo: {
                 ...row.videos,
+                publishedAt: item.publishedAt || null,
+                durationSec: item.render?.durationSec || null,
                 videoShootDate: portfolio.monthYear(item.shootDate),
                 url: row.url, loopUrl: row.loopUrl, thumbnailUrl: row.thumbnailUrl,
                 embedUrl: row.embedUrl, external: row.external,
@@ -189,7 +236,7 @@ Route.get("/api/videos/:id/recommended", getRecommendedVideos);
 async function getRecommendedVideos(req, res, next) {
     try {
         const { id } = req.params;
-        const { page = 1, limit = 10 } = req.query; // Infinite scrolling support
+        const { page, limit } = pagination(req.query, 10); // Infinite scrolling support
         if (!portfolio.isItemId(id)) return res.status(404).json({ message: 'videos not found' });
 
         if (portfolio.portfolioReadsEnabled()) {

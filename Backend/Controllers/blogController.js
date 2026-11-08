@@ -1,6 +1,6 @@
 // controllers/blogController.js
 import mongoose from 'mongoose';
-import jwt from 'jsonwebtoken';
+import { signPreviewToken, verifyPreviewToken } from '../Utils/previewTokens.js';
 import BlogPost from '../Models/blogPost.js';
 import BlogPostRevision from '../Models/BlogPostRevision.js';
 import Admin from '../Models/adminSchema.js';
@@ -9,6 +9,8 @@ import { putObjectUrl, generatePublicUrl } from './awsController.js';
 import { makeUniqueSlug } from '../Utils/slugMaker.js';
 import { extractTableOfContents } from '../Utils/tocExtractor.js';
 import { sanitizeBlogHtml } from '../Utils/sanitizeHtml.js';
+import { revalidateBlogs } from '../Services/revalidate.js';
+import { pagination } from '../Utils/pagination.js';
 import { ROLES } from '../constants.js';
 
 const calculateReadingTime = (content = '') => {
@@ -75,6 +77,7 @@ const getBlogUploadUrl = async (req, res) => {
 // POST /api/admin/blogs
 const createPost = async (req, res) => {
     try {
+        if (!isEditorOrSuperAdmin(req)) return res.status(403).json({ error: 'Only Editors and SuperAdmins may change stories' });
         const author = await resolveAuthor(req);
         if (!author) return res.status(401).json({ error: 'Author (admin) could not be resolved' });
 
@@ -101,6 +104,7 @@ const createPost = async (req, res) => {
         const blog = new BlogPost(data);
         await blog.save();
 
+        revalidateBlogs(blog.slug);
         res.status(201).json(blog);
     } catch (err) {
         console.error('createPost error:', err);
@@ -111,6 +115,7 @@ const createPost = async (req, res) => {
 // PUT /api/admin/blogs/:id
 const updatePost = async (req, res) => {
     try {
+        if (!isEditorOrSuperAdmin(req)) return res.status(403).json({ error: 'Only Editors and SuperAdmins may change stories' });
         const { id } = req.params;
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(404).json({ error: 'Blog not found' });
@@ -147,9 +152,11 @@ const updatePost = async (req, res) => {
             }
         }
 
+        const previousSlug = existing.slug;
         Object.assign(existing, data);
         await existing.save(); // save() so the status/publishedAt/readingTime hooks run
 
+        revalidateBlogs(previousSlug, existing.slug);
         res.json(existing);
     } catch (err) {
         console.error('updatePost error:', err);
@@ -198,15 +205,15 @@ const getAdminPostById = async (req, res, next) => {
 // GET /api/blogs  (public list — Published only)
 const getPublishedPosts = async (req, res) => {
     try {
-        const page = Math.max(parseInt(req.query.page) || 1, 1);
-        const limit = Math.min(Math.max(parseInt(req.query.limit) || 12, 1), 50);
+        const { page, limit } = pagination(req.query, 12, 50);
         const { category, tag, search } = req.query;
 
         const query = { status: 'Published' };
-        if (category) query.category = category;
+        if (category) query.category = ['Planning Guides', 'Wedding Planning'].includes(category)
+            ? { $in: ['Planning Guides', 'Wedding Planning'] } : String(category);
         if (tag) query.tags = tag;
         if (search) {
-            const rx = new RegExp(search.trim(), 'i');
+            const rx = new RegExp(String(search).trim().slice(0, 120).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
             query.$or = [{ title: rx }, { excerpt: rx }, { tags: rx }, { keywords: rx }];
         }
 
@@ -221,7 +228,12 @@ const getPublishedPosts = async (req, res) => {
             .populate('coverImage')
             .select('-contentJson');
 
-        res.json({ posts, page, limit, total, hasMore: page * limit < total });
+        const categories = await BlogPost.aggregate([
+            { $match: { status: 'Published' } },
+            { $group: { _id: { $cond: [{ $eq: ['$category', 'Wedding Planning'] }, 'Planning Guides', '$category'] }, count: { $sum: 1 } } },
+            { $sort: { _id: 1 } },
+        ]);
+        res.json({ posts, page, limit, total, hasMore: page * limit < total, categories });
     } catch (err) {
         console.error('getPublishedPosts error:', err);
         res.status(500).json({ error: 'Server error' });
@@ -249,9 +261,7 @@ const getPostBySlug = async (req, res) => {
         let previewClaim = null;
         if (previewToken) {
             try {
-                const secret = process.env.JWT_SECRET || 'wb_editorial_secret_2026';
-                const decoded = jwt.verify(previewToken, secret);
-                if (decoded.role === 'preview') previewClaim = decoded;
+                previewClaim = verifyPreviewToken(previewToken);
             } catch {
                 previewClaim = null;
             }
@@ -328,6 +338,7 @@ const getRelatedPosts = async (req, res) => {
 // DELETE /api/admin/blogs/:id  (archive post + its media)
 const deletePost = async (req, res) => {
     try {
+        if (!isEditorOrSuperAdmin(req)) return res.status(403).json({ error: 'Only Editors and SuperAdmins may change stories' });
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
             return res.status(404).json({ error: 'Blog not found' });
         }
@@ -340,7 +351,8 @@ const deletePost = async (req, res) => {
             await Media.updateMany({ _id: { $in: mediaIds } }, { status: 'Archived' });
         }
 
-        await BlogPost.deleteOne({ _id: blog._id }); // Mongoose 8: document.remove() is gone
+        await BlogPost.deleteOne({ _id: blog._id });
+        revalidateBlogs(blog.slug);
         res.json({ message: 'Blog deleted successfully' });
     } catch (err) {
         console.error('deletePost error:', err);
@@ -381,6 +393,7 @@ const togglePublish = async (req, res) => {
             }).save();
         }
 
+        revalidateBlogs(blog.slug);
         res.json(blog);
     } catch (err) {
         res.status(400).json({ error: err.message });
@@ -396,12 +409,7 @@ const getPreviewToken = async (req, res) => {
         const blog = await BlogPost.findById(req.params.id).select('slug title status');
         if (!blog) return res.status(404).json({ error: 'Blog not found' });
 
-        const secret = process.env.JWT_SECRET || 'wb_editorial_secret_2026';
-        const token = jwt.sign(
-            { postId: String(blog._id), slug: blog.slug, role: 'preview' },
-            secret,
-            { expiresIn: '24h' }
-        );
+        const token = signPreviewToken(blog);
 
         res.json({
             token,

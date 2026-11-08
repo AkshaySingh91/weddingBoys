@@ -203,7 +203,7 @@ export default function HeroSection({ onCTAClick }) {
           className="absolute inset-0 z-30 flex flex-col items-center pt-[20vh] px-6 pointer-events-none"
         >
           {/* ... Keep your existing Hero text elements here ... */}
-          <h1 className="font-['Cormorant_Garamond'] text-[clamp(60px,12vw,140px)] leading-[0.85] text-[#FAF6EE] font-light tracking-tight text-center mb-8">
+          <h1 className="font-display text-[clamp(60px,12vw,140px)] leading-[0.85] text-[#FAF6EE] font-light tracking-tight text-center mb-8">
             Kashi<br />
             <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#E2BC6E] via-[#FAF6EE] to-[#E2BC6E] opacity-90">
               Awaits
@@ -219,7 +219,7 @@ export default function HeroSection({ onCTAClick }) {
           className="absolute inset-0 z-30 flex flex-col items-center justify-center px-6 pointer-events-none"
         >
            {/* ... Keep your existing Boat text elements here ... */}
-           <h2 className="font-['Cormorant_Garamond'] text-[clamp(40px,8vw,80px)] text-[#FAF6EE] font-light text-center leading-[1.1] mb-12 max-w-4xl drop-shadow-xl">
+           <h2 className="font-display text-[clamp(40px,8vw,80px)] text-[#FAF6EE] font-light text-center leading-[1.1] mb-12 max-w-4xl drop-shadow-xl">
             Intimacy captured amidst the<br />
             <span className="italic text-[#E2BC6E]">timeless flow of the Ganga.</span>
           </h2>

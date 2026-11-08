@@ -65,7 +65,7 @@ export default function NextPrevStories({ previous, next }) {
                     className="group flex flex-col items-center justify-center gap-1 px-8 py-5 text-center transition-colors hover:bg-studio-canvas"
                 >
                     <SquaresFour size={18} className="text-studio-coral" />
-                    <span className="font-playfair text-sm font-bold text-studio-ink transition-colors group-hover:text-studio-coral">
+                    <span className="font-display text-sm font-bold text-studio-ink transition-colors group-hover:text-studio-coral">
                         More Stories from The Journal
                     </span>
                     <span className="text-[11px] text-studio-inkMuted">

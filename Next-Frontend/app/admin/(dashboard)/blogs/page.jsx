@@ -141,8 +141,8 @@ export default function AdminBlogsPage() {
   if (posts === null) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] gap-3 font-sans">
-        <CircleNotch size={28} className="animate-spin text-stone-600" />
-        <p className="text-xs text-stone-500 font-medium">Loading editorial stories...</p>
+        <CircleNotch size={28} className="animate-spin text-ink-secondary" />
+        <p className="text-xs text-ink-muted font-medium">Loading editorial stories...</p>
       </div>
     );
   }
@@ -159,12 +159,12 @@ export default function AdminBlogsPage() {
   return (
     <div className="space-y-6 pb-16 font-sans">
       {/* Top Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E5DCD3] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-edge-subtle pb-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1C1917]">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-ink">
             Editorial Stories &amp; Articles
           </h1>
-          <p className="text-xs text-stone-500 mt-0.5">
+          <p className="text-xs text-ink-muted mt-0.5">
             Manage wedding cinematography guides, real love stories, and studio journal publications.
           </p>
         </div>
@@ -181,20 +181,20 @@ export default function AdminBlogsPage() {
 
       {/* KPI Stats Row */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-        <div className="rounded-2xl border border-[#E5DCD3] bg-white p-3.5 shadow-sm">
+        <div className="rounded-xl border border-edge-subtle bg-white p-3.5 shadow-sm">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-stone-500">Total Stories</span>
-            <div className="h-6 w-6 rounded-lg bg-stone-100 flex items-center justify-center text-stone-600 border border-stone-200">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-ink-muted">Total Stories</span>
+            <div className="h-6 w-6 rounded-lg bg-ground-sunk flex items-center justify-center text-ink-secondary border border-edge-subtle">
               <Article size={14} />
             </div>
           </div>
-          <div className="mt-1.5 text-xl font-bold tracking-tight text-[#1C1917] tabular-nums">
+          <div className="mt-1.5 text-xl font-bold tracking-tight text-ink tabular-nums">
             {stats.total}
           </div>
-          <p className="text-[10px] text-stone-400 mt-0.5">In library</p>
+          <p className="text-[10px] text-ink-muted mt-0.5">In library</p>
         </div>
 
-        <div className="rounded-2xl border border-[#E5DCD3] bg-white p-3.5 shadow-sm">
+        <div className="rounded-xl border border-edge-subtle bg-white p-3.5 shadow-sm">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700">Published</span>
             <div className="h-6 w-6 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 border border-emerald-200">
@@ -204,10 +204,10 @@ export default function AdminBlogsPage() {
           <div className="mt-1.5 text-xl font-bold tracking-tight text-emerald-800 tabular-nums">
             {stats.published}
           </div>
-          <p className="text-[10px] text-stone-400 mt-0.5">Live on website</p>
+          <p className="text-[10px] text-ink-muted mt-0.5">Live on website</p>
         </div>
 
-        <div className="rounded-2xl border border-[#E5DCD3] bg-white p-3.5 shadow-sm">
+        <div className="rounded-xl border border-edge-subtle bg-white p-3.5 shadow-sm">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-bold uppercase tracking-wider text-amber-700">In Review</span>
             <div className="h-6 w-6 rounded-lg bg-amber-50 flex items-center justify-center text-amber-600 border border-amber-200">
@@ -217,10 +217,10 @@ export default function AdminBlogsPage() {
           <div className="mt-1.5 text-xl font-bold tracking-tight text-amber-800 tabular-nums">
             {stats.inReview}
           </div>
-          <p className="text-[10px] text-stone-400 mt-0.5">Awaiting editorial</p>
+          <p className="text-[10px] text-ink-muted mt-0.5">Awaiting editorial</p>
         </div>
 
-        <div className="rounded-2xl border border-[#E5DCD3] bg-white p-3.5 shadow-sm">
+        <div className="rounded-xl border border-edge-subtle bg-white p-3.5 shadow-sm">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-700">Scheduled</span>
             <div className="h-6 w-6 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600 border border-indigo-200">
@@ -230,37 +230,37 @@ export default function AdminBlogsPage() {
           <div className="mt-1.5 text-xl font-bold tracking-tight text-indigo-800 tabular-nums">
             {stats.scheduled}
           </div>
-          <p className="text-[10px] text-stone-400 mt-0.5">Future releases</p>
+          <p className="text-[10px] text-ink-muted mt-0.5">Future releases</p>
         </div>
 
-        <div className="rounded-2xl border border-[#E5DCD3] bg-white p-3.5 shadow-sm col-span-2 sm:col-span-1">
+        <div className="rounded-xl border border-edge-subtle bg-white p-3.5 shadow-sm col-span-2 sm:col-span-1">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-stone-600">Drafts</span>
-            <div className="h-6 w-6 rounded-lg bg-stone-100 flex items-center justify-center text-stone-600 border border-stone-200">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-ink-secondary">Drafts</span>
+            <div className="h-6 w-6 rounded-lg bg-ground-sunk flex items-center justify-center text-ink-secondary border border-edge-subtle">
               <Clock size={14} />
             </div>
           </div>
-          <div className="mt-1.5 text-xl font-bold tracking-tight text-stone-800 tabular-nums">
+          <div className="mt-1.5 text-xl font-bold tracking-tight text-ink tabular-nums">
             {stats.drafts}
           </div>
-          <p className="text-[10px] text-stone-400 mt-0.5">Work in progress</p>
+          <p className="text-[10px] text-ink-muted mt-0.5">Work in progress</p>
         </div>
       </div>
 
       {/* Filter & Search Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3 rounded-2xl border border-[#E5DCD3] shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3 rounded-xl border border-edge-subtle shadow-sm">
         <div className="relative flex-1 max-w-md">
-          <MagnifyingGlass size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400" />
+          <MagnifyingGlass size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-muted" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search stories by title or category..."
-            className="w-full pl-9 pr-4 py-2 bg-stone-50 border border-[#E5DCD3] rounded-xl text-xs text-[#1C1917] placeholder:text-stone-400 focus:outline-none focus:border-[#8C532B] focus:ring-1 focus:ring-[#8C532B]/30 transition-all"
+            className="w-full pl-9 pr-4 py-2 bg-ground border border-edge-subtle rounded-xl text-xs text-ink placeholder:text-ink-muted focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition-all"
           />
         </div>
 
-        <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-xl border border-stone-200 overflow-x-auto">
+        <div className="flex items-center gap-1 bg-ground-sunk p-1 rounded-xl border border-edge-subtle overflow-x-auto">
           {[
             { id: 'All', label: 'All Stories' },
             { id: 'Published', label: 'Published' },
@@ -276,8 +276,8 @@ export default function AdminBlogsPage() {
               className={cn(
                 'px-3 py-1 text-xs font-medium rounded-lg transition-all cursor-pointer whitespace-nowrap',
                 filter === tab.id
-                  ? 'bg-white text-[#1C1917] font-semibold shadow-sm'
-                  : 'text-stone-600 hover:text-[#1C1917]'
+                  ? 'bg-white text-ink font-semibold shadow-sm'
+                  : 'text-ink-secondary hover:text-ink'
               )}
             >
               {tab.label}
@@ -288,12 +288,12 @@ export default function AdminBlogsPage() {
 
       {/* Article List */}
       {visible.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-[#E5DCD3] p-12 text-center flex flex-col items-center justify-center shadow-sm">
-          <div className="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center text-stone-500 mb-3 border border-stone-200">
+        <div className="bg-white rounded-xl border border-edge-subtle p-12 text-center flex flex-col items-center justify-center shadow-sm">
+          <div className="w-12 h-12 rounded-full bg-ground-sunk flex items-center justify-center text-ink-muted mb-3 border border-edge-subtle">
             <BookOpenText size={24} />
           </div>
-          <h4 className="text-sm font-semibold text-[#1C1917] mb-1">No articles found</h4>
-          <p className="text-xs text-stone-500 max-w-sm mb-4">
+          <h4 className="text-sm font-semibold text-ink mb-1">No articles found</h4>
+          <p className="text-xs text-ink-muted max-w-sm mb-4">
             Try adjusting your search query or compose your first wedding story.
           </p>
           <Link href="/admin/blogs/create">
@@ -311,11 +311,11 @@ export default function AdminBlogsPage() {
             return (
               <div
                 key={post._id}
-                className="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-[#E5DCD3] bg-white p-3.5 sm:p-4 shadow-sm hover:border-stone-400 transition-all"
+                className="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-edge-subtle bg-white p-3.5 sm:p-4 shadow-sm hover:border-edge-strong transition-all"
               >
                 <div className="flex items-center gap-4 min-w-0 flex-1">
                   {/* Cover Thumbnail */}
-                  <div className="relative h-20 w-32 shrink-0 overflow-hidden rounded-xl bg-stone-100 border border-[#E5DCD3] flex items-center justify-center">
+                  <div className="relative h-20 w-32 shrink-0 overflow-hidden rounded-xl bg-ground-sunk border border-edge-subtle flex items-center justify-center">
                     {cover ? (
                       <Image
                         src={cover}
@@ -326,7 +326,7 @@ export default function AdminBlogsPage() {
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center text-stone-300 bg-stone-50">
+                      <div className="flex h-full w-full items-center justify-center text-stone-300 bg-ground">
                         <Eye size={22} />
                       </div>
                     )}
@@ -335,7 +335,7 @@ export default function AdminBlogsPage() {
                   {/* Article Meta */}
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="truncate text-sm font-bold text-[#1C1917] group-hover:text-[#8C532B] transition-colors">
+                      <h3 className="truncate text-sm font-bold text-ink group-hover:text-accent-ink transition-colors">
                         {post.title}
                       </h3>
                       <Badge
@@ -360,35 +360,35 @@ export default function AdminBlogsPage() {
                       </Badge>
                     </div>
 
-                    <div className="mt-1.5 flex flex-wrap items-center gap-3 text-xs text-stone-500">
+                    <div className="mt-1.5 flex flex-wrap items-center gap-3 text-xs text-ink-muted">
                       {post.category && (
-                        <span className="font-semibold text-stone-700 bg-stone-100 px-2 py-0.5 rounded-md border border-stone-200">
+                        <span className="font-semibold text-ink-secondary bg-ground-sunk px-2 py-0.5 rounded-lg border border-edge-subtle">
                           {post.category}
                         </span>
                       )}
                       {post.template && (
-                        <span className="font-medium text-[#8C532B] bg-[#8C532B]/10 px-2 py-0.5 rounded-md border border-[#8C532B]/20 capitalize text-[11px]">
+                        <span className="font-medium text-accent-ink bg-accent/10 px-2 py-0.5 rounded-lg border border-accent/20 capitalize text-[11px]">
                           {post.template.replace(/-/g, ' ')}
                         </span>
                       )}
                       {post.seoScore > 0 && (
-                        <span className="inline-flex items-center gap-1 font-mono text-[11px] px-2 py-0.5 rounded-md bg-stone-100 text-stone-700 border border-stone-200">
-                          <Sparkle size={11} className="text-[#8C532B]" weight="fill" />
+                        <span className="inline-flex items-center gap-1 font-mono text-[11px] px-2 py-0.5 rounded-lg bg-ground-sunk text-ink-secondary border border-edge-subtle">
+                          <Sparkle size={11} className="text-accent-ink" weight="fill" />
                           SEO {post.seoScore}%
                         </span>
                       )}
                       {typeof post.views === 'number' && (
-                        <span className="inline-flex items-center gap-1 text-[11px] font-mono text-stone-500">
-                          <Eye size={12} className="text-stone-400" />
+                        <span className="inline-flex items-center gap-1 text-[11px] font-mono text-ink-muted">
+                          <Eye size={12} className="text-ink-muted" />
                           {post.views} views
                         </span>
                       )}
                       <span className="flex items-center gap-1 tabular-nums">
-                        <Clock size={13} className="text-stone-400" />
+                        <Clock size={13} className="text-ink-muted" />
                         {post.readingTime || 1} min read
                       </span>
                       {post.updatedAt && (
-                        <span className="tabular-nums text-stone-400">
+                        <span className="tabular-nums text-ink-muted">
                           Updated {new Date(post.updatedAt).toLocaleDateString('en-IN', {
                             month: 'short',
                             day: 'numeric',
@@ -401,10 +401,10 @@ export default function AdminBlogsPage() {
                 </div>
 
                 {/* Actions */}
-                <div className="flex shrink-0 items-center gap-2 border-t sm:border-t-0 border-[#E5DCD3] pt-2 sm:pt-0">
+                <div className="flex shrink-0 items-center gap-2 border-t sm:border-t-0 border-edge-subtle pt-2 sm:pt-0">
                   {/* View Story Analytics */}
                   <Link href={`/admin/blogs/analytics`}>
-                    <Button variant="ghost" size="iconSm" title="View Story Analytics" className="h-8 w-8 text-stone-600 hover:text-[#8C532B]">
+                    <Button variant="ghost" size="iconSm" title="View Story Analytics" className="h-8 w-8 text-ink-secondary hover:text-accent-ink">
                       <ChartLineUp size={16} />
                     </Button>
                   </Link>
@@ -416,7 +416,7 @@ export default function AdminBlogsPage() {
                     loading={copyingPreviewId === post._id}
                     onClick={() => copyPreviewLink(post)}
                     title="Copy 24-Hour Signed Preview Link"
-                    className="h-8 w-8 text-stone-600 hover:text-[#8C532B]"
+                    className="h-8 w-8 text-ink-secondary hover:text-accent-ink"
                   >
                     <LinkSimple size={16} />
                   </Button>
@@ -427,7 +427,7 @@ export default function AdminBlogsPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Button variant="ghost" size="iconSm" title="View Public Story" className="h-8 w-8 text-stone-600">
+                      <Button variant="ghost" size="iconSm" title="View Public Story" className="h-8 w-8 text-ink-secondary">
                         <ArrowSquareOut size={16} />
                       </Button>
                     </a>
@@ -467,7 +467,7 @@ export default function AdminBlogsPage() {
                   )}
 
                   <Link href={`/admin/blogs/edit/${post._id}`}>
-                    <Button variant="ghost" size="iconSm" title="Edit Article" className="h-8 w-8 text-stone-600">
+                    <Button variant="ghost" size="iconSm" title="Edit Article" className="h-8 w-8 text-ink-secondary">
                       <PencilSimple size={16} />
                     </Button>
                   </Link>
@@ -475,7 +475,7 @@ export default function AdminBlogsPage() {
                   <Button
                     variant="ghost"
                     size="iconSm"
-                    className="text-stone-400 hover:text-rose-600 hover:bg-rose-50 h-8 w-8 transition-colors"
+                    className="text-ink-muted hover:text-rose-600 hover:bg-rose-50 h-8 w-8 transition-colors"
                     onClick={() => setDeleteId(post._id)}
                     title="Delete Article"
                   >
@@ -492,10 +492,10 @@ export default function AdminBlogsPage() {
       <Dialog open={!!deleteId} onOpenChange={(open) => !open && setDeleteId(null)}>
         <DialogContent className="sm:max-w-sm font-sans">
           <DialogHeader>
-            <DialogTitle className="text-sm font-bold text-[#1C1917]">
+            <DialogTitle className="text-sm font-bold text-ink">
               Delete Article
             </DialogTitle>
-            <DialogDescription className="text-xs text-stone-500">
+            <DialogDescription className="text-xs text-ink-muted">
               Are you sure you want to delete this blog story? Linked media records will be archived and this action cannot be undone.
             </DialogDescription>
           </DialogHeader>

@@ -101,13 +101,13 @@ export default function Review() {
         <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="relative py-20  bg-gradient-to-b from-[#FFF5F5] to-[#FFEEE6] overflow-hidden"
+            className="relative py-20  bg-gradient-to-b from-ground to-ground-sunk overflow-hidden"
         >
             {/* Floating Hearts */}
             {hearts?.map((heart, i) => (
                 <motion.div
                     key={i}
-                    className="absolute text-[#FF6969]/20"
+                    className="absolute text-accent/20"
                     initial={{ y: 0, x: heart.initialX, rotate: heart.initialRotate }}
                     animate={{
                         y: [0, 100],
@@ -132,7 +132,7 @@ export default function Review() {
                     <motion.div
                         initial={{ scale: 0 }}
                         whileInView={{ scale: 1 }}
-                        className="bg-[#FFE9E9] text-[#FF6969] font-semibold py-2 px-6 rounded-full inline-block mb-4"
+                        className="bg-accent-wash text-accent-ink font-semibold py-2 px-6 rounded-full inline-block mb-4"
                     >
                         CLIENT LOVE
                     </motion.div>
@@ -165,7 +165,7 @@ export default function Review() {
                                         {/* Rating Badge */}
                                         <div className="absolute top-4 right-4 bg-white px-4 py-2 rounded-full shadow-md flex items-center gap-1">
                                             {[...Array(review.rating)].map((_, i) => (
-                                                <FiStar key={i} className="w-5 h-5 text-[#FFD700]" />
+                                                <FiStar key={i} className="w-5 h-5 text-gold" />
                                             ))}
                                         </div>
 
@@ -180,20 +180,20 @@ export default function Review() {
                                                 <h3 className="text-2xl font-bold text-white">
                                                     {review.person.name}
                                                 </h3>
-                                                <p className="text-[#FFE3C8]">{review.person.gender}</p>
+                                                <p className="text-ink-onDeep/80">{review.person.gender}</p>
                                             </div>
                                         </div>
 
                                         <div className="lg:w-1/2 p-8 flex flex-col justify-center">
-                                            <blockquote className="text-xl text-[#5E2B17] mb-6 relative before:content-['“'] before:absolute before:-left-6 before:-top-4 before:text-6xl before:text-[#FF6969]/30 before:">
+                                            <blockquote className="text-xl text-[#5E2B17] mb-6 relative before:content-['“'] before:absolute before:-left-6 before:-top-4 before:text-6xl before:text-accent/30 before:">
                                                 {review.reviewText}
                                             </blockquote>
                                             <div className="flex items-center space-x-4">
-                                                <div className="flex-1 h-px bg-[#FF6969]/20" />
-                                                <span className="text-[#FF6969] uppercase tracking-widest text-sm">
+                                                <div className="flex-1 h-px bg-accent/20" />
+                                                <span className="text-accent-ink uppercase tracking-widest text-sm">
                                                     Wedding Story
                                                 </span>
-                                                <div className="flex-1 h-px bg-[#FF6969]/20" />
+                                                <div className="flex-1 h-px bg-accent/20" />
                                             </div>
                                         </div>
                                     </motion.div>
@@ -232,7 +232,7 @@ export default function Review() {
                         smooth={true}
                         duration={500}
                         offset={-80} // adjust if you have a fixed navbar
-                        className="flex flex-col items-center text-[#FF6969] cursor-pointer"
+                        className="flex flex-col items-center text-accent-ink cursor-pointer"
                     >
                         <FiChevronLeft className="w-8 h-8 transform rotate-90" />
                         <span className="text-sm mt-2">Go to Top</span>

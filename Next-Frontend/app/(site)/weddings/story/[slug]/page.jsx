@@ -36,11 +36,11 @@ export async function generateMetadata({ params }) {
     const { slug } = await params;
     const story = await getStory(slug);
     const w = story?.data?.wedding;
-    if (!w) return { title: 'Wedding story | The Wedding Boys' };
+    if (!w) return { title: 'Wedding story | The Wedding Vachan' };
     const where = w.location?.city ? ` in ${w.location.city}` : '';
-    const title = `${w.title} — wedding${where} | The Wedding Boys`;
+    const title = `${w.title} — wedding${where} | The Wedding Vachan`;
     const description = w.intro
-        || `${w.title}'s wedding${where}: ${w.films ? `${w.films} film${w.films === 1 ? '' : 's'}` : ''}${w.films && w.photos ? ' and ' : ''}${w.photos ? `${w.photos} photographs` : ''} by The Wedding Boys.`;
+        || `${w.title}'s wedding${where}: ${w.films ? `${w.films} film${w.films === 1 ? '' : 's'}` : ''}${w.films && w.photos ? ' and ' : ''}${w.photos ? `${w.photos} photographs` : ''} by The Wedding Vachan.`;
     const url = `${SITE_URL}/weddings/story/${w.slug}`;
     return {
         title,
@@ -69,7 +69,7 @@ export default async function WeddingStoryPage({ params }) {
         description: w.intro || undefined,
         image: w.cover?.url || undefined,
         contentLocation: w.location?.city ? { '@type': 'Place', name: place(w.location) } : undefined,
-        creator: { '@type': 'Organization', name: 'The Wedding Boys', url: SITE_URL },
+        creator: { '@type': 'Organization', name: 'The Wedding Vachan', url: SITE_URL },
         associatedMedia: films.map((f) => ({
             '@type': 'VideoObject',
             name: f.caption || `${w.title} — wedding film`,

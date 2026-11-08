@@ -16,13 +16,13 @@ function EventTypes() {
     ];
 
     return (
-        <section className="lg:py-10 sm:py-5 px-4 sm:px-6 lg:px-8  bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] relative overflow-hidden lg:rounded-3xl sm:rounded-lg">
+        <section className="lg:py-10 sm:py-5 px-4 sm:px-6 lg:px-8  bg-gradient-to-b from-ground-sunk to-ground relative overflow-hidden lg:rounded-3xl sm:rounded-lg">
 
             {/* henna top border */}
             <div className="absolute top-0 left-0 w-full">
                 <svg viewBox="0 0 1440 320" className="w-full">
                     <path
-                        fill="#FF6969"
+                        fill="var(--accent)"
                         fillOpacity="0.1"
                         d="M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,112C672,117,768,171,864,192C960,213,1056,203,1152,186.7C1248,171,1344,149,1392,138.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
                     ></path>
@@ -31,8 +31,8 @@ function EventTypes() {
             {/* Henna-inspired bottom Border */}
             <div className="absolute bottom-0 left-0 w-full opacity-10 transform rotate-180">
                 <svg viewBox="0 0 1440 120" className="w-full">
-                    <path fill="#FF6969" d="M0,120 C200,80 400,40 720,40 C1040,40 1240,80 1440,120 L1440,0 L0,0 Z"
-                        stroke="#FFD700" strokeWidth="2" strokeDasharray="4 4" />
+                    <path fill="var(--accent)" d="M0,120 C200,80 400,40 720,40 C1040,40 1240,80 1440,120 L1440,0 L0,0 Z"
+                        stroke="var(--gold)" strokeWidth="2" strokeDasharray="4 4" />
                 </svg>
             </div>
             {/* Floating Florals */}
@@ -42,8 +42,8 @@ function EventTypes() {
                     transition={{ duration: 8, repeat: Infinity }}
                     viewBox="0 0 24 24"
                 >
-                    <path fill="#FFD700" d="M12 2C8 2 4 6 4 12s4 10 8 10 8-4 8-10S16 2 12 2zm0 18c-3 0-6-3-6-6s3-6 6-6 6 3 6 6-3 6-6 6z" />
-                    <path fill="#FF6969" d="M12 6c-2 0-4 2-4 4s2 4 4 4 4-2 4-4-2-4-4-4z" />
+                    <path fill="var(--gold)" d="M12 2C8 2 4 6 4 12s4 10 8 10 8-4 8-10S16 2 12 2zm0 18c-3 0-6-3-6-6s3-6 6-6 6 3 6 6-3 6-6 6z" />
+                    <path fill="var(--accent)" d="M12 6c-2 0-4 2-4 4s2 4 4 4 4-2 4-4-2-4-4-4z" />
                 </motion.svg>
             </div>
             {/* Heading */}
@@ -53,7 +53,7 @@ function EventTypes() {
             <p className="text-gray-600 text-center mt-2 mb-10 sm:mb-14 max-w-xl mx-auto text-sm sm:text-base">
                 From weddings to office parties, we serve with passion and perfection.
                 <br className="hidden sm:block" />
-                For more events, contact us for <span className="font-semibold text-orange-600">free consultation</span>.
+                For more events, contact us for <span className="font-semibold text-accent-ink">free consultation</span>.
             </p>
 
             {/* Event Cards */}
@@ -82,7 +82,7 @@ function EventTypes() {
             {/* Call to Action */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
                 <button
-                    className="bg-orange-600 text-white px-6 sm:px-8 py-3 rounded-xl shadow-lg hover:bg-orange-700 transition-all font-bold text-sm sm:text-base cursor-pointer z-10"
+                    className="bg-accent text-white px-6 sm:px-8 py-3 rounded-xl shadow-lg hover:bg-accent-hover transition-all font-bold text-sm sm:text-base cursor-pointer z-10"
                     onClick={() => window.open(`https://wa.me/9284690935`, '_blank')}
                 >
                     Book Your Event

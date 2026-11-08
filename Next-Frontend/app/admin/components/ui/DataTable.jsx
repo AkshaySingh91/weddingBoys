@@ -60,15 +60,15 @@ export function DataTable({
   return (
     <div className={cn('space-y-3.5 w-full font-sans', className)}>
       {/* Control Toolbar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3 rounded-2xl border border-[#E5DCD3] shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3 rounded-xl border border-edge-subtle shadow-sm">
         <div className="relative flex-1 max-w-md">
-          <MagnifyingGlass size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400" />
+          <MagnifyingGlass size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-muted" />
           <input
             type="text"
             value={searchTerm}
             onChange={handleSearchChange}
             placeholder={searchPlaceholder}
-            className="w-full pl-9 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-[#1C1917] placeholder:text-stone-400 focus:outline-none focus:ring-1 focus:ring-amber-700/30 focus:border-amber-700 transition-all font-sans"
+            className="w-full pl-9 pr-4 py-2 bg-ground border border-edge-subtle rounded-xl text-xs text-ink placeholder:text-ink-muted focus:outline-none focus:ring-1 focus:ring-amber-700/30 focus:border-amber-700 transition-all font-sans"
           />
         </div>
 
@@ -80,27 +80,27 @@ export function DataTable({
 
       {/* Main Table Container */}
       {paginatedData.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-[#E5DCD3] p-12 text-center flex flex-col items-center justify-center shadow-sm">
-          <div className="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center text-stone-500 mb-3 border border-stone-200">
+        <div className="bg-white rounded-xl border border-edge-subtle p-12 text-center flex flex-col items-center justify-center shadow-sm">
+          <div className="w-12 h-12 rounded-full bg-ground-sunk flex items-center justify-center text-ink-muted mb-3 border border-edge-subtle">
             <Tray size={24} />
           </div>
-          <h4 className="text-sm font-semibold text-[#1C1917] mb-1">{emptyMessage}</h4>
-          <p className="text-xs text-stone-500 max-w-sm">{emptySubMessage}</p>
+          <h4 className="text-sm font-semibold text-ink mb-1">{emptyMessage}</h4>
+          <p className="text-xs text-ink-muted max-w-sm">{emptySubMessage}</p>
         </div>
       ) : (
         <>
           {/* Desktop View (Table with fixed layout) */}
-          <div className="hidden md:block overflow-hidden rounded-2xl border border-[#E5DCD3] bg-white shadow-sm">
+          <div className="hidden md:block overflow-hidden rounded-xl border border-edge-subtle bg-white shadow-sm">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse table-auto">
                 <thead>
-                  <tr className="border-b border-[#E5DCD3] bg-[#FAF8F5]">
+                  <tr className="border-b border-edge-subtle bg-ground">
                     {columns.map((col, idx) => (
                       <th
                         key={col.key || idx}
                         style={col.width ? { width: col.width } : undefined}
                         className={cn(
-                          'py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-stone-600 font-sans',
+                          'py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-ink-secondary font-sans',
                           col.className
                         )}
                       >
@@ -109,17 +109,17 @@ export function DataTable({
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-stone-100">
+                <tbody className="divide-y divide-edge-subtle">
                   {paginatedData.map((row, rowIdx) => (
                     <tr
                       key={row[keyField] || rowIdx}
-                      className="hover:bg-[#FAF8F5] transition-colors"
+                      className="hover:bg-ground transition-colors"
                     >
                       {columns.map((col, colIdx) => (
                         <td
                           key={col.key || colIdx}
                           className={cn(
-                            'py-3.5 px-4 text-xs text-[#1C1917] font-sans align-middle',
+                            'py-3.5 px-4 text-xs text-ink font-sans align-middle',
                             col.cellClassName
                           )}
                         >
@@ -133,18 +133,18 @@ export function DataTable({
             </div>
 
             {/* Pagination Controls */}
-            <div className="p-3.5 border-t border-[#E5DCD3] bg-[#FAF8F5]/60 flex items-center justify-between text-xs text-stone-500 font-sans">
+            <div className="p-3.5 border-t border-edge-subtle bg-ground/60 flex items-center justify-between text-xs text-ink-muted font-sans">
               <span className="tabular-nums">
                 Showing{' '}
-                <strong className="text-[#1C1917] font-semibold">
+                <strong className="text-ink font-semibold">
                   {(currentPage - 1) * pageSize + 1}
                 </strong>{' '}
                 to{' '}
-                <strong className="text-[#1C1917] font-semibold">
+                <strong className="text-ink font-semibold">
                   {Math.min(currentPage * pageSize, filteredData.length)}
                 </strong>{' '}
                 of{' '}
-                <strong className="text-[#1C1917] font-semibold">
+                <strong className="text-ink font-semibold">
                   {filteredData.length}
                 </strong>{' '}
                 entries
@@ -161,7 +161,7 @@ export function DataTable({
                   <CaretLeft size={14} className="mr-1" /> Previous
                 </Button>
 
-                <span className="px-2 font-medium text-stone-600 tabular-nums">
+                <span className="px-2 font-medium text-ink-secondary tabular-nums">
                   {currentPage} / {totalPages}
                 </span>
 
@@ -183,7 +183,7 @@ export function DataTable({
             {paginatedData.map((row, rowIdx) => (
               <div
                 key={row[keyField] || rowIdx}
-                className="bg-white rounded-2xl border border-[#E5DCD3] p-4 shadow-sm"
+                className="bg-white rounded-xl border border-edge-subtle p-4 shadow-sm"
               >
                 {renderMobileCard ? (
                   renderMobileCard(row)
@@ -191,7 +191,7 @@ export function DataTable({
                   <div className="space-y-2">
                     {columns.map((col, idx) => (
                       <div key={col.key || idx} className="flex justify-between text-xs">
-                        <span className="font-semibold text-stone-500">{col.label}</span>
+                        <span className="font-semibold text-ink-muted">{col.label}</span>
                         <span>{col.render ? col.render(row) : row[col.key]}</span>
                       </div>
                     ))}

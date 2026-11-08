@@ -165,7 +165,7 @@ export default function ClientsPage() {
             </PageHeader>
 
             {/* Status Tabs: All | Drafts | Published */}
-            <div className="flex items-center gap-2 border-b border-stone-200 pb-1">
+            <div className="flex items-center gap-2 border-b border-edge-subtle pb-1">
                 {[
                     { key: 'all', label: 'All Weddings', count: clients.length },
                     { key: 'drafts', label: 'Drafts Only', count: draftClientsCount, activeCls: 'bg-amber-500 text-white' },
@@ -180,14 +180,14 @@ export default function ClientsPage() {
                             className={cn(
                                 'flex items-center gap-2 rounded-xl px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer select-none',
                                 active
-                                    ? tab.activeCls || 'bg-stone-900 text-white shadow-xs'
-                                    : 'bg-white border border-stone-200 text-stone-600 hover:bg-stone-50'
+                                    ? tab.activeCls || 'bg-ink text-white shadow-xs'
+                                    : 'bg-white border border-edge-subtle text-ink-secondary hover:bg-ground'
                             )}
                         >
                             <span>{tab.label}</span>
                             <span className={cn(
                                 'rounded-full px-1.5 py-0.2 text-[10px] font-bold font-mono',
-                                active ? 'bg-white/20 text-white' : 'bg-stone-100 text-stone-600'
+                                active ? 'bg-white/20 text-white' : 'bg-ground-sunk text-ink-secondary'
                             )}>
                                 {tab.count}
                             </span>
@@ -199,7 +199,7 @@ export default function ClientsPage() {
             {/* filters */}
             <div className="flex flex-wrap items-center gap-2">
                 <div className="relative min-w-[14rem] flex-1">
-                    <MagnifyingGlass size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-stone-400" />
+                    <MagnifyingGlass size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-ink-muted" />
                     <input value={search} onChange={(e) => setSearch(e.target.value)}
                         placeholder="Search a couple, city or tag…"
                         className="h-9 w-full rounded-lg border border-studio-border bg-white pl-7 pr-3 text-xs text-studio-inkSecondary outline-none transition-colors focus:border-studio-terracotta focus:ring-2 focus:ring-studio-terracotta/15" />
@@ -218,11 +218,11 @@ export default function ClientsPage() {
                 ))}
 
                 <div className="flex items-center gap-0.5 rounded-lg border border-studio-border bg-white p-0.5">
-                    <ArrowsDownUp size={12} className="ml-1.5 text-stone-400" />
+                    <ArrowsDownUp size={12} className="ml-1.5 text-ink-muted" />
                     {SORTS.map((s) => (
                         <button key={s.key} type="button" onClick={() => setSort(s.key)}
-                            className={cn('rounded-md px-2 py-1 text-[11px] transition-colors',
-                                sort === s.key ? 'bg-studio-obsidian text-white' : 'text-studio-inkSecondary hover:bg-stone-100')}>
+                            className={cn('rounded-lg px-2 py-1 text-[11px] transition-colors',
+                                sort === s.key ? 'bg-studio-obsidian text-white' : 'text-studio-inkSecondary hover:bg-ground-sunk')}>
                             {s.label}
                         </button>
                     ))}
@@ -239,11 +239,11 @@ export default function ClientsPage() {
 
             {/* grid */}
             {loading ? (
-                <div className="flex items-center justify-center py-24 text-stone-400">
+                <div className="flex items-center justify-center py-24 text-ink-muted">
                     <CircleNotch size={22} className="animate-spin" />
                 </div>
             ) : visible.length === 0 ? (
-                <div className="rounded-2xl border border-dashed border-studio-borderStrong/60 py-16 text-center">
+                <div className="rounded-xl border border-dashed border-studio-borderStrong/60 py-16 text-center">
                     <p className="text-sm text-studio-inkSecondary">
                         {clients.length ? 'No wedding matches that.' : 'No weddings yet.'}
                     </p>
@@ -264,25 +264,25 @@ export default function ClientsPage() {
                         return (
                             <Reveal key={c.clientId} index={i}>
                                 <div className={cn(
-                                    'group relative overflow-hidden rounded-2xl border bg-white transition-all duration-200',
+                                    'group relative overflow-hidden rounded-xl border bg-white transition-all duration-200',
                                     busy === c.clientId ? 'opacity-50' : 'hover:-translate-y-0.5 hover:shadow-lg',
                                     isDraft ? 'border-amber-300/80 hover:border-amber-400' : 'border-studio-border hover:border-studio-borderStrong',
                                 )}>
                                     <Link href={`/admin/clients/${c.clientId}`} className="block">
-                                        <span className="relative block aspect-[16/10] overflow-hidden bg-stone-100">
+                                        <span className="relative block aspect-[16/10] overflow-hidden bg-ground-sunk">
                                             {c.media?.thumbnailUrl ? (
                                                 <Image src={c.media.thumbnailUrl} alt={nameOf(c)} fill
                                                     sizes="(max-width: 640px) 100vw, 380px"
                                                     className="object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
                                             ) : (
-                                                <span className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#FAF3EA] to-[#EDE2D3] font-serif text-3xl font-bold tracking-widest text-[#9D774D] uppercase">
+                                                <span className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ground to-ground-sunk font-sans text-3xl font-bold tracking-widest text-gold-strong uppercase">
                                                     {(c.clientName?.Bride?.[0] || '?').toUpperCase()}&nbsp;&amp;&nbsp;{(c.clientName?.Groom?.[0] || '?').toUpperCase()}
                                                 </span>
                                             )}
                                             <span className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
                                             <span className="absolute inset-x-3 bottom-2.5">
-                                                <span className="block truncate font-serif text-lg leading-tight text-white drop-shadow-sm">
+                                                <span className="block truncate font-sans text-lg leading-tight text-white drop-shadow-sm">
                                                     {nameOf(c)}
                                                 </span>
                                                 <span className="mt-0.5 flex flex-wrap items-center gap-x-2.5 text-[10px] text-white/80">
@@ -292,7 +292,7 @@ export default function ClientsPage() {
                                             </span>
 
                                             {s.hero > 0 && (
-                                                <span className="absolute left-2.5 top-2.5 flex items-center gap-1 rounded-md bg-studio-gold/95 px-1.5 py-0.5 text-[10px] font-semibold text-white shadow-sm">
+                                                <span className="absolute left-2.5 top-2.5 flex items-center gap-1 rounded-lg bg-studio-gold/95 px-1.5 py-0.5 text-[10px] font-semibold text-white shadow-sm">
                                                     <Star size={9} weight="fill" /> {s.hero}
                                                 </span>
                                             )}
@@ -300,16 +300,16 @@ export default function ClientsPage() {
                                             {/* Status Badge (Draft vs Published) */}
                                             <span className="absolute right-2.5 top-2.5 flex items-center gap-1">
                                                 {isDraft ? (
-                                                    <span className="flex items-center gap-1.5 rounded-md bg-amber-500/95 px-2 py-0.5 text-[10px] font-bold text-white shadow-sm backdrop-blur-xs">
+                                                    <span className="flex items-center gap-1.5 rounded-lg bg-amber-500/95 px-2 py-0.5 text-[10px] font-bold text-white shadow-sm backdrop-blur-xs">
                                                         <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
                                                         Draft Showcase
                                                     </span>
                                                 ) : s.drafts > 0 ? (
-                                                    <span className="flex items-center gap-1 rounded-md bg-stone-900/80 px-1.5 py-0.5 text-[10px] font-medium text-amber-300 shadow-sm backdrop-blur-xs">
+                                                    <span className="flex items-center gap-1 rounded-lg bg-ink/80 px-1.5 py-0.5 text-[10px] font-medium text-amber-300 shadow-sm backdrop-blur-xs">
                                                         {s.drafts} unpublished
                                                     </span>
                                                 ) : (
-                                                    <span className="flex items-center gap-1 rounded-md bg-emerald-700/90 px-1.5 py-0.5 text-[10px] font-semibold text-white shadow-sm backdrop-blur-xs">
+                                                    <span className="flex items-center gap-1 rounded-lg bg-emerald-700/90 px-1.5 py-0.5 text-[10px] font-semibold text-white shadow-sm backdrop-blur-xs">
                                                         Published
                                                     </span>
                                                 )}
@@ -319,7 +319,7 @@ export default function ClientsPage() {
 
                                     {/* Ceremony Badges */}
                                     {(s.eventGroups || []).length > 0 && (
-                                        <div className="flex flex-wrap gap-1 px-3 pt-2 pb-0.5 border-t border-stone-100">
+                                        <div className="flex flex-wrap gap-1 px-3 pt-2 pb-0.5 border-t border-edge-subtle">
                                             {(s.eventGroups || []).slice(0, 3).map((eg) => (
                                                 <Badge key={eg} size="sm" variant="gold">{eg}</Badge>
                                             ))}
@@ -331,13 +331,13 @@ export default function ClientsPage() {
 
                                     <div className="flex items-center gap-2 px-3 py-2.5">
                                         <span className="flex items-center gap-1 text-[11px] tabular-nums text-studio-inkSecondary">
-                                            <FilmSlate size={11} className="text-stone-400" />{s.videos || 0}
+                                            <FilmSlate size={11} className="text-ink-muted" />{s.videos || 0}
                                         </span>
                                         <span className="flex items-center gap-1 text-[11px] tabular-nums text-studio-inkSecondary">
-                                            <ImageSquare size={11} className="text-stone-400" />{s.photos || 0}
+                                            <ImageSquare size={11} className="text-ink-muted" />{s.photos || 0}
                                         </span>
                                         <span className="flex items-center gap-1 text-[11px] tabular-nums text-studio-inkMuted">
-                                            <HardDrives size={11} className="text-stone-400" />{formatBytes(s.storageBytes)}
+                                            <HardDrives size={11} className="text-ink-muted" />{formatBytes(s.storageBytes)}
                                         </span>
 
                                         {/* Direct Ingest Shortcuts */}
@@ -349,7 +349,7 @@ export default function ClientsPage() {
                                                     setUploadingClientId(c.clientId);
                                                     setShowPhotoModal(true);
                                                 }}
-                                                className="rounded-md bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/80 px-2 py-0.5 text-[10px] font-semibold transition cursor-pointer"
+                                                className="rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/80 px-2 py-0.5 text-[10px] font-semibold transition cursor-pointer"
                                             >
                                                 + Photo
                                             </button>
@@ -360,7 +360,7 @@ export default function ClientsPage() {
                                                     setUploadingClientId(c.clientId);
                                                     setShowVideoModal(true);
                                                 }}
-                                                className="rounded-md bg-stone-100 hover:bg-stone-200 text-stone-900 border border-stone-200 px-2 py-0.5 text-[10px] font-semibold transition cursor-pointer"
+                                                className="rounded-lg bg-ground-sunk hover:bg-ground-sunk text-ink border border-edge-subtle px-2 py-0.5 text-[10px] font-semibold transition cursor-pointer"
                                             >
                                                 + Film
                                             </button>
@@ -369,7 +369,7 @@ export default function ClientsPage() {
                                         <div className="relative shrink-0">
                                             <button type="button" aria-label="More actions"
                                                 onClick={() => setMenuFor(menuFor === c.clientId ? null : c.clientId)}
-                                                className="flex h-6 w-6 items-center justify-center rounded-md text-stone-400 transition-colors hover:bg-stone-100 hover:text-studio-ink">
+                                                className="flex h-6 w-6 items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-ground-sunk hover:text-studio-ink">
                                                 <DotsThree size={16} weight="bold" />
                                             </button>
                                             {menuFor === c.clientId && (
@@ -377,7 +377,7 @@ export default function ClientsPage() {
                                                     <button type="button" aria-label="Close menu" className="fixed inset-0 z-10 cursor-default" onClick={() => setMenuFor(null)} />
                                                     <div className="absolute bottom-full right-0 z-20 mb-1 w-48 overflow-hidden rounded-xl border border-studio-border bg-white py-1 shadow-lg">
                                                         <Link href={`/admin/clients/${c.clientId}`}
-                                                            className="flex items-center gap-2 px-3 py-2 text-xs text-studio-ink hover:bg-stone-50">
+                                                            className="flex items-center gap-2 px-3 py-2 text-xs text-studio-ink hover:bg-ground">
                                                             <PencilSimple size={13} /> Open Workspace
                                                         </Link>
                                                         {(isDraft || s.drafts > 0) && (

@@ -65,7 +65,7 @@ export default function AddFilmLinkDialog({ open, onClose, clientId, taxonomy, d
                         value={url}
                         onChange={(e) => setUrl(e.target.value)}
                         placeholder="https://youtu.be/…  or  https://vimeo.com/…"
-                        className="h-10 w-full rounded-xl border border-stone-300 px-3 text-sm outline-none focus:border-[#D9342A]"
+                        className="h-10 w-full rounded-xl border border-edge-strong px-3 text-sm outline-none focus:border-accent"
                     />
                     {taxonomy && (
                         <TagPicker taxonomy={taxonomy} kind="Video" value={tagIds} onChange={setTagIds} only={['ceremony', 'film-type']} compact />

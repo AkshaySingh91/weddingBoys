@@ -95,12 +95,12 @@ export default function RealWeddingHero({ post }) {
           <div className="max-w-3xl space-y-3.5 sm:space-y-4">
             {/* Real Wedding Feature Frosted Pill Badge */}
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[10px] font-mono font-bold tracking-[0.22em] uppercase shadow-sm">
-              <Sparkle size={11} weight="fill" className="text-[#FF5353]" />
+              <Sparkle size={11} weight="fill" className="text-gold" />
               <span>REAL WEDDING FEATURE</span>
             </div>
 
             {/* Grand Title in Playfair Display */}
-            <h1 className="font-playfair font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold text-white leading-[1.12] tracking-tight drop-shadow-md">
+            <h1 className="font-display font-display text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold text-white leading-[1.12] tracking-tight drop-shadow-md">
               {title}
             </h1>
 
@@ -112,7 +112,7 @@ export default function RealWeddingHero({ post }) {
             {/* Romantic Calligraphy Flourish */}
             {flourish && (
               <div className="pt-2 flex items-center gap-3">
-                <p className="font-[family-name:var(--font-greatvibes)] text-2xl sm:text-3xl text-white/90 tracking-wide font-normal">
+                <p className="font-[family-name:var(--font-display italic)] text-2xl sm:text-3xl text-white/90 tracking-wide font-normal">
                   {flourish}
                 </p>
                 <div className="w-12 h-[1px] bg-white/50 rounded-full" />
@@ -142,7 +142,7 @@ export default function RealWeddingHero({ post }) {
                     idx === 0 ? 'pt-0 md:pl-2' : 'pt-3 md:pt-0 md:pl-4'
                   }`}
                 >
-                  <div className="w-9 h-9 rounded-full bg-[#FCEEE6] border border-[#E5BDA7]/50 flex items-center justify-center text-[#FF5353] shrink-0 shadow-sm">
+                  <div className="w-9 h-9 rounded-full bg-[#FCEEE6] border border-[#E5BDA7]/50 flex items-center justify-center text-gold shrink-0 shadow-sm">
                     <Icon size={18} weight="fill" />
                   </div>
                   <div className="min-w-0">

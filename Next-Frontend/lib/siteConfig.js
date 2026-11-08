@@ -11,14 +11,26 @@
 // default is the bare domain, matching proxy.js, the CORS allowlist and the
 // original production build config.
 export const SITE_URL = (
-    process.env.NEXT_PUBLIC_SITE_URL || 'https://theweddingboys.in'
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://theweddingvachan.com'
 ).replace(/\/$/, '');
 
 /** Absolute URL for a site-relative path, for canonicals / OG / JSON-LD. */
 export const absoluteUrl = (path = '/') =>
     `${SITE_URL}${path.startsWith('/') ? path : `/${path}`}`;
 
-export const SITE_NAME = 'The Wedding Boys';
+export const SITE_NAME = 'The Wedding Vachan';
+
+/**
+ * The studio's social accounts. Instagram is split by city: Mumbai is the main
+ * studio account, Varanasi has its own. The YouTube channel has not been
+ * renamed yet.
+ */
+export const SOCIAL_LINKS = {
+    instagramMumbai: 'https://www.instagram.com/theweddingvachannn/',
+    instagramVaranasi: 'https://www.instagram.com/theweddingvachan_varanasi/',
+    facebook: 'https://www.facebook.com/people/The-Wedding-Vachan-Pan-India/61593606026297/',
+    youtube: 'https://www.youtube.com/@The_wedding_boys_',
+};
 
 // CMS pageKeys that exist only to supply content blocks to a hand-built route —
 // `home` feeds `/`, `about` feeds `/about-us`, and films/photos/contact feed

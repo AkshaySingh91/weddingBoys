@@ -54,13 +54,13 @@ function Process() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className="relative bg-gradient-to-b from-[#FFDCCC] to-[#FFF7F0] py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-12 rounded-none sm:rounded-2xl lg:rounded-3xl overflow-hidden"
+      className="relative bg-gradient-to-b from-ground-sunk to-ground py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-12 rounded-none sm:rounded-2xl lg:rounded-3xl overflow-hidden"
     >
       {/* Decorative Wave */}
       <div className="absolute top-0 left-0 w-full -translate-y-1/3 opacity-70">
         <svg viewBox="0 0 1440 320" className="w-full">
           <path
-            fill="#FF6969"
+            fill="var(--accent)"
             fillOpacity="0.1"
             d="M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,112C672,117,768,171,864,192C960,213,1056,203,1152,186.7C1248,171,1344,149,1392,138.7L1440,128L1440,0L0,0Z"
           ></path>
@@ -76,7 +76,7 @@ function Process() {
         <svg viewBox="0 0 100 100">
           <path
             fill="none"
-            stroke="#FFD700"
+            stroke="var(--gold)"
             strokeWidth="2"
             d="M50,5a45,45 0 1,0 0,90a45,45 0 1,0 0,-90"
             pathLength="1"
@@ -103,7 +103,7 @@ function Process() {
             transition={{ type: 'spring', stiffness: 200, damping: 15 }}
             className="bg-white/90 backdrop-blur-sm p-6 rounded-xl sm:rounded-2xl shadow-md hover:shadow-xl transition-all border border-gray-100 text-center"
           >
-            <item.icon className="w-10 h-10 sm:w-12 sm:h-12 text-orange-600 mx-auto mb-4" />
+            <item.icon className="w-10 h-10 sm:w-12 sm:h-12 text-accent-ink mx-auto mb-4" />
             <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
               {item.title}
             </h3>
@@ -117,7 +117,7 @@ function Process() {
         {particles?.map((particle, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 rounded-full bg-[#FF6969]/20"
+            className="absolute w-2 h-2 rounded-full bg-accent/20"
             initial={{ y: 0 }}
             animate={{ y: [0, 100, 0] }}
             transition={{

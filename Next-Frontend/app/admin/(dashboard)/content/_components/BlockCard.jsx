@@ -18,8 +18,8 @@ const newItem = () => ({
 // Content that lives on another admin screen: say where, and link to it.
 function SourceNote({ source }) {
     return (
-        <div className="mt-2 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5">
-            <p className="text-xs text-gray-600">{source.text}</p>
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-edge-subtle bg-ground px-3 py-2.5">
+            <p className="text-xs text-ink-secondary">{source.text}</p>
             <Link href={source.href} className="text-xs font-medium text-rose-600 hover:underline">{source.cta}</Link>
         </div>
     );
@@ -30,11 +30,11 @@ function Field({ name, label, textarea }) {
     const { register } = useFormContext();
     return (
         <label className="block">
-            <span className="mb-1 block text-xs font-medium text-gray-600">{label}</span>
+            <span className="mb-1 block text-xs font-medium text-ink-secondary">{label}</span>
             {textarea ? (
-                <textarea rows={3} {...register(name)} className="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-rose-500 focus:outline-none" />
+                <textarea rows={3} {...register(name)} className="w-full rounded-lg border border-edge-strong p-2 text-sm focus:border-rose-500 focus:outline-none" />
             ) : (
-                <input type="text" {...register(name)} className="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-rose-500 focus:outline-none" />
+                <input type="text" {...register(name)} className="w-full rounded-lg border border-edge-strong p-2 text-sm focus:border-rose-500 focus:outline-none" />
             )}
         </label>
     );
@@ -75,28 +75,28 @@ export default function BlockCard({ index, total, type, onMove, onRemove, dragHa
     const Icon = cfg.icon;
 
     return (
-        <div className={`rounded-xl border border-gray-200 bg-white ${visible === false ? 'opacity-60' : ''}`}>
+        <div className={`rounded-xl border border-edge-subtle bg-white ${visible === false ? 'opacity-60' : ''}`}>
             {/* Header */}
             <div className="flex items-center gap-2 border-b px-4 py-3">
-                <span {...dragHandleProps} className="cursor-grab text-gray-300 hover:text-gray-500 active:cursor-grabbing" title="Drag to reorder">
+                <span {...dragHandleProps} className="cursor-grab text-gray-300 hover:text-ink-muted active:cursor-grabbing" title="Drag to reorder">
                     <GripVertical size={16} />
                 </span>
-                <button type="button" onClick={() => setOpen((o) => !o)} className="text-gray-400 hover:text-gray-700">
+                <button type="button" onClick={() => setOpen((o) => !o)} className="text-ink-muted hover:text-ink-secondary">
                     {open ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                 </button>
                 <Icon size={16} className="text-rose-500" />
-                <span className="text-sm font-semibold text-gray-800">
+                <span className="text-sm font-semibold text-ink">
                     {cfg.section ? sectionLabel(sectionComponent) : cfg.label}
                 </span>
-                {!cfg.section && title && <span className="truncate text-sm text-gray-400">— {title}</span>}
+                {!cfg.section && title && <span className="truncate text-sm text-ink-muted">— {title}</span>}
 
                 <div className="ml-auto flex items-center gap-1">
-                    <button type="button" onClick={() => onMove(-1)} disabled={index === 0} className="rounded p-1 text-gray-400 hover:bg-gray-100 disabled:opacity-30" title="Move up"><ArrowUp size={14} /></button>
-                    <button type="button" onClick={() => onMove(1)} disabled={index === total - 1} className="rounded p-1 text-gray-400 hover:bg-gray-100 disabled:opacity-30" title="Move down"><ArrowDown size={14} /></button>
-                    <button type="button" onClick={() => setValue(`${base}.visible`, visible === false)} className="rounded p-1 text-gray-400 hover:bg-gray-100" title={visible === false ? 'Show' : 'Hide'}>
+                    <button type="button" onClick={() => onMove(-1)} disabled={index === 0} className="rounded-lg p-1 text-ink-muted hover:bg-ground-sunk disabled:opacity-30" title="Move up"><ArrowUp size={14} /></button>
+                    <button type="button" onClick={() => onMove(1)} disabled={index === total - 1} className="rounded-lg p-1 text-ink-muted hover:bg-ground-sunk disabled:opacity-30" title="Move down"><ArrowDown size={14} /></button>
+                    <button type="button" onClick={() => setValue(`${base}.visible`, visible === false)} className="rounded-lg p-1 text-ink-muted hover:bg-ground-sunk" title={visible === false ? 'Show' : 'Hide'}>
                         {visible === false ? <EyeOff size={14} /> : <Eye size={14} />}
                     </button>
-                    <button type="button" onClick={onRemove} className="rounded p-1 text-red-400 hover:bg-red-50" title="Delete block"><Trash2 size={14} /></button>
+                    <button type="button" onClick={onRemove} className="rounded-lg p-1 text-accent-ink hover:bg-accent-wash" title="Delete block"><Trash2 size={14} /></button>
                 </div>
             </div>
 
@@ -106,10 +106,10 @@ export default function BlockCard({ index, total, type, onMove, onRemove, dragHa
                     {cfg.section && (
                         <div>
                             <label className="block">
-                                <span className="mb-1 block text-xs font-medium text-gray-600">Section</span>
+                                <span className="mb-1 block text-xs font-medium text-ink-secondary">Section</span>
                                 <select
                                     {...register(`${base}.settings.component`)}
-                                    className="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-rose-500 focus:outline-none"
+                                    className="w-full rounded-lg border border-edge-strong p-2 text-sm focus:border-rose-500 focus:outline-none"
                                 >
                                     <option value="">Choose a section…</option>
                                     {SECTION_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
@@ -120,7 +120,7 @@ export default function BlockCard({ index, total, type, onMove, onRemove, dragHa
                             ) : SECTION_SOURCES[sectionComponent] ? (
                                 <SourceNote source={SECTION_SOURCES[sectionComponent]} />
                             ) : (
-                                <p className="mt-2 text-xs text-gray-400">
+                                <p className="mt-2 text-xs text-ink-muted">
                                     This section renders live from site data. Use show/hide and drag to control whether and where it appears.
                                 </p>
                             )}
@@ -141,7 +141,7 @@ export default function BlockCard({ index, total, type, onMove, onRemove, dragHa
                     {/* Block-level media */}
                     {cfg.media && (
                         <div>
-                            <span className="mb-1.5 block text-xs font-medium text-gray-600">
+                            <span className="mb-1.5 block text-xs font-medium text-ink-secondary">
                                 {cfg.media === 'gallery' ? 'Gallery media' : 'Media'}
                             </span>
                             <MediaControl name={`${base}.media`} mode={cfg.media} />
@@ -155,20 +155,20 @@ export default function BlockCard({ index, total, type, onMove, onRemove, dragHa
                     {cfg.item && (
                         <div>
                             <div className="mb-2 flex items-center justify-between">
-                                <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">Items ({items.length})</span>
-                                <button type="button" onClick={() => append(newItem())} className="flex items-center gap-1 rounded-md border border-gray-300 px-2 py-1 text-xs text-gray-600 hover:bg-gray-50">
+                                <span className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Items ({items.length})</span>
+                                <button type="button" onClick={() => append(newItem())} className="flex items-center gap-1 rounded-lg border border-edge-strong px-2 py-1 text-xs text-ink-secondary hover:bg-ground">
                                     <Plus size={12} /> Add item
                                 </button>
                             </div>
                             <div className="space-y-3">
                                 {items.map((it, j) => (
-                                    <div key={it.rhfId} className="rounded-lg border border-gray-200 bg-gray-50 p-3">
+                                    <div key={it.rhfId} className="rounded-lg border border-edge-subtle bg-ground p-3">
                                         <div className="mb-2 flex items-center justify-between">
-                                            <span className="text-xs text-gray-400">#{j + 1}</span>
+                                            <span className="text-xs text-ink-muted">#{j + 1}</span>
                                             <div className="flex items-center gap-1">
-                                                <button type="button" onClick={() => move(j, j - 1)} disabled={j === 0} className="rounded p-0.5 text-gray-400 hover:bg-gray-200 disabled:opacity-30"><ArrowUp size={12} /></button>
-                                                <button type="button" onClick={() => move(j, j + 1)} disabled={j === items.length - 1} className="rounded p-0.5 text-gray-400 hover:bg-gray-200 disabled:opacity-30"><ArrowDown size={12} /></button>
-                                                <button type="button" onClick={() => remove(j)} className="rounded p-0.5 text-red-400 hover:bg-red-50"><Trash2 size={12} /></button>
+                                                <button type="button" onClick={() => move(j, j - 1)} disabled={j === 0} className="rounded-lg p-0.5 text-ink-muted hover:bg-ground-sunk disabled:opacity-30"><ArrowUp size={12} /></button>
+                                                <button type="button" onClick={() => move(j, j + 1)} disabled={j === items.length - 1} className="rounded-lg p-0.5 text-ink-muted hover:bg-ground-sunk disabled:opacity-30"><ArrowDown size={12} /></button>
+                                                <button type="button" onClick={() => remove(j)} className="rounded-lg p-0.5 text-accent-ink hover:bg-accent-wash"><Trash2 size={12} /></button>
                                             </div>
                                         </div>
                                         <div className="flex gap-3">
@@ -188,7 +188,7 @@ export default function BlockCard({ index, total, type, onMove, onRemove, dragHa
                                         </div>
                                     </div>
                                 ))}
-                                {items.length === 0 && <p className="text-xs text-gray-400">No items yet.</p>}
+                                {items.length === 0 && <p className="text-xs text-ink-muted">No items yet.</p>}
                             </div>
                         </div>
                     )}

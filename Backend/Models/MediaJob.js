@@ -13,9 +13,10 @@ import mongoose from 'mongoose';
  */
 const mediaJobSchema = new mongoose.Schema({
     mediaId: { type: String, required: true, index: true },
+    idempotencyKey: String,
     type: {
         type: String,
-        enum: ['transcode', 'derivatives'],
+        enum: ['transcode', 'derivatives', 'reconcile', 'sequence'],
         required: true,
     },
     status: {
@@ -40,6 +41,8 @@ const mediaJobSchema = new mongoose.Schema({
     // Backoff: a failed job is not eligible again until this time.
     runAfter: { type: Date, default: () => new Date() },
 }, { timestamps: true });
+
+mediaJobSchema.index({ idempotencyKey: 1 }, { unique: true, partialFilterExpression: { idempotencyKey: { $type: 'string' } } });
 
 // The claim query: eligible work, oldest first.
 mediaJobSchema.index({ status: 1, runAfter: 1, createdAt: 1 });

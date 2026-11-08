@@ -46,19 +46,19 @@ export default function DeleteMediaModal({
     <Dialog open={open} onOpenChange={(v) => !v && !isDeleting && onClose()}>
       <DialogContent
         hideCloseButton
-        className="max-w-lg w-[95vw] p-0 overflow-hidden rounded-3xl border border-[#E8DDD1] bg-[#FFFCF8] shadow-2xl"
+        className="max-w-lg w-[95vw] p-0 overflow-hidden rounded-xl border border-edge-subtle bg-ground shadow-2xl"
       >
         {/* Header */}
-        <header className="flex items-center justify-between border-b border-[#E8DDD1] px-6 py-4 bg-white">
+        <header className="flex items-center justify-between border-b border-edge-subtle px-6 py-4 bg-white">
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-rose-50 border border-rose-200 text-rose-700">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-50 border border-rose-200 text-rose-700">
               <Trash size={22} weight="bold" />
             </span>
             <div>
-              <h3 className="text-base font-bold text-stone-900 font-sans tracking-tight">
+              <h3 className="text-base font-bold text-ink font-sans tracking-tight">
                 {isMultiple ? `Delete ${count} Portfolio Items` : 'Remove Portfolio Item'}
               </h3>
-              <p className="text-xs text-stone-500 font-sans">
+              <p className="text-xs text-ink-muted font-sans">
                 Choose how you want to handle these files and R2 storage
               </p>
             </div>
@@ -67,7 +67,7 @@ export default function DeleteMediaModal({
             type="button"
             disabled={isDeleting}
             onClick={onClose}
-            className="flex items-center justify-center h-8 w-8 rounded-xl text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors disabled:opacity-50"
+            className="flex items-center justify-center h-8 w-8 rounded-xl text-ink-muted hover:text-ink-secondary hover:bg-ground-sunk transition-colors disabled:opacity-50"
           >
             <X size={16} />
             <span className="sr-only">Close</span>
@@ -76,7 +76,7 @@ export default function DeleteMediaModal({
 
         {/* Content Body */}
         <div className="p-6 space-y-4">
-          <div className="rounded-2xl border border-amber-200/80 bg-amber-50/50 p-4 text-xs text-amber-900 flex items-start gap-3">
+          <div className="rounded-xl border border-amber-200/80 bg-amber-50/50 p-4 text-xs text-amber-900 flex items-start gap-3">
             <WarningCircle size={20} className="text-amber-700 shrink-0 mt-0.5" />
             <div className="space-y-1">
               <p className="font-semibold">Target: {isMultiple ? `${count} items selected` : sampleName}</p>
@@ -91,10 +91,10 @@ export default function DeleteMediaModal({
             <label
               onClick={() => setMode('unlink')}
               className={cn(
-                'flex items-start gap-3.5 p-3.5 rounded-2xl border cursor-pointer transition-all select-none',
+                'flex items-start gap-3.5 p-3.5 rounded-xl border cursor-pointer transition-all select-none',
                 mode === 'unlink'
                   ? 'border-amber-600 bg-white ring-2 ring-amber-500/20 shadow-xs'
-                  : 'border-stone-200 bg-white/70 hover:border-stone-300'
+                  : 'border-edge-subtle bg-white/70 hover:border-edge-strong'
               )}
             >
               <input
@@ -106,10 +106,10 @@ export default function DeleteMediaModal({
                 className="mt-1 accent-amber-600"
               />
               <div className="space-y-0.5">
-                <p className="text-xs font-bold text-stone-900">
+                <p className="text-xs font-bold text-ink">
                   Unlink from Portfolio only <span className="text-emerald-700 font-medium">(Safe)</span>
                 </p>
-                <p className="text-[11px] text-stone-500 leading-relaxed">
+                <p className="text-[11px] text-ink-muted leading-relaxed">
                   Removes this media from the client&apos;s wedding gallery. The master asset and variants remain stored in your Cloudflare R2 media library for other placements.
                 </p>
               </div>
@@ -118,10 +118,10 @@ export default function DeleteMediaModal({
             <label
               onClick={() => setMode('purge')}
               className={cn(
-                'flex items-start gap-3.5 p-3.5 rounded-2xl border cursor-pointer transition-all select-none',
+                'flex items-start gap-3.5 p-3.5 rounded-xl border cursor-pointer transition-all select-none',
                 mode === 'purge'
                   ? 'border-rose-600 bg-rose-50/30 ring-2 ring-rose-500/20 shadow-xs'
-                  : 'border-stone-200 bg-white/70 hover:border-rose-300'
+                  : 'border-edge-subtle bg-white/70 hover:border-rose-300'
               )}
             >
               <input
@@ -146,14 +146,14 @@ export default function DeleteMediaModal({
         </div>
 
         {/* Footer */}
-        <footer className="flex items-center justify-between border-t border-[#E8DDD1] bg-white px-6 py-4">
+        <footer className="flex items-center justify-between border-t border-edge-subtle bg-white px-6 py-4">
           <Button
             type="button"
             variant="outline"
             size="sm"
             disabled={isDeleting}
             onClick={onClose}
-            className="border-stone-200 text-stone-700 hover:bg-stone-50"
+            className="border-edge-subtle text-ink-secondary hover:bg-ground"
           >
             Cancel
           </Button>
@@ -168,7 +168,7 @@ export default function DeleteMediaModal({
               'font-semibold shadow-xs',
               mode === 'purge'
                 ? 'bg-rose-600 hover:bg-rose-700 text-white'
-                : 'bg-stone-900 hover:bg-stone-800 text-white'
+                : 'bg-ink hover:bg-ink text-white'
             )}
           >
             {mode === 'purge'

@@ -1,3 +1,4 @@
+import { pagination } from '../Utils/pagination.js';
 /**
  * Read layer for PortfolioItem.
  *
@@ -80,6 +81,7 @@ const feedSort = async (sort) => {
 };
 
 export async function findFeed({ kind, tags = [], page = 1, limit = 10, sort }) {
+    ({ page, limit } = pagination({ page, limit }, 10));
     const byTag = await tagFilter(tags);
     if (!byTag) return [];
     const filter = { kind, ...PUBLIC_GATE, ...byTag };
@@ -90,6 +92,26 @@ export async function findFeed({ kind, tags = [], page = 1, limit = 10, sort }) 
         .populate('client', 'clientName')
         .lean();
 }
+
+export async function findFeedWithTotal({ kind, tags = [], page = 1, limit = 12, sort }) {
+    ({ page, limit } = pagination({ page, limit }, 12));
+    const byTag = await tagFilter(tags);
+    if (!byTag) return { items: [], total: 0 };
+    const filter = { kind, ...PUBLIC_GATE, ...byTag };
+    const safePage = Math.max(1, page);
+    const safeLimit = Math.max(1, limit);
+    const [items, total] = await Promise.all([
+        PortfolioItem.find(filter)
+            .sort(await feedSort(sort))
+            .skip((safePage - 1) * safeLimit)
+            .limit(safeLimit)
+            .populate('client', 'clientName')
+            .lean(),
+        PortfolioItem.countDocuments(filter),
+    ]);
+    return { items, total };
+}
+
 
 export async function findById(id) {
     if (!isItemId(id)) return null;
@@ -108,6 +130,7 @@ export async function findSiblings({ clientId, kind, excludeId, limit = 50 }) {
 
 /** Tag overlap, excluding this item. Bounded — the legacy route's $limit was commented out. */
 export async function findRecommended({ item, page = 1, limit = 10 }) {
+    ({ page, limit } = pagination({ page, limit }, 10));
     if (!item?.tagIds?.length) return [];
     return PortfolioItem.find({
         kind: item.kind, ...PUBLIC_GATE,
@@ -193,6 +216,7 @@ async function findHeroByFlag(limit) {
  * expression the way they could against `new RegExp(query)`.
  */
 export async function search({ query, kind, page = 1, limit = 10 }) {
+    ({ page, limit } = pagination({ page, limit }, 10));
     const q = String(query || '').trim();
     if (!q) return [];
     const rx = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
@@ -270,7 +294,13 @@ export function toLegacyPhotoRow(i) {
         clientName: i.client?.clientName,
         blurDataURL: i.render?.blurDataURL || null,
         dominantColor: i.render?.dominantColor || null,
-        aspectRatio: i.render?.aspectRatio || null,
+        aspectRatio: i.render?.aspectRatio || (i.render?.width && i.render?.height ? Number((i.render.width / i.render.height).toFixed(4)) : 1.5),
+        title: i.title || null,
+        caption: i.caption || null,
+        eventGroup: i.eventGroup || null,
+        credits: i.credits || [],
+        width: i.render?.width || null,
+        height: i.render?.height || null,
     };
 }
 

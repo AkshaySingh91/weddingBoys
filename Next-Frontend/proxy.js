@@ -3,11 +3,11 @@ import { NextResponse } from 'next/server';
 /**
  * Subdomain routing + edge route protection.
  *
- * Nginx points BOTH theweddingboys.in and admin.theweddingboys.in at this same
+ * Nginx points BOTH theweddingvachan.com and admin.theweddingvachan.com at this same
  * Next.js instance, so the admin surface is separated here at the edge:
  *
- *   admin.theweddingboys.in/login  ->  rewrite to  /admin/login   (URL unchanged)
- *   admin.theweddingboys.in/blogs  ->  rewrite to  /admin/blogs
+ *   admin.theweddingvachan.com/login  ->  rewrite to  /admin/login   (URL unchanged)
+ *   admin.theweddingvachan.com/blogs  ->  rewrite to  /admin/blogs
  *
  * NOTE: In Next.js 16 the `middleware` file convention is deprecated and
  * renamed to `proxy` — hence this file is `proxy.js` exporting `proxy()`.
@@ -25,11 +25,11 @@ const PUBLIC_ADMIN_PATHS = [
 // Cookies that indicate a session exists. Presence only — the real
 // verification happens on the API against the signed/HttpOnly value.
 // Production uses the `__Secure-` prefix; dev drops it (no HTTPS locally).
-const AUTH_COOKIES = ['__Secure-admin-token', 'admin-token'];
+const AUTH_COOKIES = ['__Secure-admin-token', 'admin-token', '__Secure-admin-refresh', 'admin-refresh'];
 
 const isAdminHost = (host = '') => {
     const name = host.split(':')[0].toLowerCase();
-    return name === 'admin.theweddingboys.in' || name.startsWith('admin.');
+    return name === 'admin.theweddingvachan.com' || name.startsWith('admin.');
 };
 
 /**
@@ -83,9 +83,29 @@ async function storyStatus(slug) {
     }
 }
 
+async function mediaStatus(kind, id) {
+    const key = `${kind}:${id}`;
+    const hit = storyMemo.get(key);
+    if (hit && Date.now() - hit.at < 30000) return hit.value;
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/${kind}/${encodeURIComponent(id)}/status`, { signal: AbortSignal.timeout(1500) });
+        const value = res.status === 404 ? { status: 'missing' } : res.ok ? { status: 'found' } : null;
+        if (value) storyMemo.set(key, { at: Date.now(), value });
+        if (storyMemo.size > 500) storyMemo.delete(storyMemo.keys().next().value);
+        return value;
+    } catch { return null; }
+}
+
 export async function proxy(request) {
     const host = request.headers.get('host') || '';
     const { pathname } = request.nextUrl;
+
+    const media = pathname.match(/^\/(films|photos)\/([^/]+)\/?$/);
+    if (media && !isAdminHost(host)) {
+        const status = await mediaStatus(media[1] === 'films' ? 'videos' : 'photos', media[2]);
+        if (status?.status === 'missing') return NextResponse.rewrite(request.nextUrl, { status: 404 });
+        return NextResponse.next();
+    }
 
     const story = pathname.match(STORY_PATH);
     if (story && !isAdminHost(host)) {
@@ -122,14 +142,6 @@ export async function proxy(request) {
         const url = request.nextUrl.clone();
         url.pathname = '/admin/login';
         url.search = logical && logical !== '/' ? `?next=${encodeURIComponent(logical)}` : '';
-        return NextResponse.redirect(url);
-    }
-
-    // Signed-in users shouldn't sit on the login screen.
-    if (isPublic && hasSession && logical === '/login') {
-        const url = request.nextUrl.clone();
-        url.pathname = '/admin/dashboard';
-        url.search = '';
         return NextResponse.redirect(url);
     }
 

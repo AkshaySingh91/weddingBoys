@@ -145,8 +145,8 @@ module.exports = {
           DEFAULT: 'rgb(var(--ink-primary-rgb) / <alpha-value>)',
           secondary: 'rgb(var(--ink-secondary-rgb) / <alpha-value>)',
           muted: 'rgb(var(--ink-muted-rgb) / <alpha-value>)',
-          onAccent: 'var(--ink-on-accent)',
-          onDeep: 'var(--ink-on-deep)',
+          onAccent: 'rgb(var(--ink-on-accent-rgb) / <alpha-value>)',
+          onDeep: 'rgb(var(--ink-on-deep-rgb) / <alpha-value>)',
         },
         accent: {
           DEFAULT: 'rgb(var(--accent-rgb) / <alpha-value>)',

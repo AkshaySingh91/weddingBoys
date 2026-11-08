@@ -299,7 +299,7 @@ export default function SeoAuditor({ form, onScoreChange }) {
         text: 'text-amber-700',
         bg: 'bg-amber-50',
         border: 'border-amber-200',
-        bar: 'bg-[#C29555]',
+        bar: 'bg-gold',
         label: 'Good — Needs Polish',
       };
     }
@@ -315,18 +315,18 @@ export default function SeoAuditor({ form, onScoreChange }) {
   const theme = getScoreTheme(auditData.score);
 
   return (
-    <div className="rounded-2xl border border-[#E5DCD3] bg-white p-4 shadow-sm">
+    <div className="rounded-xl border border-edge-subtle bg-white p-4 shadow-sm">
       {/* Header with Score Ring & Expand Toggle */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#8C532B]/10 text-[#8C532B]">
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-accent/10 text-accent-ink">
             <Sparkle size={18} weight="bold" />
           </div>
           <div>
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#1C1917]">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-ink">
               SEO & Readability Auditor
             </h3>
-            <span className="text-[11px] font-medium text-stone-500">
+            <span className="text-[11px] font-medium text-ink-muted">
               Live algorithmic content analysis
             </span>
           </div>
@@ -344,7 +344,7 @@ export default function SeoAuditor({ form, onScoreChange }) {
           <button
             type="button"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="rounded-lg p-1 text-stone-400 hover:bg-stone-100 hover:text-stone-700 transition-colors cursor-pointer"
+            className="rounded-lg p-1 text-ink-muted hover:bg-ground-sunk hover:text-ink-secondary transition-colors cursor-pointer"
             aria-label={isExpanded ? 'Collapse auditor' : 'Expand auditor'}
           >
             {isExpanded ? <CaretUp size={16} /> : <CaretDown size={16} />}
@@ -353,7 +353,7 @@ export default function SeoAuditor({ form, onScoreChange }) {
       </div>
 
       {/* Progress Bar Meter */}
-      <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-stone-100">
+      <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-ground-sunk">
         <div
           className={`h-full transition-all duration-500 rounded-full ${theme.bar}`}
           style={{ width: `${auditData.score}%` }}
@@ -363,14 +363,14 @@ export default function SeoAuditor({ form, onScoreChange }) {
       {isExpanded && (
         <div className="mt-4">
           {/* Filter Pills */}
-          <div className="flex items-center justify-between border-b border-stone-100 pb-2 mb-3">
+          <div className="flex items-center justify-between border-b border-edge-subtle pb-2 mb-3">
             <div className="flex gap-1">
               <button
                 type="button"
                 onClick={() => setFilter('all')}
                 className={`rounded-lg px-2 py-0.5 text-[11px] font-medium transition-colors cursor-pointer ${filter === 'all'
-                  ? 'bg-stone-900 text-white'
-                  : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                  ? 'bg-ink text-white'
+                  : 'bg-ground-sunk text-ink-secondary hover:bg-ground-sunk'
                   }`}
               >
                 All ({auditData.rules.length})
@@ -397,7 +397,7 @@ export default function SeoAuditor({ form, onScoreChange }) {
               </button>
             </div>
 
-            <div className="text-[11px] font-mono text-stone-400">
+            <div className="text-[11px] font-mono text-ink-muted">
               {auditData.wordCount} words
             </div>
           </div>
@@ -428,14 +428,14 @@ export default function SeoAuditor({ form, onScoreChange }) {
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between gap-1">
-                      <span className="font-semibold text-stone-800">
+                      <span className="font-semibold text-ink">
                         {rule.label}
                       </span>
-                      <span className="text-[10px] font-medium text-stone-400 uppercase tracking-wider">
+                      <span className="text-[10px] font-medium text-ink-muted uppercase tracking-wider">
                         {rule.category}
                       </span>
                     </div>
-                    <p className="mt-0.5 text-[11px] leading-relaxed text-stone-600">
+                    <p className="mt-0.5 text-[11px] leading-relaxed text-ink-secondary">
                       {rule.message}
                     </p>
                   </div>

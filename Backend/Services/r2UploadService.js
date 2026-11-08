@@ -120,7 +120,7 @@ const cdnUrl = (key) => {
     if (!CDN_BASE) {
         throw new Error(
             'R2_PUBLIC_URL is not set — refusing to build a media URL. ' +
-            'Set it to the R2 custom domain (https://media.theweddingboys.in).'
+            'Set it to the R2 custom domain (https://media.theweddingvachan.com).'
         );
     }
     return `${CDN_BASE}/${key}`;
@@ -367,6 +367,11 @@ export async function completeMultipart({ key, uploadId, expectedPartCount }) {
         MultipartUpload: { Parts: parts.map((p) => ({ PartNumber: p.partNumber, ETag: p.etag })) },
     }));
 
+    const head = await r2.send(new HeadObjectCommand({ Bucket: BUCKET, Key: key }));
+    return { key, url: cdnUrl(key), fileSize: head.ContentLength, etag: head.ETag, contentType: head.ContentType };
+}
+
+export async function inspectObject(key) {
     const head = await r2.send(new HeadObjectCommand({ Bucket: BUCKET, Key: key }));
     return { key, url: cdnUrl(key), fileSize: head.ContentLength, etag: head.ETag, contentType: head.ContentType };
 }

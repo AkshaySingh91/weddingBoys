@@ -7,7 +7,7 @@ export async function getPublishedPosts({ category, tag, search, page = 1, limit
         if (category) params.set('category', category);
         if (tag) params.set('tag', tag);
         if (search) params.set('search', search);
-        const res = await fetch(`${api_url}/api/blogs?${params.toString()}`, { next: { revalidate: REVALIDATE } });
+        const res = await fetch(`${api_url}/api/blogs?${params.toString()}`, { next: { revalidate: REVALIDATE, tags: ['blogs'] } });
         if (!res.ok) return { posts: [], total: 0, hasMore: false };
         return await res.json();
     } catch {
@@ -19,7 +19,7 @@ export async function getPostBySlug(slug, { previewToken } = {}) {
     try {
         const query = previewToken ? `?previewToken=${encodeURIComponent(previewToken)}` : '';
         const res = await fetch(`${api_url}/api/blogs/slug/${encodeURIComponent(slug)}${query}`, {
-            next: { revalidate: previewToken ? 0 : REVALIDATE },
+            next: { revalidate: previewToken ? 0 : REVALIDATE, tags: previewToken ? [] : ['blogs'] },
             cache: previewToken ? 'no-store' : 'default',
         });
         if (!res.ok) return null;
@@ -31,7 +31,7 @@ export async function getPostBySlug(slug, { previewToken } = {}) {
 
 export async function getRelatedPosts(slug) {
     try {
-        const res = await fetch(`${api_url}/api/blogs/related/${encodeURIComponent(slug)}`, { next: { revalidate: REVALIDATE } });
+        const res = await fetch(`${api_url}/api/blogs/related/${encodeURIComponent(slug)}`, { next: { revalidate: REVALIDATE, tags: ['blogs'] } });
         if (!res.ok) return [];
         const data = await res.json();
         return data.posts || [];

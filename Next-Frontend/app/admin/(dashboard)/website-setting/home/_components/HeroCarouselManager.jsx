@@ -70,14 +70,14 @@ export default function HeroCarouselManager() {
     };
 
     return (
-        <section className="rounded-2xl border border-[#E7E2DA] bg-white p-5">
+        <section className="rounded-xl border border-edge-subtle bg-white p-5">
             <header className="mb-4 flex flex-wrap items-end justify-between gap-3">
                 <div>
-                    <h2 className="flex items-center gap-2 font-serif text-xl text-[#1C1917]">
-                        <Star size={17} weight="fill" className="text-[#C29555]" />
+                    <h2 className="flex items-center gap-2 font-sans text-xl text-ink">
+                        <Star size={17} weight="fill" className="text-gold-strong" />
                         Hero carousel order
                     </h2>
-                    <p className="mt-0.5 text-xs text-[#78716C]">
+                    <p className="mt-0.5 text-xs text-ink-muted">
                         Top to bottom is the order visitors see. Only films can appear here.
                     </p>
                 </div>
@@ -92,13 +92,13 @@ export default function HeroCarouselManager() {
             </header>
 
             {loading ? (
-                <div className="flex items-center justify-center py-10 text-stone-400">
+                <div className="flex items-center justify-center py-10 text-ink-muted">
                     <CircleNotch size={20} className="animate-spin" />
                 </div>
             ) : (
                 <div className="space-y-2">
                     {list.length === 0 && (
-                        <p className="rounded-xl border border-dashed border-stone-300 p-6 text-center text-xs text-stone-500">
+                        <p className="rounded-xl border border-dashed border-edge-strong p-6 text-center text-xs text-ink-muted">
                             No films in the carousel — the homepage falls back to its static hero.
                         </p>
                     )}
@@ -106,18 +106,18 @@ export default function HeroCarouselManager() {
                     {list.map((item, idx) => {
                         const poster = posterOf(item);
                         return (
-                            <div key={item._id} className="flex items-center gap-3 rounded-xl border border-[#E7E2DA] bg-[#FCFAF7] p-2">
-                                <span className="w-5 shrink-0 text-center text-xs font-semibold tabular-nums text-stone-400">{idx + 1}</span>
-                                <div className="relative h-12 w-20 shrink-0 overflow-hidden rounded-lg bg-stone-100">
+                            <div key={item._id} className="flex items-center gap-3 rounded-xl border border-edge-subtle bg-ground p-2">
+                                <span className="w-5 shrink-0 text-center text-xs font-semibold tabular-nums text-ink-muted">{idx + 1}</span>
+                                <div className="relative h-12 w-20 shrink-0 overflow-hidden rounded-lg bg-ground-sunk">
                                     {poster ? (
                                         <Image src={poster} alt={nameOf(item)} fill sizes="80px" className="object-cover" />
                                     ) : (
-                                        <span className="flex h-full w-full items-center justify-center text-stone-400"><FilmSlate size={16} /></span>
+                                        <span className="flex h-full w-full items-center justify-center text-ink-muted"><FilmSlate size={16} /></span>
                                     )}
                                 </div>
                                 <div className="min-w-0 flex-1">
-                                    <p className="truncate text-xs font-medium text-stone-800">{nameOf(item)}</p>
-                                    <p className="truncate text-[10px] text-stone-500">{(item.tags || []).slice(0, 3).join(' · ') || 'No tags'}</p>
+                                    <p className="truncate text-xs font-medium text-ink">{nameOf(item)}</p>
+                                    <p className="truncate text-[10px] text-ink-muted">{(item.tags || []).slice(0, 3).join(' · ') || 'No tags'}</p>
                                 </div>
                                 <div className="flex shrink-0 items-center gap-0.5">
                                     <Button variant="ghost" size="iconSm" onClick={() => move(idx, -1)} disabled={idx === 0} aria-label="Move up"><ArrowUp size={13} /></Button>
@@ -132,36 +132,36 @@ export default function HeroCarouselManager() {
                     })}
 
                     {picking && (
-                        <div className="mt-3 rounded-xl border border-dashed border-[#E7E2DA] p-3">
+                        <div className="mt-3 rounded-xl border border-dashed border-edge-subtle p-3">
                             <div className="relative mb-2">
-                                <MagnifyingGlass size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-stone-400" />
+                                <MagnifyingGlass size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-ink-muted" />
                                 <input value={search} onChange={(e) => setSearch(e.target.value)}
                                     placeholder="Search a couple or tag…"
-                                    className="h-8 w-full rounded-lg border border-[#E7E2DA] bg-white pl-7 pr-3 text-xs outline-none focus:border-[#A3603A]" />
+                                    className="h-8 w-full rounded-lg border border-edge-subtle bg-white pl-7 pr-3 text-xs outline-none focus:border-accent" />
                             </div>
                             <div className="max-h-56 space-y-1 overflow-y-auto">
                                 {available.length === 0 && (
-                                    <p className="py-4 text-center text-[11px] text-stone-500">
+                                    <p className="py-4 text-center text-[11px] text-ink-muted">
                                         {candidates.length ? 'Every published film is already in the carousel.' : 'No published films yet.'}
                                     </p>
                                 )}
                                 {available.map((item) => (
                                     <button key={item._id} type="button"
                                         onClick={() => setList([...list, item])}
-                                        className="flex w-full items-center gap-2 rounded-lg border border-stone-200 bg-white px-2 py-1.5 text-left transition hover:border-[#A3603A]">
-                                        <Plus size={12} className="shrink-0 text-[#A3603A]" />
-                                        <span className="min-w-0 flex-1 truncate text-xs text-stone-700">{nameOf(item)}</span>
-                                        <span className="shrink-0 text-[10px] text-stone-400">{(item.tags || [])[0] || ''}</span>
+                                        className="flex w-full items-center gap-2 rounded-lg border border-edge-subtle bg-white px-2 py-1.5 text-left transition hover:border-accent">
+                                        <Plus size={12} className="shrink-0 text-accent-ink" />
+                                        <span className="min-w-0 flex-1 truncate text-xs text-ink-secondary">{nameOf(item)}</span>
+                                        <span className="shrink-0 text-[10px] text-ink-muted">{(item.tags || [])[0] || ''}</span>
                                     </button>
                                 ))}
                             </div>
                         </div>
                     )}
 
-                    <p className="flex items-center gap-2 pt-1 text-[11px] text-stone-500">
+                    <p className="flex items-center gap-2 pt-1 text-[11px] text-ink-muted">
                         <Badge size="sm" variant="neutral">{list.length} in carousel</Badge>
                         {dirty
-                            ? <span className="text-[#7C4524]">Unsaved order — press Save order.</span>
+                            ? <span className="text-accent-ink">Unsaved order — press Save order.</span>
                             : <span className="flex items-center gap-1"><Check size={11} /> Matches the live homepage.</span>}
                     </p>
                 </div>

@@ -117,7 +117,7 @@ function RailMenu({ open, onClose, align = 'left', children }) {
         <div
             ref={ref}
             className={cx(
-                'absolute top-full z-[60] mt-1 w-44 overflow-hidden rounded-xl border border-[#E5DCD3] bg-white py-1 shadow-xl',
+                'absolute top-full z-[60] mt-1 w-44 overflow-hidden rounded-xl border border-edge-subtle bg-white py-1 shadow-xl',
                 align === 'right' ? 'right-0' : 'left-0',
             )}
         >
@@ -136,7 +136,7 @@ function MenuItem({ icon: Icon, label, onClick, disabled, danger, title }) {
             className={cx(
                 'flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs transition-colors',
                 'disabled:cursor-not-allowed disabled:opacity-40',
-                danger ? 'text-rose-600 hover:bg-rose-50' : 'text-stone-700 hover:bg-stone-100',
+                danger ? 'text-rose-600 hover:bg-rose-50' : 'text-ink-secondary hover:bg-ground-sunk',
             )}
         >
             <Icon size={13} weight="bold" />
@@ -349,7 +349,7 @@ function RowView({ node, editor, getPos, updateAttributes }) {
                     type="button"
                     title="Row actions"
                     onClick={() => setMenu((v) => !v)}
-                    className="flex h-6 w-5 items-center justify-center rounded-md text-stone-400 transition-colors hover:bg-stone-200/80 hover:text-stone-700"
+                    className="flex h-6 w-5 items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-ground-sunk/80 hover:text-ink-secondary"
                 >
                     <DotsSixVertical size={13} weight="bold" />
                 </button>
@@ -359,13 +359,13 @@ function RowView({ node, editor, getPos, updateAttributes }) {
                     <MenuItem icon={ArrowDown} label="Insert row below"
                         onClick={act((tr, pos, i) => addRow(tr, pos, { index: i, side: 'below' }))} />
 
-                    <div className="my-1 h-px bg-[#EFE7DE]" />
+                    <div className="my-1 h-px bg-ground-sunk" />
                     {/*
                       Height lives on the row, not the grid: a hero row and the
                       caption row beneath it want different heights, and this is
                       the lever that keeps what follows a tall image on screen.
                     */}
-                    <div className="px-3 pb-1 pt-1.5 text-[10px] uppercase tracking-wide text-stone-400">
+                    <div className="px-3 pb-1 pt-1.5 text-[10px] uppercase tracking-wide text-ink-muted">
                         Row height
                     </div>
                     {ROW_HEIGHTS.map((h) => (
@@ -374,17 +374,17 @@ function RowView({ node, editor, getPos, updateAttributes }) {
                             type="button"
                             onClick={setHeight(h.id)}
                             className={cx(
-                                'flex w-full items-center justify-between px-3 py-1 text-left text-xs transition-colors hover:bg-stone-100',
-                                node.attrs.height === h.id ? 'text-studio-terracotta' : 'text-stone-700',
+                                'flex w-full items-center justify-between px-3 py-1 text-left text-xs transition-colors hover:bg-ground-sunk',
+                                node.attrs.height === h.id ? 'text-studio-terracotta' : 'text-ink-secondary',
                             )}
                         >
                             {h.label}
-                            {h.len && <span className="text-[10px] tabular-nums text-stone-400">{h.len}</span>}
+                            {h.len && <span className="text-[10px] tabular-nums text-ink-muted">{h.len}</span>}
                             {node.attrs.height === h.id && !h.len && <span className="text-[10px]">✓</span>}
                         </button>
                     ))}
                     {node.attrs.height === 'custom' && (
-                        <label className="flex items-center justify-between gap-2 px-3 py-1.5 text-xs text-stone-700">
+                        <label className="flex items-center justify-between gap-2 px-3 py-1.5 text-xs text-ink-secondary">
                             Height
                             <span className="flex items-center gap-1">
                                 <input
@@ -393,14 +393,14 @@ function RowView({ node, editor, getPos, updateAttributes }) {
                                     max="1200"
                                     value={node.attrs.customHeight || 320}
                                     onChange={(e) => updateAttributes({ customHeight: Number(e.target.value) || 320 })}
-                                    className="w-16 rounded-md border border-[#E5DCD3] px-1 py-0.5 text-[11px] tabular-nums outline-none"
+                                    className="w-16 rounded-lg border border-edge-subtle px-1 py-0.5 text-[11px] tabular-nums outline-none"
                                 />
-                                <span className="text-[10px] text-stone-400">px</span>
+                                <span className="text-[10px] text-ink-muted">px</span>
                             </span>
                         </label>
                     )}
 
-                    <div className="my-1 h-px bg-[#EFE7DE]" />
+                    <div className="my-1 h-px bg-ground-sunk" />
                     <MenuItem
                         icon={Trash} label="Delete row" danger
                         disabled={rowCount() <= 1}
@@ -470,34 +470,34 @@ function ColumnChip({ index, units, count, editor, gridPos }) {
                 type="button"
                 title={`Column ${index + 1} — ${units} of ${count} parts`}
                 onClick={() => setMenu((v) => !v)}
-                className="flex h-full w-full items-center justify-center gap-1 rounded-md text-[10px] font-medium tabular-nums text-stone-500 transition-colors hover:bg-stone-200/70 hover:text-stone-800"
+                className="flex h-full w-full items-center justify-center gap-1 rounded-lg text-[10px] font-medium tabular-nums text-ink-muted transition-colors hover:bg-ground-sunk/70 hover:text-ink"
             >
                 <span className="h-1 w-1 rounded-full bg-current opacity-50" />
                 {units}
             </button>
             <RailMenu open={menu} onClose={() => setMenu(false)} align={index === count - 1 ? 'right' : 'left'}>
                 <div className="flex items-center justify-between px-3 py-1.5">
-                    <span className="text-[10px] uppercase tracking-wide text-stone-400">Width</span>
+                    <span className="text-[10px] uppercase tracking-wide text-ink-muted">Width</span>
                     <span className="flex items-center gap-1">
                         <button type="button" onClick={step(-1)} disabled={units <= 1}
-                            className="rounded p-0.5 text-stone-600 hover:bg-stone-100 disabled:opacity-30">
+                            className="rounded-lg p-0.5 text-ink-secondary hover:bg-ground-sunk disabled:opacity-30">
                             <Minus size={11} weight="bold" />
                         </button>
                         <span className="w-5 text-center text-xs tabular-nums">{units}</span>
                         <button type="button" onClick={step(1)}
-                            className="rounded p-0.5 text-stone-600 hover:bg-stone-100">
+                            className="rounded-lg p-0.5 text-ink-secondary hover:bg-ground-sunk">
                             <Plus size={11} weight="bold" />
                         </button>
                     </span>
                 </div>
-                <div className="my-1 h-px bg-[#EFE7DE]" />
+                <div className="my-1 h-px bg-ground-sunk" />
                 <MenuItem icon={ArrowLeft} label="Insert column left"
                     disabled={count >= MAX_COLUMNS}
                     onClick={act((tr, pos) => addColumn(tr, pos, { index, side: 'left' }))} />
                 <MenuItem icon={ArrowRight} label="Insert column right"
                     disabled={count >= MAX_COLUMNS}
                     onClick={act((tr, pos) => addColumn(tr, pos, { index, side: 'right' }))} />
-                <div className="my-1 h-px bg-[#EFE7DE]" />
+                <div className="my-1 h-px bg-ground-sunk" />
                 <MenuItem
                     icon={Trash} label="Delete column" danger
                     disabled={count <= 1}
@@ -658,15 +658,15 @@ function GridView({ node, editor, getPos, updateAttributes, deleteNode }) {
                     rather than to one row or column. */}
                 <div className="layout-grid-toolbar" contentEditable={false}>
                     <GridFour size={12} weight="bold" className="text-studio-terracotta" />
-                    <span className="text-[10px] tabular-nums text-stone-500">
+                    <span className="text-[10px] tabular-nums text-ink-muted">
                         {cols.length} × {rowCount} · {ratioLabel(cols)}
                     </span>
-                    <span className="h-3 w-px bg-[#E5DCD3]" />
+                    <span className="h-3 w-px bg-ground-sunk" />
                     <div className="relative">
                         <button
                             type="button"
                             onClick={() => setSettings((v) => !v)}
-                            className="rounded px-1.5 py-0.5 text-[10px] text-stone-600 transition-colors hover:bg-stone-100"
+                            className="rounded-lg px-1.5 py-0.5 text-[10px] text-ink-secondary transition-colors hover:bg-ground-sunk"
                         >
                             Options
                         </button>
@@ -677,12 +677,12 @@ function GridView({ node, editor, getPos, updateAttributes, deleteNode }) {
                                 { label: 'Borders', key: 'borders', options: BORDERS },
                                 { label: 'On mobile', key: 'mobile', options: MOBILE },
                             ].map(({ label, key, options }) => (
-                                <label key={key} className="flex items-center justify-between gap-2 px-3 py-1.5 text-xs text-stone-700">
+                                <label key={key} className="flex items-center justify-between gap-2 px-3 py-1.5 text-xs text-ink-secondary">
                                     {label}
                                     <select
                                         value={node.attrs[key]}
                                         onChange={(e) => updateAttributes({ [key]: e.target.value })}
-                                        className="rounded-md border border-[#E5DCD3] bg-white px-1 py-0.5 text-[10px] outline-none"
+                                        className="rounded-lg border border-edge-subtle bg-white px-1 py-0.5 text-[10px] outline-none"
                                     >
                                         {options.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
                                     </select>
@@ -694,7 +694,7 @@ function GridView({ node, editor, getPos, updateAttributes, deleteNode }) {
                         type="button"
                         onClick={() => deleteNode()}
                         title="Remove this grid"
-                        className="rounded p-0.5 text-rose-600 transition-colors hover:bg-rose-50"
+                        className="rounded-lg p-0.5 text-rose-600 transition-colors hover:bg-rose-50"
                     >
                         <Trash size={12} />
                     </button>

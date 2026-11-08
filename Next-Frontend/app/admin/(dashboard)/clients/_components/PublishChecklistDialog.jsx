@@ -38,7 +38,7 @@ export default function PublishChecklistDialog({ open, clientId, publishing, onP
                     <DialogDescription>What visitors will see once this wedding is published.</DialogDescription>
                 </DialogHeader>
 
-                {!data && !error && <p className="flex items-center gap-2 text-sm text-stone-500"><CircleNotch size={16} className="animate-spin" /> Checking…</p>}
+                {!data && !error && <p className="flex items-center gap-2 text-sm text-ink-muted"><CircleNotch size={16} className="animate-spin" /> Checking…</p>}
                 {error && <p className="rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-700">{error}</p>}
 
                 {c && (
@@ -58,7 +58,7 @@ export default function PublishChecklistDialog({ open, clientId, publishing, onP
                             <p key={w.code} className="flex items-start gap-2 text-amber-800"><WarningCircle size={16} className="mt-0.5 shrink-0" />{w.message}</p>
                         ))}
                         {data.storyUrl && (
-                            <p className="text-xs text-stone-500">Story page: <span className="font-mono text-stone-700">{data.storyUrl}</span></p>
+                            <p className="text-xs text-ink-muted">Story page: <span className="font-mono text-ink-secondary">{data.storyUrl}</span></p>
                         )}
                     </div>
                 )}

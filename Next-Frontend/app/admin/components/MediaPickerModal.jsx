@@ -51,7 +51,7 @@ function MediaThumb({ media }) {
         );
     }
     return (
-        <div className="flex h-full w-full items-center justify-center bg-stone-100 text-stone-400">
+        <div className="flex h-full w-full items-center justify-center bg-ground-sunk text-ink-muted">
             {media.mediaType === 'Video' ? <FilmSlate size={28} /> : <FileText size={28} />}
         </div>
     );
@@ -176,43 +176,43 @@ export default function MediaPickerModal({
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 font-sans">
-            <div className="flex h-[85vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl bg-white border border-[#E5DCD3] shadow-2xl">
+            <div className="flex h-[85vh] w-full max-w-5xl flex-col overflow-hidden rounded-xl bg-white border border-edge-subtle shadow-2xl">
                 {/* Header */}
-                <div className="flex items-center justify-between border-b border-[#E5DCD3] bg-[#F7F4EF] px-5 py-3.5">
+                <div className="flex items-center justify-between border-b border-edge-subtle bg-ground px-5 py-3.5">
                     <div>
-                        <h2 className="text-sm font-bold text-[#1C1917]">Studio Media Library</h2>
-                        <p className="text-[11px] text-stone-500">Select or upload cinematic photography and media assets.</p>
+                        <h2 className="text-sm font-bold text-ink">Studio Media Library</h2>
+                        <p className="text-[11px] text-ink-muted">Select or upload cinematic photography and media assets.</p>
                     </div>
                     <button
                         type="button"
                         onClick={onClose}
-                        className="rounded-xl p-1.5 text-stone-500 hover:bg-stone-200/80 hover:text-[#1C1917] transition-all cursor-pointer"
+                        className="rounded-xl p-1.5 text-ink-muted hover:bg-ground-sunk/80 hover:text-ink transition-all cursor-pointer"
                     >
                         <X size={18} />
                     </button>
                 </div>
 
                 {/* Toolbar */}
-                <div className="flex flex-wrap items-center gap-3 border-b border-[#E5DCD3] bg-white px-5 py-3">
+                <div className="flex flex-wrap items-center gap-3 border-b border-edge-subtle bg-white px-5 py-3">
                     <div className="relative flex-1 min-w-[200px]">
-                        <MagnifyingGlass size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
+                        <MagnifyingGlass size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted" />
                         <input
                             type="text"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             placeholder="Search by title, alt text, tag…"
-                            className="w-full rounded-xl border border-[#E5DCD3] bg-stone-50 py-1.5 pl-9 pr-3 text-xs text-[#1C1917] placeholder:text-stone-400 focus:border-[#8C532B] focus:ring-1 focus:ring-[#8C532B]/30 focus:outline-none"
+                            className="w-full rounded-xl border border-edge-subtle bg-ground py-1.5 pl-9 pr-3 text-xs text-ink placeholder:text-ink-muted focus:border-accent focus:ring-1 focus:ring-accent/30 focus:outline-none"
                         />
                     </div>
                     {!typeFilter && (
-                        <div className="flex gap-1 rounded-xl bg-stone-100 p-1 border border-stone-200">
+                        <div className="flex gap-1 rounded-xl bg-ground-sunk p-1 border border-edge-subtle">
                             {TYPE_TABS.map((tab) => (
                                 <button
                                     key={tab.key}
                                     type="button"
                                     onClick={() => setActiveType(tab.key)}
                                     className={`rounded-lg px-3 py-1 text-xs font-medium transition-all cursor-pointer ${
-                                        activeType === tab.key ? 'bg-white text-[#1C1917] font-semibold shadow-sm' : 'text-stone-600 hover:text-[#1C1917]'
+                                        activeType === tab.key ? 'bg-white text-ink font-semibold shadow-sm' : 'text-ink-secondary hover:text-ink'
                                     }`}
                                 >
                                     {tab.label}
@@ -243,7 +243,7 @@ export default function MediaPickerModal({
                 <div className="flex min-h-0 flex-1">
                     {/* Grid */}
                     <div
-                        className="flex-1 overflow-y-auto p-4 bg-[#F7F4EF]/50"
+                        className="flex-1 overflow-y-auto p-4 bg-ground/50"
                         onDragOver={(e) => e.preventDefault()}
                         onDrop={(e) => { e.preventDefault(); handleFiles(e.dataTransfer.files); }}
                     >
@@ -252,15 +252,15 @@ export default function MediaPickerModal({
                                 {Object.entries(uploadProgress).map(([key, pct]) => {
                                     const processing = pct === -1;
                                     return (
-                                        <div key={key} className="rounded-xl border border-[#E5DCD3] bg-white p-2">
-                                            <div className="h-1.5 w-full overflow-hidden rounded bg-stone-200">
+                                        <div key={key} className="rounded-xl border border-edge-subtle bg-white p-2">
+                                            <div className="h-1.5 w-full overflow-hidden rounded-lg bg-ground-sunk">
                                                 <div
-                                                    className={`h-full bg-[#8C532B] ${processing ? 'w-full animate-pulse' : 'transition-all'}`}
+                                                    className={`h-full bg-accent ${processing ? 'w-full animate-pulse' : 'transition-all'}`}
                                                     style={processing ? undefined : { width: `${pct}%` }}
                                                 />
                                             </div>
                                             {processing && (
-                                                <p className="mt-1 text-[11px] text-stone-500 font-medium">Optimizing &amp; uploading to Cloudflare R2…</p>
+                                                <p className="mt-1 text-[11px] text-ink-muted font-medium">Optimizing &amp; uploading to Cloudflare R2…</p>
                                             )}
                                         </div>
                                     );
@@ -269,12 +269,12 @@ export default function MediaPickerModal({
                         )}
 
                         {items.length === 0 && !loading ? (
-                            <div className="flex h-full flex-col items-center justify-center text-stone-400 p-8">
-                                <div className="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center text-stone-400 mb-3 border border-stone-200">
+                            <div className="flex h-full flex-col items-center justify-center text-ink-muted p-8">
+                                <div className="w-12 h-12 rounded-full bg-ground-sunk flex items-center justify-center text-ink-muted mb-3 border border-edge-subtle">
                                     <ImageSquare size={26} />
                                 </div>
-                                <p className="text-xs font-semibold text-[#1C1917]">No media found</p>
-                                <p className="text-[11px] text-stone-500 mt-0.5">Upload photography or videos to get started.</p>
+                                <p className="text-xs font-semibold text-ink">No media found</p>
+                                <p className="text-[11px] text-ink-muted mt-0.5">Upload photography or videos to get started.</p>
                             </div>
                         ) : (
                             <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5">
@@ -284,13 +284,13 @@ export default function MediaPickerModal({
                                         <div
                                             key={media._id}
                                             className={`group relative aspect-square cursor-pointer overflow-hidden rounded-xl border-2 transition-all ${
-                                                isSel ? 'border-[#8C532B] ring-2 ring-[#8C532B]/30' : 'border-[#E5DCD3] hover:border-stone-400'
+                                                isSel ? 'border-accent ring-2 ring-accent/30' : 'border-edge-subtle hover:border-edge-strong'
                                             }`}
                                             onClick={() => toggleSelect(media)}
                                         >
                                             <MediaThumb media={media} />
                                             {isSel && (
-                                                <span className="absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-[#8C532B] text-white shadow-sm">
+                                                <span className="absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-accent text-white shadow-sm">
                                                     <Check size={12} weight="bold" />
                                                 </span>
                                             )}
@@ -309,8 +309,8 @@ export default function MediaPickerModal({
                         )}
 
                         {loading && (
-                            <div className="flex justify-center py-6 text-stone-500">
-                                <CircleNotch size={24} className="animate-spin text-stone-600" />
+                            <div className="flex justify-center py-6 text-ink-muted">
+                                <CircleNotch size={24} className="animate-spin text-ink-secondary" />
                             </div>
                         )}
                         {hasMore && !loading && (
@@ -324,28 +324,28 @@ export default function MediaPickerModal({
 
                     {/* Edit / detail panel */}
                     {focused && (
-                        <div className="w-72 shrink-0 overflow-y-auto border-l border-[#E5DCD3] bg-white p-4 font-sans">
-                            <div className="relative mb-3 aspect-video overflow-hidden rounded-xl bg-stone-100 border border-[#E5DCD3]">
+                        <div className="w-72 shrink-0 overflow-y-auto border-l border-edge-subtle bg-white p-4 font-sans">
+                            <div className="relative mb-3 aspect-video overflow-hidden rounded-xl bg-ground-sunk border border-edge-subtle">
                                 <MediaThumb media={focused} />
                             </div>
-                            <p className="mb-3 truncate text-xs font-semibold text-[#1C1917]">{focused.originalFileName || focused.title || 'Untitled Asset'}</p>
+                            <p className="mb-3 truncate text-xs font-semibold text-ink">{focused.originalFileName || focused.title || 'Untitled Asset'}</p>
 
-                            <label className="mb-1 block text-[11px] font-semibold text-stone-600">Alt text (SEO)</label>
+                            <label className="mb-1 block text-[11px] font-semibold text-ink-secondary">Alt text (SEO)</label>
                             <input
                                 type="text"
                                 value={focused.altText || ''}
                                 onChange={(e) => setFocused({ ...focused, altText: e.target.value })}
                                 placeholder="Describe the image..."
-                                className="mb-3 w-full rounded-xl border border-[#E5DCD3] bg-stone-50 p-2 text-xs text-[#1C1917] focus:border-[#8C532B] focus:ring-1 focus:ring-[#8C532B]/30 focus:outline-none"
+                                className="mb-3 w-full rounded-xl border border-edge-subtle bg-ground p-2 text-xs text-ink focus:border-accent focus:ring-1 focus:ring-accent/30 focus:outline-none"
                             />
 
-                            <label className="mb-1 block text-[11px] font-semibold text-stone-600">Caption</label>
+                            <label className="mb-1 block text-[11px] font-semibold text-ink-secondary">Caption</label>
                             <textarea
                                 rows={2}
                                 value={focused.caption || ''}
                                 onChange={(e) => setFocused({ ...focused, caption: e.target.value })}
                                 placeholder="Optional caption..."
-                                className="mb-3 w-full rounded-xl border border-[#E5DCD3] bg-stone-50 p-2 text-xs text-[#1C1917] focus:border-[#8C532B] focus:ring-1 focus:ring-[#8C532B]/30 focus:outline-none"
+                                className="mb-3 w-full rounded-xl border border-edge-subtle bg-ground p-2 text-xs text-ink focus:border-accent focus:ring-1 focus:ring-accent/30 focus:outline-none"
                             />
 
                             <Button
@@ -362,8 +362,8 @@ export default function MediaPickerModal({
                 </div>
 
                 {/* Footer */}
-                <div className="flex items-center justify-between border-t border-[#E5DCD3] bg-[#F7F4EF] px-5 py-3">
-                    <span className="text-xs text-stone-600 font-medium">
+                <div className="flex items-center justify-between border-t border-edge-subtle bg-ground px-5 py-3">
+                    <span className="text-xs text-ink-secondary font-medium">
                         {selected.length} asset{selected.length === 1 ? '' : 's'} selected
                     </span>
                     <div className="flex gap-2">

@@ -57,13 +57,13 @@ export default function InviteModal({ open, onClose, onInvited }) {
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-            <div className="w-full max-w-md overflow-hidden rounded-2xl border border-[#E7E2DA] bg-white shadow-2xl">
-                <div className="flex items-center justify-between border-b border-[#E7E2DA] px-6 py-4">
-                    <h2 className="text-base font-medium font-sans text-[#1C1917]">Invite Administrator</h2>
+            <div className="w-full max-w-md overflow-hidden rounded-xl border border-edge-subtle bg-white shadow-2xl">
+                <div className="flex items-center justify-between border-b border-edge-subtle px-6 py-4">
+                    <h2 className="text-base font-medium font-sans text-ink">Invite Administrator</h2>
                     <button
                         type="button"
                         onClick={close}
-                        className="rounded-lg p-1.5 text-[#78716C] transition hover:bg-[#F7F4EF] hover:text-[#1C1917]"
+                        className="rounded-lg p-1.5 text-ink-muted transition hover:bg-ground hover:text-ink"
                     >
                         <X size={18} weight="bold" />
                     </button>
@@ -71,16 +71,16 @@ export default function InviteModal({ open, onClose, onInvited }) {
 
                 {inviteUrl ? (
                     <div className="p-6 space-y-4">
-                        <p className="text-sm font-sans text-[#44403C]">
-                            Invitation link generated for <span className="font-semibold text-[#1C1917]">{email}</span>.
+                        <p className="text-sm font-sans text-ink-secondary">
+                            Invitation link generated for <span className="font-semibold text-ink">{email}</span>.
                             Share this link with the recipient — it expires in 7 days.
                         </p>
-                        <div className="flex items-center gap-2 rounded-xl border border-[#E7E2DA] bg-[#F7F4EF] p-2.5">
-                            <span className="flex-1 truncate font-mono text-xs text-[#44403C]">{inviteUrl}</span>
+                        <div className="flex items-center gap-2 rounded-xl border border-edge-subtle bg-ground p-2.5">
+                            <span className="flex-1 truncate font-mono text-xs text-ink-secondary">{inviteUrl}</span>
                             <button
                                 type="button"
                                 onClick={copy}
-                                className="flex shrink-0 items-center gap-1.5 rounded-lg border border-[#E7E2DA] bg-white px-3 py-1.5 text-xs font-medium font-sans text-[#1C1917] shadow-sm transition hover:bg-[#F7F4EF]"
+                                className="flex shrink-0 items-center gap-1.5 rounded-lg border border-edge-subtle bg-white px-3 py-1.5 text-xs font-medium font-sans text-ink shadow-sm transition hover:bg-ground"
                             >
                                 {copied ? <Check size={14} weight="bold" className="text-emerald-600" /> : <Copy size={14} weight="bold" />}
                                 {copied ? 'Copied' : 'Copy'}
@@ -105,30 +105,30 @@ export default function InviteModal({ open, onClose, onInvited }) {
                         )}
 
                         <div>
-                            <label htmlFor="invite-email" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-[#78716C]">Email Address</label>
+                            <label htmlFor="invite-email" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-ink-muted">Email Address</label>
                             <div className="relative">
-                                <EnvelopeSimple size={16} weight="bold" className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A8A29E]" />
+                                <EnvelopeSimple size={16} weight="bold" className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-muted" />
                                 <input
                                     id="invite-email"
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="name@theweddingboys.in"
-                                    className="w-full rounded-xl border border-[#E7E2DA] bg-white py-2.5 pl-10 pr-3.5 text-sm font-sans text-[#1C1917] placeholder:text-[#A8A29E] outline-none transition focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880]"
+                                    placeholder="name@theweddingvachan.com"
+                                    className="w-full rounded-xl border border-edge-subtle bg-white py-2.5 pl-10 pr-3.5 text-sm font-sans text-ink placeholder:text-ink-muted outline-none transition focus:border-gold focus:ring-1 focus:ring-gold"
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <span className="mb-2 block text-xs font-medium uppercase tracking-wider text-[#78716C]">Role Privileges</span>
+                            <span className="mb-2 block text-xs font-medium uppercase tracking-wider text-ink-muted">Role Privileges</span>
                             <div className="space-y-2.5">
                                 {ROLE_OPTIONS.map((r) => (
                                     <label
                                         key={r.value}
                                         className={`flex cursor-pointer items-start gap-3 rounded-xl border p-3.5 transition-all ${
                                             role === r.value
-                                                ? 'border-[#C5A880] bg-[#FAF8F5] shadow-sm'
-                                                : 'border-[#E7E2DA] bg-white hover:border-[#D6D0C5]'
+                                                ? 'border-gold bg-ground shadow-sm'
+                                                : 'border-edge-subtle bg-white hover:border-edge-strong'
                                         }`}
                                     >
                                         <input
@@ -137,11 +137,11 @@ export default function InviteModal({ open, onClose, onInvited }) {
                                             value={r.value}
                                             checked={role === r.value}
                                             onChange={() => setRole(r.value)}
-                                            className="mt-0.5 h-4 w-4 accent-[#C5A880]"
+                                            className="mt-0.5 h-4 w-4 accent-gold"
                                         />
                                         <div className="min-w-0">
-                                            <span className="block text-sm font-medium text-[#1C1917]">{r.label}</span>
-                                            <span className="block text-xs text-[#78716C]">{r.hint}</span>
+                                            <span className="block text-sm font-medium text-ink">{r.label}</span>
+                                            <span className="block text-xs text-ink-muted">{r.hint}</span>
                                         </div>
                                     </label>
                                 ))}

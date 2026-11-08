@@ -98,7 +98,7 @@ export default function ProfessionalNavbar() {
             </motion.div>
             <div className="flex flex-col gap-1">
               <span className="text-2xl font-bold bg-gradient-to-r from-rose-600 to-rose-400 bg-clip-text text-transparent ">
-                The Wedding Boys
+                The Wedding Vachan
               </span>
               <span className="text-xs text-rose-500/80 font-medium tracking-widest">
                 MUMBAI&apos;S PREMIER WEDDING FILMMAKERS
@@ -153,7 +153,7 @@ export default function ProfessionalNavbar() {
             />
             <div className="flex flex-col gap-1">
               <span className="sm:text-2xl md:text-3xl text-4xl font-bold bg-gradient-to-r from-orange-500 to-red-500  bg-clip-text text-transparent ">
-                The Wedding Boys
+                The Wedding Vachan
               </span>
               <span className="hidden md:block sm:text-xs md:text-sm lg:text-md text-xs text-rose-500/80 font-medium lg:tracking-widest  uppercase">
                 Where Every Frame Tells a Love Story

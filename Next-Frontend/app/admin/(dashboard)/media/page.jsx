@@ -361,7 +361,7 @@ export default function MediaLibraryPage() {
               aria-label="Upload category target"
               value={uploadOwner}
               onChange={(e) => setUploadOwner(e.target.value)}
-              className="h-9 rounded-xl border border-stone-200 bg-white px-3 text-xs font-medium text-stone-700 outline-none focus:border-red-400 cursor-pointer shadow-xs"
+              className="h-9 rounded-xl border border-edge-subtle bg-white px-3 text-xs font-medium text-ink-secondary outline-none focus:border-accent cursor-pointer shadow-xs"
             >
               {UPLOAD_TARGETS.map((o) => (
                 <option key={o.key} value={o.key}>
@@ -396,15 +396,15 @@ export default function MediaLibraryPage() {
       />
 
       {/* Operational Telemetry Strip */}
-      <div className="flex flex-wrap items-center justify-between gap-2.5 rounded-xl border border-[#E8DDD1]/80 bg-[#FFFCF8]/90 p-2.5 shadow-xs backdrop-blur-xs">
+      <div className="flex flex-wrap items-center justify-between gap-2.5 rounded-xl border border-edge-subtle bg-ground/90 p-2.5 shadow-xs backdrop-blur-xs">
         <div className="flex flex-wrap items-center gap-2 text-xs">
-          <span className="inline-flex items-center gap-1.5 rounded-lg bg-stone-50 border border-stone-200/80 px-2.5 py-1 font-medium text-stone-700">
-            <HardDrives size={13} className="text-stone-400" />
-            <span className="font-semibold text-stone-900">{stats?.total || total || 0}</span> Assets
+          <span className="inline-flex items-center gap-1.5 rounded-lg bg-ground border border-edge-subtle px-2.5 py-1 font-medium text-ink-secondary">
+            <HardDrives size={13} className="text-ink-muted" />
+            <span className="font-semibold text-ink">{stats?.total || total || 0}</span> Assets
           </span>
-          <span className="inline-flex items-center gap-1.5 rounded-lg bg-stone-50 border border-stone-200/80 px-2.5 py-1 font-medium text-stone-700">
-            <Sparkle size={13} className="text-stone-400" />
-            <span className="font-semibold text-stone-900">{formatBytes(stats?.totalBytes || 0)}</span> Cloudflare R2
+          <span className="inline-flex items-center gap-1.5 rounded-lg bg-ground border border-edge-subtle px-2.5 py-1 font-medium text-ink-secondary">
+            <Sparkle size={13} className="text-ink-muted" />
+            <span className="font-semibold text-ink">{formatBytes(stats?.totalBytes || 0)}</span> Cloudflare R2
           </span>
           {unassigned > 0 && (
             <button
@@ -424,12 +424,12 @@ export default function MediaLibraryPage() {
           )}
         </div>
 
-        <div className="text-[11px] text-stone-500 font-medium">
-          Active Scope: <span className="text-stone-800 font-semibold">{activePurpose?.label || 'Everything'}</span>
-          {activeType && <span> · <span className="text-stone-800 font-semibold">{activeType}</span></span>}
-          {orientation && <span> · <span className="text-stone-800 font-semibold capitalize">{orientation}</span></span>}
+        <div className="text-[11px] text-ink-muted font-medium">
+          Active Scope: <span className="text-ink font-semibold">{activePurpose?.label || 'Everything'}</span>
+          {activeType && <span> · <span className="text-ink font-semibold">{activeType}</span></span>}
+          {orientation && <span> · <span className="text-ink font-semibold capitalize">{orientation}</span></span>}
           {sortBy && sortBy !== 'newest' && (
-            <span> · <span className="text-stone-800 font-semibold">{SORT_OPTIONS.find((s) => s.key === sortBy)?.label}</span></span>
+            <span> · <span className="text-ink font-semibold">{SORT_OPTIONS.find((s) => s.key === sortBy)?.label}</span></span>
           )}
         </div>
       </div>
@@ -449,14 +449,14 @@ export default function MediaLibraryPage() {
               className={cn(
                 'shrink-0 flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap cursor-pointer',
                 active
-                  ? 'bg-white shadow-xs border border-stone-200 text-stone-900 font-semibold ring-1 ring-stone-900/5'
-                  : 'bg-stone-100/70 hover:bg-stone-200/60 text-stone-600 border border-transparent',
+                  ? 'bg-white shadow-xs border border-edge-subtle text-ink font-semibold ring-1 ring-ink/5'
+                  : 'bg-ground-sunk/70 hover:bg-ground-sunk/60 text-ink-secondary border border-transparent',
                 p.key === 'System' && !active && count > 0 && 'text-amber-700 bg-amber-50/60 border-amber-200/50'
               )}
             >
-              <p.icon size={13} className={cn(active ? 'text-red-600' : 'text-stone-400')} />
+              <p.icon size={13} className={cn(active ? 'text-accent-ink' : 'text-ink-muted')} />
               <span>{p.label}</span>
-              <span className={cn('text-[10px] tabular-nums rounded-full px-1.5 py-0.2', active ? 'bg-stone-100 text-stone-800 font-semibold' : 'text-stone-400')}>
+              <span className={cn('text-[10px] tabular-nums rounded-full px-1.5 py-0.2', active ? 'bg-ground-sunk text-ink font-semibold' : 'text-ink-muted')}>
                 {count}
               </span>
             </button>
@@ -466,9 +466,9 @@ export default function MediaLibraryPage() {
 
       <div className="grid gap-5 xl:grid-cols-[220px_minmax(0,1fr)] items-start">
         {/* Desktop Purpose Sidebar - Unified White Studio Surface Card */}
-        <aside className="hidden xl:flex flex-col xl:sticky xl:top-4 xl:self-start w-[220px] shrink-0 rounded-2xl border border-[#E8DDD1]/80 bg-[#FFFCF8] p-3 shadow-xs space-y-3.5">
+        <aside className="hidden xl:flex flex-col xl:sticky xl:top-4 xl:self-start w-[220px] shrink-0 rounded-xl border border-edge-subtle bg-ground p-3 shadow-xs space-y-3.5">
           <div className="space-y-0.5">
-            <p className="px-2 text-[10px] font-semibold uppercase tracking-wider text-stone-400 mb-1.5">
+            <p className="px-2 text-[10px] font-semibold uppercase tracking-wider text-ink-muted mb-1.5">
               Collections
             </p>
             {DOMAIN_COLLECTIONS.map((p) => {
@@ -485,13 +485,13 @@ export default function MediaLibraryPage() {
                   className={cn(
                     'flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left text-xs transition-all cursor-pointer',
                     active
-                      ? 'bg-stone-100 text-stone-900 font-semibold shadow-2xs border border-stone-200/60'
-                      : 'text-stone-600 hover:text-stone-900 hover:bg-stone-50 border border-transparent'
+                      ? 'bg-ground-sunk text-ink font-semibold shadow-2xs border border-edge-subtle'
+                      : 'text-ink-secondary hover:text-ink hover:bg-ground border border-transparent'
                   )}
                 >
-                  <p.icon size={15} className={cn('shrink-0', active ? 'text-red-600' : 'text-stone-400')} />
+                  <p.icon size={15} className={cn('shrink-0', active ? 'text-accent-ink' : 'text-ink-muted')} />
                   <span className="min-w-0 flex-1 truncate">{p.label}</span>
-                  <span className={cn('shrink-0 tabular-nums text-[10px] rounded-full px-1.5 py-0.2', active ? 'bg-white text-stone-800 font-semibold shadow-2xs' : 'text-stone-400')}>
+                  <span className={cn('shrink-0 tabular-nums text-[10px] rounded-full px-1.5 py-0.2', active ? 'bg-white text-ink font-semibold shadow-2xs' : 'text-ink-muted')}>
                     {count}
                   </span>
                 </button>
@@ -499,8 +499,8 @@ export default function MediaLibraryPage() {
             })}
           </div>
 
-          <div className="space-y-0.5 pt-2.5 border-t border-stone-100">
-            <p className="px-2 text-[10px] font-semibold uppercase tracking-wider text-stone-400 mb-1.5">
+          <div className="space-y-0.5 pt-2.5 border-t border-edge-subtle">
+            <p className="px-2 text-[10px] font-semibold uppercase tracking-wider text-ink-muted mb-1.5">
               Workflows
             </p>
             {WORKFLOW_QUEUES.map((p) => {
@@ -519,14 +519,14 @@ export default function MediaLibraryPage() {
                       ? 'bg-amber-50 text-amber-950 font-semibold shadow-2xs border border-amber-200'
                       : count > 0
                         ? 'text-amber-800 hover:bg-amber-50/70 border border-transparent'
-                        : 'text-stone-600 hover:bg-stone-50 border border-transparent'
+                        : 'text-ink-secondary hover:bg-ground border border-transparent'
                   )}
                 >
-                  <p.icon size={15} className={cn('shrink-0', active ? 'text-amber-600' : count > 0 ? 'text-amber-500' : 'text-stone-400')} />
+                  <p.icon size={15} className={cn('shrink-0', active ? 'text-amber-600' : count > 0 ? 'text-amber-500' : 'text-ink-muted')} />
                   <span className="min-w-0 flex-1 truncate">{p.label}</span>
                   <span className={cn(
                     'shrink-0 tabular-nums text-[10px] font-semibold rounded-full px-1.5 py-0.2',
-                    active ? 'bg-white text-amber-900 shadow-2xs' : count > 0 ? 'bg-amber-100 text-amber-800' : 'text-stone-400'
+                    active ? 'bg-white text-amber-900 shadow-2xs' : count > 0 ? 'bg-amber-100 text-amber-800' : 'text-ink-muted'
                   )}>
                     {count}
                   </span>
@@ -536,18 +536,18 @@ export default function MediaLibraryPage() {
           </div>
 
           {stats && (
-            <div className="pt-2.5 border-t border-stone-100 space-y-1">
-              <div className="flex items-center justify-between text-[10px] font-semibold uppercase tracking-wider text-stone-400 px-1">
+            <div className="pt-2.5 border-t border-edge-subtle space-y-1">
+              <div className="flex items-center justify-between text-[10px] font-semibold uppercase tracking-wider text-ink-muted px-1">
                 <span className="flex items-center gap-1.5">
-                  <HardDrives size={12} className="text-stone-400" /> Pipeline Storage
+                  <HardDrives size={12} className="text-ink-muted" /> Pipeline Storage
                 </span>
-                <span className="text-[10px] text-stone-500 font-mono">R2</span>
+                <span className="text-[10px] text-ink-muted font-mono">R2</span>
               </div>
-              <p className="text-sm font-bold tabular-nums text-stone-900 px-1">{formatBytes(stats.totalBytes)}</p>
+              <p className="text-sm font-bold tabular-nums text-ink px-1">{formatBytes(stats.totalBytes)}</p>
               {activePurpose?.key && stats.byOwner?.[activePurpose.key] && (
-                <div className="pt-1 flex items-center justify-between text-[11px] text-stone-500 px-1">
+                <div className="pt-1 flex items-center justify-between text-[11px] text-ink-muted px-1">
                   <span className="truncate">{activePurpose.label}</span>
-                  <span className="font-mono font-medium text-stone-700">{formatBytes(stats.byOwner[activePurpose.key].bytes)}</span>
+                  <span className="font-mono font-medium text-ink-secondary">{formatBytes(stats.byOwner[activePurpose.key].bytes)}</span>
                 </div>
               )}
             </div>
@@ -572,15 +572,15 @@ export default function MediaLibraryPage() {
           />
 
           {progressRows.length > 0 && (
-            <div className="space-y-1.5 rounded-xl border border-stone-200 bg-white p-3">
+            <div className="space-y-1.5 rounded-xl border border-edge-subtle bg-white p-3">
               {progressRows.map(([name, pct]) => (
                 <div key={name}>
-                  <div className="flex justify-between text-[10px] text-stone-600">
+                  <div className="flex justify-between text-[10px] text-ink-secondary">
                     <span className="truncate">{name}</span>
                     <span className="tabular-nums">{pct < 0 ? 'processing…' : `${pct}%`}</span>
                   </div>
-                  <div className="mt-0.5 h-1 overflow-hidden rounded-full bg-stone-200">
-                    <div className={cn('h-full rounded-full', pct < 0 ? 'w-full animate-pulse bg-red-400' : 'bg-red-500')}
+                  <div className="mt-0.5 h-1 overflow-hidden rounded-full bg-ground-sunk">
+                    <div className={cn('h-full rounded-full', pct < 0 ? 'w-full animate-pulse bg-red-400' : 'bg-accent')}
                       style={pct >= 0 ? { width: `${pct}%` } : undefined} />
                   </div>
                 </div>
@@ -589,19 +589,19 @@ export default function MediaLibraryPage() {
           )}
 
           {loading && items.length === 0 ? (
-            <div className="flex items-center justify-center py-20 text-stone-400">
+            <div className="flex items-center justify-center py-20 text-ink-muted">
               <CircleNotch size={22} className="animate-spin" />
             </div>
           ) : items.length === 0 ? (
             <div
-              className="rounded-2xl border-2 border-dashed border-stone-300/80 py-16 text-center bg-white/50"
+              className="rounded-xl border-2 border-dashed border-edge-strong py-16 text-center bg-white/50"
               onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
             >
               <CloudArrowUp size={36} weight="duotone" className="mx-auto text-stone-300 mb-3" />
-              <p className="text-sm font-semibold text-stone-700">
+              <p className="text-sm font-semibold text-ink-secondary">
                 {search ? 'No matching assets' : `No assets in ${activePurpose?.label || 'this collection'}`}
               </p>
-              <p className="mt-1 text-xs text-stone-500 max-w-xs mx-auto">
+              <p className="mt-1 text-xs text-ink-muted max-w-xs mx-auto">
                 {search
                   ? 'Try a different search term or adjust your filters.'
                   : 'Drag files here or use the Upload button to add your first asset.'}
@@ -621,7 +621,7 @@ export default function MediaLibraryPage() {
           ) : (
             <>
               <div
-                className="grid grid-cols-2 gap-3.5 rounded-2xl sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-1 min-h-[200px]"
+                className="grid grid-cols-2 gap-3.5 rounded-xl sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-1 min-h-[200px]"
               >
                 {items.map((m) => (
                   <MediaGridCard
@@ -636,9 +636,9 @@ export default function MediaLibraryPage() {
               </div>
 
               <div className="flex items-center justify-between pt-1">
-                <p className="text-[11px] text-stone-500">{items.length} of {total} shown</p>
+                <p className="text-[11px] text-ink-muted">{items.length} of {total} shown</p>
                 {loading && items.length > 0 && (
-                  <CircleNotch size={16} className="animate-spin text-stone-400" />
+                  <CircleNotch size={16} className="animate-spin text-ink-muted" />
                 )}
               </div>
 
@@ -652,7 +652,7 @@ export default function MediaLibraryPage() {
       {/* Full-Viewport Drag-Drop Upload Overlay */}
       {dragging && (
         <div
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-stone-950/70 backdrop-blur-sm animate-in fade-in duration-150"
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-ink/70 backdrop-blur-sm animate-in fade-in duration-150"
           onDragOver={(e) => e.preventDefault()}
           onDragLeave={(e) => {
             // Only dismiss when leaving the viewport entirely
@@ -660,17 +660,17 @@ export default function MediaLibraryPage() {
           }}
           onDrop={(e) => { e.preventDefault(); setDragging(false); handleFiles(e.dataTransfer.files); }}
         >
-          <div className="flex flex-col items-center gap-4 rounded-3xl border-2 border-dashed border-red-400/70 bg-stone-900/80 px-16 py-12 text-center shadow-2xl">
-            <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-red-500/20 text-red-400 animate-bounce">
+          <div className="flex flex-col items-center gap-4 rounded-xl border-2 border-dashed border-accent/70 bg-ink/80 px-16 py-12 text-center shadow-2xl">
+            <span className="flex h-16 w-16 items-center justify-center rounded-xl bg-accent/20 text-accent-ink animate-bounce">
               <CloudArrowUp size={36} weight="duotone" />
             </span>
             <div>
               <p className="text-lg font-bold text-white">Drop files to stage for upload</p>
-              <p className="mt-1 text-sm text-stone-400">
+              <p className="mt-1 text-sm text-ink-muted">
                 Images, videos, and documents · Cloudflare R2 pipeline
               </p>
             </div>
-            <div className="flex items-center gap-3 text-[11px] font-mono text-stone-500">
+            <div className="flex items-center gap-3 text-[11px] font-mono text-ink-muted">
               <span>JPG</span><span>·</span><span>PNG</span><span>·</span><span>WEBP</span><span>·</span><span>MP4</span><span>·</span><span>MOV</span><span>·</span><span>PDF</span>
             </div>
           </div>
@@ -679,10 +679,10 @@ export default function MediaLibraryPage() {
 
       {/* Floating Batch Command Palette */}
       {selectedIds.length > 0 && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 rounded-2xl border border-stone-800/90 bg-stone-950/95 px-3.5 py-2 text-white shadow-2xl backdrop-blur-md animate-in slide-in-from-bottom-4 font-sans">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 rounded-xl border border-ink/90 bg-ink/95 px-3.5 py-2 text-white shadow-2xl backdrop-blur-md animate-in slide-in-from-bottom-4 font-sans">
           {/* Selection Counter */}
-          <div className="flex items-center gap-2 text-xs font-medium pr-2.5 border-r border-stone-800">
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[11px] font-bold">
+          <div className="flex items-center gap-2 text-xs font-medium pr-2.5 border-r border-ink">
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-accent text-[11px] font-bold">
               {selectedIds.length}
             </span>
             <span>Selected</span>
@@ -692,12 +692,12 @@ export default function MediaLibraryPage() {
           <button
             type="button"
             onClick={selectAll}
-            className="text-[11px] text-stone-400 hover:text-white font-medium transition cursor-pointer px-1.5 py-1"
+            className="text-[11px] text-ink-muted hover:text-white font-medium transition cursor-pointer px-1.5 py-1"
           >
             All ({items.length})
           </button>
 
-          <span className="h-4 w-px bg-stone-800" />
+          <span className="h-4 w-px bg-ink" />
 
           {/* Reassign Collection Dropdown */}
           <DropdownMenu>
@@ -709,7 +709,7 @@ export default function MediaLibraryPage() {
               >
                 <ArrowBendUpRight size={13} />
                 <span>Move to…</span>
-                <CaretDown size={10} className="text-stone-500" />
+                <CaretDown size={10} className="text-ink-muted" />
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="center" side="top" sideOffset={8} className="w-52">
@@ -721,10 +721,10 @@ export default function MediaLibraryPage() {
                   onClick={() => handleBatchReassign(p.key)}
                   className="flex items-center gap-2"
                 >
-                  <p.icon size={14} className="text-stone-400 shrink-0" />
+                  <p.icon size={14} className="text-ink-muted shrink-0" />
                   <div className="flex flex-col min-w-0">
                     <span className="font-medium truncate">{p.label}</span>
-                    <span className="text-[10px] text-stone-400 truncate">{p.hint}</span>
+                    <span className="text-[10px] text-ink-muted truncate">{p.hint}</span>
                   </div>
                 </DropdownMenuItem>
               ))}
@@ -741,7 +741,7 @@ export default function MediaLibraryPage() {
               >
                 <Star size={13} />
                 <span>Star</span>
-                <CaretDown size={10} className="text-stone-500" />
+                <CaretDown size={10} className="text-ink-muted" />
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="center" side="top" sideOffset={8} className="w-44">
@@ -752,7 +752,7 @@ export default function MediaLibraryPage() {
                 <span className="font-medium">Star All</span>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => handleBatchFeatured(false)} className="flex items-center gap-2">
-                <Star size={14} className="text-stone-400" />
+                <Star size={14} className="text-ink-muted" />
                 <span className="font-medium">Unstar All</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -768,7 +768,7 @@ export default function MediaLibraryPage() {
               >
                 <Eye size={13} />
                 <span>Visibility</span>
-                <CaretDown size={10} className="text-stone-500" />
+                <CaretDown size={10} className="text-ink-muted" />
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="center" side="top" sideOffset={8} className="w-44">
@@ -814,24 +814,24 @@ export default function MediaLibraryPage() {
                       }
                     }}
                     placeholder="Type tag name…"
-                    className="flex-1 h-7 rounded-lg border border-stone-200 bg-white px-2.5 text-xs text-stone-900 placeholder:text-stone-400 outline-none focus:border-red-400 focus:ring-2 focus:ring-red-400/15"
+                    className="flex-1 h-7 rounded-lg border border-edge-subtle bg-white px-2.5 text-xs text-ink placeholder:text-ink-muted outline-none focus:border-accent focus:ring-2 focus:ring-accent/15"
                     autoFocus
                   />
                   <button
                     type="button"
                     onClick={handleBatchAddTag}
                     disabled={!batchTagInput.trim() || batchBusy}
-                    className="flex h-7 items-center justify-center rounded-lg bg-red-500 hover:bg-red-600 disabled:bg-stone-300 px-2.5 text-xs font-semibold text-white transition-colors disabled:cursor-not-allowed"
+                    className="flex h-7 items-center justify-center rounded-lg bg-accent hover:bg-accent-hover disabled:bg-stone-300 px-2.5 text-xs font-semibold text-white transition-colors disabled:cursor-not-allowed"
                   >
                     <Check size={13} weight="bold" />
                   </button>
                 </div>
-                <p className="mt-1 text-[10px] text-stone-400">Press Enter to apply tag to {selectedIds.length} assets</p>
+                <p className="mt-1 text-[10px] text-ink-muted">Press Enter to apply tag to {selectedIds.length} assets</p>
               </div>
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <span className="h-4 w-px bg-stone-800" />
+          <span className="h-4 w-px bg-ink" />
 
           {/* Batch Delete */}
           <button
@@ -848,7 +848,7 @@ export default function MediaLibraryPage() {
           <button
             type="button"
             onClick={clearSelection}
-            className="flex items-center justify-center h-6 w-6 rounded-lg text-stone-500 hover:text-white hover:bg-white/10 transition cursor-pointer ml-0.5"
+            className="flex items-center justify-center h-6 w-6 rounded-lg text-ink-muted hover:text-white hover:bg-white/10 transition cursor-pointer ml-0.5"
             title="Clear selection (Esc)"
           >
             <X size={14} />

@@ -46,7 +46,7 @@ export default function TableOfContents({ toc }) {
                         <a
                             href={`#${h.id}`}
                             onClick={(e) => handleClick(e, h.id)}
-                            className={`-ml-px block border-l-2 pl-3 transition-colors ${activeId === h.id ? 'border-rose-500 font-medium text-rose-600' : 'border-transparent text-gray-500 hover:text-gray-900'}`}
+                            className={`-ml-px block border-l-2 pl-3 transition-colors ${activeId === h.id ? 'border-accent font-medium text-accent' : 'border-transparent text-gray-500 hover:text-gray-900'}`}
                         >
                             {h.text}
                         </a>

@@ -8,9 +8,11 @@
 |---|---|---|
 | `NEXT_PUBLIC_API_URL` | **yes** | Base URL of the Express API. Local: `http://localhost:8080`. Production: `https://theweddingboys.in` |
 | `NEXT_PUBLIC_SITE_URL` | no | Canonical site origin for canonicals, OG tags, JSON-LD, sitemap and robots. Defaults to `https://theweddingboys.in`. Read it from `lib/siteConfig.js`, never hardcode it |
+| `NEXT_PUBLIC_VARANASI_OFFER_ENDS_AT` | no | ISO 8601 offer deadline with timezone; unset hides the countdown |
+| `NEXT_PUBLIC_VARANASI_OFFER_LABEL` | no | Verified offer wording; only shown with a valid deadline |
 | `NEXT_PUBLIC_CDN_URL` | no | When set, switches `next/image` to the Cloudflare Image Resizing loader. When unset, Next's built-in optimiser is used with S3 `remotePatterns` |
 
-All three are `NEXT_PUBLIC_`, so they are inlined into the client bundle. Never
+These frontend variables are `NEXT_PUBLIC_`, so they are inlined into the client bundle. Never
 put a secret behind that prefix.
 
 The deleted React app's equivalents, for reference:
@@ -27,6 +29,11 @@ The deleted React app's equivalents, for reference:
 | `MONGODB_URI`, `DB_URL` | Accepted as fallbacks by the *scripts* only. Set `MONGO_URI` |
 | `JWT_SECRET_KEY` | Signs access and refresh tokens |
 | `COOKIE_SECRET_KEY` | Signs cookies (`cookie-parser`) |
+| `BLOG_PREVIEW_SECRET` | Optional private preview signing key; otherwise derived from JWT_SECRET_KEY with a preview-specific purpose |
+| `REVALIDATION_SECRET` | Same private value in API and Next environments; required for trusted cache invalidation |
+| `FRONTEND_URL` | Next origin called by the trusted API for cache invalidation |
+| `ENQUIRY_RECIPIENT` | Optional trusted notification mailbox; defaults to WebsiteSettings company email |
+| `TRUST_PROXY` | Trusted proxy address/CIDR list; defaults to loopback. Do not set true for a publicly reachable API |
 | `COOKIE_DOMAIN` | Optional override for the session-cookie `Domain`. Unset: `.theweddingboys.in` in production, none (host-only) in dev. Set to an empty string to force host-only anywhere. See [06 — Auth & security](./06-auth-and-security.md) |
 | `ADMIN_URL` | Admin origin, used when building emailed links |
 | `SITE_URL` | Public site origin, used in emails |
@@ -132,3 +139,42 @@ Two harmless build warnings you can ignore:
    [03 — Admin panel](./03-admin-panel.md)).
 5. **Two overlapping content systems** — `WebsiteSetting` and `PageContent` —
    pending completion of `migrateContentToCms.js`.
+
+
+## Verification and rollout (2026-10-31)
+
+The optional root `ecosystem.config.cjs` describes separate API, web, and media-worker
+processes. It has not been started in production. Install PM2 through your existing
+operations process, configure secrets, install both lockfiles with `npm ci`, build
+Next, then start/reload only the intended deployment. The worker needs ffmpeg and
+ffprobe. Keep the API at one instance while its abuse limits use process memory.
+
+The new CI workflow runs backend tests, frontend tests, and a production build on
+Node 22. The CI build has no application database and is a compile check; deploy a
+fresh build against the actual configured API. CI has not run remotely yet.
+Repository-wide ESLint still has pre-existing errors; it is recorded separately
+in the remediation report and is not silently suppressed or presented as passing.
+
+API startup waits for Mongo and the enquiry/media/job indexes before accepting
+requests. `/api/health` reports database readiness, not worker/SMTP health. Monitor
+worker restarts, failed/old queued MediaJobs, and pending enquiry notification age
+separately. Enquiry mail runs inside the API every 15 seconds with leases and
+backoff; delivery is at least once, so an SMTP acceptance followed by a lost DB
+write can still send a duplicate notification. Lead persistence is idempotent.
+
+Before rollout, take a database backup and verify restoring it into an isolated
+non-production database; no live restore has been attempted. Verify admin login,
+MFA, email/password changes, role restrictions, real upload/retry, and mailbox
+receipt in staging. Ensure the reverse proxy preserves `/api`, supports the admin
+hostname, and sets trusted forwarding headers. Cross-account profile writes are
+now rejected; credential changes revoke prior sessions. A deployment rollback
+must keep the repaired authentication and sanitization boundaries.
+
+Uploads use a two-minute completion lease, an idempotent media upsert, and a unique
+per-upload job key. Interrupted completions remain resumable. A stored object's
+size and MIME metadata must match the declared upload before completion. Media
+jobs store file-ready and placement-synchronized checkpoints; retries resume a
+failed placement stage. For a previously Ready asset with stale placements, an
+authorized media editor can POST `/api/admin/media/:id/reconcile` (Mongo Media ID)
+to enqueue reconciliation. This never re-encodes the source. No production media
+has been reprocessed as part of this repair.

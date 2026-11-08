@@ -22,13 +22,13 @@ import { useNodeActive } from './useNodeActive.js';
  */
 function Picker({ label, scale, value, onChange }) {
     return (
-        <label className="flex items-center gap-1 text-[10px] text-stone-600">
+        <label className="flex items-center gap-1 text-[10px] text-ink-secondary">
             <span className="uppercase tracking-wide">{label}</span>
             <span className="relative">
                 <select
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
-                    className="appearance-none rounded-md border border-studio-border bg-white py-0.5 pl-1.5 pr-5 text-[11px] text-studio-ink outline-none focus:border-studio-terracotta"
+                    className="appearance-none rounded-lg border border-studio-border bg-white py-0.5 pl-1.5 pr-5 text-[11px] text-studio-ink outline-none focus:border-studio-terracotta"
                 >
                     {scale.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
                 </select>
@@ -69,7 +69,7 @@ function ColourField({ label, value, onChange }) {
                 placeholder="#hex"
                 onChange={(e) => onChange(cleanHex(e.target.value) || e.target.value)}
                 onBlur={(e) => onChange(cleanHex(e.target.value))}
-                className="w-14 rounded-md border border-studio-border px-1 py-0.5 font-mono text-[10px] outline-none"
+                className="w-14 rounded-lg border border-studio-border px-1 py-0.5 font-mono text-[10px] outline-none"
             />
         </span>
     );
@@ -85,7 +85,7 @@ function SizeField({ label, value, onChange, placeholder = 'auto', width = 'w-12
                 value={value || ''}
                 placeholder={placeholder}
                 onChange={(e) => onChange(e.target.value)}
-                className={`${width} rounded-md border border-studio-border px-1 py-0.5 text-[10px] normal-case tabular-nums outline-none`}
+                className={`${width} rounded-lg border border-studio-border px-1 py-0.5 text-[10px] normal-case tabular-nums outline-none`}
             />
         </label>
     );
@@ -130,7 +130,7 @@ function ContainerView({ node, updateAttributes, deleteNode, selected, editor, g
                             <Picker label="Corner" scale={RADII} value={node.attrs.radius} onChange={(v) => updateAttributes({ radius: v })} />
                             <Picker label="Shadow" scale={SHADOWS} value={node.attrs.shadow} onChange={(v) => updateAttributes({ shadow: v })} />
                             <Picker label="Fill" scale={BACKGROUNDS} value={node.attrs.background} onChange={(v) => updateAttributes({ background: v })} />
-                            <label className="flex items-center gap-1 text-[10px] text-stone-600">
+                            <label className="flex items-center gap-1 text-[10px] text-ink-secondary">
                                 <input
                                     type="checkbox"
                                     checked={node.attrs.border === 'thin'}
@@ -166,13 +166,13 @@ function ContainerView({ node, updateAttributes, deleteNode, selected, editor, g
                         placeholder="01"
                         onChange={(e) => updateAttributes({ marker: e.target.value })}
                         title="A number or short marker"
-                        className="w-9 rounded-md border border-studio-border px-1 py-0.5 text-[10px] tabular-nums outline-none"
+                        className="w-9 rounded-lg border border-studio-border px-1 py-0.5 text-[10px] tabular-nums outline-none"
                     />
                     <select
                         value={icon}
                         onChange={(e) => updateAttributes({ icon: e.target.value })}
                         title="Icon"
-                        className="cursor-pointer rounded-md border border-studio-border bg-white px-1 py-0.5 text-[10px] outline-none"
+                        className="cursor-pointer rounded-lg border border-studio-border bg-white px-1 py-0.5 text-[10px] outline-none"
                     >
                         {ICON_OPTIONS.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
                     </select>
@@ -182,14 +182,14 @@ function ContainerView({ node, updateAttributes, deleteNode, selected, editor, g
                         placeholder="Label…"
                         onChange={(e) => updateAttributes({ label: e.target.value })}
                         title="A short heading for this box"
-                        className="w-24 rounded-md border border-studio-border px-1 py-0.5 text-[10px] outline-none"
+                        className="w-24 rounded-lg border border-studio-border px-1 py-0.5 text-[10px] outline-none"
                     />
 
                     <button
                         type="button"
                         onClick={() => deleteNode()}
                         title="Remove container"
-                        className="rounded p-0.5 text-rose-600 transition-colors hover:bg-rose-50"
+                        className="rounded-lg p-0.5 text-rose-600 transition-colors hover:bg-rose-50"
                     >
                         <Trash size={12} />
                     </button>

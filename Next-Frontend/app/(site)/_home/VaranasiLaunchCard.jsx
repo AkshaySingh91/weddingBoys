@@ -11,10 +11,7 @@
  * tokens that pass: `--accent` for fills, `--accent-ink` for red *as text*.
  * Same colour family, same intent, legible.
  *
- * The countdown's behaviour is deliberately unchanged — it is a decided
- * product choice, recorded in REDESIGN-PROGRESS.md. What changed is that it no
- * longer re-renders the whole card, image included, once a second: it is its
- * own component now, so the tick is scoped to the digits.
+ * Offers use an explicit deadline; an unconfigured offer shows availability instead.
  */
 import { useState, useEffect, memo } from 'react';
 import Image from 'next/image';
@@ -23,8 +20,8 @@ import varanasiCity from '@/Asset/Home/v1.png';
 import Section from '@/Component/ui/Section.jsx';
 import Button from '@/Component/ui/Button.jsx';
 
-/** Where the countdown starts. Unchanged. */
-const START = { days: 10, hours: 14, minutes: 59, seconds: 59 };
+const DEADLINE = Date.parse(process.env.NEXT_PUBLIC_VARANASI_OFFER_ENDS_AT || '');
+const OFFER_LABEL = process.env.NEXT_PUBLIC_VARANASI_OFFER_LABEL || 'Varanasi booking offer';
 
 const UNIT_LABEL = { days: 'Days', hours: 'Hours', minutes: 'Minutes', seconds: 'Seconds' };
 
@@ -34,40 +31,31 @@ const UNIT_LABEL = { days: 'Days', hours: 'Hours', minutes: 'Minutes', seconds: 
  * second for as long as the page stayed open.
  */
 const LaunchCountdown = memo(function LaunchCountdown() {
-    const [timeLeft, setTimeLeft] = useState(START);
-
+    const [timeLeft, setTimeLeft] = useState(null);
     useEffect(() => {
+        if (!Number.isFinite(DEADLINE)) return;
         const timer = setInterval(() => {
-            setTimeLeft((prev) => {
-                let { days, hours, minutes, seconds } = prev;
-                if (seconds > 0) seconds--;
-                else {
-                    seconds = 59;
-                    if (minutes > 0) minutes--;
-                    else {
-                        minutes = 59;
-                        if (hours > 0) hours--;
-                        else {
-                            hours = 23;
-                            if (days > 0) days--;
-                        }
-                    }
-                }
-                return { days, hours, minutes, seconds };
+            const seconds = Math.max(0, Math.floor((DEADLINE - Date.now()) / 1000));
+            setTimeLeft(seconds === 0 ? false : {
+                days: Math.floor(seconds / 86400), hours: Math.floor(seconds / 3600) % 24,
+                minutes: Math.floor(seconds / 60) % 60, seconds: seconds % 60,
             });
         }, 1000);
         return () => clearInterval(timer);
     }, []);
+    if (!Number.isFinite(DEADLINE) || timeLeft === false) {
+        return <p className="t-body text-ink">Tell us your wedding date to check availability in Varanasi.</p>;
+    }
 
     return (
         <div className="w-fit rounded-media border border-gold/40 bg-ground-raised p-5 shadow-panel">
             <p className="t-label flex items-center gap-2 text-ink">
                 <FiClock aria-hidden="true" className="h-4 w-4 text-accent-ink" />
-                Launch offer: 20% off ends in
+                {OFFER_LABEL} ends {new Date(DEADLINE).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' })} IST
             </p>
 
             <div className="mt-3 flex items-center gap-3 text-center md:gap-4">
-                {Object.entries(timeLeft).map(([unit, value]) => (
+                {Object.entries(timeLeft || {}).map(([unit, value]) => (
                     <div key={unit} className="flex flex-col">
                         <div
                             className="grid h-14 w-14 place-items-center rounded-panel border border-accent/20

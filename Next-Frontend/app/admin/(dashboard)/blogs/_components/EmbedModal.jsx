@@ -34,7 +34,7 @@ const PROVIDER_HINTS = [
     { name: 'Instagram', icon: InstagramLogo, color: 'text-pink-600', example: 'instagram.com/reel/...' },
     { name: 'Spotify', icon: SpotifyLogo, color: 'text-emerald-500', example: 'open.spotify.com/track/...' },
     { name: 'Google Maps', icon: MapPin, color: 'text-amber-600', example: 'maps.google.com/...' },
-    { name: 'Pinterest', icon: PinterestLogo, color: 'text-red-600', example: 'pinterest.com/pin/...' },
+    { name: 'Pinterest', icon: PinterestLogo, color: 'text-accent-ink', example: 'pinterest.com/pin/...' },
     { name: 'Cloudflare', icon: FilmSlate, color: 'text-orange-500', example: 'videodelivery.net/...' },
 ];
 
@@ -157,7 +157,7 @@ export default function EmbedModal({
             embedUrl,
             thumbnail: selectedVideo.poster || '',
             title: selectedVideo.title,
-            author: 'The Wedding Boys',
+            author: 'The Wedding Vachan',
             aspectRatio: '16/9',
             caption: caption.trim() || `${selectedClient.title} Wedding Film`,
             clientRef: {
@@ -176,25 +176,25 @@ export default function EmbedModal({
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-xl font-sans">
-                <DialogHeader className="border-b border-[#E5DCD3] pb-3">
-                    <DialogTitle className="text-base font-bold text-[#1C1917] flex items-center gap-2">
-                        <Sparkle size={18} className="text-[#8C532B]" />
+                <DialogHeader className="border-b border-edge-subtle pb-3">
+                    <DialogTitle className="text-base font-bold text-ink flex items-center gap-2">
+                        <Sparkle size={18} className="text-accent-ink" />
                         Embed Rich Media
                     </DialogTitle>
-                    <DialogDescription className="text-xs text-stone-500">
+                    <DialogDescription className="text-xs text-ink-muted">
                         Embed streaming videos, Instagram reels, Spotify soundtracks, Google Maps venues, or studio portfolio films with performance-safe facades.
                     </DialogDescription>
                 </DialogHeader>
 
                 {/* Tabs Header */}
-                <div className="flex items-center gap-1 border-b border-[#E5DCD3] pt-1">
+                <div className="flex items-center gap-1 border-b border-edge-subtle pt-1">
                     <button
                         type="button"
                         onClick={() => setTab('link')}
                         className={`flex items-center gap-2 px-4 py-2 text-xs font-semibold border-b-2 transition-all cursor-pointer ${
                             tab === 'link'
-                                ? 'border-[#8C532B] text-[#8C532B]'
-                                : 'border-transparent text-stone-500 hover:text-stone-800'
+                                ? 'border-accent text-accent-ink'
+                                : 'border-transparent text-ink-muted hover:text-ink'
                         }`}
                     >
                         <LinkSimple size={15} />
@@ -205,8 +205,8 @@ export default function EmbedModal({
                         onClick={() => setTab('portfolio')}
                         className={`flex items-center gap-2 px-4 py-2 text-xs font-semibold border-b-2 transition-all cursor-pointer ${
                             tab === 'portfolio'
-                                ? 'border-[#8C532B] text-[#8C532B]'
-                                : 'border-transparent text-stone-500 hover:text-stone-800'
+                                ? 'border-accent text-accent-ink'
+                                : 'border-transparent text-ink-muted hover:text-ink'
                         }`}
                     >
                         <Sparkle size={15} />
@@ -218,7 +218,7 @@ export default function EmbedModal({
                 {tab === 'link' && (
                     <div className="space-y-4 py-3">
                         <div>
-                            <label className="block text-[11px] font-semibold text-stone-700 mb-1">
+                            <label className="block text-[11px] font-semibold text-ink-secondary mb-1">
                                 Media URL
                             </label>
                             <div className="relative">
@@ -227,19 +227,19 @@ export default function EmbedModal({
                                     value={url}
                                     onChange={(e) => handleUrlChange(e.target.value)}
                                     placeholder="Paste YouTube, Vimeo, Instagram Reel, Spotify, or Google Maps URL..."
-                                    className="w-full rounded-xl border border-[#E5DCD3] bg-stone-50 px-3 py-2 text-xs text-[#1C1917] placeholder:text-stone-400 focus:outline-none focus:border-[#8C532B] pr-8"
+                                    className="w-full rounded-xl border border-edge-subtle bg-ground px-3 py-2 text-xs text-ink placeholder:text-ink-muted focus:outline-none focus:border-accent pr-8"
                                     autoFocus
                                 />
                                 {resolving && (
-                                    <CircleNotch size={15} className="animate-spin text-[#8C532B] absolute right-2.5 top-2.5" />
+                                    <CircleNotch size={15} className="animate-spin text-accent-ink absolute right-2.5 top-2.5" />
                                 )}
                             </div>
                         </div>
 
                         {/* Supported Providers Pills */}
                         {!resolvedData && !resolveError && (
-                            <div className="rounded-xl border border-stone-200/80 bg-stone-50/50 p-3">
-                                <span className="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-2">
+                            <div className="rounded-xl border border-edge-subtle bg-ground/50 p-3">
+                                <span className="block text-[10px] font-bold uppercase tracking-wider text-ink-muted mb-2">
                                     Supported Platforms &amp; Facades
                                 </span>
                                 <div className="flex flex-wrap gap-1.5">
@@ -248,7 +248,7 @@ export default function EmbedModal({
                                         return (
                                             <span
                                                 key={h.name}
-                                                className="inline-flex items-center gap-1.5 rounded-lg bg-white border border-stone-200 px-2 py-1 text-[11px] text-stone-700 shadow-sm"
+                                                className="inline-flex items-center gap-1.5 rounded-lg bg-white border border-edge-subtle px-2 py-1 text-[11px] text-ink-secondary shadow-sm"
                                             >
                                                 <Icon size={12} className={h.color} />
                                                 <span>{h.name}</span>
@@ -268,30 +268,30 @@ export default function EmbedModal({
 
                         {/* Resolved Media Preview Card */}
                         {resolvedData && (
-                            <div className="rounded-xl border border-[#E5DCD3] bg-stone-50/60 p-3.5 space-y-3">
+                            <div className="rounded-xl border border-edge-subtle bg-ground/60 p-3.5 space-y-3">
                                 <div className="flex items-center justify-between">
                                     <Badge variant="success" size="sm" className="capitalize">
                                         {resolvedData.provider} Detected
                                     </Badge>
-                                    <span className="text-[10px] text-stone-400 font-mono">
+                                    <span className="text-[10px] text-ink-muted font-mono">
                                         Facade Ready
                                     </span>
                                 </div>
 
-                                <div className="flex items-center gap-3 bg-white p-2.5 rounded-lg border border-[#E5DCD3]">
+                                <div className="flex items-center gap-3 bg-white p-2.5 rounded-lg border border-edge-subtle">
                                     {resolvedData.thumbnail && (
                                         // eslint-disable-next-line @next/next/no-img-element
                                         <img
                                             src={resolvedData.thumbnail}
                                             alt="preview"
-                                            className="h-14 w-20 rounded-md object-cover bg-stone-100 shrink-0"
+                                            className="h-14 w-20 rounded-lg object-cover bg-ground-sunk shrink-0"
                                         />
                                     )}
                                     <div className="min-w-0 flex-1">
-                                        <h4 className="text-xs font-bold text-[#1C1917] truncate">
+                                        <h4 className="text-xs font-bold text-ink truncate">
                                             {resolvedData.title}
                                         </h4>
-                                        <p className="text-[11px] text-stone-500 truncate">
+                                        <p className="text-[11px] text-ink-muted truncate">
                                             {resolvedData.author || resolvedData.provider}
                                         </p>
                                     </div>
@@ -299,7 +299,7 @@ export default function EmbedModal({
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <div>
-                                        <label className="block text-[11px] font-semibold text-stone-600 mb-1">
+                                        <label className="block text-[11px] font-semibold text-ink-secondary mb-1">
                                             Caption (optional)
                                         </label>
                                         <input
@@ -307,17 +307,17 @@ export default function EmbedModal({
                                             value={caption}
                                             onChange={(e) => setCaption(e.target.value)}
                                             placeholder="e.g. Sangeet entry song"
-                                            className="w-full rounded-lg border border-[#E5DCD3] bg-white px-2.5 py-1.5 text-xs text-[#1C1917] focus:outline-none focus:border-[#8C532B]"
+                                            className="w-full rounded-lg border border-edge-subtle bg-white px-2.5 py-1.5 text-xs text-ink focus:outline-none focus:border-accent"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[11px] font-semibold text-stone-600 mb-1">
+                                        <label className="block text-[11px] font-semibold text-ink-secondary mb-1">
                                             Aspect Ratio
                                         </label>
                                         <select
                                             value={aspectRatio}
                                             onChange={(e) => setAspectRatio(e.target.value)}
-                                            className="w-full rounded-lg border border-[#E5DCD3] bg-white px-2.5 py-1.5 text-xs text-[#1C1917] font-medium focus:outline-none focus:border-[#8C532B]"
+                                            className="w-full rounded-lg border border-edge-subtle bg-white px-2.5 py-1.5 text-xs text-ink font-medium focus:outline-none focus:border-accent"
                                         >
                                             <option value="16/9">16:9 (Landscape Video)</option>
                                             <option value="9/16">9:16 (Vertical Reel / Shorts)</option>
@@ -336,23 +336,23 @@ export default function EmbedModal({
                 {tab === 'portfolio' && (
                     <div className="space-y-3 py-3">
                         <div className="relative">
-                            <MagnifyingGlass size={15} className="absolute left-3 top-2.5 text-stone-400" />
+                            <MagnifyingGlass size={15} className="absolute left-3 top-2.5 text-ink-muted" />
                             <input
                                 type="text"
                                 value={clientQuery}
                                 onChange={(e) => setClientQuery(e.target.value)}
                                 placeholder="Search couples (e.g. Rhea & Kabir) or venue..."
-                                className="w-full rounded-xl border border-[#E5DCD3] bg-stone-50 pl-9 pr-3 py-2 text-xs text-[#1C1917] focus:outline-none focus:border-[#8C532B]"
+                                className="w-full rounded-xl border border-edge-subtle bg-ground pl-9 pr-3 py-2 text-xs text-ink focus:outline-none focus:border-accent"
                             />
                         </div>
 
                         <div className="max-h-64 overflow-y-auto space-y-2 pr-1">
                             {loadingClients ? (
-                                <div className="py-8 text-center text-xs text-stone-400">
+                                <div className="py-8 text-center text-xs text-ink-muted">
                                     Searching studio portfolio...
                                 </div>
                             ) : clients.length === 0 ? (
-                                <div className="py-8 text-center text-xs text-stone-400">
+                                <div className="py-8 text-center text-xs text-ink-muted">
                                     No client films found. Create client profiles in Website Setting &gt; Clients.
                                 </div>
                             ) : (
@@ -363,13 +363,13 @@ export default function EmbedModal({
                                     return (
                                         <div
                                             key={c.id}
-                                            className="rounded-xl border border-[#E5DCD3] bg-stone-50/50 p-3 space-y-2"
+                                            className="rounded-xl border border-edge-subtle bg-ground/50 p-3 space-y-2"
                                         >
                                             <div className="flex items-center justify-between">
-                                                <h4 className="font-playfair text-sm font-bold text-[#1C1917]">
+                                                <h4 className="font-sans text-sm font-bold text-ink">
                                                     {c.title}
                                                 </h4>
-                                                <span className="text-[10px] text-stone-400 font-mono">
+                                                <span className="text-[10px] text-ink-muted font-mono">
                                                     {c.videos.length} video{c.videos.length > 1 ? 's' : ''}
                                                 </span>
                                             </div>
@@ -387,27 +387,27 @@ export default function EmbedModal({
                                                             }}
                                                             className={`w-full flex items-center justify-between p-2 rounded-lg border text-left text-xs transition-all cursor-pointer ${
                                                                 isSelected
-                                                                    ? 'border-[#8C532B] bg-white ring-1 ring-[#8C532B]/20'
-                                                                    : 'border-[#E5DCD3]/60 bg-white hover:border-stone-400'
+                                                                    ? 'border-accent bg-white ring-1 ring-accent/20'
+                                                                    : 'border-edge-subtle bg-white hover:border-edge-strong'
                                                             }`}
                                                         >
                                                             <div className="flex items-center gap-2.5 min-w-0">
-                                                                <div className="flex h-7 w-7 items-center justify-center rounded-md bg-[#8C532B]/10 text-[#8C532B] shrink-0">
+                                                                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent/10 text-accent-ink shrink-0">
                                                                     <Play size={12} weight="fill" />
                                                                 </div>
                                                                 <div className="min-w-0">
-                                                                    <div className="font-semibold truncate text-[#1C1917]">
+                                                                    <div className="font-semibold truncate text-ink">
                                                                         {vid.title}
                                                                     </div>
                                                                     {vid.venue && (
-                                                                        <div className="text-[10px] text-stone-500 truncate">
+                                                                        <div className="text-[10px] text-ink-muted truncate">
                                                                             📍 {vid.venue}
                                                                         </div>
                                                                     )}
                                                                 </div>
                                                             </div>
                                                             {isSelected && (
-                                                                <Check size={14} weight="bold" className="text-[#8C532B] shrink-0 ml-2" />
+                                                                <Check size={14} weight="bold" className="text-accent-ink shrink-0 ml-2" />
                                                             )}
                                                         </button>
                                                     );
@@ -421,7 +421,7 @@ export default function EmbedModal({
 
                         {selectedVideo && (
                             <div className="pt-2">
-                                <label className="block text-[11px] font-semibold text-stone-600 mb-1">
+                                <label className="block text-[11px] font-semibold text-ink-secondary mb-1">
                                     Showcase Caption
                                 </label>
                                 <input
@@ -429,14 +429,14 @@ export default function EmbedModal({
                                     value={caption}
                                     onChange={(e) => setCaption(e.target.value)}
                                     placeholder="e.g. Highlights from Rhea & Kabir’s Udaipur Palace Celebration"
-                                    className="w-full rounded-lg border border-[#E5DCD3] bg-white px-2.5 py-1.5 text-xs text-[#1C1917] focus:outline-none focus:border-[#8C532B]"
+                                    className="w-full rounded-lg border border-edge-subtle bg-white px-2.5 py-1.5 text-xs text-ink focus:outline-none focus:border-accent"
                                 />
                             </div>
                         )}
                     </div>
                 )}
 
-                <DialogFooter className="gap-2 border-t border-[#E5DCD3] pt-3">
+                <DialogFooter className="gap-2 border-t border-edge-subtle pt-3">
                     <Button variant="outline" size="sm" onClick={() => onOpenChange?.(false)}>
                         Cancel
                     </Button>

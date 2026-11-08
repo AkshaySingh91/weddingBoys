@@ -105,7 +105,7 @@ export default function HorizontalShowcase() {
             <div className="relative w-full max-w-7xl h-full flex flex-col md:flex-row items-center gap-8 md:gap-20">
 
               {/* Image Container (Softer, cinematic edges) */}
-              <div className="relative w-full md:w-1/2 h-1/2 md:h-full overflow-hidden rounded-sm border border-[#C9973A]/10 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+              <div className="relative w-full md:w-1/2 h-1/2 md:h-full overflow-hidden rounded-sm border border-gold/10 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
                 <div className="absolute inset-[-10%] w-[120%] h-[120%]">
                   <Image
                     src={flavor.image}
@@ -121,11 +121,11 @@ export default function HorizontalShowcase() {
 
               {/* Typography Box */}
               <div className="relative w-full md:w-1/2 flex flex-col justify-center pt-8 md:pt-0">
-                <span className="font-['Cinzel'] text-[60px] md:text-[120px] text-[#C9973A] opacity-5 leading-none absolute -top-10 -left-4 md:-top-20 md:-left-8 pointer-events-none select-none">
+                <span className="font-['Cinzel'] text-[60px] md:text-[120px] text-gold opacity-5 leading-none absolute -top-10 -left-4 md:-top-20 md:-left-8 pointer-events-none select-none">
                   {flavor.id}
                 </span>
 
-                <h2 className="font-['Cormorant_Garamond'] text-[clamp(36px,5vw,64px)] text-[#FAF6EE] font-light leading-[1.05] mb-3 relative z-10">
+                <h2 className="font-display text-[clamp(36px,5vw,64px)] text-[#FAF6EE] font-light leading-[1.05] mb-3 relative z-10">
                   {flavor.title}
                 </h2>
 

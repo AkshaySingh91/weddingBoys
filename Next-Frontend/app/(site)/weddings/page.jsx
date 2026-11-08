@@ -8,8 +8,8 @@ const api_url = process.env.NEXT_PUBLIC_API_URL;
 export const revalidate = 3600;
 
 export const metadata = {
-    title: 'Wedding stories | The Wedding Boys',
-    description: 'Real weddings filmed and photographed by The Wedding Boys: every ceremony, in the order it happened.',
+    title: 'Wedding stories | The Wedding Vachan',
+    description: 'Real weddings filmed and photographed by The Wedding Vachan: every ceremony, in the order it happened.',
     alternates: { canonical: `${SITE_URL}/weddings` },
 };
 

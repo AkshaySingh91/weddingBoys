@@ -107,7 +107,7 @@ const MemoryCard = ({ item, index }) => {
       transition={{ duration: 1, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative w-full ${item.aspect} mb-6 overflow-hidden group cursor-crosshair break-inside-avoid bg-[#0A0705] border border-[#C9973A]/5 shadow-xl`}
+      className={`relative w-full ${item.aspect} mb-6 overflow-hidden group cursor-crosshair break-inside-avoid bg-[#0A0705] border border-gold/5 shadow-xl`}
     >
       {/* Base Image (Acts as the poster) */}
       <motion.div
@@ -142,7 +142,7 @@ const MemoryCard = ({ item, index }) => {
       <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end">
 
         {/* Couple Name */}
-        <h4 className="font-['Cormorant_Garamond'] text-2xl md:text-3xl text-[#FAF6EE] font-light mb-2 group-hover:text-[#E2BC6E] transition-colors duration-500 z-10 transform translate-y-6 group-hover:translate-y-0 ease-out">
+        <h4 className="font-display text-2xl md:text-3xl text-[#FAF6EE] font-light mb-2 group-hover:text-[#E2BC6E] transition-colors duration-500 z-10 transform translate-y-6 group-hover:translate-y-0 ease-out">
           {item.couple}
         </h4>
 
@@ -150,22 +150,22 @@ const MemoryCard = ({ item, index }) => {
         <div className="grid grid-cols-2 gap-x-4 gap-y-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-700 delay-75 ease-out z-10">
 
           <div className="flex flex-col">
-            <span className="text-[9px] tracking-[0.2em] text-[#E8600A] uppercase mb-1">Location</span>
+            <span className="text-[9px] tracking-[0.2em] text-gold uppercase mb-1">Location</span>
             <span className="text-xs text-[#FAF6EE]/80 font-light">{item.location}</span>
           </div>
 
           <div className="flex flex-col">
-            <span className="text-[9px] tracking-[0.2em] text-[#E8600A] uppercase mb-1">Ritual</span>
+            <span className="text-[9px] tracking-[0.2em] text-gold uppercase mb-1">Ritual</span>
             <span className="text-xs text-[#FAF6EE]/80 font-light">{item.ritual}</span>
           </div>
 
           <div className="flex flex-col mt-2">
-            <span className="text-[9px] tracking-[0.2em] text-[#E8600A] uppercase mb-1">Time</span>
+            <span className="text-[9px] tracking-[0.2em] text-gold uppercase mb-1">Time</span>
             <span className="text-xs text-[#FAF6EE]/80 font-light">{item.time}</span>
           </div>
 
           <div className="flex flex-col mt-2">
-            <span className="text-[9px] tracking-[0.2em] text-[#E8600A] uppercase mb-1">Frame Mood</span>
+            <span className="text-[9px] tracking-[0.2em] text-gold uppercase mb-1">Frame Mood</span>
             <span className="text-xs text-[#FAF6EE]/80 font-light italic">{item.mood}</span>
           </div>
 
@@ -176,7 +176,7 @@ const MemoryCard = ({ item, index }) => {
       <motion.div
         animate={{ opacity: [0, 1, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-6 right-6 w-1.5 h-1.5 rounded-full bg-[#E8600A] opacity-0 group-hover:opacity-100 shadow-[0_0_10px_2px_rgba(232,96,10,0.5)]"
+        className="absolute top-6 right-6 w-1.5 h-1.5 rounded-full bg-accent opacity-0 group-hover:opacity-100 shadow-[0_0_10px_2px_rgba(232,96,10,0.5)]"
       />
     </motion.div>
   );
@@ -185,7 +185,7 @@ const MemoryCard = ({ item, index }) => {
 // ─── MAIN COMPONENT: GallerySection ───
 export default function GallerySection() {
   return (
-    <section className="relative w-full bg-[#0A0705] py-32 md:py-48 px-6 md:px-12 lg:px-24 overflow-hidden border-t border-[#C9973A]/10">
+    <section className="relative w-full bg-[#0A0705] py-32 md:py-48 px-6 md:px-12 lg:px-24 overflow-hidden border-t border-gold/10">
 
       {/* Background Ambience */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(201,151,58,0.03)_0%,_#0A0705_60%)] pointer-events-none" />
@@ -200,7 +200,7 @@ export default function GallerySection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1 }}
-              className="text-[#E8600A] text-[10px] tracking-[0.35em] uppercase mb-6 block font-semibold"
+              className="text-gold text-[10px] tracking-[0.35em] uppercase mb-6 block font-semibold"
             >
               The Portfolio
             </motion.span>
@@ -210,7 +210,7 @@ export default function GallerySection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1.2, delay: 0.2 }}
-              className="font-['Cormorant_Garamond'] text-[clamp(40px,5vw,70px)] text-[#FAF6EE] leading-[1.05] font-light"
+              className="font-display text-[clamp(40px,5vw,70px)] text-[#FAF6EE] leading-[1.05] font-light"
             >
               Memories, already <br className="hidden md:block" />
               <span className="italic text-[#E2BC6E]">in the making</span>

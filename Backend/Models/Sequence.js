@@ -10,6 +10,10 @@ const tierSchema = new mongoose.Schema({
     everyNth: { type: Number, default: 1 },        // 1 = all frames, 2 = every other, 3 = every third
     width: { type: Number },                       // frame width to request from the CDN
     quality: { type: Number, default: 75 },
+    keyPattern: { type: String },                   // actual immutable rendition keys
+    height: { type: Number },
+    format: { type: String, default: 'webp' },
+    bytes: { type: Number, default: 0 },
 }, { _id: false });
 
 const sequenceSchema = new mongoose.Schema({
@@ -19,13 +23,24 @@ const sequenceSchema = new mongoose.Schema({
     // Optional association (e.g. the Varanasi landing page).
     ownerType: { type: String, default: 'Website' },
     ownerId: { type: mongoose.Schema.Types.Mixed, default: null },
+    pageKey: { type: String, default: 'varanasi', index: true },
+    slot: { type: String, enum: ['hero', 'director'] },
+    releaseId: { type: String, index: true },
+    sourceMediaId: { type: String },
+    manifestKey: { type: String },
+    manifestUrl: { type: String },
+    totalBytes: { type: Number, default: 0 },
+    processedObjects: { type: Number, default: 0 },
+    expectedObjects: { type: Number, default: 0 },
+    lastError: { type: String },
+    publishedAt: { type: Date },
 
     // ---- Frame addressing ----
     // Full frame URL is built as: `${cdnBase}/${keyPattern}` with {index}
     // substituted and zero-padded to `padTo`. e.g.
     //   keyPattern: 'sequences/varanasi/frame_{index}.jpg', padTo: 4
     //   -> sequences/varanasi/frame_0007.jpg
-    keyPattern: { type: String, required: true },
+    keyPattern: { type: String },
     padTo: { type: Number, default: 4 },
     startIndex: { type: Number, default: 0 },
     frameCount: { type: Number, required: true },
@@ -35,6 +50,8 @@ const sequenceSchema = new mongoose.Schema({
     width: { type: Number },
     height: { type: Number },
     aspectRatio: { type: Number },
+    focalX: { type: Number, min: 0, max: 1, default: 0.5 },
+    focalY: { type: Number, min: 0, max: 1, default: 0.5 },
 
     // ---- Adaptive placeholder + tiers ----
     blurDataURL: { type: String },                 // first-frame blur, shown before frames load
@@ -50,8 +67,11 @@ const sequenceSchema = new mongoose.Schema({
 
     provider: { type: String, enum: ['S3', 'R2'], default: 'R2' },
     bucket: { type: String },
-    status: { type: String, enum: ['Draft', 'Ready', 'Archived'], default: 'Draft' },
+    status: { type: String, enum: ['Draft', 'Processing', 'Ready', 'Failed', 'Archived'], default: 'Draft' },
 }, { timestamps: true });
+
+sequenceSchema.index({ pageKey: 1, slot: 1, createdAt: -1 });
+sequenceSchema.index({ pageKey: 1, slot: 1, releaseId: 1 }, { unique: true, partialFilterExpression: { releaseId: { $type: 'string' } } });
 
 // Build the ordered list of frame keys for a given tier (applies frame-skip).
 sequenceSchema.methods.frameKeys = function frameKeys(everyNth = 1) {

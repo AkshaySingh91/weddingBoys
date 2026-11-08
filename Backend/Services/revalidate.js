@@ -8,11 +8,11 @@
  * windows still expire on their own, so a missed refresh is a delay, never an
  * error for the admin.
  *
- * Needs FRONTEND_URL and REVALIDATION_SECRET. Deliberately no fallback secret:
- * the blog path's hardcoded fallback is public (it ships in the browser bundle).
+ * Needs FRONTEND_URL and a private REVALIDATION_SECRET.
  * Without both variables this is a no-op, logged once.
  *
  * Tags in use:
+ *   blogs          journal list, article, category and sitemap dependencies
  *   portfolio      hero carousel, sitemap film/photo entries
  *   page:<key>     a CMS page (page:home is the home layout)
  */
@@ -31,6 +31,12 @@ export function queueRevalidate({ tags: t = [], paths: p = [] } = {}) {
 
 /** Portfolio content changed: hero, rows, sitemap. */
 export const revalidatePortfolio = () => queueRevalidate({ tags: ['portfolio'] });
+
+/** Blog mutations always originate on the trusted API, never in the browser. */
+export const revalidateBlogs = (...slugs) => queueRevalidate({
+    tags: ['blogs', 'portfolio'],
+    paths: ['/blogs', '/sitemap.xml', ...slugs.filter(Boolean).map((s) => `/blogs/${encodeURIComponent(s)}`)],
+});
 
 async function flush() {
     const body = { tags: [...tags], paths: [...paths] };

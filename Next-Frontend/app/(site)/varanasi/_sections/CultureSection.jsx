@@ -70,7 +70,7 @@ const CinematicPanel = ({ pillar, index }) => {
           className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ease-in-out"
         />
         {/* Subtle orange/gold glow multiplier on hover */}
-        <div className="absolute inset-0 bg-[#E8600A]/10 mix-blend-color-dodge opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+        <div className="absolute inset-0 bg-accent/10 mix-blend-color-dodge opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
       </motion.div>
 
       {/* Content */}
@@ -81,7 +81,7 @@ const CinematicPanel = ({ pillar, index }) => {
           <span className="text-2xl mb-4 block opacity-50 group-hover:opacity-100 transition-opacity duration-700">
             {pillar.icon}
           </span>
-          <h3 className="font-['Cormorant_Garamond'] text-3xl md:text-4xl text-[#C9973A] font-light mb-4 group-hover:text-[#FAF6EE] group-hover:drop-shadow-[0_0_15px_rgba(232,96,10,0.4)] transition-all duration-700">
+          <h3 className="font-display text-3xl md:text-4xl text-gold font-light mb-4 group-hover:text-[#FAF6EE] group-hover:drop-shadow-[0_0_15px_rgba(232,96,10,0.4)] transition-all duration-700">
             {pillar.title}
           </h3>
           <p className="text-[#8C7B6E] text-sm md:text-base font-light leading-relaxed group-hover:text-[#FAF6EE]/90 transition-colors duration-700 max-w-sm">
@@ -91,7 +91,7 @@ const CinematicPanel = ({ pillar, index }) => {
       </div>
 
       {/* Ambient Animated Border Glow on Hover */}
-      <div className="absolute inset-0 border border-transparent group-hover:border-[#C9973A]/20 z-30 transition-colors duration-1000 pointer-events-none" />
+      <div className="absolute inset-0 border border-transparent group-hover:border-gold/20 z-30 transition-colors duration-1000 pointer-events-none" />
     </motion.div>
   );
 };
@@ -113,7 +113,7 @@ export default function CultureSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1 }}
-            className="text-[#C9973A] text-[10px] tracking-[0.35em] uppercase mb-6 block"
+            className="text-gold text-[10px] tracking-[0.35em] uppercase mb-6 block"
           >
             The Soul of Kashi
           </motion.span>
@@ -123,10 +123,10 @@ export default function CultureSection() {
             whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             viewport={{ once: true }}
             transition={{ duration: 1.2, delay: 0.2 }}
-            className="font-['Cormorant_Garamond'] text-[clamp(40px,6vw,80px)] text-[#FAF6EE] leading-[1.05] font-light mb-8"
+            className="font-display text-[clamp(40px,6vw,80px)] text-[#FAF6EE] leading-[1.05] font-light mb-8"
           >
             This city is a <br className="hidden md:block" />
-            <span className="italic text-[#E8600A]">living frame</span>
+            <span className="italic text-gold">living frame</span>
           </motion.h2>
 
           <motion.p
@@ -153,7 +153,7 @@ export default function CultureSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1.5, delay: 0.5 }}
-          className="mt-32 pt-16 border-t border-[#C9973A]/10 relative"
+          className="mt-32 pt-16 border-t border-gold/10 relative"
         >
           {/* Animated Gold Line */}
           <motion.div
@@ -161,7 +161,7 @@ export default function CultureSection() {
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 2, ease: "easeInOut" }}
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-[1px] bg-gradient-to-r from-transparent via-[#C9973A]/40 to-transparent"
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-[1px] bg-gradient-to-r from-transparent via-gold/40 to-transparent"
           />
 
           <div className="flex flex-col md:flex-row justify-between items-center gap-12 text-center">
@@ -172,8 +172,8 @@ export default function CultureSection() {
               { label: "Remember", desc: "Forever, and then some" }
             ].map((step, i) => (
               <div key={i} className="flex-1 relative group cursor-default">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#E8600A]/30 mx-auto mb-6 group-hover:bg-[#E8600A] group-hover:shadow-[0_0_10px_2px_rgba(232,96,10,0.5)] transition-all duration-500" />
-                <h4 className="font-['Cormorant_Garamond'] text-2xl text-[#FAF6EE] font-light mb-2">{step.label}</h4>
+                <div className="w-1.5 h-1.5 rounded-full bg-accent/30 mx-auto mb-6 group-hover:bg-accent-hover group-hover:shadow-[0_0_10px_2px_rgba(232,96,10,0.5)] transition-all duration-500" />
+                <h4 className="font-display text-2xl text-[#FAF6EE] font-light mb-2">{step.label}</h4>
                 <p className="text-[10px] tracking-[0.15em] text-[#8C7B6E] uppercase">{step.desc}</p>
               </div>
             ))}

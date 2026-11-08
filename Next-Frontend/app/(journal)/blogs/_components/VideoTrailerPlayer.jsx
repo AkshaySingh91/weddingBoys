@@ -62,8 +62,8 @@ export default function VideoTrailerPlayer({
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="relative flex items-center justify-center">
             {/* Animated Pulse Ring */}
-            <div className="absolute w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#FF5353]/30 animate-ping" />
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#FF5353] group-hover:bg-[#E04242] group-hover:scale-110 text-white flex items-center justify-center shadow-lg transition-all duration-300">
+            <div className="absolute w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-accent/30 animate-ping" />
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-accent group-hover:bg-[#E04242] group-hover:scale-110 text-white flex items-center justify-center shadow-lg transition-all duration-300">
               <Play size={24} weight="fill" className="ml-1" />
             </div>
           </div>
@@ -72,7 +72,7 @@ export default function VideoTrailerPlayer({
         {/* Bottom Caption Bar (prompt-2.png) */}
         <div className="absolute bottom-0 inset-x-0 p-4 sm:p-5 flex items-center justify-between text-white bg-gradient-to-t from-black/90 to-transparent">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#FF5353] animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
             <p className="font-sans text-xs sm:text-sm font-semibold tracking-wide text-white drop-shadow-sm">
               {title}
             </p>

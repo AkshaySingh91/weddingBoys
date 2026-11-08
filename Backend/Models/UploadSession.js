@@ -41,11 +41,15 @@ const uploadSessionSchema = new mongoose.Schema({
 
     status: {
         type: String,
-        enum: ['Open', 'Completed', 'Aborted'],
+        enum: ['Open', 'Completing', 'Completed', 'Aborted'],
         default: 'Open',
         index: true,
     },
 
+    completionToken: String,
+    completionLockedAt: Date,
+    completionVersion: Number,
+    completionMeta: mongoose.Schema.Types.Mixed,
     createdBy: { type: String },         // admin email from the session token
     expiresAt: { type: Date, required: true },
 }, { timestamps: true });

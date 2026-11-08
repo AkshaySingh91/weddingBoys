@@ -15,6 +15,7 @@ import TestimonialsSection from "../_sections/TestimonialsSection";
 import FinalCTASection from "../_sections/FinalCTASection";
 import HorizontalShowcase from "../_sections/HorizontalShowcase";
 import DirectorSection from "../_sections/DirectorSection";
+import { localSequences } from '@/lib/sequence/defaultSequences.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -29,7 +30,7 @@ function makeParticles() {
   }));
 }
 
-export default function VaranasiPage() {
+export default function VaranasiPage({ sequences = {} }) {
   const pageRef = useRef(null);
   const ctaRef = useRef(null);
   const [particles, setParticles] = useState(null);
@@ -37,6 +38,7 @@ export default function VaranasiPage() {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setParticles(makeParticles());
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
 
     // Modern Lenis Instance
     const lenis = new Lenis({
@@ -53,14 +55,13 @@ export default function VaranasiPage() {
     // Sync Lenis with GSAP
     lenis.on("scroll", ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
+    const tick = (time) => {
       lenis.raf(time * 1000);
-    });
-
-    gsap.ticker.lagSmoothing(0);
+    };
+    gsap.ticker.add(tick);
 
     // Floating ambient background motion
-    gsap.to(".ambient-glow", {
+    const ambientTween = gsap.to(".ambient-glow", {
       y: -40,
       duration: 8,
       repeat: -1,
@@ -69,7 +70,7 @@ export default function VaranasiPage() {
     });
 
     // Subtle floating particles
-    gsap.to(".floating-particle", {
+    const particleTween = gsap.to(".floating-particle", {
       y: -25,
       opacity: 0.4,
       stagger: 0.3,
@@ -81,8 +82,9 @@ export default function VaranasiPage() {
 
     return () => {
       lenis.destroy();
-      gsap.ticker.remove(lenis.raf);
-      ScrollTrigger.killAll();
+      gsap.ticker.remove(tick);
+      ambientTween.kill();
+      particleTween.kill();
     };
 
   }, []);
@@ -104,7 +106,7 @@ export default function VaranasiPage() {
         overflow-hidden
         bg-gradient-to-b from-[#fceee6] to-[#FDE9D9]
         text-[#FAF6EE]
-        selection:bg-[#E8600A]/30
+        selection:bg-accent/30
         selection:text-white
       "
     >
@@ -182,9 +184,9 @@ export default function VaranasiPage() {
       {/* Page Content */}
       <div className="relative z-10">
 
-        <HeroSection onCTAClick={scrollToCTA} />
-        <DirectorSection/>
-        <HorizontalShowcase />
+        <HeroSection onCTAClick={scrollToCTA} sequence={sequences.hero || localSequences.hero} />
+        <DirectorSection sequence={sequences.director || localSequences.director} />
+        <div id="varanasi-after-motion"><HorizontalShowcase /></div>
         <WhyVaranasiSection />
 
         <GallerySection />

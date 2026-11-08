@@ -14,17 +14,17 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        'rounded-2xl border border-[#E5DCD3] bg-white p-12 text-center flex flex-col items-center justify-center shadow-sm font-sans',
+        'rounded-xl border border-edge-subtle bg-white p-12 text-center flex flex-col items-center justify-center shadow-sm font-sans',
         className
       )}
     >
-      <div className="w-12 h-12 rounded-2xl bg-[#FAF1E6] flex items-center justify-center text-[#A3603A] mb-3.5 border border-[#E5DCD3]">
+      <div className="w-12 h-12 rounded-xl bg-ground-sunk flex items-center justify-center text-accent-ink mb-3.5 border border-edge-subtle">
         {isValidElement(Icon) ? Icon : <Icon size={22} weight="duotone" />}
       </div>
-      <h3 className="font-serif text-base font-semibold text-[#1C1917] mb-1">
+      <h3 className="font-sans text-base font-semibold text-ink mb-1">
         {title}
       </h3>
-      <p className="text-xs text-stone-500 max-w-sm leading-relaxed mb-4">
+      <p className="text-xs text-ink-muted max-w-sm leading-relaxed mb-4">
         {description}
       </p>
       {action && <div>{action}</div>}

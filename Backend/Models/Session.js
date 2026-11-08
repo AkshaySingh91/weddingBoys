@@ -9,6 +9,8 @@ const sessionSchema = new mongoose.Schema({
         required: true,
         index: true,
     },
+    authVersion: { type: Number, default: 0 },
+    rememberMe: { type: Boolean, default: true },
     refreshTokenHash: { type: String, required: true, index: true },
     deviceFingerprint: { type: String },   // User-Agent string
     ipAddress: { type: String },

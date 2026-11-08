@@ -120,10 +120,10 @@ export default function BtsSchemaManagerPage() {
       />
 
       {/* Add Role Form Card */}
-      <div className="rounded-2xl border border-[#E5DCD3] bg-white p-6 shadow-sm space-y-4">
+      <div className="rounded-xl border border-edge-subtle bg-white p-6 shadow-sm space-y-4">
         <div className="flex items-center gap-2">
-          <IdentificationBadge size={18} weight="fill" className="text-[#A3603A]" />
-          <h2 className="text-base font-serif font-semibold text-[#1C1917]">
+          <IdentificationBadge size={18} weight="fill" className="text-accent-ink" />
+          <h2 className="text-base font-sans font-semibold text-ink">
             Add New Crew Role
           </h2>
         </div>
@@ -132,14 +132,14 @@ export default function BtsSchemaManagerPage() {
           <input
             type="text"
             placeholder="Role Title (e.g. Lead Cinematographer)"
-            className="flex-1 rounded-xl border border-[#E5DCD3] bg-white py-2.5 px-3.5 text-xs text-[#1C1917] placeholder:text-stone-400 outline-none transition focus:border-[#A3603A] focus:ring-1 focus:ring-[#A3603A]"
+            className="flex-1 rounded-xl border border-edge-subtle bg-white py-2.5 px-3.5 text-xs text-ink placeholder:text-ink-muted outline-none transition focus:border-accent focus:ring-1 focus:ring-accent"
             value={newRole.title}
             onChange={(e) => setNewRole({ ...newRole, title: e.target.value })}
           />
           <input
             type="text"
             placeholder="Schema Key (e.g. leadCamera)"
-            className="flex-1 rounded-xl border border-[#E5DCD3] bg-white py-2.5 px-3.5 text-xs text-[#1C1917] placeholder:text-stone-400 outline-none transition focus:border-[#A3603A] focus:ring-1 focus:ring-[#A3603A]"
+            className="flex-1 rounded-xl border border-edge-subtle bg-white py-2.5 px-3.5 text-xs text-ink placeholder:text-ink-muted outline-none transition focus:border-accent focus:ring-1 focus:ring-accent"
             value={newRole.key}
             onChange={(e) => setNewRole({ ...newRole, key: e.target.value })}
           />
@@ -157,25 +157,25 @@ export default function BtsSchemaManagerPage() {
 
       {/* Roles Grid */}
       {loading ? (
-        <div className="flex items-center justify-center p-20 text-sm text-stone-500">
-          <CircleNotch size={24} className="animate-spin text-[#A3603A] mr-2.5" />
+        <div className="flex items-center justify-center p-20 text-sm text-ink-muted">
+          <CircleNotch size={24} className="animate-spin text-accent-ink mr-2.5" />
           Loading crew roles…
         </div>
       ) : roles.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-[#E5DCD3] bg-white p-16 text-center shadow-sm">
-          <UsersThree size={32} className="mx-auto text-[#A3603A] mb-3" />
-          <h3 className="text-base font-serif font-semibold text-[#1C1917]">No crew roles configured</h3>
-          <p className="mt-1 text-xs text-stone-500">Define roles using the form above.</p>
+        <div className="rounded-xl border border-dashed border-edge-subtle bg-white p-16 text-center shadow-sm">
+          <UsersThree size={32} className="mx-auto text-accent-ink mb-3" />
+          <h3 className="text-base font-sans font-semibold text-ink">No crew roles configured</h3>
+          <p className="mt-1 text-xs text-ink-muted">Define roles using the form above.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {roles.map((role) => (
             <div
               key={role._id}
-              className="flex items-center justify-between rounded-2xl border border-[#E5DCD3] bg-white p-4 shadow-sm transition hover:border-[#A3603A]/60"
+              className="flex items-center justify-between rounded-xl border border-edge-subtle bg-white p-4 shadow-sm transition hover:border-accent/60"
             >
               <div className="min-w-0 pr-3">
-                <h3 className="truncate font-serif text-sm font-semibold text-[#1C1917]">
+                <h3 className="truncate font-sans text-sm font-semibold text-ink">
                   {role.title}
                 </h3>
                 <div className="mt-1 flex items-center gap-1.5">

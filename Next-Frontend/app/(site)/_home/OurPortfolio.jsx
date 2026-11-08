@@ -181,13 +181,13 @@ export default function OurPortfolio({ data } = {}) {
 
     return (
         <Section width="wide" rhythm="tight" id="ourPortfolio" aria-labelledby="portfolio-heading">
-            <div className="py-10 px-5 sm:px-7 lg:py-12 bg-gradient-to-b from-[#FFDCCC] to-[#FFF0E6] relative overflow-hidden lg:rounded-3xl sm:rounded-lg shadow-lg">
+            <div className="py-10 px-5 sm:px-7 lg:py-12 bg-gradient-to-b from-ground-sunk to-ground relative overflow-hidden lg:rounded-3xl sm:rounded-lg shadow-lg">
 
                 {/* henna top border */}
                 <div className="absolute top-0 left-0 w-full" aria-hidden="true">
                     <svg viewBox="0 0 1440 320" className="w-full">
                         <path
-                            fill="#FF6969"
+                            fill="var(--accent)"
                             fillOpacity="0.1"
                             d="M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,112C672,117,768,171,864,192C960,213,1056,203,1152,186.7C1248,171,1344,149,1392,138.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
                         ></path>
@@ -196,8 +196,8 @@ export default function OurPortfolio({ data } = {}) {
                 {/* Henna-inspired bottom Border */}
                 <div className="absolute bottom-0 left-0 w-full opacity-10 transform rotate-180" aria-hidden="true">
                     <svg viewBox="0 0 1440 120" className="w-full">
-                        <path fill="#FF6969" d="M0,120 C200,80 400,40 720,40 C1040,40 1240,80 1440,120 L1440,0 L0,0 Z"
-                            stroke="#FFD700" strokeWidth="2" strokeDasharray="4 4" />
+                        <path fill="var(--accent)" d="M0,120 C200,80 400,40 720,40 C1040,40 1240,80 1440,120 L1440,0 L0,0 Z"
+                            stroke="var(--gold)" strokeWidth="2" strokeDasharray="4 4" />
                     </svg>
                 </div>
                 {/* Floating Florals */}
@@ -206,8 +206,8 @@ export default function OurPortfolio({ data } = {}) {
                         {...loop({ rotate: [0, 15, 0] }, { duration: 8 })}
                         viewBox="0 0 24 24"
                     >
-                        <path fill="#FFD700" d="M12 2C8 2 4 6 4 12s4 10 8 10 8-4 8-10S16 2 12 2zm0 18c-3 0-6-3-6-6s3-6 6-6 6 3 6 6-3 6-6 6z" />
-                        <path fill="#FF6969" d="M12 6c-2 0-4 2-4 4s2 4 4 4 4-2 4-4-2-4-4-4z" />
+                        <path fill="var(--gold)" d="M12 2C8 2 4 6 4 12s4 10 8 10 8-4 8-10S16 2 12 2zm0 18c-3 0-6-3-6-6s3-6 6-6 6 3 6 6-3 6-6 6z" />
+                        <path fill="var(--accent)" d="M12 6c-2 0-4 2-4 4s2 4 4 4 4-2 4-4-2-4-4-4z" />
                     </motion.svg>
                 </div>
                 <motion.div
@@ -216,13 +216,13 @@ export default function OurPortfolio({ data } = {}) {
                     aria-hidden="true"
                 >
                     <svg viewBox="0 0 100 40">
-                        <path fill="none" stroke="#FF6969" strokeWidth="2"
+                        <path fill="none" stroke="var(--accent)" strokeWidth="2"
                             d="M0,20 Q20,0 40,20 T80,20 T120,20"
                             strokeDasharray="4 4" />
-                        <circle cx="10" cy="20" r="3" fill="#FFD700" />
-                        <circle cx="30" cy="20" r="3" fill="#FFD700" />
-                        <circle cx="50" cy="20" r="3" fill="#FFD700" />
-                        <circle cx="70" cy="20" r="3" fill="#FFD700" />
+                        <circle cx="10" cy="20" r="3" fill="var(--gold)" />
+                        <circle cx="30" cy="20" r="3" fill="var(--gold)" />
+                        <circle cx="50" cy="20" r="3" fill="var(--gold)" />
+                        <circle cx="70" cy="20" r="3" fill="var(--gold)" />
                     </svg>
                 </motion.div>
                 <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
@@ -239,7 +239,7 @@ export default function OurPortfolio({ data } = {}) {
                             transition={{ duration: floral.duration, repeat: Infinity }}
                         >
                             <svg viewBox="0 0 100 100">
-                                <path fill="none" stroke="#FF6969" strokeWidth="2"
+                                <path fill="none" stroke="var(--accent)" strokeWidth="2"
                                     d="M20,80 Q40,60 60,80 T100,80 M30,70 Q50,50 70,70" />
                             </svg>
                         </motion.div>
@@ -254,7 +254,7 @@ export default function OurPortfolio({ data } = {}) {
                     <svg viewBox="0 0 100 100">
                         <path
                             fill="none"
-                            stroke="#FFD700"
+                            stroke="var(--gold)"
                             strokeWidth="2"
                             d="M50,5a45,45 0 1,0 0,90a45,45 0 1,0 0,-90"
                             pathLength="1"
@@ -268,7 +268,7 @@ export default function OurPortfolio({ data } = {}) {
                     {particles?.map((particle, i) => (
                         <motion.div
                             key={i}
-                            className="absolute w-2 h-2 rounded-full bg-[#FF6969]/20"
+                            className="absolute w-2 h-2 rounded-full bg-accent/20"
                             initial={{ y: 0, x: particle.initialX }}
                             animate={{
                                 y: [0, 100, 0],
@@ -291,7 +291,7 @@ export default function OurPortfolio({ data } = {}) {
                     section and dragged a further 16px out of it. */}
                 <div className="max-w-7xl mx-auto relative">
                     <div className="text-center mb-8 lg:mb-10">
-                        <span className="text-desktopBodySmall uppercase tracking-widest bg-red-100 rounded-md px-2 py-1 text-red-400">
+                        <span className="text-desktopBodySmall uppercase tracking-widest bg-accent-wash rounded-md px-2 py-1 text-accent-ink">
                             Our portfolio
                         </span>
                         <h2
@@ -345,7 +345,7 @@ export default function OurPortfolio({ data } = {}) {
                             <button
                                 type="button"
                                 onClick={() => chooseCategory(firstTab)}
-                                className="mt-3 min-h-[44px] px-4 text-sm font-semibold text-red-400 hover:text-red-500 transition-colors"
+                                className="mt-3 min-h-[44px] px-4 text-sm font-semibold text-accent-ink hover:text-ink transition-colors"
                             >
                                 Show all work
                             </button>

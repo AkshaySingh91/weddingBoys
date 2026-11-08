@@ -45,7 +45,7 @@ async function seedBlogs() {
       author: admin._id,
       tags: ['Wedding Planning', 'Cinematography', 'Destination Weddings', 'India'],
       keywords: ['wedding videography india', 'destination wedding film', 'cinematic wedding guide', 'udaipur wedding video'],
-      metaTitle: 'The Ultimate Guide to Destination Wedding Cinematography in India | The Wedding Boys',
+      metaTitle: 'The Ultimate Guide to Destination Wedding Cinematography in India | The Wedding Vachan',
       metaDescription: 'Complete masterclass on planning wedding films in India. Timelines, sound recording, drone permits, and lighting guides.',
       readingTime: 6,
       seoScore: 96,
@@ -80,7 +80,7 @@ async function seedBlogs() {
         { name: 'Reserve Dedicated Golden Hour Session', text: 'Allow 30 uninterrupted minutes between the baraat and pheras for cinematic portrait movements.' }
       ],
       vendorCredits: [
-        { role: 'Cinematography', name: 'The Wedding Boys', url: 'https://theweddingboys.in' },
+        { role: 'Cinematography', name: 'The Wedding Vachan', url: 'https://theweddingvachan.com' },
         { role: 'Curated Venues', name: 'Rajasthan Heritage Castles' }
       ],
       content: `<h2>Why Cinematic Storytelling Outlasts Traditional Coverage</h2><p>Your wedding day is an emotional whirlwind of fleeting glances: the gentle tremor in the father's hand during the kanyadaan, the burst of laughter over joota chupai, and the quiet tear that falls during the bidaai. While still photographs freeze individual seconds, cinematic filmmaking captures the rhythm, cadence, and breath of your celebration.</p><p>Unlike traditional videography which logs hours of static tripod recording, modern cinematic wedding films treat your union like high-art cinema. Every frame is graded in tailored 3D LUTs, accompanied by bespoke soundscapes crafted from real vows, family toasts, and ambient courtyard flutes.</p><h2>Sculpting the Timeline for Natural Golden Hour Light</h2><p>Lighting is the lifeblood of cinematic motion picture. When planning your palace courtyard or beach mandap, align key moments with the golden hour. A pheras ceremony bathed in soft 5500K natural sunlight creates a dreamy halo around the sacred fire that no artificial light can replicate.</p><h2>The Invisible Half of Cinema: Sound & Vows</h2><p>George Lucas famously noted that sound is 50 percent of the movie-going experience. In Indian weddings, where dhol beats and chants fill the air, directional hypercardioid audio ensures that the whispered exchange between bride and groom stands out with poignant intimacy.</p>`,
@@ -147,7 +147,7 @@ async function seedBlogs() {
       author: admin._id,
       tags: ['Real Weddings', 'Udaipur', 'Palace Weddings', 'Rajasthan', 'Luxury Weddings'],
       keywords: ['udaipur real wedding', 'lake pichola wedding film', 'taj lake palace wedding', 'royal indian wedding'],
-      metaTitle: 'Ananya & Kabir: Royal Udaipur Wedding Film | The Wedding Boys',
+      metaTitle: 'Ananya & Kabir: Royal Udaipur Wedding Film | The Wedding Vachan',
       metaDescription: 'Step inside Ananya and Kabir’s 3-day royal palace wedding in Udaipur. Watch the full cinematic trailer and explore wedding inspiration.',
       readingTime: 5,
       seoScore: 98,
@@ -175,12 +175,12 @@ async function seedBlogs() {
         url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         title: 'Ananya & Kabir | Official 4K Wedding Film Trailer',
         duration: '03:45',
-        thumbnail: 'https://media.theweddingboys.in/client/67e055820f15ebfba3ee504b/1D7ntEi1Cp3v/orig.jpg'
+        thumbnail: 'https://media.theweddingvachan.com/client/67e055820f15ebfba3ee504b/1D7ntEi1Cp3v/orig.jpg'
       },
       testimonial: 'The Wedding Boys gave us something that feels like a Sanjay Leela Bhansali motion picture, yet remains completely authentic to who we are as a couple. We have watched our trailer over a hundred times with tears of joy.',
       testimonialAuthor: 'Ananya & Kabir — The Bride & Groom',
       vendorCredits: [
-        { role: 'Cinematography & Film', name: 'The Wedding Boys', url: 'https://theweddingboys.in', instagram: '@theweddingboys' },
+        { role: 'Cinematography & Film', name: 'The Wedding Vachan', url: 'https://theweddingvachan.com', instagram: '@theweddingvachannn' },
         { role: 'Venue', name: 'The Leela Palace & Jag Mandir Island, Udaipur', url: 'https://theleela.com', instagram: '@theleelapalace' },
         { role: 'Bridal Couture', name: 'Sabyasachi Mukherjee', instagram: '@sabyasachiofficial' },
         { role: 'Groom Couture', name: 'Tarun Tahiliani', instagram: '@taruntahiliani' },
@@ -215,8 +215,8 @@ async function seedBlogs() {
             attrs: {
               layout: 'grid-2',
               images: [
-                { url: 'https://media.theweddingboys.in/review/sMAWYBQgJEWB/orig.jpg', alt: 'Ananya in bridal ivory couture', caption: 'Ananya in handcrafted bridal ivory couture adorned with emerald heirlooms' },
-                { url: 'https://media.theweddingboys.in/review/Nou40WfY3Pvu/orig.jpg', alt: 'Sunlit marble corridor overlooking Lake Pichola', caption: 'The sunlit marble corridor overlooking the calm waters of Lake Pichola' }
+                { url: 'https://media.theweddingvachan.com/review/sMAWYBQgJEWB/orig.jpg', alt: 'Ananya in bridal ivory couture', caption: 'Ananya in handcrafted bridal ivory couture adorned with emerald heirlooms' },
+                { url: 'https://media.theweddingvachan.com/review/Nou40WfY3Pvu/orig.jpg', alt: 'Sunlit marble corridor overlooking Lake Pichola', caption: 'The sunlit marble corridor overlooking the calm waters of Lake Pichola' }
               ]
             }
           },
@@ -234,7 +234,7 @@ async function seedBlogs() {
             attrs: {
               layout: 'grid-1',
               images: [
-                { url: 'https://media.theweddingboys.in/client/67e05bb60f15ebfba3ee509b/sGZNN2jIaQma/orig.jpg', alt: 'Courtyard sangeet under starry skies', caption: 'The lantern-lit courtyard sangeet under starry Rajasthani night skies' }
+                { url: 'https://media.theweddingvachan.com/client/67e05bb60f15ebfba3ee509b/sGZNN2jIaQma/orig.jpg', alt: 'Courtyard sangeet under starry skies', caption: 'The lantern-lit courtyard sangeet under starry Rajasthani night skies' }
               ]
             }
           },
@@ -252,8 +252,8 @@ async function seedBlogs() {
             attrs: {
               layout: 'grid-2',
               images: [
-                { url: 'https://media.theweddingboys.in/client/67e05bb60f15ebfba3ee509b/POyAD5Y51q_E/orig.jpg', alt: 'Sacred saat phere at twilight', caption: 'The sacred saat phere around the holy agni at twilight' },
-                { url: 'https://media.theweddingboys.in/client/67e055820f15ebfba3ee504b/1D7ntEi1Cp3v/orig.jpg', alt: 'Ananya and Kabir wedding portrait', caption: 'Pure joy as Ananya and Kabir step forward into their new beginning' }
+                { url: 'https://media.theweddingvachan.com/client/67e05bb60f15ebfba3ee509b/POyAD5Y51q_E/orig.jpg', alt: 'Sacred saat phere at twilight', caption: 'The sacred saat phere around the holy agni at twilight' },
+                { url: 'https://media.theweddingvachan.com/client/67e055820f15ebfba3ee504b/1D7ntEi1Cp3v/orig.jpg', alt: 'Ananya and Kabir wedding portrait', caption: 'Pure joy as Ananya and Kabir step forward into their new beginning' }
               ]
             }
           }
@@ -274,7 +274,7 @@ async function seedBlogs() {
       author: admin._id,
       tags: ['Photo Essays', 'Varanasi', 'Intimate Weddings', 'Spiritual Weddings', 'Candid Photography'],
       keywords: ['varanasi wedding photo essay', 'ganga aarti wedding', 'intimate wedding varanasi', 'candid wedding photographer'],
-      metaTitle: 'Sacred Dawn on the Ghats: A Varanasi Photo Essay | The Wedding Boys',
+      metaTitle: 'Sacred Dawn on the Ghats: A Varanasi Photo Essay | The Wedding Vachan',
       metaDescription: 'A visual celebration of love in the spiritual capital of India. Explore our photo essay of an intimate Ganga Aarti dawn wedding.',
       readingTime: 3,
       seoScore: 92,
@@ -320,7 +320,7 @@ async function seedBlogs() {
       author: admin._id,
       tags: ['Cinematography', 'Director Journal', 'Philosophy', 'Craft'],
       keywords: ['unposed wedding cinema', 'documentary wedding films', 'cinematography philosophy', 'wedding filmmaking craft'],
-      metaTitle: 'The Art of the Unposed Moment: A Director’s Journal | The Wedding Boys',
+      metaTitle: 'The Art of the Unposed Moment: A Director’s Journal | The Wedding Vachan',
       metaDescription: 'Why directing real couples destroys the magic of weddings. Studio director thoughts on candid wedding documentary cinema.',
       readingTime: 4,
       seoScore: 91,
@@ -328,7 +328,7 @@ async function seedBlogs() {
       isPublished: true,
       publishedAt: new Date('2026-08-28T15:00:00Z'),
       views: 1890,
-      content: `<h2>The Fallacy of the Endless Pose</h2><p>For decades, wedding videography meant a director shouting instructions: 'Look here, smile wider, twirl again, fake laugh for the drone!' But true emotion cannot be manufactured on command.</p><p>When you ask a nervous bride to repeat her tears for a second angle, you kill the truth of that second. The cinema we pursue at The Wedding Boys relies on patience. We fade into the architecture. We wait with 85mm primes and quiet breathing until reality unfolds.</p>`,
+      content: `<h2>The Fallacy of the Endless Pose</h2><p>For decades, wedding videography meant a director shouting instructions: 'Look here, smile wider, twirl again, fake laugh for the drone!' But true emotion cannot be manufactured on command.</p><p>When you ask a nervous bride to repeat her tears for a second angle, you kill the truth of that second. The cinema we pursue at The Wedding Vachan relies on patience. We fade into the architecture. We wait with 85mm primes and quiet breathing until reality unfolds.</p>`,
       contentJson: {
         type: 'doc',
         content: [
@@ -343,7 +343,7 @@ async function seedBlogs() {
           },
           {
             type: 'paragraph',
-            content: [{ type: 'text', text: 'When you ask a nervous bride to repeat her tears for a second angle, you kill the truth of that second. The cinema we pursue at The Wedding Boys relies on patience. We fade into the architecture. We wait with 85mm primes and quiet breathing until reality unfolds.' }]
+            content: [{ type: 'text', text: 'When you ask a nervous bride to repeat her tears for a second angle, you kill the truth of that second. The cinema we pursue at The Wedding Vachan relies on patience. We fade into the architecture. We wait with 85mm primes and quiet breathing until reality unfolds.' }]
           },
           {
             type: 'blockquote',
@@ -370,7 +370,7 @@ async function seedBlogs() {
       author: admin._id,
       tags: ['Real Weddings', 'Goa', 'Beach Weddings', 'Destination Weddings', 'Bohemian Weddings'],
       keywords: ['goa wedding film', 'beach wedding cinematography', 'morjim destination wedding', 'boho wedding india'],
-      metaTitle: 'Rhea & Siddharth: Bohemian Beach Wedding in Goa | The Wedding Boys',
+      metaTitle: 'Rhea & Siddharth: Bohemian Beach Wedding in Goa | The Wedding Vachan',
       metaDescription: 'Experience the relaxed coastal magic of Rhea and Siddharth’s wedding film in Goa. Beach pheras, acoustic sundowners, and wild sangeet moments.',
       readingTime: 4,
       seoScore: 94,
@@ -385,7 +385,7 @@ async function seedBlogs() {
       ],
       testimonial: 'The film feels exactly like our weekend in Goa — warm, breezy, salty, and completely unpretentious. Every friend who watched it cried and danced.',
       vendorCredits: [
-        { role: 'Cinematography', name: 'The Wedding Boys', url: 'https://theweddingboys.in' },
+        { role: 'Cinematography', name: 'The Wedding Vachan', url: 'https://theweddingvachan.com' },
         { role: 'Venue', name: 'Alila Diwa Goa' },
         { role: 'Event Design', name: 'The A-Cube Project' },
         { role: 'Bridal Ensemble', name: 'Arpita Mehta' }
@@ -429,7 +429,7 @@ async function seedBlogs() {
       author: admin._id,
       tags: ['Planning Guides', 'Lighting', 'Cinematography Craft', 'Mandap Design'],
       keywords: ['wedding lighting guide', 'mandap lighting for video', 'sangeet stage lighting tips', 'cinematography lighting'],
-      metaTitle: 'Mastering Wedding Ceremony Lighting | The Wedding Boys Guide',
+      metaTitle: 'Mastering Wedding Ceremony Lighting | The Wedding Vachan Guide',
       metaDescription: 'The ultimate couple guide to wedding lighting. How color temperature, diffusion, and position transform your cinematic film.',
       readingTime: 6,
       seoScore: 97,
@@ -496,8 +496,8 @@ async function seedBlogs() {
       author: admin._id,
       tags: ['Photo Essays', 'Jaipur', 'Palaces', 'Rajputana', 'Architecture'],
       keywords: ['jaipur wedding photography', 'rambagh palace wedding', 'samode palace photoshoot', 'heritage bridal portraits'],
-      metaTitle: 'Heritage Palaces of Jaipur: A Visual Essay | The Wedding Boys',
-      metaDescription: 'Explore the architectural majesty of Jaipur’s iconic heritage palaces through the lenses of The Wedding Boys cinematographers.',
+      metaTitle: 'Heritage Palaces of Jaipur: A Visual Essay | The Wedding Vachan',
+      metaDescription: 'Explore the architectural majesty of Jaipur’s iconic heritage palaces through the lenses of The Wedding Vachan cinematographers.',
       readingTime: 3,
       seoScore: 93,
       status: 'Published',
@@ -534,7 +534,7 @@ async function seedBlogs() {
       author: admin._id,
       tags: ['Planning Guides', 'Hiring Advice', 'Cinematography', 'Vendor Selection'],
       keywords: ['questions for wedding videographer', 'booking wedding cinematographer', 'wedding film contract checklist'],
-      metaTitle: '10 Questions to Ask Your Wedding Cinematographer | The Wedding Boys',
+      metaTitle: '10 Questions to Ask Your Wedding Cinematographer | The Wedding Vachan',
       metaDescription: 'Essential interview checklist before hiring your wedding film team. Music rights, delivery timelines, backup protocols, and editing revisions.',
       readingTime: 7,
       seoScore: 99,
@@ -598,7 +598,7 @@ async function seedBlogs() {
       author: admin._id,
       tags: ['Real Weddings', 'Mumbai', 'Modern Weddings', 'Black Tie', 'Urban Weddings'],
       keywords: ['mumbai wedding film', 'rooftop wedding marine drive', 'black tie indian wedding', 'modern wedding cinematography'],
-      metaTitle: 'Tarun & Meera: Modern Mumbai Skyline Wedding | The Wedding Boys',
+      metaTitle: 'Tarun & Meera: Modern Mumbai Skyline Wedding | The Wedding Vachan',
       metaDescription: 'Watch Tarun and Meera’s modern black-tie wedding film above Mumbai’s Queen’s Necklace. Contemporary romance captured on cinema primes.',
       readingTime: 4,
       seoScore: 95,
@@ -612,7 +612,7 @@ async function seedBlogs() {
       ],
       testimonial: 'The Wedding Boys understood our aesthetic completely. We didn’t want palace pomp; we wanted sleek urban cinema with jazz chords and honest laughter. They delivered beyond our wildest expectations.',
       vendorCredits: [
-        { role: 'Cinematography', name: 'The Wedding Boys', url: 'https://theweddingboys.in' },
+        { role: 'Cinematography', name: 'The Wedding Vachan', url: 'https://theweddingvachan.com' },
         { role: 'Venue', name: 'The Taj Mahal Palace, Colaba' },
         { role: 'Event Design', name: 'Devika Narain & Company' }
       ],
@@ -655,7 +655,7 @@ async function seedBlogs() {
       author: admin._id,
       tags: ['Cinematography', 'Archival Legacy', 'Heritage', '4K Master'],
       keywords: ['archival wedding film', 'wedding video preservation', '4k wedding master', 'family heritage cinema'],
-      metaTitle: 'Why Archival 4K Wedding Films Matter 20 Years Later | The Wedding Boys',
+      metaTitle: 'Why Archival 4K Wedding Films Matter 20 Years Later | The Wedding Vachan',
       metaDescription: 'Reflections on the lasting archival value of wedding motion pictures. Preserving voices, laughter, and heritage for future generations.',
       readingTime: 5,
       seoScore: 92,

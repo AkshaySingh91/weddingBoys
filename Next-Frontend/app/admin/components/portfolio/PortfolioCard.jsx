@@ -29,8 +29,8 @@ export default function PortfolioCard({ item, selected, onToggle, onOpen }) {
     return (
         <div
             className={cn(
-                'group relative overflow-hidden rounded-2xl border bg-white transition-all',
-                selected ? 'border-[#8C532B] ring-2 ring-[#8C532B]/25' : 'border-[#E5DCD3] hover:border-stone-400',
+                'group relative overflow-hidden rounded-xl border bg-white transition-all',
+                selected ? 'border-accent ring-2 ring-accent/25' : 'border-edge-subtle hover:border-edge-strong',
             )}
         >
             <button
@@ -39,9 +39,9 @@ export default function PortfolioCard({ item, selected, onToggle, onOpen }) {
                 aria-pressed={selected}
                 aria-label={selected ? 'Deselect item' : 'Select item'}
                 className={cn(
-                    'absolute left-2 top-2 z-20 flex h-6 w-6 items-center justify-center rounded-md border transition',
+                    'absolute left-2 top-2 z-20 flex h-6 w-6 items-center justify-center rounded-lg border transition',
                     selected
-                        ? 'border-[#8C532B] bg-[#8C532B] text-white'
+                        ? 'border-accent bg-accent text-white'
                         : 'border-white/70 bg-black/30 text-transparent backdrop-blur-sm hover:text-white/70',
                 )}
             >
@@ -51,7 +51,7 @@ export default function PortfolioCard({ item, selected, onToggle, onOpen }) {
             <button
                 type="button"
                 onClick={() => onOpen(item)}
-                className="relative block aspect-[4/3] w-full overflow-hidden bg-stone-100"
+                className="relative block aspect-[4/3] w-full overflow-hidden bg-ground-sunk"
             >
                 {poster ? (
                     <Image
@@ -74,37 +74,37 @@ export default function PortfolioCard({ item, selected, onToggle, onOpen }) {
                             playsInline
                             className="h-full w-full object-cover pointer-events-none"
                         />
-                        <span className="absolute bottom-1.5 left-1.5 flex items-center gap-1 rounded bg-black/70 px-1 py-0.5 text-[9px] font-medium text-white">
+                        <span className="absolute bottom-1.5 left-1.5 flex items-center gap-1 rounded-lg bg-black/70 px-1 py-0.5 text-[9px] font-medium text-white">
                             <FilmSlate size={10} /> Video
                         </span>
                     </div>
                 ) : (
-                    <span className="flex h-full w-full items-center justify-center text-stone-400">
+                    <span className="flex h-full w-full items-center justify-center text-ink-muted">
                         {isVideo ? <FilmSlate size={30} /> : <ImageSquare size={30} />}
                     </span>
                 )}
 
                 <span className="absolute right-2 top-2 z-10 flex gap-1">
                     {item.isHero && (
-                        <span className="flex items-center gap-1 rounded-md bg-amber-500/90 px-1.5 py-0.5 text-[10px] font-semibold text-white shadow-sm">
+                        <span className="flex items-center gap-1 rounded-lg bg-amber-500/90 px-1.5 py-0.5 text-[10px] font-semibold text-white shadow-sm">
                             <Star size={10} weight="fill" /> {item.heroPriority}
                         </span>
                     )}
                     {item.status !== 'Published' && (
-                        <span className="rounded-md bg-stone-900/80 px-1.5 py-0.5 text-[10px] font-semibold text-white">
+                        <span className="rounded-lg bg-ink/80 px-1.5 py-0.5 text-[10px] font-semibold text-white">
                             {item.status}
                         </span>
                     )}
                 </span>
 
-                <span className="absolute bottom-2 left-2 z-10 flex items-center gap-1 rounded-md bg-black/55 px-1.5 py-0.5 text-[10px] font-medium text-white backdrop-blur-sm">
+                <span className="absolute bottom-2 left-2 z-10 flex items-center gap-1 rounded-lg bg-black/55 px-1.5 py-0.5 text-[10px] font-medium text-white backdrop-blur-sm">
                     {isVideo ? <FilmSlate size={10} /> : <ImageSquare size={10} />}
                     P{item.generalPriority ?? 0}
                 </span>
             </button>
 
             <div className="space-y-1.5 p-2.5">
-                <p className="truncate text-xs font-medium text-stone-800">{nameOf(item)}</p>
+                <p className="truncate text-xs font-medium text-ink">{nameOf(item)}</p>
                 <div className="flex flex-wrap gap-1">
                     {(item.tags || []).slice(0, 3).map((t) => (
                         <Badge key={t} size="sm" variant="terracotta">{t}</Badge>

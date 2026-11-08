@@ -84,19 +84,19 @@ export default function MediaControls({ item, onChanged }) {
     };
 
     return (
-        <div className="rounded-2xl border border-stone-200 bg-white p-5 space-y-4 shadow-xs">
+        <div className="rounded-xl border border-edge-subtle bg-white p-5 space-y-4 shadow-xs">
             <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs font-semibold uppercase tracking-wider text-stone-500">On the site</span>
-                {chip && <span className={cn('rounded-md px-1.5 py-0.5 text-[10px] font-semibold text-white', chip.cls)}>{chip.label}</span>}
-                {item.pendingMedia && <span className="rounded-md bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold text-amber-900">New file processing</span>}
+                <span className="text-xs font-semibold uppercase tracking-wider text-ink-muted">On the site</span>
+                {chip && <span className={cn('rounded-lg px-1.5 py-0.5 text-[10px] font-semibold text-white', chip.cls)}>{chip.label}</span>}
+                {item.pendingMedia && <span className="rounded-lg bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold text-amber-900">New file processing</span>}
             </div>
             {item.visibility && !item.visibility.public && (
-                <ul className="list-disc space-y-0.5 pl-5 text-xs text-stone-600">
+                <ul className="list-disc space-y-0.5 pl-5 text-xs text-ink-secondary">
                     {item.visibility.reasons.map((r) => <li key={r}>Not shown: {REASON_TEXT[r] || r}</li>)}
                 </ul>
             )}
 
-            <label className="flex items-center gap-2 text-xs text-stone-700">
+            <label className="flex items-center gap-2 text-xs text-ink-secondary">
                 <span className="font-semibold">Spotlight</span>
                 <input
                     type="number" min={0} max={100} defaultValue={item.spotlight ?? 0}
@@ -106,19 +106,19 @@ export default function MediaControls({ item, onChanged }) {
                         const r = await run(() => call(`/api/admin/portfolio/${item._id}`, 'PATCH', { spotlight: v }), 'Spotlight saved');
                         if (r) onChanged?.({ spotlight: v });
                     }}
-                    className="h-7 w-16 rounded border border-stone-300 px-2 text-xs"
+                    className="h-7 w-16 rounded-lg border border-edge-strong px-2 text-xs"
                 />
-                <span className="text-stone-500">0–100; rows sorted &ldquo;Featured first&rdquo; show higher first</span>
+                <span className="text-ink-muted">0–100; rows sorted &ldquo;Featured first&rdquo; show higher first</span>
             </label>
 
             <div className="space-y-1">
-                <p className="text-xs font-semibold text-stone-700">Appears in</p>
-                {placements === null ? <p className="text-xs text-stone-400">Checking rows…</p>
+                <p className="text-xs font-semibold text-ink-secondary">Appears in</p>
+                {placements === null ? <p className="text-xs text-ink-muted">Checking rows…</p>
                     : placements.length ? (
-                        <ul className="space-y-0.5 text-xs text-stone-600">
+                        <ul className="space-y-0.5 text-xs text-ink-secondary">
                             {placements.map((p) => (
                                 <li key={p._id}>
-                                    <Link href={`/admin/collections/${p._id}`} className="text-[#D9342A] hover:underline">{p.title}</Link>
+                                    <Link href={`/admin/collections/${p._id}`} className="text-accent-ink hover:underline">{p.title}</Link>
                                     {p.shown ? ` — position ${p.position}` : ''}
                                     {p.pinned ? ' (pinned)' : ''}
                                     {p.hidden ? ' — hidden in this row' : ''}
@@ -127,20 +127,20 @@ export default function MediaControls({ item, onChanged }) {
                                 </li>
                             ))}
                         </ul>
-                    ) : <p className="text-xs text-stone-500">No row shows it.</p>}
+                    ) : <p className="text-xs text-ink-muted">No row shows it.</p>}
             </div>
 
             {external && (
-                <p className="flex items-center gap-1.5 text-xs text-stone-600">
+                <p className="flex items-center gap-1.5 text-xs text-ink-secondary">
                     <LinkSimple size={13} />
                     Plays from {external === 'youtube' ? 'YouTube' : 'Vimeo'}:
-                    <a href={item.external.url} target="_blank" rel="noreferrer" className="truncate text-[#D9342A] hover:underline">{item.external.url}</a>
+                    <a href={item.external.url} target="_blank" rel="noreferrer" className="truncate text-accent-ink hover:underline">{item.external.url}</a>
                 </p>
             )}
 
             {isVideo && (
                 <div className="space-y-2">
-                    <p className="text-xs font-semibold text-stone-700">Poster</p>
+                    <p className="text-xs font-semibold text-ink-secondary">Poster</p>
                     <div className="flex flex-wrap gap-2">
                         <Button type="button" variant="outline" size="sm" icon={ImageSquare} disabled={busy} onClick={photos ? () => setPhotos(null) : loadPhotos}>
                             {photos ? 'Close' : 'Choose from this wedding\'s photos'}
@@ -155,13 +155,13 @@ export default function MediaControls({ item, onChanged }) {
                         <div className="grid grid-cols-4 gap-2">
                             {photos.map((p) => (
                                 <button key={p._id} type="button" disabled={busy} onClick={() => choosePoster(p)}
-                                    className="relative aspect-video overflow-hidden rounded-lg border border-stone-200 hover:border-[#D9342A]">
+                                    className="relative aspect-video overflow-hidden rounded-lg border border-edge-subtle hover:border-accent">
                                     {/* eslint-disable-next-line @next/next/no-img-element -- admin thumbnail */}
                                     <img src={p.render?.imageUrl} alt="" className="h-full w-full object-cover" />
                                 </button>
                             ))}
                         </div>
-                    ) : <p className="text-xs text-stone-500">This wedding has no processed photos yet.</p>)}
+                    ) : <p className="text-xs text-ink-muted">This wedding has no processed photos yet.</p>)}
                 </div>
             )}
 
@@ -172,7 +172,7 @@ export default function MediaControls({ item, onChanged }) {
                     </Button>
                     {showReplace && (
                         <>
-                            <p className="text-[11px] text-stone-500">The item keeps its tags, order and address; visitors see the old file until the new one is ready.</p>
+                            <p className="text-[11px] text-ink-muted">The item keeps its tags, order and address; visitors see the old file until the new one is ready.</p>
                             <Uploader
                                 ownerType="Client"
                                 ownerId={clientId}

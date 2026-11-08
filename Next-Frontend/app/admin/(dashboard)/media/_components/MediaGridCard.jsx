@@ -61,10 +61,10 @@ export default function MediaGridCard({
     <div
       onClick={() => onInspect && onInspect(media)}
       className={cn(
-        'group relative flex flex-col overflow-hidden rounded-2xl border bg-white text-left transition-all duration-200 cursor-pointer select-none',
+        'group relative flex flex-col overflow-hidden rounded-xl border bg-white text-left transition-all duration-200 cursor-pointer select-none',
         selected
-          ? 'border-red-500 ring-2 ring-red-500/30 shadow-md'
-          : 'border-stone-200/90 hover:border-stone-300 hover:shadow-md hover:-translate-y-0.5'
+          ? 'border-accent ring-2 ring-accent/30 shadow-md'
+          : 'border-edge-subtle hover:border-edge-strong hover:shadow-md hover:-translate-y-0.5'
       )}
     >
       {/* Top-Left: Selection Checkbox */}
@@ -78,8 +78,8 @@ export default function MediaGridCard({
         className={cn(
           'absolute left-2.5 top-2.5 z-20 flex h-6 w-6 items-center justify-center rounded-lg transition-all cursor-pointer shadow-xs',
           selected
-            ? 'bg-red-500 text-white opacity-100 scale-100'
-            : 'bg-stone-900/60 text-white/80 hover:bg-stone-900 hover:text-white backdrop-blur-md opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100'
+            ? 'bg-accent text-white opacity-100 scale-100'
+            : 'bg-ink/60 text-white/80 hover:bg-ink hover:text-white backdrop-blur-md opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100'
         )}
       >
         <Check size={13} weight="bold" />
@@ -88,7 +88,7 @@ export default function MediaGridCard({
       {/* Top-Right: Floating Micro-Action Bar on Hover */}
       <div
         className={cn(
-          'absolute right-2.5 top-2.5 z-20 flex items-center gap-1 rounded-xl bg-stone-950/80 p-1 text-white backdrop-blur-md transition-all duration-200 shadow-lg border border-white/10',
+          'absolute right-2.5 top-2.5 z-20 flex items-center gap-1 rounded-xl bg-ink/80 p-1 text-white backdrop-blur-md transition-all duration-200 shadow-lg border border-white/10',
           copied || media.featured
             ? 'opacity-100'
             : 'opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0'
@@ -137,7 +137,7 @@ export default function MediaGridCard({
       </div>
 
       {/* Thumbnail Surface */}
-      <div className="relative block aspect-[4/3] w-full overflow-hidden bg-stone-100">
+      <div className="relative block aspect-[4/3] w-full overflow-hidden bg-ground-sunk">
         {isImage && url && !thumbError ? (
           <Image
             src={url}
@@ -164,7 +164,7 @@ export default function MediaGridCard({
             </span>
           </>
         ) : (
-          <div className="flex h-full w-full flex-col items-center justify-center bg-stone-100 text-stone-400 gap-1.5 p-3 select-none">
+          <div className="flex h-full w-full flex-col items-center justify-center bg-ground-sunk text-ink-muted gap-1.5 p-3 select-none">
             {isVideo ? (
               <FilmSlate size={26} />
             ) : media.mediaType === 'Document' ? (
@@ -174,7 +174,7 @@ export default function MediaGridCard({
             ) : (
               <ImageSquare size={26} />
             )}
-            <span className="text-[10px] font-mono uppercase tracking-wider text-stone-400">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-ink-muted">
               {extension}
             </span>
           </div>
@@ -191,14 +191,14 @@ export default function MediaGridCard({
 
         {/* Derivative Count Pill (for Ready images) */}
         {isImage && derivativeCount > 0 && (
-          <span className="absolute left-2.5 bottom-2.5 z-10 hidden sm:inline-flex items-center rounded-md bg-black/60 px-1.5 py-0.5 text-[9px] font-mono text-white/90 backdrop-blur-xs">
+          <span className="absolute left-2.5 bottom-2.5 z-10 hidden sm:inline-flex items-center rounded-lg bg-black/60 px-1.5 py-0.5 text-[9px] font-mono text-white/90 backdrop-blur-xs">
             +{derivativeCount} web
           </span>
         )}
 
         {/* Video Duration Pill */}
         {isVideo && media.duration ? (
-          <span className="absolute bottom-2.5 right-2.5 z-10 flex items-center gap-1 rounded-md bg-black/70 px-1.5 py-0.5 text-[10px] font-mono font-medium text-white backdrop-blur-xs">
+          <span className="absolute bottom-2.5 right-2.5 z-10 flex items-center gap-1 rounded-lg bg-black/70 px-1.5 py-0.5 text-[10px] font-mono font-medium text-white backdrop-blur-xs">
             <FilmSlate size={11} />
             <span>{formatDuration(media.duration)}</span>
           </span>
@@ -208,24 +208,24 @@ export default function MediaGridCard({
       {/* Card Metadata Footer */}
       <div className="flex flex-1 flex-col justify-between p-3 space-y-1.5">
         <p
-          className="text-xs font-semibold text-stone-900 truncate font-sans"
+          className="text-xs font-semibold text-ink truncate font-sans"
           title={media.title || media.originalFileName || media.mediaId}
         >
           {media.title || media.originalFileName || 'Untitled Asset'}
         </p>
 
-        <div className="flex items-center justify-between text-[11px] text-stone-500 font-mono">
-          <span className="tabular-nums font-medium text-stone-600">
+        <div className="flex items-center justify-between text-[11px] text-ink-muted font-mono">
+          <span className="tabular-nums font-medium text-ink-secondary">
             {formatBytes(media.fileSize)}
           </span>
 
           <div className="flex items-center gap-1.5">
             {media.ownerType === 'System' && (
-              <span className="inline-flex items-center rounded bg-amber-50 border border-amber-200/80 px-1.5 py-0.2 text-[9px] font-semibold uppercase tracking-wider text-amber-700">
+              <span className="inline-flex items-center rounded-lg bg-amber-50 border border-amber-200/80 px-1.5 py-0.2 text-[9px] font-semibold uppercase tracking-wider text-amber-700">
                 unassigned
               </span>
             )}
-            <span className="text-[10px] uppercase text-stone-400">
+            <span className="text-[10px] uppercase text-ink-muted">
               {extension}
             </span>
           </div>

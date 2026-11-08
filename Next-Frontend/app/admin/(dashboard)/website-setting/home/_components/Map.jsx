@@ -8,7 +8,7 @@ import dynamic from 'next/dynamic';
 const MapView = dynamic(() => import('./MapView'), {
     ssr: false,
     loading: () => (
-        <div className="flex h-screen w-full items-center justify-center text-gray-400">
+        <div className="flex h-screen w-full items-center justify-center text-ink-muted">
             Loading map…
         </div>
     ),

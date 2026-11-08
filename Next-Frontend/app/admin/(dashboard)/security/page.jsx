@@ -150,8 +150,8 @@ export default function SecurityPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[50vh] text-stone-500 font-sans gap-2">
-        <CircleNotch size={20} className="animate-spin text-stone-600" />
+      <div className="flex items-center justify-center min-h-[50vh] text-ink-muted font-sans gap-2">
+        <CircleNotch size={20} className="animate-spin text-ink-secondary" />
         <span className="text-xs">Loading account security…</span>
       </div>
     );
@@ -171,7 +171,7 @@ export default function SecurityPage() {
       {error && (
         <div
           role="alert"
-          className="flex items-start gap-2.5 rounded-2xl border border-rose-200 bg-rose-50 p-3.5 text-xs text-rose-800"
+          className="flex items-start gap-2.5 rounded-xl border border-rose-200 bg-rose-50 p-3.5 text-xs text-rose-800"
         >
           <WarningCircle size={18} className="mt-0.5 shrink-0 text-rose-600" />
           <span>{error}</span>
@@ -179,7 +179,7 @@ export default function SecurityPage() {
       )}
 
       {/* 2FA Primary Card */}
-      <Card className="border-[#E5DCD3] bg-white shadow-sm">
+      <Card className="border-edge-subtle bg-white shadow-sm">
         <CardContent className="p-6">
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
             <div className="flex gap-3.5">
@@ -187,14 +187,14 @@ export default function SecurityPage() {
                 className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${
                   enabled
                     ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
-                    : 'bg-stone-100 border-stone-200 text-stone-500'
+                    : 'bg-ground-sunk border-edge-subtle text-ink-muted'
                 }`}
               >
                 {enabled ? <ShieldCheck size={22} weight="bold" /> : <ShieldWarning size={22} />}
               </div>
               <div>
-                <h2 className="text-sm font-bold text-[#1C1917]">Two-Factor Authentication (TOTP)</h2>
-                <p className="mt-0.5 text-xs text-stone-500 max-w-md">
+                <h2 className="text-sm font-bold text-ink">Two-Factor Authentication (TOTP)</h2>
+                <p className="mt-0.5 text-xs text-ink-muted max-w-md">
                   Verify logins using an authenticator app such as Google Authenticator, 1Password, or Authy.
                 </p>
                 <div className="mt-2.5">
@@ -230,7 +230,7 @@ export default function SecurityPage() {
                   setDisabling(true);
                   setError('');
                 }}
-                className="shrink-0 text-stone-700"
+                className="shrink-0 text-ink-secondary"
               >
                 Disable 2FA
               </Button>
@@ -239,13 +239,13 @@ export default function SecurityPage() {
 
           {/* Enrollment Setup */}
           {setupData && (
-            <div className="mt-6 border-t border-stone-100 pt-6">
+            <div className="mt-6 border-t border-edge-subtle pt-6">
               <ol className="space-y-6">
                 <li>
-                  <p className="mb-3 flex items-center gap-2 text-xs font-semibold text-stone-800">
+                  <p className="mb-3 flex items-center gap-2 text-xs font-semibold text-ink">
                     <DeviceMobile size={16} /> 1. Scan this QR code with your authenticator app
                   </p>
-                  <div className="inline-block rounded-2xl border border-stone-200 bg-white p-3 shadow-sm">
+                  <div className="inline-block rounded-xl border border-edge-subtle bg-white p-3 shadow-sm">
                     <img
                       src={setupData.qrCode}
                       alt="Two-factor authentication QR code"
@@ -257,11 +257,11 @@ export default function SecurityPage() {
                 </li>
 
                 <li>
-                  <p className="mb-2 text-xs font-medium text-stone-700">
+                  <p className="mb-2 text-xs font-medium text-ink-secondary">
                     Can&apos;t scan? Enter this key manually:
                   </p>
-                  <div className="flex items-center gap-2 rounded-xl border border-stone-200 bg-stone-50 p-2">
-                    <code className="flex-1 break-all font-mono text-xs text-stone-800">
+                  <div className="flex items-center gap-2 rounded-xl border border-edge-subtle bg-ground p-2">
+                    <code className="flex-1 break-all font-mono text-xs text-ink">
                       {setupData.secret}
                     </code>
                     <Button
@@ -277,7 +277,7 @@ export default function SecurityPage() {
                 </li>
 
                 <li>
-                  <p className="mb-2 text-xs font-medium text-stone-700">
+                  <p className="mb-2 text-xs font-medium text-ink-secondary">
                     2. Enter the 6-digit code shown in your authenticator app:
                   </p>
                   <form onSubmit={confirmSetup} className="flex max-w-xs flex-col gap-3">
@@ -290,7 +290,7 @@ export default function SecurityPage() {
                       value={code}
                       onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))}
                       placeholder="123456"
-                      className="w-full rounded-xl border border-stone-300 bg-white px-3 py-2 text-center font-mono text-lg tracking-widest text-[#1C1917] outline-none focus:border-amber-700 focus:ring-1 focus:ring-amber-700/30"
+                      className="w-full rounded-xl border border-edge-strong bg-white px-3 py-2 text-center font-mono text-lg tracking-widest text-ink outline-none focus:border-amber-700 focus:ring-1 focus:ring-amber-700/30"
                     />
                     <div className="flex gap-2">
                       <Button
@@ -320,11 +320,11 @@ export default function SecurityPage() {
 
           {/* Disable Form */}
           {disabling && (
-            <form onSubmit={disableMfa} className="mt-6 border-t border-stone-100 pt-6">
-              <h3 className="mb-1 text-xs font-bold text-stone-900">
+            <form onSubmit={disableMfa} className="mt-6 border-t border-edge-subtle pt-6">
+              <h3 className="mb-1 text-xs font-bold text-ink">
                 Confirm your password to disable 2FA
               </h3>
-              <p className="mb-4 text-xs text-stone-500">
+              <p className="mb-4 text-xs text-ink-muted">
                 Disabling 2FA reduces the security of your account.
               </p>
               <div className="flex max-w-sm flex-col gap-3">
@@ -333,7 +333,7 @@ export default function SecurityPage() {
                   value={disablePassword}
                   onChange={(e) => setDisablePassword(e.target.value)}
                   placeholder="Current account password"
-                  className="rounded-xl border border-stone-300 bg-white px-3 py-2 text-xs text-[#1C1917] outline-none focus:border-amber-700 focus:ring-1 focus:ring-amber-700/30"
+                  className="rounded-xl border border-edge-strong bg-white px-3 py-2 text-xs text-ink outline-none focus:border-amber-700 focus:ring-1 focus:ring-amber-700/30"
                 />
                 <div className="flex gap-2">
                   <Button
@@ -366,16 +366,16 @@ export default function SecurityPage() {
 
       {/* Backup Recovery Codes Card */}
       {enabled && (
-        <Card className="border-[#E5DCD3] bg-white shadow-sm">
+        <Card className="border-edge-subtle bg-white shadow-sm">
           <CardContent className="p-6">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h3 className="text-xs font-bold text-[#1C1917]">Backup Recovery Codes</h3>
-                <p className="mt-0.5 text-xs text-stone-500 max-w-md">
+                <h3 className="text-xs font-bold text-ink">Backup Recovery Codes</h3>
+                <p className="mt-0.5 text-xs text-ink-muted max-w-md">
                   Use single-use recovery codes to sign in if you ever lose access to your authenticator device.
                 </p>
                 {typeof codesLeft === 'number' && (
-                  <p className="mt-2 text-xs font-medium text-stone-700 tabular-nums">
+                  <p className="mt-2 text-xs font-medium text-ink-secondary tabular-nums">
                     {codesLeft} of 10 backup codes remaining.
                   </p>
                 )}
@@ -390,7 +390,7 @@ export default function SecurityPage() {
                     setError('');
                   }}
                   icon={ArrowClockwise}
-                  className="shrink-0 text-stone-700"
+                  className="shrink-0 text-ink-secondary"
                 >
                   Regenerate Codes
                 </Button>
@@ -398,11 +398,11 @@ export default function SecurityPage() {
             </div>
 
             {regenerating && (
-              <form onSubmit={regenerateCodes} className="mt-5 border-t border-stone-100 pt-5">
-                <h4 className="mb-1 text-xs font-semibold text-stone-800">
+              <form onSubmit={regenerateCodes} className="mt-5 border-t border-edge-subtle pt-5">
+                <h4 className="mb-1 text-xs font-semibold text-ink">
                   Enter password to generate new codes
                 </h4>
-                <p className="mb-3 text-xs text-stone-500">
+                <p className="mb-3 text-xs text-ink-muted">
                   Existing backup codes will be permanently invalidated.
                 </p>
                 <div className="flex max-w-sm flex-col gap-3">
@@ -411,7 +411,7 @@ export default function SecurityPage() {
                     value={regenPassword}
                     onChange={(e) => setRegenPassword(e.target.value)}
                     placeholder="Current password"
-                    className="rounded-xl border border-stone-300 bg-white px-3 py-2 text-xs text-[#1C1917] outline-none focus:border-amber-700"
+                    className="rounded-xl border border-edge-strong bg-white px-3 py-2 text-xs text-ink outline-none focus:border-amber-700"
                   />
                   <div className="flex gap-2">
                     <Button

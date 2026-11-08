@@ -1,5 +1,6 @@
 // controllers/contentController.js
 import { z } from 'zod';
+import { sanitizeBlogHtml } from '../Utils/sanitizeHtml.js';
 import PageContent, { BLOCK_TYPES } from '../Models/PageContent.js';
 import { getObjectUrl } from './awsController.js';
 import { resolveMedia, mediaUrlForKey } from '../Utils/mediaUrl.js';
@@ -83,6 +84,9 @@ async function serializePage(pageDoc) {
             item.media = await resolveList(item.media);
         }
     }
+    for (const block of [...(page.blocks || []), ...(page.draft?.blocks || [])]) {
+        if (block.type === 'richText') block.body = sanitizeBlogHtml(block.body);
+    }
     return page;
 }
 
@@ -97,7 +101,7 @@ const populateMedia = (q) => q.populate('blocks.media').populate('blocks.items.m
 async function validateBlocks(blocks) {
     const out = [];
     for (const b of blocks) {
-        if (b.type !== 'section') { out.push(b); continue; }
+        if (b.type !== 'section') { out.push(b.type === 'richText' ? { ...b, body: sanitizeBlogHtml(b.body) } : b); continue; }
         const r = parseSectionSettings(b.settings?.component, b.settings);
         if (r.error) return { error: r.error };
         out.push({ ...b, settings: r.settings });

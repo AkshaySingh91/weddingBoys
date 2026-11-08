@@ -14,13 +14,13 @@ export function TooltipContent({ className, side = 'right', sideOffset = 8, chil
         side={side}
         sideOffset={sideOffset}
         className={cn(
-          'z-50 overflow-hidden rounded-lg bg-[#1E1D1B] px-3 py-1.5 text-xs font-medium text-amber-100 shadow-md animate-in fade-in-50 zoom-in-95 border border-stone-700 select-none font-sans',
+          'z-50 overflow-hidden rounded-lg bg-ink px-3 py-1.5 text-xs font-medium text-amber-100 shadow-md animate-in fade-in-50 zoom-in-95 border border-ink select-none font-sans',
           className
         )}
         {...props}
       >
         {children}
-        <TooltipPrimitive.Arrow className="fill-[#1E1D1B]" />
+        <TooltipPrimitive.Arrow className="fill-ink" />
       </TooltipPrimitive.Content>
     </TooltipPrimitive.Portal>
   );
