@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Button from '@/Component/ui/Button.jsx';
 
 export default function NotFound() {
   return (
@@ -15,12 +15,9 @@ export default function NotFound() {
             Sorry, we can&apos;t find that page. You&apos;ll find lots to explore on the home
             page.
           </p>
-          <Link
-            href="/"
-            className="inline-flex text-white bg-primary-600 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900 my-4"
-          >
-            Back to Homepage
-          </Link>
+          <Button href="/" variant="primary" size="lg">
+            Back to the home page
+          </Button>
         </div>
       </div>
     </section>

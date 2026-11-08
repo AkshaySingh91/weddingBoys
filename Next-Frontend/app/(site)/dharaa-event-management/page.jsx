@@ -30,7 +30,7 @@ export default function DharaaLandingPage() {
                     </h1>
                     <p className="mt-4 text-gray-600 max-w-lg mx-auto lg:mx-0 text-sm sm:text-base">
                         Dharaa Event Management brings you fresh, customized catering
-                        packages under our trusted parent company WeddingBoys.in. Let us
+                        packages under our parent studio, The Wedding Vachan. Let us
                         make your event memorable.
                     </p>
 

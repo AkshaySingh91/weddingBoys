@@ -11,6 +11,7 @@
  * div that appeared beside an already-visible desktop nav.
  */
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { FiChevronRight, FiInstagram, FiYoutube, FiFacebook } from 'react-icons/fi';
 import { PRIMARY_NAV, PRIMARY_CTA, BRAND_TAGLINE } from '@/lib/navigation.js';
@@ -69,7 +70,10 @@ export default function MobileMenu({ open, onClose }) {
 
     if (!open) return null;
 
-    return (
+    // Rendered on <body>, not inside the header: the header's backdrop-filter makes it
+    // the containing block for fixed children, which squeezed this full-screen menu
+    // into the 72px header (links collapsed to nothing, page showing beneath).
+    return createPortal(
         <div className="fixed inset-0 z-modal lg:hidden">
             <button
                 type="button"
@@ -209,6 +213,7 @@ export default function MobileMenu({ open, onClose }) {
                     </p>
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body,
     );
 }

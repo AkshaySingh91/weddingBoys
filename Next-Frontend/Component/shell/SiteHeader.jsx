@@ -19,10 +19,11 @@ function BrandLockup() {
                     onError={() => setFailedLogo(studioLogo)} alt="" className="h-full w-full rounded-full object-contain" />
             </span>
             <span className="flex min-w-0 flex-col">
-                <span className="whitespace-nowrap font-display text-[13px] font-semibold leading-tight tracking-[0.04em] text-ink sm:text-[19px]">
+                {/* Truncates rather than running under the Get Quote button on narrow phones. */}
+                <span className="overflow-hidden text-ellipsis whitespace-nowrap font-display text-[13px] font-semibold leading-tight tracking-[0.04em] text-ink sm:text-[19px]">
                     The Wedding Vachan
                 </span>
-                <span className="mt-0.5 hidden whitespace-nowrap text-[9px] font-semibold uppercase tracking-[0.17em] text-ink-muted min-[380px]:block">
+                <span className="mt-0.5 hidden overflow-hidden text-ellipsis whitespace-nowrap text-[9px] font-semibold uppercase tracking-[0.17em] text-ink-muted min-[430px]:block">
                     {BRAND_TAGLINE}
                 </span>
             </span>
@@ -89,9 +90,13 @@ export default function SiteHeader() {
                     })}
                 </nav>
                 <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
-                    <Link href={PRIMARY_CTA.href}
-                        className="inline-flex min-h-11 items-center gap-1 rounded-full bg-accent px-3 text-[12px] font-semibold text-ink-onAccent shadow-sm transition-colors hover:bg-accent-hover sm:gap-1.5 sm:px-5 sm:text-[13px]">
-                        {PRIMARY_CTA.label}<FiArrowUpRight aria-hidden="true" className="h-4 w-4" />
+                    {/* Below 420px the full label and the brand name cannot both fit, so
+                        the button says "Quote"; its accessible name stays "Get Quote". */}
+                    <Link href={PRIMARY_CTA.href} aria-label={PRIMARY_CTA.label}
+                        className="inline-flex min-h-11 items-center gap-1 rounded-full bg-accent px-3.5 text-[12px] font-semibold text-ink-onAccent shadow-sm transition-colors hover:bg-accent-hover sm:gap-1.5 sm:px-5 sm:text-[13px]">
+                        <span aria-hidden="true" className="min-[420px]:hidden">Quote</span>
+                        <span aria-hidden="true" className="hidden min-[420px]:inline">{PRIMARY_CTA.label}</span>
+                        <FiArrowUpRight aria-hidden="true" className="hidden h-4 w-4 min-[420px]:block" />
                     </Link>
                     <button type="button" onClick={() => setMenuOpen(true)} aria-label="Open menu" aria-expanded={menuOpen}
                         className="grid h-11 w-11 place-items-center rounded-control text-ink hover:bg-ground-sunk lg:hidden">
