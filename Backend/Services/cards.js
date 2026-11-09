@@ -13,6 +13,8 @@ const monthYear = (d) => {
 };
 
 const placeOf = (loc = {}) => ({ city: loc.city || null, venue: loc.venue || null, state: loc.state || null });
+// An item uploaded without a location shows its wedding's (when the client is populated).
+const itemPlace = (i) => placeOf(i.location?.city || i.location?.venue || i.location?.state ? i.location : (i.client?.location || {}));
 
 export function toFilmCard(i) {
     const r = i.render || {};
@@ -25,7 +27,7 @@ export function toFilmCard(i) {
         ceremony: i.eventGroup || null,
         tags: i.tags || [],
         shootDate: monthYear(i.shootDate),
-        location: placeOf(i.location),
+        location: itemPlace(i),
         posterUrl: r.posterUrl || null,
         blurDataURL: r.blurDataURL || null,
         dominantColor: r.dominantColor || null,
@@ -51,7 +53,7 @@ export function toPhotoCard(i) {
         ceremony: i.eventGroup || null,
         tags: i.tags || [],
         shootDate: monthYear(i.shootDate),
-        location: placeOf(i.location),
+        location: itemPlace(i),
         imageUrl: r.imageUrl || null,
         width: r.width || null,
         height: r.height || null,

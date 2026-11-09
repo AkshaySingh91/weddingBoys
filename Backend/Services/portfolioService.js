@@ -37,6 +37,16 @@ const monthYear = (d) => {
     return Number.isNaN(dt.getTime()) ? null : `${MONTHS[dt.getMonth()]} ${dt.getFullYear()}`;
 };
 
+// Wedding fields a photo or film inherits when it was uploaded without its own.
+// Location and date are entered once per wedding in the admin; without this the
+// detail pages showed neither for any item uploaded in bulk.
+const CLIENT_FIELDS = 'clientName location celebrationDates weddingDate';
+const hasPlace = (l) => Boolean(l && (l.city || l.venue || l.state));
+/** The item's own location, or its wedding's. */
+export const placeFor = (i) => (hasPlace(i.location) ? i.location : (i.client?.location || {}));
+/** The item's shoot date, or its wedding's first day. */
+export const dateFor = (i) => i.shootDate || i.client?.celebrationDates?.startDate || i.client?.weddingDate || null;
+
 /**
  * Ids arrive from public URLs. Anything that is not 24 hex characters would make
  * Mongoose throw a CastError, so it is treated as "not found" rather than a 500.
@@ -89,7 +99,7 @@ export async function findFeed({ kind, tags = [], page = 1, limit = 10, sort }) 
         .sort(await feedSort(sort))
         .skip((Math.max(1, page) - 1) * limit)
         .limit(limit)
-        .populate('client', 'clientName')
+        .populate('client', CLIENT_FIELDS)
         .lean();
 }
 
@@ -105,7 +115,7 @@ export async function findFeedWithTotal({ kind, tags = [], page = 1, limit = 12,
             .sort(await feedSort(sort))
             .skip((safePage - 1) * safeLimit)
             .limit(safeLimit)
-            .populate('client', 'clientName')
+            .populate('client', CLIENT_FIELDS)
             .lean(),
         PortfolioItem.countDocuments(filter),
     ]);
@@ -118,14 +128,14 @@ export async function findById(id) {
     return PortfolioItem.findOne({
         $or: [{ _id: id }, { 'legacy.subdocId': id }],
         ...PUBLIC_GATE,
-    }).populate('client', 'clientName').lean();
+    }).populate('client', CLIENT_FIELDS).lean();
 }
 
 export async function findSiblings({ clientId, kind, excludeId, limit = 50 }) {
     return PortfolioItem.find({
         client: clientId, kind, ...PUBLIC_GATE,
         ...(excludeId ? { _id: { $ne: excludeId } } : {}),
-    }).sort(FEED_SORT).limit(limit).populate('client', 'clientName').lean();
+    }).sort(FEED_SORT).limit(limit).populate('client', CLIENT_FIELDS).lean();
 }
 
 /** Tag overlap, excluding this item. Bounded — the legacy route's $limit was commented out. */
@@ -139,7 +149,7 @@ export async function findRecommended({ item, page = 1, limit = 10 }) {
     }).sort({ heroPriority: -1, generalPriority: -1, _id: -1 })
         .skip((Math.max(1, page) - 1) * limit)
         .limit(limit)
-        .populate('client', 'clientName')
+        .populate('client', CLIENT_FIELDS)
         .lean();
 }
 
@@ -155,7 +165,7 @@ export async function findHomePhotos({ category, limit = 8 }) {
     return PortfolioItem.find({ kind: 'Photo', ...PUBLIC_GATE, ...byTag })
         .sort({ generalPriority: 1, _id: 1 })
         .limit(limit)
-        .populate('client', 'clientName')
+        .populate('client', CLIENT_FIELDS)
         .lean();
 }
 
@@ -198,7 +208,7 @@ async function findHeroByFlag(limit) {
     return PortfolioItem.find({ kind: 'Video', isHero: true, ...PUBLIC_GATE })
         .sort({ heroPriority: -1, _id: -1 })
         .limit(limit)
-        .populate('client', 'clientName')
+        .populate('client', CLIENT_FIELDS)
         .lean();
 }
 
@@ -238,7 +248,7 @@ export async function search({ query, kind, page = 1, limit = 10 }) {
     }).sort({ generalPriority: -1, _id: -1 })
         .skip((Math.max(1, page) - 1) * limit)
         .limit(limit)
-        .populate('client', 'clientName')
+        .populate('client', CLIENT_FIELDS)
         .lean();
 }
 
@@ -260,11 +270,11 @@ export function toLegacyVideoRow(i) {
             // `url` here is what the film page's recommended strip and the map read.
             thumbnailMetaData: { key: i.legacy?.thumbnailS3Key, url: posterOf(i) },
             tags: i.tags || [],
-            videoShootDate: displayDate(i.shootDate),
+            videoShootDate: displayDate(dateFor(i)),
             isHeroVideo: i.isHero,
             heroPriority: i.heroPriority,
             generalPriority: i.generalPriority,
-            videoLocation: i.location || {},
+            videoLocation: placeFor(i),
             bts: (i.credits || []).map((c) => ({ key: c.name, value: c.role })),
         },
         thumbnailUrl: posterOf(i),
@@ -287,8 +297,8 @@ export function toLegacyPhotoRow(i) {
         // `url` here is what the film page's photo gallery reads.
         photoMetaData: { key: i.legacy?.s3Key, url: i.render?.imageUrl || null },
         tags: i.tags || [],
-        photoShootDate: i.shootDate,
-        photoLocation: i.location || {},
+        photoShootDate: dateFor(i),
+        photoLocation: placeFor(i),
         generalPriority: i.generalPriority,
         url: i.render?.imageUrl || null,
         clientName: i.client?.clientName,
@@ -312,8 +322,8 @@ export function toLegacyHeroSlide(i) {
         clientId: String(i.client?._id || i.client),
         clientName: i.client?.clientName,
         videoId: String(i._id),
-        videoShootDate: displayDate(i.shootDate),
-        videoLocation: i.location || {},
+        videoShootDate: displayDate(dateFor(i)),
+        videoLocation: placeFor(i),
         posterUrl: posterOf(i),
         posterVariants: [],
         blurDataURL: i.render?.blurDataURL || null,
