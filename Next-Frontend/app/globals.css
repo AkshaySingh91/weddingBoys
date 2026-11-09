@@ -1449,3 +1449,5 @@ html {
    ring around the mini-player's play button (one film per 7s). */
 @keyframes heroZoom { from { transform: scale(1.06); } to { transform: scale(1); } }
 @keyframes heroRing { to { stroke-dashoffset: 0; } }
+/* Hero story dashes / rail progress: fills over the advance time (paused via animation-play-state). */
+@keyframes heroBar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
