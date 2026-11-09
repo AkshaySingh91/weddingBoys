@@ -37,9 +37,10 @@ for (const item of items) {
     const media = await Media.findById(item.media);
     if (!media || media.mediaType !== 'Video') continue;
     if (only && media.mediaId !== only) continue;
-    const last = await MediaJob.findOne({ media: media._id, type: { $in: ['hero', 'transcode'] }, status: { $in: ['done', 'Done', 'completed', 'succeeded'] } })
-        .sort({ updatedAt: -1 }).lean()
-        || await MediaJob.findOne({ media: media._id, type: { $in: ['hero', 'transcode'] } }).sort({ updatedAt: -1 }).lean();
+    // Jobs reference media by mediaId (string). The curated cut is the latest
+    // 'hero' job, or a 'transcode' job run with heroOnly (before the hero type existed).
+    const jobs = await MediaJob.find({ mediaId: { $in: [media.mediaId, String(media._id)] }, status: 'done' }).sort({ createdAt: -1 }).lean();
+    const last = jobs.find((j) => j.type === 'hero' || j.options?.heroOnly) || jobs.find((j) => j.options?.makeLoop);
     const o = last?.options || {};
     const options = {
         loopStartSec: Number.isFinite(o.loopStartSec) ? o.loopStartSec : undefined,
