@@ -19,6 +19,9 @@ import rohit from '@/Asset/Team/crew-rohit.jpg';
 import vikram from '@/Asset/Team/crew-vikram.jpg';
 import nikhil from '@/Asset/Team/crew-nikhil.jpg';
 import pranav from '@/Asset/Team/crew-pranav.jpg';
+import amanRai from '@/Asset/Team/crew-aman-rai.jpg';
+import anandYadav from '@/Asset/Team/crew-anand-yadav.jpg';
+import karan from '@/Asset/Team/crew-karan.jpg';
 
 export const FOUNDERS = [
     { name: 'Aman Singh', role: 'Founder', image: amanSingh },
@@ -26,12 +29,15 @@ export const FOUNDERS = [
 ];
 
 export const MANAGING_DIRECTOR = {
-    name: 'Abhay', role: 'Managing Director', image: abhay,
+    name: 'Abhay Singh', role: 'Managing Director', image: abhay,
     line: 'Runs the studio day to day, so the founders can stay behind the camera.',
 };
 
 export const CREW = [
     { name: 'Swapnil', role: 'Candid Photographer', image: swapnilHatkar },
+    { name: 'Aman Rai', role: 'Cinematographer', image: amanRai },
+    { name: 'Anand Yadav', role: 'Traditional Photographer', image: anandYadav },
+    { name: 'Karan', role: 'Cinematic Editor', image: karan },
     { name: 'Rohit Patil', role: 'Cinematographer', image: rohit, placeholder: true },
     { name: 'Vikram Shinde', role: 'Photographer', image: vikram, placeholder: true },
     { name: 'Nikhil Jadhav', role: 'Film Editor', image: nikhil, placeholder: true },

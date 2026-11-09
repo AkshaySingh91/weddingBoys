@@ -45,10 +45,10 @@ export const FOUNDERS = [
 export const LEADERSHIP = [
     ...FOUNDERS,
     {
-        name: 'Abhay',
+        name: 'Abhay Singh',
         title: 'Managing Director',
         image: abhay,
-        alt: 'Abhay, managing director of The Wedding Vachan',
+        alt: 'Abhay Singh, managing director of The Wedding Vachan',
     },
 ];
 
