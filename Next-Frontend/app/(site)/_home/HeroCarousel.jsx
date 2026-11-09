@@ -32,6 +32,7 @@ import Link from 'next/link';
 import { LayoutGroup, motion, MotionConfig } from 'framer-motion';
 import { FiPlay, FiPause, FiArrowUpRight } from 'react-icons/fi';
 import { useInView } from 'react-intersection-observer';
+import { focusStyle } from '@/lib/focus.js';
 import FilmLightbox from '@/Component/FilmLightbox.jsx';
 import useNetworkStatus from '@/Hooks/useNetworkStatus.jsx';
 
@@ -171,7 +172,7 @@ export default function HeroCarousel({ slides = [] }) {
                                 style={!on || desktop ? undefined : { transitionDuration: '700ms' }}>
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
-                                    style={slide.dominantColor ? { backgroundColor: slide.dominantColor } : undefined}
+                                    style={focusStyle(slide.focus, slide.dominantColor ? { backgroundColor: slide.dominantColor } : undefined)}
                                     src={near ? slide.posterUrl : undefined}
                                     srcSet={near ? posterSrcSet(slide) : undefined}
                                     sizes="100vw"
@@ -194,6 +195,7 @@ export default function HeroCarousel({ slides = [] }) {
                                         autoPlay={on}
                                         onPlaying={() => { if (i === current) setPlayingIdx(i); }}
                                         onCanPlayThrough={(e) => { if (i === current && !e.currentTarget.paused) setPlayingIdx(i); }}
+                                        style={focusStyle(slide.focus)}
                                         className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-media ease-entrance ${showVideo ? 'opacity-100' : 'opacity-0'}`}
                                     />
                                 )}
@@ -244,7 +246,7 @@ export default function HeroCarousel({ slides = [] }) {
                             <button type="button" onClick={playFilm} aria-label={`Play film — ${captionOf(active)}`}
                                 className="relative block aspect-video w-28 cursor-pointer overflow-hidden rounded-[20px] bg-ground-deep focus-ring sm:w-36">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img key={current} src={smallPoster(active)} alt="" className="absolute inset-0 h-full w-full object-cover motion-safe:animate-[fadeUp_220ms_ease-out]" />
+                                <img key={current} src={smallPoster(active)} alt="" style={focusStyle(active.focus)} className="absolute inset-0 h-full w-full object-cover motion-safe:animate-[fadeUp_220ms_ease-out]" />
                             </button>
                             {multiple && !reducedMotion && (
                                 <button type="button" onClick={() => setPaused((v) => !v)} aria-label={paused ? 'Resume films' : 'Pause films'}
@@ -310,7 +312,7 @@ export default function HeroCarousel({ slides = [] }) {
                                             className="group relative w-[200px] shrink-0 cursor-pointer text-left transition-transform duration-ui ease-standard hover:-translate-y-1 focus-ring rounded-[20px]">
                                             <span className="relative block aspect-video overflow-hidden rounded-[20px] bg-ground-deep">
                                                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                <img src={smallPoster(s)} alt={`${captionOf(s)} wedding film`} loading="lazy" decoding="async"
+                                                <img src={smallPoster(s)} alt={`${captionOf(s)} wedding film`} loading="lazy" decoding="async" style={focusStyle(s.focus)}
                                                     className={`absolute inset-0 h-full w-full object-cover transition-[opacity,transform] duration-ui ease-standard group-hover:scale-[1.06]
                                                                 ${on ? 'opacity-100' : 'opacity-60 group-hover:opacity-90'}`} />
                                                 {on && <motion.span layoutId="rail-active" aria-hidden="true" className="pointer-events-none absolute inset-0 z-10 rounded-[20px] ring-2 ring-inset ring-white/80"

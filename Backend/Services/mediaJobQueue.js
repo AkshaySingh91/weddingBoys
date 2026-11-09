@@ -42,7 +42,7 @@ export async function enqueueJob({ mediaId, type, options = {}, idempotencyKey }
  * One findOneAndUpdate does both the selection and the lock, so two workers
  * racing for the same document cannot both win.
  */
-export async function claimNextJob(types = ['transcode', 'derivatives', 'reconcile', 'sequence']) {
+export async function claimNextJob(types = ['transcode', 'derivatives', 'reconcile', 'sequence', 'hero']) {
     const now = new Date();
     return MediaJob.findOneAndUpdate(
         {

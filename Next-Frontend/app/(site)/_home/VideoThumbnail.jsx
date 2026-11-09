@@ -1,5 +1,6 @@
 'use client';
 
+import { focusStyle } from '@/lib/focus.js';
 import React, { useCallback, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { FiArrowRight, FiPlay, FiCalendar } from 'react-icons/fi';
@@ -107,7 +108,7 @@ export default function VideoThumbnail({ data } = {}) {
                                            motion-safe:animate-[fadeUp_320ms_cubic-bezier(0.16,1,0.3,1)_backwards]
                                            shadow-[0_18px_36px_-22px_rgba(51,22,26,0.6)] focus-ring sm:w-[42vw] lg:w-[320px]">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src={c.thumbnailUrl} alt={`${couple} wedding film`} loading="lazy" decoding="async"
+                                <img src={c.thumbnailUrl} alt={`${couple} wedding film`} loading="lazy" decoding="async" style={focusStyle(c.focus)}
                                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-media ease-entrance group-hover:scale-[1.04]" />
                                 <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/45 to-transparent" />
                                 <span className="absolute inset-x-3 top-3 flex items-start justify-between gap-2">

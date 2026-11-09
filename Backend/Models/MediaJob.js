@@ -16,7 +16,7 @@ const mediaJobSchema = new mongoose.Schema({
     idempotencyKey: String,
     type: {
         type: String,
-        enum: ['transcode', 'derivatives', 'reconcile', 'sequence'],
+        enum: ['transcode', 'derivatives', 'reconcile', 'sequence', 'hero'],
         required: true,
     },
     status: {

@@ -14,13 +14,30 @@
 import PortfolioItem from '../Models/PortfolioItem.js';
 import { markMediaReady } from './portfolioVisibility.js';
 
+/** The image URL to use as a poster: a ~1280px variant when there is one. */
+export const posterUrlOf = (media) => {
+    const variants = (media?.imageVariants || []).filter((v) => v.url).sort((a, b) => a.width - b.width);
+    return (variants.find((v) => v.width >= 1280) || variants[variants.length - 1])?.url || media?.cdnUrl || media?.publicUrl;
+};
+
+const focusOf = (m) => (Number.isFinite(m?.focus?.x) && Number.isFinite(m?.focus?.y) ? { x: m.focus.x, y: m.focus.y } : undefined);
+
+/** The fields a custom cover owns on the render: its URL, focus, placeholder. */
+export const coverFields = (poster) => ({
+    posterUrl: posterUrlOf(poster),
+    focus: focusOf(poster),
+    blurDataURL: poster?.blurDataURL,
+    dominantColor: poster?.dominantColor,
+});
+
 /** Build the render cache for an item from its Media (and optional poster Media). */
 export const renderFromMedia = (media, poster) => {
     if (!media) return {};
     return {
-        posterUrl: poster?.cdnUrl || poster?.publicUrl || media.video?.posterUrl,
-        blurDataURL: media.blurDataURL,
-        dominantColor: media.dominantColor,
+        posterUrl: poster ? posterUrlOf(poster) : media.video?.posterUrl,
+        focus: focusOf(poster) || focusOf(media),
+        blurDataURL: poster?.blurDataURL || media.blurDataURL,
+        dominantColor: poster?.dominantColor || media.dominantColor,
         aspectRatio: media.aspectRatio,
         width: media.width,
         height: media.height,
@@ -62,7 +79,8 @@ export async function syncRenderForMedia(media) {
         );
     }
     const render = renderFromMedia(media);
-    const { posterUrl, ...withoutPoster } = render;
+    // A custom cover owns the still and everything derived from it.
+    const { posterUrl, focus, blurDataURL, dominantColor, ...withoutPoster } = render;
 
     const full = await PortfolioItem.updateMany(
         { media: media._id, poster: null },            // null also matches "no poster field"
@@ -74,11 +92,10 @@ export async function syncRenderForMedia(media) {
     );
 
     let posterUpdated = { modifiedCount: 0 };
-    const ownUrl = media.cdnUrl || media.publicUrl;
-    if (media.mediaType === 'Image' && ownUrl) {
+    if (media.mediaType === 'Image' && media.status === 'Ready' && posterUrlOf(media)) {
         posterUpdated = await PortfolioItem.updateMany(
             { poster: media._id },
-            { $set: { 'render.posterUrl': ownUrl } },
+            { $set: dotted(coverFields(media)) },
         );
     }
 

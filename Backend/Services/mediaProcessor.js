@@ -11,6 +11,7 @@ import sharp from 'sharp';
 import Media from '../Models/Media.js';
 import PortfolioItem from '../Models/PortfolioItem.js';
 import { syncRenderForMedia } from './portfolioRender.js';
+import { processHeroLoop } from './heroLoopProcessor.js';
 import { generateSequence } from './sequenceProcessor.js';
 import {
     downloadToFile, uploadFile, putObject,
@@ -18,8 +19,9 @@ import {
 } from './r2UploadService.js';
 import {
     probe, hasFaststart, makeTempDir,
-    extractPoster, makeWebRendition, makeHeroLoop, shouldMakeWebRendition,
+    extractBestPoster, makeWebRendition, makeHeroLoop, shouldMakeWebRendition,
 } from './transcodeService.js';
+import { focalPoint } from './coverService.js';
 
 const baseKeyOf = (storageKey) => storageKey.replace(/\/[^/]+$/, '');
 const POSTER_WIDTHS = [640, 1280];
@@ -29,6 +31,10 @@ const POSTER_WIDTHS = [640, 1280];
  * is destined for the hero — a short silent loop.
  */
 export async function processVideo(media, options = {}, jobId) {
+    if (options.heroOnly) {
+        await processHeroLoop(media, options, jobId);
+        return finishPlacements(media, jobId);
+    }
     const dir = await makeTempDir();
     try {
         const baseKey = baseKeyOf(media.storageKey);
@@ -40,8 +46,11 @@ export async function processVideo(media, options = {}, jobId) {
 
         // ---- poster -------------------------------------------------------
         const posterPath = path.join(dir, 'poster.jpg');
-        await extractPoster(master, posterPath, { duration: info.duration });
+        // Best frame across the film (sharp, well exposed, detailed), not a fixed 10%.
+        const best = await extractBestPoster(master, posterPath, { duration: info.duration });
         const posterBuf = await fs.readFile(posterPath);
+        const focus = await focalPoint(posterBuf).catch(() => ({ x: 0.5, y: 0.5 }));
+        console.log(`[media] ${media.mediaId}: cover at ${best.at.toFixed(1)}s${best.picked ? ' (best frame)' : ' (fallback)'}, focus ${focus.x},${focus.y}`);
 
         const poster = await putObject(`${baseKey}/poster.jpg`, posterBuf, 'image/jpeg');
         const posterVariants = [];
@@ -128,6 +137,7 @@ export async function processVideo(media, options = {}, jobId) {
         media.aspectRatio = info.width && info.height ? +(info.width / info.height).toFixed(4) : undefined;
         media.blurDataURL = blurDataURL;
         media.dominantColor = dominantColor;
+        media.focus = focus;
         media.video = {
             ...(media.video || {}),
             posterUrl: poster.url,
@@ -189,6 +199,7 @@ export async function processImage(media, jobId) {
         media.dominantColor = `#${[dominant.r, dominant.g, dominant.b]
             .map((c) => c.toString(16).padStart(2, '0')).join('')}`;
         media.imageVariants = imageVariants;
+        media.focus = await focalPoint(await sharp(buffer).rotate().resize(1280, null, { withoutEnlargement: true }).toBuffer()).catch(() => ({ x: 0.5, y: 0.5 }));
         media.status = 'Ready';
         media.processing = { ...(media.processing?.toObject?.() || media.processing || {}), filesReadyForJob: jobId, lastError: null };
         await media.save();
@@ -219,6 +230,9 @@ export async function processJob(job) {
     const jobId = String(job._id);
     if (job.type === 'reconcile' && media.status !== 'Ready') throw new Error('Media files are not ready for reconciliation');
     if (job.type === 'reconcile' || media.processing?.filesReadyForJob === jobId) return finishPlacements(media, jobId);
+    // A dedicated type keeps older workers from mistaking a curated hero cut
+    // for a full transcode and replacing its poster and playback renditions.
+    if (job.type === 'hero') return processVideo(media, { ...job.options, heroOnly: true }, jobId);
     if (job.type === 'transcode') return processVideo(media, job.options || {}, jobId);
     if (job.type === 'derivatives') return processImage(media, jobId);
     throw new Error(`Unknown job type: ${job.type}`);

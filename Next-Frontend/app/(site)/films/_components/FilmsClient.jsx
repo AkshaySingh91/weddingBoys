@@ -1,5 +1,6 @@
 'use client';
 
+import { focusStyle } from '@/lib/focus.js';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { fireMessage } from '@/Utils/fireMessage';
@@ -698,6 +699,7 @@ function FilmCard({ video, index, layout = 'portrait' }) {
                 <img
                     src={video.thumbnailUrl}
                     alt={`${coupleName} wedding film`}
+                    style={focusStyle(video.focus)}
                     loading="lazy"
                     decoding="async"
                     className={`films-card__img ${imageLoaded ? 'films-card__img--loaded' : ''}`}

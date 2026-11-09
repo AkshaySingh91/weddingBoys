@@ -39,6 +39,9 @@ const portfolioItemSchema = new mongoose.Schema({
     // change every film card.
     poster: { type: mongoose.Schema.Types.ObjectId, ref: 'Media' },
     posterMediaId: { type: String },
+    // Hand-set subject position on the cover (0–1). Wins over the worker's
+    // automatic focus, which can be drawn to sparklers or lights over faces.
+    coverFocus: { x: { type: Number, min: 0, max: 1 }, y: { type: Number, min: 0, max: 1 } },
 
     // ---- editorial ----
     title: { type: String, trim: true },
@@ -132,6 +135,7 @@ const portfolioItemSchema = new mongoose.Schema({
         posterUrl: String,
         blurDataURL: String,
         dominantColor: String,
+        focus: { x: Number, y: Number },
         aspectRatio: Number,
         width: Number,
         height: Number,

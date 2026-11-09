@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ImageSquare, ArrowCounterClockwise, Swap, LinkSimple } from '@phosphor-icons/react';
+import { ImageSquare, ArrowCounterClockwise, Swap, LinkSimple, UploadSimple, Crosshair } from '@phosphor-icons/react';
 import Uploader from '@/app/admin/components/Uploader.jsx';
 import { Button } from '@/app/admin/components/ui/Button.jsx';
 import { fireMessage } from '@/Utils/fireMessage.js';
@@ -34,6 +34,7 @@ export default function MediaControls({ item, onChanged }) {
     const [photos, setPhotos] = useState(null);
     const [busy, setBusy] = useState(false);
     const [showReplace, setShowReplace] = useState(false);
+    const [showCoverUpload, setShowCoverUpload] = useState(false);
     // The rows (collections) this item appears in, is pinned to, or is hidden from.
     const [placements, setPlacements] = useState(null);
     useEffect(() => {
@@ -74,6 +75,24 @@ export default function MediaControls({ item, onChanged }) {
     const resetPoster = async () => {
         const r = await run(() => call(`/api/admin/portfolio/${item._id}/poster`, 'DELETE'), 'Back to the film\'s own frame');
         if (r) onChanged?.({ render: r.item.render, poster: r.item.poster, mediaReady: r.item.mediaReady });
+    };
+    const uploadedCover = async (media) => {
+        const m = media?.[0];
+        if (!m) return;
+        const r = await run(() => call(`/api/admin/portfolio/${item._id}/poster`, 'POST', { media: m._id }),
+            (res) => (res.item?.render?.posterUrl === item.render?.posterUrl ? 'Cover set — it appears when the image finishes processing' : 'Cover set'));
+        if (r) { setShowCoverUpload(false); onChanged?.({ render: r.item.render, poster: r.item.poster, mediaReady: r.item.mediaReady }); }
+    };
+    // Where the subject is on the cover: click the still. Phones crop the sides
+    // and wide screens crop top/bottom around this point.
+    const focus = item.coverFocus?.x != null ? item.coverFocus : item.render?.focus;
+    const setFocus = async (next) => {
+        const r = await run(() => call(`/api/admin/portfolio/${item._id}`, 'PATCH', { coverFocus: next }), next ? 'Focus saved' : 'Back to automatic focus');
+        if (r) onChanged?.({ coverFocus: r.item.coverFocus ?? null });
+    };
+    const onFocusClick = (e) => {
+        const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+        setFocus({ x: Math.min(1, Math.max(0, (e.clientX - left) / width)), y: Math.min(1, Math.max(0, (e.clientY - top) / height)) });
     };
     const replaceWith = async (media) => {
         const m = media?.[0];
@@ -140,17 +159,54 @@ export default function MediaControls({ item, onChanged }) {
 
             {isVideo && (
                 <div className="space-y-2">
-                    <p className="text-xs font-semibold text-ink-secondary">Poster</p>
+                    <p className="text-xs font-semibold text-ink-secondary">Cover</p>
+                    {item.render?.posterUrl && (
+                        <div className="space-y-1">
+                            <button type="button" disabled={busy} onClick={onFocusClick} aria-label="Set where the subject is on the cover"
+                                className="relative block aspect-video w-full cursor-crosshair overflow-hidden rounded-lg border border-edge-subtle">
+                                {/* eslint-disable-next-line @next/next/no-img-element -- admin preview */}
+                                <img src={item.render.posterUrl} alt="" className="h-full w-full object-cover" />
+                                {focus && (
+                                    <>
+                                        {/* the 9:16 phone crop around the focus */}
+                                        <span aria-hidden="true" className="absolute inset-y-0 border-x-2 border-white/90 bg-white/10 shadow-[0_0_0_9999px_rgba(0,0,0,0.35)]"
+                                            style={{ width: '31.64%', left: `${Math.min(68.36, Math.max(0, focus.x * 100 - 15.82))}%` }} />
+                                        <span aria-hidden="true" className="absolute h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-accent shadow"
+                                            style={{ left: `${focus.x * 100}%`, top: `${focus.y * 100}%` }} />
+                                    </>
+                                )}
+                            </button>
+                            <p className="flex flex-wrap items-center gap-x-2 text-[11px] text-ink-muted">
+                                <Crosshair size={12} /> Click the subject — the box is what phones show.
+                                {item.coverFocus?.x != null && (
+                                    <button type="button" disabled={busy} onClick={() => setFocus(null)} className="text-accent-ink hover:underline">Use automatic focus</button>
+                                )}
+                            </p>
+                        </div>
+                    )}
                     <div className="flex flex-wrap gap-2">
                         <Button type="button" variant="outline" size="sm" icon={ImageSquare} disabled={busy} onClick={photos ? () => setPhotos(null) : loadPhotos}>
                             {photos ? 'Close' : 'Choose from this wedding\'s photos'}
                         </Button>
+                        <Button type="button" variant="outline" size="sm" icon={UploadSimple} disabled={busy} onClick={() => setShowCoverUpload((v) => !v)}>
+                            {showCoverUpload ? 'Cancel' : 'Upload a cover'}
+                        </Button>
                         {item.poster && (
                             <Button type="button" variant="ghost" size="sm" icon={ArrowCounterClockwise} disabled={busy} onClick={resetPoster}>
-                                Use the film&apos;s own frame
+                                Use the best frame from the film
                             </Button>
                         )}
                     </div>
+                    {showCoverUpload && (
+                        <Uploader
+                            ownerType="Client"
+                            ownerId={clientId}
+                            multiple={false}
+                            accept="image/*"
+                            label="Drop the cover image here"
+                            onUploaded={uploadedCover}
+                        />
+                    )}
                     {photos && (photos.length ? (
                         <div className="grid grid-cols-4 gap-2">
                             {photos.map((p) => (

@@ -287,6 +287,7 @@ export function toLegacyVideoRow(i) {
         blurDataURL: i.render?.blurDataURL || null,
         dominantColor: i.render?.dominantColor || null,
         aspectRatio: i.render?.aspectRatio || null,
+        focus: focusOut(i),
     };
 }
 
@@ -314,6 +315,11 @@ export function toLegacyPhotoRow(i) {
     };
 }
 
+const focusOut = (i) => {
+    const f = Number.isFinite(i.coverFocus?.x) ? i.coverFocus : i.render?.focus;
+    return Number.isFinite(f?.x) && Number.isFinite(f?.y) ? { x: f.x, y: f.y } : null;
+};
+
 /** Legacy `/api/hero-videos` slide. */
 export function toLegacyHeroSlide(i) {
     return {
@@ -326,6 +332,7 @@ export function toLegacyHeroSlide(i) {
         videoLocation: placeFor(i),
         posterUrl: posterOf(i),
         posterVariants: [],
+        focus: focusOut(i),
         blurDataURL: i.render?.blurDataURL || null,
         dominantColor: i.render?.dominantColor || null,
         aspectRatio: i.render?.aspectRatio || null,

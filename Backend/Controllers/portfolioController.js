@@ -14,7 +14,7 @@ import PortfolioItem from '../Models/PortfolioItem.js';
 import Media from '../Models/Media.js';
 import Client from '../Models/ClientSchema.js';
 import { deleteSingleMediaDoc } from './mediaController.js';
-import { renderFromMedia } from '../Services/portfolioRender.js';
+import { renderFromMedia, coverFields } from '../Services/portfolioRender.js';
 import { PUBLIC_GATE, explainVisibility, readinessOf } from '../Services/portfolioVisibility.js';
 import { revalidatePortfolio } from '../Services/revalidate.js';
 import { resolveTagParam, tagFieldsFor, TaxonomyError, loadTaxonomy, validateTagIds, mirrorsFor } from '../Services/taxonomy.js';
@@ -133,7 +133,7 @@ export async function listPortfolio(req, res) {
                 const fresh = renderFromMedia(item.media);
                 // An item with its own poster keeps it; the auto frame is only a
                 // fallback for items that have none.
-                if (item.poster) delete fresh.posterUrl;
+                if (item.poster) { delete fresh.posterUrl; delete fresh.focus; delete fresh.blurDataURL; delete fresh.dominantColor; }
                 item.render = { ...(item.render || {}), ...fresh };
                 item.mediaReady = readinessOf(item, item.media.status);
                 staleIds.push(item._id);
@@ -262,9 +262,15 @@ export async function assignToClient(req, res) {
 export async function updatePortfolioItem(req, res) {
     try {
         const ALLOWED = ['shootDate', 'location', 'generalPriority', 'isHero',
-            'heroPriority', 'caption', 'title', 'status', 'credits', 'spotlight'];
+            'heroPriority', 'caption', 'title', 'status', 'credits', 'spotlight', 'coverFocus'];
         const patch = {};
         for (const k of ALLOWED) if (req.body[k] !== undefined) patch[k] = req.body[k];
+        if (patch.coverFocus !== undefined) {
+            const f = patch.coverFocus;
+            const ok = f === null || (f && [f.x, f.y].every((v) => typeof v === 'number' && v >= 0 && v <= 1));
+            if (!ok) return res.status(400).json({ message: 'coverFocus must be { x, y } between 0 and 1, or null' });
+            patch.coverFocus = f === null ? undefined : { x: +f.x.toFixed(3), y: +f.y.toFixed(3) };
+        }
         const stringTags = refuseTagStrings(req.body);
         if (stringTags) return res.status(400).json({ message: stringTags });
         if (patch.location !== undefined) patch.location = locationFrom(patch.location || {});
@@ -275,7 +281,9 @@ export async function updatePortfolioItem(req, res) {
             try { Object.assign(patch, await tagFieldsFor(req.body.tagIds, current.kind)); } catch (e) { if (e instanceof TaxonomyError) return taxonomyFail(res, e); throw e; }
         }
 
-        const item = await PortfolioItem.findByIdAndUpdate(req.params.id, { $set: patch }, { new: true, runValidators: true })
+        const unset = 'coverFocus' in patch && patch.coverFocus === undefined ? { coverFocus: 1 } : null;
+        if (unset) delete patch.coverFocus;
+        const item = await PortfolioItem.findByIdAndUpdate(req.params.id, { $set: patch, ...(unset ? { $unset: unset } : {}) }, { new: true, runValidators: true })
             .populate('media', MEDIA_FIELDS).lean();
         if (!item) return res.status(404).json({ message: 'Portfolio item not found' });
         const visibility = explainVisibility(item, item.media);
@@ -421,11 +429,6 @@ export async function addExternalFilm(req, res) {
     }
 }
 
-/** The image URL to use as a poster: a ~1280px variant when there is one. */
-const posterUrlOf = (media) => {
-    const variants = (media.imageVariants || []).filter((v) => v.url).sort((a, b) => a.width - b.width);
-    return (variants.find((v) => v.width >= 1280) || variants[variants.length - 1])?.url || media.cdnUrl || media.publicUrl;
-};
 
 /**
  * POST /api/admin/portfolio/:id/poster { media } — a chosen poster for a film.
@@ -441,11 +444,17 @@ export async function setPoster(req, res) {
         const poster = await Media.findOne(mongoose.isValidObjectId(req.body?.media) ? { _id: req.body.media } : { mediaId: req.body?.media });
         if (!poster) return res.status(404).json({ message: 'Media not found' });
         if (poster.mediaType !== 'Image') return res.status(400).json({ message: 'A poster must be an image' });
-        if (poster.status !== 'Ready') return res.status(409).json({ message: 'That image is still processing; try again in a moment' });
+        if (poster.status === 'Archived') return res.status(409).json({ message: 'That image has been archived' });
 
         item.poster = poster._id;
         item.posterMediaId = poster.mediaId;
-        item.render = { ...(item.render?.toObject?.() || item.render || {}), posterUrl: posterUrlOf(poster) };
+        // A cover chosen at upload time may still be processing: the item keeps
+        // its current still until the image job finishes, then syncRenderForMedia
+        // swaps in the cover (URL, focus, blur) by itself.
+        if (poster.status === 'Ready') {
+            const fields = Object.fromEntries(Object.entries(coverFields(poster)).filter(([, v]) => v !== undefined));
+            item.render = { ...(item.render?.toObject?.() || item.render || {}), ...fields };
+        }
         // A film with no frame of its own becomes showable once it has a poster.
         const own = item.media ? await Media.findById(item.media).select('status').lean() : null;
         item.mediaReady = item.external?.provider ? true : readinessOf(item, own?.status);
@@ -463,11 +472,16 @@ export async function removePoster(req, res) {
         if (!mongoose.isValidObjectId(req.params.id)) return res.status(404).json({ message: 'Portfolio item not found' });
         const item = await PortfolioItem.findById(req.params.id);
         if (!item) return res.status(404).json({ message: 'Portfolio item not found' });
-        const own = item.media ? await Media.findById(item.media).select('video.posterUrl status').lean() : null;
+        const own = item.media ? await Media.findById(item.media).select('video.posterUrl status focus blurDataURL dominantColor').lean() : null;
         const fallback = own?.video?.posterUrl || item.external?.posterUrl || null;
         item.poster = null;
         item.posterMediaId = null;
-        item.render = { ...(item.render?.toObject?.() || item.render || {}), posterUrl: fallback };
+        item.render = {
+            ...(item.render?.toObject?.() || item.render || {}),
+            posterUrl: fallback,
+            focus: own?.focus?.x != null ? own.focus : undefined,
+            ...(own?.blurDataURL ? { blurDataURL: own.blurDataURL, dominantColor: own.dominantColor } : {}),
+        };
         item.mediaReady = item.external?.provider ? Boolean(fallback) : readinessOf(item, own?.status);
         await item.save();
         revalidatePortfolio();
@@ -505,7 +519,7 @@ export async function replaceFile(req, res) {
             return res.status(202).json({ item, pending: true, message: 'The new file replaces the old one when it has finished processing' });
         }
         const render = renderFromMedia(media);
-        if (item.poster) render.posterUrl = item.render?.posterUrl;
+        if (item.poster) for (const k of ['posterUrl', 'focus', 'blurDataURL', 'dominantColor']) render[k] = item.render?.[k];
         item.media = media._id;
         item.mediaId = media.mediaId;
         item.pendingMedia = undefined;

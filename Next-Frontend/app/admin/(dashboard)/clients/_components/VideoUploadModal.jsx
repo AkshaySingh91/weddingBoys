@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   X, FilmSlate, Plus, Trash, Check, Sparkle, Tag as TagIcon,
   CalendarBlank, MapPin, CircleNotch, ArrowClockwise, WarningCircle,
-  Star, SpeakerSimpleSlash, Repeat, Play, Pause, HardDrives, CheckCircle
+  Star, SpeakerSimpleSlash, Repeat, Play, Pause, HardDrives, CheckCircle, ImageSquare, MagicWand
 } from '@phosphor-icons/react';
 import { Dialog, DialogContent } from '@/app/admin/components/ui/Dialog.jsx';
 import { Button } from '@/app/admin/components/ui/Button.jsx';
@@ -21,6 +21,45 @@ const api_url = process.env.NEXT_PUBLIC_API_URL;
 // Tags): Film type is one per film (Teaser, Highlights, Full Wedding Film…),
 // Ceremony one per item. They used to be one mixed list stored as eventGroup.
 const DEFAULT_FILM_TYPE = 'Full Wedding Film';
+
+/**
+ * A film's cover: the worker picks the best frame by default (sharp, well
+ * exposed, detailed — not just 10% in); or the admin drops in their own still.
+ */
+function CoverPicker({ cover, disabled, onChange }) {
+  const inputRef = useRef(null);
+  const [preview, setPreview] = useState('');
+  useEffect(() => {
+    if (!cover) return undefined;
+    const url = URL.createObjectURL(cover);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- the object URL is revoked by this effect's cleanup
+    setPreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [cover]);
+  return (
+    <div className="flex items-center gap-1">
+      <input ref={inputRef} type="file" accept="image/jpeg,image/png,image/webp" className="sr-only" tabIndex={-1}
+        onChange={(e) => { const f = e.target.files?.[0]; if (f) onChange(f); e.target.value = ''; }} />
+      {cover ? (
+        <span className="flex items-center gap-1.5 rounded-xl border border-sky-300 bg-sky-50 py-0.5 pl-0.5 pr-1 text-xs font-semibold text-sky-900">
+          {/* eslint-disable-next-line @next/next/no-img-element -- local preview */}
+          {preview && <img src={preview} alt="" className="h-6 w-10 rounded-lg object-cover" />}
+          <button type="button" disabled={disabled} onClick={() => inputRef.current?.click()} className="hover:underline">Custom cover</button>
+          <button type="button" disabled={disabled} onClick={() => onChange(null)} aria-label="Use the best frame instead"
+            className="grid h-5 w-5 place-items-center rounded-full hover:bg-sky-100"><X size={11} /></button>
+        </span>
+      ) : (
+        <button type="button" disabled={disabled} onClick={() => inputRef.current?.click()}
+          title="The worker picks the sharpest, best-exposed frame. Click to use your own image instead."
+          className="flex items-center gap-1.5 rounded-xl border border-edge-subtle bg-white px-2.5 py-1 text-xs font-medium text-ink-secondary transition-all hover:border-edge-strong">
+          <MagicWand size={13} />
+          <span>Cover: best frame</span>
+          <span className="text-ink-muted">· <ImageSquare size={12} className="inline -mt-0.5" /> use mine</span>
+        </button>
+      )}
+    </div>
+  );
+}
 
 /**
  * Circular / Border Progress Indicator for Videos
@@ -287,6 +326,8 @@ function StagedVideoPreview({ file, isUploading, isDone, isSelected, onToggleSel
             <SpeakerSimpleSlash size={13} className={it.stripAudio ? 'text-rose-600' : ''} />
             <span>Mute Audio</span>
           </button>
+
+          <CoverPicker cover={it.cover} disabled={isUploading || isDone} onChange={(f) => onUpdateOption(it.id, 'cover', f)} />
         </div>
       </div>
     </div>
@@ -559,6 +600,7 @@ export default function VideoUploadModal({
         isHero: false, // opt-in only: the first film of every batch used to join the home hero
         makeLoop: true,
         stripAudio: false,
+        cover: null,
         caption: '',
       }));
       setItems(newItems);
@@ -588,6 +630,7 @@ export default function VideoUploadModal({
       isHero: false,
       makeLoop: true,
       stripAudio: false,
+      cover: null,
       caption: '',
     }));
     setItems((prev) => [...prev, ...added]);
@@ -712,7 +755,33 @@ export default function VideoUploadModal({
           throw new Error(errData.message || 'Portfolio assignment failed');
         }
 
-        const { item: portfolioDoc } = await portRes.json();
+        let { item: portfolioDoc } = await portRes.json();
+
+        // Step 3: a custom cover, if one was chosen. It processes in the
+        // background; the film shows it as soon as it is ready. A cover that
+        // fails never fails the film — it falls back to the best frame.
+        if (item.cover) {
+          try {
+            const coverMedia = await createUpload({
+              file: item.cover,
+              ownerType: 'Client',
+              ownerId: clientId,
+              meta: { title: `Cover — ${item.name.replace(/\.[^/.]+$/, '')}` },
+            }).promise;
+            const coverRes = await fetch(`${api_url}/api/admin/portfolio/${portfolioDoc._id}/poster`, {
+              method: 'POST',
+              credentials: 'include',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ media: coverMedia._id }),
+            });
+            const coverData = await coverRes.json().catch(() => ({}));
+            if (!coverRes.ok) throw new Error(coverData.message || 'Cover not set');
+            portfolioDoc = coverData.item || portfolioDoc;
+          } catch (coverErr) {
+            fireMessage(`${item.name}: cover not set (${coverErr.message}) — using the best frame`, 'error');
+          }
+        }
+
         uploadedPlacements.push(portfolioDoc);
         uploadedPlacementsRef.current.push(portfolioDoc);
 
