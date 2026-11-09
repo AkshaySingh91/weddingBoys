@@ -132,6 +132,7 @@ export default function HeroCarousel({ slides = [] }) {
             */}
             <div
                 ref={viewRef}
+                data-analytics-section="hero"
                 className="hero-banner group/hero relative isolate w-full overflow-hidden
                            rounded-panel border border-gold/35 bg-ground-sunk shadow-panel
                            h-[58svh] min-h-[400px] max-h-[820px] sm:h-[64svh] lg:h-[74svh]"
@@ -169,6 +170,7 @@ export default function HeroCarousel({ slides = [] }) {
                                 {isActive && allowVideo && heroSrc(slide) && (
                                     <video
                                         key={slide.videoKey}
+                                        data-analytics-video-id={slide.videoId || slide.videoKey}
                                         className={`absolute inset-0 h-full w-full object-cover transition-opacity
                                                     duration-media ease-entrance ${canPlay ? 'opacity-100' : 'opacity-0'}`}
                                         src={heroSrc(slide)}

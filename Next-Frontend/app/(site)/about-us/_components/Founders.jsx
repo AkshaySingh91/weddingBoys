@@ -2,14 +2,14 @@ import Image from 'next/image';
 import { FOUNDERS } from './storyData.js';
 
 /**
- * 04 · The founders, each on a film slate: a real photograph on set, then the
+ * 04 · The founder and the managing director, each on a film slate: a real photograph on set, then the
  * three facts a family wants — who, what they do, how long they have done it.
  */
 export default function Founders() {
     return (
         <section aria-labelledby="founders-title" className="bg-ground py-section">
             <div className="mx-auto w-full max-w-content px-5 md:px-8 lg:px-6">
-                <p className="t-label !text-accent-ink">The founders</p>
+                <p className="t-label !text-accent-ink">Who leads the studio</p>
                 <h2 id="founders-title" className="t-display-1 mt-3">The two people behind every film.</h2>
 
                 <ul className="mt-10 grid gap-8 md:grid-cols-2 lg:mt-14 lg:gap-8">
@@ -33,7 +33,7 @@ export default function Founders() {
                                 style={{ background: 'repeating-linear-gradient(-45deg, var(--ground-deep) 0 14px, var(--ground) 14px 28px)' }}
                             />
                             <dl className="divide-y divide-edge-subtle px-5 lg:px-6">
-                                <SlateRow label="Founder"><span className="font-display text-[24px] text-ink">{f.name}</span></SlateRow>
+                                <SlateRow label={f.title}><span className="font-display text-[24px] text-ink">{f.name}</span></SlateRow>
                                 <SlateRow label="Department">{f.department}</SlateRow>
                                 <SlateRow label="On set since">{f.since}</SlateRow>
                             </dl>

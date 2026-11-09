@@ -68,7 +68,7 @@ const LaunchCountdown = memo(function LaunchCountdown() {
 const FACTS = [
     { Icon: FiMapPin, k: 'City', v: 'Varanasi' },
     { Icon: FiCalendar, k: 'Dates', v: 'Limited' },
-    { Icon: FiUsers, k: 'Crew', v: 'Same founders' },
+    { Icon: FiUsers, k: 'Crew', v: 'Same team' },
 ];
 
 function VaranasiLaunchCard() {
@@ -101,7 +101,7 @@ function VaranasiLaunchCard() {
                         ))}
                     </ul>
                     <p className="mt-5 text-[15.5px] leading-relaxed text-ink-secondary">
-                        The same founders and crew, now taking a limited number of weddings in Varanasi.
+                        The same team and crew, now taking a limited number of weddings in Varanasi.
                         Tell us your date and we&apos;ll confirm availability within a day.
                     </p>
                     <div className="mt-5"><LaunchCountdown /></div>

@@ -1,11 +1,12 @@
 /**
- * Our story — a bento: the photograph with the founders on a glass bar, the
+ * Our story — a bento: the photograph with Aman (founder) and Suraj (managing
+ * director) on a glass bar, the
  * studio's timeline as connected step pills, and a wine-black card of the four
  * promises (checked, like a completed list).
  *
- * Facts only (PRODUCT.md › Confirmed): the founders have filmed together since
+ * Facts only (PRODUCT.md › Confirmed): Aman and Suraj have filmed together since
  * 2015, the studio opened in 2020, and they are on set. The wedding count lives
- * once on the page, in the stats chapter. Founder initials, not portraits: one
+ * once on the page, in the stats chapter. Initials, not portraits: one
  * portrait is AI-generated and not yet cleared for wider use.
  */
 import Image from 'next/image';
@@ -29,10 +30,10 @@ const PROMISES = [
 export default function OurStory() {
     return (
         <Chapter label="Our story" glow="left" action={{ href: '/about-us', label: 'Read our story' }}
-            title={<>Founders behind the <Em>camera</Em></>}
-            lead="Filming weddings together since 2015 — and still on set at yours.">
+            title={<>The people behind the <Em>camera</Em></>}
+            lead="Aman and Suraj have filmed weddings together since 2015 — and are still on set at yours.">
             <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-12 md:grid-cols-2 lg:gap-4">
-                {/* Photograph + founders */}
+                {/* Photograph + the people who lead the studio */}
                 <figure data-rise="fade" className="relative aspect-[4/5] overflow-hidden rounded-[28px] bg-ground-sunk shadow-[0_22px_44px_-24px_rgba(51,22,26,0.6)] md:row-span-2 md:aspect-auto md:min-h-[520px]">
                     <Image src={img} alt="A wedding moment filmed by The Wedding Vachan" fill placeholder="blur"
                         sizes="(max-width: 768px) 100vw, 600px" className="object-cover object-top" />
@@ -45,8 +46,8 @@ export default function OurStory() {
                             ))}
                         </span>
                         <span className="min-w-0">
-                            <span className="block text-[15px] font-semibold leading-tight text-ink">Aman Singh & Suraj Singh</span>
-                            <span className="block text-[12.5px] text-ink-muted">Founders · personally on set</span>
+                            <span className="block text-[15px] font-semibold leading-tight text-ink">Aman Singh · Founder</span>
+                            <span className="block text-[12.5px] text-ink-muted">Suraj Singh · Managing Director</span>
                         </span>
                     </figcaption>
                 </figure>

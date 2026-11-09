@@ -23,7 +23,7 @@ Success means booked weddings that start as enquiries, with organic Google searc
 
 ## Positioning
 
-- **The founders shoot.** Aman Singh and Suraj Singh are personally on set; the studio is not a booking front for anonymous crews.
+- **The people who run it shoot.** Aman Singh (founder) and Suraj Singh (managing director) are personally on set; the studio is not a booking front for anonymous crews.
 - **Films, not recaps.** Story-led cinematic films are the core product; photographs come alongside.
 - **Pan-India.** The studio regularly travels for destination weddings beyond its Mumbai base.
 - **Vachan means promise.** The name commits the studio to written promises (see Evidence on Hand), a position a competitor cannot copy without making the same commitments.
@@ -55,9 +55,9 @@ Success means booked weddings that start as enquiries, with organic Google searc
 
 **Confirmed and publishable:**
 - 1000+ weddings filmed and photographed.
-- Founders have filmed together since 2015; the studio opened in 2020.
+- Aman and Suraj have filmed together since 2015; the studio opened in 2020.
 - The four Vachan promises: delivery date written in the contract; every ritual and every relative covered; footage backed up the same night (two copies before leaving the venue); the people you meet are the people who shoot.
-- Founders: Aman Singh (story and direction) and Suraj Singh (managing director). Founder portraits: `Next-Frontend/Asset/Story/`. Aman's portrait was supplied as an AI-generated pose; confirm likeness before using it more widely.
+- Founder: Aman Singh (story and direction). Managing Director: Suraj Singh. Yogesh Dubey is no longer with the studio (team record removed 2026-11-09). Portraits: `Next-Frontend/Asset/Story/`. Aman's portrait was supplied as an AI-generated pose; confirm likeness before using it more widely.
 - Crew names, roles and photos come from the team API (`/api/team`).
 - Real client films and photographs in R2 (portfolio and client galleries), the YouTube channel, and the Instagram accounts above.
 

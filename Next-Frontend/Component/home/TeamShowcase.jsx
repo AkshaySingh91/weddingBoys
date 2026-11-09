@@ -17,10 +17,14 @@ import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import { ArrowDot, GlassChip, CARD } from './Chapter.jsx';
 
 const mediaUrl = (m) => m?.url || m?.cdnUrl || m?.publicUrl || '';
-const isFounder = (p) => /founder/i.test(p.subtitle || '');
+// Leadership first: the founder, then the managing director, then the crew in
+// the order the admin set. The badge names the role under the avatar.
+const rank = (p) => (/founder/i.test(p.subtitle || '') ? 0 : /managing director/i.test(p.subtitle || '') ? 1 : 2);
+const badgeFor = (p) => ['Founder', 'MD', null][rank(p)];
 
 export default function TeamShowcase({ items = [] }) {
-    const people = items.filter((it) => mediaUrl(it.media?.[0]));
+    const people = items.filter((it) => mediaUrl(it.media?.[0]))
+        .map((it, k) => ({ it, k })).sort((a, b) => rank(a.it) - rank(b.it) || a.k - b.k).map(({ it }) => it);
     const [{ i, dir }, setState] = useState({ i: 0, dir: 1 });
     const railRef = useRef(null);
     if (!people.length) return null;
@@ -60,9 +64,9 @@ export default function TeamShowcase({ items = [] }) {
                                 <span className="relative block h-[66px] w-[66px] overflow-hidden rounded-full bg-ground-sunk ring-2 ring-ground">
                                     <Image src={mediaUrl(m.media[0])} alt="" fill sizes="66px" className="object-cover" />
                                 </span>
-                                {isFounder(m) && (
-                                    <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 rounded-full bg-ink px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.06em] text-gold">
-                                        Founder
+                                {badgeFor(m) && (
+                                    <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-ink px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.06em] text-gold">
+                                        {badgeFor(m)}
                                     </span>
                                 )}
                             </span>

@@ -25,6 +25,7 @@ export const PHOTOS = {
 export const FOUNDERS = [
     {
         name: 'Aman Singh',
+        title: 'Founder',
         image: amanSingh,
         alt: 'Aman Singh filming a wedding with a cinema camera',
         department: 'Story & direction',
@@ -32,6 +33,7 @@ export const FOUNDERS = [
     },
     {
         name: 'Suraj Singh',
+        title: 'Managing Director',
         image: surajSingh,
         alt: 'Suraj Singh reviewing footage on a monitor at a wedding',
         department: 'Managing director',
@@ -39,7 +41,7 @@ export const FOUNDERS = [
     },
 ];
 
-/** Names the API lists as crew; founders get their own section instead. */
+/** The studio's leadership (founder + managing director) get their own section; the crew list leaves them out. */
 export const FOUNDER_NAMES = FOUNDERS.map((f) => f.name.toLowerCase());
 
 export const BEATS = [

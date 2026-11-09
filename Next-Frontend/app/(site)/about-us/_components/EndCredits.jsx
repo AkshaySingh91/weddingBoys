@@ -30,7 +30,7 @@ export default function EndCredits({ crew, whatsapp }) {
             </ul>
 
             <dl className="mx-auto mt-12 grid max-w-[640px] gap-4 px-5 md:grid-cols-[1fr_1.4fr] md:gap-x-8">
-                <Credit role="Founded by" name={FOUNDERS.map((f) => f.name).join('  &  ')} />
+                {FOUNDERS.map((f) => <Credit key={f.name} role={f.title} name={f.name} />)}
                 {crew.map((m) => <Credit key={m.id} role={m.role} name={m.name} />)}
             </dl>
 
