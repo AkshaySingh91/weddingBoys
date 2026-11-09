@@ -145,7 +145,7 @@ function ReviewsBlock({ block }) {
 // whether it shows and its lead line.
 function TeamBlock({ block }) {
     return (
-        <Chapter label="The team" glow="left" title={<>The people behind <Em>every film</Em></>}
+        <Chapter label="The team" title={<>The people behind <Em>every film</Em></>}
             lead={block.subtitle || 'Two founders, one managing director and the crew you’ll meet on the day.'}>
             <StudioTeam />
         </Chapter>

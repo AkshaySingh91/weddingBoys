@@ -31,10 +31,10 @@ export const MANAGING_DIRECTOR = {
 };
 
 export const CREW = [
-    { name: 'Swapnil Hatkar', role: 'Candid Photographer', image: swapnilHatkar },
+    { name: 'Swapnil', role: 'Candid Photographer', image: swapnilHatkar },
     { name: 'Rohit Patil', role: 'Cinematographer', image: rohit, placeholder: true },
     { name: 'Vikram Shinde', role: 'Photographer', image: vikram, placeholder: true },
     { name: 'Nikhil Jadhav', role: 'Film Editor', image: nikhil, placeholder: true },
-    { name: 'Pranav Deshmukh', role: 'Drone Pilot', image: pranav, placeholder: true },
-    { name: 'Swapnil', role: 'Camera Assistant', image: swapnil },
+    { name: 'Deepak', role: 'Drone Pilot', image: pranav, placeholder: true },
+    { name: 'Swapnil Hatkar', role: 'Camera Assistant', image: swapnil },
 ];
