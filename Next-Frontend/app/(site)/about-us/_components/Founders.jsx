@@ -1,8 +1,8 @@
 import Image from 'next/image';
-import { FOUNDERS } from './storyData.js';
+import { LEADERSHIP } from './storyData.js';
 
 /**
- * 04 · The founder and the managing director, each on a film slate: a real photograph on set, then the
+ * 04 · The two founders and the managing director, each on a film slate: a real photograph on set, then the
  * three facts a family wants — who, what they do, how long they have done it.
  */
 export default function Founders() {
@@ -10,10 +10,10 @@ export default function Founders() {
         <section aria-labelledby="founders-title" className="bg-ground py-section">
             <div className="mx-auto w-full max-w-content px-5 md:px-8 lg:px-6">
                 <p className="t-label !text-accent-ink">Who leads the studio</p>
-                <h2 id="founders-title" className="t-display-1 mt-3">The two people behind every film.</h2>
+                <h2 id="founders-title" className="t-display-1 mt-3">Two founders behind every film, one director keeping it moving.</h2>
 
-                <ul className="mt-10 grid gap-8 md:grid-cols-2 lg:mt-14 lg:gap-8">
-                    {FOUNDERS.map((f) => (
+                <ul className="mt-10 grid gap-8 md:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-6">
+                    {LEADERSHIP.map((f) => (
                         <li key={f.name} className="overflow-hidden rounded-media bg-ground-raised shadow-panel">
                             <div className="relative aspect-[4/5] md:aspect-[5/6]">
                                 <Image
@@ -22,8 +22,8 @@ export default function Founders() {
                                     fill
                                     placeholder="blur"
                                     unoptimized
-                                    sizes="(min-width: 970px) 560px, (min-width: 720px) 50vw, 100vw"
-                                    className="object-cover"
+                                    sizes="(min-width: 970px) 380px, (min-width: 720px) 50vw, 100vw"
+                                    className="object-cover object-top"
                                 />
                             </div>
                             {/* Clapper stripe */}
@@ -34,8 +34,8 @@ export default function Founders() {
                             />
                             <dl className="divide-y divide-edge-subtle px-5 lg:px-6">
                                 <SlateRow label={f.title}><span className="font-display text-[24px] text-ink">{f.name}</span></SlateRow>
-                                <SlateRow label="Department">{f.department}</SlateRow>
-                                <SlateRow label="On set since">{f.since}</SlateRow>
+                                {f.department && <SlateRow label="Department">{f.department}</SlateRow>}
+                                {f.since && <SlateRow label="On set since">{f.since}</SlateRow>}
                             </dl>
                         </li>
                     ))}

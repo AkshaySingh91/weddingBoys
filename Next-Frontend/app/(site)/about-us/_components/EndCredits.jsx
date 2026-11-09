@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Button from '@/Component/ui/Button.jsx';
-import { FOUNDERS } from './storyData.js';
+import { LEADERSHIP } from './storyData.js';
 
 /**
  * 07 · End credits. Every face in the crew, then the credits, then the last
@@ -9,7 +9,7 @@ import { FOUNDERS } from './storyData.js';
  */
 export default function EndCredits({ crew, whatsapp }) {
     const faces = [
-        ...FOUNDERS.map((f) => ({ key: f.name, name: f.name, src: f.image })),
+        ...LEADERSHIP.map((f) => ({ key: f.name, name: f.name, src: f.image })),
         ...crew.map((m) => ({ key: m.id, name: m.name, src: m.src })),
     ];
 
@@ -30,7 +30,8 @@ export default function EndCredits({ crew, whatsapp }) {
             </ul>
 
             <dl className="mx-auto mt-12 grid max-w-[640px] gap-4 px-5 md:grid-cols-[1fr_1.4fr] md:gap-x-8">
-                {FOUNDERS.map((f) => <Credit key={f.name} role={f.title} name={f.name} />)}
+                <Credit role="Founded by" name={LEADERSHIP.filter((f) => f.title === 'Founder').map((f) => f.name).join('  &  ')} />
+                {LEADERSHIP.filter((f) => f.title !== 'Founder').map((f) => <Credit key={f.name} role={f.title} name={f.name} />)}
                 {crew.map((m) => <Credit key={m.id} role={m.role} name={m.name} />)}
             </dl>
 

@@ -8,7 +8,7 @@ import Link from 'next/link';
 import StatsBand from './StatsBand.jsx';
 import Chapter, { Em } from '@/Component/home/Chapter.jsx';
 import ReviewsShowcase from '@/Component/home/ReviewsShowcase.jsx';
-import TeamShowcase from '@/Component/home/TeamShowcase.jsx';
+import StudioTeam from '@/Component/home/StudioTeam.jsx';
 
 const mediaUrl = (m) => m?.url || m?.cdnUrl || m?.publicUrl || '';
 const first = (arr) => (Array.isArray(arr) && arr.length ? arr[0] : null);
@@ -140,12 +140,14 @@ function ReviewsBlock({ block }) {
     );
 }
 
+// The home team is the studio's own hierarchy (founders → managing director →
+// crew) with dedicated portraits from lib/team.js; the CMS block decides only
+// whether it shows and its lead line.
 function TeamBlock({ block }) {
-    const items = block.items || [];
-    if (!items.length) return null;
     return (
-        <Chapter label="The crew" glow="left" title={<>Meet the <Em>crew</Em></>} lead={block.subtitle || 'The people who will be at your wedding.'}>
-            <TeamShowcase items={items} />
+        <Chapter label="The team" glow="left" title={<>The people behind <Em>every film</Em></>}
+            lead={block.subtitle || 'Two founders on set, a managing director keeping it all moving, and the crew you’ll meet on the day.'}>
+            <StudioTeam />
         </Chapter>
     );
 }

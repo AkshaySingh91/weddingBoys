@@ -1,18 +1,17 @@
 /**
- * Our story — a bento: the photograph with Aman (founder) and Suraj (managing
- * director) on a glass bar, the
+ * Our story — a bento: the photograph with the two founders on a glass bar, the
  * studio's timeline as connected step pills, and a wine-black card of the four
  * promises (checked, like a completed list).
  *
  * Facts only (PRODUCT.md › Confirmed): Aman and Suraj have filmed together since
  * 2015, the studio opened in 2020, and they are on set. The wedding count lives
- * once on the page, in the stats chapter. Initials, not portraits: one
- * portrait is AI-generated and not yet cleared for wider use.
+ * once on the page, in the stats chapter. Founder avatars: lib/team.js.
  */
 import Image from 'next/image';
 import { FiCheck, FiAperture, FiFeather, FiBookOpen, FiHeart } from 'react-icons/fi';
 import img from '@/Asset/Home/homepage_short_story.jpg';
 import Chapter, { Em, GlassChip, CARD, CARD_DEEP } from '@/Component/home/Chapter.jsx';
+import { FOUNDERS } from '@/lib/team.js';
 
 const MILESTONES = [
     { when: '2015', what: 'Aman & Suraj start filming together' },
@@ -30,7 +29,7 @@ const PROMISES = [
 export default function OurStory() {
     return (
         <Chapter label="Our story" glow="left" action={{ href: '/about-us', label: 'Read our story' }}
-            title={<>The people behind the <Em>camera</Em></>}
+            title={<>Founders behind the <Em>camera</Em></>}
             lead="Aman and Suraj have filmed weddings together since 2015 — and are still on set at yours.">
             <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-12 md:grid-cols-2 lg:gap-4">
                 {/* Photograph + the people who lead the studio */}
@@ -39,15 +38,16 @@ export default function OurStory() {
                         sizes="(max-width: 768px) 100vw, 600px" className="object-cover object-top" />
                     <span className="absolute left-3 top-3"><GlassChip>Since 2015</GlassChip></span>
                     <figcaption className="absolute inset-x-2 bottom-2 flex items-center gap-3 rounded-[22px] bg-white/80 p-3 pl-4 backdrop-blur-md">
-                        <span className="flex -space-x-2" aria-hidden="true">
-                            {['AS', 'SS'].map((i, k) => (
-                                <span key={i} className={`grid h-10 w-10 place-items-center rounded-full text-[12px] font-semibold ring-2 ring-white
-                                                          ${k ? 'bg-ink text-ground' : 'bg-accent text-ink-onAccent'}`}>{i}</span>
+                        <span className="flex -space-x-3" aria-hidden="true">
+                            {FOUNDERS.map((f) => (
+                                <span key={f.name} className="relative h-11 w-11 overflow-hidden rounded-full bg-ground-deep ring-2 ring-white">
+                                    <Image src={f.image} alt="" fill sizes="44px" className="object-cover object-[50%_22%]" />
+                                </span>
                             ))}
                         </span>
                         <span className="min-w-0">
-                            <span className="block text-[15px] font-semibold leading-tight text-ink">Aman Singh · Founder</span>
-                            <span className="block text-[12.5px] text-ink-muted">Suraj Singh · Managing Director</span>
+                            <span className="block text-[15px] font-semibold leading-tight text-ink">Aman Singh &amp; Suraj Singh</span>
+                            <span className="block text-[12.5px] text-ink-muted">Founders · personally on set</span>
                         </span>
                     </figcaption>
                 </figure>

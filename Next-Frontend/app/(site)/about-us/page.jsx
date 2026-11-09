@@ -11,7 +11,7 @@ import { FOUNDER_NAMES } from './_components/storyData.js';
 
 const title = 'Our Story | The Wedding Vachan';
 const description =
-    'Two friends, one camera, since 2015. Meet the founder, managing director and crew behind The Wedding Vachan, and the promises we put in writing.';
+    'Two friends, one camera, since 2015. Meet the founders, managing director and crew behind The Wedding Vachan, and the promises we put in writing.';
 
 export const metadata = {
     title,

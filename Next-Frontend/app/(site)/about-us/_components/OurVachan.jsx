@@ -2,7 +2,7 @@ import { FOUNDERS, PROMISES } from './storyData.js';
 
 /**
  * 06 · Our Vachan. A vachan is a promise: four plain commitments, numbered,
- * signed by the founder and the managing director. It answers the question an Indian family actually
+ * signed by both founders. It answers the question an Indian family actually
  * asks before booking — "what happens if something goes wrong?"
  */
 export default function OurVachan() {

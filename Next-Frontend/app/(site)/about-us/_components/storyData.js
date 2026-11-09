@@ -8,6 +8,7 @@
  */
 import amanSingh from '@/Asset/Story/aman-singh.jpg';
 import surajSingh from '@/Asset/Story/suraj-singh.jpg';
+import abhay from '@/Asset/Team/abhay.jpg';
 
 // R2 masters. The custom loader snaps `/orig.*` to the nearest pre-rendered width.
 const r2 = (client, media) => `https://media.theweddingvachan.com/client/${client}/${media}/orig.jpg`;
@@ -33,16 +34,26 @@ export const FOUNDERS = [
     },
     {
         name: 'Suraj Singh',
-        title: 'Managing Director',
+        title: 'Founder',
         image: surajSingh,
         alt: 'Suraj Singh reviewing footage on a monitor at a wedding',
-        department: 'Managing director',
         since: '2015', // CONFIRM
     },
 ];
 
-/** The studio's leadership (founder + managing director) get their own section; the crew list leaves them out. */
-export const FOUNDER_NAMES = FOUNDERS.map((f) => f.name.toLowerCase());
+/** Founders, then the managing director: the leadership slates and the end credits. */
+export const LEADERSHIP = [
+    ...FOUNDERS,
+    {
+        name: 'Abhay',
+        title: 'Managing Director',
+        image: abhay,
+        alt: 'Abhay, managing director of The Wedding Vachan',
+    },
+];
+
+/** Leadership gets its own section; the crew list leaves them out. */
+export const FOUNDER_NAMES = LEADERSHIP.map((f) => f.name.toLowerCase());
 
 export const BEATS = [
     {
