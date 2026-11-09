@@ -55,7 +55,7 @@ export function ViewAll({ href, label = 'View all', className = '' }) {
     return (
         <Link href={href}
             className={`group inline-flex h-12 shrink-0 items-center gap-3 rounded-full bg-ground-raised pl-5 pr-1.5 text-[14px] font-semibold text-ink
-                        ring-1 ring-ink/[0.07] shadow-[0_8px_20px_-14px_rgba(51,22,26,0.45)] transition-shadow duration-ui ease-standard
+                        ring-1 ring-ink/[0.07] shadow-[0_8px_20px_-14px_rgba(51,22,26,0.45)] transition-[box-shadow,transform] duration-ui ease-standard motion-safe:active:scale-[0.97]
                         hover:shadow-[0_12px_26px_-14px_rgba(51,22,26,0.55)] focus-ring ${className}`}>
             {label}
             <ArrowDot tone="accent" size="md" className="h-9 w-9" />
@@ -83,17 +83,17 @@ export function ChapterHead({ label, title, lead, action, className = '' }) {
     return (
         <header className={`flex flex-wrap items-end justify-between gap-x-6 gap-y-4 ${className}`}>
             <div className="min-w-0 max-w-2xl">
-                <p className="inline-flex items-center gap-2 rounded-full bg-ground-raised py-1 pl-1 pr-3.5 text-[12.5px] font-semibold text-ink
+                <p data-rise="" style={{ '--d': 0 }} className="inline-flex items-center gap-2 rounded-full bg-ground-raised py-1 pl-1 pr-3.5 text-[12.5px] font-semibold text-ink
                               ring-1 ring-ink/[0.07] shadow-[0_4px_14px_-10px_rgba(51,22,26,0.4)]">
                     <span aria-hidden="true" className="chapter-no__n grid h-6 min-w-6 place-items-center rounded-full bg-ink px-1.5 text-[10.5px] tabular-nums text-ground" />
                     {label}
                 </p>
                 {title && (
-                    <h2 className="mt-4 text-balance text-[30px] font-semibold leading-[1.1] tracking-[-0.03em] text-ink sm:text-[42px] lg:text-[48px]">
+                    <h2 data-rise="" style={{ '--d': 1 }} className="mt-4 text-balance text-[30px] font-semibold leading-[1.1] tracking-[-0.03em] text-ink sm:text-[42px] lg:text-[48px]">
                         {title}
                     </h2>
                 )}
-                {lead && <p className="mt-3 max-w-lg text-[15.5px] leading-relaxed text-ink-secondary sm:text-[16px]">{lead}</p>}
+                {lead && <p data-rise="" style={{ '--d': 2 }} className="mt-3 max-w-lg text-[15.5px] leading-relaxed text-ink-secondary sm:text-[16px]">{lead}</p>}
             </div>
             {action && <ViewAll href={action.href} label={action.label} className="hidden sm:inline-flex" />}
         </header>

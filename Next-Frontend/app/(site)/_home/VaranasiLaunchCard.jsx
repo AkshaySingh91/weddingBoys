@@ -76,7 +76,7 @@ function VaranasiLaunchCard() {
         <Chapter label="New city" glow="right"
             title={<>Now filming in <Em>Varanasi</Em></>}
             lead="Our cinematic weddings, on the ghats of the sacred city.">
-            <div className={`mt-8 grid overflow-hidden p-2 sm:mt-12 md:grid-cols-[1.1fr_1fr] md:gap-2 ${CARD}`}>
+            <div data-rise="" className={`mt-8 grid overflow-hidden p-2 sm:mt-12 md:grid-cols-[1.1fr_1fr] md:gap-2 ${CARD}`}>
                 <div className="relative aspect-[4/3] overflow-hidden rounded-[22px] bg-accent-wash md:aspect-auto md:min-h-[420px]">
                     <Image src={varanasiCity} alt="Illustration of the Varanasi ghats" fill placeholder="blur"
                         sizes="(max-width: 768px) 100vw, 640px" className="object-cover object-center" />

@@ -11,6 +11,7 @@ import DharaService from '@/Component/DharaService.jsx';
 import VaranasiLaunchCard from './_home/VaranasiLaunchCard.jsx';
 import { CmsSection } from '@/Component/cms/CmsRender.jsx';
 import StatsBand from '@/Component/cms/StatsBand.jsx';
+import RevealObserver from '@/Component/home/RevealObserver.jsx';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -35,6 +36,7 @@ export default async function HomePage() {
 
     return (
         <section id="top" className="chapters h-auto py-3 lg:px-4">
+            <RevealObserver />
             {page?.blocks?.length ? (
                 // CMS-driven: order, visibility, add/remove all controlled from
                 // /admin/content/home.

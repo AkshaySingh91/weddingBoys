@@ -1421,3 +1421,24 @@ html {
 
 /* Reviews: the new quote rises in (motion-safe only). */
 @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* ── Reveal (home chapters) ─────────────────────────────────────────────────
+   Driven by Component/home/RevealObserver.jsx. Elements carry data-rise and a
+   --d stagger index; only ones that start below the fold are hidden
+   (data-wait) and they animate when data-in lands. Animations (not
+   transitions) with `backwards` fill, so they never fight hover/press
+   transitions and release the transform when done. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-wait]:not([data-in]) { opacity: 0; }
+  [data-in] {
+    animation: wv-rise var(--motion-entrance) var(--ease-entrance) backwards;
+    animation-delay: calc(min(var(--d, 0), 5) * 60ms);
+  }
+  [data-in][data-rise="fade"] { animation-name: wv-fade; }
+  [data-in][data-rise="draw"] { animation-name: wv-draw; animation-duration: 600ms; transform-origin: left center; }
+  [data-in][data-rise="pop"]  { animation-name: wv-pop; animation-duration: 240ms; }
+}
+@keyframes wv-rise { from { opacity: 0; transform: translateY(16px); } }
+@keyframes wv-fade { from { opacity: 0; } }
+@keyframes wv-draw { from { transform: scaleX(0); } }
+@keyframes wv-pop  { from { opacity: 0; transform: scale(0.6); } }

@@ -22,8 +22,8 @@ export default function WhyChooseUs() {
             title={<>Why couples <Em>choose</Em> us</>}
             lead="Six promises we keep at every wedding.">
             <ul className="mt-8 grid grid-cols-2 gap-3 sm:mt-12 lg:grid-cols-3 lg:gap-4">
-                {REASONS.map(({ Icon, title, body }) => (
-                    <li key={title} className={`flex flex-col p-4 sm:p-6 ${CARD}`}>
+                {REASONS.map(({ Icon, title, body }, k) => (
+                    <li key={title} data-rise="" style={{ '--d': k % 2 }} className={`flex flex-col p-4 sm:p-6 ${CARD}`}>
                         <span aria-hidden="true" className="grid h-11 w-11 place-items-center rounded-2xl bg-accent-wash text-accent-ink sm:h-12 sm:w-12">
                             <Icon className="h-5 w-5" />
                         </span>
@@ -31,7 +31,7 @@ export default function WhyChooseUs() {
                         <p className="mt-1 text-[13.5px] leading-snug text-ink-muted sm:text-[15px]">{body}</p>
                     </li>
                 ))}
-                <li className={`col-span-2 flex flex-col justify-between gap-6 p-6 sm:p-8 lg:col-span-3 lg:flex-row lg:items-end ${CARD_DEEP}`}>
+                <li data-rise="" className={`col-span-2 flex flex-col justify-between gap-6 p-6 sm:p-8 lg:col-span-3 lg:flex-row lg:items-end ${CARD_DEEP}`}>
                     <p className="max-w-3xl font-display text-[24px] font-medium italic leading-snug sm:text-[32px]">
                         “We don’t just capture moments — we make the film you’ll watch again in twenty years.”
                     </p>

@@ -33,7 +33,7 @@ export default function OurStory() {
             lead="Filming weddings together since 2015 — and still on set at yours.">
             <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-12 md:grid-cols-2 lg:gap-4">
                 {/* Photograph + founders */}
-                <figure className="relative aspect-[4/5] overflow-hidden rounded-[28px] bg-ground-sunk shadow-[0_22px_44px_-24px_rgba(51,22,26,0.6)] md:row-span-2 md:aspect-auto md:min-h-[520px]">
+                <figure data-rise="fade" className="relative aspect-[4/5] overflow-hidden rounded-[28px] bg-ground-sunk shadow-[0_22px_44px_-24px_rgba(51,22,26,0.6)] md:row-span-2 md:aspect-auto md:min-h-[520px]">
                     <Image src={img} alt="A wedding moment filmed by The Wedding Vachan" fill placeholder="blur"
                         sizes="(max-width: 768px) 100vw, 600px" className="object-cover object-top" />
                     <span className="absolute left-3 top-3"><GlassChip>Since 2015</GlassChip></span>
@@ -52,15 +52,15 @@ export default function OurStory() {
                 </figure>
 
                 {/* Timeline */}
-                <div className={`p-5 sm:p-6 ${CARD}`}>
+                <div data-rise="" style={{ '--d': 1 }} className={`p-5 sm:p-6 ${CARD}`}>
                     <p className="text-[13px] font-semibold text-ink-muted">Our journey</p>
                     <p className="mt-1 text-[16px] leading-snug text-ink">
                         We started with one idea: a wedding film should feel like cinema, not a recap.
                     </p>
                     <ol className="relative mt-6 grid grid-cols-3 gap-2">
-                        <span aria-hidden="true" className="absolute left-[16%] right-[16%] top-[22px] border-t-2 border-dashed border-ink/15" />
+                        <span aria-hidden="true" data-rise="draw" style={{ '--d': 2 }} className="absolute left-[16%] right-[16%] top-[22px] border-t-2 border-dashed border-ink/15" />
                         {MILESTONES.map((m, i) => (
-                            <li key={m.when} className="relative flex flex-col items-center text-center">
+                            <li key={m.when} data-rise="" style={{ '--d': i + 2 }} className="relative flex flex-col items-center text-center">
                                 <span className={`relative z-10 grid h-11 min-w-[64px] place-items-center rounded-full px-3 text-[14px] font-semibold
                                                   ${i === MILESTONES.length - 1 ? 'bg-ink text-ground' : 'bg-ground ring-1 ring-ink/[0.08] text-ink'}`}>
                                     {m.when}
@@ -72,7 +72,7 @@ export default function OurStory() {
                 </div>
 
                 {/* Promises */}
-                <div className={`p-5 sm:p-6 ${CARD_DEEP}`}>
+                <div data-rise="" style={{ '--d': 1 }} className={`p-5 sm:p-6 ${CARD_DEEP}`}>
                     <div className="flex items-start justify-between">
                         <p className="text-[18px] font-semibold leading-tight">What we promise</p>
                         <p className="text-[34px] font-light leading-none tracking-[-0.03em] text-gold tabular-nums">
@@ -80,13 +80,13 @@ export default function OurStory() {
                         </p>
                     </div>
                     <ul className="mt-5 space-y-2.5">
-                        {PROMISES.map(({ Icon, text }) => (
+                        {PROMISES.map(({ Icon, text }, k) => (
                             <li key={text} className="flex items-center gap-3 rounded-2xl bg-ink-onDeep/[0.06] p-2 pr-3">
                                 <span aria-hidden="true" className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ink-onDeep/10 text-ink-onDeep">
                                     <Icon className="h-4 w-4" />
                                 </span>
                                 <span className="flex-1 text-[14px] leading-snug text-ink-onDeep">{text}</span>
-                                <span aria-hidden="true" className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-gold text-ground-deep">
+                                <span aria-hidden="true" data-rise="pop" style={{ '--d': k + 2 }} className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-gold text-ground-deep">
                                     <FiCheck className="h-3.5 w-3.5" strokeWidth={3} />
                                 </span>
                             </li>

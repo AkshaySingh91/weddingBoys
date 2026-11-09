@@ -43,7 +43,7 @@ export default function ReviewsShowcase({ items = [] }) {
                 {items.map((r, k) => {
                     const src = mediaUrl(r.media?.[0]);
                     return (
-                        <li key={r._id || k} className={`flex w-[84vw] shrink-0 snap-start flex-col p-6 sm:w-auto ${k === 0 ? CARD_TINT : CARD}`}>
+                        <li key={r._id || k} data-rise="" style={{ '--d': k % 3 }} className={`flex w-[84vw] shrink-0 snap-start flex-col p-6 sm:w-auto ${k === 0 ? CARD_TINT : CARD}`}>
                             <Quote />
                             <blockquote className="mt-5 flex-1 text-[16.5px] leading-relaxed text-ink">{r.body}</blockquote>
                             <div className="mt-6 flex items-center gap-3 border-t border-ink/[0.07] pt-4">

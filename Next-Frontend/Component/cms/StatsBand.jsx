@@ -51,19 +51,19 @@ export default function StatsBand({ title, subtitle, items }) {
     return (
         <Chapter label="By the numbers" glow="right" title={heading} lead={lead}>
             <dl className="mt-8 grid grid-cols-2 gap-3 sm:mt-12 lg:grid-cols-4 lg:gap-4">
-                <div className={`col-span-2 flex flex-col p-6 sm:p-7 lg:row-span-2 lg:justify-center ${CARD_DEEP}`}>
+                <div data-rise="" className={`col-span-2 flex flex-col p-6 sm:p-7 lg:row-span-2 lg:justify-center ${CARD_DEEP}`}>
                     <dt className="order-2 mt-3 text-[16px] font-semibold">{first.subtitle}</dt>
                     <dd className="order-1 text-[56px] font-light leading-none tracking-[-0.04em] text-gold tabular-nums sm:text-[72px]">{show(first)}</dd>
                     {first.body && <dd className="order-3 mt-1 text-[14px] text-ink-onDeep/65">{first.body}</dd>}
                     <dd aria-hidden="true" className="order-4 mt-6 flex h-9 gap-1.5">
-                        <span className="w-[62%] rounded-full bg-gold" />
+                        <span data-rise="draw" style={{ '--d': 2 }} className="w-[62%] rounded-full bg-gold" />
                         <span className="flex-1 rounded-full ring-1 ring-gold/30" style={{ background: HATCH }} />
                     </dd>
                 </div>
                 {rest.map((stat, k) => {
                     const Icon = ICONS[(k + 1) % ICONS.length];
                     return (
-                        <div key={stat._id || k}
+                        <div key={stat._id || k} data-rise="" style={{ '--d': (k + 1) % 2 }}
                             className={`flex flex-col p-5 sm:p-6 ${CARD} ${rest.length % 2 === 1 && k === rest.length - 1 ? 'col-span-2' : ''}`}>
                             <dt className="order-3 mt-1 text-[14.5px] font-semibold leading-snug text-ink">{stat.subtitle}</dt>
                             <dd aria-hidden="true" className="order-1 grid h-11 w-11 place-items-center rounded-2xl bg-accent-wash text-accent-ink"><Icon className="h-5 w-5" /></dd>

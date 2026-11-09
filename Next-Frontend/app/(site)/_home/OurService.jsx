@@ -73,9 +73,9 @@ const SERVICES = [
     },
 ];
 
-function Tile({ svc, className = '', imageClass = 'aspect-[4/3]' }) {
+function Tile({ svc, d = 0, className = '', imageClass = 'aspect-[4/3]' }) {
     return (
-        <Link href={svc.href} className={`group flex cursor-pointer flex-col overflow-hidden p-2 transition-shadow duration-ui ease-standard
+        <Link href={svc.href} data-rise="" style={{ '--d': d }} className={`group flex cursor-pointer flex-col overflow-hidden p-2 transition-[box-shadow,transform] duration-ui ease-standard motion-safe:active:scale-[0.985]
                                           hover:shadow-[0_20px_40px_-22px_rgba(51,22,26,0.45)] focus-ring ${CARD} ${className}`}>
             <span className={`relative block overflow-hidden rounded-[22px] bg-ground-sunk ${imageClass}`}>
                 <Image src={svc.image} alt="" fill placeholder="blur" sizes="(max-width: 640px) 50vw, 300px"
@@ -106,8 +106,8 @@ function OurServices() {
             lead="Films, photographs and the stories in between — pick one or all of them.">
             <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-12 lg:grid-cols-4 lg:gap-4">
                 {/* Hero card */}
-                <Link href={hero.href}
-                    className="group relative col-span-2 aspect-[5/4] cursor-pointer overflow-hidden rounded-[28px] bg-ground-sunk
+                <Link href={hero.href} data-rise="fade"
+                    className="group relative col-span-2 transition-transform duration-ui ease-standard motion-safe:active:scale-[0.985] aspect-[5/4] cursor-pointer overflow-hidden rounded-[28px] bg-ground-sunk
                                shadow-[0_22px_44px_-24px_rgba(51,22,26,0.6)] focus-ring sm:aspect-[16/10] lg:row-span-2 lg:aspect-auto">
                     <Image src={hero.image} alt="" fill placeholder="blur" sizes="(max-width: 1024px) 100vw, 600px"
                         className="object-cover transition-transform duration-media ease-entrance group-hover:scale-[1.04]" />
@@ -122,12 +122,12 @@ function OurServices() {
                     </span>
                 </Link>
 
-                {tiles.map((svc) => <Tile key={svc.title} svc={svc} />)}
+                {tiles.map((svc, k) => <Tile key={svc.title} svc={svc} d={k % 2} />)}
 
                 {/* Wide tile */}
                 {wide && (
-                    <Link href={wide.href}
-                        className={`group col-span-2 flex cursor-pointer items-center gap-4 p-2 pr-4 transition-shadow duration-ui ease-standard
+                    <Link href={wide.href} data-rise=""
+                        className={`group col-span-2 flex cursor-pointer items-center gap-4 p-2 pr-4 transition-[box-shadow,transform] duration-ui ease-standard motion-safe:active:scale-[0.985]
                                     hover:shadow-[0_20px_40px_-22px_rgba(51,22,26,0.45)] focus-ring ${CARD}`}>
                         <span className="relative aspect-square w-24 shrink-0 overflow-hidden rounded-[22px] bg-ground-sunk sm:w-28">
                             <Image src={wide.image} alt="" fill placeholder="blur" sizes="112px" className="object-cover" />
@@ -142,7 +142,7 @@ function OurServices() {
                 )}
 
                 {/* Call to action */}
-                <div className={`col-span-2 flex flex-col justify-between gap-5 p-6 sm:flex-row sm:items-center lg:col-span-2 ${CARD_DEEP}`}>
+                <div data-rise="" style={{ '--d': 1 }} className={`col-span-2 flex flex-col justify-between gap-5 p-6 sm:flex-row sm:items-center lg:col-span-2 ${CARD_DEEP}`}>
                     <span>
                         <span className="block text-[20px] font-semibold leading-tight tracking-[-0.01em]">Not on the list?</span>
                         <span className="mt-1 block text-[14.5px] leading-snug text-ink-onDeep/70">Every package is built around your celebration.</span>

@@ -178,13 +178,13 @@ export default function OurPortfolio({ data } = {}) {
                             </button>
                         </div>
                     ) : (
-                        <AnimatePresence mode="wait">
+                        <AnimatePresence mode="wait" initial={false}>
                             <motion.div
                                 key={activeCategory}
                                 initial={reduceMotion ? false : { opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                exit={reduceMotion ? undefined : { opacity: 0 }}
-                                transition={{ duration: 0.3 }}
+                                exit={reduceMotion ? undefined : { opacity: 0, transition: { duration: 0.15 } }}
+                                transition={{ duration: 0.25 }}
                                 className={GRID_CLASS}
                             >
                                 {/* Five tile cleanly at every width (one 2×2 lead + four); the rest are a tap away. */}

@@ -32,7 +32,7 @@ export default function DharaaStory() {
         <Chapter label="Sister studio" glow="left"
             title={<>Plan it all with <Em>Dharaa</Em></>}
             lead="Planning, décor and coordination — from the people behind The Wedding Vachan.">
-            <div className={`mt-8 grid gap-2 p-2 sm:mt-12 md:grid-cols-[1fr_1.1fr] ${CARD}`}>
+            <div data-rise="" className={`mt-8 grid gap-2 p-2 sm:mt-12 md:grid-cols-[1fr_1.1fr] ${CARD}`}>
                 <div className="flex flex-col p-3 sm:p-5">
                     <div className="flex items-center gap-3">
                         <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-ground ring-1 ring-ink/[0.06]">

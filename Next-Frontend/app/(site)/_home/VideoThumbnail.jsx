@@ -90,19 +90,21 @@ export default function VideoThumbnail({ data } = {}) {
                 )}
             </div>
 
-            <div className="mt-5 flex snap-x snap-mandatory gap-3 overflow-x-auto scrollbar-none pb-4
+            <div key={selectedTag} className="mt-5 flex snap-x snap-mandatory gap-3 overflow-x-auto scrollbar-none pb-4
                             -mr-5 pr-5 md:-mr-8 md:pr-8 lg:-mr-6 lg:gap-4 lg:pr-6">
                 {isLoading ? (
                     [...Array(4)].map((_, i) => (
                         <Skeleton key={i} className="aspect-[4/5] w-[74vw] shrink-0 sm:w-[42vw] lg:w-[320px]" rounded="media" />
                     ))
                 ) : clients && clients.length ? (
-                    clients.map((c) => {
+                    clients.map((c, k) => {
                         const couple = [c.clientName?.Bride, c.clientName?.Groom].filter(Boolean).join(' & ');
                         const meta = [c.videos?.videoShootDate, c.videos?.videoLocation?.city].filter(Boolean).join(' · ');
                         return (
                             <Link href={`/films/${c.videos._id}`} key={c.videos._id}
-                                className="group relative aspect-[4/5] w-[74vw] shrink-0 cursor-pointer snap-start overflow-hidden rounded-[28px] bg-ground-sunk
+                                style={{ animationDelay: `${Math.min(k, 3) * 50}ms` }}
+                                className="group relative aspect-[4/5] w-[74vw] shrink-0 cursor-pointer snap-start overflow-hidden rounded-[28px] bg-ground-sunk transition-transform duration-ui ease-standard motion-safe:active:scale-[0.985]
+                                           motion-safe:animate-[fadeUp_320ms_cubic-bezier(0.16,1,0.3,1)_backwards]
                                            shadow-[0_18px_36px_-22px_rgba(51,22,26,0.6)] focus-ring sm:w-[42vw] lg:w-[320px]">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img src={c.thumbnailUrl} alt={`${couple} wedding film`} loading="lazy" decoding="async"
