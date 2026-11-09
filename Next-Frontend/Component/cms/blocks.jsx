@@ -146,7 +146,7 @@ function ReviewsBlock({ block }) {
 function TeamBlock({ block }) {
     return (
         <Chapter label="The team" glow="left" title={<>The people behind <Em>every film</Em></>}
-            lead={block.subtitle || 'Two founders on set, a managing director keeping it all moving, and the crew you’ll meet on the day.'}>
+            lead={block.subtitle || 'Two founders, one managing director and the crew you’ll meet on the day.'}>
             <StudioTeam />
         </Chapter>
     );

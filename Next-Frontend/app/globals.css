@@ -1437,8 +1437,10 @@ html {
   [data-in][data-rise="fade"] { animation-name: wv-fade; }
   [data-in][data-rise="draw"] { animation-name: wv-draw; animation-duration: 600ms; transform-origin: left center; }
   [data-in][data-rise="pop"]  { animation-name: wv-pop; animation-duration: 240ms; }
+  [data-in][data-rise="draw-y"] { animation-name: wv-draw-y; animation-duration: 700ms; transform-origin: center top; }
 }
 @keyframes wv-rise { from { opacity: 0; transform: translateY(16px); } }
 @keyframes wv-fade { from { opacity: 0; } }
 @keyframes wv-draw { from { transform: scaleX(0); } }
 @keyframes wv-pop  { from { opacity: 0; transform: scale(0.6); } }
+@keyframes wv-draw-y { from { transform: scaleY(0); } }

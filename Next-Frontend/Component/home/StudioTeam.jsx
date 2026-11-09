@@ -1,94 +1,104 @@
 /**
- * The studio, in black & white — the team as a hierarchy you can read at a
- * glance, without drawing an org chart.
+ * The team — "scale spine": hierarchy told by size, joined by one gold thread.
  *
- *   01 Founders           two seated portraits, side by side, the largest cards
- *        └──┬──┘          a gold bracket joins them and drops to…
- *   02 Managing Director  the standing full-length portrait in a wine-black card
- *           │
- *   03 The crew           matching studio headshots, a swipe rail on phones
+ *   ┃ 01 Founders           two portrait cards, the largest on the page
+ *   ┃ 02 Managing Director  a wine-black card with the full-length portrait inset
+ *   ┃ 03 The crew           a compact rail of square headshots, names beneath
  *
- * Data: lib/team.js. Server component — nothing here needs state; entrances come
- * from the page's RevealObserver (data-rise).
+ * Phones: the thread runs down the left gutter with a node at each tier, so the
+ * whole team fits in ~560px (it was ~1,500px as three stacked tiers). From md
+ * the founders and the MD share one row and the crew sit six across beneath.
+ * Card size steps down 1 → 2 → 3, so rank reads before any label does.
+ *
+ * Server component; entrances via the page's RevealObserver (data-rise).
+ * Concept from the creative-section-designer review (film billing blocks:
+ * rank by row and size, everything visible without interaction).
  */
 import Image from 'next/image';
 import { FOUNDERS, MANAGING_DIRECTOR, CREW } from '@/lib/team.js';
-import { GlassChip, CARD_DEEP } from './Chapter.jsx';
+import { CARD_DEEP } from './Chapter.jsx';
 
-function Tier({ n, children }) {
+/** Tier label; on phones its node sits on the gold thread. */
+function Tier({ n, children, className = '' }) {
     return (
-        <p data-rise="" className="relative z-10 mx-auto flex w-fit items-center gap-2 rounded-full bg-ground-raised py-1 pl-1 pr-3.5 text-[12.5px] font-semibold
-                                   text-ink ring-1 ring-ink/[0.07] shadow-[0_4px_14px_-10px_rgba(51,22,26,0.4)]">
-            <span aria-hidden="true" className="grid h-6 w-6 place-items-center rounded-full bg-gold text-[10.5px] tabular-nums text-ground-deep">{n}</span>
+        <p className={`relative flex items-center gap-2 text-[11.5px] font-semibold uppercase tracking-[0.16em] text-ink-muted ${className}`}>
+            <span aria-hidden="true"
+                className="absolute -left-[27px] top-1/2 grid h-[18px] w-[18px] -translate-y-1/2 place-items-center rounded-full bg-ground ring-1 ring-gold md:hidden">
+                <span className="h-1.5 w-1.5 rounded-full bg-gold" />
+            </span>
+            <span className="tabular-nums text-gold-strong">{n}</span>
             {children}
         </p>
     );
 }
 
-/** Gold connector: a bracket joining the two founders, or a plain drop. */
-function Thread({ bracket = false }) {
+function FounderCard({ f, d }) {
     return (
-        <div aria-hidden="true" className={`relative mx-auto ${bracket ? 'h-12 w-1/2' : 'h-8 w-px'}`}>
-            {bracket && <span data-rise="draw" className="absolute inset-x-0 top-0 h-5 rounded-b-2xl border-x border-b border-gold/60" />}
-            <span className={`absolute left-1/2 w-px -translate-x-1/2 bg-gold/60 ${bracket ? 'top-5 h-7' : 'inset-y-0'}`} />
-        </div>
+        <figure data-rise="" style={{ '--d': d }}
+            className="relative aspect-[4/5] overflow-hidden rounded-[24px] bg-ground-deep shadow-[0_18px_36px_-22px_rgba(51,22,26,0.6)] md:aspect-[3/4] md:rounded-[28px]">
+            <Image src={f.image} alt={`${f.name}, ${f.role}`} fill placeholder="blur"
+                sizes="(max-width: 768px) 45vw, 360px" className="object-cover object-[50%_26%]" />
+            <figcaption className="absolute inset-x-1.5 bottom-1.5 rounded-[18px] bg-white/80 px-2.5 py-2 backdrop-blur-md md:inset-x-2 md:bottom-2 md:px-4 md:py-3">
+                <span className="block truncate text-[13.5px] font-semibold leading-tight text-ink md:text-[18px]">{f.name}</span>
+                <span className="block truncate text-[11px] text-ink-muted md:text-[13px]">{f.role}<span className="hidden md:inline"> · on set since 2015</span></span>
+            </figcaption>
+        </figure>
     );
 }
 
 export default function StudioTeam() {
     const md = MANAGING_DIRECTOR;
     return (
-        <div className="mt-8 sm:mt-12">
-            <Tier n="01">Founders</Tier>
-            <ul className="mt-4 grid grid-cols-2 gap-3 sm:gap-4 lg:mx-auto lg:max-w-4xl">
-                {FOUNDERS.map((f, k) => (
-                    <li key={f.name} data-rise="" style={{ '--d': k }}>
-                        <figure className="relative aspect-[3/4] overflow-hidden rounded-[28px] bg-ground-deep shadow-[0_22px_44px_-24px_rgba(51,22,26,0.6)]">
-                            <Image src={f.image} alt={`${f.name}, ${f.role}`} fill placeholder="blur"
-                                sizes="(max-width: 1024px) 50vw, 440px" className="object-cover object-[50%_28%]" />
-                            <span className="absolute left-2.5 top-2.5"><GlassChip>{f.role}</GlassChip></span>
-                            <figcaption className="absolute inset-x-2 bottom-2 rounded-[20px] bg-white/80 px-3 py-2.5 backdrop-blur-md sm:px-4 sm:py-3">
-                                <span className="block text-[14.5px] font-semibold leading-tight text-ink sm:text-[18px]">{f.name}</span>
-                                <span className="block text-[11.5px] text-ink-muted sm:text-[13px]">On set since 2015</span>
-                            </figcaption>
-                        </figure>
-                    </li>
-                ))}
-            </ul>
+        <div className="relative mt-8 pl-8 sm:mt-12 md:pl-0">
+            {/* The thread (phones). */}
+            <span aria-hidden="true" data-rise="draw-y"
+                className="absolute bottom-16 left-[8px] top-2 w-px bg-gradient-to-b from-gold via-gold/60 to-gold/0 md:hidden" />
 
-            <Thread bracket />
-            <Tier n="02">Managing Director</Tier>
-            <div data-rise="fade" className={`mx-auto mt-4 grid max-w-3xl grid-cols-[0.85fr_1fr] gap-2 p-2 ${CARD_DEEP}`}>
-                <div className="relative aspect-[9/14] overflow-hidden rounded-[22px] bg-ground-deep">
-                    <Image src={md.image} alt={`${md.name}, ${md.role}`} fill placeholder="blur"
-                        sizes="(max-width: 768px) 45vw, 340px" className="object-cover object-top" />
+            <div className="lg:grid lg:grid-cols-12 lg:items-stretch lg:gap-5">
+            <div className="md:grid md:grid-cols-[1fr_1fr_0.9fr] md:gap-4 lg:col-span-9">
+                <div className="md:col-span-2">
+                    <Tier n="01">Founders</Tier>
+                    <div className="mt-2.5 grid grid-cols-2 gap-2.5 md:mt-3 md:gap-4">
+                        {FOUNDERS.map((f, k) => <FounderCard key={f.name} f={f} d={k} />)}
+                    </div>
                 </div>
-                <div className="flex flex-col justify-end p-3 sm:p-7">
-                    <span className="w-fit rounded-full bg-gold px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.08em] text-ground-deep">
-                        {md.role}
-                    </span>
-                    <p className="mt-3 text-[28px] font-semibold leading-none tracking-[-0.02em] sm:text-[44px]">{md.name}</p>
-                    <p className="mt-3 text-[13.5px] leading-snug text-ink-onDeep/70 sm:text-[16px]">{md.line}</p>
+
+                <div className="mt-5 flex flex-col md:mt-0">
+                    <Tier n="02">Managing Director</Tier>
+                    <div data-rise="" style={{ '--d': 2 }}
+                        className={`mt-2.5 grid flex-1 grid-cols-[84px_1fr] items-end gap-3 p-2 md:mt-3 md:grid-cols-1 md:items-stretch md:gap-0 md:p-2 ${CARD_DEEP}`}>
+                        <div className="relative aspect-[9/16] overflow-hidden rounded-[18px] bg-ground-deep md:aspect-auto md:min-h-[260px] md:flex-1 md:rounded-[22px]">
+                            <Image src={md.image} alt={`${md.name}, ${md.role}`} fill placeholder="blur"
+                                sizes="(max-width: 768px) 84px, 300px" className="object-cover object-top" />
+                        </div>
+                        <div className="pb-1.5 pr-2 md:p-4">
+                            <span className="inline-flex rounded-full bg-gold px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-ground-deep">
+                                {md.role}
+                            </span>
+                            <p className="mt-2 text-[26px] font-semibold leading-none tracking-[-0.02em] md:text-[30px]">{md.name}</p>
+                            <p className="mt-2 text-[13px] leading-snug text-ink-onDeep/70 md:text-[14px]">{md.line}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <Thread />
-            <Tier n="03">The crew</Tier>
-            <ul className="-mx-5 mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 scrollbar-none
-                           sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 lg:grid-cols-6 lg:gap-4">
+            <div className="lg:col-span-3">
+            <Tier n="03" className="mt-5 md:mt-8 lg:mt-0">The crew</Tier>
+            <ul className="-mr-5 mt-2.5 flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1 pr-5 scrollbar-none
+                           md:mr-0 md:mt-3 md:grid md:grid-cols-6 md:gap-4 md:overflow-visible md:pr-0 lg:grid-cols-3 lg:gap-x-3 lg:gap-y-4">
                 {CREW.map((c, k) => (
-                    <li key={c.name} data-rise="" style={{ '--d': k % 3 }} className="w-[44vw] shrink-0 snap-start sm:w-auto">
-                        <figure className="relative aspect-[4/5] overflow-hidden rounded-[22px] bg-ground-deep">
+                    <li key={c.name} data-rise="" style={{ '--d': (k % 3) + 1 }} className="w-[88px] shrink-0 snap-start md:w-auto">
+                        <div className="relative aspect-square overflow-hidden rounded-[18px] bg-ground-deep md:rounded-[22px]">
                             <Image src={c.image} alt={`${c.name}, ${c.role}`} fill placeholder="blur"
-                                sizes="(max-width: 640px) 44vw, (max-width: 1024px) 33vw, 220px" className="object-cover object-[50%_20%]" />
-                            <figcaption className="absolute inset-x-1.5 bottom-1.5 rounded-2xl bg-white/80 px-2.5 py-2 backdrop-blur-md">
-                                <span className="block truncate text-[13px] font-semibold leading-tight text-ink">{c.name}</span>
-                                <span className="block truncate text-[11.5px] text-ink-muted">{c.role}</span>
-                            </figcaption>
-                        </figure>
+                                sizes="(max-width: 768px) 88px, 200px" className="object-cover object-[50%_22%]" />
+                        </div>
+                        <p className="mt-1.5 truncate text-[12.5px] font-semibold leading-tight text-ink md:mt-2 md:text-[14px] lg:text-[12.5px]">{c.name}</p>
+                        <p className="truncate text-[11px] text-ink-muted md:text-[12.5px] lg:text-[11px]">{c.role}</p>
                     </li>
                 ))}
             </ul>
+            </div>
+            </div>
         </div>
     );
 }
