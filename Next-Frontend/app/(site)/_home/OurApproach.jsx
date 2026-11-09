@@ -33,7 +33,7 @@ import {
     useTransform, useReducedMotion,
 } from 'framer-motion';
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
-import Section from '@/Component/ui/Section.jsx';
+import Chapter, { Em } from '@/Component/home/Chapter.jsx';
 
 const STEPS = [
     {
@@ -77,11 +77,13 @@ export default function OurApproach() {
     const reduceMotion = useReducedMotion();
 
     return (
-        <Section width="wide" rhythm="tight" id="process" aria-labelledby="approach-heading">
+        <Chapter id="process" label="Our approach" glow="right"
+            title={<>From first call to <Em>final film</Em></>}
+            lead="Five steps, the same care for every couple.">
             {/* overflow-x-clip, never overflow-hidden: `hidden` makes this a
                 scroll container and silently breaks `position: sticky` in every
                 descendant, which is the mechanism the deck runs on. */}
-            <div className="relative overflow-x-clip rounded-3xl bg-gradient-to-b from-ground-sunk to-ground">
+            <div className="relative mt-4 overflow-x-clip">
                 {reduceMotion
                     ? <PlainSteps />
                     : (
@@ -91,7 +93,7 @@ export default function OurApproach() {
                         </>
                     )}
             </div>
-        </Section>
+        </Chapter>
     );
 }
 
@@ -132,26 +134,12 @@ function Deck() {
 
     return (
         <div ref={trackRef} style={{ height: `${STEPS.length * VH_PER_STEP + 40}vh` }} className="relative">
-            <div className="sticky top-[var(--header-height)] flex h-[calc(100svh-var(--header-height))] min-h-[600px] items-center px-7 py-10 xl:px-10">
+            <div className="sticky top-[var(--header-height)] flex h-[calc(100svh-var(--header-height))] min-h-[600px] items-center py-10">
                 <div className="grid w-full grid-cols-12 items-center gap-6 xl:gap-8">
 
                     {/* ── Left: heading and the step list ── */}
                     <div className="col-span-4">
-                        <p className="t-label flex items-center gap-3">
-                            Our approach
-                            <span aria-hidden="true" className="h-px w-10 bg-accent" />
-                        </p>
-                        {/* Was an <h1> mid-page — the last of the four the home
-                            page carried (audit R-42). */}
-                        <h2 id="approach-heading" className="t-display-2 mt-3 max-w-[13ch]">
-                            How We Craft Your Dream Wedding Story
-                        </h2>
-                        <p className="t-body-sm mt-4 max-w-[30ch]">
-                            Our process combines artistic vision with meticulous planning — ensuring every
-                            detail of your wedding is captured with passion and precision.
-                        </p>
-
-                        <ol className="mt-7">
+                        <ol>
                             {STEPS.map((s, i) => (
                                 <li key={s.number}>
                                     <StepRow
@@ -214,7 +202,7 @@ function Deck() {
                                     <span
                                         key={s.number}
                                         className={`h-[3px] flex-1 rounded-pill transition-colors duration-ui ease-standard
-                                                    ${i <= active ? 'bg-accent' : 'bg-gold/35'}`}
+                                                    ${i <= active ? 'bg-accent' : 'bg-ink/10'}`}
                                     />
                                 ))}
                             </div>
@@ -339,8 +327,8 @@ function StepRow({ step, isActive, isLast, onSelect }) {
                     className={`grid h-9 w-9 shrink-0 place-items-center rounded-pill border text-[13px] font-semibold
                                 transition-colors duration-ui ease-standard
                                 ${isActive
-                            ? 'border-accent bg-accent text-white'
-                            : 'border-gold/45 bg-transparent text-ink-muted group-hover:border-gold-strong'}`}
+                            ? 'border-ink bg-ink text-ground'
+                            : 'border-ink/15 bg-transparent text-ink-muted group-hover:border-ink/30'}`}
                 >
                     {step.number}
                 </span>
@@ -430,15 +418,7 @@ function MobileDeck() {
     const step = STEPS[active];
 
     return (
-        <div className="px-5 py-10 sm:px-7">
-            <p className="t-label">Our approach</p>
-            <h2 id="approach-heading" className="t-display-2 mt-2">
-                How We Craft Your Dream Wedding Story
-            </h2>
-            <p className="t-body-sm mt-3">
-                Our process combines artistic vision with meticulous planning — ensuring every
-                detail of your wedding is captured with passion and precision.
-            </p>
+        <div className="pt-4">
 
             {/* ── Pill stepper: the vertical desktop list, laid on its side. ── */}
             <div
@@ -454,14 +434,14 @@ function MobileDeck() {
                         role="tab"
                         aria-selected={i === active}
                         onClick={() => go(i)}
-                        className={`flex min-h-[44px] shrink-0 items-center gap-2 rounded-pill border px-4
+                        className={`flex h-11 shrink-0 cursor-pointer items-center gap-2 rounded-full border pl-1.5 pr-4
                                     text-[13px] font-semibold transition-colors duration-ui ease-standard
                                     focus-ring
                                     ${i === active
-                                ? 'border-accent bg-accent text-white'
-                                : 'border-gold/45 text-ink-secondary'}`}
+                                ? 'border-ink bg-ink text-ground'
+                                : 'border-ink/10 bg-ground-raised text-ink-secondary'}`}
                     >
-                        <span className={i === active ? 'text-white/75' : 'text-ink-muted'}>{s.number}</span>
+                        <span className={`grid h-8 w-8 place-items-center rounded-full text-[12px] ${i === active ? 'bg-ground text-ink' : 'bg-ink/[0.05] text-ink'}`}>{s.number}</span>
                         {s.title.split(' ')[0]}
                     </button>
                 ))}
@@ -483,8 +463,9 @@ function MobileDeck() {
             </div>
 
             {/* ── Detail, cross-dissolved in step with the card. ── */}
-            <div aria-live="polite" aria-atomic="true" className="mt-7 min-h-[168px]">
-                <p className="t-label text-accent-ink">
+            <div className="mt-6 rounded-[28px] bg-ground-raised p-5 ring-1 ring-ink/[0.06] shadow-[0_14px_34px_-22px_rgba(51,22,26,0.35)]">
+            <div aria-live="polite" aria-atomic="true" className="min-h-[150px]">
+                <p className="inline-flex rounded-full bg-accent-wash px-2.5 py-1 text-[11.5px] font-semibold text-accent-ink">
                     Step {step.number} / {String(STEPS.length).padStart(2, '0')}
                 </p>
                 <AnimatePresence mode="wait" initial={false}>
@@ -495,22 +476,22 @@ function MobileDeck() {
                         exit={{ opacity: 0, y: -12 * direction }}
                         transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                     >
-                        <h3 className="mt-1.5 font-display text-[26px] font-semibold leading-tight text-ink">
+                        <h3 className="mt-3 text-[22px] font-semibold leading-tight tracking-[-0.02em] text-ink">
                             {step.title}
                         </h3>
-                        <p className="t-body-sm mt-2.5">{step.copy}</p>
+                        <p className="mt-2 text-[15px] leading-relaxed text-ink-secondary">{step.copy}</p>
                     </motion.div>
                 </AnimatePresence>
             </div>
 
             {/* ── Bottom bar, inside the thumb's reach. ── */}
-            <div className="mt-6 flex items-center gap-4 border-t border-gold/40 pt-5">
+            <div className="mt-5 flex items-center gap-4 border-t border-ink/[0.07] pt-4">
                 <div aria-hidden="true" className="flex flex-1 items-center gap-1.5">
                     {STEPS.map((s, i) => (
                         <span
                             key={s.number}
                             className={`h-[3px] flex-1 rounded-pill transition-colors duration-ui ease-standard
-                                        ${i <= active ? 'bg-accent' : 'bg-gold/35'}`}
+                                        ${i <= active ? 'bg-accent' : 'bg-ink/10'}`}
                         />
                     ))}
                 </div>
@@ -522,6 +503,7 @@ function MobileDeck() {
                         <FiArrowRight aria-hidden="true" className="h-4 w-4" />
                     </DeckButton>
                 </div>
+            </div>
             </div>
         </div>
     );
@@ -596,15 +578,7 @@ function SwipeCard({ step, index, active, withImage, onPrev, onNext }) {
 function PlainSteps() {
     const reduceMotion = useReducedMotion();
     return (
-        <div className="px-5 py-10 sm:px-7 lg:py-14">
-            <p className="t-label">Our approach</p>
-            <h2 id="approach-heading" className="t-display-2 mt-2">
-                How We Craft Your Dream Wedding Story
-            </h2>
-            <p className="t-body-lead mt-3">
-                Our process combines artistic vision with meticulous planning — ensuring every
-                detail of your wedding is captured with passion and precision.
-            </p>
+        <div className="pt-4">
 
             <ol className="mt-9 space-y-8">
                 {STEPS.map((step, i) => (

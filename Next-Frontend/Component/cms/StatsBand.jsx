@@ -1,10 +1,7 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
-import CountUp from 'react-countup';
-import { FiCamera, FiAward, FiHeart, FiClock, FiStar } from 'react-icons/fi';
-import Section from '@/Component/ui/Section.jsx';
+import { FiFilm, FiAward, FiHeart, FiClock } from 'react-icons/fi';
+import Chapter, { CARD, CARD_DEEP } from '@/Component/home/Chapter.jsx';
 
 /**
  * The studio's track record: the CMS `stats` block (Admin › Content › Home).
@@ -14,7 +11,7 @@ import Section from '@/Component/ui/Section.jsx';
  * figures render once now, from the block, in this design (plan phase 7).
  *
  * `items`: { title: '1000+', subtitle: 'Weddings Captured', body?: 'Magical moments preserved' }.
- * A value that starts with a number counts up to it; anything else shows as written.
+ * Values show as written (a figure like 1000 is formatted 1,000).
  */
 const DEFAULT_ITEMS = [
     { title: 'Wedding films', subtitle: 'Stories in motion', body: 'Cinematic memories of your celebration' },
@@ -25,17 +22,6 @@ const DEFAULT_ITEMS = [
 const DEFAULT_TITLE = 'Wedding stories, thoughtfully captured';
 const DEFAULT_LEAD = 'Photography and films shaped around your people, your traditions, and your celebration.';
 
-const ICON_CLASS = 'lg:text-3xl sm:text-2xl';
-const iconFor = (label = '') => {
-    const l = label.toLowerCase();
-    if (/wedding|shoot|film|photo/.test(l)) return <FiCamera className={ICON_CLASS} />;
-    if (/award|recogni/.test(l)) return <FiAward className={ICON_CLASS} />;
-    if (/client|couple|famil|happy/.test(l)) return <FiHeart className={ICON_CLASS} />;
-    if (/year|experience/.test(l)) return <FiClock className={ICON_CLASS} />;
-    return <FiStar className={ICON_CLASS} />;
-};
-
-/** "1000+" → { number: 1000, prefix: '', suffix: '+' }; null when it is not a figure. */
 function parseFigure(value = '') {
     const m = String(value).trim().match(/^([^\d]*)([\d,]+(?:\.\d+)?)(.*)$/);
     if (!m) return null;
@@ -43,116 +29,50 @@ function parseFigure(value = '') {
     return Number.isFinite(number) ? { prefix: m[1], number, suffix: m[3] } : null;
 }
 
+const ICONS = [FiFilm, FiAward, FiHeart, FiClock];
+const HATCH = 'repeating-linear-gradient(-45deg, rgb(var(--gold-rgb) / 0.55) 0 2px, transparent 2px 7px)';
+const show = (stat) => {
+    const f = parseFigure(stat.title);
+    return f ? `${f.prefix}${f.number.toLocaleString('en-IN')}${f.suffix}` : stat.title;
+};
+
+/**
+ * The numbers — a bento: the lead figure on a wine-black card with a hatched
+ * bar, the rest on light cards with an icon tile. Figures show as written in
+ * the CMS (Admin › Content › Home › stats).
+ */
 export default function StatsBand({ title, subtitle, items }) {
     const stats = (items?.length ? items : DEFAULT_ITEMS).filter((it) => it?.title || it?.subtitle);
     if (!stats.length) return null;
     const heading = title || DEFAULT_TITLE;
     const lead = title ? subtitle : DEFAULT_LEAD;
+    const [first, ...rest] = stats;
 
     return (
-        <Section width="wide" rhythm="tight" aria-labelledby="legacy-heading">
-        <div className="lg:rounded-3xl sm:rounded-lg bg-gradient-to-b from-ground-sunk to-ground relative overflow-hidden">
-            {/* Was `-mx-4` on a bare <section> whose inner container was
-                max-w-6xl: it measured 1455px against a 1425px viewport and its
-                content started at x=152 while every other band starts at 40. */}
-            <div className="px-5 py-10 sm:px-7 lg:py-12">
-                {/* Section Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-                    className="text-center lg:mb-12 sm:mb-8"
-                >
-                    <p className="inline-block bg-accent text-ink-onAccent px-5 py-1.5 rounded-pill text-[13px] font-semibold mb-5 shadow-lg">
-                        <span className="drop-shadow-md">Studio Highlights</span>
-                    </p>
-                    <h2 id="legacy-heading" className="t-display-2 mx-auto mb-4 text-secondary_on">
-                        {heading}
-                    </h2>
-                    {lead && (
-                        <p className="t-body-lead mx-auto text-[#74583E]">
-                            {lead}
-                        </p>
-                    )}
-                </motion.div>
-
-                {/* Stats Grid */}
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-                    {stats.map((stat, i) => (
-                        <StatItem key={stat._id || i} stat={stat} />
-                    ))}
-                </div>
-
-                {/* Authenticity Note */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    className="t-caption mx-auto mt-10 text-center text-[#74583E]"
-                >
-                    *Verified through client records & vendor partnerships
-                </motion.div>
-
-                {/* Decorative Elements */}
-                <div className="absolute top-0 left-0 w-40 h-40 bg-[#f6c2b9c9] rounded-full -translate-x-1/2 -translate-y-1/2" />
-                <div className="absolute bottom-0 right-0 w-48 h-48 bg-accent/10 rounded-full translate-x-1/2 translate-y-1/2" />
-            </div>
-        </div>
-        </Section>
-    );
-}
-
-function StatItem({ stat }) {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: "0px 0px -50px 0px" });
-    const [startCounter, setStartCounter] = useState(false);
-    const figure = parseFigure(stat.title);
-    const icon = iconFor(stat.subtitle);
-
-    if (isInView && !startCounter) {
-        setStartCounter(true);
-    }
-
-    return (
-        <motion.div
-            ref={ref}
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="bg-[#FDFAF6] text-primary rounded-2xl lg:p-8 sm:p-4 text-center shadow-lg hover:shadow-xl transition-all group relative overflow-hidden"
-        >
-            {/* Golden Flare */}
-            <div className="absolute inset-0 bg-gradient-to-br from-gold to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-
-            <div className="relative z-10">
-                <div className="inline-block bg-accent text-white lg:p-4 sm:p-3 lg:rounded-2xl sm:rounded-md mb-3 lg:mb-6 transform group-hover:-rotate-12 transition-transform">
-                    {icon}
-                </div>
-                {/* Was an <h3> holding the number, with the label in a <p>
-                    beneath — inverted, and until the counter fired the heading's
-                    entire text content was a star glyph. A stat is a term and a
-                    value, so it is a <dl>; the star is ornament. */}
-                <dl>
-                    <dd className="font-display text-[27px] lg:text-[40px] font-semibold tracking-wide text-[#B33A3A] mb-2">
-                        {figure && startCounter
-                            ? <CountUp end={figure.number} duration={2.5} separator="," prefix={figure.prefix} suffix={figure.suffix} />
-                            : <span>{figure ? `${figure.prefix}${figure.number.toLocaleString('en-IN')}${figure.suffix}` : stat.title}</span>}
-                        <span aria-hidden="true" className="text-gold ml-2">★</span>
+        <Chapter label="By the numbers" glow="right" title={heading} lead={lead}>
+            <dl className="mt-8 grid grid-cols-2 gap-3 sm:mt-12 lg:grid-cols-4 lg:gap-4">
+                <div className={`col-span-2 flex flex-col p-6 sm:p-7 lg:row-span-2 lg:justify-center ${CARD_DEEP}`}>
+                    <dt className="order-2 mt-3 text-[16px] font-semibold">{first.subtitle}</dt>
+                    <dd className="order-1 text-[56px] font-light leading-none tracking-[-0.04em] text-gold tabular-nums sm:text-[72px]">{show(first)}</dd>
+                    {first.body && <dd className="order-3 mt-1 text-[14px] text-ink-onDeep/65">{first.body}</dd>}
+                    <dd aria-hidden="true" className="order-4 mt-6 flex h-9 gap-1.5">
+                        <span className="w-[62%] rounded-full bg-gold" />
+                        <span className="flex-1 rounded-full ring-1 ring-gold/30" style={{ background: HATCH }} />
                     </dd>
-                    <dt className="t-heading-3 mx-auto mb-1 text-secondary_on">
-                        {stat.subtitle}
-                    </dt>
-                </dl>
-                {stat.body && (
-                    <p className="t-body-sm mx-auto text-[#74583E]">
-                        {stat.body}
-                    </p>
-                )}
-            </div>
-
-            {/* Animated Border */}
-            <div className="absolute inset-0 border-2 border-gold opacity-0 group-hover:opacity-30 transition-opacity rounded-2xl" />
-        </motion.div>
+                </div>
+                {rest.map((stat, k) => {
+                    const Icon = ICONS[(k + 1) % ICONS.length];
+                    return (
+                        <div key={stat._id || k}
+                            className={`flex flex-col p-5 sm:p-6 ${CARD} ${rest.length % 2 === 1 && k === rest.length - 1 ? 'col-span-2' : ''}`}>
+                            <dt className="order-3 mt-1 text-[14.5px] font-semibold leading-snug text-ink">{stat.subtitle}</dt>
+                            <dd aria-hidden="true" className="order-1 grid h-11 w-11 place-items-center rounded-2xl bg-accent-wash text-accent-ink"><Icon className="h-5 w-5" /></dd>
+                            <dd className="order-2 mt-6 text-[40px] font-light leading-none tracking-[-0.03em] text-ink tabular-nums sm:text-[48px]">{show(stat)}</dd>
+                            {stat.body && <dd className="order-4 text-[13px] text-ink-muted">{stat.body}</dd>}
+                        </div>
+                    );
+                })}
+            </dl>
+        </Chapter>
     );
 }

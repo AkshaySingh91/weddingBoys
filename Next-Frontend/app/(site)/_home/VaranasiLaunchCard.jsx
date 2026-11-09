@@ -15,10 +15,10 @@
  */
 import { useState, useEffect, memo } from 'react';
 import Image from 'next/image';
-import { FiClock, FiArrowRight } from 'react-icons/fi';
+import Link from 'next/link';
+import { FiClock, FiArrowUpRight, FiMapPin, FiCalendar, FiUsers } from 'react-icons/fi';
 import varanasiCity from '@/Asset/Home/v1.png';
-import Section from '@/Component/ui/Section.jsx';
-import Button from '@/Component/ui/Button.jsx';
+import Chapter, { Em, GlassChip, CARD } from '@/Component/home/Chapter.jsx';
 
 const DEADLINE = Date.parse(process.env.NEXT_PUBLIC_VARANASI_OFFER_ENDS_AT || '');
 const OFFER_LABEL = process.env.NEXT_PUBLIC_VARANASI_OFFER_LABEL || 'Varanasi booking offer';
@@ -44,27 +44,20 @@ const LaunchCountdown = memo(function LaunchCountdown() {
         return () => clearInterval(timer);
     }, []);
     if (!Number.isFinite(DEADLINE) || timeLeft === false) {
-        return <p className="t-body text-ink">Tell us your wedding date to check availability in Varanasi.</p>;
+        return null;
     }
 
     return (
-        <div className="w-fit rounded-media border border-gold/40 bg-ground-raised p-5 shadow-panel">
-            <p className="t-label flex items-center gap-2 text-ink">
+        <div className="w-full">
+            <p className="flex items-center gap-2 text-[12.5px] font-medium text-ink-secondary">
                 <FiClock aria-hidden="true" className="h-4 w-4 text-accent-ink" />
                 {OFFER_LABEL} ends {new Date(DEADLINE).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' })} IST
             </p>
-
-            <div className="mt-3 flex items-center gap-3 text-center md:gap-4">
+            <div className="mt-3 grid grid-cols-4 gap-2 text-center">
                 {Object.entries(timeLeft || {}).map(([unit, value]) => (
-                    <div key={unit} className="flex flex-col">
-                        <div
-                            className="grid h-14 w-14 place-items-center rounded-panel border border-accent/20
-                                       bg-accent-wash font-display text-[26px] font-semibold text-accent-ink
-                                       md:h-16 md:w-16 md:text-[30px]"
-                        >
-                            {value.toString().padStart(2, '0')}
-                        </div>
-                        <span className="t-caption mt-2">{UNIT_LABEL[unit]}</span>
+                    <div key={unit} className="rounded-2xl bg-ground py-3 ring-1 ring-ink/[0.06]">
+                        <p className="text-[24px] font-light leading-none tabular-nums text-ink">{value.toString().padStart(2, '0')}</p>
+                        <p className="mt-1 text-[11px] text-ink-muted">{UNIT_LABEL[unit]}</p>
                     </div>
                 ))}
             </div>
@@ -72,91 +65,55 @@ const LaunchCountdown = memo(function LaunchCountdown() {
     );
 });
 
+const FACTS = [
+    { Icon: FiMapPin, k: 'City', v: 'Varanasi' },
+    { Icon: FiCalendar, k: 'Dates', v: 'Limited' },
+    { Icon: FiUsers, k: 'Crew', v: 'Same founders' },
+];
+
 function VaranasiLaunchCard() {
     return (
-        <Section width="wide" rhythm="tight">
-            <div className="relative overflow-hidden rounded-media border border-gold/35 shadow-panel
-                            bg-gradient-to-b from-accent-tint to-accent-wash">
-                {/* The illustration, untouched. */}
-                <div className="absolute inset-0 z-0">
-                    <Image
-                        src={varanasiCity}
-                        alt=""
-                        aria-hidden="true"
-                        fill
-                        sizes="(max-width: 768px) 100vw, 1180px"
-                        className="object-cover object-center opacity-90"
-                    />
-                    {/* The desktop scrim was commented out, so the headline sat
-                        on bare artwork and was legible only because this
-                        particular illustration happens to be pale on the left.
-                        A scrim makes that a guarantee rather than a coincidence.
-
-                        It is placed, not blanket. The text column ends at 56%
-                        of the card, so the wash is solid to 35% and gone by 70%
-                        — a 14% buffer past the last glyph and nothing beyond
-                        it. Earlier attempts at 90% via and at to-80% both left
-                        the ghats a ghost; the artwork is the best asset on this
-                        page and the scrim has no business hiding it. Those
-                        percentages must stay on
-                        Tailwind's 5-step scale — from-42%/to-78% compiled to
-                        nothing and silently produced a full-width wash. A first
-                        attempt used
-                        via-accent-wash/90 with the falloff at the very edge and
-                        washed the ghats out to a ghost — the artwork is the best
-                        asset on this page and the scrim has no business hiding
-                        it. */}
-                    <div
-                        aria-hidden="true"
-                        className="absolute inset-0 z-10 bg-accent-tint/90 md:bg-transparent
-                                   md:bg-gradient-to-r md:from-accent-tint md:from-35%
-                                   md:to-transparent md:to-70%"
-                    />
+        <Chapter label="New city" glow="right"
+            title={<>Now filming in <Em>Varanasi</Em></>}
+            lead="Our cinematic weddings, on the ghats of the sacred city.">
+            <div className={`mt-8 grid overflow-hidden p-2 sm:mt-12 md:grid-cols-[1.1fr_1fr] md:gap-2 ${CARD}`}>
+                <div className="relative aspect-[4/3] overflow-hidden rounded-[22px] bg-accent-wash md:aspect-auto md:min-h-[420px]">
+                    <Image src={varanasiCity} alt="Illustration of the Varanasi ghats" fill placeholder="blur"
+                        sizes="(max-width: 768px) 100vw, 640px" className="object-cover object-center" />
+                    <span className="absolute left-3 top-3">
+                        <GlassChip>
+                            <span aria-hidden="true" className="relative flex h-2 w-2">
+                                <span className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-75 motion-safe:animate-ping" />
+                                <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+                            </span>
+                            Booking this season
+                        </GlassChip>
+                    </span>
                 </div>
-
-                <div className="relative z-20 flex w-full flex-col items-start p-6 sm:p-8 md:min-h-[450px] md:w-[62%] md:justify-center md:p-14">
-                    {/* Badge kept, faults fixed: sentence case, accent token,
-                        and the pulse is motion-safe so it stops for anyone who
-                        has asked for reduced motion. */}
-                    <p className="mb-6 inline-flex w-fit items-center gap-2 rounded-pill border border-accent/25
-                                  bg-ground-raised px-4 py-1.5 shadow-panel">
-                        <span aria-hidden="true" className="relative flex h-2.5 w-2.5">
-                            <span className="absolute inline-flex h-full w-full rounded-pill bg-accent opacity-75
-                                             motion-safe:animate-ping" />
-                            <span className="relative inline-flex h-2.5 w-2.5 rounded-pill bg-accent" />
-                        </span>
-                        <span className="text-[12px] font-semibold text-accent-ink">New branch alert</span>
+                <div className="flex flex-col p-4 sm:p-6 md:p-8">
+                    <ul className="grid grid-cols-3 gap-2">
+                        {FACTS.map(({ Icon, k, v }) => (
+                            <li key={k} className="rounded-2xl bg-accent-wash px-3 py-3">
+                                <Icon aria-hidden="true" className="h-4 w-4 text-accent-ink" />
+                                <p className="mt-2 text-[11.5px] font-medium text-ink-muted">{k}</p>
+                                <p className="text-[14px] font-semibold leading-tight text-ink">{v}</p>
+                            </li>
+                        ))}
+                    </ul>
+                    <p className="mt-5 text-[15.5px] leading-relaxed text-ink-secondary">
+                        The same founders and crew, now taking a limited number of weddings in Varanasi.
+                        Tell us your date and we&apos;ll confirm availability within a day.
                     </p>
-
-                    {/* Display face, and Varanasi in red — but --accent-ink
-                        (5.99:1), not the fill red, which measured 3.43:1 as
-                        text here and did not pass. */}
-                    <h2 className="t-display-2">
-                        Mumbai&apos;s Premier Storytellers{' '}
-                        <br className="hidden md:block" />
-                        are now in <span className="text-accent-ink">Varanasi</span>
-                    </h2>
-                    <div className="rule-ornament mt-3 w-36" aria-hidden="true" />
-
-                    <p className="t-body-lead mt-4 max-w-prose">
-                        Experience our signature cinematic wedding filmmaking in the Sacred City.
-                        We are taking limited bookings for the upcoming wedding season.
-                    </p>
-
-                    <div className="mt-8">
-                        <LaunchCountdown />
-                    </div>
-
-                    {/* Was a <button onClick={router.push('/varanasi')}> — a
-                        destination is a link, so it can be opened in a new tab,
-                        middle-clicked, and read as navigation. */}
-                    <Button href="/varanasi" variant="primary" size="lg" className="mt-8 rounded-pill">
+                    <div className="mt-5"><LaunchCountdown /></div>
+                    <Link href="/varanasi"
+                        className="group mt-6 inline-flex h-12 w-full cursor-pointer items-center justify-between gap-3 rounded-full bg-accent pl-5 pr-1.5 text-[14.5px]
+                                   font-semibold text-ink-onAccent transition-colors duration-micro ease-standard hover:bg-accent-hover focus-ring md:mt-auto md:w-fit">
                         Explore Varanasi packages
-                        <FiArrowRight aria-hidden="true" className="h-5 w-5" />
-                    </Button>
+                        <span aria-hidden="true" className="grid h-9 w-9 place-items-center rounded-full bg-white/20"><FiArrowUpRight className="h-4 w-4" /></span>
+                    </Link>
                 </div>
             </div>
-        </Section>
+        </Chapter>
     );
 }
 

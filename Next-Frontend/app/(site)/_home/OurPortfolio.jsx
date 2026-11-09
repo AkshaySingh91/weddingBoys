@@ -35,9 +35,11 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import FilterRail from "@/Component/ui/FilterRail.jsx";
+import Chapter, { ChapterAction, Em, ArrowDot } from "@/Component/home/Chapter.jsx";
+
+const GALLERY = { href: "/photos", label: "Full gallery" };
 import Link from "next/link";
 import Swal from "sweetalert2";
-import Section from "@/Component/ui/Section.jsx";
 
 // Fallback only: the tabs come from the page composition (Admin › Content › Home,
 // each a photo row in Admin › Rows). These are used when the CMS is unreachable.
@@ -51,13 +53,11 @@ const api_url = process.env.NEXT_PUBLIC_API_URL;
    bleeds right only so its left edge stays on the section axis, and
    scroll-pl mirrors that padding — without it snap-mandatory parks the
    first tile flush and eats the inset. */
-const GRID_CLASS =
-    "flex snap-x snap-mandatory gap-4 overflow-x-auto scrollbar-none pb-2 "
-    + "-mr-5 pr-5 scroll-pl-0 "
-    + "sm:mr-0 sm:pr-0 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible "
-    + "md:grid-cols-3 lg:grid-cols-4 lg:gap-8";
-/* Rail tiles need an explicit width; grid cells must not keep it. */
-const TILE_WIDTH = "w-[78vw] shrink-0 snap-start sm:w-auto sm:shrink";
+/* A photo bento: the first photograph leads at double size, the rest tile two
+   across on a phone (five shown there; all from sm), four across at lg. */
+const GRID_CLASS = "grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 lg:gap-4";
+/* Skeleton tiles only. */
+const TILE_WIDTH = "w-full";
 const TILE_HEIGHT = "h-64 lg:h-80";
 
 const PortfolioSkeleton = () => (
@@ -80,28 +80,6 @@ const PortfolioSkeleton = () => (
 // client markup match on first paint — Math.random() during render would
 // otherwise produce a hydration mismatch under Next.js SSR (see
 // Component/Background.jsx for the established fix pattern).
-function makeHennaFlorals() {
-    return Array.from({ length: 6 }, (_, i) => ({
-        key: `henna-${i}`,
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
-        rotate: Math.random() * 360,
-        duration: 10 + i * 2,
-    }));
-}
-
-function makeParticles() {
-    return Array.from({ length: 8 }, () => ({
-        initialX: Math.random() * 100,
-        animX0: Math.random() * 10,
-        animX1: Math.random() * 10 + 10,
-        duration: 4 + Math.random() * 4,
-        delay: Math.random() * 2,
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
-    }));
-}
-
 export default function OurPortfolio({ data } = {}) {
     // Composed on the server: each tab is a resolved photo row, so switching tabs
     // needs no request. Without it, the grid fetches per category as before.
@@ -115,17 +93,7 @@ export default function OurPortfolio({ data } = {}) {
         setActiveCategory(c);
         if (tabs) setPortfolio(tabs.find((t) => t.title === c)?.items || []);
     };
-    const [hennaFlorals, setHennaFlorals] = useState(null);
-    const [particles, setParticles] = useState(null);
     const reduceMotion = useReducedMotion();
-
-    useEffect(() => {
-        // Decorative. Under reduced motion they are never created.
-        if (reduceMotion) return;
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setHennaFlorals(makeHennaFlorals());
-        setParticles(makeParticles());
-    }, [reduceMotion]);
 
     useEffect(() => {
         if (tabs) return undefined; // composed on the server
@@ -176,143 +144,19 @@ export default function OurPortfolio({ data } = {}) {
         return () => controller.abort();
     }, [activeCategory, tabs]);
 
-    /** An always-on loop, or nothing at all. */
-    const loop = (animate, transition) =>
-        reduceMotion ? {} : { animate, transition: { ...transition, repeat: Infinity } };
-
     return (
-        <Section width="wide" rhythm="tight" id="ourPortfolio" aria-labelledby="portfolio-heading">
-            <div className="py-10 px-5 sm:px-7 lg:py-12 bg-gradient-to-b from-ground-sunk to-ground relative overflow-hidden lg:rounded-3xl sm:rounded-lg shadow-lg">
-
-                {/* henna top border */}
-                <div className="absolute top-0 left-0 w-full" aria-hidden="true">
-                    <svg viewBox="0 0 1440 320" className="w-full">
-                        <path
-                            fill="var(--accent)"
-                            fillOpacity="0.1"
-                            d="M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,112C672,117,768,171,864,192C960,213,1056,203,1152,186.7C1248,171,1344,149,1392,138.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
-                        ></path>
-                    </svg>
-                </div>
-                {/* Henna-inspired bottom Border */}
-                <div className="absolute bottom-0 left-0 w-full opacity-10 transform rotate-180" aria-hidden="true">
-                    <svg viewBox="0 0 1440 120" className="w-full">
-                        <path fill="var(--accent)" d="M0,120 C200,80 400,40 720,40 C1040,40 1240,80 1440,120 L1440,0 L0,0 Z"
-                            stroke="var(--gold)" strokeWidth="2" strokeDasharray="4 4" />
-                    </svg>
-                </div>
-                {/* Floating Florals */}
-                <div className="absolute top-4 left-4 w-16 h-16 opacity-20" aria-hidden="true">
-                    <motion.svg
-                        {...loop({ rotate: [0, 15, 0] }, { duration: 8 })}
-                        viewBox="0 0 24 24"
-                    >
-                        <path fill="var(--gold)" d="M12 2C8 2 4 6 4 12s4 10 8 10 8-4 8-10S16 2 12 2zm0 18c-3 0-6-3-6-6s3-6 6-6 6 3 6 6-3 6-6 6z" />
-                        <path fill="var(--accent)" d="M12 6c-2 0-4 2-4 4s2 4 4 4 4-2 4-4-2-4-4-4z" />
-                    </motion.svg>
-                </div>
-                <motion.div
-                    {...loop({ rotate: [-5, 5, -5] }, { duration: 8 })}
-                    className="absolute top-20 right-0 w-48 opacity-15"
-                    aria-hidden="true"
-                >
-                    <svg viewBox="0 0 100 40">
-                        <path fill="none" stroke="var(--accent)" strokeWidth="2"
-                            d="M0,20 Q20,0 40,20 T80,20 T120,20"
-                            strokeDasharray="4 4" />
-                        <circle cx="10" cy="20" r="3" fill="var(--gold)" />
-                        <circle cx="30" cy="20" r="3" fill="var(--gold)" />
-                        <circle cx="50" cy="20" r="3" fill="var(--gold)" />
-                        <circle cx="70" cy="20" r="3" fill="var(--gold)" />
-                    </svg>
-                </motion.div>
-                <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-                    {hennaFlorals?.map((floral) => (
-                        <motion.div
-                            key={floral.key}
-                            className="absolute w-32 h-32 opacity-10"
-                            style={{
-                                left: floral.left,
-                                top: floral.top,
-                                rotate: floral.rotate,
-                            }}
-                            animate={{ scale: [0.8, 1.2, 0.8] }}
-                            transition={{ duration: floral.duration, repeat: Infinity }}
-                        >
-                            <svg viewBox="0 0 100 100">
-                                <path fill="none" stroke="var(--accent)" strokeWidth="2"
-                                    d="M20,80 Q40,60 60,80 T100,80 M30,70 Q50,50 70,70" />
-                            </svg>
-                        </motion.div>
-                    ))}
-                </div>
-                {/* Animated Golden Swirl */}
-                <motion.div
-                    {...loop({ rotate: 360 }, { duration: 20, ease: "linear" })}
-                    className="absolute -right-24 -top-24 w-48 h-48 opacity-10"
-                    aria-hidden="true"
-                >
-                    <svg viewBox="0 0 100 100">
-                        <path
-                            fill="none"
-                            stroke="var(--gold)"
-                            strokeWidth="2"
-                            d="M50,5a45,45 0 1,0 0,90a45,45 0 1,0 0,-90"
-                            pathLength="1"
-                            strokeDasharray="0.1 0.9"
-                            strokeLinecap="round"
-                        />
-                    </svg>
-                </motion.div>
-                {/* Floating Particles */}
-                <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-                    {particles?.map((particle, i) => (
-                        <motion.div
-                            key={i}
-                            className="absolute w-2 h-2 rounded-full bg-accent/20"
-                            initial={{ y: 0, x: particle.initialX }}
-                            animate={{
-                                y: [0, 100, 0],
-                                x: [particle.animX0, particle.animX1]
-                            }}
-                            transition={{
-                                duration: particle.duration,
-                                repeat: Infinity,
-                                delay: particle.delay
-                            }}
-                            style={{
-                                left: particle.left,
-                                top: particle.top
-                            }}
-                        />
-                    ))}
-                </div>
-
-                {/* Was `max-w-7xl -mx-4` with no mx-auto: left-aligned inside the
-                    section and dragged a further 16px out of it. */}
-                <div className="max-w-7xl mx-auto relative">
-                    <div className="text-center mb-8 lg:mb-10">
-                        <span className="text-desktopBodySmall uppercase tracking-widest bg-accent-wash rounded-md px-2 py-1 text-accent-ink">
-                            Our portfolio
-                        </span>
-                        <h2
-                            id="portfolio-heading"
-                            className="t-display-2 mx-auto mt-4"
-                        >
-                            {data?.heading || 'Moments We\u2019ve Captured'}
-                        </h2>
-                        <p className="t-body-lead mt-4 mx-auto text-tertiary_on">
-                            Browse our collection of wedding stories from across Mumbai and beyond, showcasing our artistic approach to wedding photography and cinematography.
-                        </p>
-                    </div>
-
+        <Chapter id="ourPortfolio" label="Photographs" glow="left" action={GALLERY}
+            title={<>Moments we&apos;ve <Em>kept</Em></>}
+            lead={data?.heading && !/moments we/i.test(data.heading) ? data.heading : 'Candids, portraits and rituals from across India.'}>
+                <div className="mt-7">
                     {/* Category Filter — one swipeable line on phones. */}
                     <FilterRail
                         label="Filter photographs by category"
-                        options={tabNames}
+                        options={tabs ? tabs.map((t) => ({ value: t.title, label: t.title, count: t.items?.length ?? 0 })) : tabNames}
                         value={activeCategory}
                         onChange={chooseCategory}
-                        className="mb-8 lg:mb-10"
+                        align="start"
+                        className="mb-6"
                     />
 
                     {/* Portfolio Grid */}
@@ -343,53 +187,35 @@ export default function OurPortfolio({ data } = {}) {
                                 transition={{ duration: 0.3 }}
                                 className={GRID_CLASS}
                             >
-                                {portfolio.map((item, index) => (
+                                {/* Five tile cleanly at every width (one 2×2 lead + four); the rest are a tap away. */}
+                                {portfolio.slice(0, 5).map((item, index) => (
                                     <motion.div
                                         key={item._id ?? item.url ?? index}
-                                        initial={reduceMotion ? false : { scale: 0.9, opacity: 0 }}
-                                        animate={{ scale: 1, opacity: 1 }}
-                                        className={`relative group overflow-hidden rounded-xl shadow-xl ${TILE_WIDTH}`}
+                                        initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.4, delay: Math.min(index, 6) * 0.04, ease: [0.16, 1, 0.3, 1] }}
+                                        className={`group relative overflow-hidden rounded-[28px] bg-ground-sunk shadow-[0_18px_36px_-24px_rgba(51,22,26,0.6)]
+                                                    ${index === 0 ? 'col-span-2 aspect-[4/3] md:row-span-2 md:aspect-auto' : 'aspect-[4/5]'}
+`}
                                     >
                                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img
-                                            src={item.url}
-                                            alt={`${item.client?.Bride} & ${item.client?.Groom}`}
-                                            className={`w-full ${TILE_HEIGHT} object-cover transform transition-transform duration-500 group-hover:scale-105`}
-                                            loading="lazy"
-                                            decoding="async"
-                                        />
-                                        {/* `inset-0` is the whole fix: this had the
-                                            gradient but no box, measured 0×0, and
-                                            never painted — so the caption below sat
-                                            on the bare photograph. */}
-                                        <div
-                                            aria-hidden="true"
-                                            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-black/70 via-transparent to-transparent"
-                                        />
-                                        <div className="absolute bottom-0 left-0 right-0 p-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                            <h3 className="text-desktopBodyLarge font-bold">{item.client?.Bride} & {item.client?.Groom}</h3>
-                                            <p className="text-mobileBodySmall">{item.photoLocation?.city}</p>
-                                        </div>
+                                        <img src={item.url} alt={`${item.client?.Bride} & ${item.client?.Groom}`} loading="lazy" decoding="async"
+                                            className="absolute inset-0 h-full w-full object-cover transition-transform duration-media ease-entrance group-hover:scale-[1.04]" />
+                                        <span className="absolute right-2.5 top-2.5"><ArrowDot tone="glass" size="sm" /></span>
+                                        <span className="absolute inset-x-2 bottom-2 rounded-[20px] bg-white/80 px-3 py-2 backdrop-blur-md">
+                                            <span className="block truncate text-[13.5px] font-semibold text-ink">
+                                                {[item.client?.Bride, item.client?.Groom].filter(Boolean).join(' & ')}
+                                            </span>
+                                            {item.photoLocation?.city && <span className="block truncate text-[12px] text-ink-muted">{item.photoLocation.city}</span>}
+                                        </span>
                                     </motion.div>
                                 ))}
                             </motion.div>
                         </AnimatePresence>
                     )}
 
-                    {/* View All CTA */}
-                    <div className="text-center mt-12">
-                        <Link
-                            href="/photos"
-                            className="inline-flex items-center gap-2 min-h-[44px] text-desktopBodyMedium text-tertiary_on hover:text-secondary_on transition-colors"
-                        >
-                            Explore Complete Gallery
-                            <svg aria-hidden="true" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                        </Link>
-                    </div>
+                    <ChapterAction action={GALLERY} className="mt-6" />
                 </div>
-            </div>
-        </Section>
+        </Chapter>
     );
 }

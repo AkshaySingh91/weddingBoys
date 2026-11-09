@@ -2,9 +2,10 @@
 
 import React, { useCallback, useState, useEffect } from 'react';
 import Link from 'next/link';
-import { FiArrowRight } from 'react-icons/fi';
+import { FiArrowRight, FiPlay, FiCalendar } from 'react-icons/fi';
+import Chapter, { ChapterAction, Em, ArrowDot, GlassChip, CARD } from '@/Component/home/Chapter.jsx';
+import FilterRail from '@/Component/ui/FilterRail.jsx';
 import { fireMessage } from '@/Utils/fireMessage.js';
-import Section from '@/Component/ui/Section.jsx';
 import { Skeleton } from '@/Component/ui/Skeleton.jsx';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL;
@@ -71,161 +72,69 @@ export default function VideoThumbnail({ data } = {}) {
         if (tabs) setClients(tabs.find((x) => x.title === t)?.items || []);
         else fetchVideos(t)
     }
+    const ALL_FILMS = { href: '/films', label: 'All films' };
+    const chipOptions = tabs
+        ? tabs.map((t) => ({ value: t.title, label: t.title, count: t.items?.length ?? 0 }))
+        : homepageTags;
     return (
-        <Section width="wide" rhythm="tight" className="overflow-x-clip">
-            {/*
-              Heading is an <h2>, not an <h1>. The home page carried FOUR <h1>
-              elements and this was one of them (audit R-42); "Our Films" is a
-              section label, not the page's subject.
-            */}
-            <div className="flex items-end justify-between gap-4">
-                <div>
-                    <h2 className="t-display-2">{data?.heading || 'Our films'}</h2>
-                    <div className="rule-ornament mt-2.5 w-36" aria-hidden="true" />
-                </div>
-                <Link
-                    href="/films"
-                    className="hidden shrink-0 items-center gap-1.5 text-[14px] font-semibold
-                               text-accent-ink transition-colors duration-micro ease-standard
-                               hover:text-accent sm:inline-flex"
-                >
-                    All films
-                    <FiArrowRight aria-hidden="true" className="h-4 w-4" />
-                </Link>
+        <Chapter label="Films" glow="right" className="overflow-x-clip"
+            title={<>Our <Em>films</Em>, cut like cinema</>}
+            lead={data?.heading && data.heading !== 'Our films' ? data.heading : 'Real weddings from across India — told as stories, not recaps.'}
+            action={ALL_FILMS}>
+            <div className="mt-7">
+                {isLoading && !homepageTags.length ? (
+                    <div className="flex gap-2">{[...Array(3)].map((_, i) => <Skeleton key={i} className="h-11 w-28 shrink-0" rounded="pill" />)}</div>
+                ) : homepageTags.length > 1 && (
+                    <FilterRail label="Filter films by category" options={chipOptions} value={selectedTag}
+                        onChange={handleChangeTag} align="start" />
+                )}
             </div>
 
-            {/* ── Filters. Left-aligned under the heading, so they read as a
-                   control rather than as decoration floating mid-page. ── */}
-            <div
-                role="group"
-                aria-label="Filter films by category"
-                className="mt-4 flex gap-2 overflow-x-auto scrollbar-none
-                           -mr-5 pr-5 md:-mr-8 md:pr-8 lg:-mr-12 lg:pr-12"
-            >
-                {isLoading && !homepageTags.length
-                    ? [...Array(3)].map((_, i) => (
-                        <Skeleton key={i} className="h-10 w-28 shrink-0" rounded="pill" />
-                    ))
-                    : homepageTags.map((t) => {
-                        const on = selectedTag === t;
-                        return (
-                            <button
-                                key={t}
-                                type="button"
-                                onClick={() => handleChangeTag(t)}
-                                aria-pressed={on}
-                                className={`min-h-[44px] shrink-0 whitespace-nowrap rounded-pill border px-5
-                                            text-[13px] font-semibold transition-colors duration-micro ease-standard
-                                            ${on
-                                                ? 'border-accent bg-accent text-white'
-                                                : 'border-gold/50 bg-transparent text-ink-secondary hover:border-gold hover:bg-accent-wash hover:text-accent-ink'}`}
-                            >
-                                {t}
-                            </button>
-                        );
-                    })}
-            </div>
-
-            {/* ── The rail.
-                   A rail rather than a grid: a category holding two films used to
-                   leave 55.6% of the viewport empty at 1425px because the cards
-                   were a fixed 416×416. A rail has no empty cells — two films or
-                   twenty both read as deliberate. Scroll-snap and a peeking next
-                   card make it obvious there is more to the right.
-
-                   Left-aligned, always. A previous pass centred short rows to
-                   avoid the void on the right; centring pulled the cards away
-                   from the heading and read worse than the space it was hiding.
-                   The row starts where the heading starts. ── */}
-            <div
-                /* Bleeds right, not left. The rail's left edge is the section
-                   axis; only its right edge runs past the gutter so the next
-                   card peeks. An earlier symmetric px-* pushed the cards 48px
-                   inboard of their own heading, and snap-mandatory then ate
-                   that padding anyway (measured scrollLeft:20 at 390px). */
-                className="mt-5 flex snap-x snap-mandatory gap-3 overflow-x-auto scrollbar-none
-                           pb-2 -mr-5 pr-5 md:-mr-8 md:pr-8 lg:gap-4 lg:-mr-12 lg:pr-12"
-            >
+            <div className="mt-5 flex snap-x snap-mandatory gap-3 overflow-x-auto scrollbar-none pb-4
+                            -mr-5 pr-5 md:-mr-8 md:pr-8 lg:-mr-6 lg:gap-4 lg:pr-6">
                 {isLoading ? (
                     [...Array(4)].map((_, i) => (
-                        <div key={i} className="w-[78vw] shrink-0 sm:w-[44vw] lg:w-[420px]">
-                            <Skeleton className="aspect-square w-full" rounded="media" />
-                        </div>
+                        <Skeleton key={i} className="aspect-[4/5] w-[74vw] shrink-0 sm:w-[42vw] lg:w-[320px]" rounded="media" />
                     ))
                 ) : clients && clients.length ? (
-                    clients.map((c) => (
-                        <Link
-                            href={`/films/${c.videos._id}`}
-                            key={c.videos._id}
-                            className="group/film w-[78vw] shrink-0 snap-start sm:w-[44vw] lg:w-[420px]"
-                        >
-                            {/* Square, as the previous UI had it. The arch was
-                                tried here and rejected: on a film still it crops
-                                the top of the frame, and the photograph is the
-                                point. The arch stays in the system for portrait
-                                media that is composed for it. */}
-                            <div className="relative overflow-hidden rounded-media border border-gold/30
-                                            bg-ground-sunk shadow-panel transition-transform duration-ui
-                                            ease-standard group-hover/film:-translate-y-1">
-                                <div className="aspect-square w-full">
-                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                    <img
-                                        src={c.thumbnailUrl}
-                                        alt={`${c.clientName?.Bride} & ${c.clientName?.Groom} wedding film`}
-                                        loading="lazy"
-                                        decoding="async"
-                                        className="h-full w-full object-cover transition-transform duration-media
-                                                   ease-entrance group-hover/film:scale-[1.04]"
-                                    />
-                                </div>
-
-                                {/* Scrim token. The old card set white text over a
-                                    hand-rolled slate gradient and measured 1.0:1
-                                    against its effective background (audit R-06). */}
-                                <div aria-hidden="true" className="scrim-bottom pointer-events-none absolute inset-0" />
-
-                                <div className="absolute inset-x-0 bottom-0 p-4 text-white lg:p-5">
-                                    <p className="font-display text-[19px] font-semibold leading-tight lg:text-[21px]">
-                                        {[c.clientName?.Bride, c.clientName?.Groom].filter(Boolean).join(' & ')}
-                                    </p>
-                                    <p className="mt-1 text-[12px] text-white/85">
-                                        {[c.videos?.videoShootDate, c.videos?.videoLocation?.city]
-                                            .filter(Boolean).join(' · ')}
-                                    </p>
-                                </div>
-                            </div>
-                        </Link>
-                    ))
+                    clients.map((c) => {
+                        const couple = [c.clientName?.Bride, c.clientName?.Groom].filter(Boolean).join(' & ');
+                        const meta = [c.videos?.videoShootDate, c.videos?.videoLocation?.city].filter(Boolean).join(' · ');
+                        return (
+                            <Link href={`/films/${c.videos._id}`} key={c.videos._id}
+                                className="group relative aspect-[4/5] w-[74vw] shrink-0 cursor-pointer snap-start overflow-hidden rounded-[28px] bg-ground-sunk
+                                           shadow-[0_18px_36px_-22px_rgba(51,22,26,0.6)] focus-ring sm:w-[42vw] lg:w-[320px]">
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img src={c.thumbnailUrl} alt={`${couple} wedding film`} loading="lazy" decoding="async"
+                                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-media ease-entrance group-hover:scale-[1.04]" />
+                                <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/45 to-transparent" />
+                                <span className="absolute inset-x-3 top-3 flex items-start justify-between gap-2">
+                                    {meta ? <GlassChip><FiCalendar aria-hidden="true" className="h-3.5 w-3.5" />{meta}</GlassChip> : <span />}
+                                    <ArrowDot tone="glass" />
+                                </span>
+                                <span className="absolute inset-x-2 bottom-2 flex items-center gap-3 rounded-[22px] bg-white/80 p-2 pl-4 backdrop-blur-md">
+                                    <span className="min-w-0 flex-1">
+                                        <span className="block truncate font-display text-[19px] font-medium leading-tight text-ink">{couple}</span>
+                                        <span className="block text-[12px] font-medium text-ink-muted">Wedding film</span>
+                                    </span>
+                                    <span aria-hidden="true" className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-accent text-ink-onAccent">
+                                        <FiPlay className="ml-0.5 h-4 w-4" />
+                                    </span>
+                                </span>
+                            </Link>
+                        );
+                    })
                 ) : (
-                    /* A designed empty state. The old one was a bare <p>No videos
-                       found</p> with no styling and no way forward. */
-                    <div className="w-full rounded-panel border border-gold/35 bg-ground-raised px-6 py-10 text-center">
-                        <p className="t-body">No films in this category yet.</p>
-                        <Link
-                            href="/films"
-                            className="mt-3 inline-flex items-center gap-1.5 text-[14px] font-semibold text-accent-ink
-                                       transition-colors duration-micro ease-standard hover:text-accent"
-                        >
-                            Browse every film
-                            <FiArrowRight aria-hidden="true" className="h-4 w-4" />
+                    <div className={`w-full px-6 py-10 text-center ${CARD}`}>
+                        <p className="text-[15px] text-ink-secondary">No films in this category yet.</p>
+                        <Link href="/films" className="mt-3 inline-flex items-center gap-1.5 text-[14px] font-semibold text-accent-ink hover:text-accent">
+                            Browse every film <FiArrowRight aria-hidden="true" className="h-4 w-4" />
                         </Link>
                     </div>
                 )}
             </div>
 
-            {/* The desktop "All films" link is hidden on phones; this is its
-                mobile equivalent, at full width where a thumb can reach it. */}
-            <div className="mt-5 sm:hidden">
-                <Link
-                    href="/films"
-                    className="flex min-h-[44px] items-center justify-center gap-1.5 rounded-pill border
-                               border-gold/50 text-[14px] font-semibold text-accent-ink transition-colors
-                               duration-micro ease-standard hover:bg-accent-wash"
-                >
-                    All films
-                    <FiArrowRight aria-hidden="true" className="h-4 w-4" />
-                </Link>
-            </div>
-        </Section>
+            <ChapterAction action={ALL_FILMS} className="mt-4" />
+        </Chapter>
     );
 }

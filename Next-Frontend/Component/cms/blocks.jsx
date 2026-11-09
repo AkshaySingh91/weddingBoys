@@ -6,6 +6,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import StatsBand from './StatsBand.jsx';
+import Chapter, { Em } from '@/Component/home/Chapter.jsx';
+import ReviewsShowcase from '@/Component/home/ReviewsShowcase.jsx';
+import TeamShowcase from '@/Component/home/TeamShowcase.jsx';
 
 const mediaUrl = (m) => m?.url || m?.cdnUrl || m?.publicUrl || '';
 const first = (arr) => (Array.isArray(arr) && arr.length ? arr[0] : null);
@@ -125,32 +128,15 @@ function HeroVideoBlock({ block }) {
     );
 }
 
+// Home chapters (Component/home/Chapter.jsx): reviews and team share the
+// page's chapter frame, so a CMS block looks like every other home section.
 function ReviewsBlock({ block }) {
     const items = block.items || [];
     if (!items.length) return null;
     return (
-        <section className="bg-accent-wash/40 py-14">
-            <SectionHeading title={block.title} subtitle={block.subtitle} />
-            <div className="mx-auto grid max-w-5xl gap-6 px-4 sm:grid-cols-2 lg:grid-cols-3">
-                {items.map((it, i) => {
-                    const m = first(it.media);
-                    return (
-                        <figure key={it._id || i} className="flex flex-col rounded-2xl bg-white p-6 shadow-sm">
-                            {m && (
-                                <div className="relative mx-auto mb-4 h-20 w-20 overflow-hidden rounded-full">
-                                    <SmartImage media={m} className="object-cover" sizes="80px" />
-                                </div>
-                            )}
-                            <blockquote className="flex-1 text-center text-sm text-gray-600">“{it.body}”</blockquote>
-                            <figcaption className="mt-4 text-center">
-                                <span className="block font-medium text-gray-900">{it.title}</span>
-                                {it.subtitle && <span className="text-xs text-gray-400">{it.subtitle}</span>}
-                            </figcaption>
-                        </figure>
-                    );
-                })}
-            </div>
-        </section>
+        <Chapter label="Love notes" glow="right" title={block.title || <>In their <Em>words</Em></>} lead={block.subtitle || 'What our couples said after the films arrived.'}>
+            <ReviewsShowcase items={items} />
+        </Chapter>
     );
 }
 
@@ -158,24 +144,9 @@ function TeamBlock({ block }) {
     const items = block.items || [];
     if (!items.length) return null;
     return (
-        <section className="py-14">
-            <SectionHeading title={block.title} subtitle={block.subtitle} />
-            <div className="mx-auto grid max-w-5xl gap-6 px-4 sm:grid-cols-2 lg:grid-cols-4">
-                {items.map((it, i) => {
-                    const m = first(it.media);
-                    return (
-                        <div key={it._id || i} className="text-center">
-                            <div className="relative mx-auto aspect-[3/4] w-full overflow-hidden rounded-2xl">
-                                <SmartImage media={m} className="object-cover" sizes="(max-width:640px) 50vw, 240px" />
-                            </div>
-                            <p className="mt-3 font-medium text-gray-900">{it.title}</p>
-                            {it.subtitle && <p className="text-sm text-accent-ink">{it.subtitle}</p>}
-                            {it.body && <p className="mt-1 text-xs text-gray-500">{it.body}</p>}
-                        </div>
-                    );
-                })}
-            </div>
-        </section>
+        <Chapter label="The crew" glow="left" title={<>Meet the <Em>crew</Em></>} lead={block.subtitle || 'The people who will be at your wedding.'}>
+            <TeamShowcase items={items} />
+        </Chapter>
     );
 }
 

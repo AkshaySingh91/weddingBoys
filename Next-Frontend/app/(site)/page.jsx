@@ -34,7 +34,7 @@ export default async function HomePage() {
     const page = await fetchHome();
 
     return (
-        <section id="top" className="lg:px-4 py-3 h-auto">
+        <section id="top" className="chapters h-auto py-3 lg:px-4">
             {page?.blocks?.length ? (
                 // CMS-driven: order, visibility, add/remove all controlled from
                 // /admin/content/home.

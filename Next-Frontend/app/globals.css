@@ -25,7 +25,10 @@
   --ground:        #FBF6EE;
   --ground-raised: #FFFFFF;
   --ground-sunk:   #F4EBDD;
-  --ground-deep:   #2A1B12;   /* inverted sections and image scrims */
+  /* Wine-black, not brown: the dark shade of the brand red, so night surfaces
+     (footer, stats band, featured plan, cinema pages) belong to the same family
+     as the red actions and peach fills instead of reading as a second palette. */
+  --ground-deep:   #33161A;   /* inverted sections and image scrims */
 
   /* ── Ink. Warm browns, not neutral greys. ── */
   --ink-primary:   #2A1B12;   /* 15.44:1 on ground */
@@ -113,7 +116,7 @@
   --ground-rgb:        251 246 238;
   --ground-raised-rgb: 255 255 255;
   --ground-sunk-rgb:   244 235 221;
-  --ground-deep-rgb:    42  27  18;
+  --ground-deep-rgb:    51  22  26;
   --ink-primary-rgb:    42  27  18;
   --ink-on-deep-rgb:   251 246 238;
   --ink-on-accent-rgb: 255 255 255;
@@ -1405,3 +1408,16 @@ html {
   0%   { transform: translateX(-100%); }
   100% { transform: translateX(300%); }
 }
+
+/* ── Home chapters ──────────────────────────────────────────────────────────
+   Every home section after the hero is a Chapter (Component/home/Chapter.jsx).
+   The running head numbers itself in DOM order, so the CMS can reorder
+   sections without anyone renumbering them. */
+.chapters { counter-reset: chapter; }
+.chapter-no__n::before {
+  counter-increment: chapter;
+  content: counter(chapter, decimal-leading-zero);
+}
+
+/* Reviews: the new quote rises in (motion-safe only). */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }

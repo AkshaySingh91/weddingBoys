@@ -139,7 +139,7 @@ export function PlanCard({ pkg, onOpen, lift = false, className = '' }) {
                 onClick={() => onOpen(pkg)}
                 className={`group/btn mt-7 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full text-[14.5px] font-semibold
                             transition-[background-color,transform] duration-micro ease-standard focus-ring motion-safe:active:scale-[0.98]
-                            ${featured ? 'bg-ground-raised text-ink hover:bg-ground' : 'bg-ink text-ground hover:bg-ink/90'}`}
+                            ${featured ? 'bg-accent text-ink-onAccent hover:bg-accent-hover' : 'border border-ink/15 text-ink hover:border-ink/30 hover:bg-ink/[0.03]'}`}
             >
                 View full details
                 <FiArrowUpRight aria-hidden="true"

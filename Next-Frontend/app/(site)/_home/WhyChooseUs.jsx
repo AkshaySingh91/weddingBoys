@@ -1,291 +1,43 @@
-'use client';
+/**
+ * Why us — six reasons as a bento of feature cards (icon tile, title, one
+ * line), closed by a wine-black quote card. Two columns on a phone, three from
+ * lg. Replaces six full-width stacked cards (~2,000px), a typewriter quote that
+ * retyped itself every few seconds, and floating hearts.
+ */
+import { FiCalendar, FiAperture, FiGlobe, FiSliders, FiFilm, FiHeart } from 'react-icons/fi';
+import Chapter, { Em, CARD, CARD_DEEP } from '@/Component/home/Chapter.jsx';
 
-import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { motion, useAnimation, useReducedMotion } from 'framer-motion';
-import { FiCamera, FiFilm, FiBriefcase, FiZap, FiGlobe, FiHeart, FiStar } from 'react-icons/fi';
-import Section from '@/Component/ui/Section.jsx';
-
-// Simplified animations
-const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            duration: 0.3,
-            staggerChildren: 0.1,
-        },
-    },
-};
-
-const TypewriterQuotes = React.memo(({ quotes }) => {
-    const reduceMotion = useReducedMotion();
-    const [displayText, setDisplayText] = useState('');
-    const [quoteIndex, setQuoteIndex] = useState(0);
-
-    useEffect(() => {
-        const currentQuote = quotes[quoteIndex];
-
-        // Under reduced motion the quote is rendered whole (derived below,
-        // not stored — a synchronous setState here is a cascading render) and
-        // simply rotates. A character-by-character rewrite is exactly the kind
-        // of continuous motion the preference asks us to stop.
-        if (reduceMotion) {
-            const hold = setTimeout(
-                () => setQuoteIndex((prev) => (prev + 1) % quotes.length),
-                6000,
-            );
-            return () => clearTimeout(hold);
-        }
-
-        let timeoutId;
-
-        function typeText(charIndex) {
-            if (charIndex < currentQuote.length) {
-                timeoutId = setTimeout(() => {
-                    setDisplayText(currentQuote.substring(0, charIndex + 1));
-                    typeText(charIndex + 1);
-                }, 50);
-            } else {
-                timeoutId = setTimeout(() => {
-                    setDisplayText('');
-                    setQuoteIndex(prev => (prev + 1) % quotes.length);
-                }, 2000);
-            }
-        }
-
-        typeText(0);
-
-        return () => clearTimeout(timeoutId);
-    }, [quoteIndex, quotes, reduceMotion]);
-
-    const visible = reduceMotion ? quotes[quoteIndex] : displayText;
-
-    return (
-        <motion.blockquote
-            className="mt-12 text-center italic text-lg text-ink-secondary max-w-2xl mx-auto"
-            initial={reduceMotion ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-        >
-            {/* The visible text is mid-rewrite most of the time, so assistive
-                technology reads the finished quote instead of a stream of
-                partial words. */}
-            <span aria-hidden="true">
-                {visible}
-                <span className="ml-1 border-r-2 border-accent motion-safe:animate-pulse" />
-            </span>
-            <span className="sr-only">{quotes[quoteIndex]}</span>
-        </motion.blockquote>
-    );
-});
-TypewriterQuotes.displayName = 'TypewriterQuotes';
-
-const TiltCard = React.memo(({ icon, title, description }) => {
-    const controls = useAnimation();
-    const cardRef = useRef(null);
-
-    const handleHover = useCallback(() => {
-        controls.start({
-            scale: 1.02,
-            transition: { duration: 0.2 }
-        });
-    }, [controls]);
-
-    const handleHoverEnd = useCallback(() => {
-        controls.start({
-            scale: 1,
-            transition: { duration: 0.2 }
-        });
-    }, [controls]);
-
-    return (
-        <motion.div
-            ref={cardRef}
-            className="p-6 rounded-media shadow-panel bg-ground-raised border border-gold/30 relative overflow-hidden h-full"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-            animate={controls}
-            onHoverStart={handleHover}
-            onHoverEnd={handleHoverEnd}
-            transition={{ duration: 0.3 }}
-        >
-            <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                    <div className="text-accent-ink text-2xl p-3 bg-accent-wash rounded-lg">
-                        {icon}
-                    </div>
-                    <h3 className="text-xl font-semibold text-gray-800">{title}</h3>
-                </div>
-                <p className="text-gray-600 text-md">{description}</p>
-            </div>
-        </motion.div>
-    );
-});
-TiltCard.displayName = 'TiltCard';
-
-// Random values are generated client-side only (post-mount) so server and
-// client markup match on first paint — Math.random() during render would
-// otherwise produce a hydration mismatch under Next.js SSR (see
-// Component/Background.jsx for the established fix pattern).
-function makeHearts() {
-    return Array.from({ length: 8 }, () => ({
-        initialY: Math.random() * 100,
-        initialX: Math.random() * 100,
-        initialRotate: Math.random() * 360,
-        animX: Math.random() * 50 - 25,
-        duration: 15 + Math.random() * 10,
-        left: `${Math.random() * 100}%`,
-        fontSize: `${Math.random() * 32 + 24}px`,
-    }));
-}
-
-/* Module scope, not the render body. `quotes` was recreated on every render,
-   which both defeated TypewriterQuotes' React.memo and sat in its effect's
-   dependency array — so the typewriter restarted from scratch every time the
-   parent re-rendered. `features` rebuilt six JSX icon elements with it. */
-const FEATURES = [
-        {
-            icon: <FiZap className="w-6 h-6" />,
-            title: "Thoughtful wedding storytelling",
-            description: (<>
-                We plan for your venue, lighting, and cultural traditions so we can focus on the moments that matter to you.
-            </>)
-        },
-        {
-            icon: <FiFilm className="w-6 h-6" />,
-            title: "Artistic Storytelling",
-            description:
-                "We combine candid, editorial, and fine-art styles to narrate your love story with elegance and flair."
-        },
-        {
-            icon: <FiGlobe className="w-6 h-6" />,
-            title: "Destination Experts",
-            description:
-                "From tropical beaches to urban rooftops, we’ve covered diverse venues worldwide, adapting to any setting."
-        },
-        {
-            icon: <FiBriefcase className="w-6 h-6" />,
-            title: "Tailored Packages",
-            description:
-                "Choose from fully customizable packages that suit your budget, including efficient post-production for a quick turnaround."
-        },
-        {
-            icon: <FiCamera className="w-6 h-6" />,
-            title: "Cinematic Weddings",
-            description:
-                "We bring a film-like approach to every ceremony, capturing the emotional arc of your day in vivid detail."
-        },
-        {
-            icon: <FiHeart className="w-6 h-6" />,
-            title: "Authentic Emotions",
-            description:
-                "We have a keen eye for genuine laughter, tears, and those spontaneous moments that make your day unique."
-        },
+const REASONS = [
+    { Icon: FiCalendar, title: 'Planned around your day', body: 'Venue, light and rituals mapped in advance.' },
+    { Icon: FiAperture, title: 'Artistic storytelling', body: 'Candid, editorial and fine-art, combined.' },
+    { Icon: FiGlobe, title: 'At home anywhere', body: 'Palaces, ghats, beaches and rooftops.' },
+    { Icon: FiSliders, title: 'Packages that bend', body: 'Shaped to your events and budget.' },
+    { Icon: FiFilm, title: 'Cinematic, not a recap', body: 'The emotional arc of the day, on film.' },
+    { Icon: FiHeart, title: 'Real emotion', body: 'An eye for the unplanned moments.' },
 ];
 
-const QUOTES = [
-        "\"We don't just capture moments - we create timeless emotional artifacts.\"",
-        "\"Every snapshot tells a unique story of love, laughter, and cherished memories.\"",
-    "\"Your love deserves to be celebrated with every frame, every smile, every tear.\""
-];
-
-const WhyChooseUs = () => {
-    const reduceMotion = useReducedMotion();
-    const [hearts, setHearts] = useState(null);
-
-    useEffect(() => {
-        if (reduceMotion) return;
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setHearts(makeHearts());
-    }, [reduceMotion]);
-
+export default function WhyChooseUs() {
     return (
-        <Section width="wide" rhythm="tight" id="whyToChooseUs" aria-labelledby="why-choose-heading">
-        <div className="px-5 py-10 sm:px-7 lg:py-14 relative overflow-hidden bg-gradient-to-b from-ground-sunk to-ground lg:rounded-3xl sm:rounded-lg border-edge-subtle border-[1px] shadow-lg">
-            {/* Floating Hearts Decoration */}
-            <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-                {hearts?.map((heart, i) => (
-                    <motion.div
-                        key={i}
-                        className="absolute text-accent/10"
-                        initial={{
-                            y: heart.initialY,
-                            x: heart.initialX,
-                            rotate: heart.initialRotate
-                        }}
-                        animate={{
-                            y: [0, 100],
-                            x: [0, heart.animX],
-                            rotate: 360
-                        }}
-                        transition={{
-                            duration: heart.duration,
-                            repeat: Infinity,
-                            ease: "linear"
-                        }}
-                        style={{
-                            left: heart.left,
-                            fontSize: heart.fontSize
-                        }}
-                    >
-                        <FiHeart />
-                    </motion.div>
+        <Chapter id="whyToChooseUs" label="Why us" glow="right"
+            title={<>Why couples <Em>choose</Em> us</>}
+            lead="Six promises we keep at every wedding.">
+            <ul className="mt-8 grid grid-cols-2 gap-3 sm:mt-12 lg:grid-cols-3 lg:gap-4">
+                {REASONS.map(({ Icon, title, body }) => (
+                    <li key={title} className={`flex flex-col p-4 sm:p-6 ${CARD}`}>
+                        <span aria-hidden="true" className="grid h-11 w-11 place-items-center rounded-2xl bg-accent-wash text-accent-ink sm:h-12 sm:w-12">
+                            <Icon className="h-5 w-5" />
+                        </span>
+                        <h3 className="mt-6 text-[15.5px] font-semibold leading-snug text-ink sm:mt-10 sm:text-[18px]">{title}</h3>
+                        <p className="mt-1 text-[13.5px] leading-snug text-ink-muted sm:text-[15px]">{body}</p>
+                    </li>
                 ))}
-            </div>
-
-            {/* Main Content */}
-            <div className="max-w-6xl mx-auto relative z-10">
-                <motion.div
-                    className="mb-12 text-center"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                >
-                    <div className="bg-accent/10 text-accent-ink px-6 py-2 rounded-full inline-block mb-4">
-                        <FiStar aria-hidden="true" className="inline mr-2 motion-safe:animate-pulse" />
-                        Why We Stand Out
-                    </div>
-                    <h2 id="why-choose-heading" className="t-display-2 mx-auto mb-4 text-[#5E2B17]">
-                        Why Choose{' '}
-                        <br />
-                        <span className="text-accent-ink">The Wedding Vachan?</span>
-                    </h2>
-                    <motion.div
-                        aria-hidden="true"
-                        className="mx-auto w-24 h-1 bg-accent rounded-full"
-                        initial={{ scaleX: 0 }}
-                        whileInView={{ scaleX: 1 }}
-                        transition={{ duration: 0.8 }}
-                    />
-                </motion.div>
-
-                {/* Cards Grid */}
-                <motion.div
-                    className="grid md:grid-cols-2 gap-6 lg:gap-8"
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-                >
-                    {FEATURES.map((feature) => (
-                        <motion.div
-                            key={feature.title}
-                            variants={containerVariants}
-                        >
-                            <TiltCard {...feature} />
-                        </motion.div>
-                    ))}
-                </motion.div>
-
-                {/* Quote Section */}
-                <div className="relative mt-16">
-                    <FiHeart aria-hidden="true" className="absolute -top-4 left-1/2 -translate-x-1/2 text-accent/20 w-16 h-16" />
-                    <TypewriterQuotes quotes={QUOTES} />
-                </div>
-            </div>
-        </div>
-        </Section>
+                <li className={`col-span-2 flex flex-col justify-between gap-6 p-6 sm:p-8 lg:col-span-3 lg:flex-row lg:items-end ${CARD_DEEP}`}>
+                    <p className="max-w-3xl font-display text-[24px] font-medium italic leading-snug sm:text-[32px]">
+                        “We don’t just capture moments — we make the film you’ll watch again in twenty years.”
+                    </p>
+                    <p className="shrink-0 text-[13px] font-semibold uppercase tracking-[0.14em] text-gold">The Wedding Vachan</p>
+                </li>
+            </ul>
+        </Chapter>
     );
-};
-
-export default WhyChooseUs;
+}
