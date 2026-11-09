@@ -3,7 +3,7 @@
    ═══════════════════════════════════════════════════════════════════════════
    Desktop (lg+): Full-bleed edge-to-edge banner → horizon filter bar →
                   mathematical Pinterest waterfall masonry (4 columns)
-   Mobile  (<lg): Fixed hero → Uno-card draggable sheet → search + tag pills →
+   Mobile  (<lg): Sticky hero → gallery sheet scrolls over it → search + tag pills →
                   2-column Pinterest waterfall masonry
 
    All colours from globals.css design-system tokens exclusively.
@@ -281,19 +281,19 @@
     outline: 2px solid var(--accent);
     outline-offset: 2px;
 }
+/* Same active state as Component/ui/FilterRail: ink, not the CTA red — red is
+   kept for the one action on the page. */
 .photos-tag--active {
-    border-color: var(--accent) !important;
-    background: var(--accent) !important;
-    color: #ffffff !important;
+    border-color: var(--ink-primary) !important;
+    background: var(--ink-primary) !important;
+    color: var(--ground) !important;
     font-weight: 600;
-    box-shadow: 0 3px 12px -2px rgba(217, 52, 42, 0.35);
+    box-shadow: 0 2px 8px -3px rgba(42, 27, 18, 0.35);
 }
 .photos-tag--active:hover {
-    background: var(--accent-hover) !important;
-    border-color: var(--accent-hover) !important;
-    color: #ffffff !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px -2px rgba(217, 52, 42, 0.45);
+    background: var(--ink-primary) !important;
+    border-color: var(--ink-primary) !important;
+    color: var(--ground) !important;
 }
 
 
@@ -491,14 +491,17 @@
 
 
 /* ════════════════════════════════════════════════════════════════════════════
-   MOBILE LAYOUT (<lg) — Fixed Hero + Uno Card Interactive Bottom Sheet
+   MOBILE LAYOUT (<lg) — Sticky hero, gallery sheet scrolls over it
+   The hero is sticky (not fixed) and the sheet sits in normal flow with a
+   negative top margin: the page ends where the content ends, and the hero
+   can never paint over the footer.
    ════════════════════════════════════════════════════════════════════════════ */
 
 /* ── HERO BACKDROP ── */
 .photos-hero {
-    position: fixed;
-    inset: 0;
-    height: 100vh;
+    position: sticky;
+    top: 0;
+    height: 100svh;
     z-index: 0;
     overflow: hidden;
     background: var(--ground-deep);
@@ -510,8 +513,7 @@
     height: 100%;
     object-fit: cover;
     object-position: center top;
-    transition: transform 0.1s linear;
-    will-change: transform;
+    transform: scale(1.03);
 }
 .photos-hero__gradient {
     position: absolute;
@@ -582,7 +584,7 @@
     font-size: 12.5px;
     line-height: 1.55;
     font-weight: 400;
-    color: rgba(38, 28, 23, 0.78);
+    color: rgba(38, 28, 23, 0.86);
     margin: 0;
     max-width: 290px;
     text-wrap: pretty;
@@ -592,46 +594,21 @@
 .photos-sheet {
     position: relative;
     z-index: 10;
+    /* Starts 46% of the screen up from the hero's bottom edge: the couple stays in view. */
+    margin-top: -46svh;
     background: var(--ground);
     border-radius: 28px 28px 0 0;
     box-shadow:
         0 -8px 40px -8px rgba(42, 27, 18, 0.25),
         0 -2px 12px -4px rgba(42, 27, 18, 0.10);
-    min-height: 52vh;
-    transition: top 0.38s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: top;
-    padding-bottom: 40px;
-}
-.photos-sheet--dragging {
-    transition: none;
-    user-select: none;
-}
-.photos-sheet__handle-zone {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 14px 0 6px;
-    cursor: grab;
-    touch-action: none;
-}
-.photos-sheet--dragging .photos-sheet__handle-zone { cursor: grabbing; }
-.photos-sheet__handle {
-    width: 36px;
-    height: 4px;
-    border-radius: 999px;
-    background: rgba(42, 27, 18, 0.18);
-    transition: width 0.2s var(--ease-standard), background 0.2s var(--ease-standard);
-}
-.photos-sheet__handle-zone:hover .photos-sheet__handle,
-.photos-sheet--dragging .photos-sheet__handle {
-    width: 52px;
-    background: var(--accent);
+    min-height: 52svh;
+    padding-bottom: 48px;
 }
 .photos-sheet__header {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    padding: 12px 20px 0;
+    padding: 26px 20px 0;
 }
 .photos-sheet__heading {
     font-family: var(--font-display), 'Bodoni Moda', Didot, 'Times New Roman', serif;

@@ -34,6 +34,7 @@
  */
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import FilterRail from "@/Component/ui/FilterRail.jsx";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import Section from "@/Component/ui/Section.jsx";
@@ -62,9 +63,9 @@ const TILE_HEIGHT = "h-64 lg:h-80";
 const PortfolioSkeleton = () => (
     <div className="space-y-8" role="status" aria-live="polite" aria-busy="true">
         <span className="sr-only">Loading photographs</span>
-        <div className="flex flex-wrap justify-center gap-4">
+        <div className="flex justify-center gap-2 overflow-hidden">
             {categories.map((c) => (
-                <div key={c} className="h-11 w-24 bg-primary/20 rounded-full animate-pulse" />
+                <div key={c} className="h-10 w-24 shrink-0 bg-primary/20 rounded-full animate-pulse" />
             ))}
         </div>
         <div className={GRID_CLASS}>
@@ -305,32 +306,14 @@ export default function OurPortfolio({ data } = {}) {
                         </p>
                     </div>
 
-                    {/* Category Filter */}
-                    <div
-                        role="group"
-                        aria-label="Filter photographs by category"
-                        className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8 lg:mb-10"
-                    >
-                        {tabNames.map((category) => {
-                            const on = activeCategory === category;
-                            return (
-                                <motion.button
-                                    key={category}
-                                    type="button"
-                                    aria-pressed={on}
-                                    whileHover={reduceMotion ? undefined : { scale: 1.05 }}
-                                    whileTap={reduceMotion ? undefined : { scale: 0.95 }}
-                                    className={`min-h-[44px] px-4 py-2 text-sm rounded-full transition-colors ${on
-                                        ? "bg-secondary_on/20 text-primary"
-                                        : "bg-secondary_on/10 text-tertiary_on hover:bg-primary_on/20"
-                                        }`}
-                                    onClick={() => chooseCategory(category)}
-                                >
-                                    {category}
-                                </motion.button>
-                            );
-                        })}
-                    </div>
+                    {/* Category Filter — one swipeable line on phones. */}
+                    <FilterRail
+                        label="Filter photographs by category"
+                        options={tabNames}
+                        value={activeCategory}
+                        onChange={chooseCategory}
+                        className="mb-8 lg:mb-10"
+                    />
 
                     {/* Portfolio Grid */}
                     {isLoading ? (

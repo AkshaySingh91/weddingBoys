@@ -3,7 +3,7 @@
 import React from "react"
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiVideo, FiStar, FiCheckCircle, FiPackage, FiMessageCircle, FiPhone } from 'react-icons/fi';
+import { FiVideo, FiStar, FiCheck, FiPhone } from 'react-icons/fi';
 import { FaInfoCircle, FaCreditCard, FaGlobe } from "react-icons/fa";
 import { FiHeart, FiUsers, FiChevronRight, FiCalendar } from 'react-icons/fi';
 import { useStudioDetails } from '@/Context/StudioDetailsContext.jsx';
@@ -43,119 +43,131 @@ const createWhatsAppMessage = (pkg) => {
     return encodeURIComponent(message);
 };
 
+const inr = (n) => `₹${Number(n).toLocaleString('en-IN')}`;
+const savingOf = (pkg) => (pkg.total > pkg.offer ? Math.ceil(((pkg.total - pkg.offer) / pkg.total) * 100) : 0);
+
 /**
- * One package, at a glance.
+ * One package, at a glance. The full detail opens in PackageModal.
  *
- * Was a tall expanding card in a two-column grid. Expanding grew the grid ROW,
- * so opening one stretched its neighbour and left a column of empty card beside
- * the detail. The detail now opens in PackageModal and the four cards keep
- * their shape.
- *
- * **Every zone has a reserved height** so the four cards line up row for row:
- * badge, title, tagline, price, the team/deliverables rule, then the list. A
- * one-line title next to a two-line title would otherwise push every row below
- * it out of step, and the popular badge would push two of the four down by its
- * own height. Measured across all four; the rows share a baseline.
+ * In the desktop grid every zone has a reserved height (title, tagline, price
+ * row) so four cards read across on the same baselines. On a phone only one
+ * card shows at a time, so the reservations are off and it is as short as its
+ * content.
  */
 const PackageCard = ({ pkg, onOpen }) => {
-    // A package with no discount shows its one price and no "Save".
-    const save = pkg.total > pkg.offer ? Math.ceil(((pkg.total - pkg.offer) / pkg.total) * 100) : 0;
+    const save = savingOf(pkg);
     const included = pkg.includes.filter((i) => i.included);
-    const preview = included.slice(0, 4);
+    const preview = included.slice(0, 5);
     const moreCount = included.length - preview.length;
+    const popular = Boolean(pkg.isPopular);
 
     return (
         <article
-            /* border-2 on every card, colour is the only difference. A 2px
-               border on the popular ones against 1px elsewhere pushed their
-               rows down by exactly 1px — visible when four cards are read
-               across. */
-            className={`relative flex h-full w-[82vw] shrink-0 snap-start flex-col overflow-hidden
-                        rounded-media border-2 sm:w-auto sm:shrink
-                        bg-ground-raised shadow-panel transition-transform duration-ui ease-standard
-                        hover:-translate-y-1 focus-within:-translate-y-1
-                        ${pkg.isPopular ? 'border-accent' : 'border-gold/35'}`}
+            className={`relative flex h-full flex-col rounded-2xl border bg-ground-raised p-5 transition-shadow duration-ui ease-standard sm:p-6
+                        ${popular
+                            ? 'border-accent/50 shadow-[0_20px_44px_-24px_rgba(217,52,42,0.55)] ring-1 ring-accent/20'
+                            : 'border-ink/10 shadow-panel hover:shadow-[0_16px_36px_-22px_rgba(42,27,18,0.35)]'}`}
         >
-            {/* The original diagonal corner ribbon, restored. Positioned
-                absolutely and clipped by the card's own overflow-hidden, so it
-                costs the card no vertical space — which is what keeps all four
-                cards' rows on the same baselines. The top band it replaces cost
-                30px and pushed two of the four down by exactly that. */}
-            {pkg.isPopular && (
-                <p className="pointer-events-none absolute -right-[58px] top-[30px] z-10 w-[196px]
-                              rotate-45 bg-accent py-1 text-center text-[9px] font-bold
-                              tracking-[0.06em] text-white shadow-panel">
-                    POPULAR CHOICE
-                </p>
-            )}
-
-            <div className="flex flex-1 flex-col p-5">
-                {/* Two lines reserved: titles run one to three words or seven. */}
-                {/* pr-12 on every title, not only the popular ones: the corner
-                    ribbon sits over that space, and padding only the two that
-                    have it would give the four cards different wrap points.
-                    Three lines reserved (3 x 1.3em leading) because the longest
-                    title needs three once the ribbon's space is taken out — with
-                    two reserved it grew and pushed that card's rows 32px below
-                    its neighbours'. */}
-                <h3 className="t-heading-2 min-h-[3.9em] max-w-none pr-12">{pkg.title}</h3>
-                <p className="t-body-sm mt-1 min-h-[3.2em] text-ink-muted">{pkg.tagline}</p>
-
-                <div className="mt-4 flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                    <span className="font-display text-[28px] font-semibold leading-none text-accent-ink">
-                        ₹{Number(pkg.offer).toLocaleString('en-IN')}
+            <div className="flex items-start justify-between gap-3">
+                <h3 className="text-[18px] font-semibold leading-snug tracking-[-0.01em] text-ink sm:min-h-[2.75em]">{pkg.title}</h3>
+                {popular && (
+                    <span className="mt-0.5 shrink-0 rounded-full bg-accent px-2.5 py-1 text-[11px] font-semibold leading-none text-ink-onAccent">
+                        Popular
                     </span>
-                    {save > 0 && (
-                        <span className="text-[14px] text-ink-muted line-through">
-                            ₹{Number(pkg.total).toLocaleString('en-IN')}
-                        </span>
-                    )}
-                </div>
-                {/* Kept as an empty line without a discount, so the cards' rows stay level. */}
-                <p className={`mt-2.5 w-fit rounded-pill px-2.5 py-1 text-[12px] font-semibold ${save > 0 ? 'bg-accent-tint text-accent-ink' : 'invisible'}`}>
-                    Save {save}%
-                </p>
-
-                {/* Two real, derived figures. The old card showed
-                    `{pkg.duration} Hours` and no package object has a `duration`
-                    field, so every card rendered the word "Hours" with nothing
-                    in front of it. */}
-                <dl className="mt-4 grid grid-cols-2 gap-2 border-y border-gold/25 py-3">
-                    <div>
-                        <dt className="text-[12px] text-ink-muted">Team</dt>
-                        <dd className="text-[15px] font-semibold text-ink">{pkg.team.length} people</dd>
-                    </div>
-                    <div>
-                        <dt className="text-[12px] text-ink-muted">Deliverables</dt>
-                        <dd className="text-[15px] font-semibold text-ink">{included.length} items</dd>
-                    </div>
-                </dl>
-
-                <ul className="mt-4 flex-1 space-y-2">
-                    {preview.map((item, i) => (
-                        <li key={i} className="flex items-start gap-2 text-[14px] leading-snug text-ink-secondary">
-                            <FiCheckCircle aria-hidden="true" className="mt-[3px] h-3.5 w-3.5 shrink-0 text-accent-ink" />
-                            {item.text}
-                        </li>
-                    ))}
-                    {moreCount > 0 && (
-                        <li className="pl-[22px] text-[14px] text-ink-muted">+{moreCount} more</li>
-                    )}
-                </ul>
-
-                <button
-                    type="button"
-                    onClick={() => onOpen(pkg)}
-                    className="mt-5 flex min-h-[44px] w-full items-center justify-center gap-1.5 rounded-pill
-                               border border-gold-strong/60 px-4 text-[14px] font-semibold text-ink
-                               transition-colors duration-micro ease-standard hover:bg-accent-wash
-                               hover:text-accent-ink focus-ring"
-                >
-                    View full details
-                    <FiChevronRight aria-hidden="true" className="h-4 w-4" />
-                </button>
+                )}
             </div>
+            <p className="mt-1 text-[14px] leading-snug text-ink-muted sm:min-h-[2.75em]">{pkg.tagline}</p>
+
+            <div className="mt-5 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                <span className="text-[32px] font-semibold leading-none tracking-[-0.02em] text-ink tabular-nums">{inr(pkg.offer)}</span>
+                {save > 0 && <span className="text-[14px] text-ink-muted line-through tabular-nums">{inr(pkg.total)}</span>}
+                {save > 0 && (
+                    <span className="rounded-full bg-accent-tint px-2 py-0.5 text-[11.5px] font-semibold text-accent-ink">Save {save}%</span>
+                )}
+            </div>
+
+            <dl className="mt-5 grid grid-cols-2 gap-2 rounded-xl bg-ink/[0.03] p-3">
+                <div>
+                    <dt className="text-[12px] text-ink-muted">Team</dt>
+                    <dd className="text-[15px] font-semibold text-ink">{pkg.team.length} people</dd>
+                </div>
+                <div>
+                    <dt className="text-[12px] text-ink-muted">Deliverables</dt>
+                    <dd className="text-[15px] font-semibold text-ink">{included.length} items</dd>
+                </div>
+            </dl>
+
+            <ul className="mt-5 flex-1 space-y-2.5">
+                {preview.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-[14px] leading-snug text-ink-secondary">
+                        <span aria-hidden="true" className="mt-px grid h-[18px] w-[18px] shrink-0 place-items-center rounded-full bg-accent-wash text-accent-ink">
+                            <FiCheck className="h-3 w-3" strokeWidth={3} />
+                        </span>
+                        {item.text}
+                    </li>
+                ))}
+                {moreCount > 0 && <li className="pl-[28px] text-[13px] text-ink-muted">+{moreCount} more included</li>}
+            </ul>
+
+            <button
+                type="button"
+                onClick={() => onOpen(pkg)}
+                className={`mt-6 flex h-11 w-full items-center justify-center gap-1.5 rounded-xl px-4 text-[14px] font-semibold
+                            transition-colors duration-micro ease-standard focus-ring
+                            ${popular
+                                ? 'bg-accent text-ink-onAccent hover:bg-accent-hover'
+                                : 'border border-ink/15 text-ink hover:border-ink/30 hover:bg-ink/[0.03]'}`}
+            >
+                View full details
+                <FiChevronRight aria-hidden="true" className="h-4 w-4" />
+            </button>
         </article>
+    );
+};
+
+/**
+ * Phones: every plan and its price visible at once as a 2×2 picker, the chosen
+ * plan's card below. The old swipe rail showed one card and a sliver of the
+ * next, so three of the four prices were never seen.
+ */
+const PlanPicker = ({ list, selected, onSelect }) => {
+    const onKeyDown = (e) => {
+        const step = { ArrowRight: 1, ArrowDown: 2, ArrowLeft: -1, ArrowUp: -2 }[e.key];
+        if (!step) return;
+        e.preventDefault();
+        const next = (selected + step + list.length) % list.length;
+        onSelect(next);
+        document.getElementById(`pkg-tab-${next}`)?.focus();
+    };
+    return (
+        <div role="tablist" aria-label="Packages" className="grid grid-cols-2 gap-2" onKeyDown={onKeyDown}>
+            {list.map((pkg, i) => {
+                const on = i === selected;
+                return (
+                    <button
+                        key={pkg.id ?? pkg.title}
+                        id={`pkg-tab-${i}`}
+                        type="button"
+                        role="tab"
+                        aria-selected={on}
+                        aria-controls="pkg-panel"
+                        tabIndex={on ? 0 : -1}
+                        onClick={() => onSelect(i)}
+                        className={`relative flex min-h-[76px] flex-col items-start justify-between rounded-xl border p-3 text-left
+                                    transition-colors duration-micro ease-standard focus-ring
+                                    ${on ? 'border-ink bg-ink text-ground' : 'border-ink/10 bg-ground-raised text-ink hover:border-ink/25'}`}
+                    >
+                        {pkg.isPopular && (
+                            <span aria-label="Popular" className={`absolute right-2.5 top-2.5 h-1.5 w-1.5 rounded-full ${on ? 'bg-ground' : 'bg-accent'}`} />
+                        )}
+                        <span className={`line-clamp-2 pr-3 text-[12.5px] font-medium leading-snug ${on ? 'text-ground/80' : 'text-ink-secondary'}`}>
+                            {pkg.title}
+                        </span>
+                        <span className="mt-1.5 text-[16px] font-semibold tabular-nums">{inr(pkg.offer)}</span>
+                    </button>
+                );
+            })}
+        </div>
     );
 };
 
@@ -195,6 +207,8 @@ const fromPricing = (p) => ({
 const PackagesSection = ({ data }) => {
     const list = Array.isArray(data?.packages) ? data.packages.map(fromPricing) : packages;
     const [openPackage, setOpenPackage] = useState(null);
+    const [selected, setSelected] = useState(() => Math.max(0, list.findIndex((p) => p.isPopular)));
+    const current = list[Math.min(selected, list.length - 1)];
     const { studioContact } = useStudioDetails();
     const [hearts, setHearts] = useState(null);
 
@@ -264,9 +278,7 @@ const PackagesSection = ({ data }) => {
             </div>
 
             <div className="max-w-7xl mx-auto relative">
-                <div
-                    className="text-center mb-16"
-                >
+                <div className="mb-8 text-center sm:mb-12 lg:mb-16">
                     <div className="bg-accent/10 text-accent-ink px-6 py-2 rounded-full inline-block mb-4">
                         <FiStar className="inline mr-2" />
                         Most Chosen Packages
@@ -279,17 +291,19 @@ const PackagesSection = ({ data }) => {
                     </p>
                 </div>
 
-                {/* Four in one row on desktop, as a price table should be —
-                    they exist to be compared against each other. */}
-                {/* A swipe rail on phones — four full-width cards ran 3 screens.
-                    From sm up it is the grid, four across at lg, which is what a
-                    price table should be. */}
-                <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto scrollbar-none pb-2
-                                -mr-5 pr-5
-                                sm:mr-0 sm:pr-0 sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible
-                                lg:grid-cols-4 lg:gap-6 sm:items-stretch">
+                {list.length > 0 && (
+                    <div className="sm:hidden">
+                        <PlanPicker list={list} selected={selected} onSelect={setSelected} />
+                        <div id="pkg-panel" role="tabpanel" aria-labelledby={`pkg-tab-${selected}`} className="mt-3">
+                            <PackageCard key={current.id ?? current.title} pkg={current} onOpen={setOpenPackage} />
+                        </div>
+                    </div>
+                )}
+
+                {/* Tablet and up: the price table — two across, four at lg. */}
+                <div className="hidden items-stretch gap-5 sm:grid sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
                     {list.map((pkg) => (
-                        <PackageCard key={pkg.id} pkg={pkg} onOpen={setOpenPackage} />
+                        <PackageCard key={pkg.id ?? pkg.title} pkg={pkg} onOpen={setOpenPackage} />
                     ))}
                 </div>
             </div>

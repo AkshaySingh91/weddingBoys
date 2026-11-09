@@ -24,9 +24,6 @@ const DEFAULT_PHOTO_TAGS = [
 ];
 
 /* ── Mobile Sheet Snap Positions (vh) ── */
-const SHEET_PEEK = 54;
-const SHEET_FULL = 8;
-const SHEET_HIDDEN = 86;
 
 /*
  * `composition` — Admin › Content › Photos, resolved on the server by page.jsx:
@@ -67,19 +64,6 @@ export default function PhotosClient({ composition = null, initialTag = null } =
         return () => window.removeEventListener('resize', updateColumns);
     }, []);
 
-    /* ── Mobile Sheet Drag State ── */
-    const [sheetTop, setSheetTop] = useState(SHEET_PEEK);
-    const [isDragging, setIsDragging] = useState(false);
-    const dragStart = useRef({ y: 0, startTop: SHEET_PEEK });
-    const sheetRef = useRef(null);
-
-    /* ── Parallax for Hero Backdrop ── */
-    const [parallaxY, setParallaxY] = useState(0);
-    useEffect(() => {
-        const onScroll = () => setParallaxY(window.scrollY * 0.3);
-        window.addEventListener('scroll', onScroll, { passive: true });
-        return () => window.removeEventListener('scroll', onScroll);
-    }, []);
 
     /* ── Fetch tags from API or fallback ── */
     useEffect(() => {
@@ -236,47 +220,6 @@ export default function PhotosClient({ composition = null, initialTag = null } =
         }));
     };
 
-    /* ── Mobile Touch/Pointer Drag for Uno Sheet ── */
-    const onDragStart = (e) => {
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-        dragStart.current = { y: clientY, startTop: sheetTop };
-        setIsDragging(true);
-    };
-
-    const onDragMove = useCallback((e) => {
-        if (!isDragging) return;
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-        const diff = clientY - dragStart.current.y;
-        const vh = window.innerHeight / 100;
-        const newTop = dragStart.current.startTop + (diff / vh);
-        setSheetTop(Math.max(SHEET_FULL, Math.min(SHEET_HIDDEN, newTop)));
-    }, [isDragging]);
-
-    const onDragEnd = useCallback(() => {
-        if (!isDragging) return;
-        setIsDragging(false);
-        const positions = [SHEET_FULL, SHEET_PEEK, SHEET_HIDDEN];
-        const nearest = positions.reduce((prev, curr) =>
-            Math.abs(curr - sheetTop) < Math.abs(prev - sheetTop) ? curr : prev
-        );
-        setSheetTop(nearest);
-    }, [isDragging, sheetTop]);
-
-    useEffect(() => {
-        if (!isDragging) return;
-        const moveHandler = (e) => onDragMove(e);
-        const endHandler = () => onDragEnd();
-        window.addEventListener('touchmove', moveHandler, { passive: false });
-        window.addEventListener('touchend', endHandler);
-        window.addEventListener('mousemove', moveHandler);
-        window.addEventListener('mouseup', endHandler);
-        return () => {
-            window.removeEventListener('touchmove', moveHandler);
-            window.removeEventListener('touchend', endHandler);
-            window.removeEventListener('mousemove', moveHandler);
-            window.removeEventListener('mouseup', endHandler);
-        };
-    }, [isDragging, onDragMove, onDragEnd]);
 
     const loadMorePhotos = () => {
         if (!isLoading && !isLoadingMore && hasMore) {
@@ -285,7 +228,7 @@ export default function PhotosClient({ composition = null, initialTag = null } =
     };
 
     return (
-        <div className="photos-page" style={{ '--sheet-top': `${sheetTop}vh` }}>
+        <div className="photos-page">
             {requestError && <p role="alert" className="p-4 text-state-error">{requestError} <button type="button" onClick={() => fetchPhotos(1, selectedTag)} className="underline">Retry</button></p>}
 
             {/* ═══════════════════════════════════════════════════════════════
@@ -451,17 +394,16 @@ export default function PhotosClient({ composition = null, initialTag = null } =
 
 
             {/* ═══════════════════════════════════════════════════════════════
-                MOBILE LAYOUT  (<lg) — Fixed Hero + Uno Card Draggable Sheet
+                MOBILE LAYOUT  (<lg) — sticky hero, gallery sheet scrolls over it
                 ═══════════════════════════════════════════════════════════════ */}
             <div className="photos-mobile">
-                {/* Fixed Hero Backdrop with Portrait Phone Banner */}
+                {/* Sticky hero: stays put while the sheet scrolls up over it, then leaves with the page. */}
                 <div className="photos-hero">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         src="/Asset/films/films-banner-phone.webp"
                         alt="Our Photographs — Moments That Stay Forever"
                         className="photos-hero__img"
-                        style={{ transform: `translateY(${parallaxY * 0.4}px) scale(1.03)` }}
                         loading="eager"
                         fetchPriority="high"
                     />
@@ -483,26 +425,7 @@ export default function PhotosClient({ composition = null, initialTag = null } =
                     </div>
                 </div>
 
-                {/* Interactive Uno-Card Bottom Sheet */}
-                <div
-                    ref={sheetRef}
-                    className={`photos-sheet ${isDragging ? 'photos-sheet--dragging' : ''}`}
-                    style={{ top: `var(--sheet-top)` }}
-                >
-                    {/* Drag handle */}
-                    <div
-                        className="photos-sheet__handle-zone"
-                        onTouchStart={onDragStart}
-                        onMouseDown={onDragStart}
-                        role="slider"
-                        aria-label="Drag to expand or collapse photo gallery"
-                        aria-valuemin={0}
-                        aria-valuemax={100}
-                        aria-valuenow={Math.round(100 - sheetTop)}
-                        tabIndex={0}
-                    >
-                        <div className="photos-sheet__handle" />
-                    </div>
+                <div className="photos-sheet">
 
                     {/* Sheet header */}
                     <div className="photos-sheet__header">
@@ -616,7 +539,6 @@ export default function PhotosClient({ composition = null, initialTag = null } =
                         )}
                     </div>
 
-                    <div className="h-24" />
                 </div>
             </div>
         </div>
