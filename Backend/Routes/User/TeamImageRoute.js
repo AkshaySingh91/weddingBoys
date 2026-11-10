@@ -9,10 +9,28 @@ import { mediaUrlForKey, resolveNode } from '../../Utils/mediaUrl.js';
 const mediaUrl = (key) => mediaUrlForKey(key, getObjectUrl);
 
 import TeamSchema from "../../Models/TeamSchema.js"
+import Media from "../../Models/Media.js"
+
+// Responsive image facts for R2-uploaded portraits: the webp ladder, blur
+// placeholder and size, so pages can serve srcset instead of the master.
+const imageFacts = (m) => m ? {
+    width: m.width || null,
+    height: m.height || null,
+    blurDataURL: m.blurDataURL || null,
+    dominantColor: m.dominantColor || null,
+    variants: (m.imageVariants || []).filter((v) => v.format === 'webp' && v.url)
+        .map((v) => ({ width: v.width, height: v.height, url: v.url }))
+        .sort((a, b) => a.width - b.width)
+        // The ladder never enlarges, so small masters repeat their own width.
+        .filter((v, i, list) => i === 0 || v.width !== list[i - 1].width),
+} : {}
 
 async function getTeamImage(req, res, next) {
     try {
         const images = await TeamSchema.find().lean();
+        const ids = images.map((i) => i.imageMetaData?.mediaId).filter(Boolean);
+        const media = new Map((await Media.find({ mediaId: { $in: ids } })
+            .select('mediaId width height blurDataURL dominantColor imageVariants').lean()).map((m) => [m.mediaId, m]));
         let teamImages = [];
         let bannerImage = [];
         for (const i of images) {
@@ -24,12 +42,14 @@ async function getTeamImage(req, res, next) {
                         ...i,
                         _id: i._id.toString(),
                         url,
+                        ...imageFacts(media.get(i.imageMetaData?.mediaId)),
                     })
                 } else {
                     teamImages.push({
                         ...i,
                         _id: i._id.toString(),
                         url,
+                        ...imageFacts(media.get(i.imageMetaData?.mediaId)),
                     })
                 }
             }

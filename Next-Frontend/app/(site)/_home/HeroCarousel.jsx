@@ -210,9 +210,13 @@ export default function HeroCarousel({ slides = [] }) {
                                                    lg:bg-[linear-gradient(90deg,rgb(var(--ground-deep-rgb)/0.8),rgb(var(--ground-deep-rgb)/0.15)_60%,transparent),linear-gradient(0deg,rgb(var(--ground-deep-rgb)/0.85),transparent_38%)]" />
 
                 {/* ── Statement ── */}
-                <div className="absolute inset-x-0 bottom-[150px] z-30 px-5 sm:px-8 lg:bottom-auto lg:top-[42%] lg:-translate-y-1/2 lg:px-20">
+                {/* Short desktop windows (≤800px tall): the statement moves up and the
+                    headline shrinks so it never runs into the film rail at the bottom. */}
+                <div className="absolute inset-x-0 bottom-[150px] z-30 px-5 sm:px-8 lg:bottom-auto lg:top-[42%] lg:-translate-y-1/2 lg:px-20
+                                [@media(min-width:1024px)_and_(max-height:800px)]:top-[calc(var(--header-height)+1.5rem)] [@media(min-width:1024px)_and_(max-height:800px)]:translate-y-0">
                     <h1 className="max-w-[12ch] font-display text-[46px] font-medium leading-[0.98] text-ink-onDeep
-                                   motion-safe:animate-[fadeUp_600ms_cubic-bezier(0.16,1,0.3,1)_backwards] sm:text-[64px] lg:text-[96px]">
+                                   motion-safe:animate-[fadeUp_600ms_cubic-bezier(0.16,1,0.3,1)_backwards] sm:text-[64px] lg:text-[96px]
+                                   [@media(min-width:1024px)_and_(max-height:800px)]:text-[72px]">
                         Films, not recaps.
                     </h1>
                     <p className="mt-4 max-w-md text-[15px] leading-relaxed text-ink-onDeep/85 motion-safe:animate-[fadeUp_600ms_cubic-bezier(0.16,1,0.3,1)_80ms_backwards] sm:text-[17px]">

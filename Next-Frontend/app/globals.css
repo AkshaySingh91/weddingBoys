@@ -1438,12 +1438,114 @@ html {
   [data-in][data-rise="draw"] { animation-name: wv-draw; animation-duration: 600ms; transform-origin: left center; }
   [data-in][data-rise="pop"]  { animation-name: wv-pop; animation-duration: 240ms; }
   [data-in][data-rise="draw-y"] { animation-name: wv-draw-y; animation-duration: 700ms; transform-origin: center top; }
+  /* Shutter: a card opens top-down instead of sliding (DESIGN-SYSTEM §6.2). */
+  [data-in][data-rise="mask"] { animation-name: wv-mask; animation-duration: var(--motion-media); }
+  [data-in][data-rise="mask"] .wv-settle { animation: heroZoom var(--motion-media) var(--ease-entrance) backwards; animation-delay: inherit; }
+  [data-in][data-rise="sheet"] { animation-name: wv-sheet; animation-duration: 520ms; }
 }
 @keyframes wv-rise { from { opacity: 0; transform: translateY(16px); } }
 @keyframes wv-fade { from { opacity: 0; } }
 @keyframes wv-draw { from { transform: scaleX(0); } }
 @keyframes wv-pop  { from { opacity: 0; transform: scale(0.6); } }
 @keyframes wv-draw-y { from { transform: scaleY(0); } }
+@keyframes wv-mask { from { clip-path: inset(0 0 100% 0 round 28px); } to { clip-path: inset(0 0 0 0 round 28px); } }
+@keyframes wv-sheet { from { opacity: 0; transform: scale(0.98); } }
+
+/* ── /team ──────────────────────────────────────────────────────────────────
+   Hero: the group photo settles (transform only — never delays its paint), a
+   one-shot gold light leak over the window streaks, and on scroll the photo
+   drifts and dims under the ivory sheet (scroll-driven, compositor only). */
+@media (prefers-reduced-motion: no-preference) {
+  .crew-photo { animation: crewSettle 1.6s var(--ease-entrance) both; }
+  .crew-leak { animation: crewLeak 1.4s ease-out 300ms both; }
+  @supports (animation-timeline: view()) {
+    .crew-drift { animation: crewDrift linear both; animation-timeline: view(); animation-range: exit 0% exit 100%; }
+    .crew-dim { animation: crewDim linear both; animation-timeline: view(); animation-range: exit 0% exit 100%; }
+  }
+}
+@keyframes crewSettle { from { transform: scale(1.035); } to { transform: scale(1); } }
+@keyframes crewLeak { 0% { opacity: 0; } 45% { opacity: 0.35; } 100% { opacity: 0.18; } }
+@keyframes crewDrift { to { transform: translateY(6%); } }
+@keyframes crewDim { from { opacity: 0; } to { opacity: 0.45; } }
+
+/* Slates — the signature moment. The hinge (.slate-arm) rests slightly open;
+   when the card is 60% in view (ClapObserver sets data-clapped) it falls shut
+   with an accelerating ease, a gold seam flashes, then the portrait opens like
+   a shutter: clap, then "action". Hover / focus re-claps the inner bar, so the
+   two animations never cancel. No JS / reduced motion: shut or resting, and
+   the portrait is always visible (it only hides once data-clap-armed is set). */
+.slate-stripes { background: repeating-linear-gradient(-55deg, rgb(var(--ground-deep-rgb)) 0 13px, rgb(var(--ground-raised-rgb)) 13px 26px); box-shadow: inset 0 0 0 1px rgb(var(--ground-deep-rgb) / 0.25); }
+.slate-stripes-deep { background: repeating-linear-gradient(-55deg, rgb(var(--gold-rgb)) 0 13px, rgb(var(--ground-deep-rgb)) 13px 26px); box-shadow: inset 0 0 0 1px rgb(var(--gold-rgb) / 0.5); }
+.slate-arm { transform-origin: 8px 100%; transform: rotate(-7deg); }
+.slate[data-clapped] .slate-arm { transform: none; }
+.slate-seam { opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .slate[data-clap-armed]:not([data-clapped]) .slate-shot { clip-path: inset(0 0 100% 0 round 22px); }
+  .slate[data-clapped] .slate-arm { animation: slateClap 420ms both; }
+  .slate[data-clapped] .slate-seam { animation: slateSeam 180ms linear 140ms both; }
+  .slate[data-clapped] .slate-shot { animation: wv-mask var(--motion-media) var(--ease-entrance) 180ms backwards; }
+  .slate[data-clapped] .slate-shot .wv-settle { animation: heroZoom var(--motion-media) var(--ease-entrance) 180ms backwards; }
+  @media (hover: hover) {
+    .slate:hover .slate-bar, .slate:focus-visible .slate-bar { animation: slateReclap 520ms; }
+  }
+}
+@media (prefers-reduced-motion: reduce) { .slate-arm { transform: none; } }
+.slate-bar { transform-origin: 8px 100%; }
+@keyframes slateClap {
+  0% { transform: rotate(-7deg); animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
+  33% { transform: rotate(0); animation-timing-function: var(--ease-entrance); }
+  52% { transform: rotate(-1.4deg); }
+  100% { transform: rotate(0); }
+}
+@keyframes slateReclap {
+  0% { transform: none; }
+  45% { transform: rotate(-9deg); animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
+  70% { transform: none; } 84% { transform: rotate(-1deg); } 100% { transform: none; }
+}
+@keyframes slateSeam { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+
+/* Crew passes (phones): each hangs from its punched slot; the centred pass is
+   square and full size, neighbours lean, shrink and recede (inline view timeline). */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view(inline)) {
+    .pass-deck .pass-card > * { transform-origin: 50% 0; animation: passSway linear both; animation-timeline: view(inline); }
+  }
+}
+@keyframes passSway {
+  0%   { transform: scale(0.92) rotate(2.5deg); opacity: 0.55; }
+  50%  { transform: none; opacity: 1; }
+  100% { transform: scale(0.92) rotate(-2.5deg); opacity: 0.55; }
+}
+
+/* Credits: each name rises behind a mask, like end credits. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-in][data-rise="line"] { animation-name: wv-line; animation-duration: 520ms; }
+  /* The closing row: "You" / "Your day" are written in, left to right. */
+  [data-in] .wv-write { animation: wv-write 600ms cubic-bezier(0.5, 0, 0.3, 1) calc(700ms + var(--w, 0) * 140ms) backwards; }
+  .hero-fact { animation: wv-pop-soft 240ms var(--ease-entrance) backwards; }
+}
+@keyframes wv-line { from { clip-path: inset(0 0 100% 0); transform: translateY(0.35em); } to { clip-path: inset(0 0 0 0); transform: none; } }
+@keyframes wv-write { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes wv-pop-soft { from { opacity: 0; transform: scale(0.9); } }
+
+/* Viewfinder brackets: four gold corners close in on hover / focus. */
+.viewfinder::before {
+  content: ''; position: absolute; inset: 6px; z-index: 2; pointer-events: none; border-radius: inherit;
+  background:
+    linear-gradient(rgb(var(--gold-rgb)), rgb(var(--gold-rgb))) top left / 16px 2px,
+    linear-gradient(rgb(var(--gold-rgb)), rgb(var(--gold-rgb))) top left / 2px 16px,
+    linear-gradient(rgb(var(--gold-rgb)), rgb(var(--gold-rgb))) top right / 16px 2px,
+    linear-gradient(rgb(var(--gold-rgb)), rgb(var(--gold-rgb))) top right / 2px 16px,
+    linear-gradient(rgb(var(--gold-rgb)), rgb(var(--gold-rgb))) bottom left / 16px 2px,
+    linear-gradient(rgb(var(--gold-rgb)), rgb(var(--gold-rgb))) bottom left / 2px 16px,
+    linear-gradient(rgb(var(--gold-rgb)), rgb(var(--gold-rgb))) bottom right / 16px 2px,
+    linear-gradient(rgb(var(--gold-rgb)), rgb(var(--gold-rgb))) bottom right / 2px 16px;
+  background-repeat: no-repeat;
+  opacity: 0; transform: scale(1.08);
+  transition: opacity 220ms var(--ease-standard, ease), transform 220ms var(--ease-standard, ease);
+}
+.group:hover .viewfinder::before, .group:focus-visible .viewfinder::before { opacity: 1; transform: scale(1); }
+@media (prefers-reduced-motion: reduce) { .viewfinder::before { transform: none; } }
 
 /* Home hero (HeroCarousel): slow zoom on the active still, and the progress
    ring around the mini-player's play button (one film per 7s). */

@@ -11,7 +11,7 @@ Route.use(authenticateAdmin)
 // The team feeds the home "Meet the team" section (plan phase 7): refresh it
 // after any successful change. Scoped: this router sees every admin request.
 Route.use('/api/admin/team', (req, res, next) => {
-    if (req.method !== 'GET') res.on('finish', () => { if (res.statusCode < 300) queueRevalidate({ tags: ['page:home'] }) })
+    if (req.method !== 'GET') res.on('finish', () => { if (res.statusCode < 300) queueRevalidate({ tags: ['page:home', 'page:team'] }) })
     next()
 })
 
