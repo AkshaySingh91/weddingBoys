@@ -24,11 +24,12 @@ import Link from 'next/link';
 import { FiSearch, FiSliders, FiX } from 'react-icons/fi';
 import PhotoTile from '@/Component/photos/PhotoTile.jsx';
 import SelectsTray from '@/Component/photos/SelectsTray.jsx';
-import GridEnd from '@/Component/photos/GridEnd.jsx';
 import { useSelects } from '@/Component/photos/selects.js';
 import useNetworkStatus from '@/Hooks/useNetworkStatus.jsx';
 import { gradeOf, GOLD } from '@/lib/grades.js';
 import { queryOf } from '@/lib/photos.js';
+import { justify } from '@/lib/justify.js';
+import { aspectOf } from '@/Component/photos/PhotoTile.jsx';
 
 const api = () => (typeof window !== 'undefined' && window.location.hostname !== 'localhost' ? '' : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'));
 const rite = (c) => (c === 'Wedding / Pheras' ? 'Wedding' : c);
@@ -137,6 +138,13 @@ export default function Gallery({ initial, facets, initialTags = [], initialQuer
         if (single) return [label, ...cur.filter((t) => !ceremonies.some((c) => c.label === t))];
         return [...cur, label];
     });
+    // Justified rows that close at every width; pages appended later only re-flow
+    // the previous page's last two rows (below the screen when they load).
+    const layout = useMemo(() => {
+        const ends = [];
+        for (let e = pageSize; e < items.length; e += pageSize) ends.push(e);
+        return justify(items.map(aspectOf), [...ends, items.length]);
+    }, [items, pageSize]);
     const cap = tier === 'low' ? 640 : 1024;
     const nextHref = `/photos?${queryOf({ tags, q, page: page + 1, limit: pageSize })}`.replace(/&limit=\d+/, '');
 
@@ -215,28 +223,13 @@ export default function Gallery({ initial, facets, initialTags = [], initialQuer
                 </div>
 
                 {items.length ? (
-                    <ul key={round} className={`pgrid mt-2 transition-opacity duration-200 ${round ? 'pgrid-fresh' : ''} ${busy ? 'opacity-40' : 'opacity-100'}`}>
+                    <div className="jwrap mt-2"><ul key={round} className={`jgrid transition-opacity duration-200 ${round ? 'pgrid-fresh' : ''} ${busy ? 'opacity-40' : 'opacity-100'}`}>
                         {items.map((p, i) => (
-                            <PhotoTile key={p._id} p={p} i={i} priority={i === 0} cap={i < pageSize ? 1024 : cap}
+                            <PhotoTile key={p._id} p={p} i={i} priority={i === 0} cap={i < pageSize ? 1024 : cap} layout={layout[i]}
                                 tint={p.eventGroup ? gradeOf({ label: rite(p.eventGroup) }) : GOLD}
                                 selected={selects.has(p._id)} onSelect={selects.toggle} />
                         ))}
-                        <GridEnd grade={grade || GOLD}>
-                            {hasMore ? (
-                                <>
-                                    <span className="font-display text-[28px] leading-none">Keep going</span>
-                                    <button type="button" onClick={loadMore} className="w-max cursor-pointer text-[14px] font-semibold underline-offset-4 hover:underline focus-ring">
-                                        {more ? 'Loading…' : `${Math.max(0, total - items.length)} more frames`}
-                                    </button>
-                                </>
-                            ) : (
-                                <>
-                                    <span className="font-display text-[28px] leading-none">Every frame, seen.</span>
-                                    <Link href="/films" className="w-max text-[14px] font-semibold underline-offset-4 hover:underline focus-ring">Watch the films</Link>
-                                </>
-                            )}
-                        </GridEnd>
-                    </ul>
+                    </ul></div>
                 ) : (
                     <div className="mt-4 grid min-h-[260px] place-content-center rounded-[20px] bg-ground-sunk/60 px-6 text-center">
                         <p className="text-[16px] font-semibold text-ink">{busy ? 'Looking…' : 'No photographs match these filters.'}</p>
@@ -258,6 +251,10 @@ export default function Gallery({ initial, facets, initialTags = [], initialQuer
                             className="inline-flex h-11 items-center rounded-full px-5 text-[14px] font-semibold text-ink ring-1 ring-ink/15 hover:bg-ink/5 focus-ring">
                             {more ? 'Loading more photographs…' : tier === 'low' ? `Load ${Math.min(pageSize, total - items.length)} more (smaller images)` : 'Load more photographs'}
                         </a>
+                    ) : items.length > 0 ? (
+                        <p className="text-[14px] text-ink-muted">
+                            Every frame, seen. <Link href="/films" className="font-semibold text-accent-ink hover:text-accent">Watch the films</Link>
+                        </p>
                     ) : null}
                 </div>
             </section>

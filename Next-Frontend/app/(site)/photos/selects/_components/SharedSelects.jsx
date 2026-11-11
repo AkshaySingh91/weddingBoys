@@ -8,16 +8,17 @@
 import Link from 'next/link';
 import PhotoTile, { aspectOf } from '@/Component/photos/PhotoTile.jsx';
 import SelectsTray from '@/Component/photos/SelectsTray.jsx';
-import GridEnd from '@/Component/photos/GridEnd.jsx';
 import { useSelects } from '@/Component/photos/selects.js';
 import { stillLadder } from '@/lib/films.js';
 import { gradeOf, GOLD } from '@/lib/grades.js';
+import { justify } from '@/lib/justify.js';
 import { contactHref } from '@/lib/contact.js';
 
 const rite = (c) => (c === 'Wedding / Pheras' ? 'Wedding' : c);
 
 export default function SharedSelects({ photos = [], studioPhone = null }) {
     const selects = useSelects();
+    const layout = justify(photos.map(aspectOf));
     const missing = photos.filter((p) => !selects.has(p._id));
     const keepAll = () => missing.forEach((p) => selects.toggle({ id: p._id, src: stillLadder(p.url, { width: p.width, cap: 640 })?.src || p.url, a: aspectOf(p) }));
 
@@ -43,16 +44,12 @@ export default function SharedSelects({ photos = [], studioPhone = null }) {
             </div>
 
             {photos.length > 0 && (
-                <ul className="pgrid mt-8">
+                <div className="jwrap mt-8"><ul className="jgrid">
                     {photos.map((p, i) => (
                         <PhotoTile key={p._id} p={p} i={i} priority={i === 0} tint={p.eventGroup ? gradeOf({ label: rite(p.eventGroup) }) : GOLD}
-                            selected={selects.has(p._id)} onSelect={selects.toggle} />
+                            selected={selects.has(p._id)} onSelect={selects.toggle} layout={layout[i]} />
                     ))}
-                    <GridEnd>
-                        <span className="font-display text-[28px] leading-none">Want frames like these?</span>
-                        <Link href={contactHref({ from: 'selects', selects: photos.map((p) => p._id), focus: 'date' })} className="w-max text-[14px] font-semibold underline-offset-4 hover:underline focus-ring">Check your date</Link>
-                    </GridEnd>
-                </ul>
+                </ul></div>
             )}
             <SelectsTray studioPhone={studioPhone} />
         </div>

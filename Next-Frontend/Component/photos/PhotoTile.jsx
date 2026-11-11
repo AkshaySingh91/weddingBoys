@@ -18,6 +18,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { FiCheck, FiPlus } from 'react-icons/fi';
 import { stillLadder } from '@/lib/films.js';
+import { tileSizes } from '@/lib/justify.js';
 
 const coupleOf = (p) => [p.clientName?.Bride, p.clientName?.Groom].filter(Boolean).join(' & ');
 const rite = (c) => (c === 'Wedding / Pheras' ? 'Wedding' : c || '');
@@ -86,16 +87,21 @@ export function flyToTray(img) {
     };
 }
 
-export default function PhotoTile({ p, i = 0, tint, selected, onSelect, cap = 1024, priority = false }) {
+/**
+ * `layout`: this tile's place in a justified grid (lib/justify.js — --a and the
+ * per-band --p/--k), for use inside .jwrap > .jgrid. Without it the tile keeps
+ * its own aspect in the older .pgrid rows.
+ */
+export default function PhotoTile({ p, i = 0, tint, selected, onSelect, cap = 1024, priority = false, layout = null }) {
     const a = aspectOf(p);
     const ladder = stillLadder(p.url, { width: p.width, cap });
     const couple = coupleOf(p);
     const [fresh, setFresh] = useState(false); // selected in this visit: the loop draws in
     // Phones: a landscape spans the row, a portrait half of it. Wider: the tile's
     // own width at the row height (≈ a × 340px), with headroom.
-    const sizes = `(max-width: 639px) ${a > 1 ? '100vw' : '50vw'}, ${Math.round(a * 340 * 1.2)}px`;
+    const sizes = layout ? tileSizes(layout) : `(max-width: 639px) ${a > 1 ? '100vw' : '50vw'}, ${Math.round(a * 340 * 1.2)}px`;
     return (
-        <li className="ptile group" style={{ '--a': a.toFixed(4), backgroundColor: `rgb(${tint} / 0.22)`, ...(p.blurDataURL ? { backgroundImage: `url(${p.blurDataURL})` } : null) }}>
+        <li className={`ptile group ${layout ? 'jt' : ''}`} style={{ '--a': a.toFixed(4), ...layout, backgroundColor: `rgb(${tint} / 0.22)`, ...(p.blurDataURL ? { backgroundImage: `url(${p.blurDataURL})` } : null) }}>
             <Link href={`/photos/${p._id}`} prefetch={false} className="block h-full w-full focus-ring" aria-label={`${altOf(p)}, open`}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={ladder?.src || p.url} srcSet={ladder?.srcSet} sizes={sizes} alt={altOf(p)}

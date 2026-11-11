@@ -1781,20 +1781,6 @@ html[data-scrolling] .film-card { pointer-events: none; }
 @keyframes sheetUp { from { transform: translateY(100%); } }
 @keyframes drawerIn { from { transform: translateX(100%); } }
 
-/* ── Photograph page: the wedding as a strip ────────────────────────────────
-   Native scroll-snap, one frame per view. The frame keeps its own shape inside
-   a fixed-height slide; the slide's ground is the photo's blur placeholder
-   (stretched: already soft, no filter). */
-.pv-strip { --pv-h: min(125vw, 72svh); display: flex; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory;
-  overscroll-behavior-x: contain; scrollbar-width: none; }
-.pv-strip::-webkit-scrollbar { display: none; }
-@media (min-width: 1024px) { .pv-strip { --pv-h: calc(100svh - var(--header-height) - 56px); border-radius: 18px; } }
-.pv-slide { position: relative; flex: 0 0 100%; height: var(--pv-h); margin: 0; display: grid; place-items: center;
-  scroll-snap-align: center; scroll-snap-stop: always; background-size: cover; background-position: center; }
-.pv-slide[data-initial] { scroll-initial-target: nearest; }
-.pv-frame { position: relative; display: block; aspect-ratio: var(--a); width: min(100%, calc(var(--pv-h) * var(--a))); }
-.pv-frame > img { display: block; width: 100%; height: 100%; object-fit: cover; }
-@media (min-width: 1024px) { .pv-frame > img { border-radius: 4px; } }
 
 /* ── Your selects: the light table ────────────────────────────────────────
    Warm, lit paper; the selects lie on it as prints — a white border, a
@@ -1843,28 +1829,9 @@ html[data-scrolling] .film-card { pointer-events: none; }
   .shot-tick path { stroke-dasharray: 1 1; stroke-dashoffset: 1; animation: loopDraw 260ms cubic-bezier(0.5, 0, 0.3, 1) forwards; }
 }
 
-/* The grid's end tile (Component/photos/GridEnd.jsx). */
-.pgrid:has(> .pfill)::after { display: none; }
-.pfill { position: relative; isolation: isolate; flex: 1000 1 0%; align-self: stretch; min-width: 0; min-height: 76px; overflow: hidden; border-radius: 4px;
-  container-type: inline-size; background: rgb(var(--grade) / 0.18); color: var(--jelly-ink); }
-.pfill .jelly-wash { background: radial-gradient(140% 120% at 0% 100%, rgb(var(--grade) / 0.9), rgb(var(--grade) / 0.55) 60%, rgb(var(--grade) / 0.35)); }
-.pfill-body { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; padding: 18px 20px; }
-.pfill-body > * { position: relative; }
-@container (max-width: 150px) { .pfill-body { display: none; } }
 
-/* The photograph page's strip: a warm ground lit by the photo's own colours
-   (its blur placeholder, --echo); no sprockets, no dark film base. */
-.pv-slide {
-  padding: 18px 0; background-color: rgb(var(--ground-rgb));
-  background-image: linear-gradient(rgb(var(--ground-rgb) / 0.55), rgb(var(--ground-rgb) / 0.55)), var(--echo, none);
-  background-size: 100% 100%, cover; background-position: 0 0, center; background-repeat: no-repeat;
-}
-.pv-slide .pv-frame { width: min(100%, calc((var(--pv-h) - 36px) * var(--a))); }
-.pv-slide .pv-frame > img { box-shadow: 0 18px 40px -24px rgb(51 22 26 / 0.55); }
-.pv-edge { display: none; }
-.pgrid-day { --row-h: 150px; }
-@media (min-width: 640px)  { .pgrid-day { --row-h: 190px; } }
-@media (min-width: 1024px) { .pgrid-day { --row-h: 220px; } }
+
+
 
 /* the selects strip: the film's sprocket edges stay put while the negatives scroll */
 @media (max-width: 1023px) { .proofs { scroll-padding-inline: 12px; } }
@@ -1919,3 +1886,73 @@ html[data-scrolling] .film-card { pointer-events: none; }
 }
 @keyframes inviteFold { 0% { transform: scale(0.97); opacity: 0.6; } 100% { transform: none; opacity: 1; } }
 @keyframes sealPress { from { transform: rotate(-24deg) scale(1.8); opacity: 0; } to { transform: rotate(-8deg) scale(1); opacity: 1; } }
+
+/* ── Justified grid that closes at every width (lib/justify.js) ─────────────
+   The row breaks are computed per width band; the container query picks the
+   band, so each tile takes its share (--p) of the width left after its row's
+   gutters (--k). The −0.05px keeps every break exactly where it was computed;
+   flex-grow hands it back. No filler tiles, no holes, no JS on resize. */
+.jwrap { container: jg / inline-size; }
+.jgrid { --g: 6px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--g); }
+.jgrid > .jt { --p: var(--p0); --k: var(--k0); flex: var(--p) 0 calc(var(--p) * (100% - var(--k) * var(--g)) - 0.05px); aspect-ratio: var(--a); min-width: 0; }
+@container jg (min-width: 420px)  { .jgrid > .jt { --p: var(--p1); --k: var(--k1); } }
+@container jg (min-width: 600px)  { .jgrid { --g: 8px; } .jgrid > .jt { --p: var(--p2); --k: var(--k2); } }
+@container jg (min-width: 800px)  { .jgrid > .jt { --p: var(--p3); --k: var(--k3); } }
+@container jg (min-width: 1000px) { .jgrid { --g: 10px; } .jgrid > .jt { --p: var(--p4); --k: var(--k4); } }
+@container jg (min-width: 1200px) { .jgrid > .jt { --p: var(--p5); --k: var(--k5); } }
+
+/* ── Photograph page: the proof table ──────────────────────────────────────
+   The wedding's prints on the warm table, in the order the day happened. The
+   print in front is straight; its neighbours peek in at the edges, a little
+   smaller and tilted (one transition when the front print changes; nothing
+   runs while idle). Native scroll-snap. */
+.pv-strip { --pv-h: min(122vw, 64svh); display: flex; gap: 10px; overflow-x: auto; overflow-y: hidden; padding: 14px 0 18px;
+  scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; scroll-padding-inline: 7%; }
+.pv-strip::-webkit-scrollbar { display: none; }
+.pv-strip { --pv-max: 86%; }
+@media (min-width: 1024px) { .pv-strip { --pv-h: calc(100svh - var(--header-height) - 150px); --pv-max: 70%; } }
+/* each slide is as wide as its own print, so the neighbours peek in at the edges;
+   the spacers let the first and last prints reach the centre (--first/--last: their aspects) */
+.pv-strip::before, .pv-strip::after { content: ''; flex: 0 0 calc(50% - min(var(--pv-max), var(--pv-h) * var(--first, 0.667)) / 2 - 10px); }
+.pv-strip::after { flex-basis: calc(50% - min(var(--pv-max), var(--pv-h) * var(--last, 0.667)) / 2 - 10px); }
+.pv-slide { position: relative; flex: 0 0 auto; width: min(var(--pv-max), calc(var(--pv-h) * var(--a))); height: var(--pv-h); margin: 0;
+  display: grid; place-items: center; scroll-snap-align: center; scroll-snap-stop: always; }
+.pv-slide[data-initial] { scroll-initial-target: nearest; }
+.pv-print { position: relative; display: block; aspect-ratio: var(--a); width: 100%; max-height: 100%;
+  padding: 8px; background: #fff; border-radius: 3px;
+  box-shadow: 0 1px 1px rgb(51 22 26 / 0.06), 0 22px 40px -24px rgb(51 22 26 / 0.55);
+  transform: scale(0.93) rotate(var(--tilt, 0deg)); opacity: 0.82;
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1), opacity 320ms var(--ease-standard); }
+.pv-slide[data-front] .pv-print { transform: none; opacity: 1; }
+.pv-print > img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 1px; }
+.pv-print > .select-loop { inset: 8px; width: calc(100% - 16px); height: calc(100% - 16px); }
+@media (prefers-reduced-motion: reduce) { .pv-print { transition: none; } }
+
+/* The names glide under the print: the ceremony in front sits centred. */
+.pv-names { display: flex; gap: 28px; overflow-x: auto; scrollbar-width: none; padding: 2px 45% 4px;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 22%, #000 78%, transparent); mask-image: linear-gradient(to right, transparent, #000 22%, #000 78%, transparent); }
+.pv-names::-webkit-scrollbar { display: none; }
+.pv-name { position: relative; white-space: nowrap; font-size: 28px; line-height: 1.25; padding: 2px 2px 8px; color: rgb(var(--ground-deep-rgb) / 0.32);
+  cursor: pointer; transition: color 300ms var(--ease-standard); }
+.pv-name::after { content: ''; position: absolute; left: 20%; right: 20%; bottom: 0; height: 2px; border-radius: 2px; background: rgb(var(--grade));
+  transform: scaleX(0); transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1); }
+.pv-name[aria-current] { color: rgb(var(--ground-deep-rgb)); }
+.pv-name[aria-current]::after { transform: none; }
+
+/* Their day: each ceremony a pile of prints, in its own light. */
+.pv-piles { display: flex; gap: 18px; margin: 22px -16px 0; padding: 18px 16px 8px; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity; }
+.pv-piles::-webkit-scrollbar { display: none; }
+@media (min-width: 1024px) { .pv-piles { flex-wrap: wrap; justify-content: center; overflow: visible; gap: 44px; margin: 26px 0 0; padding: 18px 0 8px; } }
+.pv-pile { display: block; width: 150px; flex: none; scroll-snap-align: start; text-align: center; cursor: pointer; border-radius: 16px; padding: 6px 4px 8px;
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1); }
+.pv-pile:hover { transform: translateY(-3px); }
+.pv-pile[aria-pressed='true'] { transform: translateY(-6px); }
+.pv-pile-stack { position: relative; display: block; height: 150px; margin: 0 auto 10px; width: 116px; }
+.pv-pile-stack::before { content: ''; position: absolute; inset: 20% -30% -18%; z-index: -1; border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(var(--grade) / 0.42), rgb(var(--grade) / 0) 100%); opacity: 0.55; transition: opacity 320ms var(--ease-standard); }
+.pv-pile[aria-pressed='true'] .pv-pile-stack::before { opacity: 1; }
+.pv-pile-stack > img { position: absolute; inset: 8px 10px; width: calc(100% - 20px); height: calc(100% - 16px); object-fit: cover;
+  border: 4px solid #fff; border-radius: 2px; box-shadow: 0 10px 20px -12px rgb(51 22 26 / 0.55); background: rgb(var(--grade) / 0.25); }
+.pv-pile-name { display: block; font-size: 28px; line-height: 1.15; color: rgb(var(--ground-deep-rgb) / 0.55); transition: color 260ms var(--ease-standard); }
+.pv-pile[aria-pressed='true'] .pv-pile-name { color: rgb(var(--ground-deep-rgb)); }
+@media (prefers-reduced-motion: reduce) { .pv-pile, .pv-pile-stack::before { transition: none; } }
