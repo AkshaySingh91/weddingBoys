@@ -112,15 +112,18 @@ export default function FilmCard({ film, variant = 'landscape', rank, onPlay, si
                     className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${playing ? 'opacity-100' : 'opacity-0'}`} />
             )}
             <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/55 to-transparent opacity-80 transition-opacity duration-ui group-hover:opacity-100" />
-            {/* playing: equalizer bars, top left */}
-            <span aria-hidden="true"
-                className={`absolute left-3 top-3 inline-flex items-center gap-2 rounded-full bg-black/45 px-2.5 py-1.5 text-[11px] font-semibold text-white backdrop-blur-md transition-opacity duration-ui
-                            ${live ? 'opacity-100' : 'opacity-0'}`}>
-                <Equalizer />{nowPlaying ? 'Now playing' : null}
-            </span>
+            {/* playing: equalizer bars, top left. Mounted only while live — four
+                infinite bar animations on every card kept ~90 GPU layers alive and
+                made Chrome drop tiles (cards blanking) while scrolling. */}
+            {live && (
+                <span aria-hidden="true"
+                    className="absolute left-3 top-3 inline-flex items-center gap-2 rounded-full bg-black/60 px-2.5 py-1.5 text-[11px] font-semibold text-white">
+                    <Equalizer />{nowPlaying ? 'Now playing' : null}
+                </span>
+            )}
             {/* play mark: on the poster, decorative — the card itself is the control */}
             <span aria-hidden="true"
-                className={`absolute bottom-3 right-3 grid place-items-center rounded-full bg-white/90 text-ink shadow-[0_10px_24px_-10px_rgba(0,0,0,0.6)] backdrop-blur
+                className={`absolute bottom-3 right-3 grid place-items-center rounded-full bg-white/95 text-ink shadow-[0_10px_24px_-10px_rgba(0,0,0,0.6)]
                             transition-transform duration-ui ease-entrance motion-safe:group-hover:scale-110 ${portrait ? 'h-11 w-11' : 'h-12 w-12'}`}>
                 <FiPlay className="ml-0.5 h-[18px] w-[18px]" />
             </span>

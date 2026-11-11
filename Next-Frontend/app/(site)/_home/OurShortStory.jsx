@@ -37,7 +37,7 @@ export default function OurStory() {
                     <Image src={img} alt="A wedding moment filmed by The Wedding Vachan" fill placeholder="blur"
                         sizes="(max-width: 768px) 100vw, 600px" className="object-cover object-top" />
                     <span className="absolute left-3 top-3"><GlassChip>Since 2015</GlassChip></span>
-                    <figcaption className="absolute inset-x-2 bottom-2 flex items-center gap-3 rounded-[22px] bg-white/80 p-3 pl-4 backdrop-blur-md">
+                    <figcaption className="absolute inset-x-2 bottom-2 flex items-center gap-3 rounded-[22px] bg-white/90 p-3 pl-4">
                         <span className="flex -space-x-3" aria-hidden="true">
                             {FOUNDERS.map((f) => (
                                 <span key={f.name} className="relative h-11 w-11 overflow-hidden rounded-full bg-ground-deep ring-2 ring-white">

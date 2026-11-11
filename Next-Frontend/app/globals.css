@@ -1660,7 +1660,7 @@ html {
     border: 1px solid rgb(51 22 26 / 0.08); border-bottom: 0; border-radius: 28px 28px 0 0;
   }
   .folder-body {
-    padding: 0 22px 24px; background: rgb(var(--ground-raised-rgb)); overflow: hidden;
+    padding: 0 22px 24px; background: rgb(var(--ground-raised-rgb));
     border: 1px solid rgb(51 22 26 / 0.08); border-top: 0; border-radius: 0 0 28px 28px;
     box-shadow: 0 24px 50px -36px rgb(51 22 26 / 0.45);
   }

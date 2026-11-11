@@ -23,7 +23,7 @@ export function Em({ children }) {
 
 const ARROW_TONES = {
     light: 'bg-ink/[0.05] text-ink group-hover:bg-ink group-hover:text-ground',
-    glass: 'bg-white/80 text-ink backdrop-blur-md group-hover:bg-white',
+    glass: 'bg-white/90 text-ink group-hover:bg-white',
     accent: 'bg-accent text-ink-onAccent group-hover:bg-accent-hover',
     ink: 'bg-ink text-ground',
     onDeep: 'bg-ink-onDeep/10 text-ink-onDeep group-hover:bg-ink-onDeep group-hover:text-ground-deep',
@@ -40,11 +40,12 @@ export function ArrowDot({ tone = 'light', size = 'md', className = '' }) {
     );
 }
 
-/** Frosted chip for use over photographs. */
+/** Chip for use over photographs. Solid, not frosted: a backdrop-filter per chip
+ *  made each one a GPU layer, and a page of them blanked tiles while scrolling. */
 export function GlassChip({ children, className = '' }) {
     return (
-        <span className={`inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3 py-1.5 text-[12px] font-semibold text-ink
-                          shadow-[0_4px_14px_-6px_rgba(51,22,26,0.35)] backdrop-blur-md ${className}`}>
+        <span className={`inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-[12px] font-semibold text-ink
+                          shadow-[0_4px_14px_-6px_rgba(51,22,26,0.35)] ${className}`}>
             {children}
         </span>
     );

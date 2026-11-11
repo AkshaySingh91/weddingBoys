@@ -102,7 +102,7 @@ export default function VideoThumbnail({ data } = {}) {
                                     {meta ? <GlassChip><FiCalendar aria-hidden="true" className="h-3.5 w-3.5" />{meta}</GlassChip> : <span />}
                                     <ArrowDot tone="glass" />
                                 </span>
-                                <span className="absolute inset-x-2 bottom-2 flex items-center gap-3 rounded-[22px] bg-white/80 p-2 pl-4 backdrop-blur-md">
+                                <span className="absolute inset-x-2 bottom-2 flex items-center gap-3 rounded-[22px] bg-white/90 p-2 pl-4">
                                     <span className="min-w-0 flex-1">
                                         <span className="block truncate font-display text-[19px] font-medium leading-tight text-ink">{couple}</span>
                                         <span className="block text-[12px] font-medium text-ink-muted">{c.event || c.videos?.tags?.find(t => ['Pre-Wedding','Wedding','Haldi','Sangeet','Reception'].includes(t)) || 'Wedding film'}</span>
