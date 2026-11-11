@@ -1528,6 +1528,41 @@ html {
 @keyframes wv-write { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
 @keyframes wv-pop-soft { from { opacity: 0; transform: scale(0.9); } }
 
+/* ── Home › Varanasi ("A day on the ghats") ────────────────────────────────
+   Diyas drift along the river and their flames flicker. Few, slow, and paused
+   unless the stage is live (in view, tab visible, nobody holding it). */
+.diya-flame { box-shadow: 0 0 10px 3px rgba(255, 190, 90, 0.75), 0 0 26px 8px rgba(255, 140, 40, 0.35); }
+@media (prefers-reduced-motion: no-preference) {
+  .diya-drift { animation: diyaDrift linear infinite; animation-play-state: paused; }
+  .diya-bob { animation: diyaBob 3.2s ease-in-out infinite alternate; animation-play-state: paused; }
+  .diya-flame { animation: diyaFlicker 1.6s ease-in-out infinite alternate; animation-play-state: paused; }
+  .diya-pulse { animation: diyaPulse 2.4s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: center; animation-play-state: paused; }
+  [data-live] .diya-drift, [data-live] .diya-bob, [data-live] .diya-flame, [data-live] .diya-pulse { animation-play-state: running; }
+  /* the CTA's flame flickers whenever it shows (hover) */
+  .group:hover > span > .diya-flame { animation-play-state: running; }
+}
+/* The Aarti swell: when the day reaches dusk the river diyas light in turn,
+   left to right, and the CTA catches an ember glow; one line appears. */
+.cta-ember::before {
+  content: ''; position: absolute; inset: -14px -18px; z-index: -1; border-radius: 9999px; pointer-events: none; opacity: 0;
+  background: radial-gradient(60% 70% at 50% 55%, rgba(255, 150, 60, 0.55), transparent 70%);
+}
+[data-swell] .cta-ember::before { opacity: 0.35; }
+[data-armed]:not([data-swell]) .swell-line { opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  [data-swell] .diya-bob { animation-name: diyaBob, diyaLight; animation-duration: 3.2s, 420ms; animation-timing-function: ease-in-out, var(--ease-entrance);
+    animation-iteration-count: infinite, 1; animation-direction: alternate, normal; animation-fill-mode: none, both;
+    animation-delay: 0s, calc(var(--i, 0) * 140ms); }
+  [data-swell] .cta-ember::before { animation: ctaEmber 1200ms ease-out 900ms both; }
+  [data-swell] .swell-line { animation: wv-fade 600ms ease-out 1100ms both; }
+}
+@keyframes diyaLight { 0% { scale: 1; filter: brightness(1); } 60% { scale: 1.35; filter: brightness(1.4); } 100% { scale: 1.12; filter: brightness(1.15); } }
+@keyframes ctaEmber { 0% { opacity: 0; } 45% { opacity: 0.7; } 100% { opacity: 0.35; } }
+@keyframes diyaDrift { from { transform: translate3d(-6vw, 0, 0); } to { transform: translate3d(106vw, 0, 0); } }
+@keyframes diyaBob { from { translate: 0 -2px; } to { translate: 0 2px; } }
+@keyframes diyaFlicker { 0% { opacity: 1; transform: scale(1, 1); } 40% { opacity: 0.82; transform: scale(0.92, 1.08); } 100% { opacity: 0.95; transform: scale(1.04, 0.96); } }
+@keyframes diyaPulse { from { opacity: 0.75; transform: scale(0.9); } to { opacity: 1; transform: scale(1.12); } }
+
 /* Viewfinder brackets: four gold corners close in on hover / focus. */
 .viewfinder::before {
   content: ''; position: absolute; inset: 6px; z-index: 2; pointer-events: none; border-radius: inherit;
