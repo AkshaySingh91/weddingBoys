@@ -99,6 +99,27 @@ export async function getClientProfile(req, res) {
     }
 }
 
+/**
+ * The story fields an admin may set, cleaned: trimmed, capped, blanks dropped.
+ * Returns only the keys present in `story` so a partial update stays partial.
+ */
+export function storyFieldsFrom(story = {}) {
+    const out = {};
+    const str = (v, max) => (typeof v === 'string' ? v.trim().slice(0, max) : undefined);
+    if (story.intro !== undefined) out.intro = str(story.intro, 2000) ?? '';
+    if (story.headline !== undefined) out.headline = str(story.headline, 140) ?? '';
+    if (story.about !== undefined) out.about = str(story.about, 4000) ?? '';
+    if (story.quote !== undefined) out.quote = { text: str(story.quote?.text, 400) ?? '', by: str(story.quote?.by, 120) ?? '' };
+    if (story.highlights !== undefined) {
+        out.highlights = (Array.isArray(story.highlights) ? story.highlights : [])
+            .map((h) => ({ label: str(h?.label, 40) || '', value: str(h?.value, 60) || '' }))
+            .filter((h) => h.label && h.value)
+            .slice(0, 6);
+    }
+    if (story.enabled !== undefined) out.enabled = Boolean(story.enabled);
+    return out;
+}
+
 // POST /api/admin/clients — create the entity only. No media.
 export async function createClient(req, res) {
     try {
@@ -133,7 +154,7 @@ export async function createClient(req, res) {
                 ...(status === 'Published' ? { publishedAt: new Date() } : {}),
                 slug,
                 location: locationFrom(location || { city, venue, state }),
-                story: { intro: typeof story?.intro === 'string' ? story.intro.trim() : undefined, enabled: story?.enabled !== false },
+                story: { enabled: true, ...storyFieldsFrom(story || {}) },
                 createRequestId: requestId,
                 videos: [],
                 photos: [],
@@ -193,8 +214,9 @@ export async function updateClientProfile(req, res) {
             storyChanged = true;
         }
         if (story !== undefined) {
-            if (typeof story?.intro === 'string') client.story.intro = story.intro.trim().slice(0, 2000);
-            if (story?.enabled !== undefined) client.story.enabled = Boolean(story.enabled);
+            const fields = storyFieldsFrom(story || {});
+            for (const [k, v] of Object.entries(fields)) client.story[k] = v;
+            client.markModified('story');
             storyChanged = true;
         }
         if (featured !== undefined) { client.featured = Boolean(featured); storyChanged = true; }

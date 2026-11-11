@@ -40,9 +40,22 @@ const Client = new mongoose.Schema({
     // The portfolio item whose poster or photo represents the wedding.
     cover: { type: mongoose.Schema.Types.ObjectId, ref: 'PortfolioItem' },
     featured: { type: Boolean, default: false },
+    // The couple's page (/weddings/story/<slug>) — every film and photo of the
+    // wedding in one story. All optional: empty fields fall back to factual text
+    // built from the wedding's own data (Routes/User/weddingRoute.js storyFor()).
     story: {
         intro: { type: String, trim: true },
         enabled: { type: Boolean, default: true },
+        headline: { type: String, trim: true, default: '', maxlength: 140 },   // e.g. "Two cities, one sangeet"
+        about: { type: String, trim: true, default: '', maxlength: 4000 },     // the About section, paragraphs split by blank lines
+        quote: {
+            text: { type: String, trim: true, default: '', maxlength: 400 },  // in the couple's own words
+            by: { type: String, trim: true, default: '' },                     // "Sakshi", "Sakshi & Shubhankar"
+        },
+        highlights: {                                                           // up to 6, e.g. { label: 'Guests', value: '300' }
+            type: [{ _id: false, label: { type: String, trim: true }, value: { type: String, trim: true } }],
+            default: [],
+        },
     },
     // Idempotent create: a retried POST with the same id returns the same wedding
     // instead of a second one.

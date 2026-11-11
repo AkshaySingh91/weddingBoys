@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { serializeJsonLd } from '@/lib/jsonLd.mjs';
 import { SITE_URL } from '@/lib/siteConfig.js';
 import FilmStory from './_components/FilmStory.jsx';
@@ -69,6 +69,8 @@ export default async function SpecificFilmPage({ params }) {
     const [filmData, discovery] = await Promise.all([getFilm(videoId), fetchFilmDiscovery()]);
 
     if (!filmData?.selectedVideo) notFound();
+    // One page per couple: a film opens their whole story, starting with this film.
+    if (filmData.wedding?.href) permanentRedirect(`${filmData.wedding.href}?film=${encodeURIComponent(videoId)}`);
     const video = filmData.selectedVideo;
     const filmSchema = {
         '@context': 'https://schema.org', '@type': 'VideoObject',

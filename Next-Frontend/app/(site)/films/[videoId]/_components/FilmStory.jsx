@@ -36,7 +36,7 @@ const pad = (n) => String(n).padStart(2, '0');
 
 /* ── 1 · Title sequence ───────────────────────────────────────────────── */
 
-function TitleSequence({ couple, facts, poster, loopUrl, film, src, durationSec, nextChapter, onNext }) {
+export function TitleSequence({ couple, facts, poster, loopUrl, film, src, durationSec, nextChapter, onNext }) {
     const { tier, online } = useNetworkStatus();
     const [reduced, setReduced] = useState(true);
     const [moving, setMoving] = useState(false);

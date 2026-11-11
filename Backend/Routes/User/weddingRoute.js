@@ -29,6 +29,45 @@ const STORY_FILTER = { status: 'Published', slug: { $type: 'string' }, 'story.en
 const ITEM_ORDER = { order: 1, shootDate: 1, _id: 1 };
 const SLUG_RX = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
+const listOf = (xs) => (xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`);
+const riteLabel = (l) => (l === 'Wedding / Pheras' ? 'the wedding' : l.toLowerCase());
+
+/**
+ * The couple's story fields, with factual defaults when the admin left them
+ * empty — built only from the wedding's own data, never invented sentiment.
+ * `generated` says which parts are defaults, so the page can style them.
+ */
+export function storyFor(client, card, ceremonies, crew) {
+    const s = client.story || {};
+    const city = client.location?.city || '';
+    const venue = client.location?.venue || '';
+    const rites = ceremonies.map((c) => c.label).filter((l) => l && l !== 'More moments');
+    const counts = { ceremonies: rites.length, films: card.films || 0, photos: card.photos || 0 };
+
+    const aboutWritten = [s.about, s.intro].filter((t) => typeof t === 'string' && t.trim());
+    const facts = [];
+    if (rites.length) facts.push(`${card.title}'s celebration: ${listOf(rites.map(riteLabel))}${city ? `, in ${venue ? `${venue}, ` : ''}${city}` : ''}${card.dates ? `, ${card.dates}` : ''}.`);
+    else if (city || card.dates) facts.push(`${card.title}'s wedding${city ? ` in ${city}` : ''}${card.dates ? `, ${card.dates}` : ''}.`);
+    const parts = [counts.films && `${counts.films} film${counts.films === 1 ? '' : 's'}`, counts.photos && `${counts.photos} photograph${counts.photos === 1 ? '' : 's'}`].filter(Boolean);
+    if (parts.length) facts.push(`Told here in ${listOf(parts)}${crew.length ? `, by a crew of ${crew.length}` : ''}.`);
+
+    const highlights = (s.highlights || []).filter((h) => h?.label && h?.value);
+    const defaultHighlights = [
+        counts.ceremonies && { label: counts.ceremonies === 1 ? 'Ceremony' : 'Ceremonies', value: String(counts.ceremonies) },
+        counts.films && { label: counts.films === 1 ? 'Film' : 'Films', value: String(counts.films) },
+        counts.photos && { label: 'Photographs', value: String(counts.photos) },
+        city && { label: 'City', value: city },
+    ].filter(Boolean);
+
+    return {
+        headline: s.headline || (city ? `Their wedding, in ${city}` : 'Their wedding story'),
+        about: aboutWritten.length ? aboutWritten.join('\n\n').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean) : facts,
+        quote: s.quote?.text ? { text: s.quote.text, by: s.quote.by || card.title } : null,
+        highlights: highlights.length ? highlights : defaultHighlights,
+        generated: { headline: !s.headline, about: !aboutWritten.length, highlights: !highlights.length },
+    };
+}
+
 /** Public counts and a cover for each wedding, in one aggregation plus one find. */
 async function cardsFor(clients) {
     if (!clients.length) return [];
@@ -159,10 +198,12 @@ Route.get('/api/weddings/:slug', async (req, res) => {
             photoUrl: (r.photo?.mediaId || r.photo?.key) ? await resolveNode(r.photo, getObjectUrl).catch(() => null) : null,
         })));
 
+        const crew = crewOf(items);
         return res.status(200).json({
             wedding: {
                 ...card,
                 intro: client.story?.intro || null,
+                story: storyFor(client, card, ceremonies, crew),
                 celebrationDates: {
                     startDate: client.celebrationDates?.startDate || client.weddingDate || null,
                     endDate: client.celebrationDates?.endDate || null,
@@ -172,7 +213,7 @@ Route.get('/api/weddings/:slug', async (req, res) => {
             },
             films: items.filter((i) => i.kind === 'Video').map(toCard),
             ceremonies,
-            crew: crewOf(items),
+            crew,
             reviews,
             related,
         });

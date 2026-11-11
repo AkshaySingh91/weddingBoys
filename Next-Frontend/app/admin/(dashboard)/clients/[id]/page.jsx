@@ -244,6 +244,7 @@ export default function ClientWorkspace() {
         bride: '', groom: '', startDate: '', endDate: '', season: '',
         isInMap: false, latitude: '', longitute: '', pinTouched: false,
         city: '', venue: '', state: '', slug: '', intro: '', storyEnabled: true,
+        headline: '', about: '', quoteText: '', quoteBy: '', highlights: [],
     });
 
     // Dynamic ceremony groups present and counts
@@ -393,6 +394,11 @@ export default function ClientWorkspace() {
             slug: client?.slug || '',
             intro: client?.story?.intro || '',
             storyEnabled: client?.story?.enabled !== false,
+            headline: client?.story?.headline || '',
+            about: client?.story?.about || '',
+            quoteText: client?.story?.quote?.text || '',
+            quoteBy: client?.story?.quote?.by || '',
+            highlights: (client?.story?.highlights || []).map((h) => ({ label: h.label || '', value: h.value || '' })),
         });
         setShowProfile((v) => !v);
         setMenuOpen(false);
@@ -418,7 +424,12 @@ export default function ClientWorkspace() {
             },
             ...(pin ? { isInMap: pin.isInMap, coordinate: pin.coordinate } : {}),
             location: { city: form.city, venue: form.venue, state: form.state },
-            story: { intro: form.intro, enabled: form.storyEnabled },
+            story: {
+                intro: form.intro, enabled: form.storyEnabled,
+                headline: form.headline, about: form.about,
+                quote: { text: form.quoteText, by: form.quoteBy },
+                highlights: form.highlights.filter((h) => h.label.trim() && h.value.trim()),
+            },
             ...(form.slug.trim() && form.slug.trim() !== client?.slug ? { slug: form.slug.trim().toLowerCase() } : {}),
         });
         if (!saved) return;
@@ -712,6 +723,53 @@ export default function ClientWorkspace() {
                             <textarea rows={3} className={field} value={form.intro} maxLength={2000}
                                 placeholder="A few lines about the couple and the celebration, shown at the top of the story page."
                                 onChange={(e) => setForm((f) => ({ ...f, intro: e.target.value }))} />
+                        </div>
+                        <p className="pt-1 text-[10px] text-studio-inkMuted">
+                            Everything below is optional. Left empty, the page uses plain facts from this wedding (its city, ceremonies, films and photos) instead.
+                        </p>
+                        <div>
+                            <span className={labelCls}>Headline</span>
+                            <input className={field} value={form.headline} maxLength={140} placeholder="e.g. Two cities, one sangeet"
+                                onChange={(e) => setForm((f) => ({ ...f, headline: e.target.value }))} />
+                        </div>
+                        <div>
+                            <span className={labelCls}>About the couple</span>
+                            <textarea rows={5} className={field} value={form.about} maxLength={4000}
+                                placeholder="How they met, what the celebration felt like, what mattered to them. Leave a blank line between paragraphs."
+                                onChange={(e) => setForm((f) => ({ ...f, about: e.target.value }))} />
+                        </div>
+                        <div className="grid grid-cols-[1fr_160px] gap-2">
+                            <div>
+                                <span className={labelCls}>In their words (a quote)</span>
+                                <input className={field} value={form.quoteText} maxLength={400} placeholder="Something the couple said about the day"
+                                    onChange={(e) => setForm((f) => ({ ...f, quoteText: e.target.value }))} />
+                            </div>
+                            <div>
+                                <span className={labelCls}>Said by</span>
+                                <input className={field} value={form.quoteBy} maxLength={120} placeholder="e.g. Sakshi"
+                                    onChange={(e) => setForm((f) => ({ ...f, quoteBy: e.target.value }))} />
+                            </div>
+                        </div>
+                        <div>
+                            <span className={labelCls}>Highlights (up to 6)</span>
+                            <div className="space-y-1.5">
+                                {form.highlights.map((h, i) => (
+                                    <div key={i} className="grid grid-cols-[1fr_1fr_auto] gap-2">
+                                        <input className={field} value={h.label} maxLength={40} placeholder="Label, e.g. Guests"
+                                            onChange={(e) => setForm((f) => ({ ...f, highlights: f.highlights.map((x, k) => (k === i ? { ...x, label: e.target.value } : x)) }))} />
+                                        <input className={field} value={h.value} maxLength={60} placeholder="Value, e.g. 300"
+                                            onChange={(e) => setForm((f) => ({ ...f, highlights: f.highlights.map((x, k) => (k === i ? { ...x, value: e.target.value } : x)) }))} />
+                                        <button type="button" aria-label="Remove highlight" className="rounded-lg px-2 text-xs text-studio-inkMuted hover:bg-studio-border/40"
+                                            onClick={() => setForm((f) => ({ ...f, highlights: f.highlights.filter((_, k) => k !== i) }))}>✕</button>
+                                    </div>
+                                ))}
+                                {form.highlights.length < 6 && (
+                                    <button type="button" className="text-xs font-semibold text-studio-ink underline-offset-2 hover:underline"
+                                        onClick={() => setForm((f) => ({ ...f, highlights: [...f.highlights, { label: '', value: '' }] }))}>
+                                        + Add a highlight
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     </div>
                     <div className="flex justify-end gap-2">
