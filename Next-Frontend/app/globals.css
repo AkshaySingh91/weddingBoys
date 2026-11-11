@@ -1569,6 +1569,16 @@ html {
 @keyframes diyaFlicker { 0% { opacity: 1; transform: scale(1, 1); } 40% { opacity: 0.82; transform: scale(0.92, 1.08); } 100% { opacity: 0.95; transform: scale(1.04, 0.96); } }
 @keyframes diyaPulse { from { opacity: 0.75; transform: scale(0.9); } to { opacity: 1; transform: scale(1.12); } }
 
+/* Home films: a new category's first cards enter from the side you moved
+   towards (--dir on the rail: 1 = right, -1 = left). Outgoing cards just go. */
+@media (prefers-reduced-motion: no-preference) {
+  .wv-take { animation: wv-take 320ms var(--ease-entrance) backwards; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wv-take { animation: wv-fade 120ms linear backwards; }
+}
+@keyframes wv-take { from { opacity: 0; transform: translateX(calc(var(--dir, 1) * 24px)); } }
+
 /* Viewfinder brackets: four gold corners close in on hover / focus. */
 .viewfinder::before {
   content: ''; position: absolute; inset: 6px; z-index: 2; pointer-events: none; border-radius: inherit;
