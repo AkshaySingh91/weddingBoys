@@ -37,6 +37,7 @@ import RevealObserver from '@/Component/home/RevealObserver.jsx';
 import ClapObserver from '@/app/(site)/team/_components/ClapObserver.jsx';
 import { stillSrcSet } from '@/lib/films.js';
 import { guillotine, chunks } from '@/lib/mosaic.js';
+import { gradeOf, inkOn } from '@/lib/grades.js';
 
 const pad = (n) => String(n).padStart(2, '0');
 const rite = (c) => (c === 'Wedding / Pheras' ? 'Wedding' : c || '');
@@ -48,20 +49,6 @@ const counts = (c) => [c.films.length && `${c.films.length} film${c.films.length
 
 /* ── Scene Grade ───────────────────────────────────────────────────────── */
 
-// The ritual's own light (r g b). A colour set on the ceremony tag in admin
-// wins; these are the defaults.
-const GRADES = {
-    haldi: '232 170 40', mehendi: '112 128 60', mehndi: '112 128 60', sangeet: '120 70 130', cocktail: '120 70 130',
-    engagement: '201 162 39', tilak: '201 162 39', 'pre-wedding': '201 162 39',
-    wedding: '217 52 42', 'wedding-pheras': '217 52 42', pheras: '217 52 42', reception: '51 22 26',
-};
-const hexToRgb = (hex) => {
-    const m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
-    if (!m) return null;
-    const n = parseInt(m[1], 16);
-    return `${(n >> 16) & 255} ${(n >> 8) & 255} ${n & 255}`;
-};
-const gradeOf = (c) => hexToRgb(c.color) || GRADES[c.key] || GRADES[String(c.label || '').toLowerCase().split(/[\s/]+/)[0]] || '201 162 39';
 /** The grade mixed 30% into the ivory ground: for the browser bar. */
 const barColour = (rgb) => {
     const [r, g, b] = rgb.split(' ').map(Number); const ground = [251, 246, 238];
@@ -168,8 +155,6 @@ function ChapterFilm({ f, playing, onPlay }) {
 
 const aspectOf = (p) => p.aspectRatio || (p.width && p.height ? p.width / p.height : 1.5);
 const srcOf = (p) => p.imageUrl || p.posterUrl;
-/** Ink or ivory text, whichever reads on this grade. */
-const inkOn = (rgb) => { const [r, g, b] = rgb.split(' ').map(Number); return 0.299 * r + 0.587 * g + 0.114 * b > 150 ? 'rgb(51 22 26)' : 'rgb(255 250 244)'; };
 
 function Photo({ p, title, sizes, className, style }) {
     return (

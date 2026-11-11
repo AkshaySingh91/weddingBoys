@@ -16,15 +16,25 @@ export const filmId = (f) => f?.videos?._id || f?._id;
  * and a legacy `orig.<ext>`. Anything else (a video's poster.jpg) → undefined.
  */
 const RUNGS = [640, 1024, 1600];
-export function stillSrcSet(url) {
-    if (typeof url !== 'string') return undefined;
+/**
+ * @param {string} url
+ * @param {{width?: number, cap?: number}} [opts]
+ *   width  the photo's natural width — rungs above it are copies of the
+ *          original's size (the pipeline never enlarges), so never offer them
+ *   cap    the largest rung this slot may use (a grid card: 1024; a slow
+ *          network: 640)
+ */
+export function stillLadder(url, { width, cap = Infinity } = {}) {
+    if (typeof url !== 'string') return null;
     const m = /\/(?:(\d{3,4})\.webp|orig\.[a-z0-9]+)(?=[?#]|$)/i.exec(url);
-    if (!m) return undefined;
-    const top = m[1] ? Number(m[1]) : Infinity;
+    if (!m) return null;
+    const top = Math.min(m[1] ? Number(m[1]) : Infinity, cap, Number(width) > 0 ? Math.max(640, Number(width)) : Infinity);
     const rungs = RUNGS.filter((w) => w <= top);
-    if (!rungs.length) return undefined;
-    return rungs.map((w) => `${url.slice(0, m.index)}/${w}.webp${url.slice(m.index + m[0].length)} ${w}w`).join(', ');
+    if (!rungs.length) return null;
+    const at = (w) => `${url.slice(0, m.index)}/${w}.webp${url.slice(m.index + m[0].length)}`;
+    return { src: at(rungs[0]), srcSet: rungs.map((w) => `${at(w)} ${w}w`).join(', '), widths: rungs };
 }
+export const stillSrcSet = (url, opts) => stillLadder(url, opts)?.srcSet;
 
 /** "Pre-Wedding · Goa" */
 export const blurbOf = (f) => [f?.event === 'Wedding / Pheras' ? 'Wedding' : f?.event, placeOf(f)].filter(Boolean).join(' · ');

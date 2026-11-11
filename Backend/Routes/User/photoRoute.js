@@ -7,6 +7,8 @@ import { getObjectUrl } from '../../Controllers/awsController.js'
 
 import { mediaUrlForKey } from '../../Utils/mediaUrl.js';
 import * as portfolio from '../../Services/portfolioService.js';
+import { loadTaxonomy } from '../../Services/taxonomy.js';
+import { PUBLIC_GATE } from '../../Services/portfolioVisibility.js';
 // Prefer the immutable R2 CDN URL for any asset already migrated; fall back to a
 // signed S3 URL while the migration is in flight. Lookups are batched, so a page
 // of assets costs one query, not one per asset.
@@ -15,10 +17,27 @@ const mediaUrl = (key) => mediaUrlForKey(key, getObjectUrl);
 const Route = express.Router();
 Route.get('/api/photos/:id/status', itemStatus('Photo'));
 
+/**
+ * ?q= — every word must match the couple's names, the title, the ceremony or a
+ * tag ("riya haldi"). Couples are looked up first, so a name matches all of
+ * their photos.
+ */
+const escapeRe = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+async function searchMatch(q) {
+    const words = q.toLowerCase().split(/\s+/).filter(Boolean).slice(0, 5);
+    const clauses = await Promise.all(words.map(async (w) => {
+        const re = new RegExp(escapeRe(w), 'i');
+        const couples = await ClientSchema.find({ $or: [{ 'clientName.Bride': re }, { 'clientName.Groom': re }] }, { _id: 1 }).lean();
+        return { $or: [{ client: { $in: couples.map((c) => c._id) } }, { title: re }, { eventGroup: re }, { tags: re }, { 'location.city': re }] };
+    }));
+    return clauses.length === 1 ? clauses[0] : { $and: clauses };
+}
+
 async function getAllPhotos(req, res, next) {
     try {
         const { page, limit } = pagination(req.query, 10);
         const { tag = '', sort } = req.query;
+        const q = typeof req.query.q === 'string' ? req.query.q.trim().slice(0, 80) : '';
 
         // PortfolioItem path. Also adds the tag filter the gallery never had —
         // /api/photos accepted no `tag` param at all, which is why
@@ -28,7 +47,10 @@ async function getAllPhotos(req, res, next) {
                 kind: 'Photo', tags: portfolio.parseTags(tag),
                 page: parseInt(page), limit: parseInt(limit),
                 sort, // optional row sort from the page composition (newestShoot…)
+                match: q ? await searchMatch(q) : null,
             });
+            // Public, the same for everyone: let the edge keep it briefly.
+            res.set('Cache-Control', 'public, max-age=60, s-maxage=300, stale-while-revalidate=86400');
             return res.status(200).json({ photos: items.map(portfolio.toLegacyPhotoRow), total, page, limit, hasMore: page * limit < total });
         }
 
@@ -65,6 +87,61 @@ async function getAllPhotos(req, res, next) {
 }
 
 Route.get("/api/photos", getAllPhotos)
+
+/**
+ * The gallery's filters: every public tag group with the tags that actually
+ * have photographs, and how many — so a chip never leads to an empty page.
+ * Hidden groups/tags stay out. Groups come in taxonomy order.
+ */
+/** Several photos by id, in the order asked (a shared "selects" link). */
+Route.get('/api/photos/batch', async (req, res) => {
+    try {
+        const ids = String(req.query.ids || '').split(',').map((x) => x.trim()).filter((x) => /^[0-9a-f]{24}$/i.test(x)).slice(0, 60);
+        if (!ids.length) return res.json({ photos: [] });
+        const items = await PortfolioItem.find({ _id: { $in: ids }, kind: 'Photo', ...PUBLIC_GATE })
+            .populate('client', 'clientName location celebrationDates weddingDate slug').lean();
+        const byId = new Map(items.map((i) => [String(i._id), i]));
+        res.set('Cache-Control', 'public, max-age=60, s-maxage=300, stale-while-revalidate=86400');
+        return res.json({ photos: ids.map((id) => byId.get(id)).filter(Boolean).map(portfolio.toLegacyPhotoRow) });
+    } catch (error) {
+        console.error('GET /api/photos/batch error:', error);
+        return res.status(500).json({ message: 'Could not load the photographs' });
+    }
+});
+
+Route.get('/api/photos/facets', async (_req, res) => {
+    try {
+        const [items, tax] = await Promise.all([
+            PortfolioItem.find({ kind: 'Photo', ...PUBLIC_GATE }, { tagIds: 1 }).lean(),
+            loadTaxonomy(),
+        ]);
+        const total = items.length;
+        // A filter by label matches every tag with that label (e.g. "Haldi" as a
+        // ceremony and as a category), so count photos per LABEL, the same way.
+        const photosByLabel = new Map();
+        for (const it of items) {
+            for (const id of it.tagIds || []) {
+                const label = tax.tagById.get(String(id))?.label?.toLowerCase();
+                if (!label) continue;
+                if (!photosByLabel.has(label)) photosByLabel.set(label, new Set());
+                photosByLabel.get(label).add(String(it._id));
+            }
+        }
+        const countOf = new Map(tax.tags.map((t) => [String(t._id), photosByLabel.get(t.label.toLowerCase())?.size || 0]));
+        const groups = tax.groups.filter((g) => !g.hidden).map((g) => ({
+            key: g.key,
+            label: g.label,
+            tags: tax.tags
+                .filter((t) => !t.hidden && String(t.group) === String(g._id) && countOf.get(String(t._id)))
+                .map((t) => ({ label: t.label, count: countOf.get(String(t._id)), color: t.color || null })),
+        })).filter((g) => g.tags.length);
+        res.set('Cache-Control', 'public, max-age=60, s-maxage=300, stale-while-revalidate=86400');
+        return res.json({ total, groups });
+    } catch (error) {
+        console.error('GET /api/photos/facets error:', error);
+        return res.status(500).json({ message: 'Could not load the filters' });
+    }
+});
 async function getSpecificPhoto(req, res, next) {
     try {
         const { id = null } = req.params

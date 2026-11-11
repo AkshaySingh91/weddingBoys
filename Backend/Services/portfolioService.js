@@ -40,7 +40,7 @@ const monthYear = (d) => {
 // Wedding fields a photo or film inherits when it was uploaded without its own.
 // Location and date are entered once per wedding in the admin; without this the
 // detail pages showed neither for any item uploaded in bulk.
-const CLIENT_FIELDS = 'clientName location celebrationDates weddingDate';
+const CLIENT_FIELDS = 'clientName location celebrationDates weddingDate slug';
 const hasPlace = (l) => Boolean(l && (l.city || l.venue || l.state));
 /** The item's own location, or its wedding's. */
 export const placeFor = (i) => (hasPlace(i.location) ? i.location : (i.client?.location || {}));
@@ -103,11 +103,12 @@ export async function findFeed({ kind, tags = [], page = 1, limit = 10, sort }) 
         .lean();
 }
 
-export async function findFeedWithTotal({ kind, tags = [], page = 1, limit = 12, sort }) {
+export async function findFeedWithTotal({ kind, tags = [], page = 1, limit = 12, sort, match = null }) {
     ({ page, limit } = pagination({ page, limit }, 12));
     const byTag = await tagFilter(tags);
     if (!byTag) return { items: [], total: 0 };
-    const filter = { kind, ...PUBLIC_GATE, ...byTag };
+    // `match`: an extra condition from the caller (e.g. a search), ANDed in.
+    const filter = { kind, ...PUBLIC_GATE, ...byTag, ...(match ? { $and: [...(byTag.$and || []), match] } : {}) };
     const safePage = Math.max(1, page);
     const safeLimit = Math.max(1, limit);
     const [items, total] = await Promise.all([
@@ -312,6 +313,8 @@ export function toLegacyPhotoRow(i) {
         credits: i.credits || [],
         width: i.render?.width || null,
         height: i.render?.height || null,
+        // The couple's one page (/weddings/story/<slug>), when the wedding has one.
+        wedding: i.client?.slug || null,
     };
 }
 
@@ -358,8 +361,8 @@ export async function storyLinkFor(clientId) {
         slug: c.slug,
         href: `/weddings/story/${c.slug}`,
         title: [c.clientName?.Bride, c.clientName?.Groom].filter(Boolean).join(' & '),
+        intro: c.story?.intro || null,
     };
 }
 
-        intro: c.story?.intro || null,
 export { parseTags, displayDate, monthYear };

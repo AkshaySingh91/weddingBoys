@@ -1728,3 +1728,55 @@ html[data-scrolling] .film-card { pointer-events: none; }
   80%  { transform: scale(1.006, 0.995); }
   100% { transform: none; }
 }
+
+/* ── Photographs: the contact sheet ─────────────────────────────────────────
+   Justified rows in pure CSS: each frame's basis is aspect × row height and it
+   grows by its aspect, so every frame in a row ends at the same height and the
+   row fills the width exactly — no holes, no crop, one tree for all screens.
+   The ::after spacer keeps the last row at its natural size. Frames skip
+   rendering off screen (content-visibility); nothing is a GPU layer at rest. */
+.pgrid { --row-h: 190px; --gap: 6px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--gap); }
+@media (min-width: 640px)  { .pgrid { --row-h: 240px; --gap: 8px; } }
+@media (min-width: 1024px) { .pgrid { --row-h: 290px; --gap: 10px; } }
+@media (min-width: 1536px) { .pgrid { --row-h: 330px; } }
+.pgrid::after { content: ''; flex: 1000 1 0%; }
+.ptile {
+  position: relative; flex: var(--a) var(--a) calc(var(--a) * var(--row-h)); aspect-ratio: var(--a);
+  border-radius: 4px; overflow: hidden;
+  background-size: cover; background-position: center;
+  content-visibility: auto; contain-intrinsic-size: auto var(--row-h);
+}
+.ptile-cap { background: linear-gradient(to top, rgb(0 0 0 / 0.6), transparent); opacity: 0; transition: opacity 200ms var(--ease-standard); }
+@media (hover: hover) and (pointer: fine) {
+  .ptile:hover .ptile-cap, .ptile:focus-within .ptile-cap { opacity: 1; }
+  .ptile .ptile-select { opacity: 0; transition: opacity 120ms var(--ease-standard); }
+  .ptile:hover .ptile-select, .ptile:focus-within .ptile-select { opacity: 1; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pgrid-fresh { animation: wv-fade 260ms ease-out; }
+}
+
+/* The Select: a red grease-pencil loop drawn on the frame (one SVG, only on
+   selected frames; it draws in once, when selected in this visit). */
+.select-loop { position: absolute; inset: 3px; z-index: 2; width: calc(100% - 6px); height: calc(100% - 6px); overflow: visible; pointer-events: none;
+  filter: drop-shadow(0 0 1.5px rgb(255 255 255 / 0.85)); }
+.select-loop path { fill: none; stroke: rgb(var(--accent-rgb)); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+@media (prefers-reduced-motion: no-preference) {
+  .select-loop[data-fresh] path { stroke-dasharray: 1 1; stroke-dashoffset: 1; animation: loopDraw 460ms cubic-bezier(0.5, 0, 0.3, 1) forwards; }
+}
+@keyframes loopDraw { to { stroke-dashoffset: 0; } }
+
+/* Sheets (Your selects, Refine): a bottom sheet on phones, a drawer from the
+   right on desktop. Native <dialog>; solid scrim. */
+.sheet-dialog { position: fixed; inset: auto 0 0 0; width: 100%; }
+.sheet-panel { max-height: 84svh; border-radius: 24px 24px 0 0; }
+@media (min-width: 1024px) {
+  .sheet-dialog { inset: 0 0 0 auto; height: 100%; width: 440px; }
+  .sheet-panel { height: 100%; max-height: none; border-radius: 0; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .sheet-dialog[open] .sheet-panel { animation: sheetUp 320ms cubic-bezier(0.4, 0, 0.2, 1); }
+  @media (min-width: 1024px) { .sheet-dialog[open] .sheet-panel { animation-name: drawerIn; } }
+}
+@keyframes sheetUp { from { transform: translateY(100%); } }
+@keyframes drawerIn { from { transform: translateX(100%); } }

@@ -100,7 +100,8 @@ export async function proxy(request) {
     const host = request.headers.get('host') || '';
     const { pathname } = request.nextUrl;
 
-    const media = pathname.match(/^\/(films|photos)\/([^/]+)\/?$/);
+    // Only an item id (24 hex) is checked: /photos/selects is a page of its own.
+    const media = pathname.match(/^\/(films|photos)\/([0-9a-f]{24})\/?$/i);
     if (media && !isAdminHost(host)) {
         const status = await mediaStatus(media[1] === 'films' ? 'videos' : 'photos', media[2]);
         if (status?.status === 'missing') return NextResponse.rewrite(request.nextUrl, { status: 404 });
