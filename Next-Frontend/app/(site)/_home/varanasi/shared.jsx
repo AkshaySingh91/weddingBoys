@@ -3,53 +3,57 @@
  * words (a Hinglish line that feels like Banaras + one simple English
  * sentence), and the river diyas.
  */
-import dawnWide from '@/Asset/Varanasi/varanasi-boat-intimate.png';
-import dawnTall from '@/Asset/Varanasi/fragmentRiver.png';
+import dawnWide from '@/Asset/Varanasi/desktop-dawn-boat.jpg';      // = first frame of the dawn loop
 import galiStandIn from '@/Asset/Varanasi/culture-ghats.png';
 import aarti from '@/Asset/Varanasi/culture-aarti.png';
+// Phones: one couple, one day (sunrise → lanes → aarti), composed for 9:16.
+import phoneDawn from '@/Asset/Varanasi/phone-1-sunrise-boat.jpg';
+import phoneLanes from '@/Asset/Varanasi/phone-2-ghat-lanes.jpg';
+import phoneAarti from '@/Asset/Varanasi/phone-3-ganga-aarti.jpg';
 
 /**
- * Images to generate and drop in. Until then the slot shows the stand-in with a
- * visible "AI placeholder" tag so it cannot ship unnoticed.
+ * Desktop images still to generate. Until then the slot shows the stand-in with
+ * a visible "AI placeholder" tag (desktop only — phones have their own photo).
  * When the file exists: replace the `galiStandIn` import with it and delete
  * `placeholder: 'gali'` below.
  */
 export const AI_PLACEHOLDERS = {
     gali: {
         file: 'Asset/Varanasi/varanasi-gali-couple.png',
-        size: '2400 × 1600 (3:2), couple right of centre (~two-thirds across)',
+        size: '2400 × 1350 (16:9), the same couple as the phone photos, couple right of centre (~two-thirds across)',
     },
 };
 
 /**
- * Desktop only: a short silent loop of the dawn boat (water and mist moving,
- * the couple still), made from varanasi-boat-intimate.png. Plays only on a
- * good connection, on screen, with motion allowed; the photo is its poster.
- * Set to the file's URL once it exists (e.g. '/media/varanasi/dawn-boat-loop.mp4'
- * for Next-Frontend/public/media/varanasi/dawn-boat-loop.mp4, or an R2 URL).
+ * Desktop only: a 9 s silent loop of the dawn boat (water and mist moving, the
+ * couple still) — System Media 2pTby87C9hDq on R2, made with
+ * Backend/scripts/publish-system-video.js. Plays only on a good connection, on
+ * screen, with motion allowed; its first frame (desktop-dawn-boat.jpg) is the
+ * poster, so the hand-off never jumps. Override with NEXT_PUBLIC_VARANASI_DAWN_LOOP.
  */
-export const DAWN_LOOP_SRC = process.env.NEXT_PUBLIC_VARANASI_DAWN_LOOP || null;
+export const DAWN_LOOP_SRC = process.env.NEXT_PUBLIC_VARANASI_DAWN_LOOP
+    || 'https://media.theweddingvachan.com/dev/system/2pTby87C9hDq/loop.mp4';
 
 export const STOPS = [
     {
         key: 'dawn', label: 'Sunrise', hi: 'Subah ki pehli kiran',
         title: 'Sunrise boat ride on the Ganga',
         line: 'Just the two of you on a boat, as the sun comes up over the ghats.',
-        wide: dawnWide, tall: dawnTall, posWide: '50% 55%', posTall: '50% 62%', flipWide: true, loop: DAWN_LOOP_SRC,
+        wide: dawnWide, tall: phoneDawn, posWide: '50% 55%', posTall: '50% 58%', flipWide: true, loop: DAWN_LOOP_SRC,
         sky: 'radial-gradient(120% 80% at 70% 0%, rgba(244,179,122,0.45), transparent 60%)', diyas: 0.4,
     },
     {
         key: 'gali', label: 'Old lanes', hi: 'Ghaat, galiyan aur mandir ki ghantiyan',
         title: 'The ghats and old lanes',
         line: 'Walk the ghat steps and the colourful old lanes. Every corner looks like a film set.',
-        wide: galiStandIn, tall: galiStandIn, posWide: '50% 60%', posTall: '64% 55%', placeholder: 'gali',
+        wide: galiStandIn, tall: phoneLanes, posWide: '50% 60%', posTall: '58% 50%', placeholder: 'gali',
         sky: 'radial-gradient(120% 80% at 30% 0%, rgba(255,226,170,0.32), transparent 62%)', diyas: 0.15,
     },
     {
         key: 'aarti', label: 'Ganga Aarti', hi: 'Ganga Aarti ki roshni mein',
         title: 'In the light of the Ganga Aarti',
         line: 'Stand together in the glow of the grand evening aarti: the lamps, the bells and the river.',
-        wide: aarti, tall: aarti, posWide: '40% 45%', posTall: '36% 50%', flipWide: true,
+        wide: aarti, tall: phoneAarti, posWide: '40% 45%', posTall: '30% 50%', flipWide: true,
         sky: 'radial-gradient(120% 90% at 60% 100%, rgba(232,120,40,0.35), transparent 60%)', diyas: 1,
     },
 ];

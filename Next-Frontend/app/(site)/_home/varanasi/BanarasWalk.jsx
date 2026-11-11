@@ -18,7 +18,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useInView } from 'react-intersection-observer';
-import { STOPS, Diyas, PlaceholderTag } from './shared.jsx';
+import { STOPS, Diyas } from './shared.jsx';
 
 const STEP_SVH = 80;
 
@@ -68,7 +68,6 @@ export default function BanarasWalk() {
                             loading={i === 0 ? 'eager' : 'lazy'}
                             className={`object-cover ${i === step ? 'motion-safe:animate-[heroZoom_9s_ease-out_both]' : ''}`}
                             style={{ objectPosition: x.posTall }} />
-                        <PlaceholderTag id={x.placeholder} className="left-4 top-[calc(var(--header-height)+5.5rem)]" />
                     </div>
                 ))}
                 {/* the light of each stop, and legibility */}
@@ -87,7 +86,7 @@ export default function BanarasWalk() {
                         <span aria-hidden="true" className="chapter-no__n grid h-6 min-w-6 place-items-center rounded-full bg-gold px-1.5 text-[10.5px] tabular-nums text-ground-deep" />
                         Pre-wedding shoot in Banaras
                     </p>
-                    <h2 id="banaras-title-m" className={`mt-3 whitespace-nowrap font-display text-[clamp(30px,9.2vw,40px)] font-medium italic leading-[1] tracking-tight text-gold transition-opacity duration-700
+                    <h2 id="banaras-title-m" className={`mt-3 whitespace-nowrap font-display text-[clamp(28px,8.6vw,40px)] font-medium italic leading-[1] tracking-tight text-gold transition-opacity duration-700
                                                         ${step === 0 ? 'opacity-100' : 'opacity-0'}`}>
                         Banaras bula raha hai.
                     </h2>
