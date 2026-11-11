@@ -8,12 +8,14 @@
  *   - categories: the zero-shift controls — a drill-down row on phones, a folder
  *     on desktop (lens tabs on top, the results inside the folder body)
  *   - search matches couple, place, event and every label; "/" focuses it
- *   - results update without re-laying-out the grid: cards keep their identity,
- *     only newly shown cards fade in (CSS, after the first change) — no flicker
+ *   - results reflow like files in a folder: on a filter change, cards that stay
+ *     glide from their old place to their new one and new cards rise in. A
+ *     one-shot FLIP (Web Animations, transform/opacity) on the cards on screen —
+ *     nothing is measured while scrolling, so scrolling never flickers
  *   - the address keeps ?category= and ?q= so a filtered view can be shared
  *   - every card plays in place; "Up next" walks through the current results
  */
-import { useEffect, useMemo, useRef, useState, startTransition } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, startTransition } from 'react';
 import Link from 'next/link';
 import { MotionConfig } from 'framer-motion';
 import { FiSearch, FiX, FiArrowRight } from 'react-icons/fi';
@@ -43,7 +45,8 @@ export default function AllFilmsClient({ discovery = null, initialCategory = nul
     const [query, setQuery] = useState(initialQuery);
     const searchRef = useRef(null);
     const { play, player, playing } = useFilmPlayer(films, groups.flatMap((g) => g.rows));
-    const [changed, setChanged] = useState(false);   // first filter change arms the card entrance
+    const gridRef = useRef(null);
+    const before = useRef(null);   // card id → position, captured just before a filter change
 
     const current = rowByKey.get(category)?.row || groups[0].rows[0];
     const results = useMemo(() => current.items.filter((f) => matchesQuery(f, query)), [current, query]);
@@ -67,7 +70,43 @@ export default function AllFilmsClient({ discovery = null, initialCategory = nul
         return () => document.removeEventListener('keydown', onKey);
     }, []);
 
-    const choose = (g, k) => { setChanged(true); startTransition(() => { setGroup(g); setCategory(k); }); };
+    // FLIP, first half: where the cards on screen are now.
+    const snap = () => {
+        const m = new Map();
+        gridRef.current?.querySelectorAll('li[data-id]').forEach((li) => {
+            const r = li.getBoundingClientRect();
+            if (r.bottom > -80 && r.top < window.innerHeight + 80) m.set(li.dataset.id, r);
+        });
+        before.current = m;
+    };
+    // FLIP, second half: after the new results render, play each card from its old place.
+    useLayoutEffect(() => {
+        const was = before.current;
+        before.current = null;
+        if (!was || !gridRef.current) return;
+        const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const ease = 'cubic-bezier(0.16, 1, 0.3, 1)';
+        let n = 0;
+        gridRef.current.querySelectorAll('li[data-id]').forEach((li) => {
+            const r = li.getBoundingClientRect();
+            if (r.bottom < 0 || r.top > window.innerHeight) return;
+            const old = was.get(li.dataset.id);
+            if (old) {
+                const dx = old.left - r.left; const dy = old.top - r.top;
+                if (!still && (Math.abs(dx) > 1 || Math.abs(dy) > 1)) {
+                    li.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'none' }], { duration: 460, easing: ease });
+                }
+            } else {
+                const d = Math.min(n++, 8) * 26;
+                li.animate(still
+                    ? [{ opacity: 0 }, { opacity: 1 }]
+                    : [{ opacity: 0, transform: 'translateY(14px) scale(0.97)' }, { opacity: 1, transform: 'none' }],
+                { duration: still ? 160 : 380, delay: still ? 0 : 120 + d, easing: ease, fill: 'backwards' });
+            }
+        });
+    }, [results]);
+
+    const choose = (g, k) => { snap(); startTransition(() => { setGroup(g); setCategory(k); }); };
     const crumbs = group !== 'all' && groups.find((g) => g.key === group);
 
     if (!discovery) {
@@ -94,12 +133,12 @@ export default function AllFilmsClient({ discovery = null, initialCategory = nul
                     <label className="relative w-full sm:w-[340px]">
                         <span className="sr-only">Search films</span>
                         <FiSearch aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted" />
-                        <input ref={searchRef} type="search" value={query} onChange={(e) => { setChanged(true); setQuery(e.target.value); }}
+                        <input ref={searchRef} type="search" value={query} onChange={(e) => { snap(); setQuery(e.target.value); }}
                             placeholder="Couple, place, Haldi, beach…"
                             className="h-12 w-full rounded-full bg-ground-raised pl-11 pr-11 text-[15px] text-ink ring-1 ring-ink/10 placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-accent/50" />
                         {!query && <kbd aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 hidden -translate-y-1/2 rounded-md px-1.5 text-[12px] text-ink-muted ring-1 ring-ink/15 lg:block">/</kbd>}
                         {query && (
-                            <button type="button" onClick={() => setQuery('')} aria-label="Clear search"
+                            <button type="button" onClick={() => { snap(); setQuery(''); }} aria-label="Clear search"
                                 className="absolute right-2 top-1/2 grid h-8 w-8 -translate-y-1/2 cursor-pointer place-items-center rounded-full text-ink-muted hover:bg-ink/5 hover:text-ink focus-ring">
                                 <FiX aria-hidden="true" className="h-4 w-4" />
                             </button>
@@ -121,12 +160,9 @@ export default function AllFilmsClient({ discovery = null, initialCategory = nul
                         </p>
 
                         {results.length ? (
-                            /* No layout animation (it re-measured the whole grid and flickered):
-                               cards keep their identity across filters, and only cards that are
-                               new to the grid fade in, after the first change. */
-                            <ul className={`mt-5 grid grid-cols-1 gap-x-4 gap-y-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${changed ? 'grid-changed' : ''}`}>
+                            <ul ref={gridRef} className="mt-5 grid grid-cols-1 gap-x-4 gap-y-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                                 {results.map((f, i) => (
-                                    <li key={f.videos._id} style={{ '--i': Math.min(i, 8) }}>
+                                    <li key={f.videos._id} data-id={f.videos._id}>
                                         <FilmCard film={f} variant="landscape" onPlay={(x) => play(x, results)} eager={i < 4}
                                             nowPlaying={playing?.videos?._id === f.videos._id}
                                             sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 320px" />
@@ -138,7 +174,7 @@ export default function AllFilmsClient({ discovery = null, initialCategory = nul
                                 <p className="text-[16px] font-semibold text-ink">No films match{query.trim() ? <> &ldquo;{query.trim()}&rdquo;</> : null} in {current.title}.</p>
                                 <div className="mt-4 flex flex-wrap justify-center gap-2">
                                     {query.trim() && (
-                                        <button type="button" onClick={() => setQuery('')} className="h-10 cursor-pointer rounded-full bg-ink px-4 text-[14px] font-semibold text-ground focus-ring">Clear the search</button>
+                                        <button type="button" onClick={() => { snap(); setQuery(''); }} className="h-10 cursor-pointer rounded-full bg-ink px-4 text-[14px] font-semibold text-ground focus-ring">Clear the search</button>
                                     )}
                                     {category !== 'all' && (
                                         <button type="button" onClick={() => choose('all', 'all')} className="h-10 cursor-pointer rounded-full px-4 text-[14px] font-semibold text-ink ring-1 ring-ink/15 hover:bg-ink/5 focus-ring">

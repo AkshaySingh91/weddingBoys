@@ -1621,11 +1621,6 @@ html {
 }
 @keyframes eqBar { 0% { transform: scaleY(0.25); } 50% { transform: scaleY(1); } 100% { transform: scaleY(0.55); } }
 
-/* /allfilms: a card newly shown by a filter fades in; nothing else moves. */
-@media (prefers-reduced-motion: no-preference) {
-  .grid-changed > li { animation: wv-fade 260ms ease-out backwards; animation-delay: calc(var(--i, 0) * 18ms); }
-}
-
 /* Heavy Bodoni numerals standing behind the poster: wine→accent fill with a
    thin gold edge, sized so one or two digits fill the same column. */
 .rank-numeral {
@@ -1697,3 +1692,6 @@ html {
 @keyframes heroRing { to { stroke-dashoffset: 0; } }
 /* Hero story dashes / rail progress: fills over the advance time (paused via animation-play-state). */
 @keyframes heroBar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* Scrolling: no hover on film cards (FilmCard sets <html data-scrolling>). */
+html[data-scrolling] .film-card { pointer-events: none; }

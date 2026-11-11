@@ -9,6 +9,23 @@ export const filmHref = (f) => `/films/${f?.videos?._id || f?._id}`;
 export const playSrc = (f) => f?.url || f?.embedUrl || null;
 export const filmId = (f) => f?.videos?._id || f?._id;
 
+/**
+ * A srcset for one of our R2 stills, so a 320px card never downloads (and keeps
+ * re-decoding while scrolling) a 1600–4000px original. Only URLs that are known
+ * to carry the width ladder get one: a rung `<w>.webp` (with its ?v= version)
+ * and a legacy `orig.<ext>`. Anything else (a video's poster.jpg) → undefined.
+ */
+const RUNGS = [640, 1024, 1600];
+export function stillSrcSet(url) {
+    if (typeof url !== 'string') return undefined;
+    const m = /\/(?:(\d{3,4})\.webp|orig\.[a-z0-9]+)(?=[?#]|$)/i.exec(url);
+    if (!m) return undefined;
+    const top = m[1] ? Number(m[1]) : Infinity;
+    const rungs = RUNGS.filter((w) => w <= top);
+    if (!rungs.length) return undefined;
+    return rungs.map((w) => `${url.slice(0, m.index)}/${w}.webp${url.slice(m.index + m[0].length)} ${w}w`).join(', ');
+}
+
 /** "Pre-Wedding · Goa" */
 export const blurbOf = (f) => [f?.event === 'Wedding / Pheras' ? 'Wedding' : f?.event, placeOf(f)].filter(Boolean).join(' · ');
 

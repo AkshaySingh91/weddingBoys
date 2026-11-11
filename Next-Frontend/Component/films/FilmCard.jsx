@@ -21,17 +21,27 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { FiPlay } from 'react-icons/fi';
 import { focusStyle } from '@/lib/focus.js';
-import { coupleOf, blurbOf, filmHref } from '@/lib/films.js';
+import { coupleOf, blurbOf, filmHref, stillSrcSet } from '@/lib/films.js';
 
 const HOVER_MS = 450;
 
 // One preview on the page at a time, and none while the page is scrolling.
+// While scrolling, <html data-scrolling> also switches card hover off (CSS), so
+// cards sliding under a resting pointer don't lift and zoom one after another —
+// that read as flicker. Two attribute writes per scroll gesture, not per frame.
 let stopActive = null;
 let scrollWired = false;
 function wireScrollStop() {
     if (scrollWired || typeof window === 'undefined') return;
     scrollWired = true;
-    window.addEventListener('scroll', () => { stopActive?.(); }, { passive: true });
+    const root = document.documentElement;
+    let idle = 0;
+    window.addEventListener('scroll', () => {
+        stopActive?.();
+        if (!idle) root.dataset.scrolling = '';
+        clearTimeout(idle);
+        idle = setTimeout(() => { idle = 0; delete root.dataset.scrolling; }, 160);
+    }, { passive: true });
 }
 
 function useCanPreview() {
@@ -92,7 +102,8 @@ export default function FilmCard({ film, variant = 'landscape', rank, onPlay, si
         <div className={`relative overflow-hidden rounded-[20px] bg-ground-deep ${aspect}`}
             style={film.dominantColor ? { backgroundColor: film.dominantColor } : undefined}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={film.thumbnailUrl} alt="" loading={eager ? 'eager' : 'lazy'} decoding="async" sizes={sizes}
+            <img src={film.thumbnailUrl} srcSet={stillSrcSet(film.thumbnailUrl)} alt="" loading={eager ? 'eager' : 'lazy'} decoding="async"
+                sizes={sizes || '(max-width: 640px) 92vw, 400px'}
                 style={{ ...focusStyle(film.focus), ...(film.blurDataURL ? { backgroundImage: `url(${film.blurDataURL})`, backgroundSize: 'cover' } : null) }}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1600ms] ease-entrance group-hover:scale-[1.05]" />
             {preview && (
@@ -126,7 +137,7 @@ export default function FilmCard({ film, variant = 'landscape', rank, onPlay, si
     return (
         <article style={style}
             onPointerMove={arm} onPointerLeave={leave} onFocus={arm} onBlur={leave}
-            className={`group relative ${className}`}>
+            className={`film-card group relative ${className}`}>
             {rankCard ? (
                 /* Fixed geometry: the numeral stands in its own column behind the poster's
                    left edge, so "1" and "10" never move the poster or the names. */
