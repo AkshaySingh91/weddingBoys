@@ -27,7 +27,7 @@ const fmt = (s) => {
 
 const BTN = 'grid h-11 w-11 shrink-0 cursor-pointer place-items-center rounded-full text-white transition-colors duration-micro ease-standard hover:bg-white/15 focus-ring';
 
-export default function Videoplayer({ src, poster, autoPlay = false, title, className = '' }) {
+export default function Videoplayer({ src, poster, autoPlay = false, title, className = '', onEnded }) {
     const wrapRef = useRef(null);
     const videoRef = useRef(null);
     const barRef = useRef(null);
@@ -143,6 +143,7 @@ export default function Videoplayer({ src, poster, autoPlay = false, title, clas
                 onProgress={draw}
                 onSeeked={draw}
                 onVolumeChange={(e) => setMuted(e.currentTarget.muted)}
+                onEnded={onEnded}
             />
 
             {/* Big play (paused, not yet started) / spinner (buffering). */}

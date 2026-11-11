@@ -14,7 +14,10 @@
  * Both: focus moves in and is restored, the page behind is locked, Escape
  * closes, reduced motion skips the travel. The jaali mesh and gold frame are gone.
  *
- * Props: src, title, poster?, href? (film page), onClose.
+ * Props: src, title, poster?, href? (film page), onClose,
+ *        upNext? { title, poster, blurb?, onPlay } — a next film to keep watching;
+ *        when the film ends it starts by itself after a 6s countdown (Cancel stays visible).
+ *        url? — the address to show while open (e.g. ?watch=<id>), so the film can be shared.
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
@@ -38,26 +41,48 @@ function useIsPhone() {
     return phone;
 }
 
-export default function FilmLightbox({ src, title, poster, href, onClose }) {
+export default function FilmLightbox({ src, title, poster, href, onClose, upNext, url }) {
     const restoreTo = useRef(null);
     const closeRef = useRef(null);
     const pushed = useRef(false);
     const phone = useIsPhone();
+    // Up-next countdown: armed when the film ends; Cancel or a new film disarms it.
+    const [ending, setEnding] = useState(false);
+    const [prevSrc, setPrevSrc] = useState(src);
+    if (prevSrc !== src) { setPrevSrc(src); setEnding(false); }
+    useEffect(() => {
+        if (!ending || !upNext) return undefined;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;   // no auto-advance: the button stays
+        const t = setTimeout(() => upNext.onPlay(), 6000);
+        return () => clearTimeout(t);
+    }, [ending, upNext]);
+    // A swapped film keeps the address in step.
+    useEffect(() => { if (url && pushed.current) window.history.replaceState({ film: true }, '', url); }, [url]);
     const y = useMotionValue(0);
     const groundOpacity = useTransform(y, [0, 320], [1, 0]);
 
+    // The latest onClose / url without re-running the open effect: callers often
+    // pass a fresh arrow each render, and re-running it would push a new history
+    // entry every time (then Back would not return to the page's own address).
+    const onCloseRef = useRef(onClose);
+    const urlRef = useRef(url);
+    useEffect(() => { onCloseRef.current = onClose; urlRef.current = url; });
+
     // Close through history when we pushed an entry, so Back and the X agree.
     const close = useCallback(() => {
-        if (pushed.current) { pushed.current = false; window.history.back(); } else onClose();
-    }, [onClose]);
+        if (pushed.current) { pushed.current = false; window.history.back(); } else onCloseRef.current();
+    }, []);
 
+    // Open once: lock the page, push one history entry, wire Back / Escape.
     useEffect(() => {
         restoreTo.current = document.activeElement;
         const { overflow } = document.body.style;
         document.body.style.overflow = 'hidden';
-        window.history.pushState({ film: true }, '');
+        // Re-mounting over our own entry (React dev re-runs effects) reuses it.
+        if (window.history.state?.film) window.history.replaceState({ film: true }, '', urlRef.current || undefined);
+        else window.history.pushState({ film: true }, '', urlRef.current || undefined);
         pushed.current = true;
-        const onPop = () => { pushed.current = false; onClose(); };
+        const onPop = () => { pushed.current = false; onCloseRef.current(); };
         const onKey = (e) => { if (e.key === 'Escape') close(); };
         window.addEventListener('popstate', onPop);
         document.addEventListener('keydown', onKey);
@@ -69,15 +94,49 @@ export default function FilmLightbox({ src, title, poster, href, onClose }) {
             document.body.style.overflow = overflow;
             restoreTo.current?.focus?.({ preventScroll: true });
         };
-    }, [onClose, close]);
+    }, [close]);
 
     const film = EMBED.test(src || '') ? (
-        <div className="relative aspect-video w-full bg-black">
+        <div key={src} className="relative aspect-video w-full bg-black">
             <iframe src={withAutoplay(src)} title={title || 'Wedding film'} allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
                 allowFullScreen className="absolute inset-0 h-full w-full border-0" />
         </div>
     ) : (
-        <Videoplayer src={src} poster={poster} title={title} autoPlay />
+        <Videoplayer key={src} src={src} poster={poster} title={title} autoPlay onEnded={() => setEnding(true)} />
+    );
+
+    // "Up next": swap the film in place — no page load between one film and the next.
+    const next = upNext && (
+        <button type="button" onClick={upNext.onPlay}
+            className="group relative flex w-full cursor-pointer items-center gap-3 rounded-[18px] bg-white/[0.06] p-2 pr-4 text-left ring-1 ring-white/10 transition-colors duration-ui hover:bg-white/[0.12] focus-ring sm:w-auto sm:min-w-[320px]">
+            <span className="relative aspect-video w-24 shrink-0 overflow-hidden rounded-xl bg-black/40">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                {upNext.poster && <img src={upNext.poster} alt="" className="absolute inset-0 h-full w-full object-cover transition-transform duration-media group-hover:scale-105" />}
+            </span>
+            <span className="min-w-0 flex-1">
+                <span className="block text-[11px] font-semibold uppercase tracking-[0.16em] text-white/55">Up next</span>
+                <span className="block truncate font-display text-[17px] leading-tight text-white">{upNext.title}</span>
+                {upNext.blurb && <span className="block truncate text-[12.5px] text-white/60">{upNext.blurb}</span>}
+            </span>
+            <span aria-hidden="true" className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-[#140A0C]">▶</span>
+            {ending && (
+                <span aria-hidden="true" className="absolute inset-x-3 bottom-1 h-[3px] overflow-hidden rounded-full bg-white/15">
+                    <span className="block h-full origin-left rounded-full bg-white motion-safe:animate-[heroBar_6s_linear_both]" />
+                </span>
+            )}
+        </button>
+    );
+    const nextBlock = next && (
+        <div className="flex flex-wrap items-center justify-end gap-2">
+            {ending && <p className="w-full text-right text-[12.5px] text-white/70 sm:w-auto" aria-live="polite">Next film starting…</p>}
+            <span className="relative w-full sm:w-auto">{next}</span>
+            {ending && (
+                <button type="button" onClick={() => setEnding(false)}
+                    className="h-10 cursor-pointer rounded-full px-4 text-[13px] font-semibold text-white/80 ring-1 ring-white/20 hover:bg-white/10 focus-ring">
+                    Cancel
+                </button>
+            )}
+        </div>
     );
 
     const closeBtn = (
@@ -123,6 +182,7 @@ export default function FilmLightbox({ src, title, poster, href, onClose }) {
                             </div>
                             {closeBtn}
                         </div>
+                        {nextBlock && <div className="px-4 pt-4">{nextBlock}</div>}
                     </motion.div>
                 ) : (
                     /* Desktop / tablet: theatre */
@@ -142,6 +202,7 @@ export default function FilmLightbox({ src, title, poster, href, onClose }) {
                                 {closeBtn}
                             </div>
                             <div className="overflow-hidden rounded-[20px] shadow-[0_40px_90px_-30px_rgba(0,0,0,0.8)] ring-1 ring-white/10">{film}</div>
+                            {nextBlock && <div className="mt-4">{nextBlock}</div>}
                         </motion.div>
                     </div>
                 )}
