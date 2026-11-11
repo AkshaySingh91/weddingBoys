@@ -7,8 +7,8 @@
  * stops: the sunrise boat, the ghats and old lanes, the Ganga Aarti. Morning
  * turns to night as you go down. Each stop: one Hinglish line that feels like
  * Banaras, one plain English sentence. Down the right edge, three diyas are the
- * ghat steps — each lights as you reach it; at the Aarti everything glows and
- * the invitation appears.
+ * ghat steps — each lights as you reach it; at the Aarti everything glows.
+ * The one invitation button lives in the closing panel right below.
  *
  * Scroll position → stop: one IntersectionObserver on three invisible markers
  * (no scroll listeners). Images crossfade (opacity), text re-enters behind a
@@ -17,9 +17,7 @@
  */
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useInView } from 'react-intersection-observer';
-import { FiArrowUpRight } from 'react-icons/fi';
 import { STOPS, Diyas, PlaceholderTag } from './shared.jsx';
 
 const STEP_SVH = 80;
@@ -118,14 +116,6 @@ export default function BanarasWalk() {
                             <p className="mt-1 text-[15px] leading-relaxed text-ink-onDeep/80">{x.line}</p>
                         </div>
                     ))}
-                    <div className={`transition-[opacity,transform] duration-700 ease-entrance ${last ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0'}`}>
-                        <Link href="/varanasi" tabIndex={last ? undefined : -1}
-                            className="cta-ember group relative isolate mt-5 flex h-[54px] w-full items-center justify-between rounded-full bg-accent pl-6 pr-1.5 text-[15.5px] font-semibold text-ink-onAccent
-                                       shadow-[0_14px_34px_-14px_rgba(196,47,47,0.8)] motion-safe:active:scale-[0.97] focus-ring">
-                            Plan your Banaras pre-wedding
-                            <span aria-hidden="true" className="grid h-10 w-10 place-items-center rounded-full bg-white/15"><FiArrowUpRight className="h-4 w-4" /></span>
-                        </Link>
-                    </div>
                 </div>
             </div>
         </div>

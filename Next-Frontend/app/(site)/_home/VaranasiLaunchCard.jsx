@@ -20,7 +20,7 @@
  * AI PLACEHOLDER: the old-lanes stop needs a photograph of a couple in a gali —
  * see AI_PLACEHOLDERS in ./varanasi/shared.jsx.
  */
-import { memo, useCallback, useEffect, useId, useState } from 'react';
+import { memo, useCallback, useEffect, useId, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { animate, motion, MotionConfig, useMotionValue, useTransform } from 'framer-motion';
@@ -28,6 +28,7 @@ import { useInView } from 'react-intersection-observer';
 import { FiArrowUpRight, FiClock, FiPause, FiPlay } from 'react-icons/fi';
 import { STOPS as MOMENTS, Diyas, PlaceholderTag } from './varanasi/shared.jsx';
 import BanarasWalk from './varanasi/BanarasWalk.jsx';
+import useNetworkStatus from '@/Hooks/useNetworkStatus.jsx';
 
 const STEP_MS = 6500;
 const EASE = [0.16, 1, 0.3, 1];
@@ -57,15 +58,30 @@ const Offer = memo(function Offer() {
 
 /* ── Pieces ───────────────────────────────────────────────────────────────── */
 
-function Photo({ m, on, priority }) {
+function Photo({ m, on, priority, allowVideo }) {
+    const [playing, setPlaying] = useState(false);
+    const videoRef = useRef(null);
+    const showVideo = Boolean(m.loop && allowVideo);
+    // Play only while this stop is on; the photo stays underneath as the poster.
+    useEffect(() => {
+        const v = videoRef.current;
+        if (!v) return;
+        if (on) v.play().catch(() => {}); else v.pause();
+    }, [on, showVideo]);
     return (
         <div className={`absolute inset-0 transition-opacity duration-[900ms] ease-entrance ${on ? 'opacity-100' : 'opacity-0'}`} aria-hidden={on ? undefined : true}>
             {/* the mirror lives on a wrapper: the zoom animation owns the image's transform */}
             <div className={`absolute inset-0 ${m.flipWide ? '-scale-x-100' : ''}`}>
                 <Image src={m.wide} alt={on ? m.title : ''} fill placeholder="blur" sizes="(max-width: 1023px) 1px, 1400px"
                     loading={priority ? 'eager' : 'lazy'}
-                    className={`object-cover ${on ? 'motion-safe:animate-[heroZoom_9s_ease-out_both]' : ''}`}
+                    className={`object-cover ${on && !playing ? 'motion-safe:animate-[heroZoom_9s_ease-out_both]' : ''}`}
                     style={{ objectPosition: m.posWide }} />
+                {showVideo && (
+                    <video ref={videoRef} src={m.loop} muted loop playsInline preload="auto" aria-hidden="true"
+                        onPlaying={() => setPlaying(true)}
+                        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[900ms] ${playing ? 'opacity-100' : 'opacity-0'}`}
+                        style={{ objectPosition: m.posWide }} />
+                )}
             </div>
             <PlaceholderTag id={m.placeholder} className="right-20 top-6" />
         </div>
@@ -193,6 +209,16 @@ function DesktopDay() {
 
     const pick = useCallback((i) => { setActive(i); setCycle((c) => c + 1); }, []);
     const m = MOMENTS[active];
+    // The dawn loop: desktop, good network, on screen, motion allowed.
+    const { tier, online } = useNetworkStatus();
+    const [desktop, setDesktop] = useState(false);
+    useEffect(() => {
+        const mq = window.matchMedia('(min-width: 1024px)');
+        const sync = () => setDesktop(mq.matches);
+        sync(); mq.addEventListener('change', sync);
+        return () => mq.removeEventListener('change', sync);
+    }, []);
+    const allowVideo = desktop && inView && visible && online && tier === 'high' && !reduced;
 
     return (
         <div ref={ref} className="mx-auto hidden w-full max-w-wide px-6 py-20 lg:block"
@@ -200,7 +226,7 @@ function DesktopDay() {
             onFocus={() => setHeld(true)} onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setHeld(false); }}>
             <div data-rise="sheet" data-live={inView && visible ? '' : undefined} data-swell={swell ? '' : undefined} data-armed={armed ? '' : undefined}
                 className="varanasi-stage relative h-[min(86svh,760px)] min-h-[620px] overflow-hidden rounded-[32px] bg-[#140A0C] text-ink-onDeep shadow-[0_40px_90px_-40px_rgba(51,22,26,0.9)]">
-                {MOMENTS.map((x, i) => <Photo key={x.key} m={x} on={i === active} priority={i === 0} />)}
+                {MOMENTS.map((x, i) => <Photo key={x.key} m={x} on={i === active} priority={i === 0} allowVideo={allowVideo} />)}
                 {MOMENTS.map((x, i) => (
                     <span key={x.key} aria-hidden="true" className={`pointer-events-none absolute inset-0 mix-blend-soft-light transition-opacity duration-[1200ms] ${i === active ? 'opacity-100' : 'opacity-0'}`}
                         style={{ background: x.sky }} />

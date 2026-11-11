@@ -21,12 +21,21 @@ export const AI_PLACEHOLDERS = {
     },
 };
 
+/**
+ * Desktop only: a short silent loop of the dawn boat (water and mist moving,
+ * the couple still), made from varanasi-boat-intimate.png. Plays only on a
+ * good connection, on screen, with motion allowed; the photo is its poster.
+ * Set to the file's URL once it exists (e.g. '/media/varanasi/dawn-boat-loop.mp4'
+ * for Next-Frontend/public/media/varanasi/dawn-boat-loop.mp4, or an R2 URL).
+ */
+export const DAWN_LOOP_SRC = process.env.NEXT_PUBLIC_VARANASI_DAWN_LOOP || null;
+
 export const STOPS = [
     {
         key: 'dawn', label: 'Sunrise', hi: 'Subah ki pehli kiran',
         title: 'Sunrise boat ride on the Ganga',
         line: 'Just the two of you on a boat, as the sun comes up over the ghats.',
-        wide: dawnWide, tall: dawnTall, posWide: '50% 55%', posTall: '50% 62%', flipWide: true,
+        wide: dawnWide, tall: dawnTall, posWide: '50% 55%', posTall: '50% 62%', flipWide: true, loop: DAWN_LOOP_SRC,
         sky: 'radial-gradient(120% 80% at 70% 0%, rgba(244,179,122,0.45), transparent 60%)', diyas: 0.4,
     },
     {
