@@ -23,7 +23,20 @@ const watchUrl = (f) => {
     return `${u.pathname}${u.search}${u.hash}`;
 };
 
-export default function useFilmPlayer(allFilms = []) {
+/**
+ * Chips for the player's story panel: the film's event and labels, each a way
+ * into the library — the category when one has that title, else a search.
+ */
+function chipsFor(film, rows) {
+    const byTitle = new Map(rows.map((r) => [r.title.toLowerCase(), r.key]));
+    const labels = [...new Set([film.event === 'Wedding / Pheras' ? 'Wedding' : film.event, ...(film.labels || [])].filter(Boolean))].slice(0, 6);
+    return labels.map((label) => {
+        const key = byTitle.get(label.toLowerCase());
+        return { label, href: key ? `/allfilms?category=${encodeURIComponent(key)}` : `/allfilms?q=${encodeURIComponent(label)}` };
+    });
+}
+
+export default function useFilmPlayer(allFilms = [], rows = []) {
     const [state, setState] = useState(null);   // { film, queue }
 
     const play = useCallback((film, queue) => {
@@ -45,21 +58,33 @@ export default function useFilmPlayer(allFilms = []) {
     }, [allFilms, play]);
 
     const film = state?.film;
-    let upNext = null;
+    // The queue after this film: the first is Up next, then up to three more.
+    const queue = [];
     if (film && state.queue.length > 1) {
         const i = state.queue.findIndex((f) => filmId(f) === filmId(film));
-        const next = state.queue[(i + 1) % state.queue.length];
-        if (next && filmId(next) !== filmId(film)) {
-            upNext = {
-                title: coupleOf(next), poster: next.thumbnailUrl, blurb: blurbOf(next),
-                onPlay: () => setState((s) => ({ ...s, film: next })),
-            };
+        for (let k = 1; k < Math.min(state.queue.length, 5); k += 1) {
+            const next = state.queue[(i + k) % state.queue.length];
+            if (filmId(next) !== filmId(film)) queue.push(next);
         }
     }
+    const toItem = (f) => ({
+        id: filmId(f), title: coupleOf(f), poster: f.thumbnailUrl, blurb: blurbOf(f),
+        onPlay: () => setState((s) => ({ ...s, film: f })),
+    });
+    const [upNext, ...more] = queue.map(toItem);
+
+    // "Also from this wedding": plays in place when the film is in the catalogue.
+    const playId = (id) => {
+        const f = allFilms.find((x) => filmId(x) === id && playSrc(x));
+        if (!f) return false;
+        setState((s) => ({ ...s, film: f }));
+        return true;
+    };
 
     const player = film ? (
         <FilmLightbox src={playSrc(film)} title={coupleOf(film)} poster={film.thumbnailUrl} href={filmHref(film)}
-            url={watchUrl(film)} upNext={upNext} onClose={() => setState(null)} />
+            url={watchUrl(film)} upNext={upNext || null} more={more.slice(0, 3)} onClose={() => setState(null)}
+            meta={blurbOf(film)} chips={chipsFor(film, rows)} detailId={filmId(film)} playId={playId} />
     ) : null;
 
     return { play, player, playing: film || null };

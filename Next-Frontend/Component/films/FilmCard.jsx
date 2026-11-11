@@ -7,12 +7,15 @@
  *     a plain click plays the film in place instead (onPlay) — watching the
  *     next film never costs a page load. Cmd/Ctrl/middle-click still opens
  *     the film page.
- *   - desktop: resting on a card for ~450ms plays its silent 8s loop inside the
- *     poster (only films that have one, only on a good connection, never under
- *     reduced motion); otherwise the poster drifts slowly
+ *   - desktop: resting the pointer on a card for ~450ms plays its silent 8s
+ *     loop inside the poster (only films that have one, only on a good
+ *     connection, never under reduced motion), marked by equalizer bars. A card
+ *     sliding under a still pointer while the page scrolls never starts one —
+ *     previews begin on pointer MOVE, and any scroll stops the active one.
+ *   - nowPlaying: the film open in the player wears the bars too.
  *
  * Variants: 'landscape' (16:9), 'portrait' (4:5), 'auto' (4:5 on phones, 16:9 from sm),
- * 'rank' (Top 10: a big outlined numeral behind a portrait poster).
+ * 'rank' (Top 10: a heavy Bodoni numeral standing behind the poster).
  */
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
@@ -22,8 +25,14 @@ import { coupleOf, blurbOf, filmHref } from '@/lib/films.js';
 
 const HOVER_MS = 450;
 
-// One preview on the page at a time: starting a card stops the last one.
+// One preview on the page at a time, and none while the page is scrolling.
 let stopActive = null;
+let scrollWired = false;
+function wireScrollStop() {
+    if (scrollWired || typeof window === 'undefined') return;
+    scrollWired = true;
+    window.addEventListener('scroll', () => { stopActive?.(); }, { passive: true });
+}
 
 function useCanPreview() {
     const [ok, setOk] = useState(false);
@@ -32,13 +41,23 @@ function useCanPreview() {
         const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const c = navigator.connection;
         const slow = c && (c.saveData || ['slow-2g', '2g', '3g'].includes(c.effectiveType));
+        if (fine) wireScrollStop();
         // eslint-disable-next-line react-hooks/set-state-in-effect -- read once from the platform after mount
         setOk(fine && !still && !slow);
     }, []);
     return ok;
 }
 
-export default function FilmCard({ film, variant = 'landscape', rank, onPlay, sizes, eager = false, className = '', style }) {
+/** Four bars, like a music player — "this one is playing". */
+export function Equalizer({ className = '' }) {
+    return (
+        <span aria-hidden="true" className={`eq inline-flex h-3.5 items-end gap-[2px] ${className}`}>
+            <span /><span /><span /><span />
+        </span>
+    );
+}
+
+export default function FilmCard({ film, variant = 'landscape', rank, onPlay, sizes, eager = false, nowPlaying = false, className = '', style }) {
     const couple = coupleOf(film);
     const blurb = blurbOf(film);
     const canPreview = useCanPreview();
@@ -47,9 +66,9 @@ export default function FilmCard({ film, variant = 'landscape', rank, onPlay, si
     const timer = useRef(0);
     useEffect(() => () => clearTimeout(timer.current), []);
 
-    const stopPreview = () => { clearTimeout(timer.current); setPreview(false); setPlaying(false); };
-    const startPreview = () => {
-        if (!canPreview || !film.loopUrl) return;
+    const stopPreview = () => { clearTimeout(timer.current); setPreview(false); setPlaying(false); if (stopActive === stopPreview) stopActive = null; };
+    const arm = () => {
+        if (!canPreview || !film.loopUrl || preview || nowPlaying) return;
         clearTimeout(timer.current);
         timer.current = setTimeout(() => {
             if (stopActive && stopActive !== stopPreview) stopActive();
@@ -65,8 +84,10 @@ export default function FilmCard({ film, variant = 'landscape', rank, onPlay, si
         onPlay(film);
     };
 
-    const portrait = variant === 'portrait' || variant === 'rank';
+    const rankCard = variant === 'rank';
+    const portrait = variant === 'portrait' || rankCard;
     const aspect = variant === 'auto' ? 'aspect-[4/5] sm:aspect-video' : portrait ? 'aspect-[4/5]' : 'aspect-video';
+    const live = playing || nowPlaying;
     const media = (
         <div className={`relative overflow-hidden rounded-[20px] bg-ground-deep ${aspect}`}
             style={film.dominantColor ? { backgroundColor: film.dominantColor } : undefined}>
@@ -80,12 +101,12 @@ export default function FilmCard({ film, variant = 'landscape', rank, onPlay, si
                     className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${playing ? 'opacity-100' : 'opacity-0'}`} />
             )}
             <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/55 to-transparent opacity-80 transition-opacity duration-ui group-hover:opacity-100" />
-            {film.loopUrl && canPreview && (
-                <span aria-hidden="true" className={`absolute left-3 top-3 rounded-full bg-black/40 px-2 py-1 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-white/85 backdrop-blur-md transition-opacity duration-ui
-                                                     ${playing ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
-                    {playing ? 'Preview' : 'Hover to preview'}
-                </span>
-            )}
+            {/* playing: equalizer bars, top left */}
+            <span aria-hidden="true"
+                className={`absolute left-3 top-3 inline-flex items-center gap-2 rounded-full bg-black/45 px-2.5 py-1.5 text-[11px] font-semibold text-white backdrop-blur-md transition-opacity duration-ui
+                            ${live ? 'opacity-100' : 'opacity-0'}`}>
+                <Equalizer />{nowPlaying ? 'Now playing' : null}
+            </span>
             {/* play mark: on the poster, decorative — the card itself is the control */}
             <span aria-hidden="true"
                 className={`absolute bottom-3 right-3 grid place-items-center rounded-full bg-white/90 text-ink shadow-[0_10px_24px_-10px_rgba(0,0,0,0.6)] backdrop-blur
@@ -96,29 +117,28 @@ export default function FilmCard({ film, variant = 'landscape', rank, onPlay, si
     );
 
     const info = (
-        <div className={variant === 'rank' ? 'pt-2.5' : 'pt-3'}>
-            <h3 className={`truncate font-display font-medium leading-tight text-ink ${variant === 'rank' ? 'text-[17px]' : 'text-[19px]'}`}>{couple}</h3>
+        <div className={rankCard ? 'pt-3' : 'pt-3'}>
+            <h3 className={`truncate font-display font-medium leading-tight text-ink ${rankCard ? 'text-[18px]' : 'text-[19px]'}`}>{couple}</h3>
             {blurb && <p className="mt-0.5 truncate text-[13px] text-ink-muted">{blurb}</p>}
         </div>
     );
 
     return (
         <article style={style}
-            onPointerEnter={startPreview} onPointerLeave={leave} onFocus={startPreview} onBlur={leave}
+            onPointerMove={arm} onPointerLeave={leave} onFocus={arm} onBlur={leave}
             className={`group relative ${className}`}>
-            {variant === 'rank' ? (
-                <>
-                    {/* the numeral sits on the poster's bottom edge; the poster overlaps it */}
-                    <div className="flex items-end">
-                        <span aria-hidden="true"
-                            className="pointer-events-none relative z-0 -mr-7 select-none font-display text-[140px] font-semibold leading-[0.74] text-transparent
-                                       [-webkit-text-stroke:2px_rgb(var(--ground-deep-rgb)/0.45)] sm:-mr-9 sm:text-[180px]">
-                            {rank}
-                        </span>
-                        <div className="relative z-[1] w-[66%] transition-transform duration-ui ease-entrance motion-safe:group-hover:-translate-y-1">{media}</div>
-                    </div>
-                    <div className="ml-[34%]">{info}</div>
-                </>
+            {rankCard ? (
+                /* Fixed geometry: the numeral stands in its own column behind the poster's
+                   left edge, so "1" and "10" never move the poster or the names. */
+                <div className="relative pl-[30%]">
+                    <span aria-hidden="true"
+                        className="rank-numeral pointer-events-none absolute bottom-[3.6rem] left-0 z-0 select-none font-display font-black leading-[0.72] tracking-[-0.06em]"
+                        data-digits={String(rank).length}>
+                        {rank}
+                    </span>
+                    <div className="relative z-[1] transition-transform duration-ui ease-entrance motion-safe:group-hover:-translate-y-1">{media}</div>
+                    <div className="relative z-[1]">{info}</div>
+                </div>
             ) : (
                 <>
                     <div className="transition-transform duration-ui ease-entrance motion-safe:group-hover:-translate-y-1">{media}</div>

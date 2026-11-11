@@ -8,14 +8,14 @@
  *   - categories: the zero-shift controls — a drill-down row on phones, a folder
  *     on desktop (lens tabs on top, the results inside the folder body)
  *   - search matches couple, place, event and every label; "/" focuses it
- *   - results reflow: cards that stay glide to their new place, new ones fade
- *     and scale in, leaving ones fade out (transform/opacity only)
+ *   - results update without re-laying-out the grid: cards keep their identity,
+ *     only newly shown cards fade in (CSS, after the first change) — no flicker
  *   - the address keeps ?category= and ?q= so a filtered view can be shared
  *   - every card plays in place; "Up next" walks through the current results
  */
 import { useEffect, useMemo, useRef, useState, startTransition } from 'react';
 import Link from 'next/link';
-import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
+import { MotionConfig } from 'framer-motion';
 import { FiSearch, FiX, FiArrowRight } from 'react-icons/fi';
 import FilmCard from '@/Component/films/FilmCard.jsx';
 import useFilmPlayer from '@/Component/films/useFilmPlayer.jsx';
@@ -23,7 +23,6 @@ import CategoryDrill from '@/Component/ui/CategoryDrill.jsx';
 import CategoryTiers from '@/Component/ui/CategoryTiers.jsx';
 import { matchesQuery } from '@/lib/films.js';
 
-const EASE = [0.16, 1, 0.3, 1];
 
 export default function AllFilmsClient({ discovery = null, initialCategory = null, initialQuery = '' }) {
     const films = useMemo(() => discovery?.films || [], [discovery]);
@@ -43,7 +42,8 @@ export default function AllFilmsClient({ discovery = null, initialCategory = nul
     const [category, setCategory] = useState(start.row.key);
     const [query, setQuery] = useState(initialQuery);
     const searchRef = useRef(null);
-    const { play, player } = useFilmPlayer(films);
+    const { play, player, playing } = useFilmPlayer(films, groups.flatMap((g) => g.rows));
+    const [changed, setChanged] = useState(false);   // first filter change arms the card entrance
 
     const current = rowByKey.get(category)?.row || groups[0].rows[0];
     const results = useMemo(() => current.items.filter((f) => matchesQuery(f, query)), [current, query]);
@@ -67,7 +67,7 @@ export default function AllFilmsClient({ discovery = null, initialCategory = nul
         return () => document.removeEventListener('keydown', onKey);
     }, []);
 
-    const choose = (g, k) => startTransition(() => { setGroup(g); setCategory(k); });
+    const choose = (g, k) => { setChanged(true); startTransition(() => { setGroup(g); setCategory(k); }); };
     const crumbs = group !== 'all' && groups.find((g) => g.key === group);
 
     if (!discovery) {
@@ -94,7 +94,7 @@ export default function AllFilmsClient({ discovery = null, initialCategory = nul
                     <label className="relative w-full sm:w-[340px]">
                         <span className="sr-only">Search films</span>
                         <FiSearch aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted" />
-                        <input ref={searchRef} type="search" value={query} onChange={(e) => setQuery(e.target.value)}
+                        <input ref={searchRef} type="search" value={query} onChange={(e) => { setChanged(true); setQuery(e.target.value); }}
                             placeholder="Couple, place, Haldi, beach…"
                             className="h-12 w-full rounded-full bg-ground-raised pl-11 pr-11 text-[15px] text-ink ring-1 ring-ink/10 placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-accent/50" />
                         {!query && <kbd aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 hidden -translate-y-1/2 rounded-md px-1.5 text-[12px] text-ink-muted ring-1 ring-ink/15 lg:block">/</kbd>}
@@ -121,20 +121,18 @@ export default function AllFilmsClient({ discovery = null, initialCategory = nul
                         </p>
 
                         {results.length ? (
-                            <motion.ul layout className="mt-5 grid grid-cols-1 gap-x-4 gap-y-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                                <AnimatePresence mode="popLayout" initial={false}>
-                                    {results.map((f, i) => (
-                                        <motion.li key={f.videos._id} layout="position"
-                                            initial={{ opacity: 0, scale: 0.96 }}
-                                            animate={{ opacity: 1, scale: 1, transition: { duration: 0.22, ease: EASE, delay: 0.08 + Math.min(i, 8) * 0.02 } }}
-                                            exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.16 } }}
-                                            transition={{ layout: { type: 'spring', bounce: 0, duration: 0.38 } }}>
-                                            <FilmCard film={f} variant="landscape" onPlay={(x) => play(x, results)} eager={i < 4}
-                                                sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 320px" />
-                                        </motion.li>
-                                    ))}
-                                </AnimatePresence>
-                            </motion.ul>
+                            /* No layout animation (it re-measured the whole grid and flickered):
+                               cards keep their identity across filters, and only cards that are
+                               new to the grid fade in, after the first change. */
+                            <ul className={`mt-5 grid grid-cols-1 gap-x-4 gap-y-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${changed ? 'grid-changed' : ''}`}>
+                                {results.map((f, i) => (
+                                    <li key={f.videos._id} style={{ '--i': Math.min(i, 8) }}>
+                                        <FilmCard film={f} variant="landscape" onPlay={(x) => play(x, results)} eager={i < 4}
+                                            nowPlaying={playing?.videos?._id === f.videos._id}
+                                            sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 320px" />
+                                    </li>
+                                ))}
+                            </ul>
                         ) : (
                             <div className="mt-5 grid min-h-[280px] place-content-center rounded-[24px] bg-ground-sunk/60 px-6 text-center">
                                 <p className="text-[16px] font-semibold text-ink">No films match{query.trim() ? <> &ldquo;{query.trim()}&rdquo;</> : null} in {current.title}.</p>

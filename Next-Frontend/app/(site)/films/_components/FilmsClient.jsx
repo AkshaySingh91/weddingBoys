@@ -97,7 +97,7 @@ function Billboard({ film, total, onPlay }) {
 
 /* ── Rails ─────────────────────────────────────────────────────────────── */
 
-function Rail({ id, title, sub, count, href, films, onPlay, rank = false }) {
+function Rail({ id, title, sub, count, href, films, onPlay, rank = false, playingId }) {
     const railRef = useRef(null);
     const startRef = useRef(null);
     const endRef = useRef(null);
@@ -147,7 +147,7 @@ function Rail({ id, title, sub, count, href, films, onPlay, rank = false }) {
                     onKeyDown={(e) => { if (e.key === 'ArrowRight') page(1); if (e.key === 'ArrowLeft') page(-1); }}>
                     <span ref={startRef} aria-hidden="true" className="w-px shrink-0" />
                     {films.map((f, i) => (
-                        <FilmCard key={f.videos._id} film={f} variant={rank ? 'rank' : 'auto'} rank={rank ? i + 1 : undefined}
+                        <FilmCard key={f.videos._id} film={f} variant={rank ? 'rank' : 'auto'} rank={rank ? i + 1 : undefined} nowPlaying={playingId === f.videos._id}
                             onPlay={(x) => onPlay(x, films)} sizes={rank ? '260px' : '(max-width: 640px) 72vw, 360px'}
                             className={`shrink-0 snap-start ${rank ? 'w-[64vw] sm:w-[300px] lg:w-[330px]' : 'w-[72vw] sm:w-[340px] lg:w-[360px]'}`} />
                     ))}
@@ -181,7 +181,7 @@ export default function FilmsClient({ discovery = null }) {
     const billboard = best.find((f) => f.loopUrl) || best[0];
     const top = best.slice(0, 10);
     const { rails, rest } = pickRails(groups, { total: discovery?.total || films.length });
-    const { play, player } = useFilmPlayer(films);
+    const { play, player, playing } = useFilmPlayer(films, discovery?.rows || []);
 
     if (!discovery) {
         return (
@@ -204,10 +204,10 @@ export default function FilmsClient({ discovery = null }) {
             <Billboard film={billboard} total={discovery.total} onPlay={(f) => play(f, best)} />
 
             <div className="relative z-10 -mt-6 rounded-t-[28px] bg-ground pt-4 lg:-mx-4">
-                <Rail id="top-10" title="Our top 10" sub="Ranked by the studio" films={top} onPlay={play} rank />
+                <Rail id="top-10" title="Our top 10" sub="Ranked by the studio" films={top} onPlay={play} rank playingId={playing?.videos?._id} />
                 {rails.map((r) => (
                     <Rail key={r.key} id={`rail-${r.key}`} title={r.title} sub={r.groupLabel} count={r.items.length}
-                        href={libraryHref(r.key)} films={r.items} onPlay={play} />
+                        href={libraryHref(r.key)} films={r.items} onPlay={play} playingId={playing?.videos?._id} />
                 ))}
 
                 {/* More ways to browse */}
