@@ -9,6 +9,8 @@ import { mediaUrlForKey } from '../../Utils/mediaUrl.js';
 import * as portfolio from '../../Services/portfolioService.js';
 import { loadTaxonomy } from '../../Services/taxonomy.js';
 import { PUBLIC_GATE } from '../../Services/portfolioVisibility.js';
+import websiteSettingSchema from '../../Models/WebsiteSettingSchema.js';
+import { buildSelectsPdf, selectsPdfCached } from '../../Services/selectsPdf.js';
 // Prefer the immutable R2 CDN URL for any asset already migrated; fall back to a
 // signed S3 URL while the migration is in flight. Lookups are batched, so a page
 // of assets costs one query, not one per asset.
@@ -93,6 +95,43 @@ Route.get("/api/photos", getAllPhotos)
  * have photographs, and how many — so a chip never leads to an empty page.
  * Hidden groups/tags stay out. Groups come in taxonomy order.
  */
+/**
+ * Your selects as a lookbook PDF (Services/selectsPdf.js).
+ * ?ids=a,b,c (≤ 30 published photos, in order) &names=Riya %26 Arjun (optional, for the cover)
+ */
+Route.get('/api/photos/selects.pdf', async (req, res) => {
+    try {
+        const ids = [...new Set(String(req.query.ids || '').split(',').map((x) => x.trim()).filter((x) => /^[0-9a-f]{24}$/i.test(x)))].slice(0, 30);
+        if (!ids.length) return res.status(400).json({ message: 'Choose at least one photograph' });
+        const names = String(req.query.names || '').replace(/[\u0000-\u001f<>]/g, '').trim().slice(0, 60);
+        const pdf = await selectsPdfCached(`${ids.join(',')}|${names}`, async () => {
+            const [items, setting] = await Promise.all([
+                PortfolioItem.find({ _id: { $in: ids }, kind: 'Photo', ...PUBLIC_GATE })
+                    .populate('client', 'clientName location celebrationDates weddingDate slug').lean(),
+                websiteSettingSchema.findOne().lean(),
+            ]);
+            const byId = new Map(items.map((i) => [String(i._id), i]));
+            const photos = ids.map((id) => byId.get(id)).filter(Boolean).map(portfolio.toLegacyPhotoRow);
+            if (!photos.length) { const e = new Error('none'); e.status = 404; throw e; }
+            const d = setting?.companyDetails || {};
+            const studio = { contact: Array.isArray(d.phone) ? d.phone : d.phone ? [d.phone] : [], email: d.email || null, socials: d.companySocial || {}, address: d.address || null };
+            return buildSelectsPdf({ photos, names, studio });
+        });
+        const file = `the-wedding-vachan-selects${names ? `-${names.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}` : ''}.pdf`;
+        res.set({
+            'Content-Type': 'application/pdf',
+            'Content-Disposition': `attachment; filename="${file}"`,
+            'Content-Length': String(pdf.length),
+            'Cache-Control': 'private, max-age=600',
+        });
+        return res.end(pdf);
+    } catch (error) {
+        if (error.status === 404) return res.status(404).json({ message: 'These photographs are no longer available' });
+        console.error('GET /api/photos/selects.pdf error:', error);
+        return res.status(500).json({ message: 'Could not make the lookbook' });
+    }
+});
+
 /** Several photos by id, in the order asked (a shared "selects" link). */
 Route.get('/api/photos/batch', async (req, res) => {
     try {

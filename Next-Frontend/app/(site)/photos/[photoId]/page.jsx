@@ -26,7 +26,8 @@ export async function generateMetadata({ params }) {
     if (!p) return { title: 'Wedding photograph | The Wedding Vachan' };
     const couple = coupleOf(data.clientName);
     const city = p.photoLocation?.city ? `, ${p.photoLocation.city}` : '';
-    const what = [rite(p.eventGroup), couple && `${couple}'s wedding`].filter(Boolean).join(' at ');
+    const r = rite(p.eventGroup);
+    const what = couple ? (!r || r === 'Wedding' ? `${couple}'s wedding` : `${r} at ${couple}'s wedding`) : r;
     const title = `${p.title || what || 'Wedding photograph'}${city} | The Wedding Vachan`;
     const description = p.caption || `${what || 'A wedding'}${city}, photographed by The Wedding Vachan.`;
     const url = `${SITE_URL}/photos/${photoId}`;

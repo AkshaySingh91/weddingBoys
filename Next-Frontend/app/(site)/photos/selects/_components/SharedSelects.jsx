@@ -8,6 +8,7 @@
 import Link from 'next/link';
 import PhotoTile, { aspectOf } from '@/Component/photos/PhotoTile.jsx';
 import SelectsTray from '@/Component/photos/SelectsTray.jsx';
+import GridEnd from '@/Component/photos/GridEnd.jsx';
 import { useSelects } from '@/Component/photos/selects.js';
 import { stillLadder } from '@/lib/films.js';
 import { gradeOf, GOLD } from '@/lib/grades.js';
@@ -46,6 +47,10 @@ export default function SharedSelects({ photos = [], studioPhone = null }) {
                         <PhotoTile key={p._id} p={p} i={i} priority={i === 0} tint={p.eventGroup ? gradeOf({ label: rite(p.eventGroup) }) : GOLD}
                             selected={selects.has(p._id)} onSelect={selects.toggle} />
                     ))}
+                    <GridEnd>
+                        <span className="font-display text-[28px] leading-none">Want frames like these?</span>
+                        <Link href="/contact" className="w-max text-[14px] font-semibold underline-offset-4 hover:underline focus-ring">Check your date</Link>
+                    </GridEnd>
                 </ul>
             )}
             <SelectsTray studioPhone={studioPhone} />

@@ -1795,3 +1795,73 @@ html[data-scrolling] .film-card { pointer-events: none; }
 .pv-frame { position: relative; display: block; aspect-ratio: var(--a); width: min(100%, calc(var(--pv-h) * var(--a))); }
 .pv-frame > img { display: block; width: 100%; height: 100%; object-fit: cover; }
 @media (min-width: 1024px) { .pv-frame > img { border-radius: 4px; } }
+
+/* ── Your selects: a proof sheet on film ────────────────────────────────────
+   Film base (the studio's wine), 35mm sprocket holes along the strip's edges,
+   amber edge print. Static paint only — gradients, no images, no layers. */
+.film-base { background: rgb(var(--ground-deep-rgb)); }
+.film-strip {
+  position: relative; border-radius: 10px; padding: 14px 0;
+  background:
+    radial-gradient(circle at 50% 50%, rgb(var(--ground-rgb) / 0.9) 0 2.6px, transparent 3.2px) 0 3px / 16px 10px repeat-x,
+    radial-gradient(circle at 50% 50%, rgb(var(--ground-rgb) / 0.9) 0 2.6px, transparent 3.2px) 0 calc(100% - 3px) / 16px 10px repeat-x,
+    rgb(20 10 12);
+}
+.edge-print { font: 600 10px/1.2 var(--font-inter), ui-sans-serif, sans-serif; letter-spacing: 0.22em; color: rgb(232 160 64 / 0.85); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.edge-print > span { margin-left: 1.2em; }
+.edge-print > span::before { content: '\25B8'; margin-right: 0.6em; }
+.proof { position: relative; }
+@media (prefers-reduced-motion: no-preference) {
+  .proof .select-loop[data-fresh] path { animation-delay: calc(140ms + var(--i, 0) * 70ms); }
+  .sheet-dialog[open] .proof { animation: wv-fade 360ms ease-out backwards; animation-delay: calc(80ms + var(--i, 0) * 45ms); }
+}
+
+/* The lookbook's cover, in miniature: the PDF's invitation-card design. */
+.lookbook-cover { position: relative; width: 84px; aspect-ratio: 1 / 1.414; padding: 8px 7px; display: flex; flex-direction: column; align-items: center; gap: 5px;
+  background: rgb(var(--ground-rgb)); box-shadow: inset 0 0 0 1px rgb(var(--gold-rgb) / 0.8), inset 0 0 0 3px rgb(var(--ground-rgb)), inset 0 0 0 3.5px rgb(var(--gold-rgb) / 0.6), 0 8px 20px -10px rgb(0 0 0 / 0.5); border-radius: 2px; }
+.lookbook-mono { width: 16px; height: 16px; border-radius: 50%; box-shadow: 0 0 0 0.75px rgb(var(--gold-rgb)); font: 600 5.5px/16px var(--font-inter), sans-serif; letter-spacing: 0.04em; color: rgb(var(--gold-rgb)); text-align: center; }
+.lookbook-collage { display: grid; grid-template-columns: 1.4fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px; width: 100%; flex: 1; min-height: 0; }
+.lookbook-collage > img { width: 100%; height: 100%; object-fit: cover; min-height: 0; }
+.lookbook-collage > img:first-child { grid-row: span 2; outline: 1.5px solid rgb(var(--accent-rgb)); outline-offset: 1px; border-radius: 1px; }
+.lookbook-title { font: 600 8px/1.1 var(--font-inter), sans-serif; color: rgb(51 22 26); text-align: center; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Refine: the shot list — ruled paper, a red margin rule, ticks in pencil. */
+.shot-list {
+  background:
+    linear-gradient(to right, transparent 40px, rgb(var(--accent-rgb) / 0.35) 40px 41px, transparent 41px),
+    rgb(var(--ground-raised-rgb));
+}
+.shot-line { border-bottom: 1px solid rgb(var(--ground-deep-rgb) / 0.08); transition: background-color 160ms var(--ease-standard); }
+.shot-line:hover { background: rgb(var(--ground-deep-rgb) / 0.03); }
+.shot-box { position: relative; width: 20px; height: 20px; flex: none; border-radius: 4px; box-shadow: inset 0 0 0 1.5px rgb(var(--ground-deep-rgb) / 0.45); }
+.shot-tick { position: absolute; left: -2px; top: -6px; width: 28px; height: 28px; overflow: visible; }
+.shot-tick path { fill: none; stroke: rgb(var(--accent-rgb)); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+@media (prefers-reduced-motion: no-preference) {
+  .shot-tick path { stroke-dasharray: 1 1; stroke-dashoffset: 1; animation: loopDraw 260ms cubic-bezier(0.5, 0, 0.3, 1) forwards; }
+}
+
+/* The grid's end tile (Component/photos/GridEnd.jsx). */
+.pgrid:has(> .pfill)::after { display: none; }
+.pfill { position: relative; isolation: isolate; flex: 1000 1 0%; align-self: stretch; min-width: 0; min-height: 76px; overflow: hidden; border-radius: 4px;
+  container-type: inline-size; background: rgb(var(--grade) / 0.18); color: var(--jelly-ink); }
+.pfill .jelly-wash { background: radial-gradient(140% 120% at 0% 100%, rgb(var(--grade) / 0.9), rgb(var(--grade) / 0.55) 60%, rgb(var(--grade) / 0.35)); }
+.pfill-body { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; padding: 18px 20px; }
+.pfill-body > * { position: relative; }
+@container (max-width: 150px) { .pfill-body { display: none; } }
+
+/* The photograph page's strip as film: sprocket holes along both edges and an
+   amber edge print move with each frame; the base is film-dark, warmed by the
+   photo's own blur placeholder (--echo). */
+.pv-slide {
+  --hole: radial-gradient(ellipse 5px 3.4px at 50% 50%, rgb(var(--ground-rgb) / 0.88) 98%, transparent 100%);
+  padding: 22px 0 34px; background-color: rgb(22 12 13);
+  background-image: var(--hole), var(--hole), linear-gradient(rgb(22 12 13 / 0.74), rgb(22 12 13 / 0.74)), var(--echo, none);
+  background-size: 18px 12px, 18px 12px, 100% 100%, cover;
+  background-position: 4px 5px, 4px calc(100% - 5px), 0 0, center;
+  background-repeat: repeat-x, repeat-x, no-repeat, no-repeat;
+}
+.pv-slide .pv-frame { width: min(100%, calc((var(--pv-h) - 56px) * var(--a))); }
+.pv-edge { position: absolute; left: 14px; right: 14px; bottom: 15px; font-size: 9.5px; }
+.pgrid-day { --row-h: 150px; }
+@media (min-width: 640px)  { .pgrid-day { --row-h: 190px; } }
+@media (min-width: 1024px) { .pgrid-day { --row-h: 220px; } }

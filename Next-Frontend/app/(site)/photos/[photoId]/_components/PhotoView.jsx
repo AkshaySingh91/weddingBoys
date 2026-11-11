@@ -27,6 +27,7 @@ import Link from 'next/link';
 import { FiChevronLeft, FiChevronRight, FiShare2, FiCheck, FiPlus } from 'react-icons/fi';
 import PhotoTile, { GreasePencil, aspectOf, altOf, flyToTray } from '@/Component/photos/PhotoTile.jsx';
 import SelectsTray from '@/Component/photos/SelectsTray.jsx';
+import GridEnd from '@/Component/photos/GridEnd.jsx';
 import { useSelects } from '@/Component/photos/selects.js';
 import { stillLadder } from '@/lib/films.js';
 import { gradeOf, inkOn, GOLD } from '@/lib/grades.js';
@@ -73,15 +74,16 @@ export default function PhotoView({ data, recommended = [], studioPhone = null }
     useEffect(() => {
         if (!cur?._id || window.location.pathname === `/photos/${cur._id}`) return;
         window.history.replaceState(window.history.state, '', `/photos/${cur._id}`);
-        document.title = `${[rite(cur.eventGroup), couple && `${couple}'s wedding`].filter(Boolean).join(' at ') || 'Wedding photograph'} | The Wedding Vachan`;
+        document.title = `${altOf(cur)} | The Wedding Vachan`;
     }, [cur, couple]);
 
-    const go = (i) => {
+    const go = (i, { reveal = false } = {}) => {
         const root = strip.current;
         const el = root?.children[Math.max(0, Math.min(frames.length - 1, i))];
         if (!el) return;
         const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         root.scrollTo({ left: el.offsetLeft, behavior: still ? 'auto' : 'smooth' });
+        if (reveal) root.scrollIntoView({ block: 'center', behavior: still ? 'auto' : 'smooth' });
     };
     // ← / → walk the wedding (not while typing).
     useEffect(() => {
@@ -153,7 +155,7 @@ export default function PhotoView({ data, recommended = [], studioPhone = null }
                             const a = aspectOf(p);
                             return (
                                 <figure key={p._id} data-i={i} data-initial={i === start || undefined} aria-roledescription="slide" aria-label={`${i + 1} of ${frames.length}`}
-                                    className="pv-slide" style={p.blurDataURL ? { backgroundImage: `url(${p.blurDataURL})` } : { backgroundColor: `rgb(${gradeFor(p)} / 0.25)` }}>
+                                    className="pv-slide" style={p.blurDataURL ? { '--echo': `url(${p.blurDataURL})` } : undefined}>
                                     <span className="pv-frame" style={{ '--a': a.toFixed(4) }}>
                                         {/* eslint-disable-next-line @next/next/no-img-element */}
                                         <img src={ladder?.src || p.url} srcSet={ladder?.srcSet} sizes={FRAME_SIZES} alt={altOf(p)}
@@ -161,6 +163,9 @@ export default function PhotoView({ data, recommended = [], studioPhone = null }
                                             loading={i === start ? 'eager' : 'lazy'} fetchPriority={i === start ? 'high' : undefined} decoding="async" />
                                         {selects.has(p._id) && <GreasePencil id={p._id} a={a} fresh={fresh === p._id} />}
                                     </span>
+                                    <figcaption aria-hidden="true" className="edge-print pv-edge">
+                                        &#9656; {String(i + 1).padStart(2, '0')}<span>THE WEDDING VACHAN</span>{p.eventGroup ? <span>{rite(p.eventGroup).toUpperCase()}</span> : null}
+                                    </figcaption>
                                 </figure>
                             );
                         })}
@@ -235,35 +240,6 @@ export default function PhotoView({ data, recommended = [], studioPhone = null }
                         </div>
                     )}
 
-                    {/* Their day: the wedding at a glance */}
-                    {frames.length > 1 && (
-                        <div className="mt-8">
-                            <h2 className="text-[12px] font-semibold uppercase tracking-[0.16em] text-ink-muted">Their day</h2>
-                            <ol className="mt-3 space-y-3">
-                                {ceremonies.map((c) => (
-                                    <li key={c.label}>
-                                        <p className="flex items-center gap-2 text-[13.5px] font-semibold text-ink">
-                                            <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full" style={{ background: `rgb(${c.grade})` }} />
-                                            {rite(c.label)}<span className="font-normal text-ink-muted">{c.items.length}</span>
-                                        </p>
-                                        <ul className="mt-2 flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-                                            {c.items.map(({ p, i }) => (
-                                                <li key={p._id} className="shrink-0">
-                                                    <button type="button" onClick={() => go(i)} aria-label={`Show photograph ${i + 1}`} aria-current={i === active || undefined}
-                                                        className={`relative block h-14 overflow-hidden rounded-[4px] bg-ground-deep focus-ring ${i === active ? 'ring-2 ring-offset-2 ring-offset-ground' : 'opacity-85 hover:opacity-100'}`}
-                                                        style={{ aspectRatio: aspectOf(p), ...(i === active ? { '--tw-ring-color': `rgb(${c.grade})` } : null), ...(p.blurDataURL ? { backgroundImage: `url(${p.blurDataURL})`, backgroundSize: 'cover' } : null) }}>
-                                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                        <img src={stillLadder(p.url, { width: p.width, cap: 640 })?.src || p.url} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
-                                                    </button>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </li>
-                                ))}
-                            </ol>
-                        </div>
-                    )}
-
                     {/* The door into their whole story */}
                     {storyHref && (
                         <Link href={storyHref} style={{ '--grade': grade, '--jelly-ink': inkOn(grade) }}
@@ -288,6 +264,48 @@ export default function PhotoView({ data, recommended = [], studioPhone = null }
                 </aside>
             </div>
 
+            {/* Their day: the whole wedding, ceremony by ceremony, large enough to look at */}
+            {frames.length > 1 && (
+                <section aria-labelledby="day-title" className="mx-auto mt-14 w-full max-w-wide px-4 sm:px-6 lg:px-8">
+                    <h2 id="day-title" className="font-display text-[30px] leading-tight text-ink sm:text-[40px]">Their day</h2>
+                    <p className="mt-2 text-[15px] text-ink-muted">{frames.length} frames from {couple ? `${couple}'s` : 'this'} wedding, in the order it happened.</p>
+                    <ol className="mt-6 space-y-8">
+                        {ceremonies.map((c) => (
+                            <li key={c.label}>
+                                <div className="flex flex-wrap items-baseline justify-between gap-3">
+                                    <h3 className="flex items-center gap-2.5 text-[17px] font-semibold text-ink">
+                                        <span aria-hidden="true" className="h-3 w-3 rounded-full" style={{ background: `rgb(${c.grade})` }} />
+                                        {rite(c.label)}<span className="text-[14px] font-normal text-ink-muted">{c.items.length} frame{c.items.length === 1 ? '' : 's'}</span>
+                                    </h3>
+                                    {wedding?.href && c.label !== 'More moments' && (
+                                        <Link href={`${wedding.href}#chapter-${chapterKey(c.label)}`} className="text-[14px] font-semibold text-accent-ink hover:text-accent">In their story</Link>
+                                    )}
+                                </div>
+                                <ul className="pgrid pgrid-day mt-3">
+                                    {c.items.map(({ p, i }) => {
+                                        const on = i === active;
+                                        return (
+                                            <li key={p._id} className="ptile" style={{ '--a': aspectOf(p).toFixed(4), backgroundColor: `rgb(${c.grade} / 0.2)`, ...(p.blurDataURL ? { backgroundImage: `url(${p.blurDataURL})` } : null) }}>
+                                                <button type="button" onClick={() => go(i, { reveal: true })} aria-current={on || undefined} aria-label={`Show frame ${i + 1}, ${altOf(p)}`}
+                                                    className="block h-full w-full cursor-pointer focus-ring">
+                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                    <img src={stillLadder(p.url, { width: p.width, cap: 640 })?.src || p.url} srcSet={stillLadder(p.url, { width: p.width, cap: 1024 })?.srcSet}
+                                                        sizes="(max-width: 639px) 50vw, 300px" alt="" loading="lazy" decoding="async" className="block h-full w-full object-cover" />
+                                                </button>
+                                                {on && <span aria-hidden="true" className="pointer-events-none absolute inset-0 z-[2] rounded-[4px]" style={{ boxShadow: `inset 0 0 0 3px rgb(${c.grade})` }} />}
+                                                {selects.has(p._id) && <GreasePencil id={p._id} a={aspectOf(p)} />}
+                                                <span aria-hidden="true" className="edge-print pointer-events-none absolute bottom-1.5 left-2 z-[2] text-white/90 [text-shadow:0_1px_2px_rgb(0_0_0/0.6)]">&#9656; {String(i + 1).padStart(2, '0')}</span>
+                                            </li>
+                                        );
+                                    })}
+                                    <GridEnd grade={c.grade} />
+                                </ul>
+                            </li>
+                        ))}
+                    </ol>
+                </section>
+            )}
+
             {/* More like this */}
             {recommended.length > 0 && (
                 <section aria-labelledby="more-title" className="mx-auto mt-14 w-full max-w-wide px-4 sm:px-6 lg:px-8">
@@ -303,6 +321,16 @@ export default function PhotoView({ data, recommended = [], studioPhone = null }
                         {recommended.slice(0, 18).map((p, i) => (
                             <PhotoTile key={p._id} p={p} i={i + 8} tint={gradeFor(p)} selected={selects.has(p._id)} onSelect={selects.toggle} />
                         ))}
+                        <GridEnd grade={grade}>
+                            {cur.eventGroup ? (
+                                <>
+                                    <span className="font-display text-[28px] leading-none">More {rite(cur.eventGroup).toLowerCase()}</span>
+                                    <Link href={`/photos?tag=${encodeURIComponent(cur.eventGroup)}`} className="w-max text-[14px] font-semibold underline-offset-4 hover:underline focus-ring">See every one</Link>
+                                </>
+                            ) : (
+                                <Link href="/photos" className="font-display text-[28px] leading-none focus-ring">Every photograph</Link>
+                            )}
+                        </GridEnd>
                     </ul>
                 </section>
             )}

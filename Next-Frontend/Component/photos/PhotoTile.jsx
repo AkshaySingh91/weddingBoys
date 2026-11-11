@@ -22,7 +22,12 @@ import { stillLadder } from '@/lib/films.js';
 const coupleOf = (p) => [p.clientName?.Bride, p.clientName?.Groom].filter(Boolean).join(' & ');
 const rite = (c) => (c === 'Wedding / Pheras' ? 'Wedding' : c || '');
 export const aspectOf = (p) => Number(p.aspectRatio) || (p.width && p.height ? p.width / p.height : 1.5);
-export const altOf = (p) => p.caption || [rite(p.eventGroup) && `${rite(p.eventGroup)}`, coupleOf(p) && `at ${coupleOf(p)}'s wedding`].filter(Boolean).join(' ') || p.title || 'A wedding photograph';
+export const altOf = (p) => {
+    if (p.caption) return p.caption;
+    const c = coupleOf(p); const r = rite(p.eventGroup);
+    if (c) return !r || r === 'Wedding' ? `${c}'s wedding` : `${r} at ${c}'s wedding`;
+    return r || p.title || 'A wedding photograph';
+};
 
 /*
  * Hand-drawn loops, one family per shape (the archive is portrait 2:3 or

@@ -24,6 +24,7 @@ import Link from 'next/link';
 import { FiSearch, FiSliders, FiX } from 'react-icons/fi';
 import PhotoTile from '@/Component/photos/PhotoTile.jsx';
 import SelectsTray from '@/Component/photos/SelectsTray.jsx';
+import GridEnd from '@/Component/photos/GridEnd.jsx';
 import { useSelects } from '@/Component/photos/selects.js';
 import useNetworkStatus from '@/Hooks/useNetworkStatus.jsx';
 import { gradeOf, GOLD } from '@/lib/grades.js';
@@ -189,7 +190,7 @@ export default function Gallery({ initial, facets, initialTags = [], initialQuer
                         })}
                     </ul>
                     {lenses.length > 0 && (
-                        <button type="button" onClick={() => setRefine(true)} aria-haspopup="dialog"
+                        <button type="button" onClick={() => setRefine(true)} aria-haspopup="dialog" aria-label={refined.length ? `Refine, ${refined.length} ticked` : 'Refine'}
                             className="flex h-10 shrink-0 cursor-pointer items-center gap-2 rounded-full bg-ground-raised px-4 text-[14px] font-semibold text-ink ring-1 ring-ink/15 hover:ring-ink/30 focus-ring">
                             <FiSliders aria-hidden="true" className="h-4 w-4" />
                             <span className="hidden sm:inline">Refine</span>
@@ -220,6 +221,21 @@ export default function Gallery({ initial, facets, initialTags = [], initialQuer
                                 tint={p.eventGroup ? gradeOf({ label: rite(p.eventGroup) }) : GOLD}
                                 selected={selects.has(p._id)} onSelect={selects.toggle} />
                         ))}
+                        <GridEnd grade={grade || GOLD}>
+                            {hasMore ? (
+                                <>
+                                    <span className="font-display text-[28px] leading-none">Keep going</span>
+                                    <button type="button" onClick={loadMore} className="w-max cursor-pointer text-[14px] font-semibold underline-offset-4 hover:underline focus-ring">
+                                        {more ? 'Loading…' : `${Math.max(0, total - items.length)} more frames`}
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <span className="font-display text-[28px] leading-none">Every frame, seen.</span>
+                                    <Link href="/films" className="w-max text-[14px] font-semibold underline-offset-4 hover:underline focus-ring">Watch the films</Link>
+                                </>
+                            )}
+                        </GridEnd>
                     </ul>
                 ) : (
                     <div className="mt-4 grid min-h-[260px] place-content-center rounded-[20px] bg-ground-sunk/60 px-6 text-center">
@@ -242,11 +258,7 @@ export default function Gallery({ initial, facets, initialTags = [], initialQuer
                             className="inline-flex h-11 items-center rounded-full px-5 text-[14px] font-semibold text-ink ring-1 ring-ink/15 hover:bg-ink/5 focus-ring">
                             {more ? 'Loading more photographs…' : tier === 'low' ? `Load ${Math.min(pageSize, total - items.length)} more (smaller images)` : 'Load more photographs'}
                         </a>
-                    ) : items.length > 0 && (
-                        <p className="text-[14px] text-ink-muted">
-                            That is every one of them. <Link href="/films" className="font-semibold text-accent-ink hover:text-accent">Watch the films</Link>
-                        </p>
-                    )}
+                    ) : null}
                 </div>
             </section>
 
@@ -257,6 +269,12 @@ export default function Gallery({ initial, facets, initialTags = [], initialQuer
     );
 }
 
+/**
+ * Refine — the photographer's shot list: ruled paper with a red margin rule;
+ * each wish is a line with a box that takes a red grease-pencil tick (drawn
+ * once), and its count sits on the right like a ledger. Phones: a bottom
+ * sheet; desktop: a drawer.
+ */
 function RefineSheet({ open, onClose, lenses, tags, toggle, total, busy, clear }) {
     const ref = useRef(null);
     useEffect(() => {
@@ -265,35 +283,45 @@ function RefineSheet({ open, onClose, lenses, tags, toggle, total, busy, clear }
         if (open && !d.open) d.showModal();
         if (!open && d.open) d.close();
     }, [open]);
+    const picked = tags.filter((t) => lenses.some((l) => l.tags.some((x) => x.label === t))).length;
     return (
         <dialog ref={ref} onClose={onClose} onClick={(e) => { if (e.target === ref.current) onClose(); }} aria-labelledby="refine-title"
-            className="sheet-dialog m-0 max-h-none max-w-none bg-transparent p-0 backdrop:bg-[rgba(28,17,10,0.5)]">
-            <div className="sheet-panel flex flex-col bg-ground text-ink">
-                <div className="flex items-center justify-between px-5 pb-2 pt-5 sm:px-6">
-                    <h2 id="refine-title" className="font-display text-[30px] leading-none">Refine</h2>
-                    <button type="button" onClick={onClose} aria-label="Close" className="grid h-11 w-11 cursor-pointer place-items-center rounded-full hover:bg-ink/5 focus-ring">
+            className="sheet-dialog m-0 max-h-none max-w-none bg-transparent p-0 backdrop:bg-[rgba(28,17,10,0.55)]">
+            <div className="sheet-panel shot-list flex flex-col text-ink">
+                <div className="flex items-start justify-between gap-4 pb-3 pl-14 pr-4 pt-5 sm:pr-6">
+                    <div>
+                        <h2 id="refine-title" className="font-display text-[32px] leading-none">Shot list</h2>
+                        <p className="mt-2 text-[14px] text-ink-muted">Tick what you would like to see{picked ? `: ${picked} ticked` : ''}.</p>
+                    </div>
+                    <button type="button" onClick={onClose} aria-label="Close" className="grid h-11 w-11 shrink-0 cursor-pointer place-items-center rounded-full hover:bg-ink/5 focus-ring">
                         <FiX aria-hidden="true" className="h-5 w-5" />
                     </button>
                 </div>
-                <div className="flex-1 space-y-6 overflow-y-auto px-5 pb-4 pt-2 sm:px-6">
+                <div className="min-h-0 flex-1 overflow-y-auto pb-4">
                     {lenses.map((l) => (
-                        <fieldset key={l.key}>
-                            <legend className="text-[12px] font-semibold uppercase tracking-[0.16em] text-ink-muted">{l.label}</legend>
-                            <div className="mt-3 flex flex-wrap gap-2">
+                        <fieldset key={l.key} className="mt-3">
+                            <legend className="pl-14 text-[12px] font-semibold uppercase tracking-[0.18em] text-accent-ink">{l.label}</legend>
+                            <ul className="mt-1 grid sm:grid-cols-1">
                                 {l.tags.map((t) => {
                                     const on = tags.includes(t.label);
                                     return (
-                                        <button key={t.label} type="button" aria-pressed={on} onClick={() => toggle(t.label)}
-                                            className={`flex h-10 cursor-pointer items-center gap-2 rounded-full px-4 text-[14px] font-semibold focus-ring ${on ? 'bg-ink text-ground' : 'bg-ground-raised text-ink-secondary ring-1 ring-ink/10 hover:text-ink'}`}>
-                                            {t.label}<span className={`text-[12px] font-medium tabular-nums ${on ? 'text-ground/70' : 'text-ink-muted'}`}>{t.count}</span>
-                                        </button>
+                                        <li key={t.label}>
+                                            <button type="button" aria-pressed={on} onClick={() => toggle(t.label)}
+                                                className="shot-line flex h-12 w-full cursor-pointer items-center gap-3 pl-14 pr-5 text-left focus-ring sm:pr-6">
+                                                <span aria-hidden="true" className="shot-box">
+                                                    {on && <svg viewBox="0 0 24 24" className="shot-tick"><path pathLength="1" d="M4 13 C6 14 8 16 10 19 C13 12 17 7 22 3" /></svg>}
+                                                </span>
+                                                <span className={`flex-1 text-[15px] ${on ? 'font-semibold text-ink' : 'text-ink-secondary'}`}>{t.label}</span>
+                                                <span className="text-[13px] tabular-nums text-ink-muted">{t.count}</span>
+                                            </button>
+                                        </li>
                                     );
                                 })}
-                            </div>
+                            </ul>
                         </fieldset>
                     ))}
                 </div>
-                <div className="flex gap-2 border-t border-ink/10 px-5 pb-[calc(16px+env(safe-area-inset-bottom))] pt-4 sm:px-6">
+                <div className="flex gap-2 border-t border-ink/10 bg-ground-raised px-5 pb-[calc(16px+env(safe-area-inset-bottom))] pt-4 sm:px-6">
                     <button type="button" onClick={clear} className="h-12 cursor-pointer rounded-full px-5 text-[15px] font-semibold text-ink ring-1 ring-ink/15 hover:bg-ink/5 focus-ring">Clear</button>
                     <button type="button" onClick={onClose} className="h-12 flex-1 cursor-pointer rounded-full bg-ink text-[15px] font-semibold text-ground focus-ring">
                         {busy ? 'Finding photographs…' : `Show ${total} photograph${total === 1 ? '' : 's'}`}
