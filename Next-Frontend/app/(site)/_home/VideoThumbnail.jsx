@@ -1,98 +1,85 @@
 'use client';
 
 import { focusStyle } from '@/lib/focus.js';
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, startTransition } from 'react';
 import Link from 'next/link';
 import { FiArrowRight, FiPlay, FiCalendar } from 'react-icons/fi';
 import Chapter, { ChapterAction, Em, ArrowDot, GlassChip, CARD } from '@/Component/home/Chapter.jsx';
-import FilterRail from '@/Component/ui/FilterRail.jsx';
-import { fireMessage } from '@/Utils/fireMessage.js';
+import CategoryDrill from '@/Component/ui/CategoryDrill.jsx';
+import CategoryTiers from '@/Component/ui/CategoryTiers.jsx';
 import { Skeleton } from '@/Component/ui/Skeleton.jsx';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL;
 
 /**
- * `data` (from the page composition, Admin › Content › Home): { heading,
- * defaultTab, tabs: [{ key, title, items }] } — each tab is a row from
- * Admin › Rows, already resolved on the server, so tabs switch instantly with no
- * request. Without it (CMS unreachable) the component reads the old tag list.
+ * The CMS supplies the section's heading and placement. Its data contains the
+ * same complete film discovery groups as /films, resolved on the server.
+ * Switching groups or categories never needs another request.
  */
 export default function VideoThumbnail({ data } = {}) {
-    const tabs = Array.isArray(data?.tabs) ? data.tabs : null;
-    const firstTab = tabs ? (tabs.find((t) => t.key === data.defaultTab) || tabs[0]) : null;
-    const [isLoading, setIsLoading] = useState(false);
-    const [clients, setClients] = useState(firstTab ? firstTab.items : [])
-    const [homepageTags, setHomepageTags] = useState(tabs ? tabs.map((t) => t.title) : [])
-    const [selectedTag, setSelectedTag] = useState(firstTab ? firstTab.title : "");
-
-    const fetchVideos = async (t) => {
-        try {
-            setIsLoading(true)
-            const res = await fetch(`${api_url}/api/videos?tag=${t}`)
-            const data = await res.json();
-            if (res.status >= 300) {
-                return fireMessage(data.message, 'error')
-            }
-            setClients(data.client)
-        } catch (error) {
-            console.log(error)
-            return fireMessage(error.message, 'error')
-        } finally {
-            setIsLoading(false)
-        }
-    }
-    const fetchHomeTags = useCallback(
-        async () => {
-            try {
-                setIsLoading(true)
-                const res = await fetch(`${api_url}/api/homepage/tags`)
-                const data = await res.json();
-                if (res.status >= 300) {
-                    return fireMessage(data.message, 'error')
-                }
-                setHomepageTags(data.tags)
-                if (data.tags.length > 0) {
-                    await fetchVideos(data.tags[0]);
-                    setSelectedTag(data.tags[0])
-                }
-            } catch (error) {
-                return fireMessage(error.message, 'error')
-            } finally {
-                setIsLoading(false)
-            }
-        }, []);
-
+    const [loaded, setLoaded] = useState(null);
+    const [loadError, setLoadError] = useState('');
+    const [group, setGroup] = useState('featured');
+    const [selectedKey, setSelectedKey] = useState('best-films');
+    const source = data?.groups ? data : loaded;
+    const tabs = source?.tabs || source?.rows || [];
+    const groups = source?.groups || [];
+    const selected = tabs.find(t => t.key === selectedKey) || tabs[0];
+    const clients = selected?.items || [];
+    const isLoading = !source && !loadError;
     useEffect(() => {
-        if (tabs) return; // composed on the server: nothing to fetch
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        fetchHomeTags();    //it is tag that are selected
-    }, [fetchHomeTags, tabs])
+        if (data?.groups) return;
+        const controller = new AbortController();
+        fetch(`${api_url || ''}/api/films/discovery`, { signal: controller.signal })
+            .then(r => { if (!r.ok) throw Error('Films could not be loaded.'); return r.json(); })
+            .then(setLoaded).catch(e => { if (!controller.signal.aborted) setLoadError(e.message); });
+        return () => controller.abort();
+    }, [data]);
+    const ALL_FILMS = { href: '/films', label: 'Explore all films' };
+    const currentGroup = groups.find(g => g.key === group);
 
-    const handleChangeTag = (t) => {
-        setSelectedTag(t);
-        if (tabs) setClients(tabs.find((x) => x.title === t)?.items || []);
-        else fetchVideos(t)
-    }
-    const ALL_FILMS = { href: '/films', label: 'All films' };
-    const chipOptions = tabs
-        ? tabs.map((t) => ({ value: t.title, label: t.title, count: t.items?.length ?? 0 }))
-        : homepageTags;
+    // Content swap: new cards enter from the side you moved towards; the rail
+    // itself stays mounted (no remount, no focus loss) and returns to its start.
+    const order = groups.flatMap(g => g.rows.map(r => r.key));
+    const [dir, setDir] = useState(1);
+    const railRef = useRef(null);
+    const choose = (g, k) => {
+        setDir(order.indexOf(k) >= order.indexOf(selected?.key) ? 1 : -1);
+        // First paint the chip; the 20+ cards follow in a transition (INP).
+        startTransition(() => { setGroup(g); setSelectedKey(k); });
+        // Warm the first few posters of the new category.
+        const next = groups.find(x => x.key === g)?.rows.find(r => r.key === k)?.items || [];
+        next.slice(0, 3).forEach(c => { if (c.thumbnailUrl) { const im = new window.Image(); im.src = c.thumbnailUrl; } });
+    };
+    useLayoutEffect(() => { if (railRef.current) railRef.current.scrollLeft = 0; }, [selected?.key]);
     return (
         <Chapter label="Films" glow="right" className="overflow-x-clip"
             title={<>Our <Em>films</Em>, cut like cinema</>}
-            lead={data?.heading && data.heading !== 'Our films' ? data.heading : 'Real weddings from across India — told as stories, not recaps.'}
+            lead={data?.heading && data.heading !== 'Our films' ? data.heading : 'Start with our strongest stories, or find inspiration by destination, celebration and style.'}
             action={ALL_FILMS}>
+            {/* Phones: one fixed-height drill row. Desktop: a folder — lens tabs on top,
+                the sub-categories and the films inside the folder body. */}
             <div className="mt-7">
-                {isLoading && !homepageTags.length ? (
-                    <div className="flex gap-2">{[...Array(3)].map((_, i) => <Skeleton key={i} className="h-11 w-28 shrink-0" rounded="pill" />)}</div>
-                ) : homepageTags.length > 1 && (
-                    <FilterRail label="Filter films by category" options={chipOptions} value={selectedTag}
-                        onChange={handleChangeTag} align="start" />
-                )}
-            </div>
+                {isLoading
+                    ? <div className="flex h-[52px] items-center gap-2">{[0, 1, 2, 3].map(i => <Skeleton key={i} className="h-11 w-28" rounded="pill" />)}</div>
+                    : (
+                        <>
+                            <CategoryDrill className="lg:hidden" label="Explore films by" groups={groups} group={group} value={selected?.key} onChange={choose} />
+                            <CategoryTiers folder className="hidden lg:block" label="Explore films by" groups={groups} group={group} value={selected?.key} onChange={choose} />
+                        </>
+                    )}
+            <div className="folder-body mt-4 lg:mt-0 lg:pt-2">
+                <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
+                    <p className="text-ink-muted">
+                        {currentGroup && currentGroup.rows.length > 1 && <span className="text-ink-secondary">{currentGroup.label} › </span>}
+                        <span className="font-semibold text-ink">{selected?.title || 'Our films'}</span> · <span key={clients.length} className="inline-block tabular-nums motion-safe:animate-[fadeUp_220ms_ease-out]">{clients.length}</span> {clients.length === 1 ? 'film' : 'films'} · favourites first
+                    </p>
+                    <Link href={selected?.key && selected.key !== 'best-films' ? `/allfilms?category=${encodeURIComponent(selected.key)}` : '/films'} className="font-semibold text-accent-ink focus-ring">View this category ↗</Link>
+                </div>
+                {loadError && <p role="alert" className="mt-3 text-ink-muted">{loadError} <Link href="/films">Browse films</Link></p>}
 
-            <div key={selectedTag} className="mt-5 flex snap-x snap-mandatory gap-3 overflow-x-auto scrollbar-none pb-4
-                            -mr-5 pr-5 md:-mr-8 md:pr-8 lg:-mr-6 lg:gap-4 lg:pr-6">
+            <div ref={railRef} style={{ '--dir': dir }} className="mt-5 flex snap-x snap-mandatory gap-3 overflow-x-auto scrollbar-none pb-4
+                            -mr-5 pr-5 md:-mr-8 md:pr-8 lg:mr-0 lg:gap-4 lg:pr-0">
                 {isLoading ? (
                     [...Array(4)].map((_, i) => (
                         <Skeleton key={i} className="aspect-[4/5] w-[74vw] shrink-0 sm:w-[42vw] lg:w-[320px]" rounded="media" />
@@ -100,12 +87,12 @@ export default function VideoThumbnail({ data } = {}) {
                 ) : clients && clients.length ? (
                     clients.map((c, k) => {
                         const couple = [c.clientName?.Bride, c.clientName?.Groom].filter(Boolean).join(' & ');
-                        const meta = [c.videos?.videoShootDate, c.videos?.videoLocation?.city].filter(Boolean).join(' · ');
+                        const meta = [c.videos?.videoShootDate, c.videos?.videoLocation?.city || c.videos?.videoLocation?.state].filter(Boolean).join(' · ');
                         return (
-                            <Link href={`/films/${c.videos._id}`} key={c.videos._id}
-                                style={{ animationDelay: `${Math.min(k, 3) * 50}ms` }}
+                            <Link href={`/films/${c.videos._id}`} key={`${selected?.key}-${c.videos._id}`}
+                                style={{ animationDelay: `${Math.min(k, 3) * 45}ms` }}
                                 className="group relative aspect-[4/5] w-[74vw] shrink-0 cursor-pointer snap-start overflow-hidden rounded-[28px] bg-ground-sunk transition-transform duration-ui ease-standard motion-safe:active:scale-[0.985]
-                                           motion-safe:animate-[fadeUp_320ms_cubic-bezier(0.16,1,0.3,1)_backwards]
+                                           ${k < 4 ? 'wv-take' : ''}
                                            shadow-[0_18px_36px_-22px_rgba(51,22,26,0.6)] focus-ring sm:w-[42vw] lg:w-[320px]">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img src={c.thumbnailUrl} alt={`${couple} wedding film`} loading="lazy" decoding="async" style={focusStyle(c.focus)}
@@ -118,7 +105,7 @@ export default function VideoThumbnail({ data } = {}) {
                                 <span className="absolute inset-x-2 bottom-2 flex items-center gap-3 rounded-[22px] bg-white/80 p-2 pl-4 backdrop-blur-md">
                                     <span className="min-w-0 flex-1">
                                         <span className="block truncate font-display text-[19px] font-medium leading-tight text-ink">{couple}</span>
-                                        <span className="block text-[12px] font-medium text-ink-muted">Wedding film</span>
+                                        <span className="block text-[12px] font-medium text-ink-muted">{c.event || c.videos?.tags?.find(t => ['Pre-Wedding','Wedding','Haldi','Sangeet','Reception'].includes(t)) || 'Wedding film'}</span>
                                     </span>
                                     <span aria-hidden="true" className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-accent text-ink-onAccent">
                                         <FiPlay className="ml-0.5 h-4 w-4" />
@@ -128,13 +115,16 @@ export default function VideoThumbnail({ data } = {}) {
                         );
                     })
                 ) : (
-                    <div className={`w-full px-6 py-10 text-center ${CARD}`}>
+                    <div className={`grid aspect-[4/5] w-[74vw] shrink-0 place-content-center px-6 text-center sm:w-[42vw] lg:w-[320px] ${CARD}`}>
                         <p className="text-[15px] text-ink-secondary">No films in this category yet.</p>
                         <Link href="/films" className="mt-3 inline-flex items-center gap-1.5 text-[14px] font-semibold text-accent-ink hover:text-accent">
                             Browse every film <FiArrowRight aria-hidden="true" className="h-4 w-4" />
                         </Link>
                     </div>
                 )}
+            </div>
+
+            </div>
             </div>
 
             <ChapterAction action={ALL_FILMS} className="mt-4" />

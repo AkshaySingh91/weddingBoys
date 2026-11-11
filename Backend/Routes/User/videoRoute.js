@@ -12,7 +12,15 @@ const mediaUrl = (key) => mediaUrlForKey(key, getObjectUrl);
 
 import { getAllTags } from "../../Controllers/TagsController.js"
 import { publicTaxonomy } from '../../Services/taxonomy.js';
+import { getFilmDiscovery } from '../../Services/filmDiscovery.js';
 const Route = express.Router();
+Route.get('/api/films/discovery', async (_req, res) => {
+    try { res.json(await getFilmDiscovery()); }
+    catch (error) {
+        console.error('Film discovery failed:', error.message);
+        res.status(503).json({ message: 'Films could not be loaded. Please try again.' });
+    }
+});
 Route.get('/api/videos/:id/status', itemStatus('Video'));
 
 // it will get all videos with inc order of priority for given tags

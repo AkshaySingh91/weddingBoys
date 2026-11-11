@@ -1579,6 +1579,41 @@ html {
 }
 @keyframes wv-take { from { opacity: 0; transform: translateX(calc(var(--dir, 1) * 24px)); } }
 
+/* ── Folder (desktop category browser) ──────────────────────────────────────
+   Parent categories are folder tabs; the active tab merges into the folder
+   body through two concave "shoulders", and the sub-categories and films sit
+   inside the folder. Two stacked parts make one body (top: the sub-category
+   row; body: whatever follows), so content is never duplicated. lg+ only. */
+.folder-tab {
+  position: relative; display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0 20px;
+  border-radius: 16px 16px 0 0; background: rgb(51 22 26 / 0.045); color: rgb(var(--ink-muted-rgb, 120 100 96));
+  transition: background-color 220ms var(--ease-standard), color 220ms var(--ease-standard), transform 220ms var(--ease-standard);
+  transform: translateY(4px);
+}
+.folder-tab:hover { background: rgb(51 22 26 / 0.075); transform: translateY(2px); }
+.folder-tab[aria-selected='true'] {
+  z-index: 2; margin-bottom: -1px; height: 47px; transform: none;
+  background: rgb(var(--ground-raised-rgb)); color: rgb(var(--ground-deep-rgb));
+  box-shadow: 0 -1px 0 rgb(51 22 26 / 0.08), -1px 0 0 rgb(51 22 26 / 0.08), 1px 0 0 rgb(51 22 26 / 0.08);
+}
+.folder-tab[aria-selected='true']::before, .folder-tab[aria-selected='true']::after {
+  content: ''; position: absolute; bottom: 0; width: 16px; height: 16px; pointer-events: none;
+}
+.folder-tab[aria-selected='true']::before { left: -16px; background: radial-gradient(circle at 0 0, transparent 15.5px, rgb(51 22 26 / 0.08) 15.5px, rgb(51 22 26 / 0.08) 16.5px, rgb(var(--ground-raised-rgb)) 16.5px); }
+.folder-tab[aria-selected='true']::after { right: -16px; background: radial-gradient(circle at 100% 0, transparent 15.5px, rgb(51 22 26 / 0.08) 15.5px, rgb(51 22 26 / 0.08) 16.5px, rgb(var(--ground-raised-rgb)) 16.5px); }
+@media (min-width: 1024px) {
+  .folder-top {
+    position: relative; z-index: 1; padding: 14px 22px 0; background: rgb(var(--ground-raised-rgb));
+    border: 1px solid rgb(51 22 26 / 0.08); border-bottom: 0; border-radius: 28px 28px 0 0;
+  }
+  .folder-body {
+    padding: 0 22px 24px; background: rgb(var(--ground-raised-rgb)); overflow: hidden;
+    border: 1px solid rgb(51 22 26 / 0.08); border-top: 0; border-radius: 0 0 28px 28px;
+    box-shadow: 0 24px 50px -36px rgb(51 22 26 / 0.45);
+  }
+}
+@media (prefers-reduced-motion: reduce) { .folder-tab, .folder-tab:hover { transition: none; transform: none; } }
+
 /* Viewfinder brackets: four gold corners close in on hover / focus. */
 .viewfinder::before {
   content: ''; position: absolute; inset: 6px; z-index: 2; pointer-events: none; border-radius: inherit;

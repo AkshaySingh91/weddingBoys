@@ -14,6 +14,10 @@
  *
  * Row 1 is a tablist (arrow keys, Home/End); row 2 chips are buttons with
  * aria-pressed. One polite live region announces.
+ *
+ * `folder`: the lenses become folder tabs and row 2 opens the folder body
+ * (.folder-tab / .folder-top in globals.css); put the content that follows in
+ * a `.folder-body` so the folder continues around it.
  */
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from 'framer-motion';
@@ -23,7 +27,7 @@ import { Pill } from './CategoryDrill.jsx';
 const EASE = [0.16, 1, 0.3, 1];
 const filmsLabel = (n) => `${n} film${n === 1 ? '' : 's'}`;
 
-export default function CategoryTiers({ groups = [], group, value, onChange, label = 'Choose a category', className = '' }) {
+export default function CategoryTiers({ groups = [], group, value, onChange, label = 'Choose a category', className = '', folder = false }) {
     const uid = useId();
     const reduce = useReducedMotion();
     const railRef = useRef(null);
@@ -76,17 +80,19 @@ export default function CategoryTiers({ groups = [], group, value, onChange, lab
         <LayoutGroup id={uid}>
             <div className={className}>
                 {/* row 1: the lenses */}
-                <div role="tablist" aria-label={label} className="flex items-end gap-7 border-b border-ink/10">
+                <div role="tablist" aria-label={label} className={folder ? 'flex items-end gap-1 pl-5' : 'flex items-end gap-7 border-b border-ink/10'}>
                     {groups.map((g, i) => {
                         const on = i === gi;
                         return (
                             <button key={g.key} ref={(el) => { tabRefs.current[i] = el; }} type="button" role="tab"
                                 aria-selected={on} tabIndex={on ? 0 : -1} onClick={() => pickGroup(i)} onKeyDown={(e) => onTabKey(e, i)}
-                                className={`relative -mb-px flex cursor-pointer items-baseline gap-1.5 pb-3 pt-1 text-[15px] font-semibold transition-colors duration-ui focus-ring
-                                            ${on ? 'text-ink' : 'text-ink-muted hover:text-ink'}`}>
+                                className={folder
+                                    ? 'folder-tab cursor-pointer text-[15px] font-semibold focus-ring'
+                                    : `relative -mb-px flex cursor-pointer items-baseline gap-1.5 pb-3 pt-1 text-[15px] font-semibold transition-colors duration-ui focus-ring
+                                       ${on ? 'text-ink' : 'text-ink-muted hover:text-ink'}`}>
                                 {g.label}
                                 {g.rows.length > 1 && <span className="text-[12px] font-medium tabular-nums text-ink-muted">{g.rows.length}</span>}
-                                {on && <motion.span layoutId={`${uid}-line`} aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[2px] rounded-full bg-ink"
+                                {on && !folder && <motion.span layoutId={`${uid}-line`} aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[2px] rounded-full bg-ink"
                                     transition={reduce ? { duration: 0 } : { type: 'spring', bounce: 0.1, duration: 0.32 }} />}
                             </button>
                         );
@@ -94,7 +100,8 @@ export default function CategoryTiers({ groups = [], group, value, onChange, lab
                 </div>
 
                 {/* row 2: the takes — a reserved slot */}
-                <div className="relative mt-3 h-14 overflow-hidden">
+                <div className={folder ? 'folder-top' : 'mt-3'}>
+                <div className="relative h-14 overflow-hidden">
                     <div ref={railRef} className="h-full overflow-x-auto overflow-y-hidden scrollbar-none [mask-image:linear-gradient(to_right,#000_calc(100%-56px),transparent)]">
                         <AnimatePresence mode="popLayout" initial={false}>
                             <motion.div key={current?.key} {...slide} className="flex h-full w-max items-center gap-2 py-1.5 pr-14">
@@ -131,6 +138,7 @@ export default function CategoryTiers({ groups = [], group, value, onChange, lab
                             <FiChevronRight aria-hidden="true" className="h-4 w-4" />
                         </button>
                     )}
+                </div>
                 </div>
                 <p className="sr-only" aria-live="polite">{said}</p>
             </div>
