@@ -1556,6 +1556,12 @@ html {
   [data-swell] .cta-ember::before { animation: ctaEmber 1200ms ease-out 900ms both; }
   [data-swell] .swell-line { animation: wv-fade 600ms ease-out 1100ms both; }
 }
+/* The Aarti light: a warm, uneven breathing glow from below while the Aarti is on. */
+.aarti-glow { background: radial-gradient(90% 60% at 55% 100%, rgba(255, 140, 50, 0.32), transparent 70%); }
+@media (prefers-reduced-motion: no-preference) {
+  [data-live] .aarti-glow { animation: aartiBreath 2.6s ease-in-out infinite alternate; }
+}
+@keyframes aartiBreath { 0% { opacity: 0.75; } 35% { opacity: 1; } 60% { opacity: 0.7; } 100% { opacity: 0.95; } }
 @keyframes diyaLight { 0% { scale: 1; filter: brightness(1); } 60% { scale: 1.35; filter: brightness(1.4); } 100% { scale: 1.12; filter: brightness(1.15); } }
 @keyframes ctaEmber { 0% { opacity: 0; } 45% { opacity: 0.7; } 100% { opacity: 0.35; } }
 @keyframes diyaDrift { from { transform: translate3d(-6vw, 0, 0); } to { transform: translate3d(106vw, 0, 0); } }
