@@ -39,7 +39,8 @@ import aarti from '@/Asset/Varanasi/culture-aarti.png';
 export const AI_PLACEHOLDERS = {
     gali: {
         file: 'Asset/Varanasi/varanasi-gali-couple.png',
-        size: '2400 × 1600 (3:2), subject centred so 4:5 and 16:9 crops both work',
+        size: '2400 × 1600 (3:2), couple right of centre (~two-thirds across) — the copy sits on the left on desktop',
+        // When the file exists: replace the `galiStandIn` import with it and delete `placeholder: 'gali'`.
     },
 };
 
@@ -55,7 +56,7 @@ const MOMENTS = [
         key: 'gali', time: 'Afternoon', when: 'In the old city',
         title: 'The Heritage Walk', sub: 'Texture, alleys and time',
         body: 'Narrow galis, carved wooden doors and marigold-draped corridors. Varanasi is a film set at every corner, made for raw, candid portraits.',
-        wide: galiStandIn, tall: galiStandIn, posWide: '50% 60%', posTall: '50% 55%', placeholder: 'gali',
+        wide: galiStandIn, tall: galiStandIn, posWide: '50% 60%', posTall: '64% 55%', placeholder: 'gali',
         sky: 'radial-gradient(120% 80% at 30% 0%, rgba(255,226,170,0.32), transparent 62%)', diyas: 0.15,
     },
     {
