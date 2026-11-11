@@ -1,93 +1,77 @@
 import { notFound } from 'next/navigation';
+import { preload } from 'react-dom';
 import { SITE_URL } from '@/lib/siteConfig.js';
-import PhotoDetailClient from './_components/PhotoDetailClient.jsx';
+import { stillLadder } from '@/lib/films.js';
+import PhotoView from './_components/PhotoView.jsx';
+import { FRAME_SIZES } from '@/lib/photos.js';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
-async function getPhoto(photoId) {
+const getJSON = async (path) => {
     try {
-        const res = await fetch(`${api_url}/api/photos/${encodeURIComponent(photoId)}`, {
-            cache: 'no-store',
-        });
-        if (!res.ok) return null;
-        return await res.json();
+        const res = await fetch(`${api_url}${path}`, { next: { revalidate: 300, tags: ['portfolio', 'photos'] } });
+        return res.ok ? await res.json() : null;
     } catch {
         return null;
     }
-}
+};
 
-async function getTeam() {
-    try {
-        const res = await fetch(`${api_url}/api/team`, {
-            cache: 'no-store',
-        });
-        if (!res.ok) return [];
-        const data = await res.json();
-        return data.teamImages || [];
-    } catch {
-        return [];
-    }
-}
+const coupleOf = (c) => [c?.Bride, c?.Groom].filter(Boolean).join(' & ');
+const rite = (c) => (c === 'Wedding / Pheras' ? 'Wedding' : c);
 
 export async function generateMetadata({ params }) {
     const { photoId } = await params;
-    const data = await getPhoto(photoId);
-
-    if (!data || !data.selectedPhoto) {
-        return {
-            title: 'Wedding Photograph | The Wedding Vachan',
-            description: 'Fine art wedding photography by The Wedding Vachan.',
-        };
-    }
-
-    const bride = data.clientName?.Bride || '';
-    const groom = data.clientName?.Groom || '';
-    const couple = [bride, groom].filter(Boolean).join(' & ');
-    const titleText = data.selectedPhoto.title || (couple ? `${couple} Wedding Photograph` : 'Fine Art Photograph');
-    const city = data.selectedPhoto.photoLocation?.city ? ` in ${data.selectedPhoto.photoLocation.city}` : '';
-    const title = `${titleText}${city} | The Wedding Vachan`;
-    const description = data.selectedPhoto.caption || `Fine art wedding photography of ${couple || 'a celebration'}${city} captured by The Wedding Vachan.`;
+    const data = await getJSON(`/api/photos/${encodeURIComponent(photoId)}`);
+    const p = data?.selectedPhoto;
+    if (!p) return { title: 'Wedding photograph | The Wedding Vachan' };
+    const couple = coupleOf(data.clientName);
+    const city = p.photoLocation?.city ? `, ${p.photoLocation.city}` : '';
+    const what = [rite(p.eventGroup), couple && `${couple}'s wedding`].filter(Boolean).join(' at ');
+    const title = `${p.title || what || 'Wedding photograph'}${city} | The Wedding Vachan`;
+    const description = p.caption || `${what || 'A wedding'}${city}, photographed by The Wedding Vachan.`;
     const url = `${SITE_URL}/photos/${photoId}`;
-    const image = data.selectedPhoto.url;
-
+    const image = stillLadder(p.url, { width: p.width, cap: 1600 })?.srcSet?.split(', ').pop()?.split(' ')[0] || p.url;
     return {
-        title,
-        description,
+        title, description,
         alternates: { canonical: url },
-        openGraph: {
-            title,
-            description,
-            url,
-            type: 'article',
-            images: image ? [{ url: image, alt: titleText }] : [],
-        },
-        twitter: {
-            card: 'summary_large_image',
-            title,
-            description,
-            images: image ? [image] : [],
-        },
+        openGraph: { title, description, url, type: 'article', images: image ? [{ url: image, alt: what || title }] : [] },
+        twitter: { card: 'summary_large_image', title, description, images: image ? [image] : [] },
     };
 }
 
-export default async function SpecificPhotoPage({ params, searchParams }) {
+export default async function PhotoPage({ params }) {
     const { photoId } = await params;
-    const [photoData, team] = await Promise.all([
-        getPhoto(photoId),
-        getTeam(),
+    const [data, recs, studio] = await Promise.all([
+        getJSON(`/api/photos/${encodeURIComponent(photoId)}`),
+        getJSON(`/api/photos/${encodeURIComponent(photoId)}/recommended`),
+        getJSON('/api/studio/details'),
     ]);
+    if (!data?.selectedPhoto) notFound();
 
-    if (!photoData || !photoData.selectedPhoto) {
-        notFound();
-    }
+    const p = data.selectedPhoto;
+    // The photograph is the page's largest paint: fetch it first, at the right size.
+    const ladder = stillLadder(p.url, { width: p.width, cap: 1600 });
+    if (ladder) preload(ladder.src, { as: 'image', imageSrcSet: ladder.srcSet, imageSizes: FRAME_SIZES, fetchPriority: 'high' });
+
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'ImageObject',
+        contentUrl: ladder?.srcSet?.split(', ').pop()?.split(' ')[0] || p.url,
+        url: `${SITE_URL}/photos/${photoId}`,
+        name: p.title || undefined,
+        caption: p.caption || undefined,
+        width: p.width || undefined,
+        height: p.height || undefined,
+        creditText: 'The Wedding Vachan',
+        creator: { '@type': 'Organization', name: 'The Wedding Vachan', url: SITE_URL },
+        copyrightNotice: 'The Wedding Vachan',
+    };
 
     return (
-        <PhotoDetailClient
-            key={photoId}
-            initialLightbox={(await searchParams)?.view === 'lightbox'}
-            initialData={photoData}
-            initialTeam={team}
-            photoId={photoId}
-        />
+        <>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+            <PhotoView key={photoId} data={data} recommended={recs?.recommendedPhotos || []}
+                studioPhone={studio?.studioDetails?.contact?.[0] || null} />
+        </>
     );
 }

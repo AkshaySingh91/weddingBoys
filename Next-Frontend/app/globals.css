@@ -1780,3 +1780,18 @@ html[data-scrolling] .film-card { pointer-events: none; }
 }
 @keyframes sheetUp { from { transform: translateY(100%); } }
 @keyframes drawerIn { from { transform: translateX(100%); } }
+
+/* ── Photograph page: the wedding as a strip ────────────────────────────────
+   Native scroll-snap, one frame per view. The frame keeps its own shape inside
+   a fixed-height slide; the slide's ground is the photo's blur placeholder
+   (stretched: already soft, no filter). */
+.pv-strip { --pv-h: min(125vw, 72svh); display: flex; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain; scrollbar-width: none; }
+.pv-strip::-webkit-scrollbar { display: none; }
+@media (min-width: 1024px) { .pv-strip { --pv-h: calc(100svh - var(--header-height) - 56px); border-radius: 18px; } }
+.pv-slide { position: relative; flex: 0 0 100%; height: var(--pv-h); margin: 0; display: grid; place-items: center;
+  scroll-snap-align: center; scroll-snap-stop: always; background-size: cover; background-position: center; }
+.pv-slide[data-initial] { scroll-initial-target: nearest; }
+.pv-frame { position: relative; display: block; aspect-ratio: var(--a); width: min(100%, calc(var(--pv-h) * var(--a))); }
+.pv-frame > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+@media (min-width: 1024px) { .pv-frame > img { border-radius: 4px; } }

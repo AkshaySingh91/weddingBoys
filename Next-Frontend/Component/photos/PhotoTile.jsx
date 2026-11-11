@@ -55,7 +55,7 @@ export function GreasePencil({ id, a, fresh = false }) {
 }
 
 /** Fly a small copy of the photo to the selects tray (one Web Animation, then gone). */
-function flyToTray(img) {
+export function flyToTray(img) {
     const tray = document.querySelector('[data-selects-target]');
     if (!img || !tray || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const from = img.getBoundingClientRect();
