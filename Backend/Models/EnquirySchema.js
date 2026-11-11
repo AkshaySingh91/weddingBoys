@@ -11,11 +11,17 @@ const Enquiry = new mongoose.Schema({
         sentAt: { type: Date },
     },
     Bride: { type: String, required: true },
-    Groom: { type: String, required: true },
+    Groom: { type: String, default: '' },
     Contact: { type: String, required: true },
-    Date: {
-        type: Object, required: true
-    },
+    // An exact day { start, end }, or null when they gave a month / not fixed (DateNote).
+    Date: { type: Object, default: null },
+    DateNote: { type: String, default: '' },
+    Kind: { type: String, default: '' },
+    City: { type: String, default: '' },
+    Source: { type: String, default: '' },
+    Context: { type: String, default: '' },
+    Message: { type: String, default: '' },
+    Channel: { type: String, enum: ['form', 'whatsapp'], default: 'form' },
     Reach: { type: String, default: '' },
     SubmittedTime: { type: String, required: true, default: () => new Date().toISOString() },
     isViewed: { type: Boolean, default: false, required: true }

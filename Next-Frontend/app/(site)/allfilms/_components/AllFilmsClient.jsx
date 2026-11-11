@@ -24,6 +24,7 @@ import useFilmPlayer from '@/Component/films/useFilmPlayer.jsx';
 import CategoryDrill from '@/Component/ui/CategoryDrill.jsx';
 import CategoryTiers from '@/Component/ui/CategoryTiers.jsx';
 import { matchesQuery } from '@/lib/films.js';
+import { contactHref } from '@/lib/contact.js';
 
 
 export default function AllFilmsClient({ discovery = null, initialCategory = null, initialQuery = '' }) {
@@ -189,7 +190,7 @@ export default function AllFilmsClient({ discovery = null, initialCategory = nul
 
                 <div className="mt-12 flex flex-col items-start justify-between gap-4 rounded-[28px] bg-ground-deep p-6 text-ink-onDeep sm:flex-row sm:items-center sm:p-8">
                     <p className="font-display text-[26px] leading-tight sm:text-[32px]">Seen one you love? <span className="italic text-gold">Let&rsquo;s make yours.</span></p>
-                    <Link href="/contact" className="inline-flex h-12 shrink-0 items-center gap-2 rounded-full bg-accent px-6 text-[15px] font-semibold text-ink-onAccent hover:bg-accent-hover focus-ring">
+                    <Link href={contactHref({ from: 'allfilms', focus: 'date' })} className="inline-flex h-12 shrink-0 items-center gap-2 rounded-full bg-accent px-6 text-[15px] font-semibold text-ink-onAccent hover:bg-accent-hover focus-ring">
                         Check your date <FiArrowRight aria-hidden="true" className="h-4 w-4" />
                     </Link>
                 </div>

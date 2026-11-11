@@ -24,6 +24,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Info, ArrowRight, Link2, Check } from 'lucide-react';
+import { contactHref } from '@/lib/contact.js';
 
 const coverOf = (post) =>
     typeof post?.coverImage === 'string'
@@ -178,7 +179,7 @@ function CtaCard() {
                 Speak directly with our technical director about venue lighting and camera permits.
             </p>
             <Link
-                href="/contact"
+                href={contactHref({ from: 'journal' })}
                 className="relative inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-studio-coral px-4 py-2.5 text-[13px] font-bold text-white transition-colors hover:bg-studio-coralDark"
             >
                 Book Creative Consultation
@@ -341,7 +342,7 @@ function AuthorCard({ author }) {
                     <p className="text-[11px] text-studio-inkMuted">{jobTitle}</p>
                 </div>
                 <Link
-                    href="/contact"
+                    href={contactHref({ from: 'journal' })}
                     className="shrink-0 rounded-full border border-studio-coral px-3.5 py-1.5 text-[11px] font-semibold text-studio-coral transition-colors hover:bg-studio-coral hover:text-white"
                 >
                     Follow

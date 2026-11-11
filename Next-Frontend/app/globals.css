@@ -1796,20 +1796,23 @@ html[data-scrolling] .film-card { pointer-events: none; }
 .pv-frame > img { display: block; width: 100%; height: 100%; object-fit: cover; }
 @media (min-width: 1024px) { .pv-frame > img { border-radius: 4px; } }
 
-/* ── Your selects: a proof sheet on film ────────────────────────────────────
-   Film base (the studio's wine), 35mm sprocket holes along the strip's edges,
-   amber edge print. Static paint only — gradients, no images, no layers. */
-.film-base { background: rgb(var(--ground-deep-rgb)); }
-.film-strip {
-  position: relative; border-radius: 10px; padding: 14px 0;
+/* ── Your selects: the light table ────────────────────────────────────────
+   Warm, lit paper; the selects lie on it as prints — a white border, a
+   hand-placed tilt (--tilt), a soft shadow — numbered in pencil red. Static
+   paint only: no layers, no running animation. */
+.light-table {
   background:
-    radial-gradient(circle at 50% 50%, rgb(var(--ground-rgb) / 0.9) 0 2.6px, transparent 3.2px) 0 3px / 16px 10px repeat-x,
-    radial-gradient(circle at 50% 50%, rgb(var(--ground-rgb) / 0.9) 0 2.6px, transparent 3.2px) 0 calc(100% - 3px) / 16px 10px repeat-x,
-    rgb(20 10 12);
+    radial-gradient(120% 70% at 50% 0%, rgb(255 251 244), transparent 70%),
+    radial-gradient(90% 60% at 100% 100%, rgb(var(--gold-rgb) / 0.10), transparent 70%),
+    rgb(247 239 228);
 }
+.print { padding: 4px 4px 4px; background: #fff; border-radius: 2px; transform: rotate(var(--tilt, 0deg));
+  box-shadow: 0 1px 1px rgb(51 22 26 / 0.08), 0 10px 18px -10px rgb(51 22 26 / 0.45); }
+.print > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.print > .select-loop { inset: 2px; width: calc(100% - 4px); height: calc(100% - 4px); }
+.print-no { display: block; margin-top: 6px; text-align: center; font: 700 12px/1 var(--font-inter), sans-serif; letter-spacing: 0.06em;
+  color: rgb(var(--accent-rgb)); transform: rotate(calc(var(--tilt, 0deg) * -2)); }
 .edge-print { font: 600 10px/1.2 var(--font-inter), ui-sans-serif, sans-serif; letter-spacing: 0.22em; color: rgb(232 160 64 / 0.85); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.edge-print > span { margin-left: 1.2em; }
-.edge-print > span::before { content: '\25B8'; margin-right: 0.6em; }
 .proof { position: relative; }
 @media (prefers-reduced-motion: no-preference) {
   .proof .select-loop[data-fresh] path { animation-delay: calc(140ms + var(--i, 0) * 70ms); }
@@ -1849,19 +1852,70 @@ html[data-scrolling] .film-card { pointer-events: none; }
 .pfill-body > * { position: relative; }
 @container (max-width: 150px) { .pfill-body { display: none; } }
 
-/* The photograph page's strip as film: sprocket holes along both edges and an
-   amber edge print move with each frame; the base is film-dark, warmed by the
-   photo's own blur placeholder (--echo). */
+/* The photograph page's strip: a warm ground lit by the photo's own colours
+   (its blur placeholder, --echo); no sprockets, no dark film base. */
 .pv-slide {
-  --hole: radial-gradient(ellipse 5px 3.4px at 50% 50%, rgb(var(--ground-rgb) / 0.88) 98%, transparent 100%);
-  padding: 22px 0 34px; background-color: rgb(22 12 13);
-  background-image: var(--hole), var(--hole), linear-gradient(rgb(22 12 13 / 0.74), rgb(22 12 13 / 0.74)), var(--echo, none);
-  background-size: 18px 12px, 18px 12px, 100% 100%, cover;
-  background-position: 4px 5px, 4px calc(100% - 5px), 0 0, center;
-  background-repeat: repeat-x, repeat-x, no-repeat, no-repeat;
+  padding: 18px 0; background-color: rgb(var(--ground-rgb));
+  background-image: linear-gradient(rgb(var(--ground-rgb) / 0.55), rgb(var(--ground-rgb) / 0.55)), var(--echo, none);
+  background-size: 100% 100%, cover; background-position: 0 0, center; background-repeat: no-repeat;
 }
-.pv-slide .pv-frame { width: min(100%, calc((var(--pv-h) - 56px) * var(--a))); }
-.pv-edge { position: absolute; left: 14px; right: 14px; bottom: 15px; font-size: 9.5px; }
+.pv-slide .pv-frame { width: min(100%, calc((var(--pv-h) - 36px) * var(--a))); }
+.pv-slide .pv-frame > img { box-shadow: 0 18px 40px -24px rgb(51 22 26 / 0.55); }
+.pv-edge { display: none; }
 .pgrid-day { --row-h: 150px; }
 @media (min-width: 640px)  { .pgrid-day { --row-h: 190px; } }
 @media (min-width: 1024px) { .pgrid-day { --row-h: 220px; } }
+
+/* the selects strip: the film's sprocket edges stay put while the negatives scroll */
+@media (max-width: 1023px) { .proofs { scroll-padding-inline: 12px; } }
+
+/* ── /contact: the invitation ───────────────────────────────────────────────
+   The studio's invitation-card design (the lookbook's gold double frame and
+   TWV monogram). The blanks are the card's own lines: an underline, no box. */
+.invite-card {
+  position: relative; margin: 0 auto; max-width: 720px; padding: 44px 22px 36px; text-align: center;
+  background: rgb(var(--ground-raised-rgb)); border-radius: 6px;
+  box-shadow: inset 0 0 0 1px rgb(var(--gold-rgb) / 0.75), inset 0 0 0 7px rgb(var(--ground-raised-rgb)), inset 0 0 0 7.5px rgb(var(--gold-rgb) / 0.5),
+    0 30px 60px -40px rgb(51 22 26 / 0.45);
+}
+@media (min-width: 640px) { .invite-card { padding: 56px 48px 44px; } }
+.invite-mono { display: grid; place-items: center; width: 46px; height: 46px; margin: 0 auto 18px; border-radius: 50%;
+  box-shadow: 0 0 0 1px rgb(var(--gold-rgb)), 0 0 0 4px rgb(var(--ground-raised-rgb)), 0 0 0 4.5px rgb(var(--gold-rgb) / 0.55);
+  font: 600 12px/1 var(--font-inter), sans-serif; letter-spacing: 0.08em; color: rgb(var(--gold-rgb)); }
+.invite-line { color: rgb(var(--ground-deep-rgb) / 0.62); font-size: 15px; }
+.invite-blank { display: inline-block; }
+.invite-input {
+  background: transparent; border: 0; border-bottom: 1.5px solid rgb(var(--gold-rgb) / 0.6); border-radius: 0; padding: 4px 2px 6px;
+  color: rgb(var(--ground-deep-rgb)); font-size: 30px; line-height: 1.15; text-align: center; max-width: 100%;
+  transition: border-color 160ms var(--ease-standard);
+}
+.invite-input.font-display { font-size: 32px; }
+@media (min-width: 640px) { .invite-input.font-display { font-size: 42px; } }
+.invite-input[type='date'] { font-size: 28px; }
+.invite-input::placeholder { color: rgb(var(--ground-deep-rgb) / 0.3); }
+.invite-input:focus { outline: none; border-bottom-color: rgb(var(--accent-rgb)); }
+.invite-input[aria-invalid='true'] { border-bottom-color: rgb(var(--accent-rgb)); }
+.invite-error { margin-top: 8px; font-size: 13.5px; color: rgb(var(--accent-ink-rgb, 168 36 28)); }
+
+/* Phones: both ways out, always under the thumb (solid, no blur). */
+.invite-bar { position: fixed; inset: auto 0 0 0; z-index: 30; display: flex; gap: 8px; padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  background: rgb(var(--ground-rgb) / 0.97); box-shadow: 0 -10px 30px -18px rgb(51 22 26 / 0.45); }
+
+.direct-row { display: flex; align-items: center; gap: 14px; min-height: 64px; padding: 12px 18px; transition: background-color 160ms var(--ease-standard); }
+.direct-row:hover { background: rgb(var(--ground-deep-rgb) / 0.03); }
+
+/* Sent: a red TWV seal presses onto the card; the date is circled in pencil. */
+.invite-card.is-sealed .invite-mono { visibility: hidden; }
+@media (min-width: 640px) { .invite-seal { top: 42px; } }
+.invite-seal { position: absolute; left: 50%; top: 30px; margin-left: -37px; display: grid; place-items: center; width: 74px; height: 74px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgb(236 92 78), rgb(var(--accent-rgb)) 55%, rgb(150 30 24));
+  box-shadow: inset 0 0 0 3px rgb(255 255 255 / 0.14), inset 0 -3px 6px rgb(0 0 0 / 0.25), 0 8px 18px -8px rgb(120 20 16 / 0.7);
+  font: 700 15px/1 var(--font-inter), sans-serif; letter-spacing: 0.08em; color: rgb(255 236 230); transform: rotate(-8deg); }
+.invite-card .select-loop { inset: -2px; width: calc(100% + 4px); height: calc(100% + 4px); }
+@media (prefers-reduced-motion: no-preference) {
+  .invite-card.is-sealed { animation: inviteFold 520ms cubic-bezier(0.16, 1, 0.3, 1); }
+  .invite-card.is-sealed .invite-seal { animation: sealPress 460ms cubic-bezier(0.34, 1.56, 0.64, 1) 260ms backwards; }
+  .invite-card.is-sealed .select-loop path { animation-delay: 620ms; }
+}
+@keyframes inviteFold { 0% { transform: scale(0.97); opacity: 0.6; } 100% { transform: none; opacity: 1; } }
+@keyframes sealPress { from { transform: rotate(-24deg) scale(1.8); opacity: 0; } to { transform: rotate(-8deg) scale(1); opacity: 1; } }

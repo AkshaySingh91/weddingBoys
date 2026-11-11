@@ -4,6 +4,24 @@ import WebsiteSettings from '../Models/WebsiteSettingSchema.js';
 import { sendMail } from '../Utils/mailer.js';
 import { escapeEmailHtml } from '../Utils/enquiryValidation.js';
 
+/** The studio's email for one enquiry: only the details they gave, escaped. */
+export function enquiryMail(enquiry) {
+    const e = escapeEmailHtml;
+    const names = [enquiry.Bride, enquiry.Groom].filter(Boolean).join(' & ');
+    const d = enquiry.Date;
+    const when = d?.start ? (d.end && d.end !== d.start ? `${d.start} – ${d.end}` : d.start) : (enquiry.DateNote || 'Not given');
+    const rows = [
+        ['Names', names], ['Reply to', enquiry.Contact], ['For', enquiry.Kind], ['When', when], ['Where', enquiry.City],
+        ['Came from', enquiry.Source], ['Was looking at', enquiry.Context], ['Message', enquiry.Message],
+        ['Sent by', enquiry.Channel === 'whatsapp' ? 'WhatsApp (they opened a chat too)' : 'The website form'], ['Found us via', enquiry.Reach],
+    ].filter(([, v]) => v);
+    return {
+        subject: `New wedding enquiry: ${names}${enquiry.Kind ? `, ${enquiry.Kind}` : ''} — The Wedding Vachan`,
+        html: `<h1>New wedding enquiry</h1>${rows.map(([k, v]) => `<p><strong>${e(k)}:</strong> ${e(v)}</p>`).join('')}`,
+        text: rows.map(([k, v]) => `${k}: ${v}`).join('\n'),
+    };
+}
+
 let timer;
 let busy = false;
 
@@ -20,12 +38,7 @@ export async function deliverNextEnquiry() {
         const settings = await WebsiteSettings.findOne().select('companyDetails.email').lean();
         const recipient = process.env.ENQUIRY_RECIPIENT || settings?.companyDetails?.email;
         if (!z.email().safeParse(recipient).success) throw new Error('Studio enquiry email is not configured');
-        const e = escapeEmailHtml;
-        sent = await sendMail({
-            to: recipient, subject: 'New wedding enquiry — The Wedding Vachan',
-            html: `<h1>New wedding enquiry</h1><p>Bride: ${e(enquiry.Bride)}</p><p>Groom: ${e(enquiry.Groom)}</p><p>Contact: ${e(enquiry.Contact)}</p><p>Dates: ${e(enquiry.Date.start)} – ${e(enquiry.Date.end)}</p><p>Referral: ${e(enquiry.Reach || 'Not specified')}</p>`,
-            text: `Bride: ${enquiry.Bride}\nGroom: ${enquiry.Groom}\nContact: ${enquiry.Contact}\nDates: ${enquiry.Date.start} - ${enquiry.Date.end}\nReferral: ${enquiry.Reach || 'Not specified'}`,
-        });
+        sent = await sendMail({ to: recipient, ...enquiryMail(enquiry) });
     } catch (error) {
         console.warn('[enquiry] notification delayed:', error.message);
     }

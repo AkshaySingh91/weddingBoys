@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Button from '@/Component/ui/Button.jsx';
 import { LEADERSHIP } from './storyData.js';
+import { contactHref } from '@/lib/contact.js';
 
 /**
  * 07 · End credits. Every face in the crew, then the credits, then the last
@@ -41,7 +42,7 @@ export default function EndCredits({ crew, whatsapp }) {
                 <p className="t-display-hero mx-auto !text-ink-onDeep">Your film is next.</p>
                 <p className="t-body-lead mx-auto mt-4 !text-ink-onDeep/80">Tell us your date and city, and we will plan it with you.</p>
                 <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-                    <Button href="/contact" size="lg">Plan your wedding <span aria-hidden="true">→</span></Button>
+                    <Button href={contactHref({ from: 'about' })} size="lg">Plan your wedding <span aria-hidden="true">→</span></Button>
                     {whatsapp && (
                         <Button href={whatsapp} variant="onMedia" size="lg" target="_blank" rel="noopener noreferrer" className="!text-ink-onDeep">
                             Chat on WhatsApp

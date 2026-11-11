@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer';
 import Enquiry from '../Models/EnquirySchema.js';
 import WebsiteSettings from '../Models/WebsiteSettingSchema.js';
 import { submitEnquiry } from '../Controllers/enquiryController.js';
-import { deliverNextEnquiry } from '../Services/enquiryNotifications.js';
+import { deliverNextEnquiry, enquiryMail } from '../Services/enquiryNotifications.js';
 import { enquirySchema } from '../Utils/enquiryValidation.js';
 import { rateLimit } from '../Middleware/rateLimit.js';
 
@@ -78,4 +78,30 @@ test('public abuse limits reject excess requests while keeping separate IP bucke
     guard({ ip: '127.0.0.2' }, response(), () => accepted++);
     assert.equal(denied.code, 429);
     assert.equal(accepted, 2);
+});
+
+test('the invitation needs only a name and a way to reply; date, partner and context are optional', () => {
+    const parsed = enquirySchema.parse({ bride: 'Riya', contact: '9876543210' });
+    assert.equal(parsed.groom, '');
+    assert.equal(parsed.eventDate, null);
+    assert.equal(parsed.channel, 'form');
+    const later = enquirySchema.parse({ bride: 'Riya', groom: 'Arjun', contact: 'riya@example.com', dateNote: 'December 2026',
+        kind: 'Wedding', city: 'Udaipur', source: 'film', context: "Krishna & Vishakha's film", channel: 'whatsapp', eventDate: { start: '' } });
+    assert.equal(later.eventDate, null);
+    assert.equal(later.dateNote, 'December 2026');
+    assert.equal(later.channel, 'whatsapp');
+    assert.equal(enquirySchema.safeParse({ contact: '9876543210' }).success, false, 'a name is still required');
+    assert.equal(enquirySchema.safeParse({ bride: 'Riya', contact: '12' }).success, false, 'a usable contact is still required');
+    assert.equal(enquirySchema.safeParse({ bride: 'Riya', contact: '9876543210', channel: 'sms' }).success, false);
+});
+
+test('a notification without an exact date says what they gave instead', () => {
+    const mail = enquiryMail({ Bride: 'Riya', Groom: '', Contact: '+919876543210', Date: null, DateNote: 'Not fixed yet',
+        Kind: 'Pre-wedding shoot', City: 'Varanasi', Source: 'varanasi', Channel: 'whatsapp' });
+    assert.match(mail.text, /When: Not fixed yet/);
+    assert.match(mail.text, /For: Pre-wedding shoot/);
+    assert.match(mail.text, /Sent by: WhatsApp/);
+    assert.match(mail.subject, /Riya, Pre-wedding shoot/);
+    assert.doesNotMatch(mail.text + mail.html, /undefined|null/);
+    assert.match(enquiryMail({ Bride: 'A', Groom: 'B', Contact: 'x', Date: { start: '2027-01-15', end: '2027-01-17' } }).text, /When: 2027-01-15 – 2027-01-17/);
 });

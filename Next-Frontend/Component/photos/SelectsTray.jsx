@@ -3,9 +3,10 @@
 /**
  * Your selects — the pill, and the contact sheet it opens.
  *
- * The sheet is a proof sheet on film: a wine film base with sprocket holes and
- * an amber edge print, your frames numbered and circled in red grease pencil
- * (the loops draw in one after another as it opens). Below, the lookbook: a
+ * The sheet is the studio's light table: warm, lit paper with your selects laid
+ * on it as prints (white borders, a hand-placed tilt, a soft shadow), each
+ * circled and numbered in red grease pencil (the loops draw in one after
+ * another as it opens). Below, the lookbook: a
  * small preview of the PDF's cover (the studio's invitation-card design with
  * your selects), your names for it, and Download — or Share, which on phones
  * hands the PDF itself to WhatsApp and family. Then: Ask us about these.
@@ -18,6 +19,7 @@ import Link from 'next/link';
 import { FiX, FiDownload, FiShare2 } from 'react-icons/fi';
 import { useSelects, selectsHref } from './selects.js';
 import { GreasePencil } from './PhotoTile.jsx';
+import { contactHref } from '@/lib/contact.js';
 
 const api = () => (typeof window !== 'undefined' && window.location.hostname !== 'localhost' ? '' : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'));
 const absolute = (p) => (typeof window === 'undefined' ? p : new URL(p, window.location.origin).toString());
@@ -44,7 +46,7 @@ export default function SelectsTray({ studioPhone = null }) {
     const link = absolute(selectsHref(list));
     const studio = studioPhone
         ? `https://wa.me/${String(studioPhone).replace(/\D/g, '')}?text=${encodeURIComponent(`Hi, we're planning our wedding and loved these photographs: ${link}`)}`
-        : `/contact?selects=${ids}`;
+        : contactHref({ from: 'selects', selects: list.map((x) => x.id) });
     const saveNames = (v) => { setNames(v); try { localStorage.setItem(NAMES_KEY, v); } catch { /* private mode */ } };
 
     /** Make the lookbook on the server and hand it over (download or share the file). */
@@ -90,37 +92,39 @@ export default function SelectsTray({ studioPhone = null }) {
 
             <dialog ref={dialog} onClose={() => setOpen(false)} onClick={(e) => { if (e.target === dialog.current) setOpen(false); }}
                 aria-labelledby="selects-title" className="sheet-dialog m-0 max-h-none max-w-none bg-transparent p-0 backdrop:bg-[rgba(28,17,10,0.55)]">
-                <div className="sheet-panel film-base flex flex-col text-ink-onDeep">
+                <div className="sheet-panel light-table flex flex-col text-ink">
                     <div className="flex items-start justify-between gap-4 px-5 pb-2 pt-5 sm:px-6">
                         <div>
-                            <h2 id="selects-title" className="font-display text-[32px] leading-none text-gold">Your selects</h2>
-                            <p className="mt-2 text-[14px] text-ink-onDeep/70">
+                            <h2 id="selects-title" className="font-display text-[32px] leading-none text-ink">Your selects</h2>
+                            <p className="mt-2 text-[14px] text-ink-muted">
                                 {n ? `${n} frame${n === 1 ? '' : 's'} circled, kept on this device.` : 'Circle the frames you would want for your own day. They stay on this device.'}
                             </p>
                         </div>
                         <button type="button" onClick={() => setOpen(false)} aria-label="Close"
-                            className="grid h-11 w-11 shrink-0 cursor-pointer place-items-center rounded-full text-ink-onDeep hover:bg-white/10 focus-ring">
+                            className="grid h-11 w-11 shrink-0 cursor-pointer place-items-center rounded-full text-ink hover:bg-ink/5 focus-ring">
                             <FiX aria-hidden="true" className="h-5 w-5" />
                         </button>
                     </div>
 
                     <div className="min-h-0 flex-1 overflow-y-auto">
                         {n > 0 && (
-                            <div className="film-strip mx-3 sm:mx-4">
-                                <p aria-hidden="true" className="edge-print px-3 pt-1">THE WEDDING VACHAN<span>SELECTS</span><span>{String(n).padStart(2, '0')} FRAMES</span></p>
-                                <ul className="grid grid-cols-3 gap-2 px-3 py-3">
+                            <div className="mx-1 sm:mx-2">
+                                {n > 3 && <p className="px-4 text-[12px] text-ink-muted lg:hidden">Swipe through all {n}.</p>}
+                                {/* Prints laid on the light table. Phones: one row to swipe — the sheet keeps
+                                    its size however many are circled. Desktop drawer: rows that scroll. */}
+                                <ul className="proofs flex snap-x gap-3 overflow-x-auto px-4 pb-4 pt-3 scrollbar-none lg:grid lg:max-h-[46vh] lg:grid-cols-4 lg:overflow-y-auto lg:overflow-x-hidden">
                                     {list.map((x, i) => (
-                                        <li key={x.id} className="proof" style={{ '--i': Math.min(i, 11) }}>
+                                        <li key={x.id} className="proof w-[88px] shrink-0 snap-start lg:w-auto" style={{ '--i': Math.min(i, 11), '--tilt': `${[-1.6, 1.1, -0.6, 1.8, -1.2, 0.7][i % 6]}deg` }}>
                                             <Link href={`/photos/${x.id}`} prefetch={false} onClick={() => setOpen(false)}
-                                                className="relative block aspect-[4/5] overflow-hidden rounded-[3px] bg-black/30 focus-ring">
+                                                className="print relative block aspect-[4/5] focus-ring">
                                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                                 <img src={x.src} alt="" loading="lazy" className="h-full w-full object-cover" />
                                                 <GreasePencil id={x.id} a={0.8} fresh={open} />
                                             </Link>
-                                            <span aria-hidden="true" className="edge-print mt-1 block">&#9656; {String(i + 1).padStart(2, '0')}</span>
+                                            <span aria-hidden="true" className="print-no">{String(i + 1).padStart(2, '0')}</span>
                                             <button type="button" onClick={() => remove(x.id)} aria-label={`Remove frame ${i + 1} from your selects`}
                                                 className="absolute -right-1 -top-1 grid h-11 w-11 cursor-pointer place-items-center focus-ring">
-                                                <span className="grid h-7 w-7 place-items-center rounded-full bg-ground text-ink shadow"><FiX aria-hidden="true" className="h-3.5 w-3.5" /></span>
+                                                <span className="grid h-7 w-7 place-items-center rounded-full bg-ground-raised text-ink shadow-[0_2px_8px_-2px_rgba(51,22,26,0.45)] ring-1 ring-ink/10"><FiX aria-hidden="true" className="h-3.5 w-3.5" /></span>
                                             </button>
                                         </li>
                                     ))}
@@ -130,7 +134,7 @@ export default function SelectsTray({ studioPhone = null }) {
 
                         {n > 0 && (
                             /* The lookbook: what they will get, and their names for its cover */
-                            <section aria-labelledby="lookbook-title" className="mx-3 mt-4 flex gap-4 rounded-[18px] bg-ground p-4 text-ink sm:mx-4">
+                            <section aria-labelledby="lookbook-title" className="mx-4 mt-2 flex gap-4 rounded-[18px] bg-ground-raised p-4 text-ink shadow-[0_10px_30px_-22px_rgba(51,22,26,0.5)] ring-1 ring-gold/30 sm:mx-5">
                                 <div aria-hidden="true" className="lookbook-cover shrink-0">
                                     <span className="lookbook-mono">TWV</span>
                                     <span className="lookbook-collage">
@@ -143,7 +147,9 @@ export default function SelectsTray({ studioPhone = null }) {
                                 </div>
                                 <div className="min-w-0 flex-1">
                                     <h3 id="lookbook-title" className="text-[15px] font-semibold">Your lookbook</h3>
-                                    <p className="mt-1 text-[13px] leading-snug text-ink-muted">Every frame you circled, in a PDF to keep, print or send to family.</p>
+                                    <p className="mt-1 text-[13px] leading-snug text-ink-muted">
+                                        {n > 30 ? `Your first 30 frames, in a PDF to keep, print or send to family.` : 'Every frame you circled, in a PDF to keep, print or send to family.'}
+                                    </p>
                                     <label className="mt-3 block">
                                         <span className="text-[12px] font-semibold text-ink-secondary">Names for the cover (optional)</span>
                                         <input value={names} onChange={(e) => saveNames(e.target.value.slice(0, 60))} placeholder="Riya & Arjun" autoComplete="off"
@@ -152,20 +158,20 @@ export default function SelectsTray({ studioPhone = null }) {
                                 </div>
                             </section>
                         )}
-                        {error && <p role="alert" className="mx-5 mt-3 text-[13.5px] text-gold">{error}</p>}
+                        {error && <p role="alert" className="mx-5 mt-3 text-[13.5px] text-accent-ink">{error}</p>}
                     </div>
 
-                    <div className="space-y-2 border-t border-white/10 px-5 pb-[calc(18px+env(safe-area-inset-bottom))] pt-4 sm:px-6">
+                    <div className="space-y-2 border-t border-ink/10 bg-ground-raised/70 px-5 pb-[calc(18px+env(safe-area-inset-bottom))] pt-4 sm:px-6">
                         {n > 0 ? (
                             <>
                                 <div className="flex gap-2">
                                     <button type="button" onClick={() => lookbook('download')} disabled={Boolean(making)} aria-busy={making === 'download'}
-                                        className="flex h-12 flex-1 cursor-pointer items-center justify-center gap-2 rounded-full bg-ground text-[15px] font-semibold text-ink hover:bg-white focus-ring disabled:cursor-wait disabled:opacity-80">
+                                        className="flex h-12 flex-1 cursor-pointer items-center justify-center gap-2 rounded-full bg-ink text-[15px] font-semibold text-ground hover:bg-ink/90 focus-ring disabled:cursor-wait disabled:opacity-80">
                                         <FiDownload aria-hidden="true" className="h-[18px] w-[18px]" />
                                         {making === 'download' ? 'Making your lookbook…' : 'Download the lookbook'}
                                     </button>
                                     <button type="button" onClick={() => lookbook('share')} disabled={Boolean(making)} aria-label="Share with family"
-                                        className="flex h-12 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-full px-4 text-[15px] font-semibold text-ink-onDeep ring-1 ring-white/30 hover:bg-white/10 focus-ring disabled:cursor-wait">
+                                        className="flex h-12 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-full px-4 text-[15px] font-semibold text-ink ring-1 ring-ink/20 hover:bg-ink/5 focus-ring disabled:cursor-wait">
                                         <FiShare2 aria-hidden="true" className="h-[18px] w-[18px]" />
                                         <span className="hidden sm:inline">{making === 'share' ? 'Preparing…' : 'Share'}</span>
                                     </button>
@@ -175,13 +181,13 @@ export default function SelectsTray({ studioPhone = null }) {
                                     Ask us about these
                                 </a>
                                 <div className="flex justify-between pt-1 text-[14px]">
-                                    <Link href={selectsHref(list)} prefetch={false} onClick={() => setOpen(false)} className="font-semibold text-gold hover:text-ink-onDeep">Open as a page</Link>
-                                    <button type="button" onClick={clear} className="cursor-pointer text-ink-onDeep/60 hover:text-ink-onDeep">Clear all</button>
+                                    <Link href={selectsHref(list)} prefetch={false} onClick={() => setOpen(false)} className="font-semibold text-accent-ink hover:text-accent">Open as a page</Link>
+                                    <button type="button" onClick={clear} className="cursor-pointer text-ink-muted hover:text-ink">Clear all</button>
                                 </div>
                             </>
                         ) : (
                             <button type="button" onClick={() => setOpen(false)}
-                                className="flex h-12 w-full cursor-pointer items-center justify-center rounded-full bg-ground text-[15px] font-semibold text-ink focus-ring">
+                                className="flex h-12 w-full cursor-pointer items-center justify-center rounded-full bg-ink text-[15px] font-semibold text-ground focus-ring">
                                 Browse photographs
                             </button>
                         )}

@@ -29,6 +29,7 @@ import { FiArrowUpRight, FiClock, FiPause, FiPlay } from 'react-icons/fi';
 import { STOPS as MOMENTS, Diyas, PlaceholderTag } from './varanasi/shared.jsx';
 import BanarasWalk from './varanasi/BanarasWalk.jsx';
 import useNetworkStatus from '@/Hooks/useNetworkStatus.jsx';
+import { contactHref } from '@/lib/contact.js';
 
 const STEP_MS = 6500;
 const EASE = [0.16, 1, 0.3, 1];
@@ -300,7 +301,7 @@ function VaranasiLaunchCard() {
                         <Offer />
                         <div className="mt-6 grid gap-2.5">
                             <Cta className="w-full">See shoot ideas &amp; packages</Cta>
-                            <Link href="/contact"
+                            <Link href={contactHref({ from: 'varanasi', kind: 'Pre-wedding shoot', city: 'Varanasi' })}
                                 className="inline-flex h-12 items-center justify-center rounded-full text-[15px] font-semibold text-ink-onDeep ring-1 ring-white/25 hover:bg-white/10 motion-safe:active:scale-[0.97] focus-ring">
                                 Check your dates
                             </Link>

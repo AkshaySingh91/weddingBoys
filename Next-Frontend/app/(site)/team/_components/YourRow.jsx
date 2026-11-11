@@ -7,6 +7,7 @@ import { FaWhatsapp } from 'react-icons/fa';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { PortraitImage } from '@/Component/team/Portrait.jsx';
 import { CARD_DEEP } from '@/Component/home/Chapter.jsx';
+import { contactHref } from '@/lib/contact.js';
 
 export default function YourRow({ people, crewCount, whatsapp }) {
     const faces = people.slice(0, 8);
@@ -49,7 +50,7 @@ export default function YourRow({ people, crewCount, whatsapp }) {
                         )}
                     </ul>
                     <div className="grid w-full grid-cols-1 gap-2.5 sm:flex sm:w-auto">
-                        <Link href="/contact"
+                        <Link href={contactHref({ from: 'team' })}
                             className="group inline-flex h-12 items-center justify-between gap-3 whitespace-nowrap rounded-full bg-accent pl-5 pr-1.5 text-[14.5px] font-semibold text-ink-onAccent
                                        transition-[background-color,transform] duration-ui ease-standard hover:bg-accent-hover motion-safe:active:scale-[0.97] focus-ring sm:flex-none">
                             Check your date

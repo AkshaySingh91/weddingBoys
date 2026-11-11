@@ -38,6 +38,7 @@ import ClapObserver from '@/app/(site)/team/_components/ClapObserver.jsx';
 import { stillSrcSet } from '@/lib/films.js';
 import { guillotine, chunks } from '@/lib/mosaic.js';
 import { gradeOf, inkOn } from '@/lib/grades.js';
+import { contactHref } from '@/lib/contact.js';
 
 const pad = (n) => String(n).padStart(2, '0');
 const rite = (c) => (c === 'Wedding / Pheras' ? 'Wedding' : c || '');
@@ -473,7 +474,7 @@ export default function WeddingStory({ data, filmId = null, rows = [] }) {
                                     </div>
                                 ))}
                             </dl>
-                            <Link href="/contact" className="mt-6 inline-flex h-12 items-center rounded-full bg-accent px-6 text-[15px] font-semibold text-ink-onAccent hover:bg-accent-hover motion-safe:active:scale-[0.97] focus-ring">
+                            <Link href={contactHref({ from: 'story', wedding: w.slug, focus: 'date' })} className="mt-6 inline-flex h-12 items-center rounded-full bg-accent px-6 text-[15px] font-semibold text-ink-onAccent hover:bg-accent-hover motion-safe:active:scale-[0.97] focus-ring">
                                 Check your date
                             </Link>
                         </div>

@@ -325,7 +325,7 @@ export default function DashboardPage() {
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2">
                           <h4 className="text-xs font-bold text-ink truncate font-sans">
-                            {inq.Bride || 'Bride'} & {inq.Groom || 'Groom'}
+                            {[inq.Bride, inq.Groom].filter(Boolean).join(' & ') || 'Unnamed'}
                           </h4>
                           {!inq.isViewed && (
                             <Badge variant="terracotta" size="sm">

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { contactHref } from '@/lib/contact.js';
 
 /**
  * Mobile only: once the cold open has scrolled away, WhatsApp and Enquire sit
@@ -48,7 +49,7 @@ export default function StickyActions({ whatsapp }) {
                     </a>
                 )}
                 <Link
-                    href="/contact"
+                    href={contactHref({ from: 'about' })}
                     tabIndex={visible ? undefined : -1}
                     className="inline-flex min-h-[48px] flex-1 items-center justify-center rounded-control bg-accent text-[15px] font-semibold text-ink-onAccent"
                 >

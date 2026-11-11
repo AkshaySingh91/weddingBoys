@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { FiArrowUpRight, FiInstagram, FiYoutube, FiFacebook } from 'react-icons/fi';
-import { FOOTER_NAV, PRIMARY_CTA, BRAND_DESCRIPTION, BRAND_TAGLINE } from '@/lib/navigation.js';
+import { FOOTER_NAV, BRAND_DESCRIPTION, BRAND_TAGLINE } from '@/lib/navigation.js';
+import FooterCta from './FooterCta.jsx';
 import { SOCIAL_LINKS } from '@/lib/siteConfig.js';
 
 // Two Instagram accounts, so those two carry their city as visible text.
@@ -16,20 +17,8 @@ export default function SiteFooter() {
         // relative + z-10: pages with a sticky or fixed hero must never paint over the footer.
         <footer className="relative z-10 bg-ground-deep text-ink-onDeep">
             <div className="mx-auto max-w-wide px-5 pb-8 pt-12 sm:px-8 lg:px-12 lg:pb-10 lg:pt-16">
-                {/* Call to action, as a card. */}
-                <div className="flex flex-col gap-5 rounded-2xl border border-ink-onDeep/10 bg-ink-onDeep/[0.04] p-5 sm:p-7 lg:flex-row lg:items-center lg:justify-between">
-                    <div>
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gold">Begin your story</p>
-                        <h2 className="mt-2 max-w-2xl text-balance font-display text-[26px] leading-tight sm:text-4xl">
-                            Every wedding deserves to be remembered beautifully.
-                        </h2>
-                        <p className="mt-2 max-w-xl text-[14px] leading-relaxed text-ink-onDeep/70">Tell us what you are planning. We would love to hear about it.</p>
-                    </div>
-                    <Link href={PRIMARY_CTA.href}
-                        className="inline-flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-accent px-6 text-[14px] font-semibold text-ink-onAccent transition-colors hover:bg-accent-hover focus-ring sm:w-fit">
-                        {PRIMARY_CTA.label}<FiArrowUpRight aria-hidden="true" className="h-4 w-4" />
-                    </Link>
-                </div>
+                {/* Call to action, as a card — not on /contact itself. */}
+                <FooterCta />
 
                 <div className="grid grid-cols-2 gap-x-6 gap-y-9 py-12 lg:grid-cols-[1.6fr_repeat(4,minmax(0,1fr))] lg:gap-8">
                     <div className="col-span-2 lg:col-span-1">

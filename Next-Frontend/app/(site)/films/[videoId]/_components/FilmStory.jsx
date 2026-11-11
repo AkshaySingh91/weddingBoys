@@ -28,6 +28,7 @@ import useFilmPlayer from '@/Component/films/useFilmPlayer.jsx';
 import RevealObserver from '@/Component/home/RevealObserver.jsx';
 import useNetworkStatus from '@/Hooks/useNetworkStatus.jsx';
 import { focusStyle } from '@/lib/focus.js';
+import { contactHref } from '@/lib/contact.js';
 
 const EMBED = /^https:\/\/(www\.youtube-nocookie\.com\/embed\/|player\.vimeo\.com\/video\/)/;
 const rite = (c) => (c === 'Wedding / Pheras' ? 'Wedding' : c || '');
@@ -375,7 +376,7 @@ export default function FilmStory({ data, videoId, related = [], rows = [] }) {
                         <p className="font-display text-[30px] leading-tight text-ink sm:text-[40px]">Your story could be <em className="italic text-accent-ink">the next film</em>.</p>
                         <p className="mt-2 text-[15px] text-ink-secondary">Tell us your date and where you&rsquo;re celebrating.</p>
                     </div>
-                    <Link href="/contact" className="inline-flex h-12 shrink-0 items-center gap-2 rounded-full bg-accent px-6 text-[15px] font-semibold text-ink-onAccent hover:bg-accent-hover motion-safe:active:scale-[0.97] focus-ring">
+                    <Link href={contactHref({ from: 'film', film: videoId, focus: 'date' })} className="inline-flex h-12 shrink-0 items-center gap-2 rounded-full bg-accent px-6 text-[15px] font-semibold text-ink-onAccent hover:bg-accent-hover motion-safe:active:scale-[0.97] focus-ring">
                         Check your date <FiArrowRight aria-hidden="true" className="h-4 w-4" />
                     </Link>
                 </div>

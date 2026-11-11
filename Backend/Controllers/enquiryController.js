@@ -23,6 +23,8 @@ export async function submitEnquiry(req, res) {
                 enquiry = await Enquiry.create({
                     requestId, requestHash, Bride: details.bride, Groom: details.groom,
                     Contact: details.contact, Date: details.eventDate, Reach: details.reach,
+                    DateNote: details.dateNote, Kind: details.kind, City: details.city, Source: details.source,
+                    Context: details.context, Message: details.message, Channel: details.channel,
                     SubmittedTime: new Date().toISOString(), isViewed: false,
                 });
             } catch (error) {

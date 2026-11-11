@@ -24,6 +24,7 @@ import RevealObserver from '@/Component/home/RevealObserver.jsx';
 import useNetworkStatus from '@/Hooks/useNetworkStatus.jsx';
 import { focusStyle } from '@/lib/focus.js';
 import { coupleOf, blurbOf, filmHref, pickRails } from '@/lib/films.js';
+import { contactHref } from '@/lib/contact.js';
 
 const libraryHref = (key) => `/allfilms?category=${encodeURIComponent(key)}`;
 
@@ -241,7 +242,7 @@ export default function FilmsClient({ discovery = null }) {
                             <h2 className="font-display text-[30px] leading-tight sm:text-[40px]">Let&rsquo;s make your story <span className="italic text-gold">next</span>.</h2>
                             <p className="mt-2 text-[15px] text-ink-onDeep/75">Tell us where, when and what you&rsquo;re dreaming of.</p>
                         </div>
-                        <Link href="/contact" className="inline-flex h-12 shrink-0 items-center gap-2 rounded-full bg-accent px-6 text-[15px] font-semibold text-ink-onAccent hover:bg-accent-hover motion-safe:active:scale-[0.97] focus-ring">
+                        <Link href={contactHref({ from: 'films', focus: 'date' })} className="inline-flex h-12 shrink-0 items-center gap-2 rounded-full bg-accent px-6 text-[15px] font-semibold text-ink-onAccent hover:bg-accent-hover motion-safe:active:scale-[0.97] focus-ring">
                             Plan your wedding film <FiArrowRight aria-hidden="true" className="h-4 w-4" />
                         </Link>
                     </div>

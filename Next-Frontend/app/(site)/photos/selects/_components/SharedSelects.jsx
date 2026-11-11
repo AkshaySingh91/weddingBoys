@@ -12,6 +12,7 @@ import GridEnd from '@/Component/photos/GridEnd.jsx';
 import { useSelects } from '@/Component/photos/selects.js';
 import { stillLadder } from '@/lib/films.js';
 import { gradeOf, GOLD } from '@/lib/grades.js';
+import { contactHref } from '@/lib/contact.js';
 
 const rite = (c) => (c === 'Wedding / Pheras' ? 'Wedding' : c);
 
@@ -49,7 +50,7 @@ export default function SharedSelects({ photos = [], studioPhone = null }) {
                     ))}
                     <GridEnd>
                         <span className="font-display text-[28px] leading-none">Want frames like these?</span>
-                        <Link href="/contact" className="w-max text-[14px] font-semibold underline-offset-4 hover:underline focus-ring">Check your date</Link>
+                        <Link href={contactHref({ from: 'selects', selects: photos.map((p) => p._id), focus: 'date' })} className="w-max text-[14px] font-semibold underline-offset-4 hover:underline focus-ring">Check your date</Link>
                     </GridEnd>
                 </ul>
             )}

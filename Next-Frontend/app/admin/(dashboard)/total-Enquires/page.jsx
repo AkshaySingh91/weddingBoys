@@ -118,8 +118,8 @@ export default function ClientEnquiriesPage() {
     return phone.replace(/[^0-9+]/g, '');
   };
 
-  const formatDateRange = (dateObj) => {
-    if (!dateObj?.start) return 'Date TBD';
+  const formatDateRange = (dateObj, note) => {
+    if (!dateObj?.start) return note || 'Date TBD';
     const start = dateObj.start;
     const end = dateObj.end;
     if (end && end !== start) {
@@ -144,7 +144,7 @@ export default function ClientEnquiriesPage() {
             </div>
             <div className="min-w-0 flex-1">
               <span className="font-semibold text-ink text-xs block truncate">
-                {row.Bride || 'Bride'} & {row.Groom || 'Groom'}
+                {[row.Bride, row.Groom].filter(Boolean).join(' & ') || 'Unnamed'}
               </span>
               <span className="text-[11px] text-ink-muted font-sans flex items-center gap-1 mt-0.5 truncate">
                 <Compass size={12} className="text-ink-muted shrink-0" />
@@ -192,7 +192,7 @@ export default function ClientEnquiriesPage() {
         <div className="flex items-center gap-1.5 text-ink-secondary whitespace-nowrap">
           <CalendarBlank size={14} className="text-ink-muted shrink-0" />
           <span className="font-medium text-xs tabular-nums whitespace-nowrap">
-            {formatDateRange(row.Date)}
+            {formatDateRange(row.Date, row.DateNote)}
           </span>
         </div>
       ),
@@ -357,7 +357,7 @@ export default function ClientEnquiriesPage() {
               <div className="flex items-center gap-2">
                 <Heart size={16} className="text-accent-ink" />
                 <h4 className="text-xs font-bold text-ink">
-                  {row.Bride || 'Bride'} & {row.Groom || 'Groom'}
+                  {[row.Bride, row.Groom].filter(Boolean).join(' & ') || 'Unnamed'}
                 </h4>
               </div>
               <Badge variant={row.isViewed ? 'neutral' : 'warning'} size="sm">
@@ -372,7 +372,7 @@ export default function ClientEnquiriesPage() {
               </div>
               <div className="flex items-center gap-2">
                 <CalendarBlank size={13} className="text-ink-muted" />
-                <span className="tabular-nums whitespace-nowrap">{formatDateRange(row.Date)}</span>
+                <span className="tabular-nums whitespace-nowrap">{formatDateRange(row.Date, row.DateNote)}</span>
               </div>
             </div>
 
@@ -404,7 +404,7 @@ export default function ClientEnquiriesPage() {
               </span>
             </div>
             <DialogTitle className="text-base font-bold text-ink font-sans">
-              {selectedInquiry?.Bride || 'Bride'} & {selectedInquiry?.Groom || 'Groom'}
+              {[selectedInquiry?.Bride, selectedInquiry?.Groom].filter(Boolean).join(' & ') || 'Unnamed'}
             </DialogTitle>
             <DialogDescription className="text-xs text-ink-muted font-sans">
               Direct booking inquiry from the studio marketing portal.
@@ -454,7 +454,7 @@ export default function ClientEnquiriesPage() {
                     Wedding Dates:
                   </span>
                   <span className="font-semibold text-ink tabular-nums whitespace-nowrap">
-                    {formatDateRange(selectedInquiry.Date)}
+                    {formatDateRange(selectedInquiry.Date, selectedInquiry.DateNote)}
                   </span>
                 </div>
 
@@ -467,6 +467,18 @@ export default function ClientEnquiriesPage() {
                     {selectedInquiry.Reach || 'Website Direct'}
                   </span>
                 </div>
+
+                {[
+                  ['For', selectedInquiry.Kind], ['Where', selectedInquiry.City],
+                  ['Came from', selectedInquiry.Source], ['Was looking at', selectedInquiry.Context],
+                  ['Sent by', selectedInquiry.Channel === 'whatsapp' ? 'WhatsApp (they opened a chat too)' : selectedInquiry.Channel ? 'Website form' : ''],
+                  ['Note', selectedInquiry.Message],
+                ].filter(([, v]) => v).map(([k, v]) => (
+                  <div key={k} className="flex justify-between gap-4 py-1.5 border-b border-edge-subtle">
+                    <span className="shrink-0 text-ink-secondary font-medium">{k}:</span>
+                    <span className="text-right font-medium text-ink">{v}</span>
+                  </div>
+                ))}
 
                 <div className="flex justify-between items-center py-1.5 border-b border-edge-subtle">
                   <span className="text-ink-secondary font-medium flex items-center gap-1.5">

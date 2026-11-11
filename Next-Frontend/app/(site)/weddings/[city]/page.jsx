@@ -18,6 +18,7 @@ import {
     CheckCircle,
     Question,
 } from '@phosphor-icons/react/dist/ssr';
+import { contactHref } from '@/lib/contact.js';
 
 export const revalidate = 3600;
 
@@ -211,7 +212,7 @@ export default async function DestinationCityPage({ params }) {
 
                     <div className="mt-8 flex flex-wrap items-center gap-4">
                         <Link
-                            href="/contact"
+                            href={contactHref({ from: 'city', city: loc.name })}
                             className="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-md hover:bg-[#724222] transition-colors"
                         >
                             <Sparkle size={14} weight="bold" />
@@ -410,7 +411,7 @@ export default async function DestinationCityPage({ params }) {
                         </p>
                         <div className="mt-6 flex flex-wrap justify-center gap-3">
                             <Link
-                                href="/contact"
+                                href={contactHref({ from: 'city', city: loc.name })}
                                 className="rounded-xl bg-accent px-6 py-3 text-xs font-bold uppercase tracking-wider text-white shadow-md hover:bg-[#724222] transition-colors"
                             >
                                 Check Crew Availability
