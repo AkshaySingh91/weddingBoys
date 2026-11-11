@@ -1579,6 +1579,19 @@ html {
 }
 @keyframes wv-take { from { opacity: 0; transform: translateX(calc(var(--dir, 1) * 24px)); } }
 
+/* ── Wedding story: Scene Grade ────────────────────────────────────────────
+   Each ceremony's light (--grade: r g b), one fixed layer per scene, opacity
+   only. Phones: a bloom from the top. Desktop: blooms at the outer edges, so
+   photographs and text are never tinted. */
+.scene-grade { background: radial-gradient(130% 55% at 50% 0%, rgb(var(--grade) / 0.24), transparent 70%); }
+@media (min-width: 1024px) {
+  .scene-grade {
+    background:
+      radial-gradient(38% 75% at 0% 35%, rgb(var(--grade) / 0.22), transparent 70%),
+      radial-gradient(38% 75% at 100% 65%, rgb(var(--grade) / 0.22), transparent 70%);
+  }
+}
+
 /* ── Film page: title sequence & chapters ───────────────────────────────────
    The still paints at once (it is the LCP) and drifts; the title card comes in
    line by line like an opening title; chapters hang on one thread. */
