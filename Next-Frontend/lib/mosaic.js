@@ -101,21 +101,3 @@ export function chunks(list, size = MAX) {
     }
     return out;
 }
-
-/**
- * Phones: a swipeable strip at one height. Portraits stand alone; two landscapes
- * in a row stack into one portrait-width slide (w = 0.75·(H − gap) makes them
- * exactly fill the height); a landscape on its own shares its slide with a jelly.
- */
-export function stripSlides(photos, aspectOf) {
-    const out = [];
-    for (let i = 0; i < photos.length; i += 1) {
-        const p = photos[i];
-        if (aspectOf(p) > 1.05) {
-            const q = photos[i + 1];
-            if (q && aspectOf(q) > 1.05) { out.push({ kind: 'pair', photos: [p, q] }); i += 1; }
-            else out.push({ kind: 'pair', photos: [p], jelly: true });
-        } else out.push({ kind: 'one', photos: [p] });
-    }
-    return out;
-}

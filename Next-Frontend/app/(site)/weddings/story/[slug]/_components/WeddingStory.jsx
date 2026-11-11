@@ -7,15 +7,14 @@
  *   Opening titles  the chosen film (or their first): still + loop, the title
  *                   card, and the Letterbox — Watch closes the frame to a screen
  *   Prologue        their headline, their story, their words (when the studio wrote
- *                   them); the Running order — each ceremony a block of its own
- *                   colour, as wide as its share of the footage: a preview of the
- *                   colour journey the page is about to take
+ *                   them); otherwise a heading from the day ("Haldi to the
+ *                   wedding") and one facts line
  *   Scenes          every ceremony in order, each with ITS films (play in place,
  *                   Up next through the whole wedding) and photos: a guillotine
  *                   mosaic on wider screens (lib/mosaic.js — no holes, ever) and a
- *                   paired strip on phones. Where the shapes leave room, a
- *                   "jelly" tile takes the exact shape: the ceremony's colour, an
- *                   echo of its photographs and its name
+ *                   contact sheet on phones. Where the shapes leave room, a
+ *                   "jelly" tile takes the exact shape: the ceremony's colour and
+ *                   an echo of its photographs
  *   End credits     the crew · their review · more weddings
  *   Post-credits    a slate: "Scene: your wedding"
  *
@@ -37,7 +36,7 @@ import useFilmPlayer from '@/Component/films/useFilmPlayer.jsx';
 import RevealObserver from '@/Component/home/RevealObserver.jsx';
 import ClapObserver from '@/app/(site)/team/_components/ClapObserver.jsx';
 import { stillSrcSet } from '@/lib/films.js';
-import { guillotine, chunks, stripSlides } from '@/lib/mosaic.js';
+import { guillotine, chunks } from '@/lib/mosaic.js';
 
 const pad = (n) => String(n).padStart(2, '0');
 const rite = (c) => (c === 'Wedding / Pheras' ? 'Wedding' : c || '');
@@ -195,12 +194,10 @@ function Jelly({ grade, echo, name, note, style, rise = true, className = '' }) 
             {echo && <span className="jelly-echo" style={{ backgroundImage: `url(${echo})` }} />}
             <span className="jelly-wash" />
             <span className="jelly-lattice jaali-dense" />
-            {name && (
-                <span className="jelly-frame">
-                    <span className="jelly-name font-display">{name}</span>
-                    {note && <span className="jelly-note">{note}</span>}
-                </span>
-            )}
+            <span className="jelly-frame">
+                {name && <span className="jelly-name font-display">{name}</span>}
+                {note && <span className="jelly-note">{note}</span>}
+            </span>
         </div>
     );
 }
@@ -231,41 +228,35 @@ function Mosaic({ photos, title, jelly }) {
 
 /**
  * A ceremony's photographs.
- *   phones   a swipeable strip at one height; two landscapes share a slide
- *            stacked, a lone landscape shares it with a jelly; the strip ends
- *            on the next ceremony, in its colour
+ *   phones   a swipeable contact sheet at one height (landscapes fit the
+ *            screen width); it ends on the next ceremony, in its colour
  *   sm+      mosaics of up to six (lib/mosaic.js): every pixel a photograph,
  *            a gutter or a jelly
  */
 function Photos({ photos, title, label, grade, next }) {
     const [open, setOpen] = useState(false);
     const groups = useMemo(() => chunks(photos), [photos]);
-    const slides = useMemo(() => stripSlides(photos, aspectOf), [photos]);
-    const jelly = (i) => ({ grade, name: rite(label), note: `${photos.length} photograph${photos.length === 1 ? '' : 's'}`, echo: photos[i % photos.length]?.blurDataURL });
-    const H = 'min(52svh,440px)';
+    // The jelly carries colour and an echo of the photographs, not words: the
+    // ceremony's name is already in the scene's heading.
+    const jelly = (i) => ({ grade, echo: photos[i % photos.length]?.blurDataURL });
+    const H = 'min(62vw,340px)';
     return (
         <div>
-            <ul className="-mx-5 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-5 pb-1 scroll-px-5 scrollbar-none sm:hidden" aria-label={`${rite(label)} photographs`}>
-                {slides.map((s, i) => (s.kind === 'one' ? (
-                    <li key={s.photos[0]._id || i} style={{ height: H, aspectRatio: aspectOf(s.photos[0]) }} className="shrink-0 snap-start overflow-hidden rounded-[16px] bg-ground-deep">
-                        <Photo p={s.photos[0]} title={title} sizes="70vw" className="block h-full w-full object-cover" />
+            {/* Phones: a contact sheet at one height — a landscape fits the screen's
+                width, portraits stand beside it; nothing stacked, nothing cut in half */}
+            <ul className="-mx-5 flex snap-x snap-mandatory gap-2 overflow-x-auto px-5 pb-1 scroll-px-5 scrollbar-none sm:hidden" aria-label={`${rite(label)} photographs`}>
+                {photos.map((p, i) => (
+                    <li key={p._id || i} style={{ height: H, width: aspectOf(p) > 1 ? `min(calc(${H} * ${aspectOf(p).toFixed(3)}), calc(100vw - 56px))` : `calc(${H} * ${aspectOf(p).toFixed(3)})` }}
+                        className="shrink-0 snap-start overflow-hidden rounded-[14px] bg-ground-deep">
+                        <Photo p={p} title={title} sizes="90vw" className="block h-full w-full object-cover" />
                     </li>
-                ) : (
-                    <li key={s.photos[0]._id || i} style={{ height: H, width: `calc((${H} - 10px) * 0.75)` }} className="flex shrink-0 snap-start flex-col gap-2.5">
-                        {s.photos.map((p) => (
-                            <span key={p._id} className="min-h-0 flex-1 overflow-hidden rounded-[16px] bg-ground-deep">
-                                <Photo p={p} title={title} sizes="70vw" className="block h-full w-full object-cover" />
-                            </span>
-                        ))}
-                        {s.jelly && <Jelly {...jelly(i + 1)} rise={false} className="flex-1" />}
-                    </li>
-                )))}
+                ))}
                 {next && (
-                    <li style={{ height: H, aspectRatio: 0.62, '--grade': next.grade, '--jelly-ink': inkOn(next.grade) }} className="shrink-0 snap-start">
-                        <a href={`#chapter-${next.key}`} className="jelly flex h-full w-full flex-col justify-end p-5 focus-ring">
+                    <li style={{ height: H, width: `calc(${H} * 0.62)`, '--grade': next.grade, '--jelly-ink': inkOn(next.grade) }} className="shrink-0 snap-start">
+                        <a href={`#chapter-${next.key}`} className="jelly flex h-full w-full flex-col justify-end p-4 focus-ring">
                             <span className="jelly-wash" />
-                            <span className="relative text-[13px] font-semibold opacity-80">Up next</span>
-                            <span className="relative mt-1 font-display text-[30px] leading-none">{rite(next.label)}</span>
+                            <span className="relative text-[12.5px] font-semibold opacity-80">Up next</span>
+                            <span className="relative mt-1 font-display text-[28px] leading-none">{rite(next.label)}</span>
                         </a>
                     </li>
                 )}
@@ -281,39 +272,6 @@ function Photos({ photos, title, label, grade, next }) {
                 </button>
             )}
         </div>
-    );
-}
-
-/**
- * The running order — the ceremonies as blocks of their own colour, each as
- * wide as its share of the footage, so the prologue previews the colour journey
- * of the page. Desktop: one band (a block swells when pointed at); phones:
- * stacked rows. Every block is a link to its scene.
- */
-function RunningOrder({ chapters, grades }) {
-    const weight = (c) => c.films.length * 4 + c.photos.length || 1;
-    return (
-        <nav aria-label="The celebrations, in order">
-            <ol className="run-order flex flex-col gap-2 md:h-[240px] md:flex-row md:gap-2.5">
-                {chapters.map((c, i) => {
-                    const echo = c.photos[0]?.blurDataURL || c.films[0]?.blurDataURL;
-                    return (
-                        <li key={c.key} style={{ '--w': weight(c), '--grade': grades[i], '--jelly-ink': inkOn(grades[i]) }} className="run-item min-w-0">
-                            <a href={`#chapter-${c.key}`} data-rise="pour" style={{ '--d': i }}
-                                className="jelly group flex h-[92px] w-full items-center justify-between gap-4 px-5 focus-ring md:h-full md:flex-col md:items-start md:justify-between md:p-6">
-                                {echo && <span className="jelly-echo" style={{ backgroundImage: `url(${echo})` }} />}
-                                <span className="jelly-wash" />
-                                <span className="relative text-[13px] font-semibold tabular-nums opacity-75 md:order-none">{pad(i + 1)}</span>
-                                <span className="relative min-w-0 flex-1 md:flex-none">
-                                    <span className="block truncate font-display text-[30px] leading-none md:text-[clamp(28px,2.4vw,40px)]">{rite(c.label)}</span>
-                                    <span className="mt-2 block text-[13px] opacity-85">{counts(c)}</span>
-                                </span>
-                            </a>
-                        </li>
-                    );
-                })}
-            </ol>
-        </nav>
     );
 }
 
@@ -422,7 +380,6 @@ export default function WeddingStory({ data, filmId = null, rows = [] }) {
                                 </dl>
                             )}
                         </div>
-                        {chapters.length > 1 && <div className="mt-8 sm:mt-10"><RunningOrder chapters={chapters} grades={grades} /></div>}
                     </section>
                 )}
 
