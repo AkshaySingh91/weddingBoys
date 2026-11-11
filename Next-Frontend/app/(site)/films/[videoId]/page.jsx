@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
 import { serializeJsonLd } from '@/lib/jsonLd.mjs';
 import { SITE_URL } from '@/lib/siteConfig.js';
-import FilmDetailClient from './_components/FilmDetailClient.jsx';
+import FilmStory from './_components/FilmStory.jsx';
+import { fetchFilmDiscovery } from '@/lib/filmDiscovery.js';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
@@ -17,17 +18,17 @@ async function getFilm(videoId) {
     }
 }
 
-async function getTeam() {
-    try {
-        const res = await fetch(`${api_url}/api/team`, {
-            cache: 'no-store',
-        });
-        if (!res.ok) return [];
-        const data = await res.json();
-        return data.teamImages || [];
-    } catch {
-        return [];
-    }
+/** Films to keep watching: the catalogue's films that share the most labels. */
+function relatedFilms(discovery, videoId) {
+    const films = discovery?.films || [];
+    const me = films.find((f) => f.videos?._id === videoId);
+    const mine = new Set([me?.event, ...(me?.labels || [])].filter(Boolean));
+    return films
+        .filter((f) => f.videos?._id !== videoId)
+        .map((f) => ({ f, score: [f.event, ...(f.labels || [])].filter((l) => mine.has(l)).length + (f.priority || 0) / 1000 }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 10)
+        .map(({ f }) => f);
 }
 
 export async function generateMetadata({ params }) {
@@ -65,17 +66,14 @@ export async function generateMetadata({ params }) {
 
 export default async function SpecificFilmPage({ params }) {
     const { videoId } = await params;
-    const [filmData, team] = await Promise.all([
-        getFilm(videoId),
-        getTeam(),
-    ]);
+    const [filmData, discovery] = await Promise.all([getFilm(videoId), fetchFilmDiscovery()]);
 
     if (!filmData?.selectedVideo) notFound();
     const video = filmData.selectedVideo;
     const filmSchema = {
         '@context': 'https://schema.org', '@type': 'VideoObject',
         name: [filmData.clientName?.Bride, filmData.clientName?.Groom].filter(Boolean).join(' & ') || 'Wedding film',
-        description: video.caption || 'A cinematic wedding film by The Wedding Vachan.',
+        description: filmData.film?.caption || video.caption || 'A cinematic wedding film by The Wedding Vachan.',
         thumbnailUrl: video.thumbnailUrl || video.thumbnailMetaData?.url,
         ...(video.publishedAt ? { uploadDate: video.publishedAt } : {}),
         ...(video.durationSec > 0 ? { duration: `PT${Math.round(video.durationSec)}S` } : {}),
@@ -85,11 +83,7 @@ export default async function SpecificFilmPage({ params }) {
     return (
         <>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(filmSchema) }} />
-        <FilmDetailClient
-            initialFilmData={filmData}
-            videoId={videoId}
-            initialTeam={team}
-        />
+        <FilmStory data={filmData} videoId={videoId} related={relatedFilms(discovery, videoId)} rows={discovery?.rows || []} />
         </>
     );
 }

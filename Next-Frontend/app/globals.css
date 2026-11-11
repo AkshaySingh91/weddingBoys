@@ -1579,6 +1579,25 @@ html {
 }
 @keyframes wv-take { from { opacity: 0; transform: translateX(calc(var(--dir, 1) * 24px)); } }
 
+/* ── Film page: title sequence & chapters ───────────────────────────────────
+   The still paints at once (it is the LCP) and drifts; the title card comes in
+   line by line like an opening title; chapters hang on one thread. */
+@media (prefers-reduced-motion: no-preference) {
+  .title-still { animation: heroZoom 14s ease-out both; }
+  .title-card { animation: wv-rise 900ms var(--ease-entrance) backwards; }
+  .title-card--1 { animation-delay: 150ms; }
+  .title-card--2 { animation-name: titleIn; animation-duration: 1200ms; animation-delay: 300ms; }
+  .title-card--3 { animation-delay: 650ms; }
+  .title-card--4 { animation-delay: 850ms; }
+}
+@keyframes titleIn { from { opacity: 0; letter-spacing: 0.06em; filter: blur(6px); } }
+@media (min-width: 1024px) {
+  .chapter-line::before {
+    content: ''; position: absolute; left: 8%; right: 8%; top: calc(50% - 30px); height: 1px; z-index: -1;
+    background: linear-gradient(90deg, transparent, rgb(var(--gold-rgb) / 0.55) 15%, rgb(var(--gold-rgb) / 0.55) 85%, transparent);
+  }
+}
+
 /* ── Films: equalizer + Top 10 numerals ───────────────────────────────────── */
 .eq > span { width: 3px; height: 100%; border-radius: 2px; background: currentColor; transform-origin: bottom; transform: scaleY(0.45); }
 @media (prefers-reduced-motion: no-preference) {

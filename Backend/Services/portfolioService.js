@@ -361,4 +361,5 @@ export async function storyLinkFor(clientId) {
     };
 }
 
+        intro: c.story?.intro || null,
 export { parseTags, displayDate, monthYear };

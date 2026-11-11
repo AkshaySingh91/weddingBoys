@@ -162,6 +162,25 @@ async function getSpecificVideoById(req, res) {
             portfolio.findSiblings({ clientId: item.client?._id || item.client, kind: 'Photo' }),
         ]);
         const row = portfolio.toLegacyVideoRow(item);
+        const wedding = await portfolio.storyLinkFor(item.client?._id || item.client);
+        const client = item.client || {};
+        // The wedding's films in story order (admin drag order, then date): this
+        // film is one chapter of their celebration.
+        // Order: the admin's story order; else where the ceremony falls in a
+        // wedding; else the date.
+        const RITE = ['pre-wedding', 'engagement', 'tilak', 'mehendi', 'haldi', 'sangeet', 'cocktail', 'wedding', 'wedding / pheras', 'reception'];
+        const rite = (v) => { const i = RITE.indexOf(String(v.eventGroup || '').toLowerCase()); return i < 0 ? RITE.length : i; };
+        const chapters = [item, ...siblings]
+            .sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || rite(a) - rite(b) || new Date(a.shootDate || 0) - new Date(b.shootDate || 0))
+            .map((v) => {
+                const r = portfolio.toLegacyVideoRow(v);
+                return {
+                    _id: String(v._id), ceremony: v.eventGroup || '', title: v.title || null,
+                    posterUrl: r.thumbnailUrl, date: portfolio.monthYear(v.shootDate), durationSec: v.render?.durationSec || null,
+                    url: r.url, loopUrl: r.loopUrl, embedUrl: r.embedUrl, focus: v.render?.focus || null,
+                    current: String(v._id) === String(item._id),
+                };
+            });
         return res.status(200).json({
             clientName: item.client?.clientName,
             selectedVideo: {
@@ -172,7 +191,21 @@ async function getSpecificVideoById(req, res) {
                 url: row.url, loopUrl: row.loopUrl, thumbnailUrl: row.thumbnailUrl,
                 embedUrl: row.embedUrl, external: row.external,
             },
-            wedding: await portfolio.storyLinkFor(item.client?._id || item.client),
+            wedding,
+            // The film as a moment: its own words, ceremony and credits.
+            film: {
+                title: item.title || null, caption: item.caption || null, ceremony: item.eventGroup || null,
+                credits: item.credits || [], focus: item.render?.focus || null,
+                blurDataURL: item.render?.blurDataURL || null, dominantColor: item.render?.dominantColor || null,
+            },
+            // The celebration it belongs to.
+            story: {
+                intro: wedding?.intro || null,
+                span: client.celebrationDates?.spanDisplay || null,
+                weddingDate: client.weddingDate || null,
+                location: client.location || null,
+            },
+            chapters,
             remainingVideos: siblings.map((s2) => {
                 const r = portfolio.toLegacyVideoRow(s2);
                 return { ...r.videos, thumbnailMetaData: { ...r.videos.thumbnailMetaData, url: r.thumbnailUrl } };
