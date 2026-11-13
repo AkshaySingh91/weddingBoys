@@ -47,6 +47,7 @@ import clientEnquiryRoute from "./Routes/Admin/ClientEnquiryRoute.js"
 import adminTeamImageRoute from "./Routes/Admin/TeamImageRoute.js"
 import studioDetailsRoute from './Routes/User/studioDetailsRoute.js'
 import submitEnquiryRoute from "./Routes/User/enqueryRoute.js"
+import inviteRoute from './Routes/User/inviteRoute.js'
 import searchRoute from "./Routes/User/searchRoute.js"
 import getTeamImage from "./Routes/User/TeamImageRoute.js"
 
@@ -94,6 +95,7 @@ app.use(collectionRoute)
 app.use(browseRoute)
 app.use(studioDetailsRoute)
 app.use(submitEnquiryRoute)
+app.use(inviteRoute)
 app.use(searchRoute)
 app.use(getTeamImage)
 app.use(publicBlogRoute)

@@ -22,6 +22,9 @@ const Enquiry = new mongoose.Schema({
     Context: { type: String, default: '' },
     Message: { type: String, default: '' },
     Channel: { type: String, enum: ['form', 'whatsapp'], default: 'form' },
+    Grade: { type: String, default: '' },
+    // the invitation made with it (/invite/<code>), for the partner
+    Invite: { type: mongoose.Schema.Types.ObjectId, ref: 'Invitation', default: null },
     Reach: { type: String, default: '' },
     SubmittedTime: { type: String, required: true, default: () => new Date().toISOString() },
     isViewed: { type: Boolean, default: false, required: true }

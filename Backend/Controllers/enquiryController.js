@@ -1,6 +1,8 @@
 import { createHash } from 'node:crypto';
 import Enquiry from '../Models/EnquirySchema.js';
 import { enquirySchema } from '../Utils/enquiryValidation.js';
+import Invitation from '../Models/InvitationSchema.js';
+import { createInvitation } from '../Services/invitations.js';
 
 export async function submitEnquiry(req, res) {
     const parsed = enquirySchema.safeParse(req.body);
@@ -25,6 +27,7 @@ export async function submitEnquiry(req, res) {
                     Contact: details.contact, Date: details.eventDate, Reach: details.reach,
                     DateNote: details.dateNote, Kind: details.kind, City: details.city, Source: details.source,
                     Context: details.context, Message: details.message, Channel: details.channel,
+                    Grade: details.grade,
                     SubmittedTime: new Date().toISOString(), isViewed: false,
                 });
             } catch (error) {
@@ -34,8 +37,22 @@ export async function submitEnquiry(req, res) {
             }
         }
         if (enquiry.requestHash !== requestHash) return res.status(409).json({ message: 'This request identifier has already been used for different details' });
+        // The partner's invitation: made once per enquiry (a retry returns the same one).
+        let invite = enquiry.Invite ? await Invitation.findById(enquiry.Invite).select('code').lean() : null;
+        if (!invite) {
+            try {
+                invite = await createInvitation({ enquiryId: enquiry._id, details, grade: details.grade, selects: details.selects });
+                if (invite) await Enquiry.updateOne({ _id: enquiry._id }, { $set: { Invite: invite._id } });
+            } catch (error) {
+                console.warn('[enquiry] invitation not made:', error.message); // the enquiry itself is safe
+                invite = null;
+            }
+        }
         // Delivery is retried independently from this durable receipt.
-        return res.status(201).json({ message: 'Your enquiry has been received. Our team will be in touch.', enquiryId: enquiry._id });
+        return res.status(201).json({
+            message: 'Your enquiry has been received. Our team will be in touch.', enquiryId: enquiry._id,
+            ...(invite ? { invite: { code: invite.code, url: `/invite/${invite.code}` } } : {}),
+        });
     } catch (error) {
         console.error('[enquiry] persistence failed:', error.message);
         return res.status(503).json({ message: 'We could not save your enquiry. Please try again.' });

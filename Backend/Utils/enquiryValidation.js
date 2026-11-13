@@ -41,6 +41,9 @@ export const enquirySchema = z.object({
     context: text(600),
     message: text(1000),
     channel: z.enum(['form', 'whatsapp']).optional().default('form'),
+    // the invitation's look, and the frames they circled (both feed the partner's invitation)
+    grade: z.enum(['ivory', 'haldi', 'mehendi', 'sangeet', 'pheras', 'reception']).optional().default('ivory'),
+    selects: z.array(z.string().regex(/^[0-9a-f]{24}$/i)).max(30).optional().default([]),
 });
 
 export const escapeEmailHtml = (value) => String(value).replace(/[&<>"']/g, (c) => ({

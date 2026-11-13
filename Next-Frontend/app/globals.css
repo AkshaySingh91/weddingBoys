@@ -1840,9 +1840,14 @@ html[data-scrolling] .film-card { pointer-events: none; }
    The studio's invitation-card design (the lookbook's gold double frame and
    TWV monogram). The blanks are the card's own lines: an underline, no box. */
 .invite-card {
-  position: relative; margin: 0 auto; max-width: 720px; padding: 44px 22px 36px; text-align: center;
-  background: rgb(var(--ground-raised-rgb)); border-radius: 6px;
-  box-shadow: inset 0 0 0 1px rgb(var(--gold-rgb) / 0.75), inset 0 0 0 7px rgb(var(--ground-raised-rgb)), inset 0 0 0 7.5px rgb(var(--gold-rgb) / 0.5),
+  --grade: var(--gold-rgb);
+  position: relative; isolation: isolate; overflow: hidden; margin: 0 auto; max-width: 720px; padding: 40px 22px 36px; text-align: center; border-radius: 4px;
+  view-transition-name: invite-card;
+  background:
+    radial-gradient(120% 70% at 18% 0%, rgb(var(--grade) / 0.17), transparent 62%),
+    radial-gradient(90% 60% at 100% 100%, rgb(var(--grade) / 0.08), transparent 70%),
+    rgb(var(--ground-raised-rgb));
+  box-shadow: inset 0 0 0 1px rgb(var(--grade) / 0.7), inset 0 0 0 7px rgb(var(--ground-raised-rgb) / 0.6), inset 0 0 0 7.5px rgb(var(--grade) / 0.45),
     0 30px 60px -40px rgb(51 22 26 / 0.45);
 }
 @media (min-width: 640px) { .invite-card { padding: 56px 48px 44px; } }
@@ -1850,9 +1855,16 @@ html[data-scrolling] .film-card { pointer-events: none; }
   box-shadow: 0 0 0 1px rgb(var(--gold-rgb)), 0 0 0 4px rgb(var(--ground-raised-rgb)), 0 0 0 4.5px rgb(var(--gold-rgb) / 0.55);
   font: 600 12px/1 var(--font-inter), sans-serif; letter-spacing: 0.08em; color: rgb(var(--gold-rgb)); }
 .invite-line { color: rgb(var(--ground-deep-rgb) / 0.62); font-size: 15px; }
-.invite-blank { display: inline-block; }
+.invite-blank { position: relative; display: inline-block; }
+/* the blank's line is foil in the card's light; once written (and not being edited) it
+   retracts, so the card reads as printed */
+.invite-blank::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px; background: rgb(var(--grade) / 0.7);
+  transition: transform 240ms var(--ease-standard); }
+.invite-blank:has(.invite-input:not(:placeholder-shown)):not(:focus-within)::after { transform: scaleX(0); }
+.invite-blank:hover::after { transform: none; }
+.invite-blank:has(.invite-input[aria-invalid='true'])::after { background: rgb(var(--accent-rgb)); transform: none; }
 .invite-input {
-  background: transparent; border: 0; border-bottom: 1.5px solid rgb(var(--gold-rgb) / 0.6); border-radius: 0; padding: 4px 2px 6px;
+  background: transparent; border: 0; border-bottom: 1.5px solid transparent; border-radius: 0; padding: 4px 2px 6px;
   color: rgb(var(--ground-deep-rgb)); font-size: 30px; line-height: 1.15; text-align: center; max-width: 100%;
   transition: border-color 160ms var(--ease-standard);
 }
@@ -1860,8 +1872,9 @@ html[data-scrolling] .film-card { pointer-events: none; }
 @media (min-width: 640px) { .invite-input.font-display { font-size: 42px; } }
 .invite-input[type='date'] { font-size: 28px; }
 .invite-input::placeholder { color: rgb(var(--ground-deep-rgb) / 0.3); }
-.invite-input:focus { outline: none; border-bottom-color: rgb(var(--accent-rgb)); }
-.invite-input[aria-invalid='true'] { border-bottom-color: rgb(var(--accent-rgb)); }
+.invite-input:focus { outline: none; }
+.invite-blank:focus-within::after { background: rgb(var(--accent-rgb)); }
+
 .invite-error { margin-top: 8px; font-size: 13.5px; color: rgb(var(--accent-ink-rgb, 168 36 28)); }
 
 /* Phones: both ways out, always under the thumb (solid, no blur). */
@@ -1872,8 +1885,11 @@ html[data-scrolling] .film-card { pointer-events: none; }
 .direct-row:hover { background: rgb(var(--ground-deep-rgb) / 0.03); }
 
 /* Sent: a red TWV seal presses onto the card; the date is circled in pencil. */
-.invite-card.is-sealed .invite-mono { visibility: hidden; }
+.invite-card.is-sealed .invite-mono, .invite-card.is-sealed .invite-window { visibility: hidden; }
 @media (min-width: 640px) { .invite-seal { top: 42px; } }
+/* with an arch window, the seal presses where the window was */
+.invite-card.is-sealed:has(.invite-window) .invite-seal { top: 57px; }
+@media (min-width: 640px) { .invite-card.is-sealed:has(.invite-window) .invite-seal { top: 93px; } }
 .invite-seal { position: absolute; left: 50%; top: 30px; margin-left: -37px; display: grid; place-items: center; width: 74px; height: 74px; border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, rgb(236 92 78), rgb(var(--accent-rgb)) 55%, rgb(150 30 24));
   box-shadow: inset 0 0 0 3px rgb(255 255 255 / 0.14), inset 0 -3px 6px rgb(0 0 0 / 0.25), 0 8px 18px -8px rgb(120 20 16 / 0.7);
@@ -1956,3 +1972,85 @@ html[data-scrolling] .film-card { pointer-events: none; }
 .pv-pile-name { display: block; font-size: 28px; line-height: 1.15; color: rgb(var(--ground-deep-rgb) / 0.55); transition: color 260ms var(--ease-standard); }
 .pv-pile[aria-pressed='true'] .pv-pile-name { color: rgb(var(--ground-deep-rgb)); }
 @media (prefers-reduced-motion: reduce) { .pv-pile, .pv-pile-stack::before { transition: none; } }
+
+/* The invitation's light: a lamp over the paper (desktop, follows the pointer),
+   a preview of the light under the pointer, the arch window, the foil motif. */
+.invite-card > *:not(.invite-lamp):not(.invite-preview):not(.invite-motif):not(.invite-sealed) { position: relative; }
+.invite-lamp { position: absolute; inset: -30%; z-index: -1; pointer-events: none; opacity: 0;
+  background: radial-gradient(closest-side, rgb(255 246 226 / 0.9), transparent 70%);
+  transform: translate3d(var(--lx, 0%), var(--ly, -20%), 0) scale(0.55); transition: opacity 400ms var(--ease-standard); }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) { .invite-card:hover .invite-lamp { opacity: 0.55; } }
+.invite-preview { position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity 260ms var(--ease-standard);
+  background: radial-gradient(120% 70% at 18% 0%, rgb(var(--preview) / 0.2), transparent 62%), radial-gradient(90% 60% at 100% 100%, rgb(var(--preview) / 0.1), transparent 70%); }
+.invite-card.is-previewing .invite-preview { opacity: 1; }
+.invite-window { display: block; width: 84px; height: 108px; margin: 0 auto 16px; padding: 4px; background: #fff; border-radius: 999px 999px 4px 4px;
+  box-shadow: 0 0 0 1px rgb(var(--grade) / 0.7), 0 12px 24px -14px rgb(51 22 26 / 0.55); }
+.invite-window > img { width: 100%; height: 100%; object-fit: cover; border-radius: 999px 999px 2px 2px; }
+@media (min-width: 640px) { .invite-window { width: 116px; height: 148px; } }
+.invite-motif { position: absolute; inset: 14px; z-index: -1; pointer-events: none; }
+.invite-motif svg { position: absolute; overflow: visible; }
+.invite-motif path { fill: none; stroke: rgb(var(--grade) / 0.75); stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; }
+.invite-motif-top path, .invite-motif-arch path { stroke-width: 0.6; }
+.invite-motif-top { left: 10%; right: 10%; top: 6px; width: 80%; height: 22px; }
+.invite-motif-arch { left: 18%; width: 64%; top: 2px; height: 64px; }
+.invite-motif-corner { width: 44px; height: 50px; }
+.invite-motif-corner.is-tl { left: 4px; top: 4px; }
+.invite-motif-corner.is-tr { right: 4px; top: 4px; transform: scaleX(-1); }
+.invite-motif-corner.is-bl { left: 4px; bottom: 4px; transform: scaleY(-1); }
+.invite-motif-corner.is-br { right: 4px; bottom: 4px; transform: scale(-1, -1); }
+@media (prefers-reduced-motion: no-preference) {
+  .invite-motif path { stroke-dasharray: 1 1; stroke-dashoffset: 1; animation: loopDraw 620ms cubic-bezier(0.5, 0, 0.3, 1) 120ms forwards; }
+}
+@media (prefers-reduced-motion: reduce) { .invite-motif path { stroke-dasharray: none; } }
+
+/* Switching lights: the new card is revealed from the swatch that was tapped. */
+html.vt-gel::view-transition-old(root), html.vt-gel::view-transition-new(root) { animation: none; }
+html.vt-gel::view-transition-old(invite-card) { animation: none; }
+html.vt-gel::view-transition-new(invite-card) { animation: inviteGel 520ms cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes inviteGel { from { clip-path: circle(0 at var(--vx, 50%) var(--vy, 0)); } to { clip-path: circle(150% at var(--vx, 50%) var(--vy, 0)); } }
+
+/* Phones: the lights as arched swatches above the card. */
+.invite-rail { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin: 0 -16px 14px; padding: 2px 16px 4px; }
+.invite-rail::-webkit-scrollbar { display: none; }
+.invite-chip { display: flex; align-items: center; gap: 8px; flex: none; height: 44px; padding: 0 14px 0 8px; border-radius: 999px; cursor: pointer;
+  background: rgb(var(--ground-raised-rgb)); box-shadow: inset 0 0 0 1px rgb(var(--ground-deep-rgb) / 0.12); font: 600 13.5px/1 var(--font-inter), sans-serif;
+  color: rgb(var(--ground-deep-rgb) / 0.75); }
+.invite-chip[aria-checked='true'] { box-shadow: inset 0 0 0 1.5px rgb(var(--grade)); color: rgb(var(--ground-deep-rgb)); }
+.invite-chip-swatch { width: 20px; height: 26px; border-radius: 999px 999px 3px 3px; background: radial-gradient(120% 90% at 30% 10%, rgb(var(--grade) / 0.45), rgb(var(--grade) / 0.95));
+  box-shadow: inset 0 0 0 1.5px #fff, 0 0 0 1px rgb(var(--grade) / 0.6); }
+
+/* Desktop: the swatchbook — leaves fanned from a pin; point to preview, click to choose. */
+.invite-fan { position: relative; display: flex; justify-content: center; height: 176px; width: 420px; margin: 14px 0 44px; }
+.invite-leaf { position: absolute; bottom: 0; left: calc(50% - 30px); width: 60px; height: 112px; cursor: pointer; border-radius: 999px 999px 6px 6px;
+  transform-origin: 50% 240%; transform: rotate(var(--r)); z-index: var(--z);
+  background: radial-gradient(120% 70% at 30% 8%, rgb(255 255 255 / 0.55), transparent 60%), linear-gradient(rgb(var(--grade) / 0.55), rgb(var(--grade) / 0.95));
+  box-shadow: inset 0 0 0 3px #fff, 0 0 0 1px rgb(var(--grade) / 0.5), 0 10px 18px -10px rgb(51 22 26 / 0.55);
+  transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1); }
+.invite-leaf:hover, .invite-leaf:focus-visible { transform: rotate(var(--r)) translateY(-16px); }
+.invite-leaf[aria-checked='true'] { transform: rotate(var(--r)) translateY(-8px); box-shadow: inset 0 0 0 3px #fff, 0 0 0 2px rgb(var(--grade)), 0 14px 24px -12px rgb(51 22 26 / 0.6); }
+.invite-leaf-name { position: absolute; left: 0; right: 0; bottom: 10px; font: 700 9.5px/1 var(--font-inter), sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: #fff;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.35); }
+@media (prefers-reduced-motion: reduce) { .invite-leaf { transition: none; } }
+
+/* The partner's copy peels off the sealed card. */
+.invite-copy { margin: 30px auto 0; max-width: 440px; padding: 22px 18px; border-radius: 4px; background: rgb(var(--ground-rgb));
+  box-shadow: inset 0 0 0 1px rgb(var(--grade) / 0.55), 0 18px 34px -22px rgb(51 22 26 / 0.55); }
+@media (prefers-reduced-motion: no-preference) {
+  .invite-card.is-sealed .invite-copy { animation: copyPeel 700ms cubic-bezier(0.16, 1, 0.3, 1) 1100ms backwards; }
+}
+@keyframes copyPeel { from { transform: translateY(-46px) rotate(-3deg) scale(0.96); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* /invite/<code>: the invitation arrives sealed — the seal lifts, the card rises. */
+.invite-seal-lift { top: 57px; }
+@media (min-width: 640px) { .invite-seal-lift { top: 93px; } }
+@media (prefers-reduced-motion: no-preference) {
+  .invite-arrive { animation: inviteRise 680ms cubic-bezier(0.16, 1, 0.3, 1) 420ms backwards; }
+  .invite-seal-lift { animation: sealLift 560ms cubic-bezier(0.5, 0, 0.75, 0) 260ms forwards; }
+}
+@media (prefers-reduced-motion: reduce) { .invite-seal-lift { display: none; } }
+@keyframes inviteRise { from { transform: translateY(28px); opacity: 0.4; } to { transform: none; opacity: 1; } }
+@keyframes sealLift { from { transform: rotate(-8deg); opacity: 1; } to { transform: translateY(-70px) rotate(-34deg) scale(1.15); opacity: 0; visibility: hidden; } }
+@media (min-width: 1024px) {
+  .invite-bar.is-float { left: auto; right: 28px; bottom: 24px; width: min(540px, 42vw); border-radius: 999px; padding: 8px;
+    box-shadow: 0 18px 40px -18px rgb(51 22 26 / 0.55), inset 0 0 0 1px rgb(var(--ground-deep-rgb) / 0.08); }
+}

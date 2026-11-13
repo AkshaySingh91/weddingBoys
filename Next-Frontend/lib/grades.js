@@ -26,3 +26,19 @@ export const inkOn = (rgb) => {
     const [r, g, b] = rgb.split(' ').map(Number);
     return 0.299 * r + 0.587 * g + 0.114 * b > 150 ? 'rgb(51 22 26)' : 'rgb(255 250 244)';
 };
+
+/**
+ * The invitation's lights (/contact, /invite): each a ceremony's colour used as
+ * light, foil and a hairline motif — never a fill. Text always stays ink.
+ */
+export const INVITE_LOOKS = [
+    { key: 'ivory', label: 'Ivory', rgb: GOLD, ceremony: null },
+    { key: 'haldi', label: 'Haldi', rgb: GRADES.haldi, ceremony: 'Haldi' },
+    { key: 'mehendi', label: 'Mehendi', rgb: GRADES.mehendi, ceremony: 'Mehendi' },
+    { key: 'sangeet', label: 'Sangeet', rgb: GRADES.sangeet, ceremony: 'Sangeet' },
+    { key: 'pheras', label: 'Pheras', rgb: GRADES.wedding, ceremony: 'Wedding / Pheras' },
+    { key: 'reception', label: 'Reception', rgb: GRADES.reception, ceremony: 'Reception' },
+];
+export const lookOf = (key) => INVITE_LOOKS.find((l) => l.key === key) || INVITE_LOOKS[0];
+/** The light that fits a ceremony label ("Wedding / Pheras" → pheras). */
+export const lookForCeremony = (label) => INVITE_LOOKS.find((l) => l.ceremony && l.ceremony.toLowerCase() === String(label || '').toLowerCase())?.key || 'ivory';

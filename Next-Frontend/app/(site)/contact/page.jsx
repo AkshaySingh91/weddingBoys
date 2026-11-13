@@ -1,6 +1,7 @@
 import { SITE_URL } from '@/lib/siteConfig.js';
 import { KINDS } from '@/lib/contact.js';
 import { stillLadder } from '@/lib/films.js';
+import { INVITE_LOOKS, lookForCeremony } from '@/lib/grades.js';
 import Invitation from './_components/Invitation.jsx';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
@@ -41,11 +42,18 @@ export default async function ContactPage({ searchParams }) {
     const kind = KINDS.find((k) => k.toLowerCase() === kindParam.toLowerCase()) || '';
     const city = one(q?.city, 80);
 
-    const [studio, filmData, weddingData, selectData] = await Promise.all([
+    // One of the studio's own portraits per light, for the card's arch window.
+    const windowFor = async (look) => {
+        const data = await getJSON(`/api/photos?limit=8${look.ceremony ? `&tag=${encodeURIComponent(look.ceremony)}` : ''}`);
+        const p = (data?.photos || []).find((x) => Number(x.aspectRatio) < 1) || data?.photos?.[0];
+        return p ? [look.key, stillLadder(p.url, { width: p.width, cap: 640 })?.src || p.url] : null;
+    };
+    const [studio, filmData, weddingData, selectData, ...windows] = await Promise.all([
         getJSON('/api/studio/details'),
         film ? getJSON(`/api/videos/${film}`) : null,
         wedding ? getJSON(`/api/weddings/${wedding}`) : null,
         selects.length ? getJSON(`/api/photos/batch?ids=${selects.join(',')}`) : null,
+        ...INVITE_LOOKS.map(windowFor),
     ]);
 
     // What they were looking at, in the shape the card shows.
@@ -53,10 +61,10 @@ export default async function ContactPage({ searchParams }) {
     if (filmData?.selectedVideo || filmData?.film) {
         const couple = [filmData.clientName?.Bride, filmData.clientName?.Groom].filter(Boolean).join(' & ');
         const poster = filmData.selectedVideo?.thumbnailUrl || filmData.selectedVideo?.thumbnailMetaData?.url || null;
-        context = { type: 'film', label: couple ? `${couple}'s film` : 'one of our films', images: poster ? [poster] : [], href: `/films/${film}` };
+        context = { type: 'film', label: couple ? `${couple}'s film` : 'one of our films', images: poster ? [stillLadder(poster, { cap: 640 })?.src || poster] : [], href: `/films/${film}` };
     } else if (weddingData?.wedding) {
         const w = weddingData.wedding;
-        context = { type: 'story', label: `${w.title}'s wedding`, images: w.cover?.url ? [w.cover.url] : [], href: `/weddings/story/${wedding}` };
+        context = { type: 'story', label: `${w.title}'s wedding`, images: w.cover?.url ? [stillLadder(w.cover.url, { cap: 640 })?.src || w.cover.url] : [], href: `/weddings/story/${wedding}` };
     } else if (selectData?.photos?.length) {
         const n = selectData.photos.length;
         context = {
@@ -67,8 +75,9 @@ export default async function ContactPage({ searchParams }) {
     }
 
     const s = studio?.studioDetails || {};
+    const initialLook = filmData?.film?.ceremony ? lookForCeremony(filmData.film.ceremony) : 'ivory';
     return (
-        <Invitation
+        <Invitation windows={Object.fromEntries(windows.filter(Boolean))} initialLook={initialLook} selects={context?.type === 'selects' ? selects : []}
             from={from} context={context} initialKind={kind || (from === 'varanasi' ? 'Pre-wedding shoot' : '')}
             initialCity={city} focus={one(q?.focus, 10)}
             studio={{ phones: Array.isArray(s.contact) ? s.contact : [], email: s.email || null, address: s.address || null, instagram: s.socials?.instagram || null }} />

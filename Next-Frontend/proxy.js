@@ -108,6 +108,14 @@ export async function proxy(request) {
         return NextResponse.next();
     }
 
+    // A couple's invitation: a code that does not open is a real 404.
+    const invite = pathname.match(/^\/invite\/([^/]+)\/?$/);
+    if (invite && !isAdminHost(host)) {
+        const status = /^[2-9A-HJKMNP-TV-Z]{8}$/.test(invite[1]) ? await mediaStatus('invites', invite[1]) : { status: 'missing' };
+        if (status?.status === 'missing') return NextResponse.rewrite(request.nextUrl, { status: 404 });
+        return NextResponse.next();
+    }
+
     const story = pathname.match(STORY_PATH);
     if (story && !isAdminHost(host)) {
         const found = await storyStatus(decodeURIComponent(story[1]).toLowerCase());
