@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { preload } from 'react-dom';
-import { SITE_URL } from '@/lib/siteConfig.js';
+import { SITE_URL, STUDIO_WHATSAPP } from '@/lib/siteConfig.js';
 import { stillLadder } from '@/lib/films.js';
 import PhotoView from './_components/PhotoView.jsx';
 import { FRAME_SIZES } from '@/lib/photos.js';
@@ -42,10 +42,9 @@ export async function generateMetadata({ params }) {
 
 export default async function PhotoPage({ params }) {
     const { photoId } = await params;
-    const [data, recs, studio] = await Promise.all([
+    const [data, recs] = await Promise.all([
         getJSON(`/api/photos/${encodeURIComponent(photoId)}`),
         getJSON(`/api/photos/${encodeURIComponent(photoId)}/recommended`),
-        getJSON('/api/studio/details'),
     ]);
     if (!data?.selectedPhoto) notFound();
 
@@ -72,7 +71,7 @@ export default async function PhotoPage({ params }) {
         <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <PhotoView key={photoId} data={data} recommended={recs?.recommendedPhotos || []}
-                studioPhone={studio?.studioDetails?.contact?.[0] || null} />
+                studioPhone={STUDIO_WHATSAPP} />
         </>
     );
 }

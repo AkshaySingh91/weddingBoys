@@ -1,4 +1,4 @@
-import { SITE_URL, SITE_NAME } from '@/lib/siteConfig.js';
+import { SITE_URL, SITE_NAME, STUDIO_WHATSAPP } from '@/lib/siteConfig.js';
 import RevealObserver from '@/Component/home/RevealObserver.jsx';
 import { buildTeam } from './_lib/teamData.js';
 import CrewHero from './_components/CrewHero.jsx';
@@ -31,14 +31,13 @@ async function getJSON(path) {
     }
 }
 
-const digits = (phone) => String(phone || '').replace(/\D/g, '');
 
 export default async function TeamPage() {
-    const [team, studio] = await Promise.all([getJSON('/api/team'), getJSON('/api/studio/details')]);
+    const team = await getJSON('/api/team');
     const { founders, md, departments, everyone, group, count } = buildTeam(team);
     const crewCount = departments.reduce((n, d) => n + d.people.length, 0);
 
-    const phone = digits(studio?.studioDetails?.contact?.[0]);
+    const phone = STUDIO_WHATSAPP;
     const whatsapp = phone
         ? `https://wa.me/${phone}?text=${encodeURIComponent('Hi, we would like to check our wedding date.')}`
         : null;

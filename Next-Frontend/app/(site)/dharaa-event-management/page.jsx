@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { SITE_URL } from '@/lib/siteConfig.js'
+import { SITE_URL, STUDIO_WHATSAPP } from '@/lib/siteConfig.js'
 import Process from "./_sections/Process"
 import EventTypes from "./_sections/EventTypes"
 import FoodItems from "./_sections/FoodItems"
@@ -40,7 +40,7 @@ export default function DharaaLandingPage() {
                         </button>
                         <a
                             className="border border-accent text-accent-ink px-6 sm:px-8 py-3 rounded-xl hover:bg-accent-wash transition-all font-semibold sm:font-bold text-base sm:text-lg text-center"
-                            href="https://wa.me/9284690935"
+                            href={`https://wa.me/${STUDIO_WHATSAPP}`}
                             target="_blank"
                             rel="noopener noreferrer"
                         >

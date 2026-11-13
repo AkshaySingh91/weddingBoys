@@ -13,7 +13,6 @@ import { memo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FiArrowUpRight, FiStar } from 'react-icons/fi';
-import { useStudioDetails } from '@/Context/StudioDetailsContext.jsx';
 import Chapter, { Em, ArrowDot, GlassChip, CARD, CARD_DEEP } from '@/Component/home/Chapter.jsx';
 
 import homeImage1 from '@/Asset/Home/homeImage1.jpg';
@@ -22,6 +21,7 @@ import homeImage3 from '@/Asset/Home/homeImage3.jpg';
 import homeImage4 from '@/Asset/Home/homeImage4.jpg';
 import homeImage5 from '@/Asset/Home/homeImage5.jpg';
 import homeImage6 from '@/Asset/Home/homeImage6.jpg';
+import { STUDIO_WHATSAPP } from '@/lib/siteConfig.js';
 
 /**
  * Where each service actually leads. Two of the six — Baby Celebrations and
@@ -93,8 +93,7 @@ function Tile({ svc, d = 0, className = '', imageClass = 'aspect-[4/3]' }) {
 }
 
 function OurServices() {
-    const { studioContact } = useStudioDetails();
-    const whatsapp = studioContact?.[0] ? `https://wa.me/${studioContact[0]}` : '/contact';
+    const whatsapp = `https://wa.me/${STUDIO_WHATSAPP}`;
     const external = whatsapp.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {};
     const [hero, ...rest] = SERVICES;
     const tiles = rest.slice(0, 4);

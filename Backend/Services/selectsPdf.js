@@ -26,6 +26,11 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const FONTS = path.join(here, '..', 'assets', 'fonts');
 const SITE = (process.env.PUBLIC_SITE_URL || 'https://theweddingvachan.com').replace(/\/$/, '');
 
+// The brand's own email and Instagram accounts (never the old "Wedding Boys" ones).
+const STUDIO_EMAIL = 'theweddingvachanofficial@gmail.com';
+const PHONES = ['+918080825560', '+919156466515']; // the studio's two official numbers
+const INSTAGRAM = [['Mumbai', 'https://www.instagram.com/theweddingvachanofficial/'], ['Varanasi', 'https://www.instagram.com/theweddingvachan_varanasi/']];
+
 const C = { ground: '#FBF6EE', raised: '#FFFFFF', ink: '#33161A', muted: '#7A6A66', accent: '#D9342A', gold: '#C9A227', deep: '#33161A', onDeep: '#FBF6EE' };
 const W = 595.28; const H = 841.89; // A4, points
 
@@ -229,10 +234,10 @@ async function closing(doc, studio) {
     spaced(doc, 'Scan to check your date', 60, 340 + qs + 14, { size: 8, color: C.gold, spacing: 2.6 });
 
     const lines = [];
-    (studio?.contact || []).slice(0, 2).forEach((c) => lines.push({ label: 'Call or WhatsApp', value: c, link: `https://wa.me/${String(c).replace(/\D/g, '')}` }));
-    if (studio?.email) lines.push({ label: 'Email', value: studio.email, link: `mailto:${studio.email}` });
-    const ig = studio?.socials?.instagram;
-    if (ig) lines.push({ label: 'Instagram', value: `@${ig.replace(/\/+$/, '').split('/').pop()}`, link: ig });
+    PHONES.forEach((c) => lines.push({ label: 'Call or WhatsApp', value: c.replace(/^\+91(\d{5})(\d{5})$/, '+91 $1 $2'), link: `https://wa.me/${c.replace(/\D/g, '')}` }));
+    const email = studio?.email && !/weddingboys/i.test(studio.email) ? studio.email : STUDIO_EMAIL;
+    lines.push({ label: 'Email', value: email, link: `mailto:${email}` });
+    for (const [place, ig] of INSTAGRAM) lines.push({ label: `Instagram, ${place}`, value: `@${ig.replace(/\/+$/, '').split('/').pop()}`, link: ig });
     lines.push({ label: 'Website', value: SITE.replace(/^https?:\/\//, ''), link: SITE });
     let y = 560;
     for (const l of lines) {

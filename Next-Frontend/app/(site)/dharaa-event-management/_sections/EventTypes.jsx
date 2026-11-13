@@ -6,6 +6,7 @@ import OfficeEvent from '@/Asset/Dharaa/office-event.jpg'
 import BirthdayParty from '@/Asset/Dharaa/birthday.jpg'
 import Party from '@/Asset/Dharaa/party.jpg'
 import { motion } from 'framer-motion';
+import { STUDIO_WHATSAPP } from '@/lib/siteConfig.js';
 
 function EventTypes() {
     const eventTypes = [
@@ -83,7 +84,7 @@ function EventTypes() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
                 <button
                     className="bg-accent text-white px-6 sm:px-8 py-3 rounded-xl shadow-lg hover:bg-accent-hover transition-all font-bold text-sm sm:text-base cursor-pointer z-10"
-                    onClick={() => window.open(`https://wa.me/9284690935`, '_blank')}
+                    onClick={() => window.open(`https://wa.me/${STUDIO_WHATSAPP}`, '_blank')}
                 >
                     Book Your Event
                 </button>

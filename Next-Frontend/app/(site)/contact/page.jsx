@@ -1,4 +1,4 @@
-import { SITE_URL } from '@/lib/siteConfig.js';
+import { SITE_URL, SOCIAL_LINKS, STUDIO_EMAIL, STUDIO_PHONES } from '@/lib/siteConfig.js';
 import { KINDS } from '@/lib/contact.js';
 import { stillLadder } from '@/lib/films.js';
 import { INVITE_LOOKS, lookForCeremony } from '@/lib/grades.js';
@@ -80,6 +80,12 @@ export default async function ContactPage({ searchParams }) {
         <Invitation windows={Object.fromEntries(windows.filter(Boolean))} initialLook={initialLook} selects={context?.type === 'selects' ? selects : []}
             from={from} context={context} initialKind={kind || (from === 'varanasi' ? 'Pre-wedding shoot' : '')}
             initialCity={city} focus={one(q?.focus, 10)}
-            studio={{ phones: Array.isArray(s.contact) ? s.contact : [], email: s.email || null, address: s.address || null, instagram: s.socials?.instagram || null }} />
+            studio={{
+                phones: STUDIO_PHONES,
+                // the brand's own email and accounts (never an old-name address from settings)
+                email: s.email && !/weddingboys/i.test(s.email) ? s.email : STUDIO_EMAIL,
+                address: s.address || null,
+                instagram: [{ place: 'Mumbai', href: SOCIAL_LINKS.instagramMumbai }, { place: 'Varanasi', href: SOCIAL_LINKS.instagramVaranasi }],
+            }} />
     );
 }

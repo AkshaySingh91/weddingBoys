@@ -2,6 +2,7 @@ import { cache } from 'react';
 import { notFound } from 'next/navigation';
 import { stillLadder } from '@/lib/films.js';
 import InviteView from './_components/InviteView.jsx';
+import { STUDIO_WHATSAPP } from '@/lib/siteConfig.js';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
@@ -15,14 +16,6 @@ const getInvite = cache(async (code) => {
         return null;
     }
 });
-const getStudio = async () => {
-    try {
-        const res = await fetch(`${api_url}/api/studio/details`, { next: { revalidate: 300 } });
-        return res.ok ? (await res.json()).studioDetails : null;
-    } catch {
-        return null;
-    }
-};
 
 const namesOf = (inv) => [inv.names?.a, inv.names?.b].filter(Boolean).join(' & ');
 
@@ -46,7 +39,7 @@ export async function generateMetadata({ params }) {
 
 export default async function InvitePage({ params }) {
     const { code } = await params;
-    const [inv, studio] = await Promise.all([getInvite(code), getStudio()]);
+    const inv = await getInvite(code);
     if (!inv) notFound();
-    return <InviteView invitation={inv} studioPhone={studio?.contact?.[0] || null} />;
+    return <InviteView invitation={inv} studioPhone={STUDIO_WHATSAPP} />;
 }

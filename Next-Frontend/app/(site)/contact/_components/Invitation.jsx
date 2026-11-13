@@ -483,7 +483,8 @@ function PartnerCopy({ invite, partner, names }) {
 
 /** The studio, directly: WhatsApp, call, email, Instagram, the address. */
 function Studio({ studio, waHref, onWhatsApp }) {
-    const handle = studio.instagram ? `@${studio.instagram.replace(/\/+$/, '').split('/').pop()}` : null;
+    const handleOf = (url) => `@${url.replace(/\/+$/, '').split('/').pop()}`;
+    const instagram = Array.isArray(studio.instagram) ? studio.instagram : [];
     const maps = studio.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(studio.address)}` : null;
     return (
         <aside aria-labelledby="direct-title" className="mt-10 lg:mt-0 lg:pt-4">
@@ -513,14 +514,14 @@ function Studio({ studio, waHref, onWhatsApp }) {
                         </a>
                     </li>
                 )}
-                {handle && (
-                    <li>
-                        <a href={studio.instagram} target="_blank" rel="noopener noreferrer" className="direct-row">
+                {instagram.map((ig) => (
+                    <li key={ig.href}>
+                        <a href={ig.href} target="_blank" rel="noopener noreferrer" className="direct-row">
                             <FiInstagram aria-hidden="true" className="h-5 w-5 text-ink" />
-                            <span className="flex-1"><span className="block font-semibold text-ink">{handle}</span><span className="block text-[13px] text-ink-muted">Instagram</span></span>
+                            <span className="flex-1"><span className="block font-semibold text-ink">{handleOf(ig.href)}</span><span className="block text-[13px] text-ink-muted">Instagram, {ig.place}</span></span>
                         </a>
                     </li>
-                )}
+                ))}
                 {maps && (
                     <li>
                         <a href={maps} target="_blank" rel="noopener noreferrer" className="direct-row">

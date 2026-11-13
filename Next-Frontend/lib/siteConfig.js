@@ -21,15 +21,19 @@ export const absoluteUrl = (path = '/') =>
 export const SITE_NAME = 'The Wedding Vachan';
 
 /**
- * The studio's social accounts. Instagram is split by city: Mumbai is the main
- * studio account, Varanasi has its own. The YouTube channel has not been
- * renamed yet.
+ * The studio's social accounts and email. Instagram is split by city: the
+ * official account (Mumbai, the main studio) and Varanasi's own. Nothing on the
+ * site carries the old "Wedding Boys" name; the YouTube channel is not linked
+ * until it is renamed.
  */
+export const STUDIO_EMAIL = 'theweddingvachanofficial@gmail.com';
+/** The studio's two official numbers (the first is its WhatsApp). No others anywhere. */
+export const STUDIO_PHONES = ['+918080825560', '+919156466515'];
+export const STUDIO_WHATSAPP = '918080825560';
 export const SOCIAL_LINKS = {
-    instagramMumbai: 'https://www.instagram.com/theweddingvachannn/',
+    instagramMumbai: 'https://www.instagram.com/theweddingvachanofficial/',
     instagramVaranasi: 'https://www.instagram.com/theweddingvachan_varanasi/',
     facebook: 'https://www.facebook.com/people/The-Wedding-Vachan-Pan-India/61593606026297/',
-    youtube: 'https://www.youtube.com/@The_wedding_boys_',
 };
 
 // CMS pageKeys that exist only to supply content blocks to a hand-built route —

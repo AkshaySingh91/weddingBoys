@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FiArrowUpRight, FiInstagram, FiYoutube, FiFacebook } from 'react-icons/fi';
+import { FiArrowUpRight, FiInstagram, FiFacebook } from 'react-icons/fi';
 import { FOOTER_NAV, BRAND_DESCRIPTION, BRAND_TAGLINE } from '@/lib/navigation.js';
 import FooterCta from './FooterCta.jsx';
 import { SOCIAL_LINKS } from '@/lib/siteConfig.js';
@@ -8,7 +8,6 @@ import { SOCIAL_LINKS } from '@/lib/siteConfig.js';
 const SOCIALS = [
     { label: 'Instagram, Mumbai', place: 'Mumbai', href: SOCIAL_LINKS.instagramMumbai, Icon: FiInstagram },
     { label: 'Instagram, Varanasi', place: 'Varanasi', href: SOCIAL_LINKS.instagramVaranasi, Icon: FiInstagram },
-    { label: 'YouTube', href: SOCIAL_LINKS.youtube, Icon: FiYoutube },
     { label: 'Facebook', href: SOCIAL_LINKS.facebook, Icon: FiFacebook },
 ];
 

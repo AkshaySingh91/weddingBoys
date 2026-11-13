@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import { motion, MotionConfig } from 'framer-motion';
 import { FiMessageCircle, FiPhone, FiSliders, FiCalendar, FiCreditCard, FiMapPin } from 'react-icons/fi';
-import { useStudioDetails } from '@/Context/StudioDetailsContext.jsx';
 import PackageModal from '@/Component/PackageModal.jsx';
 import { PlanCard, PlanRail, firstPlan } from './PricingPlans.jsx';
 import Chapter, { Em, CARD, CARD_TINT } from '@/Component/home/Chapter.jsx';
 import { BUILT_IN_PACKAGES as packages } from '@/lib/builtInPackages.js';
+import { STUDIO_PHONES, STUDIO_WHATSAPP } from '@/lib/siteConfig.js';
 
 const FACTS = [
     { Icon: FiCalendar, title: 'Booking', body: '50% advance secures your date; the balance is due one week before the event.' },
@@ -60,10 +60,9 @@ const PackagesSection = ({ data }) => {
     const list = Array.isArray(data?.packages) ? data.packages.map(fromPricing) : packages;
     const [openPackage, setOpenPackage] = useState(null);
     const [active, setActive] = useState(() => firstPlan(list));
-    const { studioContact } = useStudioDetails();
 
-    const whatsapp = `https://wa.me/${studioContact?.[0] || ''}?text=${encodeURIComponent("Hello! I'd like to talk about a package for our wedding.")}`;
-    const call = studioContact?.[1] ? `tel:${studioContact[1]}` : null;
+    const whatsapp = `https://wa.me/${STUDIO_WHATSAPP}?text=${encodeURIComponent("Hello! I'd like to talk about a package for our wedding.")}`;
+    const call = `tel:${STUDIO_PHONES[1]}`;
 
     return (<>
         <Chapter id="pricing" label="Packages" glow="left"
@@ -135,8 +134,8 @@ const PackagesSection = ({ data }) => {
         {openPackage && (
             <PackageModal
                 pkg={openPackage}
-                whatsappHref={`https://wa.me/${studioContact?.[0] || ''}?text=${createWhatsAppMessage(openPackage)}`}
-                callHref={studioContact?.[1] ? `tel:${studioContact[1]}` : null}
+                whatsappHref={`https://wa.me/${STUDIO_WHATSAPP}?text=${createWhatsAppMessage(openPackage)}`}
+                callHref={`tel:${STUDIO_PHONES[1]}`}
                 onClose={() => setOpenPackage(null)}
             />
         )}

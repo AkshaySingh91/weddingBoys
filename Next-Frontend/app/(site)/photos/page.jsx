@@ -1,4 +1,4 @@
-import { SITE_URL } from '@/lib/siteConfig.js';
+import { SITE_URL, STUDIO_WHATSAPP } from '@/lib/siteConfig.js';
 import { composedSection } from '@/lib/pageComposition.js';
 import Gallery from './_components/Gallery.jsx';
 import { queryOf } from '@/lib/photos.js';
@@ -39,10 +39,9 @@ export default async function PhotosPage({ searchParams }) {
     const sort = composed?.data?.sort || null;
     const pageSize = Math.min(48, Math.max(12, Number(composed?.data?.pageSize) || 24));
 
-    const [initial, facets, studio] = await Promise.all([
+    const [initial, facets] = await Promise.all([
         getJSON(`/api/photos?${queryOf({ tags, q, page, limit: pageSize, sort })}`),
         getJSON('/api/photos/facets'),
-        getJSON('/api/studio/details'),
     ]);
 
     const photos = initial?.photos || [];
@@ -65,7 +64,7 @@ export default async function PhotosPage({ searchParams }) {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <Gallery key={`${tags.join(',')}|${q}|${page}`} initial={initial ? { ...initial, page } : null} facets={facets}
                 initialTags={tags} initialQuery={q} sort={sort} pageSize={pageSize}
-                studioPhone={studio?.studioDetails?.contact?.[0] || null} />
+                studioPhone={STUDIO_WHATSAPP} />
         </>
     );
 }

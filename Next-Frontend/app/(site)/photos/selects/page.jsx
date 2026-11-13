@@ -1,4 +1,5 @@
 import SharedSelects from './_components/SharedSelects.jsx';
+import { STUDIO_WHATSAPP } from '@/lib/siteConfig.js';
 
 const api_url = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
@@ -21,9 +22,8 @@ const getJSON = async (path) => {
 export default async function SelectsPage({ searchParams }) {
     const query = await searchParams;
     const ids = (typeof query?.ids === 'string' ? query.ids : '').split(',').filter((x) => /^[0-9a-f]{24}$/i.test(x)).slice(0, 60);
-    const [data, studio] = await Promise.all([
+    const [data] = await Promise.all([
         ids.length ? getJSON(`/api/photos/batch?ids=${ids.join(',')}`) : null,
-        getJSON('/api/studio/details'),
     ]);
-    return <SharedSelects photos={data?.photos || []} studioPhone={studio?.studioDetails?.contact?.[0] || null} />;
+    return <SharedSelects photos={data?.photos || []} studioPhone={STUDIO_WHATSAPP} />;
 }

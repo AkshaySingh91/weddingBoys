@@ -1,4 +1,4 @@
-import { SITE_URL, SOCIAL_LINKS } from '@/lib/siteConfig.js';
+import { SITE_URL, SOCIAL_LINKS, STUDIO_WHATSAPP } from '@/lib/siteConfig.js';
 import ColdOpen from './_components/ColdOpen.jsx';
 import HowItStarted from './_components/HowItStarted.jsx';
 import TheNumber from './_components/TheNumber.jsx';
@@ -34,10 +34,9 @@ async function getJSON(path) {
     }
 }
 
-const digits = (phone) => String(phone || '').replace(/\D/g, '');
 
 export default async function AboutPage() {
-    const [team, studio] = await Promise.all([getJSON('/api/team'), getJSON('/api/studio/details')]);
+    const team = await getJSON('/api/team');
 
     // Founders come from storyData, not the API. Anyone the API still marks as
     // "Founder" but who is not a current founder is left out of the crew too.
@@ -47,8 +46,7 @@ export default async function AboutPage() {
             && m.about.designation?.trim().toLowerCase() !== 'founder')
         .map((m) => ({ id: m._id, name: m.about.name.trim(), role: m.about.designation, src: m.url }));
 
-    const details = studio?.studioDetails;
-    const phone = digits(details?.contact?.[0]);
+    const phone = STUDIO_WHATSAPP;
     const whatsapp = phone
         ? `https://wa.me/${phone}?text=${encodeURIComponent('Hi, we would like to talk about our wedding.')}`
         : null;

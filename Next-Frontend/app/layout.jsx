@@ -2,7 +2,7 @@ import { serializeJsonLd } from '@/lib/jsonLd.mjs';
 import './globals.css';
 import { fontVariables } from './fonts';
 import StudioDetailsContext from '@/Context/StudioDetailsContext.jsx';
-import { SITE_URL as siteUrl, SITE_NAME } from '@/lib/siteConfig.js';
+import { SITE_URL as siteUrl, SITE_NAME, STUDIO_PHONES, STUDIO_EMAIL } from '@/lib/siteConfig.js';
 const title =
   'Capturing Your Love Story: Cinematic Wedding Videography in India | The Wedding Vachan';
 const description =
@@ -70,13 +70,8 @@ const organizationJsonLd = {
       name: SITE_NAME,
       url: siteUrl,
       logo: `${siteUrl}/companyLogo.png`,
-      contactPoint: [
-        {
-          '@type': 'ContactPoint',
-          telephone: '+91-7666016904',
-          contactType: 'Customer Service',
-        },
-      ],
+      email: STUDIO_EMAIL,
+      contactPoint: STUDIO_PHONES.map((telephone) => ({ '@type': 'ContactPoint', telephone, contactType: 'Customer Service' })),
     },
     {
       '@type': 'WebSite',

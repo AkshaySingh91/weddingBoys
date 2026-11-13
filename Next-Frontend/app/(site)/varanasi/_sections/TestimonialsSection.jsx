@@ -18,7 +18,7 @@ const TESTIMONIALS = [
   {
     name: "Radhika & Aditya",
     location: "Mumbai",
-    quote: "Standing on a boat at sunrise with the ghats behind us — that image is now the background of our home. The Wedding Boys understood what we couldn't explain."
+    quote: "Standing on a boat at sunrise with the ghats behind us — that image is now the background of our home."
   },
   {
     name: "Preeti & Nikhil",
