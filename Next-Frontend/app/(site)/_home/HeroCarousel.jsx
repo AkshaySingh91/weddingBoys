@@ -152,7 +152,8 @@ export default function HeroCarousel({ slides = [] }) {
         <MotionConfig reducedMotion="user">
             {lightbox && (
                 <FilmLightbox src={filmSrc(lightbox)} title={captionOf(lightbox)} poster={lightbox.posterUrl}
-                    href={lightbox.videoId ? `/films/${lightbox.videoId}` : undefined} onClose={() => setLightbox(null)} />
+                    href={lightbox.videoId ? `/films/${lightbox.videoId}` : undefined} onClose={() => setLightbox(null)}
+                    detailId={lightbox.videoId || undefined} />
             )}
 
             <div ref={viewRef} data-analytics-section="hero"
