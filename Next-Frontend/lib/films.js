@@ -36,8 +36,8 @@ export function stillLadder(url, { width, cap = Infinity } = {}) {
 }
 export const stillSrcSet = (url, opts) => stillLadder(url, opts)?.srcSet;
 
-/** "Pre-Wedding · Goa" */
-export const blurbOf = (f) => [f?.event === 'Wedding / Pheras' ? 'Wedding' : f?.event, placeOf(f)].filter(Boolean).join(' · ');
+/** "Pre-Wedding, Goa" */
+export const blurbOf = (f) => [f?.event === 'Wedding / Pheras' ? 'Wedding' : f?.event, placeOf(f)].filter(Boolean).join(', ');
 
 /** Everything a search box should match against. */
 export const searchTextOf = (f) => [coupleOf(f), f?.title, f?.event, placeOf(f), f?.videos?.videoLocation?.state, ...(f?.labels || [])]

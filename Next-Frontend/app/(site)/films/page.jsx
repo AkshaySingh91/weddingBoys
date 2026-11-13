@@ -5,7 +5,7 @@ import { fetchFilmDiscovery } from '@/lib/filmDiscovery.js';
 
 const title = 'Wedding Films & Cinematography Portfolio | The Wedding Vachan';
 const description =
-    'Watch our cinematic wedding films — real Indian weddings captured as stories, from intimate ceremonies to grand celebrations. Browse the full portfolio by style and location.';
+    'Watch our wedding films: real Indian weddings, from small ceremonies to big celebrations. Browse them by style and location.';
 
 export const metadata = {
     title,

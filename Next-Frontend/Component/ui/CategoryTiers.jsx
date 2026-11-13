@@ -120,7 +120,7 @@ export default function CategoryTiers({ groups = [], group, value, onChange, lab
                                     );
                                 }) : (
                                     <p className="text-[14px] text-ink-muted">
-                                        {current?.rows[0]?.title || current?.label} · {filmsLabel(current?.rows[0]?.items?.length ?? 0)}, favourites first
+                                        {current?.rows[0]?.title || current?.label}, {filmsLabel(current?.rows[0]?.items?.length ?? 0)}, our favourites first
                                     </p>
                                 )}
                             </motion.div>

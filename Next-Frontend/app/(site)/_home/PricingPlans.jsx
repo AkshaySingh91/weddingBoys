@@ -101,7 +101,7 @@ export function PlanCard({ pkg, onOpen, lift = false, className = '' }) {
                 </p>
             </div>
             <p className={`mt-2 text-[12.5px] font-medium ${featured ? 'text-gold' : 'text-accent-ink'}`}>
-                Team of {pkg.team.length} · {included} deliverables
+                Team of {pkg.team.length}, {included} deliverables
             </p>
 
             <p className={`mt-4 text-[14px] leading-relaxed lg:min-h-[4.9em] ${featured ? 'text-ink-onDeep/75' : 'text-ink-secondary'}`}>

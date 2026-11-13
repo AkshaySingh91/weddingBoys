@@ -18,7 +18,7 @@ const TESTIMONIALS = [
   {
     name: "Radhika & Aditya",
     location: "Mumbai",
-    quote: "Standing on a boat at sunrise with the ghats behind us — that image is now the background of our home."
+    quote: "Standing on a boat at sunrise with the ghats behind us. That image is now the background of our home."
   },
   {
     name: "Preeti & Nikhil",
@@ -118,7 +118,7 @@ export default function TestimonialsSection() {
                   {testimonial.name}
                 </span>
                 <span className="text-[9px] md:text-[10px] tracking-[0.25em] text-gold uppercase font-medium">
-                  — {testimonial.location}
+                  {testimonial.location}
                 </span>
               </div>
             </div>

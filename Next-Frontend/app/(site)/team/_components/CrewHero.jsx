@@ -42,7 +42,7 @@ export default function CrewHero({ group, count, facts, names }) {
     const spotRef = useRef(null);
     const frameRef = useRef(null);
     const [panned, setPanned] = useState(false);
-    const alt = `The Wedding Vachan crew${names.length ? ` — ${names.join(', ')}` : ''}`;
+    const alt = `The Wedding Vachan crew${names.length ? `: ${names.join(', ')}` : ''}`;
 
     // Phones: start the pan on the centre of the line-up (the founders).
     useEffect(() => {
@@ -127,7 +127,7 @@ export default function CrewHero({ group, count, facts, names }) {
                             One crew. <span className="[&_em]:text-gold"><Em>Every</Em></span> frame.
                         </h1>
                         <p className="mt-4 max-w-xl text-[15.5px] leading-relaxed text-ink-onDeep/75 sm:text-[17px]">
-                            The founders, the managing director and the camera, stills and edit teams — the same people who will be with you on your wedding day.
+                            The founders, the managing director and the camera, stills and edit teams. These are the people who will be with you on your wedding day.
                         </p>
                         <ul className="mt-6 flex flex-wrap gap-2" aria-label="The team in numbers">
                             {facts.map((f, k) => (

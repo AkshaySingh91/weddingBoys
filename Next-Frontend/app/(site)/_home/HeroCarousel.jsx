@@ -247,7 +247,7 @@ export default function HeroCarousel({ slides = [] }) {
                     )}
                     <div className="flex items-center gap-2.5 rounded-[28px] bg-white/80 p-2 pr-2.5 shadow-[0_20px_44px_-20px_rgba(51,22,26,0.6)] ring-1 ring-white/60 backdrop-blur-xl sm:gap-3 sm:rounded-[30px] sm:pr-3">
                         <div className="relative shrink-0">
-                            <button type="button" onClick={playFilm} aria-label={`Play film — ${captionOf(active)}`}
+                            <button type="button" onClick={playFilm} aria-label={`Play film: ${captionOf(active)}`}
                                 className="relative block aspect-video w-28 cursor-pointer overflow-hidden rounded-[20px] bg-ground-deep focus-ring sm:w-36">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img key={current} src={smallPoster(active)} alt="" style={focusStyle(active.focus)} className="absolute inset-0 h-full w-full object-cover motion-safe:animate-[fadeUp_220ms_ease-out]" />

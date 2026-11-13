@@ -6,9 +6,9 @@ import FoodItems from "./_sections/FoodItems"
 import dharaaLogo from '@/Asset/Dharaa/Logo.png'
 import catering from '@/Asset/Dharaa/Food/catering.jpg'
 
-const title = 'Dharaa Event Management — Wedding Catering & Events | The Wedding Vachan'
+const title = 'Dharaa Event Management: Wedding Catering and Events | The Wedding Vachan'
 const description =
-    'Premium catering and event management for weddings and celebrations, from Dharaa — the events arm of The Wedding Vachan. Customised packages for every occasion.'
+    'Catering and event management for weddings and celebrations by Dharaa, the events team of The Wedding Vachan. Packages for every occasion.'
 
 export const metadata = {
     title,

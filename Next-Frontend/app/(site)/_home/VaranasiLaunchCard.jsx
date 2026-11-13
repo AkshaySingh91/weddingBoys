@@ -159,7 +159,7 @@ function Story({ m, i, active, panelId, tabId }) {
     const on = i === active;
     return (
         <div id={panelId} role="tabpanel" aria-labelledby={tabId} hidden={!on}>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gold">{i + 1} · {m.label}</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gold">{m.label}</p>
             <motion.div key={m.key} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: EASE }}>
                 <p className="mt-2 font-display text-[34px] font-medium italic leading-[1.05] text-ink-onDeep">{m.hi}</p>
                 <h3 className="mt-3 text-[18px] font-semibold leading-snug text-ink-onDeep">{m.title}</h3>
@@ -293,20 +293,17 @@ function VaranasiLaunchCard() {
                     <div className="bg-[#140A0C] px-5 pb-12 pt-6 text-ink-onDeep">
                         <p className="font-display text-[26px] font-medium italic leading-tight text-gold">Aapki kahani, Ganga kinare.</p>
                         <p className="mt-2 text-[15px] leading-relaxed text-ink-onDeep/80">
-                            Your love story, on the banks of the Ganga. Our team now shoots pre-weddings in Banaras: sunrise boat rides, the ghats and old lanes, and the Ganga Aarti.
+                            We now shoot pre-weddings in Banaras. Come for a morning on the river and stay for the evening aarti.
                         </p>
-                        <ul className="mt-4 flex flex-wrap gap-2 text-[12.5px]">
-                            {MOMENTS.map((x) => <li key={x.key} className="rounded-full bg-white/[0.08] px-3 py-1.5 ring-1 ring-white/10">{x.label}</li>)}
-                        </ul>
                         <Offer />
                         <div className="mt-6 grid gap-2.5">
-                            <Cta className="w-full">See shoot ideas &amp; packages</Cta>
+                            <Cta className="w-full">Plan your Banaras shoot</Cta>
                             <Link href={contactHref({ from: 'varanasi', kind: 'Pre-wedding shoot', city: 'Varanasi' })}
                                 className="inline-flex h-12 items-center justify-center rounded-full text-[15px] font-semibold text-ink-onDeep ring-1 ring-white/25 hover:bg-white/10 motion-safe:active:scale-[0.97] focus-ring">
                                 Check your dates
                             </Link>
                         </div>
-                        <p className="mt-4 text-center text-[10.5px] uppercase tracking-[0.18em] text-ink-onDeep/40">Booking this season · Sample images</p>
+                        <p className="mt-4 text-center text-[12px] text-ink-onDeep/45">Sample images</p>
                     </div>
                 </div>
                 <DesktopDay />

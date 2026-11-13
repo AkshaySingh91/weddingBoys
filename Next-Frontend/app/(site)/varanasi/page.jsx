@@ -3,7 +3,7 @@ import VaranasiClient from './_components/VaranasiClient.jsx';
 
 const title = 'Wedding Cinematography in Varanasi | The Wedding Vachan';
 const description =
-    'The Wedding Vachan are now filming in Varanasi. Ghats, rituals and river light — wedding films made for the oldest living city in the world.';
+    'The Wedding Vachan now films weddings and pre-wedding shoots in Varanasi, on the ghats and by the Ganga.';
 
 export const metadata = {
     title,

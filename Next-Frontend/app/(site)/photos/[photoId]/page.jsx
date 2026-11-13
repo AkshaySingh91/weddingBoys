@@ -28,7 +28,7 @@ export async function generateMetadata({ params }) {
     const city = p.photoLocation?.city ? `, ${p.photoLocation.city}` : '';
     const r = rite(p.eventGroup);
     const what = couple ? (!r || r === 'Wedding' ? `${couple}'s wedding` : `${r} at ${couple}'s wedding`) : r;
-    const title = `${p.title || what || 'Wedding photograph'}${city} | The Wedding Vachan`;
+    const title = `${what || p.title || 'Wedding photograph'}${city} | The Wedding Vachan`;
     const description = p.caption || `${what || 'A wedding'}${city}, photographed by The Wedding Vachan.`;
     const url = `${SITE_URL}/photos/${photoId}`;
     const image = stillLadder(p.url, { width: p.width, cap: 1600 })?.srcSet?.split(', ').pop()?.split(' ')[0] || p.url;
@@ -58,7 +58,7 @@ export default async function PhotoPage({ params }) {
         '@type': 'ImageObject',
         contentUrl: ladder?.srcSet?.split(', ').pop()?.split(' ')[0] || p.url,
         url: `${SITE_URL}/photos/${photoId}`,
-        name: p.title || undefined,
+        name: (p.title || '').replace(/\s*—\s*/g, ', ') || undefined,
         caption: p.caption || undefined,
         width: p.width || undefined,
         height: p.height || undefined,

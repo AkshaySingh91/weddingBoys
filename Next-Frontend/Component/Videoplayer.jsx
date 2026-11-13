@@ -123,7 +123,7 @@ export default function Videoplayer({ src, poster, autoPlay = false, title, clas
     const pipOk = typeof document !== 'undefined' && 'pictureInPictureEnabled' in document && document.pictureInPictureEnabled;
 
     return (
-        <div ref={wrapRef} tabIndex={0} onKeyDown={onKey} onPointerMove={poke} aria-label={title ? `${title} — video player` : 'Video player'}
+        <div ref={wrapRef} tabIndex={0} onKeyDown={onKey} onPointerMove={poke} aria-label={title ? `${title}, video player` : 'Video player'}
             className={`group/player relative aspect-video w-full overflow-hidden bg-black outline-none focus-visible:ring-2 focus-visible:ring-accent ${showChrome ? '' : 'cursor-none'} ${className}`}>
             <video
                 ref={videoRef}

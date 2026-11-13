@@ -56,7 +56,7 @@ function Billboard({ film, total, onPlay }) {
         <section ref={ref} aria-labelledby="films-title"
             className="relative -mt-[calc(var(--header-height)+0.75rem)] h-[78svh] min-h-[560px] overflow-hidden bg-ground-deep text-ink-onDeep lg:-mx-4 lg:h-[min(88svh,860px)]">
             {/* eslint-disable-next-line @next/next/no-img-element -- the LCP poster */}
-            <img src={film.thumbnailUrl} alt={`${couple} — wedding film`} loading="eager" fetchPriority="high" decoding="async"
+            <img src={film.thumbnailUrl} alt={`${couple}'s wedding film`} loading="eager" fetchPriority="high" decoding="async"
                 style={{ ...focusStyle(film.focus), ...(film.blurDataURL ? { backgroundImage: `url(${film.blurDataURL})`, backgroundSize: 'cover' } : null) }}
                 className="absolute inset-0 h-full w-full object-cover motion-safe:animate-[heroZoom_9s_ease-out_both]" />
             {allow && (
@@ -74,10 +74,10 @@ function Billboard({ film, total, onPlay }) {
                         Our films
                     </p>
                     <h1 id="films-title" className="mt-4 max-w-3xl font-display text-[46px] font-medium leading-[0.98] sm:text-[64px] lg:text-[88px]">
-                        Real stories. <span className="italic text-gold">Timeless</span> films.
+                        Real weddings. <span className="italic text-gold">Real</span> films.
                     </h1>
                     <p className="mt-5 text-[12px] font-semibold uppercase tracking-[0.18em] text-ink-onDeep/60">Now showing</p>
-                    <p className="mt-1 text-[18px] font-semibold sm:text-[20px]">{couple}{blurbOf(film) && <span className="font-normal text-ink-onDeep/70"> — {blurbOf(film)}</span>}</p>
+                    <p className="mt-1 text-[18px] font-semibold sm:text-[20px]">{couple}{blurbOf(film) && <span className="font-normal text-ink-onDeep/70">, {blurbOf(film)}</span>}</p>
                     <div className="mt-6 flex flex-wrap items-center gap-3">
                         <button type="button" onClick={() => onPlay(film)}
                             className="inline-flex h-[52px] cursor-pointer items-center gap-3 rounded-full bg-white pl-2 pr-6 text-[15px] font-semibold text-ink shadow-[0_14px_34px_-14px_rgba(0,0,0,0.7)]

@@ -10,11 +10,11 @@ export const FEATURED_DESTINATIONS = {
         name: 'Udaipur',
         state: 'Rajasthan',
         title: 'Destination Wedding Cinematography in Udaipur',
-        tagline: 'The City of Lakes & Royal Palace Celebrations',
+        tagline: 'Lake palaces and royal courtyards',
         heroSubtitle:
-            'Where heritage marble reflects upon shimmering waters — bespoke wedding cinematography amidst timeless Rajputana majesty.',
+            'Marble palaces on the lake, and the evening light on the water. We film and photograph weddings across Udaipur.',
         metaDescription:
-            'Bespoke destination wedding films and photography in Udaipur. Explore iconic lake palaces, seasonal cinematography advice, and real royal weddings by The Wedding Vachan.',
+            'Destination wedding films and photographs in Udaipur by The Wedding Vachan. Lake palace venues, the best season to marry and real weddings we have filmed.',
         coordinates: { latitude: '24.5854', longitude: '73.7125' },
         bestSeason: 'October to March (Crisp skies, golden lakeside sunsets)',
         filmingHighlights: [
@@ -31,7 +31,7 @@ export const FEATURED_DESTINATIONS = {
             {
                 name: 'The Leela Palace Udaipur',
                 type: 'Modern Luxury Palace',
-                desc: 'Opulent lakeside pavilions offering breathtaking panoramic views of the City Palace.',
+                desc: 'Lakeside pavilions looking straight across at the City Palace.',
             },
             {
                 name: 'The Oberoi Udaivilas',
@@ -41,7 +41,7 @@ export const FEATURED_DESTINATIONS = {
             {
                 name: 'Taj Lake Palace',
                 type: 'Heritage Island Wonder',
-                desc: 'Floating white marble palace built in 1746, epitomizing ethereal romance.',
+                desc: 'A white marble palace on the lake, built in 1746.',
             },
             {
                 name: 'Raffles Udaipur',
@@ -73,11 +73,11 @@ export const FEATURED_DESTINATIONS = {
         name: 'Jaipur',
         state: 'Rajasthan',
         title: 'Luxury Wedding Cinematography in Jaipur',
-        tagline: 'The Pink City of Fortresses & Grand Royal Splendor',
+        tagline: 'Forts, palaces and the Pink City',
         heroSubtitle:
-            'From majestic ramparts of Amber to opulent durbar halls — cinematic wedding narratives celebrating heritage and grandeur.',
+            'The walls of Amber, old durbar halls and palace courtyards. We film and photograph weddings across Jaipur.',
         metaDescription:
-            'Capturing royal destination weddings in Jaipur. Explore heritage palace venues, cinematography guides, and wedding films filmed by The Wedding Vachan.',
+            'Destination wedding films and photographs in Jaipur by The Wedding Vachan. Palace venues, the best season to marry and real weddings we have filmed.',
         coordinates: { latitude: '26.9124', longitude: '75.7873' },
         bestSeason: 'November to February (Cool winter breezes, clear regal sunlight)',
         filmingHighlights: [
@@ -116,7 +116,7 @@ export const FEATURED_DESTINATIONS = {
             {
                 question: 'What makes Jaipur such a favored destination for royal weddings?',
                 answer:
-                    'Jaipur provides an unmatched blend of living royal heritage, seamless flight connectivity, and world-class luxury palace hotels that accommodate large destination guest contingents.',
+                    'Jaipur provides an unmatched blend of living royal heritage, good flight connections, and world-class luxury palace hotels that accommodate large destination guest contingents.',
             },
             {
                 question: 'How does The Wedding Vachan capture the grand scale of Jaipur palace weddings?',
@@ -131,11 +131,11 @@ export const FEATURED_DESTINATIONS = {
         name: 'Goa',
         state: 'Goa',
         title: 'Coastal Destination Wedding Cinematography in Goa',
-        tagline: 'Sunkissed Shores, Portuguese Villas & Coastal Reverie',
+        tagline: 'Beaches, old Portuguese villas and sunsets',
         heroSubtitle:
-            'Barefoot beachfront pheras, sunset sea breezes, and vibrant sundowners documented with fine-art cinematic nuance.',
+            'Pheras on the sand, sunset by the sea and parties that run late. We film and photograph weddings across Goa.',
         metaDescription:
-            'Fine art beach wedding cinematography in Goa. Sunset ceremonies, Portuguese heritage havelis, and luxury coastal wedding films by The Wedding Vachan.',
+            'Beach wedding films and photographs in Goa by The Wedding Vachan. Sunset ceremonies, old Portuguese houses and real weddings we have filmed.',
         coordinates: { latitude: '15.2993', longitude: '74.1240' },
         bestSeason: 'November to April (Balmy coastal evenings, vibrant sunset light)',
         filmingHighlights: [
@@ -184,11 +184,11 @@ export const FEATURED_DESTINATIONS = {
         name: 'Jodhpur',
         state: 'Rajasthan',
         title: 'Imperial Wedding Cinematography in Jodhpur',
-        tagline: 'The Sun City & The Fortress of the Blue Kingdom',
+        tagline: 'Mehrangarh, Umaid Bhawan and the blue city',
         heroSubtitle:
-            'Towering sandstones of Mehrangarh and Art Deco majesty of Umaid Bhawan — epic love stories set against the Thar horizon.',
+            'Mehrangarh at dusk, Umaid Bhawan and the edge of the Thar. We film and photograph weddings across Jodhpur.',
         metaDescription:
-            'Imperial destination wedding cinematography in Jodhpur. Umaid Bhawan Palace, Mehrangarh fort celebrations, and cinematic wedding films by The Wedding Vachan.',
+            'Destination wedding films and photographs in Jodhpur by The Wedding Vachan. Umaid Bhawan, Mehrangarh and real weddings we have filmed.',
         coordinates: { latitude: '26.2389', longitude: '73.0243' },
         bestSeason: 'October to March (Warm sunny days, dramatic desert evenings)',
         filmingHighlights: [
@@ -227,15 +227,15 @@ export const FEATURED_DESTINATIONS = {
         name: 'Varanasi',
         state: 'Uttar Pradesh',
         title: 'Spiritual Heritage Wedding Cinematography in Varanasi',
-        tagline: 'The Eternal City of Ghats, Sacred Mantras & River Light',
+        tagline: 'The ghats, the Ganga and the evening aarti',
         heroSubtitle:
-            'Holy Ganga river dawn portraits, evening maha aarti blessings, and profound Vedic wedding rituals captured with reverent artistic vision.',
+            'Portraits on the river at dawn, the evening aarti and the wedding rituals themselves. We film and photograph weddings across Varanasi.',
         metaDescription:
-            'Soulful wedding cinematography in Varanasi. Sacred Ganga ghats, heritage havelis, and Vedic wedding rituals filmed by The Wedding Vachan.',
+            'Wedding and pre-wedding films and photographs in Varanasi by The Wedding Vachan. The ghats, old havelis and real weddings we have filmed.',
         coordinates: { latitude: '25.3176', longitude: '82.9739' },
         bestSeason: 'October to March (Gentle morning river mists, evening temple warmth)',
         filmingHighlights: [
-            'Sunrise boat journeys along historical ghats with morning temple reflections',
+            'Sunrise boat rides past the ghats, with the temples reflected in the river',
             'Evening Ganga Maha Aarti with thousands of illuminated brass lamps',
             'Ancient haveli courtyards infused with traditional shehnai and Vedic hymns',
         ],
@@ -270,11 +270,11 @@ export const FEATURED_DESTINATIONS = {
         name: 'Mumbai',
         state: 'Maharashtra',
         title: 'Cosmopolitan Luxury Wedding Cinematography in Mumbai',
-        tagline: 'High-Society Elegance, Sea Fronts & Glamorous Soirées',
+        tagline: 'Sea fronts, ballrooms and our home city',
         heroSubtitle:
-            'Art Deco sea promenades, iconic ballroom galas, and sophisticated contemporary Indian celebrations filmed with cinematic panache.',
+            'Art Deco sea fronts, hotel ballrooms and big city celebrations. Mumbai is where our studio is.',
         metaDescription:
-            'Sophisticated luxury wedding photography and films in Mumbai. Heritage seafront landmarks, ballroom galas, and fine-art celebrations by The Wedding Vachan.',
+            'Wedding films and photographs in Mumbai by The Wedding Vachan. Sea front landmarks, hotel ballrooms and real weddings we have filmed.',
         coordinates: { latitude: '18.9220', longitude: '72.8347' },
         bestSeason: 'November to February (Pleasant coastal winter)',
         filmingHighlights: [
@@ -290,7 +290,7 @@ export const FEATURED_DESTINATIONS = {
             },
             {
                 name: 'The St. Regis Mumbai',
-                type: 'Elevated High-Rise Luxury',
+                type: 'High-rise hotel',
                 desc: 'Soaring city views, luxurious ballrooms, and refined urban wedding suites.',
             },
             {
@@ -313,9 +313,9 @@ export const FEATURED_DESTINATIONS = {
         name: 'Kerala',
         state: 'Kerala',
         title: 'Backwater & Coastal Wedding Cinematography in Kerala',
-        tagline: 'God’s Own Country: Palm Groves, Backwaters & Trad Romance',
+        tagline: 'Backwaters, palm groves and temple weddings',
         heroSubtitle:
-            'Serene houseboat cruises, coconut palm canopies, and traditional Kasavu temple nuptials captured with poetic tropical warmth.',
+            'Houseboats, palm-lined backwaters and traditional Kasavu temple weddings. We film and photograph weddings across Kerala.',
         metaDescription:
             'Intimate backwater and coastal wedding films in Kerala. Kumarakom, Kochi, and Kovalam wedding cinematography by The Wedding Vachan.',
         coordinates: { latitude: '9.9312', longitude: '76.2673' },
@@ -375,9 +375,9 @@ export function getLocationBySlug(rawSlug = '') {
             name: found.city,
             state: found.state,
             title: `Wedding Cinematography in ${found.city}`,
-            tagline: `Cinematic Wedding Films & Photography in ${found.city}, ${found.state}`,
-            heroSubtitle: `Capturing authentic celebrations, heritage traditions, and modern romance across ${found.city}.`,
-            metaDescription: `Bespoke wedding cinematography and photography in ${found.city}, ${found.state} by The Wedding Vachan. Timeless storytelling and high-definition wedding films.`,
+            tagline: `Wedding films and photographs in ${found.city}, ${found.state}`,
+            heroSubtitle: `We film and photograph weddings across ${found.city}.`,
+            metaDescription: `Wedding films and photographs in ${found.city}, ${found.state} by The Wedding Vachan.`,
             coordinates: { latitude: '20.5937', longitude: '78.9629' },
             bestSeason: 'October to March',
             filmingHighlights: [
@@ -389,7 +389,7 @@ export function getLocationBySlug(rawSlug = '') {
                 {
                     name: `Top Luxury Venues in ${found.city}`,
                     type: 'Heritage & Luxury Hotels',
-                    desc: `Curated wedding venues, banquets, and resorts across ${found.city}, ${found.state}.`,
+                    desc: `Wedding venues, banquet halls and resorts across ${found.city}, ${found.state}.`,
                 },
             ],
             faqs: [

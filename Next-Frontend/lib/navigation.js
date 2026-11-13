@@ -97,6 +97,6 @@ export const FOOTER_NAV = [
  * Mumbai, works across India, and travels. "Mumbai's premier" alone contradicted
  * the footer's "worldwide"; "India's premier" alone erased where they are.
  */
-export const BRAND_TAGLINE = 'MUMBAI · INDIA · BEYOND';
+export const BRAND_TAGLINE = 'MUMBAI AND BEYOND';
 export const BRAND_DESCRIPTION =
-    'A cinematography studio filming Indian weddings — palace, coast and sacred city — for couples who want the day back as a film, not a recap.';
+    'A wedding film and photography studio from Mumbai. We film Indian weddings in palaces, on beaches and in Banaras, for couples who want to watch their day again.';

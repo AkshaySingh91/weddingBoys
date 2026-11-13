@@ -12,7 +12,7 @@ function BrandLockup() {
     const { studioLogo } = useStudioDetails();
     const [failedLogo, setFailedLogo] = useState(null);
     return (
-        <Link href="/" aria-label="The Wedding Vachan — home" className="flex min-w-0 items-center gap-2 rounded-xl focus-ring min-[380px]:gap-2.5">
+        <Link href="/" aria-label="The Wedding Vachan, home" className="flex min-w-0 items-center gap-2 rounded-xl focus-ring min-[380px]:gap-2.5">
             <span className="grid h-8 w-8 shrink-0 place-items-center overflow-hidden rounded-full min-[380px]:h-9 min-[380px]:w-9 bg-ground-raised ring-1 ring-gold/50 sm:h-10 sm:w-10">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={studioLogo && studioLogo !== failedLogo ? studioLogo : '/companyLogo.png'}

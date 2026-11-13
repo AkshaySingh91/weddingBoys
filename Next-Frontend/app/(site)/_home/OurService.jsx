@@ -31,14 +31,14 @@ import { STUDIO_WHATSAPP } from '@/lib/siteConfig.js';
 const SERVICES = [
     {
         title: 'Cinematic Wedding Films',
-        description: 'Hollywood-style storytelling that captures every tear, laugh, and magical moment in 4K brilliance.',
+        description: 'A film of your wedding, shot in 4K, with every tear and every laugh in it.',
         image: homeImage1,
         href: '/films',
         cta: 'Watch the films',
     },
     {
         title: 'Storybook Photography',
-        description: 'Timeless images that transform your special day into a visual fairytale.',
+        description: 'Photographs of your day that you will want to print and keep.',
         image: homeImage4,
         href: '/photos',
         cta: 'See the photographs',
@@ -52,21 +52,21 @@ const SERVICES = [
     },
     {
         title: 'Engagement Stories',
-        description: 'Capture the excitement of your new journey together.',
+        description: 'A shoot before the wedding, somewhere that means something to you.',
         image: homeImage6,
         href: '/photos',
         cta: 'See the photographs',
     },
     {
         title: 'Baby Celebrations',
-        description: 'Cherish the joy of new beginnings with heartwarming coverage.',
+        description: 'The ring, the families and the first celebration, filmed and photographed.',
         image: homeImage2,
         href: '/contact',
         cta: 'Ask about this',
     },
     {
         title: 'Same-Day Edits',
-        description: 'Your highlights delivered within hours - perfect for receptions and social media.',
+        description: 'Your highlights within hours, in time for the reception and for social media.',
         image: homeImage5,
         href: '/contact',
         cta: 'Ask about this',
@@ -102,7 +102,7 @@ function OurServices() {
     return (
         <Chapter id="services" label="Services" glow="left"
             title={<>Everything we <Em>make</Em> for your wedding</>}
-            lead="Films, photographs and the stories in between — pick one or all of them.">
+            lead="Films, photographs, or both. Choose what you need.">
             <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-12 lg:grid-cols-4 lg:gap-4">
                 {/* Hero card */}
                 <Link href={hero.href} data-rise="fade"

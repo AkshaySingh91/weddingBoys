@@ -109,7 +109,7 @@ export function TitleSequence({ couple, facts, poster, loopUrl, film, src, durat
                     <div className="absolute z-[1] overflow-hidden rounded-[20px] bg-black shadow-[0_40px_90px_-30px_rgba(0,0,0,0.7)] ring-1 ring-white/10"
                         style={{ top: box.top, left: box.left, width: box.width, height: box.height }}>
                         {EMBED.test(src) ? (
-                            <iframe src={`${src}${src.includes('?') ? '&' : '?'}autoplay=1`} title={`${couple} — wedding film`}
+                            <iframe src={`${src}${src.includes('?') ? '&' : '?'}autoplay=1`} title={`${couple}'s wedding film`}
                                 allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowFullScreen className="absolute inset-0 h-full w-full border-0" />
                         ) : (
                             <Videoplayer src={src} poster={poster} title={couple} autoPlay onEnded={() => setEnded(true)} className="!aspect-auto h-full" />
@@ -135,7 +135,7 @@ export function TitleSequence({ couple, facts, poster, loopUrl, film, src, durat
                 {!settled && (
                     <div className="absolute inset-0 z-[2] transition-[clip-path] duration-[520ms] ease-entrance motion-reduce:transition-none" style={{ clipPath: clip }}>
                         {/* eslint-disable-next-line @next/next/no-img-element -- the LCP still */}
-                        <img src={poster} alt={`${couple} — wedding film`} loading="eager" fetchPriority="high" decoding="async"
+                        <img src={poster} alt={`${couple}'s wedding film`} loading="eager" fetchPriority="high" decoding="async"
                             style={{ ...focusStyle(film?.focus), ...(film?.blurDataURL ? { backgroundImage: `url(${film.blurDataURL})`, backgroundSize: 'cover' } : null) }}
                             className="title-still absolute inset-0 h-full w-full object-cover" />
                         {allowLoop && (
@@ -216,7 +216,7 @@ export default function FilmStory({ data, videoId, related = [], rows = [] }) {
     const credits = [...(film.credits?.length ? film.credits : (v.bts || []).map((b) => ({ name: b.key, role: b.value })))
         .filter((c) => c?.name)
         .reduce((m, c) => m.set(c.name, [...(m.get(c.name) || []), c.role].filter(Boolean)), new Map())]
-        .map(([name, roles]) => ({ name, role: [...new Set(roles)].join(' · ') }));
+        .map(([name, roles]) => ({ name, role: [...new Set(roles)].join(', ') }));
     const words = [film.caption, story.intro].filter(Boolean);
     const others = chapters.filter((c) => !c.current).length;
 
@@ -285,13 +285,13 @@ export default function FilmStory({ data, videoId, related = [], rows = [] }) {
                                         )}
                                     </span>
                                     <span className="mt-3 block font-display text-[21px] leading-tight text-ink">{rite(c.ceremony) || 'Film'}</span>
-                                    <span className="mt-0.5 block text-[13px] text-ink-muted">{[c.date, length(c.durationSec)].filter(Boolean).join(' · ')}</span>
+                                    <span className="mt-0.5 block text-[13px] text-ink-muted">{[c.date, length(c.durationSec)].filter(Boolean).join(', ')}</span>
                                 </>
                             );
                             return (
                                 <li key={c._id} data-rise="" style={{ '--d': i }} className={`relative lg:w-[300px] ${cur ? 'chapter-current' : ''}`}>
                                     {cur ? (
-                                        <button type="button" onClick={watch} aria-label={`Chapter ${i + 1}, ${rite(c.ceremony)}: now watching — play`}
+                                        <button type="button" onClick={watch} aria-label={`Chapter ${i + 1}, ${rite(c.ceremony)}: now watching, play`}
                                             className="group block w-full cursor-pointer rounded-[20px] p-2 text-left ring-2 ring-accent/70 focus-ring">{body}</button>
                                     ) : (
                                         <Link href={`/films/${c._id}`} prefetch={false}

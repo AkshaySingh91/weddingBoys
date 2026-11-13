@@ -30,7 +30,7 @@ const CULTURE_PILLARS = [
     id: "rituals",
     icon: "🌸",
     title: "Banarasi Rituals",
-    body: "The chanting, the sindoor, the sapta padi — ancient vows performed where they have always belonged.",
+    body: "The chanting, the sindoor and the seven steps, taken on the banks of the Ganga.",
     image: ritualsImage,
     offset: "mt-0",
   },

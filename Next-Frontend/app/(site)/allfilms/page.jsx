@@ -4,7 +4,7 @@ import { fetchFilmDiscovery } from '@/lib/filmDiscovery.js';
 
 const title = 'Browse All Wedding Films | The Wedding Vachan';
 const description =
-    'Every wedding film we have shot, filterable by ceremony type, location, style and season — find the wedding story closest to the day you are planning.';
+    'Every wedding film we have shot. Filter by ceremony, place, style or season to find one close to the day you are planning.';
 
 export const metadata = {
     title,

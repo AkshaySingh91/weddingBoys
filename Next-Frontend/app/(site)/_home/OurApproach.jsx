@@ -46,7 +46,7 @@ const STEPS = [
         number: '02',
         title: 'Tailored Package Creation',
         label: 'Crafted for you',
-        copy: 'Our team designs a bespoke package that perfectly balances creativity with practicality, ensuring every detail is covered.',
+        copy: 'We put together a package that fits your days, your guest count and your budget.',
     },
     {
         number: '03',
@@ -63,8 +63,8 @@ const STEPS = [
     {
         number: '05',
         title: 'Post-Production Mastery',
-        label: 'A timeless keepsake',
-        copy: 'Finally, we curate and refine your visuals into a timeless cinematic piece that tells your unique love story.',
+        label: 'Your film, delivered',
+        copy: 'We edit your footage and photographs into a film and an album you will want to watch again.',
     },
 ];
 
@@ -595,7 +595,7 @@ function PlainSteps() {
                         </figure>
 
                         <div className="sm:col-span-7">
-                            <p className="t-label text-accent-ink">{step.number} · {step.label}</p>
+                            <p className="t-label text-accent-ink">{step.label}</p>
                             <h3 className="mt-1.5 font-display text-[24px] font-semibold leading-tight text-ink">
                                 {step.title}
                             </h3>

@@ -27,7 +27,7 @@ import { ArrowDot, CARD_DEEP } from './Chapter.jsx';
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 const TIERS = { Founder: '01', 'Managing Director': '02' };
 const PEOPLE = [...FOUNDERS, MANAGING_DIRECTOR, ...CREW].map((p) => ({
-    ...p, id: slug(p.name), tier: TIERS[p.role] ? `${TIERS[p.role]} · ${p.role}` : '03 · Crew',
+    ...p, id: slug(p.name), tier: TIERS[p.role] ? p.role : 'Crew',
 }));
 const indexOf = (name) => PEOPLE.findIndex((p) => p.name === name);
 
@@ -107,7 +107,7 @@ export default function StudioTeam() {
                                 <Tier n="01">Founders</Tier>
                                 <div className="grid grid-cols-2 gap-2 md:mt-3 md:gap-4">
                                     {FOUNDERS.map((f, k) => (
-                                        <button key={f.name} type="button" onClick={(e) => openPerson(f.name, e)} aria-label={`${f.name}, ${f.role} — open`}
+                                        <button key={f.name} type="button" onClick={(e) => openPerson(f.name, e)} aria-label={`Open ${f.name}, ${f.role}`}
                                             data-rise="" style={{ '--d': k }} className={TILE_BTN}>
                                             <Photo person={f} layoutId={tileId(f.name)} sizes="(max-width: 768px) 45vw, 360px"
                                                 className="aspect-[4/5] rounded-[24px] shadow-[0_18px_36px_-22px_rgba(51,22,26,0.6)] md:aspect-[3/4] md:rounded-[28px]"
@@ -115,7 +115,7 @@ export default function StudioTeam() {
                                             <span className="absolute right-2 top-2"><ArrowDot tone="glass" size="sm" /></span>
                                             <span className="absolute inset-x-1.5 bottom-1.5 rounded-[18px] bg-white/80 px-2.5 py-2 backdrop-blur-md md:inset-x-2 md:bottom-2 md:px-4 md:py-3">
                                                 <span className="block truncate text-[13.5px] font-semibold leading-tight text-ink md:text-[18px]">{f.name}</span>
-                                                <span className="block truncate text-[11px] text-ink-muted md:text-[13px]">{f.role}<span className="hidden md:inline"> · on set since 2015</span></span>
+                                                <span className="block truncate text-[11px] text-ink-muted md:text-[13px]">{f.role}<span className="hidden md:inline">, on set since 2015</span></span>
                                             </span>
                                         </button>
                                     ))}
@@ -125,7 +125,7 @@ export default function StudioTeam() {
                             <Ribbon from="left" />
                             <div className={`${TRAY} flex flex-col`}>
                                 <Tier n="02" side="right">Managing Director</Tier>
-                                <button type="button" onClick={(e) => openPerson(md.name, e)} aria-label={`${md.name}, ${md.role} — open`}
+                                <button type="button" onClick={(e) => openPerson(md.name, e)} aria-label={`Open ${md.name}, ${md.role}`}
                                     data-rise="" style={{ '--d': 2 }}
                                     className={`${TILE_BTN} grid flex-1 grid-cols-[84px_1fr] items-center gap-4 p-2 md:mt-3 md:grid-cols-1 md:items-stretch md:gap-0 ${CARD_DEEP}`}>
                                     <Photo person={md} layoutId={tileId(md.name)} sizes="(max-width: 768px) 84px, 300px"
@@ -148,7 +148,7 @@ export default function StudioTeam() {
                                            md:mt-3 md:grid md:grid-cols-6 md:gap-4 md:overflow-visible md:px-0 lg:grid-cols-3 lg:gap-x-3 lg:gap-y-4">
                                 {CREW.map((c, k) => (
                                     <li key={c.name} data-rise="" style={{ '--d': (k % 3) + 1 }} className="w-[92px] shrink-0 snap-start md:w-auto">
-                                        <button type="button" onClick={(e) => openPerson(c.name, e)} aria-label={`${c.name}, ${c.role} — open`} className={TILE_BTN}>
+                                        <button type="button" onClick={(e) => openPerson(c.name, e)} aria-label={`Open ${c.name}, ${c.role}`} className={TILE_BTN}>
                                             <Photo person={c} layoutId={tileId(c.name)} sizes="(max-width: 768px) 88px, 200px"
                                                 className="aspect-square rounded-[18px] md:rounded-[22px]" imgClass="object-[50%_22%] transition-transform duration-media ease-entrance group-hover:scale-[1.05]" />
                                             <span className="mt-1.5 block truncate text-[12.5px] font-semibold leading-tight text-ink md:mt-2 md:text-[14px] lg:text-[12.5px]">{c.name}</span>

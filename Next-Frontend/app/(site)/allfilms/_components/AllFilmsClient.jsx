@@ -156,7 +156,7 @@ export default function AllFilmsClient({ discovery = null, initialCategory = nul
                         <p className="text-[14px] text-ink-muted" aria-live="polite">
                             {crumbs && <span className="text-ink-secondary">{crumbs.label} › </span>}
                             <span className="font-semibold text-ink">{current.title}</span>
-                            {' · '}<span className="tabular-nums">{results.length}</span> {results.length === 1 ? 'film' : 'films'}
+                            {', '}<span className="tabular-nums">{results.length}</span> {results.length === 1 ? 'film' : 'films'}
                             {query.trim() && <> matching &ldquo;{query.trim()}&rdquo;</>}
                         </p>
 

@@ -45,8 +45,8 @@ export async function generateMetadata({ params }) {
     const groom = film.clientName?.Groom || '';
     const couple = [bride, groom].filter(Boolean).join(' & ') || 'Wedding Celebration';
     const city = film.selectedVideo.videoLocation?.city ? ` in ${film.selectedVideo.videoLocation.city}` : '';
-    const title = `${couple} — Wedding Film${city} | The Wedding Vachan`;
-    const description = `Watch ${couple}’s cinematic wedding film${city} by The Wedding Vachan. Real emotions, timeless rituals, and unscripted storytelling.`;
+    const title = `${couple}, Wedding Film${city} | The Wedding Vachan`;
+    const description = `Watch ${couple}’s cinematic wedding film${city} by The Wedding Vachan. Real people, real rituals, nothing staged.`;
     const url = `${SITE_URL}/films/${videoId}`;
     const image = film.selectedVideo.thumbnailUrl || film.selectedVideo.thumbnailMetaData?.url;
 

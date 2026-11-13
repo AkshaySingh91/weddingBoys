@@ -41,7 +41,7 @@ export default function ColdOpen() {
             </div>
 
             <p aria-hidden="true" className="absolute bottom-[8%] right-6 hidden font-mono text-[11px] tracking-[0.2em] text-ink-onDeep/70 lg:block">
-                REEL 1 · 00:00:04:12
+                REEL 1   00:00:04:12
             </p>
         </section>
     );

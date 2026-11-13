@@ -161,7 +161,7 @@ export default function FilmCard({ film, variant = 'landscape', rank, onPlay, si
             )}
             {/* the card's link covers the whole card: a plain click plays in place */}
             <Link href={filmHref(film)} prefetch={false} onClick={onClick}
-                aria-label={`${couple}${blurb ? ` — ${blurb}` : ''}: play film`}
+                aria-label={`Play ${couple}'s film${blurb ? `, ${blurb}` : ''}`}
                 className="absolute inset-0 z-[3] rounded-[20px] focus-ring" />
         </article>
     );

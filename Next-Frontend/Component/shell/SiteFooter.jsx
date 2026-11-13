@@ -48,7 +48,7 @@ export default function SiteFooter() {
                     <p className="text-[12px] text-ink-onDeep/60">© {new Date().getFullYear()} The Wedding Vachan. All rights reserved.</p>
                     <ul className="flex flex-wrap items-center gap-2">
                         {SOCIALS.map(({ label, place, href, Icon }) => <li key={label}>
-                            <a href={href} target="_blank" rel="noopener noreferrer" aria-label={`${label} — opens in a new tab`}
+                            <a href={href} target="_blank" rel="noopener noreferrer" aria-label={`${label} (opens in a new tab)`}
                                 className={`flex h-10 items-center justify-center gap-2 rounded-xl border border-ink-onDeep/15 text-ink-onDeep/80 transition-colors hover:border-ink-onDeep/40 hover:text-ink-onDeep focus-ring ${place ? 'px-3 text-[13px]' : 'w-10'}`}>
                                 <Icon aria-hidden="true" className="h-4 w-4" />
                                 {place && <span aria-hidden="true">{place}</span>}

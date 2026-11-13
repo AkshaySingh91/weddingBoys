@@ -235,7 +235,7 @@ export default function FilmLightbox({ src, title, poster, href, onClose, upNext
             {crew.length > 0 && (
                 <div>
                     <p className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-white/55">Filmed by</p>
-                    <p className="mt-1.5 text-[13.5px] leading-relaxed text-white/80">{crew.map((c) => `${c.key} (${c.value})`).join(' · ')}</p>
+                    <p className="mt-1.5 text-[13.5px] leading-relaxed text-white/80">{crew.map((c) => `${c.key} (${c.value})`).join(', ')}</p>
                 </div>
             )}
 
@@ -280,7 +280,7 @@ export default function FilmLightbox({ src, title, poster, href, onClose, upNext
     if (typeof document === 'undefined') return null;
     return createPortal(
         <MotionConfig reducedMotion="user">
-            <div role="dialog" aria-modal="true" aria-label={title ? `${title} — film` : 'Film'} className="fixed inset-0 z-modal">
+            <div role="dialog" aria-modal="true" aria-label={title ? `${title}, film` : 'Film'} className="fixed inset-0 z-modal">
                 {/* Warm ground, lit by the film's own poster */}
                 <motion.div aria-hidden="true" className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25 }}
                     onClick={wide ? close : undefined}>

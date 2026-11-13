@@ -38,21 +38,21 @@ export const STOPS = [
     {
         key: 'dawn', label: 'Sunrise', hi: 'Subah ki pehli kiran',
         title: 'Sunrise boat ride on the Ganga',
-        line: 'Just the two of you on a boat, as the sun comes up over the ghats.',
+        line: 'The two of you on a boat while the sun comes up over the ghats.',
         wide: dawnWide, tall: phoneDawn, posWide: '50% 55%', posTall: '50% 58%', flipWide: true, loop: DAWN_LOOP_SRC,
         sky: 'radial-gradient(120% 80% at 70% 0%, rgba(244,179,122,0.45), transparent 60%)', diyas: 0.4,
     },
     {
         key: 'gali', label: 'Old lanes', hi: 'Ghaat, galiyan aur mandir ki ghantiyan',
         title: 'The ghats and old lanes',
-        line: 'Walk the ghat steps and the colourful old lanes. Every corner looks like a film set.',
+        line: 'Ghat steps, narrow lanes and painted doors. Every turn looks like a film set.',
         wide: galiStandIn, tall: phoneLanes, posWide: '50% 60%', posTall: '58% 50%', placeholder: 'gali',
         sky: 'radial-gradient(120% 80% at 30% 0%, rgba(255,226,170,0.32), transparent 62%)', diyas: 0.15,
     },
     {
         key: 'aarti', label: 'Ganga Aarti', hi: 'Ganga Aarti ki roshni mein',
         title: 'In the light of the Ganga Aarti',
-        line: 'Stand together in the glow of the grand evening aarti: the lamps, the bells and the river.',
+        line: 'Lamps, bells and the river glowing behind you at the evening aarti.',
         wide: aarti, tall: phoneAarti, posWide: '40% 45%', posTall: '30% 50%', flipWide: true,
         sky: 'radial-gradient(120% 90% at 60% 100%, rgba(232,120,40,0.35), transparent 60%)', diyas: 1,
     },
@@ -83,7 +83,8 @@ export function Diyas({ strength, className = 'h-[26%]' }) {
 }
 
 export function PlaceholderTag({ id, className = '' }) {
-    if (!id) return null;
+    // a note for the team while an image is still a stand-in; visitors never see it
+    if (!id || process.env.NODE_ENV === 'production') return null;
     return (
         <span className={`absolute z-20 rounded-lg border border-dashed border-gold/80 bg-black/55 px-2.5 py-1.5 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-gold ${className}`}>
             AI placeholder · {AI_PLACEHOLDERS[id].file.split('/').pop()}

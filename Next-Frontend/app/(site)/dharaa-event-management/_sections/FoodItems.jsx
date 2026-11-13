@@ -128,10 +128,8 @@ function FoodItems() {
 
             {/* CTA Footer */}
             <p className="text-center mt-8 text-gray-700 text-sm sm:text-base">
-                🍴 These are just a <span className="font-semibold">few</span> of our
-                specialties — we have{" "}
-                <span className="text-accent-ink font-bold">many more</span> to make
-                your event unforgettable!
+                These are a few of our specialties. Ask us for the{" "}
+                <span className="text-accent-ink font-bold">full menu</span>.
             </p>
         </section>
     )

@@ -60,7 +60,7 @@ export default function Slates({ founders, md }) {
                             </div>
                             <div className="px-1 pb-1 pt-3">
                                 <h3 className="truncate text-[17px] font-semibold leading-tight tracking-[-0.02em] text-ink sm:text-[22px]">{p.name}</h3>
-                                <p className="mt-0.5 text-[12.5px] text-ink-muted sm:text-[14px]">Co-founder · behind the camera</p>
+                                <p className="mt-0.5 text-[12.5px] text-ink-muted sm:text-[14px]">Co-founder, behind the camera</p>
                             </div>
                         </article>
                     ))}

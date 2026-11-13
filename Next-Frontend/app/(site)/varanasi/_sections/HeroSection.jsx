@@ -154,7 +154,7 @@ export default function HeroSection({ onCTAClick, sequence }) {
         <div className="flex items-center gap-3 md:gap-5 mb-6 drop-shadow-md">
           <div className="w-8 md:w-16 h-[1px] bg-gradient-to-r from-transparent to-gold" />
           <span className="text-[9px] md:text-[11px] tracking-[0.35em] md:tracking-[0.4em] text-ink-onDeep uppercase font-medium">
-            The Wedding Vachan · Destination Series
+            The Wedding Vachan in Banaras
           </span>
           <div className="w-8 md:w-16 h-[1px] bg-gradient-to-l from-transparent to-gold" />
         </div>

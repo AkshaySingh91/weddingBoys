@@ -120,7 +120,7 @@ export default function CategoryDrill({ groups = [], group, value, onChange, lab
                                             className={`${CHIP} pl-4 ${many ? 'pr-2' : 'pr-4'} ${on ? 'text-ground' : IDLE}`}>
                                             {on && <Pill id={`${uid}-pill`} reduce={reduce} />}
                                             <motion.span layout="position">{g.label}</motion.span>
-                                            {sub && <span className="max-w-[9rem] truncate font-medium text-ground/70">· {sub}</span>}
+                                            {sub && <span className="max-w-[9rem] truncate font-medium text-ground/70">{sub}</span>}
                                             {many && (
                                                 <span className={`inline-flex h-7 items-center gap-0.5 rounded-full pl-2 pr-1 text-[11.5px] tabular-nums
                                                                   ${on ? 'bg-ground/15 text-ground' : 'bg-ink/[0.05] text-ink-muted'}`}>

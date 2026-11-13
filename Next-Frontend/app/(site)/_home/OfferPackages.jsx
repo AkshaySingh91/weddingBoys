@@ -11,7 +11,7 @@ import { STUDIO_PHONES, STUDIO_WHATSAPP } from '@/lib/siteConfig.js';
 
 const FACTS = [
     { Icon: FiCalendar, title: 'Booking', body: '50% advance secures your date; the balance is due one week before the event.' },
-    { Icon: FiCreditCard, title: 'Payments', body: 'Bank transfer, card or UPI — whichever is easiest for you.' },
+    { Icon: FiCreditCard, title: 'Payments', body: 'Pay by bank transfer, card or UPI.' },
     { Icon: FiMapPin, title: 'Travel', body: 'Anywhere in Mumbai at no extra cost. Destination weddings are quoted with travel.' },
 ];
 

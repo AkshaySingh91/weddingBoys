@@ -205,7 +205,7 @@ export default async function DestinationCityPage({ params }) {
                             </div>
                             <div>
                                 <span className="block font-medium text-stone-400">Coverage Team</span>
-                                <span className="font-semibold text-white">Bespoke Destination Crew</span>
+                                <span className="font-semibold text-white">Our own crew, travelling with you</span>
                             </div>
                         </div>
                     </div>
@@ -401,7 +401,7 @@ export default async function DestinationCityPage({ params }) {
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(194,149,85,0.18),transparent_70%)]" />
                     <div className="relative mx-auto max-w-2xl">
                         <span className="text-[11px] font-bold uppercase tracking-widest text-gold">
-                            Bespoke Wedding Cinematography
+                            Wedding films and photographs
                         </span>
                         <h2 className="mt-2 font-display text-3xl font-bold text-[#FDFBF7] sm:text-4xl">
                             Planning a Destination Wedding in {loc.name}?

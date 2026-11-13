@@ -33,7 +33,7 @@ export default function WhyChooseUs() {
                 ))}
                 <li data-rise="" className={`col-span-2 flex flex-col justify-between gap-6 p-6 sm:p-8 lg:col-span-3 lg:flex-row lg:items-end ${CARD_DEEP}`}>
                     <p className="max-w-3xl font-display text-[24px] font-medium italic leading-snug sm:text-[32px]">
-                        “We don’t just capture moments — we make the film you’ll watch again in twenty years.”
+                        “We make the film you will still be watching in twenty years.”
                     </p>
                     <p className="shrink-0 text-[13px] font-semibold uppercase tracking-[0.14em] text-gold">The Wedding Vachan</p>
                 </li>

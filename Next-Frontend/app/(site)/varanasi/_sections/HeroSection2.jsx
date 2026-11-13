@@ -221,7 +221,7 @@ export default function HeroSection({ onCTAClick }) {
            {/* ... Keep your existing Boat text elements here ... */}
            <h2 className="font-display text-[clamp(40px,8vw,80px)] text-[#FAF6EE] font-light text-center leading-[1.1] mb-12 max-w-4xl drop-shadow-xl">
             Intimacy captured amidst the<br />
-            <span className="italic text-[#E2BC6E]">timeless flow of the Ganga.</span>
+            <span className="italic text-[#E2BC6E]">slow flow of the Ganga.</span>
           </h2>
         </div>
 

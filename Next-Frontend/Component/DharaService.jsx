@@ -31,7 +31,7 @@ export default function DharaaStory() {
     return (
         <Chapter label="Sister studio" glow="left"
             title={<>Plan it all with <Em>Dharaa</Em></>}
-            lead="Planning, décor and coordination — from the people behind The Wedding Vachan.">
+            lead="Planning, décor and coordination, from the people behind The Wedding Vachan.">
             <div data-rise="" className={`mt-8 grid gap-2 p-2 sm:mt-12 md:grid-cols-[1fr_1.1fr] ${CARD}`}>
                 <div className="flex flex-col p-3 sm:p-5">
                     <div className="flex items-center gap-3">
@@ -40,12 +40,12 @@ export default function DharaaStory() {
                         </span>
                         <span className="min-w-0 flex-1">
                             <span className="block text-[17px] font-semibold leading-tight text-ink">Dharaa Events</span>
-                            <span className="block text-[13.5px] text-ink-muted">Event management · Mumbai</span>
+                            <span className="block text-[13.5px] text-ink-muted">Event management, Mumbai</span>
                         </span>
                     </div>
                     <p className="mt-5 text-[15.5px] leading-relaxed text-ink-secondary">
-                        A new event-planning studio guided by The Wedding Vachan — the same care for detail, applied to
-                        everything around the camera.
+                        A new event-planning studio from The Wedding Vachan, with the same care for detail
+                        in everything around the camera.
                     </p>
                     <ul className="mt-5 flex flex-wrap gap-2" aria-label="Dharaa services">
                         {dharaaServices.map(({ label, Icon }) => (

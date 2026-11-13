@@ -145,7 +145,7 @@ export default function PackageModal({ pkg, whatsappHref, callHref, onClose }) {
                             {[
                                 ['Team', pkg.team.length],
                                 ['Deliverables', included.length],
-                                ['You save', save > 0 ? `${save}%` : '—'],
+                                ['You save', save > 0 ? `${save}%` : 'None'],
                             ].map(([k, v]) => (
                                 <div key={k} className="px-2 py-3">
                                     <dd className="text-[18px] font-semibold tabular-nums">{v}</dd>
@@ -200,7 +200,7 @@ export default function PackageModal({ pkg, whatsappHref, callHref, onClose }) {
                                         </li>
                                     ))}
                                 </ul>
-                                <p className="mt-4 text-[13px] text-ink-muted">Any of these can be added — ask when you enquire.</p>
+                                <p className="mt-4 text-[13px] text-ink-muted">Any of these can be added. Ask when you enquire.</p>
                             </Group>
                         )}
                     </div>

@@ -91,7 +91,7 @@ export default function BanarasWalk() {
                         Banaras bula raha hai.
                     </h2>
                     <p className={`mt-2 max-w-[19rem] text-[14.5px] leading-snug text-ink-onDeep/85 transition-opacity duration-700 ${step === 0 ? 'opacity-100' : 'opacity-0'}`}>
-                        Do your pre-wedding shoot on the holy ghats of the Ganga. Scroll down the ghats with us.
+                        Your pre-wedding shoot on the ghats of the Ganga. Scroll down with us.
                     </p>
                 </div>
 
@@ -105,14 +105,13 @@ export default function BanarasWalk() {
                 <div className="absolute inset-x-0 bottom-0 px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
                     {STOPS.map((x, i) => (
                         <div key={x.key} hidden={i !== step} className="pr-10">
-                            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gold">{i + 1} · {x.label}</p>
+                            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gold">{x.label}</p>
                             <p className="mt-2 overflow-clip">
                                 <span data-step-line className="block font-display text-[34px] font-medium italic leading-[1.05] text-ink-onDeep motion-safe:animate-[wv-line_620ms_var(--ease-entrance)_backwards]">
                                     {x.hi}
                                 </span>
                             </p>
-                            <h3 className="mt-3 text-[17px] font-semibold leading-snug text-ink-onDeep">{x.title}</h3>
-                            <p className="mt-1 text-[15px] leading-relaxed text-ink-onDeep/80">{x.line}</p>
+                            <p className="mt-3 text-[15.5px] leading-relaxed text-ink-onDeep/85">{x.line}</p>
                         </div>
                     ))}
                 </div>

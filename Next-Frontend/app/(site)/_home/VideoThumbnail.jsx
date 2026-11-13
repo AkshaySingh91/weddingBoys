@@ -72,7 +72,7 @@ export default function VideoThumbnail({ data } = {}) {
                 <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
                     <p className="text-ink-muted">
                         {currentGroup && currentGroup.rows.length > 1 && <span className="text-ink-secondary">{currentGroup.label} › </span>}
-                        <span className="font-semibold text-ink">{selected?.title || 'Our films'}</span> · <span key={clients.length} className="inline-block tabular-nums motion-safe:animate-[fadeUp_220ms_ease-out]">{clients.length}</span> {clients.length === 1 ? 'film' : 'films'} · favourites first
+                        <span className="font-semibold text-ink">{selected?.title || 'Our films'}</span>, <span key={clients.length} className="inline-block tabular-nums motion-safe:animate-[fadeUp_220ms_ease-out]">{clients.length}</span> {clients.length === 1 ? 'film' : 'films'}, our favourites first
                     </p>
                     <Link href={selected?.key && selected.key !== 'best-films' ? `/allfilms?category=${encodeURIComponent(selected.key)}` : '/films'} className="font-semibold text-accent-ink focus-ring">View this category ↗</Link>
                 </div>
@@ -87,7 +87,7 @@ export default function VideoThumbnail({ data } = {}) {
                 ) : clients && clients.length ? (
                     clients.map((c, k) => {
                         const couple = [c.clientName?.Bride, c.clientName?.Groom].filter(Boolean).join(' & ');
-                        const meta = [c.videos?.videoShootDate, c.videos?.videoLocation?.city || c.videos?.videoLocation?.state].filter(Boolean).join(' · ');
+                        const meta = [c.videos?.videoShootDate, c.videos?.videoLocation?.city || c.videos?.videoLocation?.state].filter(Boolean).join(', ');
                         return (
                             <Link href={`/films/${c.videos._id}`} key={`${selected?.key}-${c.videos._id}`}
                                 style={{ animationDelay: `${Math.min(k, 3) * 45}ms` }}

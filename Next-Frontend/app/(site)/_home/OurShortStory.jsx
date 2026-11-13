@@ -30,7 +30,7 @@ export default function OurStory() {
     return (
         <Chapter label="Our story" glow="left" action={{ href: '/about-us', label: 'Read our story' }}
             title={<>Founders behind the <Em>camera</Em></>}
-            lead="Aman and Suraj have filmed weddings together since 2015 — and are still on set at yours.">
+            lead="Aman and Suraj have filmed weddings together since 2015. They will be on set at yours too.">
             <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-12 md:grid-cols-2 lg:gap-4">
                 {/* Photograph + the people who lead the studio */}
                 <figure data-rise="fade" className="relative aspect-[4/5] overflow-hidden rounded-[28px] bg-ground-sunk shadow-[0_22px_44px_-24px_rgba(51,22,26,0.6)] md:row-span-2 md:aspect-auto md:min-h-[520px]">
@@ -47,14 +47,14 @@ export default function OurStory() {
                         </span>
                         <span className="min-w-0">
                             <span className="block text-[15px] font-semibold leading-tight text-ink">Aman Singh &amp; Suraj Singh</span>
-                            <span className="block text-[12.5px] text-ink-muted">Founders · personally on set</span>
+                            <span className="block text-[12.5px] text-ink-muted">The founders, on set</span>
                         </span>
                     </figcaption>
                 </figure>
 
                 {/* Timeline */}
                 <div data-rise="" style={{ '--d': 1 }} className={`p-5 sm:p-6 ${CARD}`}>
-                    <p className="text-[13px] font-semibold text-ink-muted">Our journey</p>
+                    <p className="text-[13px] font-semibold text-ink-muted">Our story</p>
                     <p className="mt-1 text-[16px] leading-snug text-ink">
                         We started with one idea: a wedding film should feel like cinema, not a recap.
                     </p>

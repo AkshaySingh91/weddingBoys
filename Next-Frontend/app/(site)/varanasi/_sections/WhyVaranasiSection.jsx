@@ -27,7 +27,7 @@ const REASONS = [
     num: "02",
     title: "Every lane is a set",
     body:
-      "Narrow galis, marigold vendors, temple thresholds — Varanasi turns even a still frame into cinema through texture, rhythm, and layered chaos.",
+      "Narrow galis, marigold sellers and temple doorways. In Varanasi even a still frame feels alive.",
     image: fragmentLane,
     alignment: "right",
   },

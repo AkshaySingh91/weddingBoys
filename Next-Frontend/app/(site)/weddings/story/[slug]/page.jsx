@@ -33,7 +33,7 @@ export async function generateMetadata({ params }) {
     const w = story?.data?.wedding;
     if (!w) return { title: 'Wedding story | The Wedding Vachan' };
     const where = w.location?.city ? ` in ${w.location.city}` : '';
-    const title = `${w.title} — wedding${where} | The Wedding Vachan`;
+    const title = `${w.title}'s wedding${where} | The Wedding Vachan`;
     const description = w.story?.about?.join(' ').slice(0, 300) || w.intro
         || `${w.title}'s wedding${where}: ${w.films ? `${w.films} film${w.films === 1 ? '' : 's'}` : ''}${w.films && w.photos ? ' and ' : ''}${w.photos ? `${w.photos} photographs` : ''} by The Wedding Vachan.`;
     const url = `${SITE_URL}/weddings/story/${w.slug}`;
@@ -56,7 +56,7 @@ export default async function WeddingStoryPage({ params, searchParams }) {
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'ImageGallery',
-        name: `${w.title} — wedding`,
+        name: `${w.title}'s wedding`,
         url,
         description: w.story?.about?.join(' ') || w.intro || undefined,
         image: w.cover?.url || undefined,
@@ -64,7 +64,7 @@ export default async function WeddingStoryPage({ params, searchParams }) {
         creator: { '@type': 'Organization', name: 'The Wedding Vachan', url: SITE_URL },
         associatedMedia: films.map((f) => ({
             '@type': 'VideoObject',
-            name: f.caption || `${w.title} — ${f.ceremony || 'wedding'} film`,
+            name: f.caption || `${w.title}, ${f.ceremony || 'wedding'} film`,
             thumbnailUrl: f.posterUrl || undefined,
             ...(f.durationSec ? { duration: `PT${Math.round(f.durationSec)}S` } : {}),
             ...(f.embedUrl ? { embedUrl: f.embedUrl } : { contentUrl: f.webUrl || f.sourceUrl || undefined }),
