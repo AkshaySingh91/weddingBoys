@@ -318,6 +318,21 @@ export default function WeddingStory({ data, filmId = null, rows = [] }) {
     const photoCount = chapters.reduce((n, c) => n + c.photos.length, 0);
     const toldLine = [films.length && `${films.length} film${films.length === 1 ? '' : 's'}`, photoCount && `${photoCount} photograph${photoCount === 1 ? '' : 's'}`].filter(Boolean).join(' and ');
     const writtenHighlights = story.generated?.highlights === false && story.highlights?.length > 0;
+    // One ceremony: no "scene by scene" scaffolding and no numbered chapter — the
+    // heading leads straight into what the opening film has not already shown.
+    const single = chapters.length === 1;
+    const filmLength = films.length === 1 ? length(films[0].durationSec) : null;
+    // Its prologue is a credit sheet built only from what the day has.
+    const credits = single ? [
+        ['Couple', [w.couple?.bride, w.couple?.groom].filter(Boolean).join(' & ')],
+        ['Ceremony', rite(chapters[0].label).replace(/(.)(\S*)/, (_, a, b) => a + b.toLowerCase())],
+        ['Date', w.dates],
+        ['Place', where(w.location)],
+        [films.length === 1 ? 'Film' : 'Films', films.length === 1 ? filmLength || '1 film' : films.length ? `${films.length} films` : null],
+        ['Photographs', photoCount || null],
+        ['Filmed by', 'The Wedding Vachan'],
+    ].filter(([, v]) => v) : [];
+    const singleFilms = single ? chapters[0].films.filter((f) => f._id !== opening?._id) : [];
 
     return (
         <article className="relative isolate bg-ground pb-10">
@@ -336,7 +351,7 @@ export default function WeddingStory({ data, filmId = null, rows = [] }) {
                 {/* Prologue */}
                 {(chapters.length > 0 || written) && (
                     <section aria-labelledby="about-title" className="mx-auto w-full max-w-wide px-5 pb-6 pt-14 sm:pt-20 md:px-8 lg:px-10">
-                        <div className={written ? 'grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16' : ''}>
+                        <div className={written || single ? 'grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16' : ''}>
                             <div>
                                 <h2 id="about-title" data-rise="" className="text-balance font-display text-[34px] leading-[1.08] text-ink sm:text-[52px]">{heading}</h2>
                                 {written ? (
@@ -344,9 +359,11 @@ export default function WeddingStory({ data, filmId = null, rows = [] }) {
                                         {(story.about || []).map((t, i) => <p key={i} data-rise="" style={{ '--d': i + 1 }}>{t}</p>)}
                                     </div>
                                 ) : (
-                                    <p data-rise="" style={{ '--d': 1 }} className="mt-3 text-[16px] text-ink-muted">
-                                        {w.dates ? `${w.dates}. ` : ''}{toldLine ? `Told in ${toldLine}.` : ''}
-                                    </p>
+                                    !single && (
+                                        <p data-rise="" style={{ '--d': 1 }} className="mt-3 text-[16px] text-ink-muted">
+                                            {w.dates ? `${w.dates}. ` : ''}{toldLine ? `Told in ${toldLine}.` : ''}
+                                        </p>
+                                    )
                                 )}
                                 {story.quote && (
                                     <figure data-rise="" className="mt-10 border-l-2 border-accent pl-6">
@@ -355,6 +372,17 @@ export default function WeddingStory({ data, filmId = null, rows = [] }) {
                                     </figure>
                                 )}
                             </div>
+                            {!written && single && (
+                                <dl data-rise="sheet" style={{ '--grade': grades[0] }} className="grid h-max grid-cols-2 overflow-hidden rounded-[28px] bg-ground-raised ring-1 ring-ink/[0.07]">
+                                    <span aria-hidden="true" className="col-span-2 block h-[3px]" style={{ background: `rgb(${grades[0]})` }} />
+                                    {credits.map(([k, v], i) => (
+                                        <div key={k} className={`min-w-0 p-5 ${i ? 'border-t border-ink/[0.07]' : 'col-span-2'} ${i && (i - 1) % 2 ? 'border-l border-ink/[0.07]' : ''} ${i && i === credits.length - 1 && (i - 1) % 2 === 0 ? 'col-span-2' : ''}`}>
+                                            <dt className="text-[11px] font-semibold uppercase tracking-[0.2em] text-ink-muted">{k}</dt>
+                                            <dd className={`mt-2 font-display leading-tight text-ink ${i ? 'text-[19px] sm:text-[24px]' : 'text-[28px] sm:text-[34px]'}`}>{v}</dd>
+                                        </div>
+                                    ))}
+                                </dl>
+                            )}
                             {written && writtenHighlights && (
                                 <dl data-rise="sheet" className="grid h-max grid-cols-2 overflow-hidden rounded-[28px] bg-ground-raised ring-1 ring-ink/[0.07]">
                                     {story.highlights.map((h, i) => (
@@ -369,8 +397,20 @@ export default function WeddingStory({ data, filmId = null, rows = [] }) {
                     </section>
                 )}
 
+                {/* One ceremony: what the opening film has not shown, under the heading */}
+                {single && (singleFilms.length > 0 || chapters[0].photos.length > 0) && (
+                    <section id={`chapter-${chapters[0].key}`} data-scene={0} style={{ '--grade': grades[0] }} aria-label={rite(chapters[0].label)}
+                        className="mx-auto w-full max-w-wide scroll-mt-24 space-y-4 px-5 pb-12 pt-4 md:px-8 lg:px-10">
+                        {singleFilms.map((f) => {
+                            const film = allFilms.find((x) => x._id === f._id) || asFilm(f, couple);
+                            return <div key={f._id} data-rise="mask"><ChapterFilm f={{ ...f, ...film }} playing={playing?.videos?._id === f._id} onPlay={() => play(film, allFilms)} /></div>;
+                        })}
+                        {chapters[0].photos.length > 0 && <Photos photos={chapters[0].photos} title={w.title} label={chapters[0].label} grade={grades[0]} next={null} />}
+                    </section>
+                )}
+
                 {/* Scenes */}
-                {chapters.length > 0 && (
+                {chapters.length > 1 && (
                     <section aria-labelledby="chapters-title" className="mx-auto w-full max-w-wide px-5 py-12 md:px-8 lg:px-10">
                         <h2 id="chapters-title" data-rise="" className="font-display text-[30px] leading-tight text-ink sm:text-[40px]">The celebration, scene by scene</h2>
                         <ol className="mt-10 space-y-16 sm:space-y-20">
